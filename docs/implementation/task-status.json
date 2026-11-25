@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T10:48:33.243491+08:00",
+  "asOf": "2026-11-25T11:12:56.353437+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,9 +12,9 @@
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
     "I-010 manual caption domain/UI and I-009 audio semantics",
-    "I-012 real autosave/save serialization and I-011 crash fault/recovery tests",
     "I-021 indexed seek/cache, I-023 real audio execution, I-024 H264/AAC qualification",
-    "Continue remaining dependency-ready pure Dart/Harness/privacy/budget tasks; no new batch approval required"
+    "I-011 corrupt-DB recovery/compaction and I-012 draft/desktop exit state machine",
+    "Continue remaining dependency-ready original tasks; no new batch approval required"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -96,9 +96,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Linux fsync/rename publisher and rejection/preservation tests; not process-kill/ENOSPC/provider qualification",
+      "implementedScope": "Linux controlled-local fsync/rename publisher plus 50 actual child SIGKILL trials (10 at each of five save phases); verified old/new archive, committed head and explicit postpublish reconciliation; not physical powerloss/ENOSPC/provider qualification",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/save-checkpoints/verification.json"
       ],
       "remainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
       "remainingScope": "含本地fsync与SAF/iCloud分开证明；不把rename套所有云盘。",
@@ -644,9 +645,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Actual bounded embedded ZIP snapshot/manifest/checksums/originals and POSIX atomic publication; no full journal tail/recovery scan",
+      "implementedScope": "SQLite v3 immutable managed checkpoints, FULL operation journal and receipts, verified old backup/staged archive/readback/atomic publication; real lost-ACK reconciliation without overwrite/head rollback and 50 process kills; no compaction or corrupt-DB recovery-fork UI",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/save-checkpoints/verification.json"
       ],
       "remainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；durableRevision不虚报；损坏唯一好副本不覆盖；Schema完整往返。",
       "remainingScope": "含manifest校验/单writer/崩溃恢复；不把session DB混进项目。",
@@ -663,9 +665,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Real explicit archive save UI reports frozen saved revision; autosave/debounce/concurrent-save scheduler/exit hook unimplemented",
+      "implementedScope": "Monotonic local checkpoint idle2s/max30s/50 commits/background/switch/close, actual virtual-clock failures/retry; identical save coalescing, serial targets, frozen snapshots/continued SDK edits, derived persisted state and actual Flutter progress/cancel/reconcile UI; no full draft/desktop exit state machine",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/save-checkpoints/verification.json"
       ],
       "remainingAcceptance": "虚拟时钟验证全部触发；并发save合并；head继续编辑不伪改userSavedRevision；保存完成只在durable receipt之后。",
       "remainingScope": "含debounce/最大间隔/退出触发与保存中续编；不等同同步或导出。",

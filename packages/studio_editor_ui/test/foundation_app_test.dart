@@ -42,6 +42,21 @@ void main() {
       await tester.pump();
       expect(find.text('Revision 2'), findsOneWidget);
       expect(workspace.current.title, 'Untitled');
+      expect(workspace.persistence().userSavedRevision, isNull);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      await tester.pump();
+      expect(workspace.persistence().checkpointRevision, BigInt.two);
+      expect(workspace.persistence().userSavedRevision, isNull);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.ensureVisible(find.byKey(const Key('save-managed')));
+      await tester.tap(find.byKey(const Key('save-managed')));
+      await tester.pump();
+      expect(workspace.persistence().userSavedRevision, BigInt.two);
+      expect(find.textContaining('explicit save 2'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       workspace.close();
       workspace = StudioWorkspace.open(
@@ -53,6 +68,8 @@ void main() {
       await tester.pumpWidget(FoundationApp(workspace: workspace));
       expect(find.text('Revision 2'), findsOneWidget);
       expect(workspace.current.title, 'Untitled');
+      expect(find.textContaining('explicit save 2'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
     },
   );
 }

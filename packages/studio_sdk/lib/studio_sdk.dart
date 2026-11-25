@@ -1,3 +1,10 @@
+import 'dart:async';
+
+import 'autosave_scheduler.dart';
+import 'save_coordinator.dart';
+export 'autosave_scheduler.dart';
+export 'save_coordinator.dart' show SaveHandle, SaveReceipt;
+
 import 'dart:io';
 
 import 'package:studio_store/blob_store.dart';
@@ -40,6 +47,7 @@ final class StudioWorkspace {
       if (mediaLibraryPath != null && mediaRootPath != null) {
         _blobs = BlobStore(Directory(mediaRootPath), _repository.namespace);
         _media = NativeMedia.open(mediaLibraryPath, _repository.namespace);
+        _saves = SaveCoordinator(_repository, _blobs!);
       }
     } catch (_) {
       _repository.close();
@@ -54,9 +62,28 @@ final class StudioWorkspace {
   WriterToken? _writer;
   BlobStore? _blobs;
   NativeMedia? _media;
+  AutosaveScheduler? _autosave;
+  SaveCoordinator? _saves;
   String _activeProjectId = 'demo-project';
   int _exportCancelEpoch = 0;
   bool _closed = false;
+  final _persistenceEvents = StreamController<void>.broadcast(sync: true);
+  Stream<void> get persistenceEvents => _persistenceEvents.stream;
+  Object? get checkpointError => _autosave?.lastError;
+  void _notifyPersistence() {
+    if (!_closed) _persistenceEvents.add(null);
+  }
+
+  void _captureCheckpoint() {
+    _repository.captureCheckpoint(_writer!);
+    _notifyPersistence();
+  }
+
+  void _durableCommit() {
+    _autosave?.onDurableCommit();
+    _notifyPersistence();
+  }
+
   NativeMedia? get media => _media;
   String get projectId => _activeProjectId;
   void _requireMetadata() {
@@ -83,6 +110,12 @@ final class StudioWorkspace {
       _uuid.v7(),
       expectedEpoch: _repository.writerEpoch(project.projectId),
     );
+    _autosave?.dispose();
+    _autosave = AutosaveScheduler(
+      checkpoint: _captureCheckpoint,
+      onError: (_) => _notifyPersistence(),
+    );
+    _repository.captureCheckpoint(_writer!);
     return project;
   }
 
@@ -99,7 +132,9 @@ final class StudioWorkspace {
       expectedRevision: expectedRevision,
       title: title,
     );
-    return current;
+    final result = current;
+    if (result.revision != expectedRevision) _durableCommit();
+    return result;
   }
 
   ProjectDocument undo({required BigInt expectedRevision}) {
@@ -115,7 +150,9 @@ final class StudioWorkspace {
       expectedRevision: expectedRevision,
       targetCommandId: target,
     );
-    return current;
+    final result = current;
+    if (result.revision != expectedRevision) _durableCommit();
+    return result;
   }
 
   void _requireMedia() {
@@ -142,7 +179,9 @@ final class StudioWorkspace {
       expectedRevision: expectedRevision,
       operation: operation,
     );
-    return current;
+    final result = current;
+    if (result.revision != expectedRevision) _durableCommit();
+    return result;
   }
 
   Future<ProjectDocument> importVideo(
@@ -222,12 +261,43 @@ final class StudioWorkspace {
     }
   }
 
-  Future<BigInt> saveArchive(File destination) async {
+  PersistenceView persistence({File? target}) => _repository.persistenceView(
+    _activeProjectId,
+    targetPath: target?.absolute.uri.normalizePath().toFilePath(),
+  );
+  void flushCheckpoint() => _autosave?.flush();
+  BigInt saveManaged() {
+    _requireMetadata();
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    flushCheckpoint();
+    final revision = _repository.saveManaged(_writer!);
+    _notifyPersistence();
+    return revision;
+  }
+
+  SaveHandle requestArchiveSave(File destination) {
     _requireMedia();
     _protectOutput(destination);
-    final snapshot = current;
-    await ProjectArchive().save(snapshot, _blobs!, destination);
-    return snapshot.revision;
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    _saves ??= SaveCoordinator(_repository, _blobs!);
+    return _saves!.request(_writer!, current, destination);
+  }
+
+  Future<BigInt> saveArchive(File destination) async =>
+      (await requestArchiveSave(destination).result).snapshot.revision;
+  List<Map<String, dynamic>> get pendingSaves =>
+      _repository.pendingSaveOperations(_activeProjectId);
+  Future<SaveReceipt> reconcileSave(String id, LocalFileGrant target) {
+    _requireMedia();
+    _protectOutput(target.file);
+    _saves ??= SaveCoordinator(_repository, _blobs!);
+    return _saves!.reconcile(_writer!, id, target);
+  }
+
+  Future<void> closeAsync() async {
+    flushCheckpoint();
+    await _saves?.drain();
+    close();
   }
 
   Future<ProjectDocument> restoreArchive(LocalFileGrant source) async {
@@ -242,6 +312,8 @@ final class StudioWorkspace {
       await _blobs!.putVerifiedBytes(e.key, e.value);
     }
     if (_closed) throw const StudioException('WORKSPACE_CLOSED');
+    flushCheckpoint();
+    _autosave?.dispose();
     _repository.create(fork);
     _repository.selectProject(fork.projectId);
     _activeProjectId = fork.projectId;
@@ -250,6 +322,11 @@ final class StudioWorkspace {
       _uuid.v7(),
       expectedEpoch: 0,
     );
+    _autosave = AutosaveScheduler(
+      checkpoint: _captureCheckpoint,
+      onError: (_) => _notifyPersistence(),
+    );
+    _repository.captureCheckpoint(_writer!);
     return current;
   }
 
@@ -390,8 +467,14 @@ final class StudioWorkspace {
 
   void close() {
     if (!_closed) {
+      if (_saves?.pending == true) {
+        throw const StudioException('SAVE_IN_PROGRESS');
+      }
+      flushCheckpoint();
+      _autosave?.dispose();
       cancelExport();
       _closed = true;
+      unawaited(_persistenceEvents.close());
       _media?.close();
       _repository.close();
     }

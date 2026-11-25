@@ -1,0 +1,13 @@
+00:00 +0: loading packages/studio_sdk/test/save_test.dart
+00:00 +0: virtual monotonic clock: idle, continuous maximum, 50 commits, lifecycle flush
+00:00 +1: scheduler surfaces failure, retains pending and explicit retry succeeds
+00:00 +2: actual workspace autosave derives checkpoint without claiming user/package save
+00:00 +3: real save journal/filesystem identical requests coalesce; edits during save never move head or saved receipt backwards
+00:00 +4: real save journal/filesystem queued cancellation does not publish or manufacture a receipt; retry works
+00:00 +5: real save journal/filesystem actual receipt INSERT failure leaves uncertain publication and explicit regrant reconciles after reopen
+00:00 +6: real save journal/filesystem receipt replay is idempotent only for its committed artifact hash
+00:00 +7: real save journal/filesystem corrupt only-copy target and corrupt backup never get overwritten; queue remains usable
+00:00 +8: real save journal/filesystem staging failure preserves old copy and no successful receipt; explicit retry succeeds
+00:00 +9: real save journal/filesystem external target change and stale writer refuse publication
+00:00 +10: real save journal/filesystem two coordinators serialize a shared target and older snapshots cannot overwrite newer receipts
+00:00 +11: All tests passed!

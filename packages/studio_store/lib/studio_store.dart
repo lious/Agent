@@ -7,6 +7,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 export 'package:studio_contracts/studio_contracts.dart';
+part 'persistence.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -56,6 +57,17 @@ CREATE TABLE blob_edges(ns TEXT NOT NULL,project_id TEXT NOT NULL,revision INTEG
  FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
 ''';
 
+const _ddl3 = """
+CREATE TABLE checkpoints(ns TEXT NOT NULL,id TEXT NOT NULL,project_id TEXT NOT NULL,revision INTEGER NOT NULL,snapshot_hash TEXT NOT NULL,
+ PRIMARY KEY(ns,id),UNIQUE(ns,project_id,snapshot_hash),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id),FOREIGN KEY(ns,snapshot_hash) REFERENCES snapshots(ns,hash));
+CREATE TABLE checkpoint_pointers(ns TEXT NOT NULL,project_id TEXT NOT NULL,checkpoint_id TEXT NOT NULL,PRIMARY KEY(ns,project_id),FOREIGN KEY(ns,checkpoint_id) REFERENCES checkpoints(ns,id));
+CREATE TABLE save_operations(ns TEXT NOT NULL,id TEXT NOT NULL,checkpoint_id TEXT NOT NULL,target_path TEXT,stage_path TEXT,old_hash TEXT,new_hash TEXT,
+ explicit INTEGER NOT NULL CHECK(explicit IN (0,1)),state TEXT NOT NULL CHECK(state IN ('preparing','publishing','committed','failed','cancelled','uncertain')),error TEXT,
+ PRIMARY KEY(ns,id),FOREIGN KEY(ns,checkpoint_id) REFERENCES checkpoints(ns,id));
+CREATE TABLE save_receipts(seq INTEGER PRIMARY KEY AUTOINCREMENT,ns TEXT NOT NULL,operation_id TEXT NOT NULL,checkpoint_id TEXT NOT NULL,artifact_hash TEXT NOT NULL,
+ UNIQUE(ns,operation_id),FOREIGN KEY(ns,operation_id) REFERENCES save_operations(ns,id),FOREIGN KEY(ns,checkpoint_id) REFERENCES checkpoints(ns,id));
+""";
+
 final class WriterToken {
   WriterToken(this.namespace, this.projectId, this.owner, this.epoch);
   final Namespace namespace;
@@ -81,7 +93,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 2) {
+        if (version > 3) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -108,6 +120,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=2',
         );
         if (v2.length != 1 || v2.single['checksum'] != contentHash(_ddl2)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 3) {
+          _db.execute(_ddl3);
+          _db.execute('INSERT INTO schema_migrations VALUES(3,?)', [
+            contentHash(_ddl3),
+          ]);
+          _db.userVersion = 3;
+        }
+        final v3 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=3',
+        );
+        if (v3.length != 1 || v3.single['checksum'] != contentHash(_ddl3)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });

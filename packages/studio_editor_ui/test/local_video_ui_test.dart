@@ -69,7 +69,13 @@ void main() {
       expect(w.current.revision, BigInt.from(4));
       final archive = File('${dir.path}/ui.studio-project');
       await enter('archive-path', archive.path);
-      await asyncTap('save-archive', archive.existsSync);
+      await asyncTap(
+        'save-archive',
+        () =>
+            w.persistence(target: archive).targetSavedRevision ==
+            w.current.revision,
+      );
+      expect(find.textContaining('explicit save 4'), findsOneWidget);
       final old = w.projectId;
       await asyncTap('restore-archive', () => w.projectId != old);
       final output = File('${dir.path}/ui.mp4');

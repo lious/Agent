@@ -29,6 +29,21 @@ final class ProjectArchive {
     BlobStore blobs,
     File destination,
   ) async {
+    final publisher = AtomicFilePublisher(),
+        stage = AtomicFilePublisher().stagingFor(destination);
+    try {
+      await prepare(project, blobs, stage);
+      publisher.publish(stage, destination);
+    } finally {
+      if (stage.existsSync()) stage.deleteSync();
+    }
+  }
+
+  Future<void> prepare(
+    ProjectDocument project,
+    BlobStore blobs,
+    File stage,
+  ) async {
     requireLocalEditingWritable(project);
     final files = <String, Uint8List>{};
     final snapshot = utf8.encode(project.canonicalJson),
@@ -91,7 +106,8 @@ final class ProjectArchive {
     verifyBytes(
       bytes,
     ); // Validate the complete archive, not just the pre-ZIP maps.
-    AtomicFilePublisher().write(destination, bytes);
+    stage.createSync(exclusive: true);
+    stage.writeAsBytesSync(bytes, flush: true);
   }
 
   VerifiedArchive open(File file) {

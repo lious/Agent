@@ -69,3 +69,39 @@
 这可能隐瞒未验证的起点语义。改为明确拒绝未知流时间戳及首帧/stream 起点不一致。
 额外真实 remux 一个 +7秒非零起点 fixture，经相同导入/剪辑/导出后与零起点成片逐字节一致。
 这仅验证一个非零PTS组合，不升级为20点seek、VFR或CPU/GPU golden资格通过。
+
+## Continuation — actual managed save/checkpoint batch (2026-11-25, Asia/Shanghai)
+
+Three executed audit/fix rounds; these are self-reviews, not an independent signoff.
+
+1. **Transaction/authority audit:** read original s5b/s5c and task contracts; replace
+   archive-as-autosave assumption with immutable managed checkpoints and derived
+   receipt views; add checksum migration v3 and real virtual-clock tests. Actual
+   old SQLite suite: 28 tests passed (including v1→v3, rollback and edit/undo).
+   Initial new suite caught an invalid test owner ID containing a space; corrected
+   the fixture, not weakened production ID validation.
+2. **Concurrency/publication audit:** actual save tests exposed that completing a
+   receipt Future before releasing locks left immediate close reporting SAVE_IN_PROGRESS.
+   Move ACK completion after cleanup. fcntl process-scoped locks alone cannot serialize
+   same-process coordinators: add target FIFO. Extend the same serialization/locking
+   to explicit reconciliation, recheck fence/hash and reject stale target revisions.
+   Add real receipt INSERT failure after file publication, regrant/reopen reconciliation,
+   external write conflict, cancellation, continued-edit and dual-coordinator tests.
+3. **Replay/failure/UI audit:** committed operation replay previously accepted an
+   arbitrary hash; now compare immutable receipt and reject mismatches. Add corrupt
+   only-copy target, corrupt backup, injected post-stage failure, queue retry and
+   cleanup tests. Remove session-only UI saved revision; actual Flutter tests check
+   receipt state, lifecycle checkpoint, explicit local save and reopen. Declare the
+   direct SQLite test dependency, fix all static-analysis findings. Fifty real child
+   SIGKILL trials verify committed head and old/new validated output at five phases;
+   no fabricated ENOSPC/platform/power-loss qualification.
+
+Evidence and remaining original acceptance: `evidence/save-checkpoints/`, ADR0003
+and the unchanged 87-task overlay. Baseline historical evidence is preserved.
+
+Final whole-suite execution caught two additional real widget failures before commit:
+invalid test lifecycle transitions (fixed to inactive→hidden→paused and back), and
+a save queue Future captured in the constructor's fake-clock zone that stalled real
+IO callbacks. Initialize the queue lazily in the first request's zone; rerun the
+actual native Flutter path, now 2/2 passing. The first full gate failed (74 tests
+executed), was not reported as a pass; final evidence is a fresh rerun.

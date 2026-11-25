@@ -17,6 +17,19 @@
 - [开发机工具链](../../tools/spikes/toolchain/linux-dev.json)
 - `evidence/` 是本分支真实运行记录，不是旧设计的 schema 模拟测试。
 
+## 本轮真实保存与恢复增量
+
+自动保存现在登记本机 SQLite checkpoint（空闲2秒/最长30秒/50次durable提交），
+**不**自动打包素材或写云端；后台/切工程/关闭会立即请求本地 checkpoint。
+UI 的 durable/checkpoint/explicit/target 状态来自持久回执，重开不丢失；可显式
+保存本机恢复点、查看归档阶段、在发布前取消，并明确重新选择原路径后验证中断发布。
+保存中 SDK 可继续提交编辑，归档回执仍只对应捕获的 revision，不回退 head。
+
+详见 [ADR0003](../adr/0003-managed-checkpoints-and-local-save-recovery.md)。
+本轮总计74个 Dart/Flutter 测试（0跳过，含新增11个保存/失败/虚拟时钟和5个崩溃测试，每阶段内部10次进程SIGKILL）、6个工具测试、3个CTest；双宿主各3次clean/release构建启动通过。完整退出草稿处理、
+损坏数据库隔离恢复/日志压缩、物理断电/磁盘满及非Linux provider资格仍未完成。
+新证据 `evidence/save-checkpoints/`；旧 local-video 证据是历史基线，不冒充本轮计数。
+
 ## 固定开发工具链
 
 Flutter **3.50.1 stable** / Dart **3.14.0**；`.flutter-version` 仅登记，不自动安装。
@@ -105,7 +118,7 @@ GitHub OAuth 缺 workflow scope，未提权/绕过，没有启用 .github/workfl
 | --- | --- |
 | studio_contracts | AppProfile、namespace、稳定错误码、ID |
 | studio_document | BigInt 有理时间/帧/sample/区间；2.0 文档值、工厂、部分 validator、JCS hash |
-| studio_store | SQLite v1→v2；revision/CAS/fence/receipt/outbox/历史定义与blob pins；最新快照撤销；CAS原件；受限ZIP归档/fork；Linux原子发布 |
+| studio_store | SQLite v1→v2→v3；revision/CAS/fence/receipt/outbox/历史定义与blob pins；最新快照撤销；CAS原件；受限ZIP归档/fork；Linux原子发布 |
 | studio_harness | scoped SessionRef 与 ProposalPort 契约；没有可执行 Agent |
 | studio_media / native/studio_media | Dart FFI与实际C++20 libav probe/decode/软件H264/MP4、取消与能力事实 |
 | studio_sdk | 同一装配/事务入口，真实导入、编辑、保存、恢复、冻结快照导出 |

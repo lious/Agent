@@ -51,6 +51,21 @@ final class AtomicFilePublisher {
       handle.closeSync();
     }
     stage.renameSync(destination.absolute.path);
+    _syncParent(destination);
+  }
+
+  void syncPublished(File destination) {
+    stagingFor(destination);
+    final handle = destination.openSync(mode: FileMode.append);
+    try {
+      handle.flushSync();
+    } finally {
+      handle.closeSync();
+    }
+    _syncParent(destination);
+  }
+
+  void _syncParent(File destination) {
     final lib = DynamicLibrary.process();
     final open = lib
         .lookupFunction<

@@ -81,12 +81,12 @@ def main():
         'profile': args.profile, 'timezone': 'Asia/Shanghai',
         'checkedAt': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
         'scopeStatus': 'passed' if ok else 'failed', 'fullTaskComplete': False,
-        'scope': 'Synthetic silent 320x180 CFR Rec709 limited software H264; Linux dev only',
+        'scope': 'Synthetic silent CFR Rec709 H264 plus durable checkpoints, serial archive receipts and 50 SIGKILL save recoveries; Linux dev only',
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
         'notValidated': ['all 87 full acceptance contracts', '1080p Main L4/AAC qualification', 'audio export',
                          'GPU or hardware adapters', 'full RenderGraph', 'random seek/cache/proxy', 'non-Linux platforms',
-                         'all process-kill/disk-full/provider durability faults', 'model inference', 'paid/remote services'],
+                         'physical power-loss/disk-full/non-Linux provider durability faults', 'model inference', 'paid/remote services'],
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')

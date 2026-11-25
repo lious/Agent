@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
@@ -12,7 +13,8 @@ class FoundationApp extends StatefulWidget {
   State<FoundationApp> createState() => _FoundationAppState();
 }
 
-class _FoundationAppState extends State<FoundationApp> {
+class _FoundationAppState extends State<FoundationApp>
+    with WidgetsBindingObserver {
   late ProjectDocument _project;
   late TextEditingController _title;
   final _input = TextEditingController(),
@@ -23,12 +25,17 @@ class _FoundationAppState extends State<FoundationApp> {
   String _status =
       'All edits commit to local SQLite; archive save is explicit.';
   bool _busy = false, _videoOnly = false;
-  BigInt? _savedRevision;
+  SaveHandle? _saving;
+  StreamSubscription<void>? _persistenceSubscription;
   @override
   void initState() {
     super.initState();
     _project = widget.workspace.openDemo();
     _title = TextEditingController(text: _project.title);
+    WidgetsBinding.instance.addObserver(this);
+    _persistenceSubscription = widget.workspace.persistenceEvents.listen((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   void _refresh() {
@@ -97,7 +104,53 @@ class _FoundationAppState extends State<FoundationApp> {
   );
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.detached) {
+      try {
+        widget.workspace.flushCheckpoint();
+      } catch (error) {
+        if (mounted) {
+          setState(
+            () => _error = error is StudioException
+                ? error.code
+                : 'CHECKPOINT_FAILED',
+          );
+        }
+      }
+    }
+  }
+
+  String get _persistenceText {
+    final p = widget.workspace.persistence(
+      target: _archive.text.isEmpty ? null : File(_archive.text),
+    );
+    return 'Durable ${p.headRevision} · checkpoint ${p.checkpointRevision ?? "none"} · explicit save ${p.userSavedRevision ?? "none"} · target ${p.targetSavedRevision ?? "none"}${p.packageBehind ? " (package behind)" : ""}';
+  }
+
+  Future<String> _saveArchive() async {
+    final handle = widget.workspace.requestArchiveSave(File(_archive.text));
+    setState(() => _saving = handle);
+    final subscription = handle.progress.listen((phase) {
+      if (mounted) {
+        setState(() => _status = 'Archive ${handle.snapshot.revision}: $phase');
+      }
+    });
+    try {
+      final receipt = await handle.result;
+      return 'Archive saved at revision ${receipt.snapshot.revision}';
+    } finally {
+      await subscription.cancel();
+      if (mounted) setState(() => _saving = null);
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    unawaited(_persistenceSubscription?.cancel());
     for (final c in [_title, _input, _archive, _output, _frames]) {
       c.dispose();
     }
@@ -208,14 +261,7 @@ class _FoundationAppState extends State<FoundationApp> {
       children: [
         FilledButton(
           key: const Key('save-archive'),
-          onPressed: _busy
-              ? null
-              : () => _run(() async {
-                  _savedRevision = await widget.workspace.saveArchive(
-                    File(_archive.text),
-                  );
-                  return 'Archive saved at revision $_savedRevision';
-                }),
+          onPressed: _busy ? null : () => _run(_saveArchive),
           child: const Text('Save archive'),
         ),
         OutlinedButton(
@@ -226,18 +272,41 @@ class _FoundationAppState extends State<FoundationApp> {
                   await widget.workspace.restoreArchive(
                     LocalFileGrant.fromUserSelection(File(_archive.text)),
                   );
-                  _savedRevision = null;
                   return 'Archive verified and restored as new project; original preserved.';
                 }),
           child: const Text('Restore as fork'),
         ),
       ],
     ),
-    Text(
-      _savedRevision == null
-          ? 'No archive saved in this session.'
-          : 'Archived revision $_savedRevision · current ${_project.revision}',
+    OutlinedButton(
+      key: const Key('cancel-save'),
+      onPressed: _saving == null
+          ? null
+          : () => setState(() => _status = _saving!.cancel()),
+      child: const Text('Cancel archive before publication'),
     ),
+    for (final op in widget.workspace.pendingSaves)
+      ListTile(
+        title: Text(
+          'Interrupted save ${op['state']} · revision ${op['revision']}',
+        ),
+        subtitle: const Text(
+          'Select the ORIGINAL archive path above to verify publication. No automatic overwrite or journal-path authorization.',
+        ),
+        trailing: OutlinedButton(
+          key: Key('reconcile-${op['id']}'),
+          onPressed: _busy || !['publishing', 'uncertain'].contains(op['state'])
+              ? null
+              : () => _run(() async {
+                  final receipt = await widget.workspace.reconcileSave(
+                    op['id'] as String,
+                    LocalFileGrant.fromUserSelection(File(_archive.text)),
+                  );
+                  return 'Verified interrupted publication ${receipt.snapshot.revision}; no overwrite.';
+                }),
+          child: const Text('Verify selected archive'),
+        ),
+      ),
     _path(
       'export-path',
       'Local .mp4 destination (overwrites atomically on success)',
@@ -327,6 +396,22 @@ class _FoundationAppState extends State<FoundationApp> {
                       child: const Text('Undo latest'),
                     ),
                   ],
+                ),
+                Text(_persistenceText, key: const Key('persistence-status')),
+                if (widget.workspace.checkpointError != null)
+                  const Text(
+                    'CHECKPOINT_FAILED: durable edits remain in SQLite; retry checkpoint.',
+                    key: Key('checkpoint-error'),
+                  ),
+                OutlinedButton(
+                  key: const Key('save-managed'),
+                  onPressed: _busy
+                      ? null
+                      : () => _act(() {
+                          widget.workspace.saveManaged();
+                          return widget.workspace.current;
+                        }),
+                  child: const Text('Explicit save local checkpoint'),
                 ),
                 if (_error != null)
                   Text(
