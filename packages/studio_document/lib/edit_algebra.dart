@@ -5,6 +5,7 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'studio_document.dart';
 
 part 'persistent_audio.dart';
+part 'multi_move.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -895,6 +896,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is MoveClips) {
+    return _moveClips(before, operation, nextVersion, newId);
+  }
   if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
     return _opacityKeyframeEdit(before, operation, nextVersion, newId);
   }
@@ -1076,6 +1080,7 @@ ProjectDocument applyEdit(
 
   if (zeroDelta) {
     switch (operation) {
+      case MoveClips():
       case DiscardPreviewProxies():
       case AttachPreviewProxies():
         throw StateError("handled above");
@@ -1114,6 +1119,7 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case MoveClips():
     case DiscardPreviewProxies():
     case AttachPreviewProxies():
       throw StateError("handled above");

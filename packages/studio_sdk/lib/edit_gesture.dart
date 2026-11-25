@@ -22,6 +22,7 @@ final class EditGesture {
 // commands, different clips, trim modes/edges, or distinct keyframe coordinates.
 String _gestureTarget(EditOperation op) => contentHash(switch (op) {
   MoveClip() => ['move', op.clipId],
+  MoveClips() => ['moveSelection', op.clipIds],
   TrimClip() => ['trim', op.clipId, op.edge, op.ripple],
   SlipClip() => ['slip', op.clipId],
   SetClipOpacity() => ['opacity', op.clipId],
@@ -169,7 +170,9 @@ extension WorkspaceGestures on StudioWorkspace {
     // command, rather than allocating fresh Gap/entity versions for no motion.
     final zero = Q.of(0);
     final unchanged = switch (gesture._operation!) {
-      MoveClip(:final delta) || TrimClip(:final delta) => delta == zero,
+      MoveClip(:final delta) ||
+      MoveClips(:final delta) ||
+      TrimClip(:final delta) => delta == zero,
       SlipClip(:final sourceDelta) => sourceDelta == zero,
       _ => false,
     };

@@ -170,6 +170,7 @@ extension _GestureControls on _FoundationAppState {
     final effect = _opacityEffect;
     final enabled =
         !_busy &&
+        _multiGesture == null &&
         video &&
         (effect == null || (effect['keyframes'] as List).isEmpty);
     final value = _gesture == null

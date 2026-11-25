@@ -1,0 +1,1418 @@
+{
+  "baseCommit": "a52002f920fc16ce7a60f994ed30e97ace0321ca",
+  "sourceSha256": {
+    "native/studio_media/src/pulse_playback.inc": "19f6d1ab4473cf0617122badbc58bdba9eae6d6268bb2cf45f95a4147f9b6513",
+    "native/studio_media/src/studio_media.cpp": "951a8ef9cd4e302f72ba8166eee338d9fe7ed68651608180b9c9aa08812ea856",
+    "native/studio_media/tests/abi_test.cpp": "b384c03081987cb1028ad29a8f6be761d731ba0f3f7edcb6b3c1bcf63422877a",
+    "packages/studio_document/lib/edit_algebra.dart": "26dafb5c92e848d3534ed77ec2d0fdf2f88670bc41c9b68c373184bc45a4525d",
+    "packages/studio_document/lib/effect_registry.dart": "a4158cd2a1ab469fe5787cb89b9d05240ee8149724ac85f02cad7d32c34a127a",
+    "packages/studio_document/lib/multi_move.dart": "fb3dcfc546a86d68c3aac5dd71231f0f6f5131a3064b1cced31ec26cc3bca459",
+    "packages/studio_document/lib/timeline_graph.dart": "cef01e4dcf93b458163793a9ef1ced4bc90c62f7fe52b2b687f608558c091840",
+    "packages/studio_document/test/multi_move_test.dart": "dbbacf692632acee1e71b5ce1515a84db1e3a5f53c0f3d1f4ed279edb35d9b31",
+    "packages/studio_document/test/raster_effect_test.dart": "d9f41af144f8d6e36bb1c04d7d22587932e885b429915dda3883bf294505da0b",
+    "packages/studio_editor_ui/lib/edit_gesture_controls.dart": "548740c29e89599b9c7d946d7dff261a8aaaefaa2694751b9035315f04ef004e",
+    "packages/studio_editor_ui/lib/multi_move_controls.dart": "bd95ed7185ae096b77f398730b4e257094a105c00f8dc802fa021718e128354a",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "f9207d9ce1cfd31fa1aa5c9ad7e4f2e9d3e8325a2cd9c6c9624fb24e6ec0e5b4",
+    "packages/studio_editor_ui/pubspec.yaml": "eece3f2946d07da0499919e02ec13c94f5ba1a9ae3838a20c741b0ce8e21c4f0",
+    "packages/studio_editor_ui/test/edit_gesture_ui_test.dart": "620c424413cef5c5223ec136a719ea31e7085009b5b2265b6034483ec78f0c4c",
+    "packages/studio_editor_ui/test/multi_move_ui_test.dart": "5dfd7e491d4fb6b0e2dcd2432f6b02cd079ecabf1d518376563313e5e6f081e1",
+    "packages/studio_editor_ui/test/raster_ui_test.dart": "036195bb0d7bcd3dd1c5adfb5ad930817f64b1a9456990e4e8c630742ad115ba",
+    "packages/studio_media/lib/studio_media.dart": "194a8c97c342b50cc59901d63a91dc697ff5eea4588113cddba7f5eefc3231ed",
+    "packages/studio_sdk/lib/edit_gesture.dart": "d94d203edf235fffe39f896842678073aa34ec6b828fb1b85ffee555f39dc584",
+    "packages/studio_sdk/lib/studio_sdk.dart": "9863fc7d4301191db3aa176ff309f7bbf9bdde3a969065416a6fbea428917a6f",
+    "packages/studio_sdk/test/command_history_media_test.dart": "8ff6f83ab7d71033aa83639c06d1d3295b16b8ee43d31ea13482c82d8d0d7b5a",
+    "packages/studio_sdk/test/edit_gesture_test.dart": "262a09d242b2bdfb13a03fd8a92f83cc21befe61bbb768c70bb66b2edda5a6f8",
+    "packages/studio_sdk/test/multi_move_fixture.dart": "99587e8978b18460ce157141f71b14ec7a13115af3f33c039004fe37edeed514",
+    "packages/studio_sdk/test/multi_move_test.dart": "3af40433395bfbce03831b71a53ff2f66326898e07c4f1c554ab13132bb09e9f",
+    "packages/studio_sdk/test/raster_clock_test.dart": "8c72543b071b6fb4b0395e5b5a2fd6a0cd089fcb17a771a7a12d9bb9b26a3875",
+    "packages/studio_sdk/test/raster_render_test.dart": "59fd5308624577fdfba54a90c223a224325db653a6eb3611517cc55f43b7d589",
+    "packages/studio_sdk/tool/edit_gesture_probe.dart": "cdb265f0ee20c60e12d825fbff367f7f3620d2c126e4063d5089c03ae28aeb24",
+    "packages/studio_store/lib/command_history.dart": "87006159d52161a2fc5da67bd613f6876ef4e7239542f9b56bbf1ff1e3e2b70b",
+    "packages/studio_store/lib/studio_store.dart": "b2ff1dfa1e010784617fbae6175eb927a18868dcc61bd03ee06e6ae6052667f3",
+    "packages/studio_store/test/command_history_test.dart": "34d3368794ce6178f4cc3e7f7af296782f65b1f0566e3dc1d76e7d42a36d6318",
+    "packages/studio_store/tool/definition_history_probe.dart": "b5b95b3c884a0d1db1a5923b2b919e7a1ef830ec5cadefd8744f45247c1e8c17",
+    "tools/acceptance/audio_sink/pulse_smoke.py": "39e96d2cc72970df4ba5b93c23566b5bb162f19cdbca5f2dd8e17c3772539ad2",
+    "tools/acceptance/verify_command_history.py": "af8daa7c0af363500620288795097b1466124daaf2a1eb853fd21358214aec76"
+  },
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "2e594e516e21ca952a64b4ff22e3882c1e3a85cf5246f9ad4622069228b8078a",
+    "/workspace/agent-media-native-asan-opacity/libstudio_media.so": "a4f9703c6ff944f527b043ca8a2f386b88d1a932b2486d37a4f6009807b64826"
+  },
+  "asOf": "2026-11-26T01:13:56.583929+08:00",
+  "scope": "Increment1.21 gesture source/test/package freeze; native unchanged, hashes recomputed and matched.",
+  "timezone": "Asia/Shanghai",
+  "freezeIdentity": "Containing LOCAL commit matches all32 source/test/package hashes. New selected final runs use this exact source; docs/evidence only afterward. Not all repository/original87 acceptance. No borrowed248/233/209/182.",
+  "commands": {
+    "log": "commands.json",
+    "sha256": "374b6013d7dc8ee711387c658d0556235966c248dc036a1904a2b1326d2dd322"
+  },
+  "results": {
+    "native": {
+      "passed": 234,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 145808
+      },
+      "cases": [
+        {
+          "name": "REAL linked4 atomic gesture -> exact native preview/preencoder/AAC MP4 -> undo redo save reopen fork",
+          "result": "success"
+        },
+        {
+          "name": "REAL40 ghost changes -> one command/inverse; preview=commit; reopen redo, archive fork and MP4",
+          "result": "success"
+        },
+        {
+          "name": "explicit cancellation/no-op preserve redo; new different gesture truncates redo, never another target",
+          "result": "success"
+        },
+        {
+          "name": "basic move/trim/slip absolute-from-base matrix, collision/handles/edge targets and invalid release",
+          "result": "success"
+        },
+        {
+          "name": "SQL late abort keeps candidate and journal atomic; explicit retry; revision and writer fencing",
+          "result": "success"
+        },
+        {
+          "name": "transform/crop/color gesture matrix uses same native preview and commit nodes",
+          "result": "success"
+        },
+        {
+          "name": "linked closure lock/field/grid failures reject whole DB mutation, never skip audio",
+          "result": "success"
+        },
+        {
+          "name": "actual child SIGKILL while100 updates staged preserves committed journal on reopen",
+          "result": "success"
+        },
+        {
+          "name": "absolute captions preserved; clip-local anchors refuse; no implicit caption loss on preview/export",
+          "result": "success"
+        },
+        {
+          "name": "mixed exact grids reject fractional audio samples; nonzero link offsets remain exact",
+          "result": "success"
+        },
+        {
+          "name": "real dissolve endpoints move together, exact cut/handles/effect order shared with encoder and archive",
+          "result": "success"
+        },
+        {
+          "name": "late SQL rollback/retry/receipt idempotency, revision and stale writer fencing",
+          "result": "success"
+        },
+        {
+          "name": "actual two independent SQLite contenders publish one entire four-member move",
+          "result": "success"
+        },
+        {
+          "name": "100 seeded selection moves each undo/redo retain exact full roots, source and canceled candidate",
+          "result": "success"
+        },
+        {
+          "name": "public still preview keeps asynchronous capability refusal before reading unopened head",
+          "result": "success"
+        },
+        {
+          "name": "keyframe coordinate isolation, unknown-history refusal, superseded/canceled image never admitted",
+          "result": "success"
+        },
+        {
+          "name": "REAL AV effects/audio/captions/proxy multiundo-redo, durable reopen, empty fork history and preview/MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL source crop coverage, colour order/late clamp, single inverse/SQL rollback, two-leg effects→MP4/archive/fork/admission/reopen",
+          "result": "success"
+        },
+        {
+          "name": "REAL coloured-source luma/saturation golden keeps negative and >1 intermediates until final transfer",
+          "result": "success"
+        },
+        {
+          "name": "REAL malformed raster primary/secondary reject before creating encoder output",
+          "result": "success"
+        },
+        {
+          "name": "REAL2-source linear dissolve: independent color reference, encoder samples, transform/curve, undo, archive/fork/reopen",
+          "result": "success"
+        },
+        {
+          "name": "REAL malformed secondary schedules refuse before output creation",
+          "result": "success"
+        },
+        {
+          "name": "REAL individually displayable different-size originals: actual joint consumer rejects and adoption preserves selected root without bypassing earlier graph gate",
+          "result": "success"
+        },
+        {
+          "name": "REAL transform UI-consumer pipeline: known linear-light bilinear pixels, shared encoder, undo/archive/fork/reopen",
+          "result": "success"
+        },
+        {
+          "name": "REAL keyframed opacity edit/undo/split -> evaluated preview -> preencoder -> archive/fork/reopen",
+          "result": "success"
+        },
+        {
+          "name": "REAL hostile native transform recipes fail before creating output",
+          "result": "success"
+        },
+        {
+          "name": "real local video import → split/trim/slip → save/fork/reopen → native MP4 export",
+          "result": "success"
+        },
+        {
+          "name": "REAL native malformed opacity schedules refuse before file creation",
+          "result": "success"
+        },
+        {
+          "name": "REAL FFmpeg indexed seeks equal sequential PTS/pixels at20 random CFR points plus nonzero PTS and VFR",
+          "result": "success"
+        },
+        {
+          "name": "REAL opacity edit/undo -> full-source preview -> actual preencoder pixels -> export/archive/fork/reopen",
+          "result": "success"
+        },
+        {
+          "name": "REAL source preview LRU immutable bytes, budget/eviction/oversize and SDK superseded request cannot return stale frame",
+          "result": "success"
+        },
+        {
+          "name": "REAL native qualification -> writable fork -> ImportMap -> edit/archive/reopen/original-file export",
+          "result": "success"
+        },
+        {
+          "name": "REAL native linear-light BT709 grayscale reference, zero/identity and strict invalid recipes",
+          "result": "success"
+        },
+        {
+          "name": "REAL AAC source qualification decodes bounded PCM and adopted timeline exports its audio",
+          "result": "success"
+        },
+        {
+          "name": "REAL source/font/mask/image collection → metadata/archive → separate-process reopen → registered fork preserves hashes/refs, not execution",
+          "result": "success"
+        },
+        {
+          "name": "REAL opaque/font/mask/image content stays readonly, never stripped to pass renderer gate",
+          "result": "success"
+        },
+        {
+          "name": "REAL native source metadata forgery rejected without project publication",
+          "result": "success"
+        },
+        {
+          "name": "REAL explicit cancellation and intervening revision reject adoption without switching projects",
+          "result": "success"
+        },
+        {
+          "name": "REAL namespace budget rejects resource adoption without project, source or reservation leakage",
+          "result": "success"
+        },
+        {
+          "name": "REAL retained full-Project snapshot/pin qualification and archive reopen; no retained renderer claim",
+          "result": "success"
+        },
+        {
+          "name": "REAL SDK video proxies, named checkpoint/undo/archive/reopen survive explicit index pruning; shared DB refuses",
+          "result": "success"
+        },
+        {
+          "name": "REAL opaque LUT/library refs remain byte-preserved metadata; missing/role resources diagnosed without guessing opaque hashes or fork",
+          "result": "success"
+        },
+        {
+          "name": "REAL corrupted/wrong-size/unrelated inputs do not enter collection; stale consent and cancel cannot publish",
+          "result": "success"
+        },
+        {
+          "name": "REAL no-clobber outputs and symlink input/output refuse; existing source/target bytes remain",
+          "result": "success"
+        },
+        {
+          "name": "REAL two-process prepared publishers race one new target; exactly one wins without clobber",
+          "result": "success"
+        },
+        {
+          "name": "REAL namespace byte policy gates import/native staging, survives failure/cancel/archive/reopen and preserves originals/history",
+          "result": "success"
+        },
+        {
+          "name": "REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history",
+          "result": "success"
+        },
+        {
+          "name": "REAL SIGKILL reservation credits reclaimed only under OS lease; staged bytes remain inventoried, concurrent writes cannot overbook",
+          "result": "success"
+        },
+        {
+          "name": "REAL policy invalid/future/unsafe inputs and unreserved native writes fail closed without deletion",
+          "result": "success"
+        },
+        {
+          "name": "REAL missing proxy explicit detach/rebuild; corrupt collision refuses, source export/history/GC survive",
+          "result": "success"
+        },
+        {
+          "name": "REAL shared derived hashes stay in current resource closure after selecting only one asset; unsupported metadata still refuses",
+          "result": "success"
+        },
+        {
+          "name": "REAL durable SchemaProxy archive/fork/reopen reuse, exact map, historical pins and corrupt closure refuse",
+          "result": "success"
+        },
+        {
+          "name": "REAL SQLite retained original-role collision refuses before any CAS publication",
+          "result": "success"
+        },
+        {
+          "name": "REAL legacy namespace, cross-database usage and symlink targets cannot gain repair authority",
+          "result": "success"
+        },
+        {
+          "name": "virtual monotonic clock: idle, continuous maximum, 50 commits, lifecycle flush",
+          "result": "success"
+        },
+        {
+          "name": "scheduler surfaces failure, retains pending and explicit retry succeeds",
+          "result": "success"
+        },
+        {
+          "name": "actual workspace autosave derives checkpoint without claiming user/package save",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem identical requests coalesce; edits during save never move head or saved receipt backwards",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem queued cancellation does not publish or manufacture a receipt; retry works",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem actual receipt INSERT failure leaves uncertain publication and explicit regrant reconciles after reopen",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem receipt replay is idempotent only for its committed artifact hash",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem corrupt only-copy target and corrupt backup never get overwritten; queue remains usable",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem staging failure preserves old copy and no successful receipt; explicit retry succeeds",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem external target change and stale writer refuse publication",
+          "result": "success"
+        },
+        {
+          "name": "real save journal/filesystem two coordinators serialize a shared target and older snapshots cannot overwrite newer receipts",
+          "result": "success"
+        },
+        {
+          "name": "REAL44.1k AAC decode ->48k Dart AudioBus -> Main4/AAC mux -> reopen, gain/mute, atomic failure",
+          "result": "success"
+        },
+        {
+          "name": "REAL concurrent revision invalidates pending native proxy adoption without losing originals",
+          "result": "success"
+        },
+        {
+          "name": "REAL killed stage owner releases lock; GC reclaims only owned orphan and rejects symlink",
+          "result": "success"
+        },
+        {
+          "name": "REAL PCM44.1k impulse resample drain/trim exact length; layout/gap/resource/overwrite failure cleans private output",
+          "result": "success"
+        },
+        {
+          "name": "noncurrent version reuse resolves real dependencies; exact reuse allowed without writes; fresh checks do not teach history",
+          "result": "success"
+        },
+        {
+          "name": "other connection invalidates proof cache; receipt replay and undo retain byte-exact old rows",
+          "result": "success"
+        },
+        {
+          "name": "actual SQLite caption command CAS/version/undo/reopen and automatic manual lock rollback",
+          "result": "success"
+        },
+        {
+          "name": "late SQL fault rolls back counters/history/head; rejected candidate cannot contaminate cache",
+          "result": "success"
+        },
+        {
+          "name": "unknown raw hash and removed counter refuse; no automatic rewrite or source mutation",
+          "result": "success"
+        },
+        {
+          "name": "historical snapshot hash corruption refuses even if current metadata/legacy row matches",
+          "result": "success"
+        },
+        {
+          "name": "orphan raw hash does not establish historical identity; foreign project/namespace cannot certify reuse",
+          "result": "success"
+        },
+        {
+          "name": "SQL parent-location fixture permits known-equivalent legacy raw mismatch without rewriting it",
+          "result": "success"
+        },
+        {
+          "name": "zero cache streams identical source proofs and still rejects noncurrent conflicts",
+          "result": "success"
+        },
+        {
+          "name": "real preservation archive/fork/reopen retain original historical bytes and independent definition authority",
+          "result": "success"
+        },
+        {
+          "name": "persistent deep undo/redo, no-op preserves redo, branch invalidates redo without deleting journal, reopen and fencing",
+          "result": "success"
+        },
+        {
+          "name": "two REAL Linux child workers execute free CPU tasks in one persisted session; NOT physical-device/network qualification",
+          "result": "success"
+        },
+        {
+          "name": "late SQL failure rolls back cursor/head/events; retry exactly once; malformed journal refuses, no history swallowed",
+          "result": "success"
+        },
+        {
+          "name": "legacy undoLatest transitions remain immutable and traversable, not rewritten as modern stack",
+          "result": "success"
+        },
+        {
+          "name": "actual simultaneous SQLite undo contenders publish exactly one revision/cursor transition",
+          "result": "success"
+        },
+        {
+          "name": "1000 seeded committed edits then full undo/redo preserve exact content roots and monotonic revisions",
+          "result": "success"
+        },
+        {
+          "name": "actual reopen requires local CAS authority; takeover fences old process, preserves attempt/fence and quarantines old device",
+          "result": "success"
+        },
+        {
+          "name": "takeover receipt persists and is idempotent, conflicts reject, old boot identifiers cannot be reused",
+          "result": "success"
+        },
+        {
+          "name": "unknown downtime consumes wall budget rather than resetting it; measured charge bounds execution",
+          "result": "success"
+        },
+        {
+          "name": "known downtime and subsequent ticks cannot escape original wall budget",
+          "result": "success"
+        },
+        {
+          "name": "old-device quarantine survives another restart after its step was reassigned",
+          "result": "success"
+        },
+        {
+          "name": "persistent per-attempt timeout cannot be extended by repeated heartbeats",
+          "result": "success"
+        },
+        {
+          "name": "explicit CAS GC keeps pins/other namespaces, refuses symlinks and releases lock after failure",
+          "result": "success"
+        },
+        {
+          "name": "actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption",
+          "result": "success"
+        },
+        {
+          "name": "oversize import and symlink selection publish no blob",
+          "result": "success"
+        },
+        {
+          "name": "atomic sibling publication replaces complete file; failure never overwrites old good target",
+          "result": "success"
+        },
+        {
+          "name": "archive valid roundtrip/fork and damaged checksum preserve original",
+          "result": "success"
+        },
+        {
+          "name": "hostile ZIP paths rejected before extraction",
+          "result": "success"
+        },
+        {
+          "name": "ZIP duplicate headers and advertised expanded-size bomb are rejected before decompression",
+          "result": "success"
+        },
+        {
+          "name": "ZIP Unix symlink metadata is rejected before contents are trusted",
+          "result": "success"
+        },
+        {
+          "name": "valid checksums cannot authorize unknown manifest fields; unlisted entries rejected",
+          "result": "success"
+        },
+        {
+          "name": "REAL default preserveAll, named/save/latest pins; prune indexes only, repeat audited once and undo remains",
+          "result": "success"
+        },
+        {
+          "name": "REAL stale policy/name/row/revision/fence reviews refuse; explicit confirmation and bounds",
+          "result": "success"
+        },
+        {
+          "name": "REAL audit SQL failure and lost ownership after deletion roll back ALL indexes and audit",
+          "result": "success"
+        },
+        {
+          "name": "REAL other projects/namespaces and ANY session plan retain their roots; corrupt root refuses review",
+          "result": "success"
+        },
+        {
+          "name": "REAL v7 through v8/v9 migration atomic failure/reopen and integrity retain old snapshots/checkpoints",
+          "result": "success"
+        },
+        {
+          "name": "REAL SIGKILL after index deletes and audit insert rolls back; next writer re-reviews and commits",
+          "result": "success"
+        },
+        {
+          "name": "real SQLite same-session durable DAG dispatch/retry/heartbeat/receipt/cancel/reopen/outbox, project revision isolated",
+          "result": "success"
+        },
+        {
+          "name": "real SQLite candidate outbox insertion failure rolls back terminal receipt; retry and repeated cancellation are idempotent",
+          "result": "success"
+        },
+        {
+          "name": "REAL SQLite persistent AV extraction all-table rollback, retry/idempotency, stale CAS, undo and reopen",
+          "result": "success"
+        },
+        {
+          "name": "rich Schema project remains read-only: unsupported image/story/plugin writes refuse without definitions, preserving opaque data",
+          "result": "success"
+        },
+        {
+          "name": "REAL SQLite unlinked audio split undo/re-edit never reuses a retired immutable version",
+          "result": "success"
+        },
+        {
+          "name": "archive fork remaps AV group, anchor, members and clip backlinks without mutating original",
+          "result": "success"
+        },
+        {
+          "name": "REAL SQL late failure rolls back new project/definitions/pins/map/selection; retry and durable namespace-scoped provenance",
+          "result": "success"
+        },
+        {
+          "name": "REAL takeover/stale head blocks fork before registration",
+          "result": "success"
+        },
+        {
+          "name": "REAL v8-v9 failure preserves old selected snapshot; migration retry qualifies new table/checksum",
+          "result": "success"
+        },
+        {
+          "name": "REAL SIGKILL after ImportMap and selected-project change before COMMIT restores old project without half-import",
+          "result": "success"
+        },
+        {
+          "name": "validated snapshot head fence observes other connection commits and isolates namespaces/projects",
+          "result": "success"
+        },
+        {
+          "name": "migration, commit, reopen, checksum and foreign key enforcement",
+          "result": "success"
+        },
+        {
+          "name": "same key same input returns original receipt even after a new writer",
+          "result": "success"
+        },
+        {
+          "name": "no-op records only receipt, retains revision, images and event tail",
+          "result": "success"
+        },
+        {
+          "name": "undo restores content in a NEW revision, stale undo cannot overwrite",
+          "result": "success"
+        },
+        {
+          "name": "fence transfer invalidates old writer and expected epoch CAS",
+          "result": "success"
+        },
+        {
+          "name": "SQL failure after event append rolls back EVERY write",
+          "result": "success"
+        },
+        {
+          "name": "invalid title, project namespace and duplicate create are rejected",
+          "result": "success"
+        },
+        {
+          "name": "dual hosts, tenants and workspaces cannot read each other through APIs",
+          "result": "success"
+        },
+        {
+          "name": "real 100 competing commands on 10 isolates: exactly one CAS succeeds",
+          "result": "success"
+        },
+        {
+          "name": "unknown schema version refuses without modifying it",
+          "result": "success"
+        },
+        {
+          "name": "migration checksum mismatch fails closed",
+          "result": "success"
+        },
+        {
+          "name": "stored snapshot tampering is detected on read",
+          "result": "success"
+        },
+        {
+          "name": "writer tokens cannot cross namespaces even with identical owner/epoch",
+          "result": "success"
+        },
+        {
+          "name": "fixture blob corruption is detected",
+          "result": "success"
+        },
+        {
+          "name": "missing referenced snapshot is corruption, never an absent project",
+          "result": "success"
+        },
+        {
+          "name": "failed first migration preserves original database and version",
+          "result": "success"
+        },
+        {
+          "name": "undo verifies historical before-image hash, not just current head",
+          "result": "success"
+        },
+        {
+          "name": "1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused",
+          "result": "success"
+        },
+        {
+          "name": "v1 frozen SQL migration preserves existing snapshot and permits later edits/reopen",
+          "result": "success"
+        },
+        {
+          "name": "failure after definitions/blob pins rolls back every table and head",
+          "result": "success"
+        },
+        {
+          "name": "SRT/VTT actual Unicode, RTL, emoji, linebreak, escaped markup and millisecond non-frame times roundtrip",
+          "result": "success"
+        },
+        {
+          "name": "manual text/timing protected from automatic update; split duplicates text and exact source retime retains flags",
+          "result": "success"
+        },
+        {
+          "name": "overlap policy is deterministic reject; touching half-open cues allowed and IDs unique",
+          "result": "success"
+        },
+        {
+          "name": "static ASS parses exact centiseconds, commas and newline, reports dropped styles and overrides without execution",
+          "result": "success"
+        },
+        {
+          "name": "unsupported VTT style/settings warn; malicious/malformed/oversize/quantization input refused",
+          "result": "success"
+        },
+        {
+          "name": "seeded rational millisecond vectors roundtrip without frame quantization or accumulating rounding",
+          "result": "success"
+        },
+        {
+          "name": "rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal",
+          "result": "success"
+        },
+        {
+          "name": "split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys",
+          "result": "success"
+        },
+        {
+          "name": "linked split clones only video curve and linked trim preserves exact boundary value",
+          "result": "success"
+        },
+        {
+          "name": "off-grid, invalid range/type and locked implicit curve edits refuse whole operation",
+          "result": "success"
+        },
+        {
+          "name": "editing disabled animation preserves enable state; crop extension holds edges and unsupported values remain refused",
+          "result": "success"
+        },
+        {
+          "name": "complete 2.0 empty project roundtrip is immutable",
+          "result": "success"
+        },
+        {
+          "name": "structural errors are distinct from semantic errors",
+          "result": "success"
+        },
+        {
+          "name": "closed root, unknown version and invalid namespace rejected",
+          "result": "success"
+        },
+        {
+          "name": "ID duplicates, time encoding and numeric overflow rejected",
+          "result": "success"
+        },
+        {
+          "name": "bus references and cycles rejected",
+          "result": "success"
+        },
+        {
+          "name": "half-open gap intervals and duration validate, overlap rejects",
+          "result": "success"
+        },
+        {
+          "name": "JCS number vectors, UTF16 order and exact I64 string",
+          "result": "success"
+        },
+        {
+          "name": "validator rejects cyclic/nonJSON input without recursing forever",
+          "result": "success"
+        },
+        {
+          "name": "unknown extensions roundtrip unchanged and are not interpreted as time",
+          "result": "success"
+        },
+        {
+          "name": "static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds",
+          "result": "success"
+        },
+        {
+          "name": "split clones owner, trim preserves node, deleting removes current orphan only",
+          "result": "success"
+        },
+        {
+          "name": "linked audio extraction does not inherit visual node, linked split owns independent video effects",
+          "result": "success"
+        },
+        {
+          "name": "locks, unknown effect versions and extensions never become writable by replacing semantics",
+          "result": "success"
+        },
+        {
+          "name": "strict crop/colour bounds, finite values and captured parameter ownership",
+          "result": "success"
+        },
+        {
+          "name": "static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse",
+          "result": "success"
+        },
+        {
+          "name": "split clone ownership and slip preserve source-space crop/colour; two-leg encoder recipes carry both",
+          "result": "success"
+        },
+        {
+          "name": "10000 exact rational arithmetic and JSON roundtrips",
+          "result": "success"
+        },
+        {
+          "name": "300 frames at NTSC are 10.01 seconds and no cumulative sample drift",
+          "result": "success"
+        },
+        {
+          "name": "negative and positive ties to even, floor and ceil",
+          "result": "success"
+        },
+        {
+          "name": "canonical wire rejects noncanonical, overflow and divide by zero",
+          "result": "success"
+        },
+        {
+          "name": "half-open intervals and checked end",
+          "result": "success"
+        },
+        {
+          "name": "frame rate and sample rate bounds",
+          "result": "success"
+        },
+        {
+          "name": "adjacent selection moves together without self-collision; exact sources/curves retained",
+          "result": "success"
+        },
+        {
+          "name": "immutable canonical selection never filters duplicate/missing/gap IDs; bounded input",
+          "result": "success"
+        },
+        {
+          "name": "all locks preflight atomically; only written field locks block",
+          "result": "success"
+        },
+        {
+          "name": "transition endpoints must move together; cut translates, exact handles and sources untouched",
+          "result": "success"
+        },
+        {
+          "name": "full closed-root rich image/story/provenance/font/unknown-plugin project validates and roundtrips opaque references",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: image parent missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: image parent cycle",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: image source version",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: image font missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: effect owner mismatch",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: effect backlink missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: character rights missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: character appearance missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: script brief missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: script scene mismatch",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: scene character missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: scene shot missing",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: shot subject version",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: shot continuity version",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: generation output version",
+          "result": "success"
+        },
+        {
+          "name": "semantic not structural: candidate missing",
+          "result": "success"
+        },
+        {
+          "name": "exact piecewise endpoints/monotonicity and semantic arithmetic overflow are reported, not thrown",
+          "result": "success"
+        },
+        {
+          "name": "nested current sequence references depth8 accepted, depth9/cycle rejected without following retained-version graph as current",
+          "result": "success"
+        },
+        {
+          "name": "opaque plugin/provider versions and rational lookalikes remain opaque, never project invariants",
+          "result": "success"
+        },
+        {
+          "name": "3000-node valid reciprocal bus graph validates without recursive host-stack exhaustion; closing its cycle refuses",
+          "result": "success"
+        },
+        {
+          "name": "definition identity excludes project title; canonical own data and actual unversioned bus dependencies change identity",
+          "result": "success"
+        },
+        {
+          "name": "master bus edit advances owning sequence once; duplicate is a true no-op",
+          "result": "success"
+        },
+        {
+          "name": "actual Dart PCM consumer changes with the dependency fingerprint; this is not pixel equivalence",
+          "result": "success"
+        },
+        {
+          "name": "unqualified sequence effect ordering is refused, never silently omitted",
+          "result": "success"
+        },
+        {
+          "name": "unqualified track effect ordering is refused, never silently omitted",
+          "result": "success"
+        },
+        {
+          "name": "clip-owned core effect parameters are actual definition dependencies, not an execution certificate",
+          "result": "success"
+        },
+        {
+          "name": "blob packaging locator is not a rendering dependency; source bytes/role are",
+          "result": "success"
+        },
+        {
+          "name": "source refs resolve the exact frozen version, not latest; unrelated title in snapshot does not change definition",
+          "result": "success"
+        },
+        {
+          "name": "same kind/id/version with equal literal sequence but changed resolved bus is an immutable conflict across snapshots",
+          "result": "success"
+        },
+        {
+          "name": "unknown LUT/library semantics never get a qualified fingerprint",
+          "result": "success"
+        },
+        {
+          "name": "rational window half-open, exact handles, source offsets, curve endpoint hold and bounded composite recipes",
+          "result": "success"
+        },
+        {
+          "name": "missing head/tail handles, zero range/offgrid/freeze and disabled legs refuse without changing input",
+          "result": "success"
+        },
+        {
+          "name": "slip revalidates handles, topology edits demand explicit removal, locked removal and noop/NOT_FOUND are real",
+          "result": "success"
+        },
+        {
+          "name": "dissolve sequence closes both rendered leg definitions; schedule allocations retain native limits",
+          "result": "success"
+        },
+        {
+          "name": "persistent extraction pins stream, materializes separate clip and exact reciprocal AV link; unlink keeps both and relink works",
+          "result": "success"
+        },
+        {
+          "name": "linked split/trim/move/slip are atomic and maintain pinned sample/source ranges; locks refuse whole command",
+          "result": "success"
+        },
+        {
+          "name": "1000 linked legal trim/inverse commands conserve exact offsets/source windows; failures do not mutate",
+          "result": "success"
+        },
+        {
+          "name": "sample-aligned absolute stream origins, unavailable audio, duplicate extraction and id collision are explicit atomic refusals",
+          "result": "success"
+        },
+        {
+          "name": "editing from linked audio selection, unlink independent moves/slips/deletes, no-op and append import retain valid semantics",
+          "result": "success"
+        },
+        {
+          "name": "semantic FK/version/map/link/bus errors reject before commit; opaque extension IDs do not allocate entities",
+          "result": "success"
+        },
+        {
+          "name": "timeline graph exact half-open source map, split/non-ripple trim and immutable snapshot",
+          "result": "success"
+        },
+        {
+          "name": "disabled clip renders a gap; unsupported background refuses rather than black substitution",
+          "result": "success"
+        },
+        {
+          "name": "graph reciprocal refs, duplicate and disconnected cycles are refused deterministically",
+          "result": "success"
+        },
+        {
+          "name": "gain, mono equal-power pan and stereo balance have explicit distinct policies",
+          "result": "success"
+        },
+        {
+          "name": "exact absolute sample mapping, hold/linear interpolation and source anchors survive 2x retime",
+          "result": "success"
+        },
+        {
+          "name": "duck proposal is a separate lower envelope, clips endpoints and protects manual regions and locks",
+          "result": "success"
+        },
+        {
+          "name": "actual float PCM mute/solo/bus closure, stereo balance, no implicit limiter and source immutability",
+          "result": "success"
+        },
+        {
+          "name": "bus automation at actual sample boundaries and finite PCM/length failures",
+          "result": "success"
+        },
+        {
+          "name": "silent/disconnected routes, scratch bounds and non-finite overflow fail explicitly",
+          "result": "success"
+        },
+        {
+          "name": "real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification",
+          "result": "success"
+        },
+        {
+          "name": "split preserves exact half-open source mapping and rejects endpoints/off-grid",
+          "result": "success"
+        },
+        {
+          "name": "normal lift and trim preserve trailing Gap; ripple changes duration",
+          "result": "success"
+        },
+        {
+          "name": "roll slip slide conserve expected source/sequence intervals",
+          "result": "success"
+        },
+        {
+          "name": "collision, negative, source exhaustion, duplicate IDs and locks reject atomically",
+          "result": "success"
+        },
+        {
+          "name": "1000 seeded legal slip/inverse cases conserve ranges without float rounding",
+          "result": "success"
+        },
+        {
+          "name": "strict JSON rejects duplicate decoded keys, invalid UTF8, depth and nonfinite numbers",
+          "result": "success"
+        },
+        {
+          "name": "registered transform preserves opacity curves, order, split ownership and slip/trim semantics",
+          "result": "success"
+        },
+        {
+          "name": "static transform identity bypass, value noop, readonly unsupported animation/order and lock protection",
+          "result": "success"
+        },
+        {
+          "name": "finite static transform bounds, anchor, singular matrix and unknown field rejection",
+          "result": "success"
+        }
+      ],
+      "log": "final-native.jsonl",
+      "sha256": "32904e12cc1bed9c2cf890ef8a0ad63db778a4e31a6364273b9c5d5bccbbfc77",
+      "exitCode": 0,
+      "elapsedSeconds": 146.816
+    },
+    "ui": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 58727
+      },
+      "cases": [
+        {
+          "name": "REAL four-member checkbox move -> native ghost -> one undo/redo -> Escape/SQL/collision refusal -> archive fork MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL drag40 -> one undo; native ghost image; Escape, pointer CANCEL and scroll arena loss have no commit",
+          "result": "success"
+        },
+        {
+          "name": "REAL crop/color UI multilevel undo/redo with dissolve preview/save/fork/export",
+          "result": "success"
+        },
+        {
+          "name": "REAL VIDEO dissolve UI handles/edit/preview/undo/save/fork/export",
+          "result": "success"
+        },
+        {
+          "name": "REAL static transform UI edit/preview/undo/archive/fork/export",
+          "result": "success"
+        },
+        {
+          "name": "REAL keyframe UI edit/preview/undo/archive/fork/export",
+          "result": "success"
+        },
+        {
+          "name": "REAL opacity UI edit/preview/undo/archive/fork/export",
+          "result": "success"
+        },
+        {
+          "name": "real native UI import split trim undo archive fork export",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI resource JSON load/collect/confirm/archive/reopen/fork leaves editable workspace and CAS unchanged",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI explicit retention configuration/dry-run/confirmation removes only reviewed recovery indexes",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI explicit native qualification and writable fork switches workspace with durable ImportMap",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI explicit storage policy applies byte cap and rejects over-budget import without deleting data",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI selected source-qualified repair restores corrupt CAS without changing project revision",
+          "result": "success"
+        },
+        {
+          "name": "REAL UI explicit selected proxy consent detaches references, resets consent and undo restores metadata",
+          "result": "success"
+        },
+        {
+          "name": "real SQLite title save, validation, undo and reopen in Flutter widget",
+          "result": "success"
+        }
+      ],
+      "log": "final-ui.jsonl",
+      "sha256": "e7b869fa11d9694620188532db1a609ab744dec2f3730284eef1b36dcb497a3f",
+      "exitCode": 0,
+      "elapsedSeconds": 59.943
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 7557
+      },
+      "cases": [
+        {
+          "name": "ACTUAL Chrome pure resource graph keeps integrity/format/execution distinct and preserves opaque library/LUT metadata",
+          "result": "success"
+        },
+        {
+          "name": "ACTUAL Chrome definition identity ignores title, resolves bus changes, and rejects unchanged-version mutation",
+          "result": "success"
+        },
+        {
+          "name": "readonly pasted snapshot and exact opaque payload remain isolated; reference search does not resolve resources",
+          "result": "success"
+        },
+        {
+          "name": "readonly inspector rejects duplicate JSON, future Schema, invalid FK and excess bytes without replacing good snapshot",
+          "result": "success"
+        },
+        {
+          "name": "readonly pending selected loader cannot update a disposed view",
+          "result": "success"
+        }
+      ],
+      "log": "final-chrome.jsonl",
+      "sha256": "687d27db256af2b79c41642fd2baa113de27a41f281f7d52dd5d46a17ffc9a2f",
+      "exitCode": 0,
+      "elapsedSeconds": 27.63
+    },
+    "pulse": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 21637
+      },
+      "cases": [
+        {
+          "name": "REAL Pulse confirmed-sample clock consumes static transform plus clip-local opacity curve; paused seek pixels match, edits invalidate",
+          "result": "success"
+        },
+        {
+          "name": "REAL Pulse confirmed-sample clock consumes crop/colour2-source VIDEO dissolve plus transform/opacity; paused seek pixels match, edits invalidate",
+          "result": "success"
+        },
+        {
+          "name": "REAL Pulse confirmed-sample clock consumes2-source VIDEO dissolve plus transform/opacity; paused seek pixels match, edits invalidate",
+          "result": "success"
+        },
+        {
+          "name": "REAL Pulse confirmed-sample clock consumes clip-local opacity curve; paused seek pixels match, edits invalidate",
+          "result": "success"
+        },
+        {
+          "name": "REAL Pulse SDK timeline prepare, confirmed clock, pause/seek/rebind/edit fence/cancel/close",
+          "result": "success"
+        },
+        {
+          "name": "REAL AudioSink-clock RenderGraph selects generated proxy, freezes paused, fences seek/rebind/revision and closes resources",
+          "result": "success"
+        },
+        {
+          "name": "REAL Pulse confirmed-sample clock consumes full-source opacity; paused seek pixels match, edits invalidate",
+          "result": "success"
+        }
+      ],
+      "log": "final-pulse.jsonl",
+      "sha256": "b82f6fa466d8a145eacbd93c792ccdc2a3190363855b0fdddbe5cc2fca848679",
+      "exitCode": 0,
+      "elapsedSeconds": 22.299
+    }
+  },
+  "totalPassed": 261,
+  "totalFailed": 0,
+  "totalSkipped": 0,
+  "additionalRuns": {
+    "analyzer": {
+      "log": "final-analyzer.log",
+      "sha256": "d67745476d0d035a1480f30296404329e44b68b0fd20400227b01df482835172",
+      "rawSha256": "c653b018399ce8808b2afe5fb4bca8f9955b86f30c2d6458d0b4704bdfde2395",
+      "exitCode": 0,
+      "elapsedSeconds": 1.858
+    },
+    "native": {
+      "log": "final-native.jsonl",
+      "sha256": "32904e12cc1bed9c2cf890ef8a0ad63db778a4e31a6364273b9c5d5bccbbfc77",
+      "exitCode": 0,
+      "elapsedSeconds": 146.816
+    },
+    "actual-legacy-and-kill": {
+      "log": "final-actual-legacy-and-kill.log",
+      "sha256": "39d94600bc116daa5affe46849b7d05034fa47ccf24e9d6887fe1a62ffa32528",
+      "exitCode": 0,
+      "elapsedSeconds": 14.753
+    },
+    "undo-redo-kill": {
+      "log": "final-undo-redo-kill.log",
+      "sha256": "c0d1f9bc45e0c7cd6723cba86e44db6f25a8fcb22399c5041f168c9765db188c",
+      "exitCode": 0,
+      "elapsedSeconds": 23.602
+    },
+    "ui": {
+      "log": "final-ui.jsonl",
+      "sha256": "e7b869fa11d9694620188532db1a609ab744dec2f3730284eef1b36dcb497a3f",
+      "exitCode": 0,
+      "elapsedSeconds": 59.943
+    },
+    "chrome": {
+      "log": "final-chrome.jsonl",
+      "sha256": "687d27db256af2b79c41642fd2baa113de27a41f281f7d52dd5d46a17ffc9a2f",
+      "exitCode": 0,
+      "elapsedSeconds": 27.63
+    },
+    "pulse": {
+      "log": "final-pulse.jsonl",
+      "sha256": "b82f6fa466d8a145eacbd93c792ccdc2a3190363855b0fdddbe5cc2fca848679",
+      "exitCode": 0,
+      "elapsedSeconds": 22.299
+    },
+    "real-monitor-and-faults": {
+      "log": "final-real-monitor-and-faults.log",
+      "sha256": "a4eb9e149cdedd077ee9135d82080524c04a33d629d045d8881e5491c96e25ec",
+      "exitCode": 0,
+      "elapsedSeconds": 11.865
+    },
+    "ctest": {
+      "log": "final-ctest.log",
+      "sha256": "f1df27c706a8c0a47b92e6152e75c3df134230c49fadf594bab69c5c7d814094",
+      "exitCode": 0,
+      "elapsedSeconds": 0.293
+    },
+    "100cancel": {
+      "log": "final-100cancel.log",
+      "sha256": "30f41d93a43c9c960eeb37cc89b9b4aabed7f3ffb8d8f680df81691ce1190989",
+      "exitCode": 0,
+      "elapsedSeconds": 0.857
+    },
+    "asan-100cancel": {
+      "log": "final-asan-100cancel.log",
+      "sha256": "7f8628d07a5360dc6b83f9a7da9b228936792eac894b563176b649178f539162",
+      "exitCode": 0,
+      "elapsedSeconds": 1.572
+    },
+    "transform-100cancel": {
+      "log": "final-transform-100cancel.log",
+      "sha256": "76c06d40b7b6c0c17b7c8135b3f6d730e73fa43635086c88a2e31ab4a6b6e7bb",
+      "exitCode": 0,
+      "elapsedSeconds": 1.9
+    },
+    "asan-transform-100cancel": {
+      "log": "final-asan-transform-100cancel.log",
+      "sha256": "d863f8fb35622b9c5d215e42b5c0a5a82131cd01b9d14165e8aeccc574eaa5c2",
+      "exitCode": 0,
+      "elapsedSeconds": 2.155
+    },
+    "dissolve-100cancel": {
+      "log": "final-dissolve-100cancel.log",
+      "sha256": "f682066dcab71c459c4c826d864b6049d226a1395c68caeeaecd4f49f225f762",
+      "exitCode": 0,
+      "elapsedSeconds": 3.409
+    },
+    "asan-dissolve-100cancel": {
+      "log": "final-asan-dissolve-100cancel.log",
+      "sha256": "4ceaf91c46a3a320751002ffcb051f960ac4d04a15075660457b5567dd393d92",
+      "exitCode": 0,
+      "elapsedSeconds": 3.688
+    },
+    "raster-100cancel": {
+      "log": "final-raster-100cancel.log",
+      "sha256": "58cbfc89ca8fbefcfee4ba1678ac0da5139a7f1d0847182581e6927660f056c3",
+      "exitCode": 0,
+      "elapsedSeconds": 4.637
+    },
+    "asan-raster-100cancel": {
+      "log": "final-asan-raster-100cancel.log",
+      "sha256": "e16a8d3b2c2c76f4d2590c0f4d816e089eb6fd3692a3b734817198bede010b4b",
+      "exitCode": 0,
+      "elapsedSeconds": 4.387
+    }
+  },
+  "auxiliaryPreFreezeEvidence": [
+    {
+      "log": "fifth-analyze.log",
+      "sha256": "ff662ec4da1a0ffedfb2cec23b08faeaec153b501df620eb0170d62f01b3e45f",
+      "rawSha256": "ba0d576bc10ab91232eb03f9bda9d3c3565baf9b9093ed974a9413f8ec79ca45"
+    },
+    {
+      "log": "fifth-native.jsonl",
+      "sha256": "2b512b038f69814aa177cf87f12e6942210962ffd90c6bba2940e10499a4d0fc"
+    },
+    {
+      "log": "final-actual-legacy.json",
+      "sha256": "39d94600bc116daa5affe46849b7d05034fa47ccf24e9d6887fe1a62ffa32528"
+    },
+    {
+      "log": "final-undo-redo-kill.json",
+      "sha256": "c0d1f9bc45e0c7cd6723cba86e44db6f25a8fcb22399c5041f168c9765db188c"
+    },
+    {
+      "log": "first-analyze.log",
+      "sha256": "950055d353d3baefd3a001ea8adc0e8dc46987becb5852dfbdf202202989523f",
+      "rawSha256": "ffb3105816ae02e3caa8430014c63f188ad5e384b149d35b13de2d5ed981a76d"
+    },
+    {
+      "log": "first-domain.jsonl",
+      "sha256": "ef03f86526a77ffd0e0ebdbfc527e9ecf7d3494bc3aab4985bf50c92f3085d09"
+    },
+    {
+      "log": "first-sdk.jsonl",
+      "sha256": "948c32fcfb2023ddd303e303af5b45cd0295ffc28159bfb15f3f420884ff9f52"
+    },
+    {
+      "log": "first-ui.jsonl",
+      "sha256": "d85034d03ca92776580fe901ca553c3df9b79b6deefd495d91924fda95513e4b"
+    },
+    {
+      "log": "fourth-analyze.log",
+      "sha256": "d67745476d0d035a1480f30296404329e44b68b0fd20400227b01df482835172",
+      "rawSha256": "c653b018399ce8808b2afe5fb4bca8f9955b86f30c2d6458d0b4704bdfde2395"
+    },
+    {
+      "log": "second-analyze.log",
+      "sha256": "3e193dc0b8b228c37f75576bf96e020b0082efea22a22487ce945b9064b325f8",
+      "rawSha256": "a94d6147e749d518b784c6ffa6420c9f9b3216b7502c0a6825a74b1d63b30300"
+    },
+    {
+      "log": "second-domain.jsonl",
+      "sha256": "56017f2cc1bfbdb8771e77b2293eb2566b14c13fc6ca74cc4d837568040c93fe"
+    },
+    {
+      "log": "second-sdk.jsonl",
+      "sha256": "5f1fddb67844cad47ed1a8896c160f9c92139e1b9a07b91986d49c2231748df0"
+    },
+    {
+      "log": "second-style-ui.log",
+      "sha256": "3d57432cd93323b299564d87f264975e9d1558887029e38939a9acb45123b1ab"
+    },
+    {
+      "log": "second-ui.jsonl",
+      "sha256": "586c4c2b260e99fa0de06f1b7c1da65ce4761de7e4b3d23396f02ca0dea781b3"
+    },
+    {
+      "log": "seventh-analyze.log",
+      "sha256": "db6ba40994e641fd5b5d18e4eb693166a67153297a0019e0f7305acd0fd9d010",
+      "rawSha256": "989056761648b265538130196722bc27151ed1bdcf17a8069136d5f0546dabc4"
+    },
+    {
+      "log": "sixth-analyze.log",
+      "sha256": "3346020f47b30277fdae7ae7368781fec24b5c13f472009dfb3d58a600e53180",
+      "rawSha256": "0f4b51f436c18dae27ae547c2e35e8e80c5bc77301862af0079ff3e99ce07404"
+    },
+    {
+      "log": "style-fix.log",
+      "sha256": "36cac2dc8e8ee1694b3015a43a673536ba078f5c70cd2e8ac5894ced54918573"
+    },
+    {
+      "log": "style-sdk.log",
+      "sha256": "66d99b2ff58d9fa5823cf5429f904c4ed32568b99d53c5bace6e1f6695108e38"
+    },
+    {
+      "log": "style-ui.log",
+      "sha256": "10461c28665c0f97b3e549f98b839b419717d54d1a09d05f50830ce82b565689"
+    },
+    {
+      "log": "third-analyze.log",
+      "sha256": "9989874bf93c7f240efc1a3198fd63c8a1b5caad5d6b7b5af049cfe574d12ba2",
+      "rawSha256": "d98c9b594b61f59feccea9f128412570e096d1ad555c2597462b2e99604152de"
+    },
+    {
+      "log": "third-native.jsonl",
+      "sha256": "3b5d6c2b26c7ef1b3aae1cdad2d4cb1b4be753bde40bec1fef9ed6cd9463797c"
+    }
+  ],
+  "multiMoveScope": {
+    "originalContract": "s3 rows25/36/37/41/45/51/53, original I-005 dependencies/acceptance unchanged. Same-track/reject/includeLinks=true only, explicit viewport checkboxes + exact Q candidate then explicit commit/cancel. Not pointer/snap/copy/insert/overwrite or full I-005.",
+    "authority": "Immutable canonical requested IDs; different requested selections refuse gesture coalescing even if a closure could match. Entire admitted AV link closure, exact offsets and source/effect/automation preservation. No silently skipped failed members or stale IDs.",
+    "atomicity": "All-member track/start-field locks, negative/frame/sample/collision and transition endpoint checks before one normal repository edit. Existing revision/writer fence, receipt/journal/definitions/pins/events/outbox transaction. Real late SQL rollback/manual same-candidate retry and independent connections exact-one winner.",
+    "time": "Absolute captions unchanged; richer caption anchors refuse editing. Caption pixel preview/export explicitly refuse, never silently omit. Exact source ranges/time maps and clip-local effect curves unchanged. Audio fractional sample move refuses; if preserved duration ends mid-video-frame, video tail Gap uses ceil frame.",
+    "UI": "Actual four-member AV checkbox selection, native still ghost, one commit undo/redo, invalid-update image disposal/commit refusal, Escape, SQL failure inline/cancel, whole collision refusal, durable save/archive fork/AAC MP4. Widget software-service test, not physical device/window performance.",
+    "media": "Real linked four-member AV path plus opacity keyframes/transform/crop/color/proxy; paired dissolve source handles/cut/effect order with native preview==preencoder RGBA, actual MP4 and archive/reopen.100 seeded same-type multi-move/undo/redo roots, not1000 randomized all-NLE matrix.",
+    "preservation": "No new schema/tables/registry. Uses existing persistent full-root tip inverse and stored definitions, monotonic revisions; no field-aware concurrent inverse. Existing resource admission/unknown history remains fail-closed.",
+    "limits": "O(document+affected sort), existing history cursor O(n), no interval-index/large-history qualification, at-most currently admitted native track/profile slice. Other original48 planned functions not implemented by this increment."
+  },
+  "threeReviews": "../../REVIEW.md increment1.22 / ADR0029: whole-set/locks and sealed exhaustive dispatch; real offset/mixed clocks/transition+SQL/fence; UI invalid ghost/live-binding cleanup+media/resource regressions. Preliminary failures retained, not final counts.",
+  "priorUnresolved": [
+    {
+      "commit": "e23a559c7178c5ee9a127780d199d098e60927c5",
+      "summary": "../raster-effects/summary.json",
+      "failure": "raster_clock first-play underrun presented2877 still not proven solved"
+    },
+    {
+      "commit": "00c2e5d4b6e93d71ff3b19d8ddf5d30f95fdd77d",
+      "summary": "../dissolve/summary.json",
+      "failure": "opacity_clock Pulse timeout/underrun still not proven solved"
+    }
+  ],
+  "cancelQualification": {
+    "iterationsFinalOnlyVerified": 800,
+    "scope": "Four actual active-video cancel modes regular/ASan100 each, app AVFrame/FD; not full codec/GPU/real Pulse ASan/TSan"
+  },
+  "notRun": [
+    "Full repo/all87 hard-dependency closure or full I-005 operation positive-negative/random1000 NLE matrix",
+    "Cross-track/insert-overwrite/snap/clipboard/groups/Alt-unlink/all pointer drag UI or field-aware inverse",
+    "Large/million-entry history realtime performance / balanced interval index (O(n) history unchanged)",
+    "Fresh release App/window build, GPU/stable fps/human hearing/actual DAC/physical AV synchronization/non-Linux/mobile/physical multi-device",
+    "Statistical root-cause elimination of startup/resume underrun; old failures retained",
+    "Fresh independent60s/VFR/HDR/full P0/whole v4-v8 old-executable qualification (selected current migration/actual legacy/SQL/SIGKILL only)",
+    "Unselected Harness/security/peer suites unchanged",
+    "Positive RTC known managed policy blocked unchanged, no retry/bypass/relay",
+    "Remote reads/diagnosis/push or rule/branch/identity/protocol/permission change"
+  ],
+  "statusCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 26,
+      "planned": 48,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "publication": "Ordinary LOCAL commit only; existing unpublished e23a559/c8c12d8/c948c56/a52002f ancestors preserved, resulting ahead5 relative last-known local tracking. No new GitHub commit URL. commit_refs_rules cause remains unknown; no new remote diagnosis/retry or compliant recovery evidence.",
+  "toolchain": "Reused Flutter3.50.1/Dart3.14; strict approved SQLite3.54.1 unchanged (system DEV3.46.1 not accepted); FFmpeg7.1.5/Pulse17/clang19/CMake3.31.6/Chrome156. Native hashes unchanged; no package install/large models/paid calls.",
+  "toolchainCurrent": {
+    "log": "toolchain-current.json",
+    "sha256": "1e9eeb38b621f60f3ed19cee50b897921fd00686062858f17d0350ad048f8fbc"
+  }
+}

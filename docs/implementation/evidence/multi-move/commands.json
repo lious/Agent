@@ -1,0 +1,272 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.858
+    },
+    {
+      "name": "native",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/multi_move_test.dart",
+        "packages/studio_sdk/test/edit_gesture_test.dart",
+        "packages/studio_sdk/test/command_history_media_test.dart",
+        "packages/studio_sdk/test/raster_render_test.dart",
+        "packages/studio_sdk/test/dissolve_render_test.dart",
+        "packages/studio_sdk/test/transform_render_test.dart",
+        "packages/studio_sdk/test/opacity_keyframe_render_test.dart",
+        "packages/studio_sdk/test/local_video_test.dart",
+        "packages/studio_sdk/test/source_preview_test.dart",
+        "packages/studio_sdk/test/opacity_render_test.dart",
+        "packages/studio_sdk/test/resource_admission_test.dart",
+        "packages/studio_sdk/test/resource_preservation_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/namespace_budget_test.dart",
+        "packages/studio_sdk/test/proxy_repair_test.dart",
+        "packages/studio_sdk/test/proxy_discard_test.dart",
+        "packages/studio_sdk/test/durable_proxy_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/audio_export_test.dart",
+        "packages/studio_store/test",
+        "packages/studio_document/test",
+        "--concurrency=2",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-native.log",
+      "exitCode": 0,
+      "elapsedSeconds": 146.816
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/multi-move/final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-actual-legacy-and-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 14.753
+    },
+    {
+      "name": "undo-redo-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_command_history.py",
+        "--report",
+        "artifacts/multi-move/final-undo-redo-kill.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-undo-redo-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 23.602
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/multi_move_ui_test.dart",
+        "test/edit_gesture_ui_test.dart",
+        "test/raster_ui_test.dart",
+        "test/dissolve_ui_test.dart",
+        "test/transform_ui_test.dart",
+        "test/opacity_keyframe_ui_test.dart",
+        "test/opacity_ui_test.dart",
+        "test/local_video_ui_test.dart",
+        "test/resource_preservation_ui_test.dart",
+        "test/checkpoint_retention_ui_test.dart",
+        "test/namespace_budget_ui_test.dart",
+        "test/proxy_repair_ui_test.dart",
+        "test/proxy_discard_ui_test.dart",
+        "test/foundation_app_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/multi-move/final-ui.log",
+      "exitCode": 0,
+      "elapsedSeconds": 59.943
+    },
+    {
+      "name": "chrome",
+      "command": [
+        "flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "test/resource_closure_test.dart",
+        "test/inspector_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "log": "artifacts/multi-move/final-chrome.log",
+      "exitCode": 0,
+      "elapsedSeconds": 27.63
+    },
+    {
+      "name": "pulse",
+      "command": [
+        "python3",
+        "tools/acceptance/audio_sink/run_private.py",
+        "dart",
+        "test",
+        "packages/studio_sdk/test/transform_clock_test.dart",
+        "packages/studio_sdk/test/raster_clock_test.dart",
+        "packages/studio_sdk/test/dissolve_clock_test.dart",
+        "packages/studio_sdk/test/opacity_keyframe_clock_test.dart",
+        "packages/studio_sdk/test/timeline_audio_test.dart",
+        "packages/studio_sdk/test/timeline_video_test.dart",
+        "packages/studio_sdk/test/opacity_clock_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-pulse.log",
+      "exitCode": 0,
+      "elapsedSeconds": 22.299
+    },
+    {
+      "name": "real-monitor-and-faults",
+      "command": [
+        "dbus-run-session",
+        "--",
+        "python3",
+        "tools/acceptance/audio_sink/pulse_smoke.py"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-real-monitor-and-faults.log",
+      "exitCode": 0,
+      "elapsedSeconds": 11.865
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/workspace/agent-media-native-peer",
+        "--output-on-failure"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-ctest.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.293
+    },
+    {
+      "name": "100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.857
+    },
+    {
+      "name": "asan-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-asan-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 1.572
+    },
+    {
+      "name": "transform-100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "transform_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-transform-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.9
+    },
+    {
+      "name": "asan-transform-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "transform_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-asan-transform-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 2.155
+    },
+    {
+      "name": "dissolve-100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "dissolve_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-dissolve-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 3.409
+    },
+    {
+      "name": "asan-dissolve-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "dissolve_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-asan-dissolve-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 3.688
+    },
+    {
+      "name": "raster-100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "raster_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-raster-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 4.637
+    },
+    {
+      "name": "asan-raster-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "raster_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/multi-move/final-asan-raster-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 4.387
+    }
+  ]
+}

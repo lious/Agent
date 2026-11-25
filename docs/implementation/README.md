@@ -916,3 +916,36 @@ SDK另对move/trim/slip、opacity固定时间关键帧值、transform/crop/color
 
 
 本批最后26份源码/测试/package冻结后的**248项：248通过、0失败/0跳过**，分别222领域/SQLite/nativeSDK、14真实FFI widget UI、5 Chrome资源/Inspector、7真实私有Pulse；不是首次247的混算。另CTest3、真实monitor/故障probe、真实旧库与SQL/Undo三次SIGKILL、SDK独立child staged100次更新后的SIGKILL，以及四种视频active取消普通/ASan各100共800轮通过。原underrun两次历史失败仍未证解。前期shader/cwd/SQL错误可见性/格式/公共preview回归的真实失败均保留，最后修正后才重新冻结运行。未跑fresh release窗口构建、全仓/全87/全I-005、非Linux/物理设备/GPU及巨量历史资格。原87仍0 complete/26 partial/48 planned/13 blocked；XD10仍0/8/1/1。本地保留全部未发布祖先，不push、不重试远端诊断。
+
+
+## Increment1.22 — 原I-005同轨多选/音画链接整组原子移动（本地未发布）
+
+在原生工具App导入视频、拆分并提取链接音频后，可勾选多个视频/音频Clip，
+使用共享正数Frame count输入框，点击`Preview selection +/- frame count`查看
+**未提交**的真实native候选图与完整链接闭包，再选择一次Commit或Cancel。
+未勾选的链接音频会显式列入闭包，不拆链接/不独立舍入，不静默跳过锁定成员。
+空选集/重复ID/缺失ID/Gap或字幕选项/锁轨或起点字段锁/负起点/碰撞/音频非整sample
+全部原子拒绝；转场只能同时移动两端，cut平移，source handles不变且重新校验。
+候选失效时不会显示前一个有效ghost，不能提交旧值；Escape/取消/生命周期不写历史。
+同一请求选集顺序不影响手势，但切换请求对象不能静默归并。原有tip/full-root
+多级undo/redo、保存重开及归档fork语义不变。fork后旧选集不会默默裁剪：需显式清空。
+
+该切片**仅同原轨/reject/includeLinks=true**。没有新插入/覆盖/跨轨/吸附/剪贴板/
+编组/Alt临时脱链/任意指针拖拽/field-aware协作逆操作。绝对字幕仍保留原时刻；
+clipLocal/source字幕锚定不支持编辑、字幕像素执行不支持时仍明确拒绝，绝不吞掉。
+clip-local效果/关键帧、音频automation、素材/代理/链接offset均保全。精确音频尾点
+落在视频帧间时，必要视频尾Gap向上取整项目帧以保留时长，不制造非法半帧Gap。
+
+```sh
+# 环境须使用前述已批准SQLite3.54.1和真实native库/合成视频fixture；不安装/下载模型。
+dart test packages/studio_document/test/multi_move_test.dart packages/studio_sdk/test/multi_move_test.dart --concurrency=1 --reporter=json
+(cd packages/studio_editor_ui && flutter test test/multi_move_ui_test.dart --reporter=json)
+# 原I-005入口已按目录收集新domain/SDK/UI用例；下命令是更大的资格入口，不等于本批已运行。
+python3 tools/acceptance/run_task.py I-005 --profile linux-dev --report artifacts/i005-full.json
+```
+
+详见ADR0029和`evidence/multi-move/summary.json`的冻结源码、当批真实测试与失败。
+本批不修改存储Schema/原104规格/原87验收，不将100次同类移动等同全NLE1000随机矩阵。
+原O(n)历史与区间索引性能、startup/resume underrun、schema9不能阻止旧writer共写、
+Linux CPU/SDR子集非GPU/全平台/物理声画同步等限制仍在。WebRTC网络策略不变且未重试。
+按要求仅普通本地提交，既有4个未发布祖先保全；本批不push/不重诊断远端拒绝。

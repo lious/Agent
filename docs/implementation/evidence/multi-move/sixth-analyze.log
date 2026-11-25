@@ -1,0 +1,7 @@
+Analyzing agent-foundation-20261125...
+
+  error • 4 positional arguments expected by 'setDissolve', but 1 found. Try adding the missing arguments • packages/studio_sdk/test/multi_move_test.dart:315:21 • not_enough_positional_arguments
+  error • The named parameter 'before' isn't defined. Try correcting the name to an existing named parameter's name, or defining a named parameter with the name 'before' • packages/studio_sdk/test/multi_move_test.dart:316:7 • undefined_named_parameter
+  error • The named parameter 'after' isn't defined. Try correcting the name to an existing named parameter's name, or defining a named parameter with the name 'after' • packages/studio_sdk/test/multi_move_test.dart:317:7 • undefined_named_parameter
+
+3 issues found. (ran in 1.6s)

@@ -1,0 +1,5 @@
+Analyzing agent-foundation-20261125...
+
+warning • Unused import: 'dart:convert'. Try removing the import directive • packages/studio_sdk/test/multi_move_test.dart:2:8 • unused_import
+
+1 issue found. (ran in 1.4s)

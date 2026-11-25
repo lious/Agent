@@ -13,6 +13,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:studio_sdk/studio_sdk.dart';
 
 part 'edit_gesture_controls.dart';
+part 'multi_move_controls.dart';
 
 /// Shared local-video workbench. Unsupported media/operations fail explicitly;
 /// this is not the complete timeline, preview, audio mixer, or AI product UI.
@@ -83,6 +84,13 @@ class _FoundationAppState extends State<FoundationApp>
   final _opacityFrame = TextEditingController(text: '0');
   bool _opacityHold = false;
   EditGesture? _gesture;
+  final _multiSelection = <String>{};
+  EditGesture? _multiGesture;
+  String? _multiError;
+  Q? _multiDelta;
+  ui.Image? _multiImage;
+  bool _multiPreviewBusy = false;
+  final _multiFocus = FocusNode();
   final _gestureFocus = FocusNode();
   ui.Image? _gestureImage;
   double _gestureValue = 1, _gestureStartValue = 1;
@@ -311,7 +319,7 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   void _act(ProjectDocument Function() action) {
-    if (_gesture != null) {
+    if (_gesture != null || _multiGesture != null) {
       setState(() => _error = 'GESTURE_IN_PROGRESS');
       return;
     }
@@ -327,7 +335,7 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   Future<void> _run(Future<String> Function() action) async {
-    if (_gesture != null) {
+    if (_gesture != null || _multiGesture != null) {
       setState(() => _error = 'GESTURE_IN_PROGRESS');
       return;
     }
@@ -379,7 +387,10 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) _cancelGestureUi();
+    if (state != AppLifecycleState.resumed) {
+      _cancelGestureUi();
+      _cancelMultiMoveUi();
+    }
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused ||
         state == AppLifecycleState.hidden ||
@@ -425,6 +436,10 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    final multi = _multiGesture;
+    if (multi != null) widget.workspace.cancelGesture(multi);
+    _multiImage?.dispose();
+    _multiFocus.dispose();
     final gesture = _gesture;
     if (gesture != null) widget.workspace.cancelGesture(gesture);
     _gestureImage?.dispose();
@@ -900,6 +915,7 @@ class _FoundationAppState extends State<FoundationApp>
             }),
       child: const Text('Preview selected timeline clip effect'),
     ),
+    _buildMultiMoveControls(),
     for (final c in _clips)
       ListTile(
         key: Key('clip-${c['id']}'),
@@ -913,6 +929,7 @@ class _FoundationAppState extends State<FoundationApp>
             : () => setState(() {
                 if (_selected != c['id']) {
                   _cancelGestureUi();
+                  _cancelMultiMoveUi();
                   _clearPreview();
                 }
                 _selected = c['id'] as String;

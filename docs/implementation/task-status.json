@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-26T00:33:32.369955+08:00",
+  "asOf": "2026-11-26T01:09:36.374513+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,7 +12,7 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-005 remaining multiselect/snap/clipboard/grouping/insert-overwrite and full operation positive-negative matrix; explicit eight-target SDK ghost + static-opacity UI coalescing now exercised, not all timeline gestures/field-aware inverse. Do not expand storage/fingerprints.",
+    "Continue original I-005 remaining snap/clipboard/group/insert-overwrite/cross-track and original each-operation matrix, original I-023 audio underrun diagnosis and other48 planned dependencies; same-track linked multiselect is now an executable subset, not full completion. No storage/fingerprint side branch.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
     "Remote publication blocked: read-only applicable rules=[] / repo rulesets=[] / protected=false does not explain commit_refs_rules rejection. No confirmed user-side corrective action. No further push until cause and compliant resolution evidence reported; continue ordinary local commits for authorized work.",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
@@ -587,11 +587,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite Increment1.20: actual SDK/UI persistent multi-level undo/redo derived from existing immutable commands/revisions journal, no new tables; monotonic commit revisions/exact saved entity definitions, no-op/branch-redo invalidation/idempotency, same-snapshot cursor reads and existing writer-fence transaction atomicity. Legacy undoLatest transitions retained byte-exact as real historical restore commands. Real AV/effects/audio/caption/proxy/save/reopen/archive-fork/preview/preencoder/MP4,1000 seeded title-root history undo/redo, real concurrent connections and SQL/kill/actual-old-library tests recorded. Conservative tip/full-root inverse, not field-aware collaboration or coalescing/full NLE matrix. Increment1.21: explicit base/writer/target-bound ghost interaction for8 existing SDK operations, no per-pointer history writes; real Linux static-opacity slider40 moves -> one durable edit/undo/redo. Physical-UP gate, identity/no-motion, Escape/pointer/scroll-arena cancel, invalid-update refusal, same-ID SQL retry and revision/fence refusal. Shared exact-time native preview, rich AV/caption/proxy/archive history and staged child SIGKILL evidence. Not complete basic-operation/all drag UI/field-aware inverse or large-history qualification.",
+      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite Increment1.20: actual SDK/UI persistent multi-level undo/redo derived from existing immutable commands/revisions journal, no new tables; monotonic commit revisions/exact saved entity definitions, no-op/branch-redo invalidation/idempotency, same-snapshot cursor reads and existing writer-fence transaction atomicity. Legacy undoLatest transitions retained byte-exact as real historical restore commands. Real AV/effects/audio/caption/proxy/save/reopen/archive-fork/preview/preencoder/MP4,1000 seeded title-root history undo/redo, real concurrent connections and SQL/kill/actual-old-library tests recorded. Conservative tip/full-root inverse, not field-aware collaboration or coalescing/full NLE matrix. Increment1.21: explicit base/writer/target-bound ghost interaction for8 existing SDK operations, no per-pointer history writes; real Linux static-opacity slider40 moves -> one durable edit/undo/redo. Physical-UP gate, identity/no-motion, Escape/pointer/scroll-arena cancel, invalid-update refusal, same-ID SQL retry and revision/fence refusal. Shared exact-time native preview, rich AV/caption/proxy/archive history and staged child SIGKILL evidence. Not complete basic-operation/all drag UI/field-aware inverse or large-history qualification. Increment1.22: same-track/reject multi-select MoveClips expands complete admitted AV link closure; exact offsets/source/effect curves/audio/caption/proxy preservation, all-member locks/grids/negative/collision and paired-transition refusal, simultaneous final-interval evaluation. Native checkbox candidate/preview/explicit one-commit-or-cancel uses existing persistent journal/gesture/fence; no new persistence schema. Actual linked4 AV, nonzero offset/mixed-grid metadata, shared preview/preencoder/AAC MP4, SQL rollback/two connections, undo/redo/reopen/archive fork and selected regressions recorded in evidence/multi-move. Full I-005 acceptance is NOT complete.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/command-history/summary.json",
-        "evidence/gesture-edit/summary.json"
+        "evidence/gesture-edit/summary.json",
+        "evidence/multi-move/summary.json"
       ],
       "remainingAcceptance": "第3节每操作正反例通过；1千随机序列undo后文档hash相等；锁定成员与负区间整组拒。",
       "remainingScope": "含Gap/多选/吸附/复制粘贴/编组；不含高级trim。",
@@ -599,7 +600,8 @@
         "I-003"
       ],
       "blockers": [
-        "Full Gap/multiselection/snapping/clipboard/grouping/basic-operation positive-negative matrix, full operation/UI gesture matrix and field-aware concurrent inverse policy remain incomplete;1000 title-history transitions are not full randomized NLE acceptance. Current cursor reconstruction is O(n), not large-history UI performance qualification."
+        "Full Gap/multiselection/snapping/clipboard/grouping/basic-operation positive-negative matrix, full operation/UI gesture matrix and field-aware concurrent inverse policy remain incomplete;1000 title-history transitions are not full randomized NLE acceptance. Current cursor reconstruction is O(n), not large-history UI performance qualification.",
+        "Increment1.22 only same-track reject+includeLinks=true selection, not cross-track/insert/overwrite/copy/snap/group/Alt unlink/all drag UI. Whole-root inverse/O(n) history/interval index and full random operation matrix remain unqualified."
       ]
     },
     {

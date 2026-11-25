@@ -1,0 +1,15 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":639592,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/multi_move_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/multi_move_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":1,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":497}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":499}
+{"test":{"id":3,"name":"adjacent selection moves together without self-collision; exact sources/curves retained","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":499}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":652}
+{"test":{"id":4,"name":"immutable canonical selection never filters duplicate/missing/gap IDs; bounded input","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":72,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":653}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":780}
+{"test":{"id":5,"name":"all locks preflight atomically; only written field locks block","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":99,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":780}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":817}
+{"test":{"id":6,"name":"transition endpoints must move together; cut translates, exact handles and sources untouched","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":130,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":818}
+{"testID":6,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":845}
+{"success":true,"type":"done","time":854}

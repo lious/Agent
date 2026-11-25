@@ -1,0 +1,36 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":643056,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/multi_move_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/multi_move_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":1,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":570}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":572}
+{"test":{"id":3,"name":"REAL linked4 atomic gesture -> exact native preview/preencoder/AAC MP4 -> undo redo save reopen fork","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":572}
+[libx264 @ 0x7f4198002980] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f4198002980] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f4198002980] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f4198002980] frame I:4     Avg QP:10.21  size:  3542
+[libx264 @ 0x7f4198002980] frame P:116   Avg QP:14.43  size:  1237
+[libx264 @ 0x7f4198002980] mb I  I16..4: 75.0%  0.0% 25.0%
+[libx264 @ 0x7f4198002980] mb P  I16..4: 19.8%  0.0%  2.5%  P16..4: 11.5%  6.2%  3.7%  0.0%  0.0%    skip:56.3%
+[libx264 @ 0x7f4198002980] coded y,uvDC,uvAC intra: 9.7% 29.5% 23.9% inter: 6.7% 20.7% 13.7%
+[libx264 @ 0x7f4198002980] i16 v,h,dc,p: 87%  9%  3%  0%
+[libx264 @ 0x7f4198002980] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 21% 23%  3%  1%  2%  2%  2%  3%
+[libx264 @ 0x7f4198002980] i8c dc,h,v,p: 55% 16% 29%  1%
+[libx264 @ 0x7f4198002980] Weighted P-Frames: Y:37.9% UV:35.3%
+[libx264 @ 0x7f4198002980] kb/s:315.30
+[aac @ 0x7f4198262800] Qavg: 43271.508
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3518}
+{"test":{"id":4,"name":"linked closure lock/field/grid failures reject whole DB mutation, never skip audio","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":140,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":3519}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4246}
+{"test":{"id":5,"name":"absolute captions preserved; clip-local anchors refuse; no implicit caption loss on preview/export","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":193,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":4248}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4562}
+{"test":{"id":6,"name":"mixed exact grids reject fractional audio samples; nonzero link offsets remain exact","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":227,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":4563}
+{"testID":6,"error":"DURATION_MISMATCH at /sequences/0/duration","stackTrace":"package:studio_document/studio_document.dart 56:7       new ProjectDocument.fromJson\npackage:studio_sdk/resource_preservation.dart 60:58     ResourcePreservationSession.openJson\n===== asynchronous gap ===========================\npackages/studio_sdk/test/multi_move_fixture.dart 78:19  adoptMoveMetadata\n===== asynchronous gap ===========================\npackages/studio_sdk/test/multi_move_test.dart 263:5     main.<fn>\n","isFailure":false,"type":"error","time":4878}
+{"testID":6,"result":"error","skipped":false,"hidden":false,"type":"testDone","time":4884}
+{"test":{"id":7,"name":"late SQL rollback/retry/receipt idempotency, revision and stale writer fencing","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":286,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":4885}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5310}
+{"test":{"id":8,"name":"actual two independent SQLite contenders publish one entire four-member move","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":335,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":5311}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5659}
+{"test":{"id":9,"name":"100 seeded selection moves each undo/redo retain exact full roots, source and canceled candidate","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":392,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":5660}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18589}
+{"success":false,"type":"done","time":18603}

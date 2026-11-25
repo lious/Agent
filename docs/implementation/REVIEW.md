@@ -900,3 +900,30 @@ the historical intermittent underrun. Full original tasks remain partial.
 
 
 最后refreeze实际248/248，222 native/领域/存储/SDK+14 FFI widget+5 Chrome+7私有Pulse，另CTest3、真实monitor/故障probe/旧库与SQL/SIGKILL、四模式普通/ASan800取消全部本次重跑。首轮247不算最后SHA结果；wrapper反例先失败再修正且完整refreeze，不放宽断言。尚未做fresh窗口构建/全仓/全87/完整操作随机矩阵/巨量历史/非Linux/GPU/物理验收，旧underrun两失败继续保留。工具CLI版本当前重新只读查询存toolchain-current.json；没有native重编、SDK安装、模型、付费或网络策略变化。全部旧祖先、原104、87验收依赖保持；仅普通本地提交。
+
+
+## Increment1.22 / ADR0029 — 三轮实际审查与修正（多选原子移动）
+
+1. **原合同/原子集合/锁与链接审查**：逐项读原s3第25/36/37/41/45/51/53行和
+   I-005的验收/硬依赖。实现同轨reject闭包，不循环提交单Clip命令；检查所有成员
+   锁和最终区间，锁定/缺失/负起点整组拒绝。首次编译暴露旧sealed switches漏列
+   MoveClips，补全两处分派后新纯domain4例通过。请求ID防重复/不可变/原100000上限，
+   未实现的跨轨/insert/overwrite/Alt/snap/组/全操作矩阵继续缺口，不假称完成。
+2. **真实AV/时域/历史与失败事务审查**：真实合成AAC素材导入、拆分及提取两对链接
+   Clip，检查相对offset、clip-local曲线、transform/crop/color、持久代理和字幕原文。
+   非零音频offset测试暴露帧间audio尾点可能被直接做成非法video尾Gap，改为ceil帧
+   边界，并加+1/-1回移回归；混合29.97/48kHz不整sample拒绝，不拿该metadata测试
+   当真实29.97/native性能资格。早期人工fixture遗漏leading Gap/精确maxEnd、旧writer
+   接管后未显式重开、dissolve helper误复用AV工程导致失败，均记录并修正有效fixture，
+   不是放宽生产断言。加入真实DB整组锁、late SQL rollback/同候选重试、双连接竞争、
+   revision/writer fence、100 seeded同类移动及完整root undo/redo；非全随机NLE验收。
+3. **实际UI/像素/生命周期/回归审查**：真实checkbox→native ghost→一次提交→多级
+   undo/redo→归档fork/MP4；非法update必须禁用旧候选并清除旧ghost（修复原会遗留图），
+   错选集不自动裁剪、不自动冲突重试。原始两次UI测试走完影音导出后在测试清理阶段
+   timeout，保留失败；把pumpWidget移出test_api teardown至live binding内，显式验证
+   closeAsync/保存队列drain，不掩盖失败或取消/故障断言。新真实dissolve双端移动验证
+   cut/handles/效果排序与共享preview/preencoder字节一致。最终冻结后独立选测现有
+   legacy/SQL/SIGKILL/迁移与资源取消回归，实际结果只从新summary读取，不借用旧248/182。
+
+原underrun失败仍未证根因修复，绿色选测不代表消除；没有重新运行受策略阻塞的RTC。
+新源码只做普通本地commit，未push/未改变身份、分支、协议、规则或权限。
