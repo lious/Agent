@@ -1,0 +1,14 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/timeline_snap.dart:13:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/timeline_snap.dart:37:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/timeline_snap.dart:88:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/timeline_snap.dart:90:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/timeline_snap.dart:191:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/snap_controls.dart:5:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/snap_controls.dart:23:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/snap_controls.dart:120:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:44:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:51:7 • curly_braces_in_flow_control_structures
+
+10 issues found. (ran in 2.3s)

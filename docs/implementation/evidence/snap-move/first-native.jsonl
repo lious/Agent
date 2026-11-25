@@ -1,0 +1,65 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":666361,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/timeline_snap_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/timeline_snap_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":2,"time":6,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":358}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":360}
+{"test":{"id":3,"name":"exact logical viewport roundtrip/pan/zoom, invalid scales and overflow refuse","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":360}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":380}
+{"test":{"id":4,"name":"eight logical pixels inclusive, just outside and zoomed threshold are exact","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":380}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":383}
+{"test":{"id":5,"name":"nearest precedes type; tied distance playhead/cut/marker then ID, independent of traversal","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":64,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":384}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":400}
+{"test":{"id":6,"name":"selected owners including linked audio are never targets","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":400}
+{"testID":6,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":402}
+{"test":{"id":7,"name":"snap BEFORE quantize, selected target and nonzero residual stay honest","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":93,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":403}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":404}
+{"test":{"id":8,"name":"project closure excludes own edges; stationary cuts do not bypass atomic collision","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":108,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":405}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":496}
+{"test":{"id":9,"name":"valid marker project remains refused by existing admission, not stripped for snap","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":144,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":497}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":519}
+{"test":{"id":10,"name":"even excluded target stream is bounded; empty sources and missing selection refuse","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":173,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":520}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":550}
+{"test":{"id":11,"name":"200 seeded cases match independent brute-force nearest/type/ID oracle","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":200,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_snap_test.dart"},"type":"testStart","time":551}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":638}
+{"suite":{"id":12,"platform":"vm","path":"packages/studio_sdk/test/snap_move_test.dart"},"type":"suite","time":642}
+{"test":{"id":13,"name":"loading packages/studio_sdk/test/snap_move_test.dart","suiteID":12,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":643}
+{"testID":13,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1389}
+{"group":{"id":14,"suiteID":12,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":1390}
+{"test":{"id":15,"name":"real snapped linked4 -> ghost/one history -> exact pixels/AAC leading silence -> reopen/fork","suiteID":12,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":1390}
+[libx264 @ 0x7f02140bab40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f02140bab40] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f02140bab40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f02140bab40] frame I:4     Avg QP:10.37  size:  3937
+[libx264 @ 0x7f02140bab40] frame P:116   Avg QP:15.99  size:  1244
+[libx264 @ 0x7f02140bab40] mb I  I16..4: 73.8%  0.0% 26.2%
+[libx264 @ 0x7f02140bab40] mb P  I16..4:  7.1%  0.0%  1.5%  P16..4:  9.7%  6.4%  4.0%  0.0%  0.0%    skip:71.3%
+[libx264 @ 0x7f02140bab40] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.2% 16.4% 12.8%
+[libx264 @ 0x7f02140bab40] i16 v,h,dc,p: 87%  9%  3%  0%
+[libx264 @ 0x7f02140bab40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f02140bab40] i8c dc,h,v,p: 54% 18% 27%  1%
+[libx264 @ 0x7f02140bab40] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f02140bab40] kb/s:320.16
+[aac @ 0x7f0214392580] Qavg: 43271.508
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2727}
+{"test":{"id":16,"name":"late SQL failure fully rolls back snapped command; retry same candidate, stale plan/candidate and writer refuse","suiteID":12,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":138,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":2728}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3206}
+{"test":{"id":17,"name":"stationary cut snap cannot hide collision; linked locks/negative boundary reject whole DB change","suiteID":12,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":180,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":3207}
+{"testID":17,"error":"Expected: throws <Instance of 'StudioException'> with `code`: 'COLLISION'\n  Actual: <Closure: () => EditGesture>\n   Which: returned <Instance of 'EditGesture'>\n","stackTrace":"package:matcher                                     expect\npackages/studio_sdk/test/snap_move_test.dart 185:5  main.<fn>\n","isFailure":true,"type":"error","time":3485}
+{"testID":17,"result":"failure","skipped":false,"hidden":false,"type":"testDone","time":3488}
+{"test":{"id":18,"name":"real dissolve snapped pair retains handles/shared preview and encoder; lone endpoint refuses","suiteID":12,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":201,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":3489}
+[libx264 @ 0x7f0214095880] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0214095880] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0214095880] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0214095880] frame I:14    Avg QP: 8.14  size:    49
+[libx264 @ 0x7f0214095880] frame P:76    Avg QP: 7.12  size:    14
+[libx264 @ 0x7f0214095880] mb I  I16..4: 97.5%  0.0%  2.5%
+[libx264 @ 0x7f0214095880] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+[libx264 @ 0x7f0214095880] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f0214095880] i16 v,h,dc,p: 82%  0% 18%  0%
+[libx264 @ 0x7f0214095880] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f0214095880] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f0214095880] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f0214095880] kb/s:4.66
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4393}
+{"success":false,"type":"done","time":4398}

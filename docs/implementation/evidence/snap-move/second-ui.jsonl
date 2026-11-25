@@ -1,0 +1,29 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":670281,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"count":1,"time":4,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2549}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2551}
+{"test":{"id":3,"name":"REAL zoom/pan8px snap -> linked native ghost -> one history -> invalid input/SQL/collision refusal -> archive AAC MP4","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart"},"type":"testStart","time":2552}
+{"testID":3,"messageType":"print","message":"snap-move-ui: selection ready","type":"print","time":4582}
+{"testID":3,"messageType":"print","message":"snap-move-ui: atomic/error matrix done","type":"print","time":8006}
+{"testID":3,"messageType":"print","message":"snap-move-ui: archive fork done","type":"print","time":9825}
+Shell: [libx264 @ 0x7f99c000c8c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f99c000c8c0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f99c000c8c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f99c000c8c0] frame I:4     Avg QP:10.37  size:  3937
+Shell: [libx264 @ 0x7f99c000c8c0] frame P:116   Avg QP:15.99  size:  1244
+Shell: [libx264 @ 0x7f99c000c8c0] mb I  I16..4: 73.8%  0.0% 26.2%
+Shell: [libx264 @ 0x7f99c000c8c0] mb P  I16..4:  7.1%  0.0%  1.5%  P16..4:  9.7%  6.4%  4.0%  0.0%  0.0%    skip:71.3%
+Shell: [libx264 @ 0x7f99c000c8c0] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.2% 16.4% 12.8%
+Shell: [libx264 @ 0x7f99c000c8c0] i16 v,h,dc,p: 87%  9%  3%  0%
+Shell: [libx264 @ 0x7f99c000c8c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f99c000c8c0] i8c dc,h,v,p: 54% 18% 27%  1%
+Shell: [libx264 @ 0x7f99c000c8c0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f99c000c8c0] kb/s:320.16
+Shell: [aac @ 0x7f99c012a8c0] Qavg: 43271.508
+{"testID":3,"messageType":"print","message":"snap-move-ui: MP4 done","type":"print","time":10976}
+{"testID":3,"messageType":"print","message":"snap-move-ui: unmounted inside live binding","type":"print","time":10992}
+{"testID":3,"messageType":"print","message":"snap-move-ui: archive queue drained and workspace closed","type":"print","time":10994}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11005}
+{"success":true,"type":"done","time":11037}

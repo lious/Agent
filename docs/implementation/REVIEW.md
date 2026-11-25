@@ -927,3 +927,29 @@ the historical intermittent underrun. Full original tasks remain partial.
 
 原underrun失败仍未证根因修复，绿色选测不代表消除；没有重新运行受策略阻塞的RTC。
 新源码只做普通本地commit，未push/未改变身份、分支、协议、规则或权限。
+
+
+## Increment1.23 / ADR0030 — 原I-005吸附三轮实审修正
+
+1. 原s3第25/36/41/45/51/53行、实际admission/有理时间及I-005合同对照：最近优先、
+   8逻辑像素闭区间、类型/ID排序、先snap再量化。排除整个选集/链接闭包及其派生Gap
+   自目标；marker项目原准入继续拒绝，不剥离语义。改正目标上限最初只计过滤后数量的
+   问题，排除流也先计数有界；加入精确zoom/pan、阈值内外、优先级、源排除、残差、
+   200 seeded独立暴力oracle和合法marker只读拒绝。无O(帧数)/全对全遍历。
+2. SDK/事务/时钟与历史审查：冻结plan hash绑定实际工程revision，元数据门禁先于读取；
+   修复stale/foreign plan update在抛错后仍可能留下旧有效ghost可提交的状态，显式失效。
+   真实AV4成员、预览/编码前像素、AAC解码PCM静音/信号窗口、保存重开fork、多级undo/redo、
+   SQL late abort/同候选手动重试/重复提交/revision/fence/锁/转场整组拒绝。首个碰撞
+   fixture误设pointer146导致正确吸回原位而非碰撞，保留失败；改为pointer4明确吸入
+   被占用切点，不改生产判据。实际AV元数据的29.97/48k格拒绝与独立audio sample格通过，
+   不能冒充29.97新native/物理资格。
+3. 实际UI/资源/失败审查：非几何输入错误也必须清旧图并禁止旧candidate提交，不因
+   Decimal/zoom错误退回未吸附值。首个UI回归发现Undo/scroll后ExpansionTile虚拟化
+   丢展开态，修复为由Viewport父state持有；后续同路径验证。装饰标尺先按精确时间
+   裁剪再乘zoom，避免远端目标/非法candidate在paint中溢出；double只画线。真实UI
+   8px边界zoom/pan、候选/结果、native ghost、取消、单命令undo-redo、SQL故障和
+   cut碰撞拒绝、归档fork/AAC MP4。最终源码冻结后重跑选定历史/旧库/SQL/SIGKILL/
+   取消/迁移/音视频回归，结果由当批summary给出，不复用旧261。
+
+这些审查不消除原startup/resume underrun/O(n)/field-aware/旧writer限制，也不完成
+全部I-005矩阵或其他平台/物理跨端；原87/XD10分别保持真实状态。

@@ -14,6 +14,7 @@ import 'package:studio_sdk/studio_sdk.dart';
 
 part 'edit_gesture_controls.dart';
 part 'multi_move_controls.dart';
+part 'snap_controls.dart';
 
 /// Shared local-video workbench. Unsupported media/operations fail explicitly;
 /// this is not the complete timeline, preview, audio mixer, or AI product UI.
@@ -84,6 +85,13 @@ class _FoundationAppState extends State<FoundationApp>
   final _opacityFrame = TextEditingController(text: '0');
   bool _opacityHold = false;
   EditGesture? _gesture;
+  final _snapZoom = TextEditingController(text: '100'),
+      _snapOrigin = TextEditingController(text: '0'),
+      _snapPointer = TextEditingController(text: '96'),
+      _snapPlayhead = TextEditingController(text: '30');
+  SnappedMovePlan? _snapPlan;
+  bool _multiInputInvalid = false;
+  bool _snapExpanded = false;
   final _multiSelection = <String>{};
   EditGesture? _multiGesture;
   String? _multiError;
@@ -436,6 +444,9 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    for (final c in [_snapZoom, _snapOrigin, _snapPointer, _snapPlayhead]) {
+      c.dispose();
+    }
     final multi = _multiGesture;
     if (multi != null) widget.workspace.cancelGesture(multi);
     _multiImage?.dispose();

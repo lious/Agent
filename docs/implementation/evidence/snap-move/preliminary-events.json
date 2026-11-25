@@ -1,0 +1,32 @@
+{
+  "timezone": "Asia/Shanghai",
+  "events": [
+    {
+      "kind": "cli-usage",
+      "command": "dart fix --apply --code=curly_braces_in_flow_control_structures packages/studio_document packages/studio_sdk packages/studio_editor_ui",
+      "exitCode": 64,
+      "correction": "Tool accepts one directory; package-scoped invocations used, no workaround/privilege change"
+    },
+    {
+      "kind": "test-failure",
+      "file": "first-native.jsonl",
+      "reason": "pointer146 correctly snapped single member back to identity, so collision expectation was wrong",
+      "correction": "pointer4 targets occupied stationary cut; original production collision assertion retained"
+    },
+    {
+      "kind": "test-failure",
+      "file": "first-ui.jsonl",
+      "reason": "snap ExpansionTile expansion lost after Undo/scroll virtualization",
+      "correction": "Viewport parent retains expansion; real UI same path rerun after source correction"
+    },
+    {
+      "kind": "review-corrections",
+      "changes": [
+        "Count excluded target streams before filtering",
+        "Stale plan UPDATE invalidates previous candidate; metadata guard before new API snapshot read",
+        "UI non-geometric planning failures disable previous candidate commit",
+        "Exact-time clip before drawing-only zoom conversion"
+      ]
+    }
+  ]
+}

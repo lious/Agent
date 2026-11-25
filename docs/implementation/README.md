@@ -949,3 +949,32 @@ python3 tools/acceptance/run_task.py I-005 --profile linux-dev --report artifact
 原O(n)历史与区间索引性能、startup/resume underrun、schema9不能阻止旧writer共写、
 Linux CPU/SDR子集非GPU/全平台/物理声画同步等限制仍在。WebRTC网络策略不变且未重试。
 按要求仅普通本地提交，既有4个未发布祖先保全；本批不push/不重诊断远端拒绝。
+
+
+## Increment1.23 — 原I-005精确吸附接入多选移动（本地未发布）
+
+原生App多选视频/音频Clip后展开`Exact viewport snapping · 8 logical px`：
+设置逻辑像素/秒、Viewport起始帧、指针x和编辑播放头帧，点击
+`Preview exact snapped selection`。读出最近目标/类型/ID、原始与吸附后及最终Q位移、
+距离与量化残差、参与轨，标尺显示候选，真实native候选图复用共享预览节点；
+确认一次Commit，或Escape/Cancel无工程编辑。沿用持久undo/redo、保存重开、归档fork
+和AAC MP4。缩放200px/s、origin15帧、pointer92px、playhead30帧的真实UI例子中，
+原始0.96s以8逻辑像素吸附1s，完整4成员音画链接组一起移动。
+
+最近优先，再播放头/切点/marker/ID；候选排除整个移动链接闭包。先吸附再帧量化，
+音频独立移动使用48k sample格；混合时钟不独立舍入，不整sample整组拒绝。量化后
+残差非零会明示。失败不选择另一个目标绕碰撞/锁/handles；非法数字和旧plan不能提交
+之前有效ghost。marker仅通用纯计算排序有测试，现有marker工程仍保全只读/拒绝编辑，
+不宣称marker业务支持。编辑播放头不是AudioSink已呈现时钟；标尺double仅用于绘制。
+数值viewport预览/按钮确认不是完整pointer拖拽交互；没有新存储或注册协议。
+
+```sh
+dart test packages/studio_document/test/timeline_snap_test.dart packages/studio_sdk/test/snap_move_test.dart --concurrency=1 --reporter=json
+(cd packages/studio_editor_ui && flutter test test/snap_move_ui_test.dart --reporter=json)
+```
+
+使用前述批准SQLite3.54.1/FFmpeg/native库与合成fixture环境；完整原任务入口仍按目录
+发现这些用例，本批只运行summary列出的冻结选测，不等于完整I-005/87项验收。
+新增真实AAC文件PCM检查仅确认移动后0–0.8s静音和1.1–1.2s存在音频，不声称AAC切点
+sample-exact或DAC/物理延迟。原underrun仍未证解，既有失败保留；不重试受限RTC。
+详见ADR0030、REVIEW和evidence/snap-move/summary.json。本批不push、不重诊断远端。

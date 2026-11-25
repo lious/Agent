@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "asOf": "2026-11-26T01:15:19.610371+08:00",
+  "asOf": "2026-11-26T01:32:10.992560+08:00",
   "timezone": "Asia/Shanghai",
   "sourceRequirements": [
     "t83u",
@@ -161,5 +161,5 @@
     "planned": 1,
     "blocked": 1
   },
-  "currentIncrementNote": "1.7 real Linux local audio-service audition does not upgrade XD acceptance. Ordinary Chrome/native authorization/security regressions continue. Retained managed positive WebRTC policy failure is not rerun or bypassed. No physical/non-Linux/multi-device playback claim. Increment1.22 changes original I-005 native same-track linked multiselect only; no XD completion or physical-device qualification. Existing RTC policy block unchanged, no positive retry/bypass; existing security/peer mechanisms unchanged and unselected this batch."
+  "currentIncrementNote": "1.7 real Linux local audio-service audition does not upgrade XD acceptance. Ordinary Chrome/native authorization/security regressions continue. Retained managed positive WebRTC policy failure is not rerun or bypassed. No physical/non-Linux/multi-device playback claim. Increment1.22 changes original I-005 native same-track linked multiselect only; no XD completion or physical-device qualification. Existing RTC policy block unchanged, no positive retry/bypass; existing security/peer mechanisms unchanged and unselected this batch. Increment1.23 changes original I-005 viewport snapping only; no new XD/platform/physical-device qualification or RTC positive retry. All security/network mechanisms unchanged, unselected here."
 }

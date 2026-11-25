@@ -1,3 +1,4 @@
+export 'timeline_snap.dart';
 export 'effect_registry.dart';
 export 'definition_fingerprint.dart';
 export 'resource_closure.dart';

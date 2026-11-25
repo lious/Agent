@@ -1,0 +1,43 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":676865,"type":"start","time":0}
+{"suite":{"id":0,"platform":"chrome","path":"/workspace/agent-foundation-20261125/apps/studio_web/test/resource_closure_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/apps/studio_web/test/resource_closure_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"count":2,"time":4,"type":"allSuites"}
+[BROWSER CONSOLE] [log]: Dart test runner browser host running
+[BROWSER CONSOLE] [log]: Starting suite http://localhost:46365/resource_closure_test.html
+[BROWSER CONSOLE] [log]: Appended iframe with src http://localhost:46365/resource_closure_test.html#%7B%22metadata%22:%7B%22testOn%22:null,%22timeout%22:%7B%22duration%22:null,%22scaleFactor%22:1%7D,%22skip%22:null,%22skipReason%22:null,%22verboseTrace%22:null,%22chainStackTraces%22:true,%22retry%22:null,%22tags%22:%5B%5D,%22onPlatform%22:%5B%5D,%22forTag%22:%7B%7D,%22languageVersionComment%22:null%7D,%22browser%22:%22chrome%22%7D
+[BROWSER CONSOLE] [debug]: Injecting <script> tag. Using callback.
+[BROWSER CONSOLE] [info]: DDC is about to load 1/2 scripts with pool size = 1000
+[BROWSER CONSOLE] [info]: DDC is about to load 1327/1327 scripts with pool size = 1000
+[BROWSER CONSOLE] [log]: Starting application from main method in: org-dartlang-app:///main.dart.
+[BROWSER CONSOLE] [warning]: registerExtension() from dart:developer is only supported in build/run/test environments where the developer event method hooks have been set by package:dwds v11.1.0 or higher.
+[BROWSER CONSOLE] [warning]: Font manifest does not exist at `assets/FontManifest.json` - ignoring.
+[BROWSER CONSOLE] [log]: Connecting channel for suite http://localhost:46365/resource_closure_test.html
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2798}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":2800}
+{"test":{"id":3,"name":"ACTUAL Chrome pure resource graph keeps integrity/format/execution distinct and preserves opaque library/LUT metadata","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":9,"column":3,"url":"file:///workspace/agent-foundation-20261125/apps/studio_web/resource_closure_test.dart"},"type":"testStart","time":2801}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2853}
+{"test":{"id":4,"name":"ACTUAL Chrome definition identity ignores title, resolves bus changes, and rejects unchanged-version mutation","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":51,"column":3,"url":"file:///workspace/agent-foundation-20261125/apps/studio_web/resource_closure_test.dart"},"type":"testStart","time":2853}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2879}
+{"suite":{"id":5,"platform":"chrome","path":"/workspace/agent-foundation-20261125/apps/studio_web/test/inspector_test.dart"},"type":"suite","time":2882}
+{"test":{"id":6,"name":"loading /workspace/agent-foundation-20261125/apps/studio_web/test/inspector_test.dart","suiteID":5,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2882}
+[BROWSER CONSOLE] [warning]: A message on the flutter/lifecycle channel was discarded before it could be handled.
+This happens when a plugin sends messages to the framework side before the framework has had an opportunity to register a listener. See the ChannelBuffers API documentation for details on how to configure the channel to expect more messages, or to expect messages to get discarded:
+  https://api.flutter.dev/flutter/dart-ui/ChannelBuffers-class.html
+[BROWSER CONSOLE] [log]: Starting suite http://localhost:46365/inspector_test.html
+[BROWSER CONSOLE] [log]: Appended iframe with src http://localhost:46365/inspector_test.html#%7B%22metadata%22:%7B%22testOn%22:null,%22timeout%22:%7B%22duration%22:null,%22scaleFactor%22:1%7D,%22skip%22:null,%22skipReason%22:null,%22verboseTrace%22:null,%22chainStackTraces%22:true,%22retry%22:null,%22tags%22:%5B%5D,%22onPlatform%22:%5B%5D,%22forTag%22:%7B%7D,%22languageVersionComment%22:null%7D,%22browser%22:%22chrome%22%7D
+[BROWSER CONSOLE] [debug]: Injecting <script> tag. Using callback.
+[BROWSER CONSOLE] [info]: DDC is about to load 1/2 scripts with pool size = 1000
+[BROWSER CONSOLE] [info]: DDC is about to load 1327/1327 scripts with pool size = 1000
+[BROWSER CONSOLE] [log]: Starting application from main method in: org-dartlang-app:///main.dart.
+[BROWSER CONSOLE] [warning]: registerExtension() from dart:developer is only supported in build/run/test environments where the developer event method hooks have been set by package:dwds v11.1.0 or higher.
+[BROWSER CONSOLE] [warning]: Font manifest does not exist at `assets/FontManifest.json` - ignoring.
+[BROWSER CONSOLE] [log]: Connecting channel for suite http://localhost:46365/inspector_test.html
+{"testID":6,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4695}
+{"group":{"id":7,"suiteID":5,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":4696}
+{"test":{"id":8,"name":"readonly pasted snapshot and exact opaque payload remain isolated; reference search does not resolve resources","suiteID":5,"groupIDs":[7],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart"},"type":"testStart","time":4696}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5757}
+{"test":{"id":9,"name":"readonly inspector rejects duplicate JSON, future Schema, invalid FK and excess bytes without replacing good snapshot","suiteID":5,"groupIDs":[7],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart"},"type":"testStart","time":5757}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6522}
+{"test":{"id":10,"name":"readonly pending selected loader cannot update a disposed view","suiteID":5,"groupIDs":[7],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart"},"type":"testStart","time":6523}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6671}
+{"success":true,"type":"done","time":6673}

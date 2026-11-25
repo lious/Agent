@@ -7,28 +7,43 @@ extension _MultiMoveControls on _FoundationAppState {
     widget.workspace.cancelGesture(g);
     _multiGesture = null;
     _multiDelta = null;
+    _snapPlan = null;
+    _multiInputInvalid = false;
     _multiError = null;
     _multiImage?.dispose();
     _multiImage = null;
     _gestureSetState(() {});
   }
 
-  Future<void> _previewMultiMove(int direction) async {
+  Future<void> _previewMultiMove(int direction, {SnappedMovePlan? snap}) async {
     if (_multiPreviewBusy || _busy || _gesture != null) return;
+    _multiImage?.dispose();
+    _multiImage = null;
+    _multiInputInvalid = true;
+    _snapPlan = snap;
     try {
-      final op = MoveClips(_multiSelection, _delta() * Q.of(direction));
+      final op =
+          snap?.operation ??
+          MoveClips(_multiSelection, _delta() * Q.of(direction));
       // A rejected update must not leave the preceding successful ghost visible.
       _multiImage?.dispose();
       _multiImage = null;
       if (_multiGesture == null) {
         _clearTimelineVideo();
-        _multiGesture = widget.workspace.beginGesture(
-          op,
-          expectedRevision: _project.revision,
-        );
+        _multiGesture = snap == null
+            ? widget.workspace.beginGesture(
+                op,
+                expectedRevision: _project.revision,
+              )
+            : widget.workspace.beginSnappedMove(snap);
       } else {
-        widget.workspace.updateGesture(_multiGesture!, op);
+        if (snap == null) {
+          widget.workspace.updateGesture(_multiGesture!, op);
+        } else {
+          widget.workspace.updateSnappedMove(_multiGesture!, snap);
+        }
       }
+      _multiInputInvalid = false;
       _multiDelta = op.delta;
       _multiError = null;
       _multiImage?.dispose();
@@ -95,11 +110,13 @@ extension _MultiMoveControls on _FoundationAppState {
 
   void _commitMultiMoveUi() {
     final g = _multiGesture;
-    if (g == null || _multiPreviewBusy) return;
+    if (g == null || _multiPreviewBusy || _multiInputInvalid) return;
     try {
       widget.workspace.commitGesture(g);
       _multiGesture = null;
       _multiDelta = null;
+      _snapPlan = null;
+      _multiInputInvalid = false;
       _multiImage?.dispose();
       _multiImage = null;
       _gestureSetState(() {
@@ -166,9 +183,15 @@ extension _MultiMoveControls on _FoundationAppState {
             key: const Key('clear-multi-selection'),
             onPressed: blocked || g != null
                 ? null
-                : () => _gestureSetState(() => _multiSelection.clear()),
+                : () => _gestureSetState(() {
+                    _multiSelection.clear();
+                    _multiError = null;
+                    _snapPlan = null;
+                    _multiInputInvalid = false;
+                  }),
             child: const Text('Clear explicit selection'),
           ),
+          _buildSnapControls(blocked),
           Wrap(
             children: [
               OutlinedButton(
@@ -187,7 +210,11 @@ extension _MultiMoveControls on _FoundationAppState {
               ),
               FilledButton(
                 key: const Key('commit-multi-move'),
-                onPressed: blocked || g == null || g.error != null
+                onPressed:
+                    blocked ||
+                        g == null ||
+                        g.error != null ||
+                        _multiInputInvalid
                     ? null
                     : _commitMultiMoveUi,
                 child: const Text('Commit this exact multi-move once'),

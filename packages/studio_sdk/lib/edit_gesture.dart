@@ -39,6 +39,26 @@ String _gestureTarget(EditOperation op) => contentHash(switch (op) {
 });
 
 extension WorkspaceGestures on StudioWorkspace {
+  EditGesture beginSnappedMove(SnappedMovePlan plan) {
+    _requireMetadata();
+    if (current.hash != plan.baseHash) {
+      throw const StudioException('REVISION_CONFLICT');
+    }
+    return beginGesture(plan.operation, expectedRevision: current.revision);
+  }
+
+  ProjectDocument updateSnappedMove(EditGesture gesture, SnappedMovePlan plan) {
+    _checkGesture(gesture);
+    if (gesture.base.hash != plan.baseHash) {
+      // Invalid foreign/stale plan must not leave an older valid ghost releasable.
+      gesture._generation++;
+      gesture._error = 'REVISION_CONFLICT';
+      cancelSourcePreview();
+      throw const StudioException('REVISION_CONFLICT');
+    }
+    return updateGesture(gesture, plan.operation);
+  }
+
   EditGesture beginGesture(
     EditOperation initial, {
     required BigInt expectedRevision,
