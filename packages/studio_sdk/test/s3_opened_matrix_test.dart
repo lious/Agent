@@ -34,18 +34,21 @@ Q sourceDurOf(ProjectDocument p, String id) =>
 Q seqDur(ProjectDocument p) =>
     Q.fromJson(p.toJson()['sequences'][0]['duration']);
 
-String idA(ProjectDocument p) => videos(p)
-    .reduce(
-      (a, b) =>
-          Q.fromJson(a['timelineRange']['start']) <=
-              Q.fromJson(b['timelineRange']['start'])
-          ? a
-          : b,
-    )['id'] as String;
+String idA(ProjectDocument p) =>
+    videos(p).reduce(
+          (a, b) =>
+              Q.fromJson(a['timelineRange']['start']) <=
+                  Q.fromJson(b['timelineRange']['start'])
+              ? a
+              : b,
+        )['id']
+        as String;
 
-String idAt(ProjectDocument p, Q start) => videos(p).singleWhere(
-      (c) => Q.fromJson(c['timelineRange']['start']) == start,
-    )['id'] as String;
+String idAt(ProjectDocument p, Q start) =>
+    videos(p).singleWhere(
+          (c) => Q.fromJson(c['timelineRange']['start']) == start,
+        )['id']
+        as String;
 
 ProjectDocument detached(ProjectDocument p, EditOperation op) {
   var serial = 0, max = 0;
@@ -199,75 +202,84 @@ void main() {
     root.deleteSync(recursive: true);
   });
 
-  test('s3 reject move of A by +30 collides; negative start and revision stay', () {
-    final a = idA(w.current);
-    final rev = w.current.revision;
-    final hash = contents(w.current);
-    expect(
-      () => w.edit(MoveClips([a], f(30)), expectedRevision: rev),
-      code('COLLISION'),
-    );
-    expect(w.current.revision, rev);
-    expect(contents(w.current), hash);
-    expect(
-      () => w.edit(
-        MoveClips([a], Q.of(0) - f(30)),
-        expectedRevision: w.current.revision,
-      ),
-      code('NEGATIVE_TIMELINE_START'),
-    );
-    expect(w.current.revision, rev);
-    expect(contents(w.current), hash);
-  });
+  test(
+    's3 reject move of A by +30 collides; negative start and revision stay',
+    () {
+      final a = idA(w.current);
+      final rev = w.current.revision;
+      final hash = contents(w.current);
+      expect(
+        () => w.edit(MoveClips([a], f(30)), expectedRevision: rev),
+        code('COLLISION'),
+      );
+      expect(w.current.revision, rev);
+      expect(contents(w.current), hash);
+      expect(
+        () => w.edit(
+          MoveClips([a], Q.of(0) - f(30)),
+          expectedRevision: w.current.revision,
+        ),
+        code('NEGATIVE_TIMELINE_START'),
+      );
+      expect(w.current.revision, rev);
+      expect(contents(w.current), hash);
+    },
+  );
 
-  test('s3 split of A at 60 remaps the planted source window; endpoints refuse', () {
-    final a = idA(w.current);
-    final before = contents(w.current);
-    w.edit(
-      SplitClip(a, f(60), 's3-a-right'),
-      expectedRevision: w.current.revision,
-    );
-    expect(startOf(w.current, a), Q.of(0));
-    expect(durOf(w.current, a), f(60));
-    expect(sourceStartOf(w.current, a), f(30));
-    expect(sourceDurOf(w.current, a), f(60));
-    expect(startOf(w.current, 's3-a-right'), f(60));
-    expect(sourceStartOf(w.current, 's3-a-right'), f(90));
-    expect(sourceDurOf(w.current, 's3-a-right'), f(90));
-    expect(seqDur(w.current), f(450));
-    w.undo(expectedRevision: w.current.revision);
-    expect(contents(w.current), before);
-    expect(
-      () => w.edit(
-        SplitClip(a, Q.of(0), 'x'),
+  test(
+    's3 split of A at 60 remaps the planted source window; endpoints refuse',
+    () {
+      final a = idA(w.current);
+      final before = contents(w.current);
+      w.edit(
+        SplitClip(a, f(60), 's3-a-right'),
         expectedRevision: w.current.revision,
-      ),
-      throwsA(isA<StudioException>()),
-    );
-    expect(contents(w.current), before);
-  });
+      );
+      expect(startOf(w.current, a), Q.of(0));
+      expect(durOf(w.current, a), f(60));
+      expect(sourceStartOf(w.current, a), f(30));
+      expect(sourceDurOf(w.current, a), f(60));
+      expect(startOf(w.current, 's3-a-right'), f(60));
+      expect(sourceStartOf(w.current, 's3-a-right'), f(90));
+      expect(sourceDurOf(w.current, 's3-a-right'), f(90));
+      expect(seqDur(w.current), f(450));
+      w.undo(expectedRevision: w.current.revision);
+      expect(contents(w.current), before);
+      expect(
+        () => w.edit(
+          SplitClip(a, Q.of(0), 'x'),
+          expectedRevision: w.current.revision,
+        ),
+        throwsA(isA<StudioException>()),
+      );
+      expect(contents(w.current), before);
+    },
+  );
 
-  test('s3 insert paste of 60 frames at 150 shifts B and C and grows duration', () {
-    final a = idA(w.current);
-    final payload = buildClipboard(
-      detached(w.current, TrimClip(a, 'out', Q.of(0) - f(90))),
-      [a],
-    );
-    final before = contents(w.current);
-    w.edit(
-      PasteClips(payload, at: f(150), mode: 'insert'),
-      expectedRevision: w.current.revision,
-    );
-    final b = idAt(w.current, f(210));
-    final c = idAt(w.current, f(360));
-    expect(startOf(w.current, a), Q.of(0));
-    expect(sourceStartOf(w.current, b), f(60));
-    expect(durOf(w.current, b), Q.of(1));
-    expect(durOf(w.current, c), Q.of(1));
-    expect(seqDur(w.current), f(510));
-    w.undo(expectedRevision: w.current.revision);
-    expect(contents(w.current), before);
-  });
+  test(
+    's3 insert paste of 60 frames at 150 shifts B and C and grows duration',
+    () {
+      final a = idA(w.current);
+      final payload = buildClipboard(
+        detached(w.current, TrimClip(a, 'out', Q.of(0) - f(90))),
+        [a],
+      );
+      final before = contents(w.current);
+      w.edit(
+        PasteClips(payload, at: f(150), mode: 'insert'),
+        expectedRevision: w.current.revision,
+      );
+      final b = idAt(w.current, f(210));
+      final c = idAt(w.current, f(360));
+      expect(startOf(w.current, a), Q.of(0));
+      expect(sourceStartOf(w.current, b), f(60));
+      expect(durOf(w.current, b), Q.of(1));
+      expect(durOf(w.current, c), Q.of(1));
+      expect(seqDur(w.current), f(510));
+      w.undo(expectedRevision: w.current.revision);
+      expect(contents(w.current), before);
+    },
+  );
 
   test('s3 overwrite [120,210) keeps C and duration; remaps the B tail', () {
     final a = idA(w.current);
@@ -282,9 +294,8 @@ void main() {
     expect(startOf(w.current, a), Q.of(0));
     expect(durOf(w.current, a), f(120));
     expect(sourceStartOf(w.current, a), f(30));
-    final pasted = videos(w.current).singleWhere(
-      (c) => Q.fromJson(c['timelineRange']['start']) == f(120),
-    );
+    final pasted = videos(w.current)
+        .singleWhere((c) => Q.fromJson(c['timelineRange']['start']) == f(120));
     expect(Q.fromJson(pasted['timelineRange']['duration']), f(90));
     final b = idAt(w.current, f(210));
     expect(sourceStartOf(w.current, b), f(120));
@@ -319,22 +330,25 @@ void main() {
     expect(startOf(w.current, idAt(w.current, f(240))), f(240));
     expect(sourceStartOf(w.current, idAt(w.current, f(240))), f(0));
     expect(seqDur(w.current), f(390));
-    final local = (w.current.toJson()['captions'] as List)
-        .singleWhere((c) => c['id'] == 'cue-local');
-    final abs = (w.current.toJson()['captions'] as List)
-        .singleWhere((c) => c['id'] == 'cue-abs');
+    final local = (w.current.toJson()['captions'] as List).singleWhere(
+      (c) => c['id'] == 'cue-local',
+    );
+    final abs = (w.current.toJson()['captions'] as List).singleWhere(
+      (c) => c['id'] == 'cue-abs',
+    );
     expect(local['text'], 'follow');
     expect(Q.fromJson(local['timelineRange']['start']), f(15));
     expect(abs['text'], 'stay');
     expect(Q.fromJson(abs['timelineRange']['start']), f(270));
     expect(
-      (w.current.toJson()['markers'] as List)
-          .singleWhere((m) => m['id'] == 'mark-abs')['label'],
+      (w.current.toJson()['markers'] as List).singleWhere(
+        (m) => m['id'] == 'mark-abs',
+      )['label'],
       'stay',
     );
   });
 
-  test('s3 ordinary leave-gap trim and ripple trim match the table; captions still refuse split/trim', () {
+  test('s3 ordinary leave-gap trim and ripple trim match the table; captions now survive split and leave-gap trim', () {
     final a = idA(w.current);
     final start = contents(w.current);
     w.edit(
@@ -357,16 +371,40 @@ void main() {
     w.undo(expectedRevision: w.current.revision);
     attachFollowAndStay(w);
     final withCues = contents(w.current);
-    expect(
-      () => w.edit(
-        SplitClip(a, f(60), 's3-a-right'),
-        expectedRevision: w.current.revision,
-      ),
-      code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+    w.edit(
+      SplitClip(a, f(60), 's3-a-right'),
+      expectedRevision: w.current.revision,
     );
     expect(
+      (w.current.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-local',
+      )['anchor']['kind'],
+      'clipLocal',
+    );
+    expect(
+      (w.current.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-local',
+      )['anchor']['clipId'],
+      a,
+    );
+    w.undo(expectedRevision: w.current.revision);
+    expect(contents(w.current), withCues);
+    w.edit(
+      TrimClip(a, 'out', Q.of(0) - f(15)),
+      expectedRevision: w.current.revision,
+    );
+    expect(
+      (w.current.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-local',
+      )['text'],
+      'follow',
+    );
+    expect(durOf(w.current, a), f(135));
+    w.undo(expectedRevision: w.current.revision);
+    expect(contents(w.current), withCues);
+    expect(
       () => w.edit(
-        TrimClip(a, 'out', Q.of(0) - f(15)),
+        TrimClip(a, 'out', Q.of(0) - f(15), ripple: true),
         expectedRevision: w.current.revision,
       ),
       code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
@@ -388,8 +426,9 @@ void main() {
     );
     expect(seqDur(w.current), f(435));
     expect(
-      (w.current.toJson()['captions'] as List)
-          .singleWhere((c) => c['id'] == 'cue-local')['text'],
+      (w.current.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-local',
+      )['text'],
       'follow',
     );
     final trimmed = w.current;

@@ -1121,3 +1121,189 @@ final class CaptionFormats {
     return out.toString();
   }
 }
+
+Set<String> _lockedCaptionTrackIds(Map d) => {
+  for (final t in (d['sequences'] as List).first['tracks'] as List)
+    if (t['kind'] == 'caption' && t['locked'] == true) t['id'] as String,
+};
+
+void _makeCaptionAbsolute(Map cue, String Function(String id)? nextVersion) {
+  final anchor = cue['anchor'] as Map;
+  if (anchor['kind'] == 'absolute' &&
+      anchor['clipId'] == null &&
+      anchor['range'] == null) {
+    return;
+  }
+  cue['anchor'] = {'kind': 'absolute', 'clipId': null, 'range': null};
+  if (nextVersion != null) {
+    cue['version'] = nextVersion(cue['id'] as String);
+  }
+}
+
+void _bindCaptionToHost(
+  Map d,
+  Map cue,
+  String hostId, {
+  String Function(String id)? nextVersion,
+}) {
+  final anchor = cue['anchor'] as Map;
+  final clips = _mediaClipsById(d);
+  final host = clips[hostId]!;
+  final hostStart = Q.fromJson(host['timelineRange']['start']);
+  final hostDur = Q.fromJson(host['timelineRange']['duration']);
+  final start = Q.fromJson(cue['timelineRange']['start']);
+  final duration = Q.fromJson(cue['timelineRange']['duration']);
+  if (start < hostStart || start + duration > hostStart + hostDur) {
+    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+  }
+  final changed = anchor['kind'] != 'clipLocal' || anchor['clipId'] != hostId;
+  anchor['kind'] = 'clipLocal';
+  anchor['clipId'] = hostId;
+  anchor['range'] = {
+    'start': (start - hostStart).toJson(),
+    'duration': duration.toJson(),
+  };
+  if (changed && nextVersion != null) {
+    cue['version'] = nextVersion(cue['id'] as String);
+  }
+}
+
+/// After a [SplitClip], keep every cue's text and authored timeline range.
+/// A clipLocal cue that is still uniquely covered is rebound to that remnant.
+/// A cue that now spans the cut becomes absolute rather than splitting text.
+/// Source-anchored cues must be restored with [applySourceCaptionAbsolutes]
+/// first; a cue that would be uncovered or cropped still refuses.
+void applyCaptionsAfterSplit(Map d, {String Function(String id)? nextVersion}) {
+  final captions = d['captions'];
+  if (captions is! List || captions.isEmpty) {
+    return;
+  }
+  final locked = _lockedCaptionTrackIds(d);
+  for (final raw in captions) {
+    final cue = raw as Map;
+    final kind = cue['anchor']['kind'] as String;
+    if (kind == 'absolute' || kind == 'source') {
+      continue;
+    }
+    if (kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    final range = TimeRange(
+      Q.fromJson(cue['timelineRange']['start']),
+      Q.fromJson(cue['timelineRange']['duration']),
+    );
+    final cover = coveringCaptionHostClipId(d, range);
+    if (cover == null) {
+      if (locked.contains(cue['trackId'])) {
+        throw const StudioException('FIELD_LOCKED');
+      }
+      _makeCaptionAbsolute(cue, nextVersion);
+      continue;
+    }
+    _bindCaptionToHost(d, cue, cover, nextVersion: nextVersion);
+  }
+}
+
+Q _qMax(Q a, Q b) => a > b ? a : b;
+Q _qMin(Q a, Q b) => a < b ? a : b;
+
+({Q start, Q duration})? _intersectRange(Q start, Q duration, Q from, Q to) {
+  final begin = _qMax(start, from);
+  final end = _qMin(start + duration, to);
+  if (end <= begin) {
+    return null;
+  }
+  return (start: begin, duration: end - begin);
+}
+
+/// After a leave-gap [TrimClip], later content is not shifted. Cues keep their
+/// authored times when they still sit on the host; a portion that now falls
+/// in the vacated gap becomes an absolute remnant (new id, same text). Source
+/// cues are not cropped here — restore them with [applySourceCaptionAbsolutes].
+void applyCaptionsAfterLeaveGapTrim(
+  Map d, {
+  required String hostId,
+  required Q oldStart,
+  required Q oldEnd,
+  required Q newStart,
+  required Q newEnd,
+  required String Function() newId,
+  String Function(String id)? nextVersion,
+}) {
+  final captions = d['captions'];
+  if (captions is! List || captions.isEmpty) {
+    return;
+  }
+  if (newEnd <= newStart) {
+    throw const StudioException('INVALID_RANGE');
+  }
+  final locked = _lockedCaptionTrackIds(d);
+  final vacated = <({Q start, Q end})>[];
+  if (newStart > oldStart) {
+    vacated.add((start: oldStart, end: newStart));
+  }
+  if (newEnd < oldEnd) {
+    vacated.add((start: newEnd, end: oldEnd));
+  }
+  final next = <Map<String, dynamic>>[];
+  for (final raw in captions) {
+    final cue = _cloneCaptionMap(raw as Map);
+    final kind = cue['anchor']['kind'] as String;
+    if (kind == 'absolute' || kind == 'source') {
+      next.add(cue);
+      continue;
+    }
+    if (kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    if (cue['anchor']['clipId'] != hostId) {
+      next.add(cue);
+      continue;
+    }
+    final start = Q.fromJson(cue['timelineRange']['start']);
+    final duration = Q.fromJson(cue['timelineRange']['duration']);
+    final hostPart = _intersectRange(start, duration, newStart, newEnd);
+    final gapParts = [
+      for (final g in vacated)
+        ?_intersectRange(start, duration, g.start, g.end),
+    ];
+    final unchanged =
+        hostPart != null &&
+        gapParts.isEmpty &&
+        hostPart.start == start &&
+        hostPart.duration == duration;
+    if (unchanged) {
+      _bindCaptionToHost(d, cue, hostId, nextVersion: nextVersion);
+      next.add(cue);
+      continue;
+    }
+    if (locked.contains(cue['trackId'])) {
+      throw const StudioException('FIELD_LOCKED');
+    }
+    if (hostPart != null) {
+      _writeCaptionTimeline(
+        cue,
+        hostPart.start,
+        hostPart.duration,
+        nextVersion,
+      );
+      _bindCaptionToHost(d, cue, hostId, nextVersion: nextVersion);
+      next.add(cue);
+    }
+    for (final part in gapParts) {
+      final remnant = hostPart == null && identical(part, gapParts.first)
+          ? cue
+          : _cloneCaptionMap(cue);
+      if (!identical(remnant, cue) || hostPart != null) {
+        remnant['id'] = newId();
+        remnant['version'] = nextVersion != null
+            ? nextVersion(remnant['id'] as String)
+            : '1';
+      }
+      _writeCaptionTimeline(remnant, part.start, part.duration, null);
+      _makeCaptionAbsolute(remnant, null);
+      next.add(remnant);
+    }
+  }
+  d['captions'] = next;
+}

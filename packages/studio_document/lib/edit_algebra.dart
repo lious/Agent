@@ -1040,7 +1040,9 @@ ProjectDocument applyEdit(
     return _setMarkers(before, operation, nextVersion);
   }
   if ((before.toJson()['captions'] as List).isNotEmpty &&
-      operation is! AppendVideoAsset) {
+      operation is! AppendVideoAsset &&
+      operation is! SplitClip &&
+      !(operation is TrimClip && !operation.ripple)) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1052,6 +1054,21 @@ ProjectDocument applyEdit(
     _ => false,
   };
   final d = before.toJson();
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
+  ({Q start, Q end})? leaveGapBounds;
+  if (operation is TrimClip && !operation.ripple) {
+    for (final track in d['sequences'][0]['tracks'] as List) {
+      for (final item in track['items']) {
+        if (item['id'] == operation.clipId && item['source'] != null) {
+          final start = Q.fromJson(item['timelineRange']['start']);
+          leaveGapBounds = (
+            start: start,
+            end: start + Q.fromJson(item['timelineRange']['duration']),
+          );
+        }
+      }
+    }
+  }
   final s = d['sequences'][0];
   final tracks = s['tracks'] as List;
   if (tracks.isEmpty && operation is! AppendVideoAsset) {
@@ -1526,6 +1543,45 @@ ProjectDocument applyEdit(
   s['duration'] = end.toJson();
   s['version'] = nextVersion(s['id'] as String);
   _normalizeOpacityOwners(d, nextVersion, newId, before, operation);
+  if (operation is SplitClip) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    applyCaptionsAfterSplit(d, nextVersion: nextVersion);
+    applyMarkersAfterSplit(d);
+  } else if (operation is TrimClip && !operation.ripple) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    if (leaveGapBounds != null) {
+      Q start = Q.of(0);
+      Q end = Q.of(0);
+      var found = false;
+      for (final track in d['sequences'][0]['tracks'] as List) {
+        for (final item in track['items']) {
+          if (item['id'] == operation.clipId && item['source'] != null) {
+            start = Q.fromJson(item['timelineRange']['start']);
+            end = start + Q.fromJson(item['timelineRange']['duration']);
+            found = true;
+          }
+        }
+      }
+      if (found) {
+        applyCaptionsAfterLeaveGapTrim(
+          d,
+          hostId: operation.clipId,
+          oldStart: leaveGapBounds.start,
+          oldEnd: leaveGapBounds.end,
+          newStart: start,
+          newEnd: end,
+          newId: newId,
+          nextVersion: nextVersion,
+        );
+        applyMarkersAfterLeaveGapTrim(
+          d,
+          hostId: operation.clipId,
+          newStart: start,
+          newEnd: end,
+        );
+      }
+    }
+  }
   final after = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(after);
   return after;

@@ -61,6 +61,37 @@ ProjectDocument _persistentAudioEdit(
       s = d['sequences'][0],
       tracks = s['tracks'] as List,
       groups = d['linkGroups'] as List;
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
+  ({Q start, Q end, String id})? leaveGapHost;
+  final leaveGapHostIds = <String>[];
+  if (operation is TrimClip && !operation.ripple) {
+    for (final t in tracks) {
+      for (final c in t['items']) {
+        if (c['id'] == operation.clipId && c['source'] != null) {
+          final cs = Q.fromJson(c['timelineRange']['start']);
+          leaveGapHost = (
+            start: cs,
+            end: cs + Q.fromJson(c['timelineRange']['duration']),
+            id: operation.clipId,
+          );
+          leaveGapHostIds.add(operation.clipId);
+          final gid = c['linkGroupId'];
+          if (gid != null) {
+            for (final g in groups) {
+              if (g['id'] == gid) {
+                for (final m in g['members']) {
+                  final mid = m['clipId'] as String;
+                  if (!leaveGapHostIds.contains(mid)) {
+                    leaveGapHostIds.add(mid);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   final changed = <String>{};
   Q start(Map c) => Q.fromJson(c['timelineRange']['start']);
   Q duration(Map c) => Q.fromJson(c['timelineRange']['duration']);
@@ -233,7 +264,9 @@ ProjectDocument _persistentAudioEdit(
     t['muted'] = operation.muted;
     t['solo'] = operation.solo;
   } else {
-    if ((d['captions'] as List).isNotEmpty) {
+    if ((d['captions'] as List).isNotEmpty &&
+        !(operation is SplitClip ||
+            (operation is TrimClip && !operation.ripple))) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
     final key = switch (operation) {
@@ -419,6 +452,47 @@ ProjectDocument _persistentAudioEdit(
   s['duration'] = maximum.toJson();
   s['version'] = version(s['id'] as String);
   _normalizeOpacityOwners(d, version, id, before, operation);
+  if (operation is SplitClip) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+    applyCaptionsAfterSplit(d, nextVersion: version);
+    applyMarkersAfterSplit(d);
+  } else if (operation is TrimClip &&
+      !operation.ripple &&
+      leaveGapHost != null) {
+    Q ns = leaveGapHost.start;
+    Q ne = leaveGapHost.end;
+    var found = false;
+    for (final t in tracks) {
+      for (final c in t['items']) {
+        if (c['id'] == leaveGapHost.id && c['source'] != null) {
+          ns = start(c as Map);
+          ne = end(c);
+          found = true;
+        }
+      }
+    }
+    if (found) {
+      applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+      for (final hostId in leaveGapHostIds) {
+        applyCaptionsAfterLeaveGapTrim(
+          d,
+          hostId: hostId,
+          oldStart: leaveGapHost.start,
+          oldEnd: leaveGapHost.end,
+          newStart: ns,
+          newEnd: ne,
+          newId: id,
+          nextVersion: version,
+        );
+        applyMarkersAfterLeaveGapTrim(
+          d,
+          hostId: hostId,
+          newStart: ns,
+          newEnd: ne,
+        );
+      }
+    }
+  }
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

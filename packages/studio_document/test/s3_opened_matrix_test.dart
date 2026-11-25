@@ -43,15 +43,20 @@ Q seqDur(ProjectDocument p) =>
 String content(ProjectDocument p) =>
     contentHash(p.toJson()..remove('revision'));
 
-String videoA(ProjectDocument p) => media(p)
-    .where((c) => c['trackId'] == p.toJson()['sequences'][0]['tracks'][0]['id'])
-    .reduce(
-      (a, b) =>
-          Q.fromJson(a['timelineRange']['start']) <=
-              Q.fromJson(b['timelineRange']['start'])
-          ? a
-          : b,
-    )['id'] as String;
+String videoA(ProjectDocument p) =>
+    media(p)
+            .where(
+              (c) =>
+                  c['trackId'] == p.toJson()['sequences'][0]['tracks'][0]['id'],
+            )
+            .reduce(
+              (a, b) =>
+                  Q.fromJson(a['timelineRange']['start']) <=
+                      Q.fromJson(b['timelineRange']['start'])
+                  ? a
+                  : b,
+            )['id']
+        as String;
 
 String? audioId(ProjectDocument p) {
   final tracks = p.toJson()['sequences'][0]['tracks'] as List;
@@ -64,7 +69,12 @@ String? audioId(ProjectDocument p) {
   return null;
 }
 
-ProjectDocument plantS3Sources(ProjectDocument p, String a, String b, String c) {
+ProjectDocument plantS3Sources(
+  ProjectDocument p,
+  String a,
+  String b,
+  String c,
+) {
   final d = jsonDecode(jsonEncode(p.toJson())) as Map<String, dynamic>;
   void plant(String id, Q start) {
     for (final t in d['sequences'][0]['tracks']) {
@@ -154,10 +164,7 @@ void main() {
     expect(seqDur(p), f(450));
     expect(sourceStartOf(p, a), f(30));
     assertPure(p, () {
-      expect(
-        () => move.change(p, MoveClips([a], f(30))),
-        code('COLLISION'),
-      );
+      expect(() => move.change(p, MoveClips([a], f(30))), code('COLLISION'));
       expect(
         () => move.change(p, MoveClips([a], Q.of(0) - f(30))),
         code('NEGATIVE_TIMELINE_START'),
@@ -190,20 +197,40 @@ void main() {
     expect(seqDur(split), f(450));
     expect(p.toJson()['assets'], split.toJson()['assets']);
     assertPure(p, () {
-      expect(() => move.change(p, SplitClip(a, Q.of(0), 'x')), throwsA(isA<StudioException>()));
-      expect(() => move.change(p, SplitClip(a, f(150), 'x')), throwsA(isA<StudioException>()));
-      expect(() => move.change(p, SplitClip(a, Q.of(1, 100), 'x')), throwsA(isA<StudioException>()));
-    });
-    // Caption-bearing projects still refuse SplitClip as a whole group.
-    final withCue = attachCue(p, id: 'cue-1', start: f(15));
-    expect(content(withCue), isNot(content(p)));
-    assertPure(withCue, () {
       expect(
-        () => move.change(withCue, SplitClip(a, f(60), 's3-a-right')),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+        () => move.change(p, SplitClip(a, Q.of(0), 'x')),
+        throwsA(isA<StudioException>()),
+      );
+      expect(
+        () => move.change(p, SplitClip(a, f(150), 'x')),
+        throwsA(isA<StudioException>()),
+      );
+      expect(
+        () => move.change(p, SplitClip(a, Q.of(1, 100), 'x')),
+        throwsA(isA<StudioException>()),
       );
     });
-    expect(withCue.toJson()['captions'][0]['text'], 'hello');
+    // A cue wholly on the left remnant stays clipLocal; text and time stay.
+    final withCue = attachCue(p, id: 'cue-1', start: f(15));
+    expect(content(withCue), isNot(content(p)));
+    final splitWithCue = move.change(
+      withCue,
+      SplitClip(a, f(60), 's3-a-right'),
+    );
+    expect(splitWithCue.toJson()['captions'][0]['text'], 'hello');
+    expect(splitWithCue.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
+    expect(splitWithCue.toJson()['captions'][0]['anchor']['clipId'], a);
+    expect(
+      Q.fromJson(
+        splitWithCue.toJson()['captions'][0]['timelineRange']['start'],
+      ),
+      f(15),
+    );
+    expect(content(withCue), isNot(content(splitWithCue)));
+    expect(
+      content(withCue),
+      content(ProjectDocument.fromJson(withCue.toJson())),
+    );
   });
 
   test('s3 insert: paste 60 frames at 150 shifts B and C; spanning audio splits; locked sync refuses', () {
@@ -213,17 +240,15 @@ void main() {
       move.change(p, TrimClip(a, 'out', Q.of(0) - f(90))),
       [a],
     );
-    final out = move.change(
-      p,
-      PasteClips(payload, at: f(150), mode: 'insert'),
-    );
+    final out = move.change(p, PasteClips(payload, at: f(150), mode: 'insert'));
     expect(startOf(out, a), Q.of(0));
     expect(durOf(out, a), Q.of(1));
     expect(startOf(out, 's3-b'), f(210));
     expect(sourceStartOf(out, 's3-b'), f(60));
     expect(startOf(out, 's3-c'), f(360));
     expect(seqDur(out), f(510));
-    final copies = media(out).where((c) => !{a, 's3-b', 's3-c'}.contains(c['id']));
+    final copies = media(out)
+        .where((c) => !{a, 's3-b', 's3-c'}.contains(c['id']));
     expect(copies, hasLength(1));
     expect(Q.fromJson(copies.single['timelineRange']['start']), f(150));
     expect(Q.fromJson(copies.single['timelineRange']['duration']), f(60));
@@ -242,7 +267,9 @@ void main() {
       return track['kind'] == 'audio';
     }).toList();
     expect(audios, hasLength(2));
-    final left = audios.singleWhere((c) => Q.fromJson(c['timelineRange']['start']) == Q.of(0));
+    final left = audios.singleWhere(
+      (c) => Q.fromJson(c['timelineRange']['start']) == Q.of(0),
+    );
     final right = audios.singleWhere((c) => c['id'] != left['id']);
     expect(Q.fromJson(left['timelineRange']['duration']), f(150));
     expect(Q.fromJson(right['timelineRange']['start']), f(210));
@@ -256,7 +283,10 @@ void main() {
     final locked = ProjectDocument.fromJson(d);
     assertPure(locked, () {
       expect(
-        () => move.change(locked, PasteClips(payload, at: f(150), mode: 'insert')),
+        () => move.change(
+          locked,
+          PasteClips(payload, at: f(150), mode: 'insert'),
+        ),
         code('SYNC_LOCKED'),
       );
     });
@@ -277,7 +307,8 @@ void main() {
     expect(durOf(out, a), f(120));
     expect(sourceStartOf(out, a), f(30));
     expect(sourceDurOf(out, a), f(120));
-    final copies = media(out).where((c) => !{a, 's3-b', 's3-c'}.contains(c['id']));
+    final copies = media(out)
+        .where((c) => !{a, 's3-b', 's3-c'}.contains(c['id']));
     expect(copies, hasLength(1));
     expect(Q.fromJson(copies.single['timelineRange']['start']), f(120));
     expect(Q.fromJson(copies.single['timelineRange']['duration']), f(90));
@@ -382,13 +413,22 @@ void main() {
     });
 
     final withCue = attachCue(p, id: 'cue-1', start: f(15));
-    assertPure(withCue, () {
-      expect(
-        () => move.change(withCue, TrimClip(a, 'out', Q.of(0) - f(15))),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    });
-    expect(withCue.toJson()['captions'][0]['text'], 'hello');
+    final trimmedCue = move.change(
+      withCue,
+      TrimClip(a, 'out', Q.of(0) - f(15)),
+    );
+    expect(trimmedCue.toJson()['captions'][0]['text'], 'hello');
+    expect(trimmedCue.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
+    expect(
+      Q.fromJson(trimmedCue.toJson()['captions'][0]['timelineRange']['start']),
+      f(15),
+    );
+    expect(durOf(trimmedCue, a), f(135));
+    expect(startOf(trimmedCue, 's3-b'), f(150));
+    expect(
+      content(withCue),
+      content(ProjectDocument.fromJson(withCue.toJson())),
+    );
   });
 
   test('s3 ripple trim: A out -15 and A in +15 close or keep start 0 and shorten later content', () {
@@ -462,14 +502,13 @@ void main() {
       p,
       PasteClips(buildClipboard(p, [a, 's3-c']), at: f(450)),
     );
-    final copies = media(out)
-        .where((c) => !{a, 's3-b', 's3-c'}.contains(c['id']))
-        .toList()
-      ..sort(
-        (x, y) => Q.fromJson(
-          x['timelineRange']['start'],
-        ).compareTo(Q.fromJson(y['timelineRange']['start'])),
-      );
+    final copies =
+        media(out).where((c) => !{a, 's3-b', 's3-c'}.contains(c['id'])).toList()
+          ..sort(
+            (x, y) => Q
+                .fromJson(x['timelineRange']['start'])
+                .compareTo(Q.fromJson(y['timelineRange']['start'])),
+          );
     expect(copies, hasLength(2));
     expect(Q.fromJson(copies[0]['timelineRange']['start']), f(450));
     expect(Q.fromJson(copies[1]['timelineRange']['start']), f(750));
@@ -480,7 +519,10 @@ void main() {
     );
     expect(startOf(out, a), Q.of(0));
     expect(startOf(out, 's3-c'), f(300));
-    expect(jsonEncode(out.toJson()['assets']), jsonEncode(p.toJson()['assets']));
+    expect(
+      jsonEncode(out.toJson()['assets']),
+      jsonEncode(p.toJson()['assets']),
+    );
   });
 
   test('captions and markers follow opened commands; lift of a clipLocal-marker host refuses; no silent drop', () {
@@ -516,11 +558,15 @@ void main() {
       ),
     );
     expect(
-      (p.toJson()['captions'] as List).singleWhere((c) => c['id'] == 'cue-local')['anchor']['kind'],
+      (p.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-local',
+      )['anchor']['kind'],
       'clipLocal',
     );
     expect(
-      (p.toJson()['captions'] as List).singleWhere((c) => c['id'] == 'cue-abs')['anchor']['kind'],
+      (p.toJson()['captions'] as List).singleWhere(
+        (c) => c['id'] == 'cue-abs',
+      )['anchor']['kind'],
       'absolute',
     );
 
@@ -528,46 +574,46 @@ void main() {
       p,
       RippleDeleteClips(const [], range: TimeRange(f(120), f(60))),
     );
-    final local = (closed.toJson()['captions'] as List)
-        .singleWhere((c) => c['id'] == 'cue-local');
-    final abs = (closed.toJson()['captions'] as List)
-        .singleWhere((c) => c['id'] == 'cue-abs');
+    final local = (closed.toJson()['captions'] as List).singleWhere(
+      (c) => c['id'] == 'cue-local',
+    );
+    final abs = (closed.toJson()['captions'] as List).singleWhere(
+      (c) => c['id'] == 'cue-abs',
+    );
     expect(local['text'], 'follow');
     expect(Q.fromJson(local['timelineRange']['start']), f(15));
     expect(abs['text'], 'stay');
     expect(Q.fromJson(abs['timelineRange']['start']), f(270));
-    final marks = {
-      for (final m in closed.toJson()['markers']) m['id']: m,
-    };
+    final marks = {for (final m in closed.toJson()['markers']) m['id']: m};
     expect(marks['mark-local']['label'], 'on-a');
     expect(Q.fromJson(marks['mark-local']['time']), f(30));
     expect(marks['mark-abs']['label'], 'stay');
     expect(Q.fromJson(marks['mark-abs']['time']), f(330));
 
     assertPure(p, () {
-      expect(
-        () => move.change(p, LiftClips([a])),
-        code('REF_NOT_FOUND'),
-      );
+      expect(() => move.change(p, LiftClips([a])), code('REF_NOT_FOUND'));
     });
     expect((p.toJson()['markers'] as List), hasLength(2));
     expect((p.toJson()['captions'] as List), hasLength(2));
   });
 
-  test('insert-move still leaves a source gap; auto-close is not a MoveClips mode', () {
-    final p = s3Abc();
-    final a = videoA(p);
-    final inserted = move.change(
-      p,
-      MoveClips([a], f(450), mode: 'insert', includeLinks: false),
-    );
-    expect(startOf(inserted, a), f(450));
-    expect(startOf(inserted, 's3-b'), f(150));
-    expect(startOf(inserted, 's3-c'), f(300));
-    expect(seqDur(inserted), greaterThan(f(450)));
-    expect(
-      () => MoveClips([a], f(30), mode: 'close'),
-      throwsA(isA<StudioException>()),
-    );
-  });
+  test(
+    'insert-move still leaves a source gap; auto-close is not a MoveClips mode',
+    () {
+      final p = s3Abc();
+      final a = videoA(p);
+      final inserted = move.change(
+        p,
+        MoveClips([a], f(450), mode: 'insert', includeLinks: false),
+      );
+      expect(startOf(inserted, a), f(450));
+      expect(startOf(inserted, 's3-b'), f(150));
+      expect(startOf(inserted, 's3-c'), f(300));
+      expect(seqDur(inserted), greaterThan(f(450)));
+      expect(
+        () => MoveClips([a], f(30), mode: 'close'),
+        throwsA(isA<StudioException>()),
+      );
+    },
+  );
 }

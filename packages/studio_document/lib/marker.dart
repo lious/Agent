@@ -507,3 +507,67 @@ void _rebindClipLocalMarkersAfterInterval(Map d) {
     }
   }
 }
+
+void _makeMarkerAbsolute(Map marker) {
+  if (marker['anchor']['kind'] == 'absolute' &&
+      marker['anchor']['clipId'] == null) {
+    return;
+  }
+  marker['anchor'] = {'kind': 'absolute', 'clipId': null};
+}
+
+/// Rebind a clipLocal marker to a remnant that still uniquely covers it.
+/// A marker that now spans the cut, or has no covering host, becomes
+/// absolute at the same sequence time rather than being dropped.
+void applyMarkersAfterSplit(Map d) {
+  final markers = d['markers'];
+  if (markers is! List || markers.isEmpty) {
+    return;
+  }
+  for (final raw in markers) {
+    final m = raw as Map;
+    if (m['anchor']['kind'] != 'clipLocal') {
+      continue;
+    }
+    final start = Q.fromJson(m['time']);
+    final duration = Q.fromJson(m['duration']);
+    final cover = coveringMarkerHostClipId(d, start, duration);
+    if (cover == null) {
+      _makeMarkerAbsolute(m);
+      continue;
+    }
+    if (m['anchor']['clipId'] != cover) {
+      m['anchor']['clipId'] = cover;
+    }
+  }
+}
+
+/// Leave-gap trim keeps sequence times. A clipLocal marker still covered by
+/// the trimmed host stays clipLocal; one that now sits in the vacated gap
+/// becomes absolute at the same time.
+void applyMarkersAfterLeaveGapTrim(
+  Map d, {
+  required String hostId,
+  required Q newStart,
+  required Q newEnd,
+}) {
+  final markers = d['markers'];
+  if (markers is! List || markers.isEmpty) {
+    return;
+  }
+  for (final raw in markers) {
+    final m = raw as Map;
+    if (m['anchor']['kind'] != 'clipLocal') {
+      continue;
+    }
+    if (m['anchor']['clipId'] != hostId) {
+      continue;
+    }
+    final start = Q.fromJson(m['time']);
+    final duration = Q.fromJson(m['duration']);
+    if (start >= newStart && start + duration <= newEnd) {
+      continue;
+    }
+    _makeMarkerAbsolute(m);
+  }
+}
