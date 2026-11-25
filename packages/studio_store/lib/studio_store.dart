@@ -445,11 +445,23 @@ final class DocumentRepository {
   void _registerDefinitions(ProjectDocument project) {
     final d = project.toJson();
     final definitions = <Map<String, dynamic>>[];
-    for (final a in d['assets'] as List) {
-      definitions.add(a as Map<String, dynamic>);
-    }
-    for (final c in d['captions'] as List) {
-      definitions.add(c as Map<String, dynamic>);
+    // Only declared versioned entities: opaque plugin/provider/extension maps
+    // and EntityRef lookalikes never allocate immutable definitions.
+    for (final table in [
+      'assets',
+      'captions',
+      'effects',
+      'transitions',
+      'imageDocuments',
+      'briefs',
+      'scripts',
+      'scenes',
+      'characters',
+      'shots',
+    ]) {
+      for (final entity in d[table] as List) {
+        definitions.add(entity as Map<String, dynamic>);
+      }
     }
     for (final seq in d['sequences'] as List) {
       final used = <String>{};

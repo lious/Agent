@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "1.0.0",
+  "increment": "1.6.0",
+  "checkedAt": "2026-11-25T15:20:02.582998+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passedRestrictedPersistentAudioAndSemanticSlice",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "baselineCommit": "c0dbbb951893c32e60f9e7d8b89f59e1f48bafdf",
+  "branch": "feat/studio-foundation-20261125",
+  "scope": "Original generic audio Clips/LinkGroups persisted through original SQLite edit/CAS/undo/archive/fork/reopen; actual shared native UI and real default AAC export. Broader pure-Dart Schema semantics, not full original task or timeline playback.",
+  "counts": {
+    "nativeRegressionTests": 160,
+    "realChromeTests": 9,
+    "realOsKeyringNativeUiTests": 1,
+    "dartFlutterTotal": 170,
+    "skipped": 0,
+    "pythonToolTests": 6,
+    "nativeCTestCases": 3,
+    "internalSilentCancelExperiments": 10,
+    "internalActiveAACCancelExperiments": 10,
+    "internalSigkillExperiments": 50,
+    "cleanReleaseBuilds": 6,
+    "releaseFirstFrameStarts": 6,
+    "cleanAbiProbes": 3
+  },
+  "counting": "160+9+1=170 distinct passing Dart/Flutter cases,32 more native cases than baseline128. The21 semantic/6 persistent-domain/4 SQL+fork/1 clicked-UI cases are tests, not task completions.1000 exact inverse edits/3000-route assertions, focused reruns,60s pulses,20seek points,20cancels,50SIGKILL and historical migrations are not extra passing test cases. Release probes are metadata startup, not full packaged audio/device-clock tests.",
+  "original87": {
+    "complete": 0,
+    "partial": 22,
+    "planned": 52,
+    "blocked": 13
+  },
+  "separateXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "original104SnapshotsChanged": false,
+  "originalAcceptanceDependenciesAndStatusesPreserved": true,
+  "closedProject2SchemaChanged": false,
+  "frozenSourceHashesMatch": true,
+  "fixtureAndSchemaHashes": {
+    "fixtures/project/local-video.json": "2d1e2b530e780a20ae93a393edb01ad23f212b00df1ee43db58b80d9ae70acb7",
+    "fixtures/project/semantic-rich.json": "4c0c4902158f138c5cc131f117829ce1c3c2e1c407c0d042bc55e309a354b8fc",
+    "packages/studio_document/lib/src/project_schema.dart": "f1bf111ea4803321d4ba8c5e663dd6e80e81d5da774d24305da0e7ed20f5de48"
+  },
+  "userPath": [
+    "Select actual supported audio-bearing video and acknowledge existing video import scope; original bytes stay in local verified CAS",
+    "Select video; explicitly extract one pinned audio stream into a separate durable audio Clip and preserve LinkGroup. Actual stream PTS origins and48k timeline grid are reconciled",
+    "Linked split/move/non-ripple trim/slip/delete are atomic domain operations; UI exposes linked split and explicitly labelled leave-gap trim/delete. Persisted track mute/unmute and unlink keep both clips",
+    "Actual UI save/archive/restore-as-fork fixes all AV group/member/anchor backlinks; independent SDK close/reopen and archive/fork/export exercised",
+    "Normal export now includes actual PCM→Dart AudioBus→AAC automatically from persistent audio clips. Double-requesting old embedded mode refuses instead of double-mixing; actual mute output independently decoded",
+    "These are real short-media UI/SDK file exports, not in-app timeline listening. Existing60s qualification separately remains legacy embedded-source OFFLINE native codec/mux regression"
+  ],
+  "schemaSemantics": "Declared entity indexing, pinned current/retained metadata/version/ranges/maps, nest depth/cycles, reciprocal rights/routes/groups/effects/keyframes, caption/marker/image/story/provenance refs; full rich synthetic project roundtrip and21 direct cases. Unknown opaque numeric IDs/versions/Q lookalikes remain opaque. Iterative3000-node routing/cycle validation; no invented external provider/font/job FK.",
+  "sql": "Actual event-trigger fault after audio definitions/pins restores all table counts/head; exact receipt retry/idempotency, stale CAS, undo/reopen, never-reused retired unlinked audio split version, and direct AV fork backlink regression. Rich unsupported app writes still refuse with no definition side effects.",
+  "dspMeasurements": [
+    {
+      "sourceSampleRate": 44100,
+      "outputSampleRate": 48000,
+      "contentSamples": 144000,
+      "gainRatio": 0.501650567355317,
+      "outputHash": "sha256:accbb4b79239f7e7d62f2560b44c56c959ba7522c7efa3e1769035abc03907e2"
+    },
+    {
+      "pcmImpulseSamples": 48000,
+      "resampledPeakSample": 24000,
+      "trimmedPeakSample": 23000,
+      "resampleDrainSamples": 48000,
+      "sourceRate": 44100
+    }
+  ],
+  "offline60s": {
+    "evidence": "offline-60s.json",
+    "videoFrames": 1800,
+    "contentAudioSamples": 2880000,
+    "maxAbsAVOffsetMs": 0.0,
+    "method": "Synthetic60 pulse/flash independent file threshold observations,1800 video frames/60s DTS/endpoints; NOT AudioSink, presented-device clock, zero-latency or physical listening qualification"
+  },
+  "sqlite": {
+    "version": "3.54.1",
+    "gate": "Exact approved SOURCE_ID/THREADSAFE unchanged; system3.46.1 rejected",
+    "schema": 7,
+    "migrations": [
+      "migration-v4.json",
+      "migration-v5.json",
+      "migration-v6.json"
+    ]
+  },
+  "toolchain": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "chrome": "156.0.8078.47",
+    "nativeCompiler": "Clang19.1.7 (unchanged cached native build)",
+    "ffmpeg": "7.1.5-0+deb13u1",
+    "swresample": "5.3.100",
+    "installation": "Reused existing official pinned Flutter SDK, approved SQLite3.54.1 source build and Debian FFmpeg dev libraries; no new dependency/model/toolchain download in this increment"
+  },
+  "webTransport": {
+    "positiveQualificationRerun": false,
+    "positiveEncryptedTransportPassed": false,
+    "status": "Previously recorded managed zero-host-ICE policy block retained",
+    "evidence": "../audio-aac/rtc-positive-blocked.json",
+    "policyFlagsTransportOrRelayChanged": false,
+    "ordinaryChromeRegression": "browser.json:9 actual Chrome tests and release Web build; NOT physical/browser-native RTC success"
+  },
+  "bounds": {
+    "audioTracks": 1,
+    "videoTracks": 1,
+    "captionTracks": 1,
+    "extractionRate": 1,
+    "offlineAudioSeconds": 120,
+    "audioRegions": 128,
+    "dspFramesPerBlock": 1024,
+    "sampleRate": 48000,
+    "channels": 2,
+    "decodeHistorySeconds": 600
+  },
+  "review": "Three actual self-review/fix rounds in REVIEW.md, including real archive fork user-path bug, unlinked audio split version reuse, UI ripple mismatch and opaque/graph hardening. Not independent audit. Exact initial failures retained in failures.json and initial-full-gate-fork-failure.json.",
+  "subcriteriaAudit": [
+    {
+      "tasks": [
+        "I-002"
+      ],
+      "verifiedHere": "Rich closed-Schema domain roundtrip; semantic FK/map/link/image/story/effect failures, opaque preservation, depth8/9/cycles and3000-route bounds; structure/business errors separate",
+      "remaining": "Full original resource/historical-definition closure, all image/story/effect/business constraints, supported app read-only paths; not all original synthetic/prod data/features"
+    },
+    {
+      "tasks": [
+        "I-003",
+        "I-006",
+        "I-009"
+      ],
+      "verifiedHere": "Persistent original AV Clips/links/track state with actual transactional failures, exact edits, versions, undo, archive-fork/reopen and real muted/audible exports",
+      "remaining": "Original full Schema dependency; all linked trim/ripple/roll/slide/handles/random matrix; caption/source retime; independent audio import; full multitrack routing/effects/duck/manual automation"
+    },
+    {
+      "tasks": [
+        "I-023",
+        "I-024",
+        "V-002"
+      ],
+      "verifiedHere": "Actual short persistent-clip SDK/UI default AAC and existing independent60s OFFLINE file/cancel/frozen-revision/atomic-output qualification",
+      "remaining": "Actual AudioSink/presented clock/ring/underrun/pause/rebind/timeline listening; RenderGraph/proxy/effects and P0/non-Linux/hardware matrix"
+    }
+  ],
+  "nextPriority": [
+    "I-023 real AudioSink bounded ring/presented-sample clock/pause/rebind with honest hardware qualification",
+    "I-002 remaining complete semantic/resource/app read-only closure",
+    "I-021 proxy/source-time mapping and full timeline RenderGraph",
+    "I-006/I-009 remaining linked/retime/routes/import semantics; then other executable original87/XD10"
+  ],
+  "notValidated": [
+    "all original87 full contracts",
+    "actual AudioSink/device presentation clock and in-app timeline listening",
+    "independent audio import or arbitrary multitrack/effect/duck pipeline",
+    "full RenderGraph/proxy/playback",
+    "positive browser-native RTC and physical multi-device distributed compute",
+    "iOS/Android/macOS/Windows or non-Linux hardware",
+    "models/large weights/paid or remote APIs/production deployment",
+    "P0/hardware/release transitive App SBOM or legal distribution qualification"
+  ],
+  "safety": "No Mac/other-device access, user-media upload, paid API, production deployment, large model download, OAuth elevation/workflow bypass, main merge or history rewrite. Existing codec license facts/allow_with_warning policy unchanged; privacy/consent/auth/budgets/fence/revocation remain enforced."
+}

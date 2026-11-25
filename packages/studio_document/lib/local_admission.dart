@@ -10,7 +10,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
     'effects',
     'transitions',
     'markers',
-    'linkGroups',
     'selectionGroups',
     'imageDocuments',
     'briefs',
@@ -90,15 +89,24 @@ void requireLocalEditingWritable(ProjectDocument project) {
   }
   final tracks = s['tracks'] as List;
   final video = tracks.where((t) => t['kind'] == 'video').toList(),
-      captionTracks = tracks.where((t) => t['kind'] == 'caption').toList();
+      captionTracks = tracks.where((t) => t['kind'] == 'caption').toList(),
+      audioTracks = tracks.where((t) => t['kind'] == 'audio').toList();
   if (video.length > 1 ||
       captionTracks.length > 1 ||
-      video.length + captionTracks.length != tracks.length ||
+      audioTracks.length > 1 ||
+      video.length + captionTracks.length + audioTracks.length !=
+          tracks.length ||
       (video.isNotEmpty && tracks[0]['kind'] != 'video')) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
   for (final t in tracks) {
-    if (t['busId'] != null || t['muted'] != false || t['solo'] != false) {
+    if (t['kind'] == 'audio') {
+      if (t['busId'] != s['masterBusId']) {
+        throw const StudioException('AUDIO_ROUTE_NOT_IMPLEMENTED');
+      }
+    } else if (t['busId'] != null ||
+        t['muted'] != false ||
+        t['solo'] != false) {
       throw const StudioException('FEATURE_NOT_IMPLEMENTED');
     }
   }
@@ -114,42 +122,60 @@ void requireLocalEditingWritable(ProjectDocument project) {
     cues.add(CaptionCue.fromProjectJson(c as Map<String, dynamic>));
   }
   CaptionStore(cues);
-  if (video.isEmpty) return;
-  final track = video.single;
-  for (final c in track['items']) {
-    if (c['source'] == null) continue;
-    if (c['source']['kind'] != 'asset' ||
-        c['timeMap']['kind'] != 'linear' ||
-        (c['effectIds'] as List).isNotEmpty ||
-        c['linkGroupId'] != null ||
-        c['selectionGroupId'] != null ||
-        c['shotId'] != null ||
-        c['candidateId'] != null ||
-        c['provenanceId'] != null) {
-      throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+  for (final group in d['linkGroups']) {
+    if (group['syncPolicy'] != 'preserve' ||
+        (group['members'] as List).length != 2) {
+      throw const StudioException('LINK_MODE_NOT_IMPLEMENTED');
     }
-    final source = c['source'];
-    final a = assets[source['id']];
-    if (a == null) throw const StudioException('REF_NOT_FOUND');
-    if (a['version'] != source['version']) {
-      throw const StudioException('SOURCE_VERSION_MISSING');
+    final kinds = <String>[];
+    for (final member in group['members']) {
+      final ts = tracks.where(
+        (t) => (t['items'] as List).any((c) => c['id'] == member['clipId']),
+      );
+      if (ts.length != 1) {
+        throw const StudioException('LINK_MEMBERSHIP_MISMATCH');
+      }
+      kinds.add(ts.single['kind'] as String);
     }
-    final streams = (a['streams'] as List).where(
-      (v) => v['id'] == source['streamId'] && v['type'] == 'video',
-    );
-    if (streams.length != 1) throw const StudioException('REF_NOT_FOUND');
-    final rate = Q.fromJson(c['timeMap']['rate']);
-    final tr = c['timelineRange'], sr = c['sourceRange'];
-    final start = Q.fromJson(sr['start']),
-        duration = Q.fromJson(sr['duration']);
-    if (rate <= Q.of(0) ||
-        start < Q.of(0) ||
-        duration <= Q.of(0) ||
-        rate * Q.fromJson(tr['duration']) != duration) {
-      throw const StudioException('TIME_MAP_MISMATCH');
+    if (!kinds.contains('video') || !kinds.contains('audio')) {
+      throw const StudioException('LINK_MODE_NOT_IMPLEMENTED');
     }
-    if (start + duration > Q.fromJson(streams.single['duration'])) {
-      throw const StudioException('SOURCE_OUT_OF_RANGE');
+  }
+  for (final track in [...video, ...audioTracks]) {
+    for (final c in track['items']) {
+      if (c['source'] == null) continue;
+      if (c['source']['kind'] != 'asset' ||
+          c['timeMap']['kind'] != 'linear' ||
+          (c['effectIds'] as List).isNotEmpty ||
+          c['selectionGroupId'] != null ||
+          c['shotId'] != null ||
+          c['candidateId'] != null ||
+          c['provenanceId'] != null) {
+        throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+      }
+      final source = c['source'];
+      final a = assets[source['id']];
+      if (a == null) throw const StudioException('REF_NOT_FOUND');
+      if (a['version'] != source['version']) {
+        throw const StudioException('SOURCE_VERSION_MISSING');
+      }
+      final streams = (a['streams'] as List).where(
+        (v) => v['id'] == source['streamId'] && v['type'] == track['kind'],
+      );
+      if (streams.length != 1) throw const StudioException('REF_NOT_FOUND');
+      final rate = Q.fromJson(c['timeMap']['rate']);
+      final tr = c['timelineRange'], sr = c['sourceRange'];
+      final start = Q.fromJson(sr['start']),
+          duration = Q.fromJson(sr['duration']);
+      if (rate <= Q.of(0) ||
+          start < Q.of(0) ||
+          duration <= Q.of(0) ||
+          rate * Q.fromJson(tr['duration']) != duration) {
+        throw const StudioException('TIME_MAP_MISMATCH');
+      }
+      if (start + duration > Q.fromJson(streams.single['duration'])) {
+        throw const StudioException('SOURCE_OUT_OF_RANGE');
+      }
     }
   }
 }

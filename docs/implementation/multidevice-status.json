@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "asOf": "2026-11-25T13:57:54.588530+08:00",
+  "asOf": "2026-11-25T15:09:47.760274+08:00",
   "timezone": "Asia/Shanghai",
   "sourceRequirements": [
     "t83u",
@@ -160,5 +160,6 @@
     "partial": 8,
     "planned": 1,
     "blocked": 1
-  }
+  },
+  "currentIncrementNote": "1.6 persistent audio/domain work does not upgrade XD acceptance; ordinary Chrome/native security regressions continue. Positive RTC policy failure retained from prior evidence, not redundantly rerun or bypassed; no physical/non-Linux claim."
 }

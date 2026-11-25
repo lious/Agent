@@ -66,6 +66,9 @@ final class StudioWorkspace {
   final Set<String> _selectedInputs = {};
   final DocumentRepository _repository;
   final _uuid = const Uuid();
+
+  /// Production editing entity IDs, shared with persistent-store allocation.
+  String newEntityId() => _uuid.v7();
   WriterToken? _writer;
   BlobStore? _blobs;
   NativeMedia? _media;
@@ -690,6 +693,15 @@ final class StudioWorkspace {
         .frameIndex(Q.fromJson(s['duration']), Rounding.tiesToEven)
         .toInt();
     if (count <= 0) throw const StudioException('EMPTY_SEQUENCE');
+    final persistentAudio = (s['tracks'] as List).any(
+      (t) =>
+          t['kind'] == 'audio' &&
+          (t['items'] as List).any((c) => c['source'] != null),
+    );
+    if (persistentAudio && includeEmbeddedAudio) {
+      throw const StudioException('AUDIO_SOURCE_MODE_AMBIGUOUS');
+    }
+    final renderAudio = persistentAudio || includeEmbeddedAudio;
     final assets = {for (final a in d['assets'] as List) a['id']: a};
     final segments = <Map<String, dynamic>>[];
     final audioSegments = <Map<String, dynamic>>[];
@@ -705,17 +717,18 @@ final class StudioWorkspace {
         final stream = (a['streams'] as List).singleWhere(
           (v) => v['id'] == clip['source']['streamId'],
         );
-        if (stream['variableFrameRate'] != false) {
+        if (track['kind'] == 'video' && stream['variableFrameRate'] != false) {
           throw const StudioException('VFR_RENDER_NOT_VALIDATED');
         }
         final color = stream['color'];
-        if (color == null ||
-            color['primaries'] != 'bt709' ||
-            color['transfer'] != 'bt709' ||
-            color['matrix'] != 'bt709' ||
-            color['range'] != 'limited' ||
-            color['bitDepth'] != 8 ||
-            color['alpha'] != 'none') {
+        if (track['kind'] == 'video' &&
+            (color == null ||
+                color['primaries'] != 'bt709' ||
+                color['transfer'] != 'bt709' ||
+                color['matrix'] != 'bt709' ||
+                color['range'] != 'limited' ||
+                color['bitDepth'] != 8 ||
+                color['alpha'] != 'none')) {
           throw const StudioException('COLOR_POLICY_REQUIRED');
         }
         final file = await _blobs!.resolve(a['originalBlobHash'] as String);
@@ -735,6 +748,37 @@ final class StudioWorkspace {
           throw const StudioException('SOURCE_STREAM_CHANGED');
         }
         final index = raw['index'] as int;
+        if (track['kind'] == 'audio') {
+          if (raw['type'] != 'audio') {
+            throw const StudioException('AUDIO_STREAM_REQUIRED');
+          }
+          final start = sampleIndex(
+                Q.fromJson(clip['timelineRange']['start']),
+                48000,
+                Rounding.tiesToEven,
+              ).toInt(),
+              end = sampleIndex(
+                Q.fromJson(clip['timelineRange']['start']) +
+                    Q.fromJson(clip['timelineRange']['duration']),
+                48000,
+                Rounding.tiesToEven,
+              ).toInt();
+          final origin =
+              Q(BigInt.parse(raw['startPTS'] as String), BigInt.one) *
+              Q.of(raw['timeBase']['n'] as int, raw['timeBase']['d'] as int);
+          audioSegments.add({
+            'path': file.absolute.path,
+            'streamIndex': index,
+            'destStart': start,
+            'sampleCount': end - start,
+            'startSample': sampleIndex(
+              origin + Q.fromJson(clip['sourceRange']['start']),
+              48000,
+              Rounding.tiesToEven,
+            ).toInt(),
+          });
+          continue;
+        }
         if (includeEmbeddedAudio) {
           final audios = (fact['streams'] as List)
               .where((v) => v['type'] == 'audio')
@@ -795,8 +839,9 @@ final class StudioWorkspace {
     Map<String, dynamic>? audioPcm;
     try {
       checkCanceled();
-      if (includeEmbeddedAudio) {
-        if (!audioSegments.any((v) => v['streamIndex'] != null)) {
+      if (renderAudio) {
+        if (!persistentAudio &&
+            !audioSegments.any((v) => v['streamIndex'] != null)) {
           throw const StudioException('EMBEDDED_AUDIO_REQUIRED');
         }
         audioDirectory = await Directory.systemTemp.createTemp(
@@ -850,7 +895,7 @@ final class StudioWorkspace {
           Q.fromJson(sd['duration']) != Q.fromJson(s['duration'])) {
         throw const StudioException('EXPORT_VERIFICATION_FAILED');
       }
-      if (includeEmbeddedAudio) {
+      if (renderAudio) {
         final audios = (verified['streams'] as List)
             .where((v) => v['type'] == 'audio')
             .toList();
@@ -897,7 +942,7 @@ final class StudioWorkspace {
         'snapshotHash': snapshot.hash,
         'revision': snapshot.revision.toString(),
         'outputHash': hash,
-        'audio': includeEmbeddedAudio ? 'aac' : 'video-only',
+        'audio': renderAudio ? 'aac' : 'video-only',
         if (audioPcm != null) 'audioSamples': audioPcm['sampleCount'],
         'warnings': [
           ...?audioPcm?['warnings'] as List?,

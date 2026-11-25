@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T14:36:32.773063+08:00",
+  "asOf": "2026-11-25T15:09:47.760274+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,12 +12,13 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-002 complete original Schema/invariants and I-009 persistent AudioClip/link-group/time-map semantics; embedded source-audio opt-in is NOT that model",
-    "I-023 actual AudioSink bounded ring and presented-sample clock, pause/rebind/underrun; current60s<=20ms is OFFLINE file qualification, not playback",
-    "I-021 proxy generation/strict source-time map and full timeline RenderGraph preview; actual source thumbnails/LRU remain qualified",
-    "I-024 full effect/RenderGraph plan and remaining original upstream acceptance; extend60s synthetic qualification to original P0 device matrix",
-    "XD-003 positive WebRTC remains managed-policy blocked/nonzero; do not bypass. Native bridge/browser outbox/reconnect/recovery/blob are implementation work, not external blockers",
-    "Continue executable original87/XD10; no need for per-batch approval, non-Linux and physical devices remain separately unverified"
+    "I-023 real bounded AudioSink ring/presented-sample clock, underrun/pause/rebind and actual timeline listening; offline file sync is not presentation latency",
+    "I-002 remaining original full semantic/resource closure and supported read-only app path; typed rich Schema roundtrip does not complete all original business contracts",
+    "I-006/I-009 linked ripple/roll/slide, fractional video/audio-grid policy, source/clip-local caption reproject, independent audio import and full routing/effect/duck contracts",
+    "I-021 proxy generation/strict source-time map and full timeline RenderGraph preview; current actual source-thumbnail indexed seek/LRU remains qualified",
+    "I-024 full upstream RenderGraph/effects/proxy and P0 device acceptance; preserved real default persistent-audio AAC export and frozen revision",
+    "XD-003 managed zero-host-ICE policy remains recorded blocker; no unchanged positive qualification reruns or policy/relay bypass. Other executable original87/XD10 work continues",
+    "Continue same checkout/feature branch without per-batch approvals; physical devices/non-Linux remain separately unverified"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -479,10 +480,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls; both Linux native hosts build with actual OS secure-storage plugin and optional peer session panel, default no endpoint. No all-platform parity claim.",
+      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls; both Linux native hosts build with actual OS secure-storage plugin and optional peer session panel, default no endpoint. No all-platform parity claim. Added actual persistent-audio extraction, linked split/non-ripple trim/undo, mute/unlink/archive-fork/default-AAC controls to shared native UI. UI split IDs now use shared SDK UUIDv7. Both Linux hosts only; no new platform parity claim.",
       "evidence": [
         "evidence/local-video/verification.json",
-        "evidence/peer-ui-blob/V-001.json"
+        "evidence/peer-ui-blob/V-001.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "flutter analyze/dart test零错误；两App同asset字节但session不可互读；runner未知任务非零退出。",
       "remainingScope": "含package依赖/本地端口/namespace；不含模型或真实商业后端。",
@@ -498,9 +500,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Project schema, strict bounded duplicate-key JSON, rational time, pinned source references and narrow local-video semantic admission",
+      "implementedScope": "Broader original Project2 structural/domain closure: only declared entities allocate IDs; typed pinned sources/retained metadata/map endpoints/nest graph, reciprocal routes/groups/rights/effects/keyframes, caption/marker/image/story/provenance refs. Rich full-root image/story/opaque-plugin fixture roundtrips,21 direct semantic tests incl3000-node routes; opaque provider/extension numeric versions and Q lookalikes remain uninterpreted. Full resource/historical/effect/business/app read-only closure remains unfinished.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "1万次有理运算/往返无漂移；非法FK/交叠/overflow全拒；现有合成项目通过；结构与业务错误分开。",
       "remainingScope": "含全部现行Schema/语义/版本合同；不改闭合根塞新字段。",
@@ -516,13 +519,14 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope.",
+      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope. Added real persistent AV transaction tests: all-table event-failure rollback after pins/definitions, retry/idempotency, stale CAS, undo/reopen and retired unlinked-audio-ID version reuse. Rich unsupported projects still refuse before definition writes. AV archive-fork group/member/anchor backlinks remap correctly. Original upstream Schema and broader contracts remain incomplete.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/peer-tls-sqlite/sqlite-upgrade.json",
         "evidence/peer-tls-sqlite/verification.json",
         "evidence/peer-ui-blob/summary.json",
-        "evidence/recovery-adoption/summary.json"
+        "evidence/recovery-adoption/summary.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
       "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
@@ -575,9 +579,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Single-track normal/ripple trim, roll, slip, slide with locks, collision and source bounds; no linked multi-track propagation",
+      "implementedScope": "Single-track original edits plus linked video+audio split/move/non-ripple trim/slip/delete, prechecked partner locks, collision/source/grid failure atomicity, actual source-origin offsets and1000 exact trim/inverse operations. Unlink preserves both clips; selected-audio split allocates real immutable versions. Linked ripple/roll/slide, full handles/modes/random matrix and caption reprojection remain explicit unfinished scope.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "全部trim模式逐条含handles/跨链接/锁轨断言；1千随机合法输入长度/源范围守恒；失败不半写。",
       "remainingScope": "含轨锁/syncLock/link/unlink/多轨边界；不静默破同步。",
@@ -625,11 +630,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Original pure Dart bus/routing/gain/pan/mute/solo/automation domain plus persisted master controls through original edit/revision/CAS/no-op/undo/archive/reopen, and REAL offline decode→AudioBus→AAC gain/mute output. Full AudioClip/link/effects/duck integration remains missing.",
+      "implementedScope": "Original pure Dart AudioBus/routing/gain/pan/mute/solo domain plus durable generic audio Clips on audio tracks and reciprocal preserve LinkGroups. Explicit extraction/link/unlink/track-state edit commands use existing revision/CAS/undo/SQLite/archive/fork/reopen. Real default native PCM→Dart AudioBus→AAC export and track/master mute/gain measured; legacy transient embedded mode rejects double-source use. One local audio track/master route only; full effects/duck/retime/independent audio import/linked editing remain.",
       "evidence": [
         "evidence/caption-audio-harness/verification.json",
         "evidence/caption-audio-harness/multidevice.json",
-        "evidence/audio-aac/summary.json"
+        "evidence/audio-aac/summary.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "总线路由环拒绝；相同cue变速后音频锚点正确；手调音量/锁轨修改=0；silent track不混入。",
       "remainingScope": "含mute/solo/link/gain与路由；不偷启limiter。",
@@ -915,9 +921,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. NO AudioSink/ring/presented-device clock or switch qualification.",
+      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. NO AudioSink/ring/presented-device clock or switch qualification. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Still NO AudioSink/ring/presented-device clock, live timeline listening or switch qualification.",
       "evidence": [
-        "evidence/audio-aac/summary.json"
+        "evidence/audio-aac/summary.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",
@@ -935,10 +942,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Frozen snapshot/revision real native Main4/AAC48k encode/drain/MP4 mux; actual profile/level/pixel format/logical audio content/duration/hash verification then atomic publication. Actual60s sync/DTS/pattern test, concurrent head edit/EXPORT_BUSY and canceled existing-target preservation. Full RenderGraph/effects/proxy/upstream/P0 contracts remain.",
+      "implementedScope": "Frozen snapshot/revision real native Main4/AAC48k encode/drain/MP4 mux; actual profile/level/pixel format/logical audio content/duration/hash verification then atomic publication. Actual60s sync/DTS/pattern test, concurrent head edit/EXPORT_BUSY and canceled existing-target preservation. Full RenderGraph/effects/proxy/upstream/P0 contracts remain. Added default AAC export from durable audio clips, mutually-exclusive source-mode guard and actual linked edit/save/reopen/archive-fork UI/SDK path; native actual samples/cancel/atomic publication preserved. Full RenderGraph/proxy/effects/AudioSink/P0 acceptance remains.",
       "evidence": [
         "evidence/local-video/verification.json",
-        "evidence/audio-aac/summary.json"
+        "evidence/audio-aac/summary.json",
+        "evidence/persistent-audio/summary.json"
       ],
       "remainingAcceptance": "时长误差≤1帧、音画≤20ms、无黑/丢帧异常；失败/取消无损坏成片伪成功；revision固定不被编辑中途改。",
       "remainingScope": "含H264/AAC基础preset/drain/DTS/校验；不默认smart-render。",

@@ -31,6 +31,10 @@ class _FoundationAppState extends State<FoundationApp>
   final _peerHash = TextEditingController();
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
+  bool get _hasPersistentAudio =>
+      (widget.workspace.current.toJson()['sequences'][0]['tracks'] as List).any(
+        (t) => t['kind'] == 'audio',
+      );
   bool _includeEmbeddedAudio = false;
   ui.Image? _previewImage;
   String? _peerAdoptionId;
@@ -111,11 +115,11 @@ class _FoundationAppState extends State<FoundationApp>
 
   List<dynamic> get _clips {
     final tracks = _project.toJson()['sequences'][0]['tracks'] as List;
-    return tracks.isEmpty
-        ? []
-        : (tracks[0]['items'] as List)
-              .where((c) => c['source'] != null)
-              .toList();
+    return [
+      for (final track in tracks)
+        for (final c in track['items'])
+          if (c['source'] != null) c,
+    ];
   }
 
   Q _delta() {
@@ -305,6 +309,63 @@ class _FoundationAppState extends State<FoundationApp>
             }),
       child: const Text('Collect unreferenced local material (explicit only)'),
     ),
+    const Text(
+      'Persisted audio clips are exported automatically; linked edits affect BOTH clips. No AudioSink/timeline playback yet.',
+    ),
+    OutlinedButton(
+      key: const Key('extract-persistent-audio'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _edit(() {
+              final c = _clips.singleWhere((c) => c['id'] == _selected),
+                  asset = (_project.toJson()['assets'] as List).singleWhere(
+                    (a) => a['id'] == c['source']['id'],
+                  );
+              final streams = (asset['streams'] as List)
+                  .where((s) => s['type'] == 'audio')
+                  .toList();
+              if (streams.length != 1) {
+                throw const StudioException('AUDIO_STREAM_SELECTION_REQUIRED');
+              }
+              _includeEmbeddedAudio = false;
+              return ExtractAudioClip(
+                _selected!,
+                streams.single['id'] as String,
+              );
+            }),
+      child: const Text(
+        'Create persistent AUDIO clip + explicit AV link from selected video',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('unlink-persistent-audio'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _edit(() {
+              final c = _clips.singleWhere((c) => c['id'] == _selected);
+              if (c['linkGroupId'] == null) {
+                throw const StudioException('LINK_GROUP_NOT_FOUND');
+              }
+              return UnlinkAudioVideo(c['linkGroupId'] as String);
+            }),
+      child: const Text('Unlink selected pair (keep BOTH clips)'),
+    ),
+    for (final t in _project.toJson()['sequences'][0]['tracks'] as List)
+      if (t['kind'] == 'audio')
+        CheckboxListTile(
+          key: Key('audio-track-mute-${t['id']}'),
+          value: t['muted'] as bool,
+          onChanged: _busy
+              ? null
+              : (v) => _edit(
+                  () => SetAudioTrackState(
+                    t['id'] as String,
+                    muted: v ?? false,
+                    solo: t['solo'] as bool,
+                  ),
+                ),
+          title: const Text('Persisted AUDIO track mute'),
+        ),
     for (final c in _clips)
       ListTile(
         key: Key('clip-${c['id']}'),
@@ -387,7 +448,7 @@ class _FoundationAppState extends State<FoundationApp>
                   return SplitClip(
                     _selected!,
                     Q.fromJson(c['timelineRange']['start']) + _delta(),
-                    '${DateTime.now().microsecondsSinceEpoch}-split',
+                    widget.workspace.newEntityId(),
                   );
                 }),
           child: const Text('Split'),
@@ -401,17 +462,23 @@ class _FoundationAppState extends State<FoundationApp>
                     _selected!,
                     'out',
                     Q.of(0) - _delta(),
-                    ripple: true,
+                    ripple: !_hasPersistentAudio,
                   ),
                 ),
-          child: const Text('Ripple trim out'),
+          child: Text(
+            _hasPersistentAudio ? 'Trim out (leave gap)' : 'Ripple trim out',
+          ),
         ),
         OutlinedButton(
           key: const Key('delete'),
           onPressed: _busy || _selected == null
               ? null
-              : () => _edit(() => DeleteClip(_selected!, ripple: true)),
-          child: const Text('Ripple delete'),
+              : () => _edit(
+                  () => DeleteClip(_selected!, ripple: !_hasPersistentAudio),
+                ),
+          child: Text(
+            _hasPersistentAudio ? 'Delete (leave gap)' : 'Ripple delete',
+          ),
         ),
       ],
     ),
@@ -472,7 +539,7 @@ class _FoundationAppState extends State<FoundationApp>
         ),
       ),
     const Text(
-      'Offline embedded audio export:48k stereo via Dart AudioBus + AAC. Explicit per-export option, NOT an AudioClip link or device playback clock.',
+      'Offline48k stereo via Dart AudioBus + AAC. Persisted AudioClips export automatically; the legacy embedded option below is NOT an AudioClip link. No device playback clock.',
     ),
     _path('master-gain-db', 'Persisted master gain dB [-96,12]', _masterGain),
     OutlinedButton(
@@ -515,7 +582,13 @@ class _FoundationAppState extends State<FoundationApp>
     CheckboxListTile(
       key: const Key('export-embedded-audio'),
       value: _includeEmbeddedAudio,
-      onChanged: _busy
+      onChanged:
+          _busy ||
+              (_project.toJson()['sequences'][0]['tracks'] as List).any(
+                (t) =>
+                    t['kind'] == 'audio' &&
+                    (t['items'] as List).any((c) => c['source'] != null),
+              )
           ? null
           : (v) => setState(() => _includeEmbeddedAudio = v ?? false),
       title: const Text(

@@ -4,6 +4,8 @@ import 'package:studio_contracts/studio_contracts.dart';
 
 import 'studio_document.dart';
 
+part 'persistent_audio.dart';
+
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
 
@@ -186,6 +188,19 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is ExtractAudioClip ||
+      operation is LinkAudioVideo ||
+      operation is UnlinkAudioVideo ||
+      operation is SetAudioTrackState ||
+      ((before.toJson()['sequences'][0]['tracks'] as List).any(
+            (t) => t['kind'] == 'audio',
+          ) &&
+          operation is! SetMasterAudio &&
+          operation is! RenameProject &&
+          operation is! SetCaptions &&
+          operation is! AppendVideoAsset)) {
+    return _persistentAudioEdit(before, operation, nextVersion, newId);
+  }
   if (operation is SetMasterAudio) {
     AudioBus(
       id: 'validated-master',
@@ -329,6 +344,11 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case ExtractAudioClip():
+    case LinkAudioVideo():
+    case UnlinkAudioVideo():
+    case SetAudioTrackState():
+      throw StateError('persistent audio dispatch');
     case SetMasterAudio():
       throw StateError('Handled master audio edit');
     case SetCaptions():

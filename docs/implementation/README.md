@@ -397,3 +397,18 @@ python3 tools/acceptance/run_task.py I-023 --profile linux-dev --report artifact
 未验证；Web正向RTC仍受原受管0候选策略阻塞，不改策略、不走替代transport/中继绕过。
 
 本版最终实测：**128 native +9 Chrome +1真实OS-keyring/native UI =138个Dart/Flutter测试，零跳过**；另6工具测试、3 CTest、10主动AAC+10无声视频取消内部实验、50次内部SIGKILL。双宿主各3次clean/release构建及首帧启动、3次独立ABI probe通过。实际60秒1080p30输出1800帧/2880000逻辑音频samples，60个合成flash/pulse事件测得最大阈值起点偏差0ms（仅离线文件，不是设备时钟）。原87：**0 complete /22 partial /52 planned /13 blocked**；新增XD10：**0 /8 /1 /1**。正向RTC重跑仍实际退出1、外层runner2=blocked，不计通过。所有工具链/测量方法/失败/源hash见summary。
+
+## Increment1.6: persistent audio Clips and semantic closure (Linux restricted slice)
+
+Use the existing pinned toolchain/native library and approved SQLite3.54.1 environment below; never accept the system3.46.1 runtime:
+
+```sh
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+```
+
+In either Linux demo editor: import a supported audio-bearing video with the existing explicit import acknowledgment; select its video clip; click **extract persistent audio** (one audio stream in this UI; ambiguous streams refuse). The new separate audio clip is linked and durable. Split/trim/move/slip/delete have linked domain semantics; the UI trim/delete explicitly leave a gap rather than claiming ripple support. Track mute and unlink are real persisted controls. Save archive, restore/fork, or close/reopen: the audio clips/link groups remain. Export normally: AAC is included **without** the old transient checkbox. The old checkbox is disabled when persistent audio clips exist, and the SDK explicitly rejects requesting both modes.
+
+Actual UI coverage clicks import→source seek→extract→linked split/trim/undo→gain→archive/fork→track mute/unmute→unlink→default AAC export. SDK coverage independently decodes output to measure audible/silent samples, reopens SQLite and verifies default AAC export, duplicate-mode refusal, frozen revision and cancellation. Domain tests include1000 exact trim/inverse operations, origin offsets, locks/source/id failure paths, and a rich image/story/plugin roundtrip. SQLite tests inject a failure after definitions/pins, inspect every table, retry/dedup, stale CAS, undo, reopen and retired audio-ID version reuse.
+
+**Not timeline listening:** no AudioSink/presented-clock/ring/playback/device rebind implementation yet. Unsupported linked ripple/roll/slide, caption reprojection, fractional-grid combinations, independent audio import and full Schema app editing remain explicit refusals/unfinished work. The60s test remains offline file sync, not device latency. See ADR0010 and `evidence/persistent-audio/summary.json` for exact results, failures and platform limits. Original87 and XD10 statuses are not inferred from test totals.

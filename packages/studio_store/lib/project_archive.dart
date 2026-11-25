@@ -346,6 +346,9 @@ ProjectDocument forkLocalProject(
     'outputBusId',
     'rightsId',
     'streamId',
+    'clipId',
+    'anchorClipId',
+    'linkGroupId',
   };
   void replace(dynamic x) {
     if (x is Map) {

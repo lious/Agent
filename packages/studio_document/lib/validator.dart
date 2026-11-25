@@ -7,6 +7,8 @@ import 'time.dart';
 
 import 'package:studio_contracts/studio_contracts.dart';
 
+part 'project_semantics.dart';
+
 final class ValidationIssue {
   const ValidationIssue(this.phase, this.code, this.path);
   final String phase, code, path;
@@ -58,49 +60,40 @@ final class DocumentValidator {
     final issues = <ValidationIssue>[];
     void issue(String code, String path) =>
         issues.add(ValidationIssue('semantic', code, path));
+    // Enumerate declared entities, NEVER recursively interpret opaque extension,
+    // provider parameter or source-reference objects as entity definitions.
     final ids = <String>{document['projectId'] as String};
-    void collect(dynamic x, String path) {
-      if (x is Map) {
-        if (x.containsKey('id') &&
-            !path.contains('/source') &&
-            !path.contains('/owner') &&
-            !path.contains('/anchor') &&
-            x.keys.length > 2) {
-          if (!ids.add(x['id'] as String)) issue('DUPLICATE_ID', path);
-        }
-        for (final e in x.entries) {
-          collect(e.value, '$path/${e.key}');
-        }
-      } else if (x is List) {
-        for (var i = 0; i < x.length; i++) {
-          collect(x[i], '$path/$i');
+    void entity(Map value, String path) {
+      if (!ids.add(value['id'] as String)) issue('DUPLICATE_ID', path);
+    }
+
+    for (final name in _entityTables) {
+      for (final value in document[name] as List) {
+        entity(value as Map, '/$name');
+      }
+    }
+    for (final sequence in document['sequences']) {
+      for (final track in sequence['tracks']) {
+        entity(track as Map, '/sequences/tracks');
+        for (final item in track['items']) {
+          entity(item as Map, '/sequences/tracks/items');
         }
       }
     }
-
-    // Only declared entities own IDs; reference objects never allocate IDs.
-    const tables = [
-      'sequences',
-      'assets',
-      'effects',
-      'transitions',
-      'captions',
-      'audioBuses',
-      'markers',
-      'rightsRecords',
-      'linkGroups',
-      'selectionGroups',
-      'imageDocuments',
-      'briefs',
-      'scripts',
-      'scenes',
-      'characters',
-      'shots',
-      'generationRecords',
-      'fontRefs',
-    ];
-    for (final table in tables) {
-      collect(document[table], '/$table');
+    for (final asset in document['assets']) {
+      for (final stream in asset['streams']) {
+        entity(stream as Map, '/assets/streams');
+      }
+    }
+    for (final effect in document['effects']) {
+      for (final key in effect['keyframes']) {
+        entity(key as Map, '/effects/keyframes');
+      }
+    }
+    for (final image in document['imageDocuments']) {
+      for (final layer in image['layers']) {
+        entity(layer as Map, '/imageDocuments/layers');
+      }
     }
     void checkTimes(dynamic x, String path) {
       if (x is Map) {
@@ -139,7 +132,9 @@ final class DocumentValidator {
               BigInt.parse(e.value as String) > maxI64) {
             issue('TIME_OVERFLOW', '$path/${e.key}');
           }
-          if (e.key != 'extensions') checkU64(e.value, '$path/${e.key}');
+          if (e.key != 'extensions' && e.key != 'parameters') {
+            checkU64(e.value, '$path/${e.key}');
+          }
         }
       } else if (x is List) {
         for (var i = 0; i < x.length; i++) {
@@ -154,26 +149,28 @@ final class DocumentValidator {
     if (!sequences.any((s) => s['id'] == document['rootSequenceId'])) {
       issue('REF_NOT_FOUND', '/rootSequenceId');
     }
-    final visiting = <String>{}, visited = <String>{};
-    void visit(String id) {
-      if (visiting.contains(id)) {
-        issue('REFERENCE_CYCLE', '/audioBuses/$id');
-        return;
+    // Project graphs are not JSON nesting: a valid bounded document can have
+    // thousands of routes. Avoid host-stack recursion on untrusted project data.
+    final visited = <String>{};
+    for (final root in buses.keys.cast<String>()) {
+      if (visited.contains(root)) continue;
+      final path = <String>{};
+      String? current = root;
+      while (current != null) {
+        if (path.contains(current)) {
+          issue('REFERENCE_CYCLE', '/audioBuses/$current');
+          break;
+        }
+        if (visited.contains(current)) break;
+        path.add(current);
+        final bus = buses[current];
+        if (bus == null) {
+          issue('REF_NOT_FOUND', '/audioBuses/$current');
+          break;
+        }
+        current = bus['outputBusId'] as String?;
       }
-      if (visited.contains(id)) return;
-      visiting.add(id);
-      final bus = buses[id];
-      if (bus == null) {
-        issue('REF_NOT_FOUND', '/audioBuses/$id');
-      } else if (bus['outputBusId'] != null) {
-        visit(bus['outputBusId'] as String);
-      }
-      visiting.remove(id);
-      visited.add(id);
-    }
-
-    for (final id in buses.keys) {
-      visit(id as String);
+      visited.addAll(path);
     }
     for (var si = 0; si < sequences.length; si++) {
       final s = sequences[si];
@@ -257,6 +254,13 @@ final class DocumentValidator {
         }
       } on StudioException catch (e) {
         issue(e.code, sp);
+      }
+    }
+    if (issues.isEmpty) {
+      try {
+        _projectSemantics(document, issue);
+      } on StudioException catch (e) {
+        issue(e.code, '/');
       }
     }
     return issues;

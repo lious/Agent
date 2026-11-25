@@ -1,0 +1,519 @@
+{
+  "assets": [
+    {
+      "contentFingerprint": "sha256:41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "externalLocator": null,
+      "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+      "kind": "video",
+      "name": "input.mp4",
+      "originalBlobHash": "sha256:41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "proxyRefs": [],
+      "rightsId": "01a21091-0dd7-76d9-a000-6df9aee8c220",
+      "status": "ready",
+      "streams": [
+        {
+          "channelLayout": null,
+          "channels": null,
+          "codec": "h264",
+          "color": {
+            "alpha": "none",
+            "bitDepth": 8,
+            "matrix": "bt709",
+            "primaries": "bt709",
+            "range": "limited",
+            "transfer": "bt709"
+          },
+          "duration": {
+            "d": 1,
+            "n": "3"
+          },
+          "height": 180,
+          "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3:stream-0",
+          "nominalFrameRate": {
+            "d": 1,
+            "n": 30
+          },
+          "pixelFormat": "yuv420p",
+          "profile": null,
+          "rotationDeg": 0,
+          "sampleRate": null,
+          "startPTS": "0",
+          "timeBase": {
+            "d": 15360,
+            "n": "1"
+          },
+          "type": "video",
+          "variableFrameRate": false,
+          "width": 320
+        }
+      ],
+      "version": "1"
+    }
+  ],
+  "audioBuses": [
+    {
+      "effectIds": [],
+      "gainDb": 0,
+      "id": "bus-master",
+      "inputBusIds": [],
+      "muted": false,
+      "name": "Master",
+      "outputBusId": null,
+      "pan": 0,
+      "solo": false
+    }
+  ],
+  "blobs": [
+    {
+      "bytes": "91961",
+      "hash": "sha256:41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "mime": "application/octet-stream",
+      "packagePath": "originals/41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "role": "original"
+    }
+  ],
+  "briefs": [
+    {
+      "id": "brief",
+      "version": "1",
+      "locale": "zh-CN",
+      "audience": "x",
+      "objective": "x",
+      "targetDuration": {
+        "n": "1",
+        "d": 1
+      },
+      "aspect": "9:16",
+      "deliveryPresetId": "x",
+      "requiredFacts": [],
+      "forbiddenClaims": [],
+      "referenceRefs": [],
+      "brandPolicy": {
+        "palette": [],
+        "logoAssetRef": {
+          "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+          "version": "1"
+        },
+        "safeArea": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "restrictedTopics": [],
+        "rightsAttestationId": "01a21091-0dd7-76d9-a000-6df9aee8c220"
+      },
+      "audioPolicy": "originalOnly",
+      "textPolicy": "editableOverlay",
+      "budget": {
+        "currency": "CNY",
+        "maxMicros": "1"
+      },
+      "purpose": "productAd",
+      "purposePayload": {
+        "productName": "x",
+        "verifiedClaims": [
+          "x"
+        ],
+        "audience": "x",
+        "cta": "x",
+        "referenceAssetId": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+        "offer": null,
+        "endDate": null,
+        "brandPalette": []
+      }
+    }
+  ],
+  "captions": [],
+  "characters": [
+    {
+      "id": "character",
+      "version": "1",
+      "name": "x",
+      "appearanceRef": {
+        "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+        "version": "1"
+      },
+      "motivation": "x",
+      "constraints": [],
+      "rightsId": "01a21091-0dd7-76d9-a000-6df9aee8c220"
+    }
+  ],
+  "defaultFontRef": "font",
+  "effects": [
+    {
+      "id": "opaque-effect",
+      "version": "1",
+      "owner": {
+        "kind": "clip",
+        "id": "01a21091-0dd8-7f7c-8f4a-51eef9fa5ccd"
+      },
+      "pluginVersion": "1.0.0",
+      "enabled": true,
+      "keyframes": [],
+      "extensions": {},
+      "type": "vendor/opaque",
+      "parameters": {
+        "id": "01a21091-0dd8-7f7c-8f4a-51eef9fa5ccd",
+        "version": "opaque-value",
+        "assetRef": {
+          "id": "external-plugin-id",
+          "version": "42"
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "opaque.test": {
+      "id": "01a21091-0dd8-7f7c-8f4a-51eef9fa5ccd",
+      "version": "not-an-entity",
+      "data": {
+        "id": "external"
+      }
+    }
+  },
+  "fontRefs": [
+    {
+      "id": "font",
+      "family": "x",
+      "style": "x",
+      "hash": "sha256:41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "licenseRef": "external-font-license",
+      "embedAllowed": false,
+      "fallbackFamilies": []
+    }
+  ],
+  "generationRecords": [
+    {
+      "id": "generation",
+      "candidateIds": [
+        "candidate"
+      ],
+      "provider": "external-provider",
+      "modelId": "external-model",
+      "providerModelVersion": null,
+      "templateId": "external-template",
+      "templateVersion": "x",
+      "promptHash": "sha256:41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+      "promptText": null,
+      "negativePrompt": null,
+      "parameterProfileId": "external-profile",
+      "inputAssetRefs": [
+        {
+          "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+          "version": "1"
+        }
+      ],
+      "seed": null,
+      "parameters": {},
+      "rights": {
+        "attestationId": "01a21091-0dd7-76d9-a000-6df9aee8c220",
+        "licenseSnapshotRef": null
+      },
+      "outputAssetRefs": [
+        {
+          "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+          "version": "1"
+        }
+      ],
+      "jobId": "external-job",
+      "createdAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "imageDocuments": [
+    {
+      "id": "image",
+      "version": "1",
+      "width": 64,
+      "height": 64,
+      "color": "linear-rec709",
+      "rootLayerIds": [
+        "root"
+      ],
+      "layers": [
+        {
+          "id": "root",
+          "parentId": null,
+          "kind": "group",
+          "sourceRef": null,
+          "text": null,
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "opacity": 0,
+          "blendMode": "normal",
+          "maskRef": null,
+          "effectIds": [],
+          "locked": false,
+          "visible": true
+        },
+        {
+          "id": "child",
+          "parentId": "root",
+          "kind": "raster",
+          "sourceRef": {
+            "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+            "version": "1"
+          },
+          "text": null,
+          "transform": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "opacity": 0,
+          "blendMode": "normal",
+          "maskRef": null,
+          "effectIds": [],
+          "locked": false,
+          "visible": true
+        }
+      ],
+      "fontRefs": [
+        "font"
+      ]
+    }
+  ],
+  "linkGroups": [],
+  "markers": [],
+  "minReaderVersion": "2.0.0",
+  "modelRefs": [],
+  "namespace": {
+    "appId": "test",
+    "tenantId": "local",
+    "workspaceId": "test"
+  },
+  "projectId": "demo-project",
+  "requiredFeatures": [],
+  "retainedSources": [],
+  "revision": "0",
+  "rightsRecords": [
+    {
+      "allowedUses": [],
+      "assetIds": [
+        "01a21091-0dd7-7ab3-881f-1f870ad6f1c3"
+      ],
+      "consentId": null,
+      "evidenceBlobHash": null,
+      "expiresAt": null,
+      "holder": "unknown",
+      "id": "01a21091-0dd7-76d9-a000-6df9aee8c220",
+      "kind": "license",
+      "providerTermsRef": null,
+      "statement": "No license evidence supplied; allow_with_warning. No rights verification claimed.",
+      "territories": [],
+      "verified": false
+    }
+  ],
+  "rootSequenceId": "sequence-main",
+  "scenes": [
+    {
+      "id": "scene",
+      "version": "1",
+      "scriptId": "script",
+      "order": 0,
+      "summary": "x",
+      "characterIds": [
+        "character"
+      ],
+      "shotIds": [
+        "shot"
+      ]
+    }
+  ],
+  "schemaVersion": "2.0.0",
+  "scripts": [
+    {
+      "id": "script",
+      "version": "1",
+      "briefId": "brief",
+      "title": "x",
+      "sceneIds": [
+        "scene"
+      ],
+      "language": "x",
+      "status": "draft"
+    }
+  ],
+  "selectionGroups": [],
+  "sequences": [
+    {
+      "backgroundRGBA": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "canvas": {
+        "height": 180,
+        "pixelAspect": {
+          "d": 1,
+          "n": "1"
+        },
+        "width": 320
+      },
+      "duration": {
+        "d": 1,
+        "n": "3"
+      },
+      "frameRate": {
+        "d": 1,
+        "n": 30
+      },
+      "id": "sequence-main",
+      "markerIds": [],
+      "masterBusId": "bus-master",
+      "name": "Main",
+      "outputColor": "rec709",
+      "sampleRate": 48000,
+      "tracks": [
+        {
+          "busId": null,
+          "id": "01a21091-0de2-72f8-9c5e-ce09aa53f050",
+          "items": [
+            {
+              "candidateId": "candidate",
+              "effectIds": [
+                "opaque-effect"
+              ],
+              "enabled": true,
+              "id": "01a21091-0dd8-7f7c-8f4a-51eef9fa5ccd",
+              "linkGroupId": null,
+              "lockedFields": [],
+              "name": "input.mp4",
+              "provenanceId": "generation",
+              "selectionGroupId": null,
+              "shotId": "shot",
+              "source": {
+                "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+                "kind": "asset",
+                "streamId": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3:stream-0",
+                "version": "1"
+              },
+              "sourceRange": {
+                "duration": {
+                  "d": 1,
+                  "n": "3"
+                },
+                "start": {
+                  "d": 1,
+                  "n": "0"
+                }
+              },
+              "timeMap": {
+                "kind": "linear",
+                "rate": {
+                  "d": 1,
+                  "n": "1"
+                }
+              },
+              "timelineRange": {
+                "duration": {
+                  "d": 1,
+                  "n": "3"
+                },
+                "start": {
+                  "d": 1,
+                  "n": "0"
+                }
+              },
+              "trackId": "01a21091-0de2-72f8-9c5e-ce09aa53f050",
+              "version": "1"
+            }
+          ],
+          "kind": "video",
+          "locked": false,
+          "muted": false,
+          "name": "Video 1",
+          "order": 0,
+          "sequenceId": "sequence-main",
+          "solo": false,
+          "syncLock": true,
+          "targeted": true
+        }
+      ],
+      "version": "1",
+      "workingColor": "linear-rec709"
+    }
+  ],
+  "shots": [
+    {
+      "id": "shot",
+      "version": "1",
+      "sceneId": "scene",
+      "order": 0,
+      "purposeBeat": "x",
+      "targetTimelineRange": {
+        "start": {
+          "n": "0",
+          "d": 1
+        },
+        "duration": {
+          "n": "3",
+          "d": 1
+        }
+      },
+      "subjectRefs": [
+        {
+          "id": "character",
+          "version": "1"
+        },
+        {
+          "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+          "version": "1"
+        }
+      ],
+      "setting": "x",
+      "action": "x",
+      "camera": {
+        "size": "x",
+        "motion": "x",
+        "lensIntent": "x"
+      },
+      "lighting": "x",
+      "continuity": {
+        "characterRefs": [
+          {
+            "id": "character",
+            "version": "1"
+          }
+        ],
+        "wardrobe": "x",
+        "screenDirection": "x",
+        "propRefs": [
+          {
+            "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+            "version": "1"
+          }
+        ],
+        "mustPreserve": []
+      },
+      "captionPlan": [],
+      "voicePlan": [],
+      "musicRange": null,
+      "generationMode": "t2v",
+      "firstFrameRef": {
+        "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+        "version": "1"
+      },
+      "lastFrameRef": {
+        "id": "01a21091-0dd7-7ab3-881f-1f870ad6f1c3",
+        "version": "1"
+      },
+      "referenceRefs": [],
+      "targetProviderProfileId": "x",
+      "selectedCandidateId": null,
+      "lockedFields": []
+    }
+  ],
+  "title": "Untitled",
+  "transitions": []
+}

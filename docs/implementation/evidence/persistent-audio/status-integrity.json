@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-11-25T15:20:02.582998+08:00",
+  "timezone": "Asia/Shanghai",
+  "original87": 87,
+  "preservedFields": [
+    "id",
+    "status",
+    "remainingAcceptance",
+    "remainingScope",
+    "hardDeps",
+    "fullTaskComplete"
+  ],
+  "original104SnapshotsChanged": false,
+  "closedSchemaChanged": false,
+  "originalCounts": {
+    "complete": 0,
+    "partial": 22,
+    "planned": 52,
+    "blocked": 13
+  },
+  "separateXD10Counts": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "frozenSourceHashEntries": 154,
+  "allRecordedHashesMatch": true
+}

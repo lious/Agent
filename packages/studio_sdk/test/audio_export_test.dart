@@ -162,10 +162,90 @@ void main() {
         final muted = File('${root.path}/mute.mp4');
         await w.exportVideo(muted, includeEmbeddedAudio: true);
         expect(rms(muted), lessThan(0.000001));
+        // Materialize persistent audio; unlike the legacy export option it
+        // survives storage/reopen/archive and exports automatically by default.
+        final videoClip =
+            (w.current.toJson()['sequences'][0]['tracks'][0]['items'] as List)
+                .firstWhere((c) => c['source'] != null);
+        final stream = (w.current.toJson()['assets'][0]['streams'] as List)
+            .singleWhere((st) => st['type'] == 'audio');
+        w.edit(
+          ExtractAudioClip(videoClip['id'] as String, stream['id'] as String),
+          expectedRevision: w.current.revision,
+        );
+        expect(w.current.toJson()['linkGroups'].length, 1);
+        w.setMasterAudio(gainDb: -6, expectedRevision: w.current.revision);
+        final persisted = File('${root.path}/persistent.mp4');
+        await w.exportVideo(persisted);
+        expect(rms(persisted), greaterThan(0));
+        await expectLater(
+          w.exportVideo(
+            File('${root.path}/double.mp4'),
+            includeEmbeddedAudio: true,
+          ),
+          throwsA(
+            isA<StudioException>().having(
+              (e) => e.code,
+              'code',
+              'AUDIO_SOURCE_MODE_AMBIGUOUS',
+            ),
+          ),
+        );
+        final audioTrack =
+            (w.current.toJson()['sequences'][0]['tracks'] as List).singleWhere(
+              (t) => t['kind'] == 'audio',
+            );
+        w.edit(
+          SetAudioTrackState(
+            audioTrack['id'] as String,
+            muted: true,
+            solo: false,
+          ),
+          expectedRevision: w.current.revision,
+        );
+        final trackMuted = File('${root.path}/track-muted.mp4');
+        await w.exportVideo(trackMuted);
+        expect(rms(trackMuted), lessThan(1e-6));
+        w.undo(expectedRevision: w.current.revision);
+        w.edit(
+          SplitClip(videoClip['id'] as String, Q.of(1), 'persistent-right'),
+          expectedRevision: w.current.revision,
+        );
+        expect(w.current.toJson()['linkGroups'].length, 2);
+        final linked = File('${root.path}/linked-split.mp4');
+        await w.exportVideo(linked);
+        expect(rms(linked), greaterThan(0));
+        final linkedHash = w.current.hash;
+        w.saveManaged();
+        w.close();
+        w = StudioWorkspace.open(
+          profile: AppProfile(
+            appId: 'studio',
+            region: 'local',
+            features: {'project.metadata', 'media.local'},
+          ),
+          databasePath: '${root.path}/db',
+          tenantId: 'local',
+          workspaceId: 'audio',
+          mediaLibraryPath: lib,
+          mediaRootPath: '${root.path}/media',
+        );
+        w.openDemo();
+        expect(w.current.hash, linkedHash);
+        expect(w.current.toJson()['linkGroups'].length, 2);
+        final archive = File('${root.path}/linked.studio-project');
+        await w.saveArchive(archive);
+        final beforeFork = w.projectId;
+        await w.restoreArchive(LocalFileGrant.fromUserSelection(archive));
+        expect(w.projectId, isNot(beforeFork));
+        expect(w.current.toJson()['linkGroups'].length, 2);
+        final reopened = File('${root.path}/linked-reopened.mp4');
+        await w.exportVideo(reopened);
+        expect(rms(reopened), greaterThan(0));
         final target = File('${root.path}/untouched.mp4')
           ..writeAsStringSync('existing');
         w.cancelExport();
-        final started = w.exportVideo(target, includeEmbeddedAudio: true);
+        final started = w.exportVideo(target);
         w.cancelExport();
         await expectLater(
           started,
