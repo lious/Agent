@@ -62,6 +62,7 @@ extension PeerAuthority on DocumentRepository {
     required int nowMs,
     required int offerExpiresMs,
     required int grantExpiresMs,
+    Map<String, int> allowedBlobs = const {},
   }) => _transaction(() {
     _peerClock(nowMs);
     _peerHash(certificateFingerprint);
@@ -82,6 +83,13 @@ extension PeerAuthority on DocumentRepository {
     for (final node in nodeIds) {
       plan.node(node);
     }
+    if (allowedBlobs.length > 2) throw const StudioException('PEER_BLOB_QUOTA');
+    for (final entry in allowedBlobs.entries) {
+      _peerHash(entry.key);
+      if (entry.value < 0 || entry.value > 16 * 1024 * 1024) {
+        throw const StudioException('PEER_BLOB_QUOTA');
+      }
+    }
     final id = const Uuid().v4(),
         value = {
           'schemaVersion': '1.0.0',
@@ -91,6 +99,7 @@ extension PeerAuthority on DocumentRepository {
           'device': _peerDeviceJson(device),
           'nodeIds': nodeIds.toList()..sort(),
           'expiresMs': grantExpiresMs,
+          'allowedBlobs': Map<String, int>.from(allowedBlobs),
         };
     _db.execute('INSERT INTO peer_offers VALUES(?,?,?,?,0)', [
       _ns,
@@ -319,7 +328,18 @@ extension PeerAuthority on DocumentRepository {
       final payload = request['payload'] as Map<String, dynamic>,
           op = request['operation'];
       Map<String, dynamic> response;
-      if (op == 'claim') {
+      if (op is String && op.startsWith('blob.')) {
+        response = _peerBlobOperation(
+          fingerprint,
+          session,
+          planHash,
+          nodeId,
+          epoch,
+          grant,
+          op,
+          payload,
+        );
+      } else if (op == 'claim') {
         if (payload.length != 1 || payload['leaseMs'] is! int) {
           throw const StudioException('PEER_SCHEMA');
         }

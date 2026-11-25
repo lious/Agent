@@ -13,7 +13,10 @@
     "studio_sdk": {
       "path": "../studio_sdk"
     },
-    "material_ui": "1.11.1"
+    "material_ui": "1.11.1",
+    "studio_peer_ui": {
+      "path": "../studio_peer_ui"
+    }
   },
   "dev_dependencies": {
     "flutter_test": {

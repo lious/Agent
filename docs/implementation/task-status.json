@@ -1,20 +1,21 @@
 {
-  "asOf": "2026-11-25T12:15:13.476543+08:00",
+  "asOf": "2026-11-25T12:56:10.440330+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
   "fullTasksCompleted": 0,
   "counts": {
+    "complete": 0,
     "partial": 21,
     "planned": 53,
     "blocked": 13
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "XD-002/XD-003 trusted pairing, revocation and encrypted direct transport before any remote endpoint",
-    "XD-004 resumable scoped media/results and XD-006 authenticated same-session network dispatch, coordinator restart authority and budget/epoch guards",
-    "I-021 seek/cache and I-023/I-024 real audio/AAC; I-010 synchronized cue ripple/font/rendering",
-    "Continue all remaining original dependency-ready tasks; no per-batch approval stop"
+    "XD-003 authenticated browser-capable encrypted transport without weakening native identity; XD-002 other-platform OS identity qualification and explicit lifecycle/rotation",
+    "XD-004 full project-CAS adoption/GC/large-file flow and XD-006 explicit coordinator UI recovery without restoring revoked authority; preserve source/lease/resource/epoch checks",
+    "I-021 actual seek/cache, I-023/I-024 real audio/AAC, I-002 full Schema contracts; close original profile acceptance with explicit evidence rather than count-only partial growth",
+    "Continue every remaining dependency-ready original task; no per-batch approval stop; physical/mobile/other-desktop validation remains separate"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -28,7 +29,8 @@
       "fullTaskComplete": false,
       "implementedScope": "Linux dev 3 native ABI builds + dual-host clean build/start probes; release P0 unset",
       "evidence": [
-        "evidence/local-video/V-001.json"
+        "evidence/local-video/V-001.json",
+        "evidence/peer-ui-blob/V-001.json"
       ],
       "remainingAcceptance": "每目标3次干净构建/启动；2个namespace句柄不串用；无工具机型记unvalidated，不代填成功。",
       "remainingScope": "含P0及跨端构建资格；不含正式App功能。",
@@ -473,9 +475,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls",
+      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls; both Linux native hosts build with actual OS secure-storage plugin and optional peer session panel, default no endpoint. No all-platform parity claim.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/peer-ui-blob/V-001.json"
       ],
       "remainingAcceptance": "flutter analyze/dart test零错误；两App同asset字节但session不可互读；runner未知任务非零退出。",
       "remainingScope": "含package依赖/本地端口/namespace；不含模型或真实商业后端。",
@@ -509,11 +512,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "SQLite v2 migration, atomic generic edits/CAS/fence/receipts/outbox/definition history/blob pins/latest snapshot undo and persisted selection; v5 additive peer authority tables and nested savepoints; default approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate; actual original-v4/system3.46.1 -> current-v5/fixed3.54.1 compatibility probe and old runtime rejection.",
+      "implementedScope": "SQLite v2 migration, atomic generic edits/CAS/fence/receipts/outbox/definition history/blob pins/latest snapshot undo and persisted selection; v5 additive peer authority tables and nested savepoints; default approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate; actual original-v4/system3.46.1 -> current-v6/fixed3.54.1 compatibility probe and old runtime rejection. Additive v6 bounded authenticated peer inbox; genuine committed-v4/system3.46.1 -> v6/fixed3.54.1 and committed-v5/fixed3.54.1 -> v6 migration/integrity/deadline preservation; default old-runtime rejection unchanged.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/peer-tls-sqlite/sqlite-upgrade.json",
-        "evidence/peer-tls-sqlite/verification.json"
+        "evidence/peer-tls-sqlite/verification.json",
+        "evidence/peer-ui-blob/summary.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
       "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
@@ -1047,11 +1051,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Original PlanGraph 1.0 safe execution subset, verified-device value placement and SQLite v4 durable plan/task leases/progress/attempts/candidate outbox; real two same-host CPU child workers and expiry/fence/late result/replay/rollback tests. No complete dynamic replan/100-restart proof/model loops/secure physical-device transport.; actual authenticated native TLS safe-subset task endpoint with scoped grant/request idempotency/source validation, one-heavy-slot admission and local-only boot takeover/quarantine preserving wall budgets.",
+      "implementedScope": "Original PlanGraph 1.0 safe execution subset, verified-device value placement and SQLite v4 durable plan/task leases/progress/attempts/candidate outbox; real two same-host CPU child workers and expiry/fence/late result/replay/rollback tests. No complete dynamic replan/100-restart proof/model loops/secure physical-device transport.; actual authenticated native TLS safe-subset task endpoint with scoped grant/request idempotency/source validation, one-heavy-slot admission and local-only boot takeover/quarantine preserving wall budgets. Actual native operator path: current Project revision, one scoped remote CPU + another local CPU under SAME PlanGraph, persistent candidate receipts, revoke and fresh re-pair. Still bounded metadata digest executor, not arbitrary models/dynamic replan/full acceptance.",
       "evidence": [
         "evidence/caption-audio-harness/verification.json",
         "evidence/caption-audio-harness/multidevice.json",
-        "evidence/peer-tls-sqlite/verification.json"
+        "evidence/peer-tls-sqlite/verification.json",
+        "evidence/peer-ui-blob/native-ui.json"
       ],
       "remainingAcceptance": "图环/越namespace拒绝；fanout/迭代不越上限；过期fence不提交；100重启无重复副作用；手动锁始终有效。",
       "remainingScope": "含扩图/replan/fanout/fanin/mapreduce/lease；不在手机内存托管云长job。",

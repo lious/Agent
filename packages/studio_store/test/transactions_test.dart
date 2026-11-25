@@ -88,7 +88,7 @@ void main() {
     expect(repo.read('p1')!.revision, BigInt.one);
     final db = sqlite3.open(path);
     addTearDown(db.dispose);
-    expect(db.userVersion, 5);
+    expect(db.userVersion, 6);
     expect(db.select('PRAGMA integrity_check').single.values.single, 'ok');
     expect(db.select('PRAGMA foreign_key_check'), isEmpty);
     expect(db.select('SELECT count(*) AS n FROM revisions').single['n'], 1);

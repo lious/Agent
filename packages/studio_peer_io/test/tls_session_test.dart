@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:studio_peer_io/compute_session.dart';
 
 import 'package:crypto/crypto.dart';
 import 'package:studio_document/studio_document.dart';
@@ -147,7 +150,12 @@ class Rig {
   int now = 0;
   Stopwatch? realTime;
   int wall = DateTime.now().millisecondsSinceEpoch;
-  int pair(String name, Set<String> nodes, {String? deviceId}) {
+  int pair(
+    String name,
+    Set<String> nodes, {
+    String? deviceId,
+    Map<String, int> allowedBlobs = const {},
+  }) {
     final offer = repository.createPeerOffer(
       session,
       plan.hash,
@@ -161,6 +169,7 @@ class Rig {
       nowMs: wall,
       offerExpiresMs: wall + 10000,
       grantExpiresMs: wall + 60000,
+      allowedBlobs: allowedBlobs,
     );
     return repository.confirmPeerOffer(offer, fingerprint(name), nowMs: wall);
   }
@@ -615,5 +624,142 @@ void main() {
         .send(r.message('retry', 'a', 'claim', {'leaseMs': 500}));
     expect(retry['lease']['fence'], '2');
     expect(retry['lease']['coordinatorBoot'], 'new');
+  });
+  test('real TLS hash-whitelisted chunk resume survives receiver reopen, final hash and duplicate commit', () async {
+    final r = Rig();
+    addTearDown(r.dispose);
+    final bytes = Uint8List.fromList(
+          List.generate(131085, (i) => (i * 17) % 251),
+        ),
+        hash = rawBytesHash(
+          Uint8List.fromList(List.generate(131085, (i) => (i * 17) % 251)),
+        ).substring(7);
+    r.pair('alpha', {'a'}, allowedBlobs: {hash: bytes.length});
+    await r.start();
+    final c = r.client('alpha');
+    await c.send(r.message('begin', 'a', 'blob.begin', {'blobHash': hash}));
+    final part = Uint8List.sublistView(bytes, 0, 65536);
+    await c.send(
+      r.message('part0', 'a', 'blob.chunk', {
+        'blobHash': hash,
+        'index': 0,
+        'base64': base64.encode(part),
+        'chunkHash': rawBytesHash(part).substring(7),
+      }),
+    );
+    final alternateEncoding = base64Url.encode(part);
+    expect(alternateEncoding, isNot(base64.encode(part)));
+    await c.send(
+      r.message('same-bytes-alternate-base64', 'a', 'blob.chunk', {
+        'blobHash': hash,
+        'index': 0,
+        'base64': alternateEncoding,
+        'chunkHash': rawBytesHash(part).substring(7),
+      }),
+    );
+    await r.server!.close();
+    r.repository.close();
+    r.repository = DocumentRepository.open('${r.directory.path}/db', ns);
+    await r.start();
+    final fresh = r.client('alpha'),
+        invite = <String, dynamic>{
+          'schemaVersion': '1.0.0',
+          'sessionId': 'session',
+          'planHash': r.plan.hash,
+          'nodeIds': ['a'],
+          'epoch': '1',
+          'allowedBlobs': {hash: bytes.length},
+        };
+    final status = await fresh.send(
+      r.message('status', 'a', 'blob.status', {'blobHash': hash}),
+    );
+    expect(status['received'], [0]);
+    final finished = await uploadPeerBlob(
+      fresh,
+      invite,
+      'a',
+      bytes,
+      operationId: 'resume',
+    );
+    expect(finished['committed'], isTrue);
+    expect(r.repository.receivedPeerBlob(hash), orderedEquals(bytes));
+    await fresh.send(
+      r.message('again', 'a', 'blob.finish', {'blobHash': hash}),
+    );
+    expect(
+      r.repository
+          .harnessOutbox(session)
+          .where((e) => e['kind'] == 'peer.blob.ready'),
+      hasLength(1),
+    );
+    expect(r.repository.read('p')!.revision, BigInt.zero);
+  });
+  test('real TLS blob rejects missing consent, bad chunk/hash/conflicts and revoked replays; final outbox failure rolls back object', () async {
+    final r = Rig();
+    addTearDown(r.dispose);
+    final bytes = Uint8List.fromList([1, 2, 3, 4]),
+        hash = rawBytesHash(Uint8List.fromList([1, 2, 3, 4])).substring(7);
+    r.pair('alpha', {'a'}, allowedBlobs: {hash: 4});
+    r.pair('beta', {'a'});
+    await r.start();
+    final c = r.client('alpha');
+    final begin = r.message('begin', 'a', 'blob.begin', {'blobHash': hash});
+    await expectLater(
+      r.client('beta').send(begin),
+      code('PEER_BLOB_NOT_GRANTED'),
+    );
+    await c.send(begin);
+    await expectLater(
+      c.send(r.message('early', 'a', 'blob.finish', {'blobHash': hash})),
+      code('PEER_BLOB_INCOMPLETE'),
+    );
+    await expectLater(
+      c.send(
+        r.message('bad', 'a', 'blob.chunk', {
+          'blobHash': hash,
+          'index': 0,
+          'base64': base64.encode(bytes),
+          'chunkHash': '0' * 64,
+        }),
+      ),
+      code('PEER_BLOB_CHUNK_HASH'),
+    );
+    await c.send(
+      r.message('chunk', 'a', 'blob.chunk', {
+        'blobHash': hash,
+        'index': 0,
+        'base64': base64.encode(bytes),
+        'chunkHash': rawBytesHash(bytes).substring(7),
+      }),
+    );
+    final changed = Uint8List.fromList([4, 3, 2, 1]);
+    await expectLater(
+      c.send(
+        r.message('changed', 'a', 'blob.chunk', {
+          'blobHash': hash,
+          'index': 0,
+          'base64': base64.encode(changed),
+          'chunkHash': rawBytesHash(changed).substring(7),
+        }),
+      ),
+      code('PEER_BLOB_CHUNK_CONFLICT'),
+    );
+    final injection = sqlite3.open('${r.directory.path}/db');
+    injection.execute(
+      "CREATE TRIGGER fail_blob BEFORE INSERT ON harness_outbox WHEN NEW.kind='peer.blob.ready' BEGIN SELECT RAISE(ABORT,'injected'); END",
+    );
+    final finish = r.message('finish', 'a', 'blob.finish', {'blobHash': hash});
+    await expectLater(c.send(finish), code('PEER_INVALID_REQUEST'));
+    expect(r.repository.receivedPeerBlob(hash), isNull);
+    injection.execute('DROP TRIGGER fail_blob');
+    injection.dispose();
+    expect((await c.send(finish))['committed'], isTrue);
+    r.repository.revokePeer(
+      fingerprint('alpha'),
+      session,
+      r.plan.hash,
+      nowMs: r.wall,
+    );
+    await expectLater(c.send(finish), code('PEER_NOT_AUTHORIZED'));
   });
 }

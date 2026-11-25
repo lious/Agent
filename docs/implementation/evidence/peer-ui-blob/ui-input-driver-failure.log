@@ -1,0 +1,39 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/peer_identity_test.dart
+Building Linux application...
+✓ Built build/linux/x64/debug/bundle/studio_demo
+00:00 +0: real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: '0000000000000000000000000000000000000000000000000000000000000000'
+  Actual: '651ae386ec9e693cf9666db9b2e42c22307ceb79343207c5b867a0c80d67a621'
+   Which: is different.
+          Expected: 0000000000 ...
+            Actual: 651ae386ec ...
+                    ^
+           Differ at offset 0
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/apps/studio_demo/integration_test/peer_identity_test.dart:113:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/agent-foundation-20261125/apps/studio_demo/integration_test/peer_identity_test.dart line 113
+The test description was:
+  real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved
+  blob, revoke; same host only
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +0 -1: real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only [E]
+  Test failed. See exception logs above.
+  The test description was: real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only
+
+00:07 +0 -1: (tearDownAll)
+00:07 +0 -1: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/peer_identity_test.dart: real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only

@@ -1,0 +1,5 @@
+exit=0 /workspace/toolchains/flutter/bin/flutter test --platform chrome test
+exit=0 /workspace/toolchains/flutter/bin/flutter build web --release --no-pub
+exit=0 /workspace/toolchains/flutter/bin/flutter --version --machine
+exit=0 /workspace/toolchains/browser/chrome-test --version
+scope=passed tests=3 skipped=0 physicalDevices=false

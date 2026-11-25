@@ -9,6 +9,8 @@
 原 104 文档不变；全部87项逐项保留原验收：21 partial、53 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
+当前操作入口见文末 **v1.2 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
+
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
 - [基础 ADR](../adr/0001-foundation-slice.md) · [本地视频范围/偏差 ADR 0002](../adr/0002-local-video-vertical-slice.md)
@@ -17,7 +19,7 @@
 - [开发机工具链](../../tools/spikes/toolchain/linux-dev.json)
 - `evidence/` 是本分支真实运行记录，不是旧设计的 schema 模拟测试。
 
-## 本轮真实保存与恢复增量
+## v1.0历史保存与恢复增量
 
 自动保存现在登记本机 SQLite checkpoint（空闲2秒/最长30秒/50次durable提交），
 **不**自动打包素材或写云端；后台/切工程/关闭会立即请求本地 checkpoint。
@@ -63,8 +65,9 @@ flutter pub get --enforce-lockfile
 ```
 
 只有开发 SDK/编译依赖，没有模型权重。依赖版本与哈希在根 pubspec.lock 中；
-未声称其他 Flutter/Dart 版本验证通过。当前 sqlite3 2.x 适配器动态链接系统 SQLite，
-不是已打包验证的 iOS/Android/Windows 插件；这些平台需另接可信库和门禁。
+未声称其他 Flutter/Dart 版本验证通过。当前 sqlite3 2.x 适配器动态加载经严格门禁的
+SQLite3.54.1（启动/测试前设置LD_LIBRARY_PATH，见v1.1/v1.2命令）；系统3.46.1不合格且默认拒绝。
+不是已打包验证的iOS/Android/Windows插件；这些平台需另接可信库和门禁。
 
 ## 构建真实 native adapter / 启动
 
@@ -189,4 +192,59 @@ Repository runtime now defaults to exact approved SQLite3.54.1 SOURCE_ID + THREA
 
 Evidence: `evidence/peer-tls-sqlite/`. Original87 and newXD10 remain independent; original I-003 local concurrency/undo/fault/isolation acceptance has been rechecked, but complete upstream Schema and the wider originals are still missing. Do not promote whole tasks merely because a bounded integration test passed.
 
-本增量最终实际结果：**115个Dart/Flutter测试（112 native + 3真实Chrome），零跳过**；另6个Python工具测试、3个native CTest，50次SIGKILL为内部实验；双Linux宿主各3次clean/release构建启动通过。Web release JS编译通过，不冒充release页面运行/其他浏览器/物理多设备。实际加载SQLite3.54.1精确SOURCE_ID、THREADSAFE=1；系统pkg-config仍报3.46.1，未替换系统库且它仍不合格。工具链Flutter3.50.1 / Dart3.14.0，Chrome156.0.8078.47，fixture证书工具OpenSSL3.5.9。最终报告与当前代码sourceHashes全部匹配。
+v1.1历史增量最终实际结果：**115个Dart/Flutter测试（112 native + 3真实Chrome），零跳过**；另6个Python工具测试、3个native CTest，50次SIGKILL为内部实验；双Linux宿主各3次clean/release构建启动通过。Web release JS编译通过，不冒充release页面运行/其他浏览器/物理多设备。实际加载SQLite3.54.1精确SOURCE_ID、THREADSAFE=1；系统pkg-config仍报3.46.1，未替换系统库且它仍不合格。工具链Flutter3.50.1 / Dart3.14.0，Chrome156.0.8078.47，fixture证书工具OpenSSL3.5.9。该历史版本报告与当时代码sourceHashes匹配；当前版本以v1.2证据为准。
+
+
+## v1.2 当前可操作增量：Linux OS身份 / 显式配对 / 同会话计算 / 受限文件传输
+
+[ADR0006](../adr/0006-linux-os-identity-and-bounded-peer-inbox.md) ·
+[新证据](evidence/peer-ui-blob/summary.json)。不是只有SDK接口；两个native宿主都接入真实面板。
+
+1. 在Linux安全存储服务可用的桌面启动native App，展开 **Trusted peer session · Linux preview**。
+   默认不监听/不自动生成身份。先选择身份IP（默认127.0.0.1用于本机协议实验；LAN需先选实际IP），
+   点 **Create/load OS-stored device identity**。密钥进入libsecret，不能输出私钥/将其放入工程包。
+2. 双方通过独立可信通道核对**完整**证书SHA256；复制公开offer给owner，不能只照抄不验证。
+   需要发文件时worker先选本机文件并点 **Freeze selected file + offer public hash/size**，
+   它仅冻结<=16MiB精确字节并发布hash/size，路径和文件均尚未传输。把此更新offer给owner。
+3. Owner粘贴worker公开offer、键入其独立确认指纹、显式勾选元数据同意；需要文件再单独勾选blob同意。
+   LAN还须单独开启LAN监听。点 **Approve peer + start scoped session**（一peer、一node、10分钟grant）。
+4. Worker粘贴owner邀请，独立确认owner完整指纹、勾选元数据同意，点 **Run invited task on this device**。
+   这是实际免费元数据CPU任务；owner点 **Run other node locally in the SAME session**，
+   两个任务属于同一个原PlanGraph，不改Project revision，不是两个fork冒充协作。
+5. Worker点 **Send/resume exact granted blob to paired device**，实际TLS分块并恢复缺失块；owner仅收到
+   校验inbox，不自动导入项目/模型/云端。SDK `receivedPeerBlob`可本机读并再次校验；当前没有inbox浏览/GC/项目采纳UI。
+6. Owner可刷新持久回执或 **Revoke peer and stop listener**；旧grant/缓存回执不可绕过撤销。
+   再显式配对得到新session，不复活旧权限。App重启不会自动恢复授权/监听。
+   多session本地执行共享同一namespace逻辑slot，不能换session ID绕资源门禁；进程崩溃留下的
+   running slot需显式trusted-local恢复，当前没有自动恢复权限或完整重启管理UI。
+
+只资格验证Linux OS store；非硬件不可导出密钥，私钥会在进程内存中存在。证书固定首次选择IP，
+无轮换UI。UI目前一owner+一peer、两小型元数据digest，不是任意N端或模型/FFmpeg分布式执行。
+64MiB是逻辑stage预约限额而非物理磁盘上限（chunks/objects重复，约128MiB载荷+WAL/索引等）；
+无GC，不接受对端路径。完整项目CAS采纳/大文件、Web加密transport、移动/其他桌面/物理多端仍未完成。
+**Web不是native mTLS**；现有Web编辑/IndexedDB继续可用，但未添加不安全匿名socket或绕过证书认证。
+
+### 本增量真实复跑（Linux box，Asia/Shanghai）
+
+前置：官方Flutter/Dart与原native FFmpeg依赖，官方Debian `libsecret-1-dev`、
+`gnome-keyring`、`dbus-x11`。新增依赖锁定`flutter_secure_storage`11.2.0/Linux插件3.0.3。
+测试runner使用全新隔离D-Bus/HOME/XDG keyring和内存生成的测试密码，不读取/解锁既有用户keyring。
+
+```sh
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+python3 tools/acceptance/run_peer_ui.py --report artifacts/local-video/ui-blob-native-ui-verified.json
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /workspace/agent-media-native-peer --report artifacts/local-video/ui-blob-verification.json
+CHROME_EXECUTABLE=/workspace/toolchains/browser/chrome-test python3 tools/acceptance/run_multidevice_dev.py --report artifacts/local-video/ui-blob-browser.json
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/ui-blob-upgrade-v4.json
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --baseline-commit 85b9b49d9d9cd4e2b5562e1d7b416c0d48ae52d0 --baseline-schema 5 --baseline-library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/ui-blob-upgrade-v5.json
+python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/local-video/ui-blob-V-001.json
+```
+
+不要让toolchain probe的flutter clean和native integration build同时操作同一个App。
+以上使用校验过的SQLite3.54.1，不覆盖系统3.46.1，后者仍被默认门禁拒绝。没有OAuth/workflow权限变更。
+真实版本/测试计数/未验范围见本增量summary；历史证据不是本轮测试，也不把同机双pane/TLS/Chrome当物理设备通过。
+
+`foundation-ci.yml`仅更新为当前SQLite/keyring/peer子范围的**未安装配方**，未上传为active workflow、未远端执行；完整native媒体仍以真实本地gate为准。
+
+本增量最终实际结果：**119个Dart/Flutter测试（115 native回归 + 3真实Chrome + 1真实OS keyring/native UI），零跳过**；另6工具测试、3 CTest、内部50次SIGKILL；双Linux宿主各3次clean/release构建启动。真实v4/v5→v6迁移均通过、旧SQLite默认拒绝。最终sourceHashes与交付代码一致。原87仍0 complete /21 partial /53 planned /13 blocked；新增XD10为0 complete /8 partial /1 planned /1 blocked，未缩减原验收。

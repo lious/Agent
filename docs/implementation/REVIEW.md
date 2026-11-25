@@ -157,3 +157,52 @@ physical hardware, signed enrollment, privacy epoch revocation or model availabi
 Environment failures are not passes: refreshed box lacked cmake/pkg-config/clang/development headers, then nlohmann_json. Initial full gates failed for these exact prerequisites; a temporary SQL JSON-path Dart interpolation error also failed a concurrent build and was corrected to a raw DDL string. Installed only official Debian build packages using existing passwordless box permission; no user machine or credential accessed. Re-executed the final stable-source full gates rather than reusing those failed reports. SQLite build comes from hash-verified official source in isolated toolchain path, not a changed version assertion or system-library substitution.
 
 Not closed: physical devices; OS identity provisioning / pairing UI / browser transport; scoped resumable blobs; global/live resource attestations; full privacy/rights/paid budget ledger; original complete Schema/replan/media/audio/AAC contracts. Existing I-003 100-competing-CAS/undo/rollback/namespace tests are genuine, but do not erase its upstream complete-Schema dependency or turn library probes into App tests.
+
+## Linux OS identity + explicit native UI + bounded blob inbox — three actual rounds
+
+These are executed code self-audits/fixes, not an external security review.
+
+1. **Identity/endpoint lifecycle:** inspected actual Linux Secret Service plugin behavior;
+   added exact OS-store readback, stable store-wide OS-user-root SHA256 cross-process lock plus
+   store-wide in-process FIFO and cleanup in nested finally. Removed any need for plaintext fallback/whole-store
+   access. Certificate private key travels only stdin/process memory/OS store. Fixed bind/close
+   race and ensured close cleans listener even when revoke fails. Actual isolated encrypted
+   keyring + native Flutter load/reload verifies stable public identity; no user keyring read.
+   Public Linux plugin source audit found an APPLICATION_ID-wide aggregate read-modify-write;
+   per-namespace locks would not prevent cross-namespace lost updates, so the supported SDK now
+   supplies one store-wide path and all NativeIdentity calls share one FIFO. Real SDK assertions
+   check distinct identity scopes share the lock. Locked/denied backend remains unqualified.
+2. **Transfer transaction/resource/replay:** every chunk uses existing certificate/scope/
+   revision/epoch guard before replay. Added real SQL-trigger outbox abort + rollback/retry,
+   chunk/final hashes, conflicting repeats, receiver reopen/resume and revoked-cache denial.
+   Corrected repeated full-byte chunk loading (O(n²)) to index-only status, and bounded file
+   preparation using immutable typed snapshots instead of unbounded/boxed reads. Review also
+   caught unequal treatment of identical bytes using valid alternate Base64; normalize decoded
+   bytes for comparison and exercise this over real TLS. Limits are logical reserved payload,
+   not a misleading physical disk ceiling. Inbox is deliberately distinct from project CAS.
+3. **Real operator/restart/migration:** actual two-pane Linux integration clicks secure-store
+   identity -> both full fingerprints -> separate metadata/blob consent -> remote CPU -> exact
+   file bytes -> other CPU SAME PlanGraph -> revoke -> fresh session re-pair. Fixed retained
+   closed UI session handle preventing explicit re-pair; assert the new sessionId differs.
+   Final SDK audit added the existing AppProfile metadata gate to compute-session creation and
+   owner inbox reads, with actual denied-profile regressions; native UI also rejects a wrong
+   independently confirmed fingerprint before any listener is started. The new UI negative test
+   initially failed because the integration binding retained focusedEditable across native-control
+   focus changes: actual controller diagnostics proved the replacement text never reached the field,
+   not that a wrong fingerprint passed. Reset the public test-driver focus cache and assert exact
+   field text for every entry; keep the wrong-fingerprint rejection and full end-to-end assertions.
+   Retain the observed failing diagnostic, not present it as a successful security test.
+   Genuine committed-v4 and committed-v5 probes initially exposed an incorrect500ms expected
+   deadline in the *v5 test harness* (actual hard deadline1000ms); corrected baseline expectation,
+   left production gate/migration intact, reran both real versions and old-runtime rejection.
+   Resource audit also found the new local executor used a session-derived device ID, allowing
+   concurrent sessions to look like different devices. Use one stable namespace/database-local
+   slot and run two real overlapping CPU sessions: second claim DEVICE_RESOURCE_BUSY, release on
+   first commit, then second succeeds with unchanged Project revision. Unknown crashed-slot
+   recovery stays conservative and explicit; no new device-ID bypass or silent budget reset.
+   Final static analysis/full native/actual Chrome/OS UI/clean release starts are rerun from
+   frozen source; historical failed logs are not counted as passes.
+
+Remaining full acceptance is unchanged: browser authenticated transport, physical devices,
+other platform OS identity stores/builds, full Schema/media CAS, real audio/AAC/model/paid work,
+full rights/privacy/resource attestation. This is not a claim that all87 or allXD10 are complete.

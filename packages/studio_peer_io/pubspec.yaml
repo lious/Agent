@@ -16,13 +16,13 @@
     "studio_contracts": {
       "path": "../studio_contracts"
     },
-    "crypto": "^3.0.8"
+    "crypto": "^3.0.8",
+    "studio_document": {
+      "path": "../studio_document"
+    }
   },
   "dev_dependencies": {
     "test": "^1.26.3",
-    "studio_document": {
-      "path": "../studio_document"
-    },
     "lints": "^6.0.0",
     "sqlite3": "^2.9.4"
   }

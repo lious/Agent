@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/acceptance/verify_sqlite_upgrade.py", line 92, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/agent-foundation-20261125/tools/acceptance/verify_sqlite_upgrade.py", line 72, in main
+    raise RuntimeError(f'{stage} fixture failed: {result.stderr}')
+RuntimeError: new fixture failed: Unhandled exception:
+Bad state: Legacy lease deadline lost
+#0      main (file:///tmp/sqlite-real-upgrade-gwlyjy0j/fixture.dart:19:146)
+#1      _delayEntrypointInvocation.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:311:33)
+#2      _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:192:12)

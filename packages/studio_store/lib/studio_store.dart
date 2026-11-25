@@ -12,6 +12,7 @@ import 'package:studio_harness/builtin_compute.dart';
 part 'persistence.dart';
 part 'harness_persistence.dart';
 part 'peer_authority.dart';
+part 'peer_blobs.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -93,6 +94,12 @@ CREATE TABLE peer_requests(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session_id
 CREATE TABLE peer_task_bindings(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,node_id TEXT NOT NULL,fence TEXT NOT NULL,fingerprint TEXT NOT NULL,epoch INTEGER NOT NULL,PRIMARY KEY(ns,session_id,plan_hash,node_id,fence));
 """;
 
+const _ddl6 = """
+CREATE TABLE peer_blob_stages(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,epoch INTEGER NOT NULL,hash TEXT NOT NULL,size INTEGER NOT NULL,state TEXT NOT NULL CHECK(state IN ('receiving','committed')),PRIMARY KEY(ns,fingerprint,session_id,plan_hash,epoch,hash));
+CREATE TABLE peer_blob_chunks(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,epoch INTEGER NOT NULL,hash TEXT NOT NULL,chunk_index INTEGER NOT NULL,bytes BLOB NOT NULL,PRIMARY KEY(ns,fingerprint,session_id,plan_hash,epoch,hash,chunk_index),FOREIGN KEY(ns,fingerprint,session_id,plan_hash,epoch,hash) REFERENCES peer_blob_stages(ns,fingerprint,session_id,plan_hash,epoch,hash));
+CREATE TABLE peer_blob_objects(ns TEXT NOT NULL,hash TEXT NOT NULL,bytes BLOB NOT NULL,PRIMARY KEY(ns,hash));
+""";
+
 const approvedSqliteVersion = '3.54.1';
 const approvedSqliteSourceId =
     '2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76';
@@ -137,7 +144,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 5) {
+        if (version > 6) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -203,6 +210,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=5',
         );
         if (v5.length != 1 || v5.single['checksum'] != contentHash(_ddl5)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 6) {
+          _db.execute(_ddl6);
+          _db.execute('INSERT INTO schema_migrations VALUES(6,?)', [
+            contentHash(_ddl6),
+          ]);
+          _db.userVersion = 6;
+        }
+        final v6 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=6',
+        );
+        if (v6.length != 1 || v6.single['checksum'] != contentHash(_ddl6)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });

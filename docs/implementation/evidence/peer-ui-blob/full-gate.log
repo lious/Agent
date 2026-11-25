@@ -1,0 +1,15 @@
+exit=0 cmake -S native/studio_media -B /workspace/agent-media-native-peer
+exit=0 cmake --build /workspace/agent-media-native-peer
+exit=0 ctest --test-dir /workspace/agent-media-native-peer --output-on-failure
+exit=0 ffmpeg -v error -f lavfi
+exit=0 /workspace/toolchains/flutter/bin/dart format --output=none --set-exit-if-changed packages
+exit=0 /workspace/toolchains/flutter/bin/flutter analyze
+exit=0 /workspace/toolchains/flutter/bin/dart test packages/studio_contracts/test packages/studio_document/test packages/studio_store/test
+exit=0 /workspace/toolchains/flutter/bin/flutter test test --reporter=json
+exit=0 /usr/bin/python3 -m unittest discover -s
+exit=0 sha256sum --quiet -c SHA256SUMS
+exit=0 /workspace/toolchains/flutter/bin/flutter --version --machine
+exit=0 /workspace/toolchains/flutter/bin/dart run packages/studio_store/tool/runtime_version.dart
+exit=0 pkg-config --modversion libavformat libavcodec libavutil
+exit=0 /workspace/toolchains/flutter/bin/dart run packages/studio_media/tool/probe.dart /workspace/agent-media-native-peer/libstudio_media.so /workspace/agent-foundation-20261125/artifacts/local-video/input.mp4
+scope=passed tests=115 skipped=0 fullTaskComplete=false

@@ -31,6 +31,8 @@ void main() {
       try {
         a.openDemo();
         b.openDemo();
+        expect(a.peerStorageScope, isNot(b.peerStorageScope));
+        expect(a.peerIdentityLockPath, b.peerIdentityLockPath);
         a.rename('Image title', expectedRevision: BigInt.zero);
         expect(a.current.title, 'Image title');
         expect(b.current.title, 'Untitled');
@@ -49,6 +51,48 @@ void main() {
       }
     },
   );
+  test(
+    'local metadata sessions share one real namespace executor slot',
+    () async {
+      final directory = Directory.systemTemp.createTempSync('session-slot-');
+      final workspace = StudioWorkspace.open(
+        profile: AppProfile(
+          appId: 'studio',
+          region: 'local',
+          features: {'project.metadata'},
+        ),
+        databasePath: '${directory.path}/db',
+        tenantId: 't',
+        workspaceId: 'w',
+      );
+      workspace.openDemo();
+      final first = workspace.createMetadataComputeSession('first'),
+          second = workspace.createMetadataComputeSession('second');
+      try {
+        final running = first.runLocalNode('digest-0');
+        await expectLater(
+          second.runLocalNode('digest-0'),
+          throwsA(
+            isA<StudioException>().having(
+              (e) => e.code,
+              'code',
+              'DEVICE_RESOURCE_BUSY',
+            ),
+          ),
+        );
+        await running;
+        await second.runLocalNode('digest-0');
+        expect(first.statuses['digest-0'], 'committed');
+        expect(second.statuses['digest-0'], 'committed');
+        expect(workspace.current.revision, BigInt.zero);
+      } finally {
+        await first.close();
+        await second.close();
+        workspace.close();
+        directory.deleteSync(recursive: true);
+      }
+    },
+  );
   test('disabled profile cannot open writable project metadata', () {
     final workspace = StudioWorkspace.open(
       profile: AppProfile(appId: 'disabled', region: 'local', features: {}),
@@ -57,6 +101,21 @@ void main() {
       workspaceId: 'w',
     );
     try {
+      for (final action in <void Function()>[
+        () => workspace.createMetadataComputeSession('denied-session'),
+        () => workspace.receivedPeerBlob('0' * 64),
+      ]) {
+        expect(
+          action,
+          throwsA(
+            isA<StudioException>().having(
+              (e) => e.code,
+              'code',
+              'CAPABILITY_UNAVAILABLE',
+            ),
+          ),
+        );
+      }
       expect(
         () => workspace.openDemo(),
         throwsA(

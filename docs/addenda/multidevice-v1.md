@@ -1,14 +1,26 @@
-# 多端 + 同一会话分布式计算增量 v1.1.0
+# 多端 + 同一会话分布式计算增量 v1.2.0
 
 有效需求：t83u「web、桌面、iOS、安卓…多设备直通互联协同工作」；t84u进一步明确
 「同一个会话…多端调度算力分配任务协同」。本增量是用户新增范围，不改写原104份导出，
 不把原87项改成“已完成”，也不只交付文件同步/工程fork。
 
+## v1.2.0 实现增量
+
+新增Linux真实OS加密安全存储身份与显式App配对面板；原始Harness PlanGraph下同会话
+一远端/一本地免费元数据CPU任务、权限回执/撤销/重新配对；SQLite v6受限素材inbox，
+逐块hash/持久断点/最终hash/原子ready回执。真实libsecret+Flutter原生UI+TLS+SQLite
+已运行，不是模拟transport。具体限额、用户路径与安全边界见ADR0006及
+`evidence/peer-ui-blob/`。原104快照不改，原87与新增XD10独立追踪。
+
+**仅Linux同机协议/App集成通过，不冒充物理多设备、Web加密transport或其他平台资格。**
+OS identity初始生成固定选定IP，无轮换UI；一session一peer；inbox不是完整项目CAS。
+Web仍是真实可编辑宿主，但没有弱化身份门禁来假装已接入native mTLS。
+
 ## v1.1.0 实现增量
 
 在v1.0.0纯核心/持久lease基线上，新增native成熟TLS双向认证直连、HTTP前校验精确证书指纹、SQLite一次性离线配对确认/限定plan-node grant/epoch撤销/持久请求幂等、真实同会话双子进程HTTPS计算、每设备单重任务、保守资源隔离与LOCAL-owner boot CAS接管/不重置预算/硬attempt deadline。实际API与安全界限见 ADR0005 和 evidence/peer-tls-sqlite；原104快照不改。**不是物理多设备通过，也未完成Web transport、OS密钥库或App配对UI。** 没有生产/公网服务或付费中继。
 
-以下“v1.0.0基线”段落保留历史交付边界（其中“配对/网络未实现”仅指旧版），当前进度以版本增量、ADR和独立XD任务状态为准。
+以下v1.1.0和“v1.0.0基线”段落保留历史交付边界（其中“配对/网络未实现”仅指旧版），当前进度以版本增量、ADR和独立XD任务状态为准。
 
 ## 既有合同与增量
 
@@ -53,17 +65,18 @@ U63不能经JS Number；fence在Dart里为BigInt。时钟只解释为coordinator
 
 ## 必须补齐的安全/网络/资源合同
 
+以下为完整目标合同，当前子范围仅以v1.2.0/ADR0006证据为准；其中“尚未实现”历史描述不代表全部现状。
+
 1. **显式可信配对**：本机生成设备密钥；一次性有过期时间的人工确认/QR offer绑定身份
    指纹、scope、能力和允许传输的资源；密钥由系统安全存储持有，不入项目/日志/会话归档。
-   scoped grant可撤销并递增epoch；领取、心跳、结果、资源分块每次都重验。当前没有已启用
-   远程endpoint，绝不能把trusted-local SQLite API直接映射成peer API。
+   scoped grant可撤销并递增epoch；领取、心跳、结果、资源分块每次都重验。默认启动没有peer endpoint；只有显式配对后才有scope受限mTLS端点，绝不能把trusted-local SQLite API直接映射成peer API。
 2. **加密与可达性**：优先用户控制的局域网直连（受信TLS或等价经审查实现）；Web transport
    需实际浏览器支持的协议/受信证书或WebRTC DataChannel适配。此版本不预设必须WebRTC、
    不承诺任意NAT可直连。信令/发现只交换最小连接元数据；素材数据另授权。没有用户启用
    不使用公共信令/云素材备份/付费TURN。不可达返回DIRECT_UNREACHABLE，不能静默回退。
 3. **素材/结果传输**：scope内BlobRef白名单、总大小/块大小/总配额、逐块hash和最终hash、
    持久接收位图/幂等块ID、断点续传、隔离stage、校验后原子认领CAS。绝不接受对端任意
-   文件路径，不上传整个素材库。当前JSON下载不等于素材互传。
+   文件路径，不上传整个素材库。当前受限inbox传输不等于完整项目CAS互传。
 4. **同会话调度**：local重任务默认每设备一个、资源/温度/前后台变化停止新领取；浏览器
    关闭/挂起不能保证心跳。不会把“任意一个模型”切分显存；只调度独立任务/显式可分子任务。
    模型缺失时拒绝/换合适已授权设备，不自动下载大权重、云调用或扩大上传同意。
@@ -78,7 +91,7 @@ U63不能经JS Number；fence在Dart里为BigInt。时钟只解释为coordinator
 
 | 目标 | 本轮层级 | 仍未验证/未实现 |
 |---|---|---|
-| Linux desktop | 原生Flutter/SQLite/软件FFmpeg已有真实路径；新增字幕/调度协议测试 | 真跨设备、安全配对传输、完整87项 |
+| Linux desktop | 原生Flutter/SQLite/软件FFmpeg已有真实路径；新增字幕/调度协议测试 | 物理跨设备、完整媒体互传、完整87项 |
 | Web / Linux Chrome | 真实可编辑Flutter Web、IndexedDB CAS与shared核心 | 完整媒体/模型/SQLiteWASM/后台、其他浏览器 |
 | macOS / Windows | 共享纯Dart合同与明确适配边界 | 原生构建、签名、文件/FFmpeg/加密网络实测 |
 | iOS / Android | 目标平台，按前后台与设备资格准入 | 平台SDK/实机/签名/硬编/模型/后台限制实测 |

@@ -1,3 +1,5 @@
+import 'package:studio_peer_ui/studio_peer_ui.dart';
+
 import 'dart:async';
 import 'dart:io';
 
@@ -560,6 +562,11 @@ class _FoundationAppState extends State<FoundationApp>
             padding: const EdgeInsets.all(24),
             child: ListView(
               children: [
+                PeerPanel(
+                  storageScope: widget.workspace.peerStorageScope,
+                  lockPath: widget.workspace.peerIdentityLockPath,
+                  createSession: widget.workspace.createMetadataComputeSession,
+                ),
                 const Text(
                   'Project metadata · local SQLite',
                   style: TextStyle(fontSize: 24),

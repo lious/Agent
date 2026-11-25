@@ -1,0 +1,59 @@
+{
+  "timezone": "Asia/Shanghai",
+  "checkedAt": "2026-11-25T12:39:21.946124+08:00",
+  "tools": [
+    {
+      "command": [
+        "flutter",
+        "--version",
+        "--machine"
+      ],
+      "exitCode": 0,
+      "output": "{\n  \"frameworkVersion\": \"3.50.1\",\n  \"channel\": \"stable\",\n  \"repositoryUrl\": \"https://github.com/flutter/flutter.git\",\n  \"frameworkRevision\": \"ae9b586f34a8443573f82ef57c3bf914a908cbf7\",\n  \"frameworkCommitDate\": \"2026-11-18 17:01:07 -0800\",\n  \"engineRevision\": \"4d35714800b9266b6693a58e1225ecd7e9e45ed7\",\n  \"engineCommitDate\": \"2026-11-18 01:50:07.000Z\",\n  \"engineContentHash\": \"51379e6df48ea8ee7205623b90fe66491cad8df3\",\n  \"engineBuildDate\": \"2026-11-17 23:29:07.499\",\n  \"dartSdkVersion\": \"3.14.0\",\n  \"devToolsVersion\": \"2.61.0\",\n  \"flutterVersion\": \"3.50.1\",\n  \"flutterRoot\": \"/workspace/toolchains/flutter\"\n}\n"
+    },
+    {
+      "command": [
+        "openssl",
+        "version"
+      ],
+      "exitCode": 0,
+      "output": "OpenSSL 3.5.9 29 Sep 2026 (Library: OpenSSL 3.5.9 29 Sep 2026)\n"
+    },
+    {
+      "command": [
+        "pkg-config",
+        "--modversion",
+        "libsecret-1"
+      ],
+      "exitCode": 0,
+      "output": "0.21.7\n"
+    },
+    {
+      "command": [
+        "dpkg-query",
+        "-W",
+        "-f=${Package} ${Version}\n",
+        "libsecret-1-dev",
+        "gnome-keyring",
+        "dbus-x11"
+      ],
+      "exitCode": 0,
+      "output": "dbus-x11 1.16.2-2\ngnome-keyring 48.0-1\nlibsecret-1-dev 0.21.7-1\n"
+    },
+    {
+      "command": [
+        "dart",
+        "run",
+        "packages/studio_store/tool/runtime_version.dart"
+      ],
+      "exitCode": 0,
+      "output": "{\"sqliteSourceId\":\"2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76\",\"threadsafe\":1,\"sqliteVersion\":\"3.54.1\"}\n"
+    }
+  ],
+  "installSources": {
+    "flutterDart": "Existing official pinned Flutter SDK at /workspace/toolchains/flutter (see frozen linux-dev profile)",
+    "linuxKeyring": "Official Debian packages libsecret-1-dev, gnome-keyring, dbus-x11; fresh isolated test keyring only",
+    "flutterSecureStorage": "pub.dev flutter_secure_storage 11.2.0 / flutter_secure_storage_linux 3.0.3; exact pubspec.lock",
+    "sqlite": "Previously hash-verified official SQLite3.54.1 source, separate /workspace/toolchains/sqlite-3.54.1; default exact SOURCE_ID gate; system3.46.1 NOT approved"
+  }
+}

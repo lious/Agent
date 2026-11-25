@@ -1,0 +1,15 @@
+00:00 +0: loading packages/studio_peer_io/test/tls_session_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: real mTLS two-worker same session CPU compute, heartbeat, candidate receipts, replay and reopen
+00:00 +1: offline one-time confirmation, TTL, wrong fingerprint, deny unpaired/no cert/wrong scope
+00:00 +2: revocation rechecks existing TLS connection and persisted replay; expired grant and clock rollback fail closed
+00:00 +3: actual SQLite receipt insertion failure rolls back nested dispatch/outbox/binding and safe retry
+00:00 +4: trusted CA is insufficient: exact server pin, TLS validation and no certificate bypass; unreachable explicit
+00:00 +5: one heavy slot per authenticated device; expiry redispatch fences old results and source/hash checks reject forgery
+00:00 +6: two actual native child processes compute via authenticated HTTPS in one persisted session; same host only
+00:02 +7: closed result schema, payload bounds and lost-claim replay cannot extend a lease
+00:02 +8: authenticated network endpoints are fenced by local-owner takeover; new boot retries without resetting authority
+00:02 +9: real TLS hash-whitelisted chunk resume survives receiver reopen, final hash and duplicate commit
+00:02 +10: real TLS blob rejects missing consent, bad chunk/hash/conflicts and revoked replays; final outbox failure rolls back object
+00:03 +11: (tearDownAll)
+00:03 +11: All tests passed!

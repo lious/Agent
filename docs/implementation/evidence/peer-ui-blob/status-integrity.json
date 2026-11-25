@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-11-25T12:52:20.046544+08:00",
+  "timezone": "Asia/Shanghai",
+  "originalTasks": 87,
+  "originalTaskIdSetPreserved": true,
+  "allOriginalAcceptanceTextPreserved": true,
+  "original104Sha256ManifestPassed": true,
+  "originalSnapshotManifestSha256": "16b1757802c3fa10ebaa30c69d82b80214deeebde8d3b9529a51dbdc57bf7cfe",
+  "originalCounts": {
+    "complete": 0,
+    "partial": 21,
+    "planned": 53,
+    "blocked": 13
+  },
+  "separateNewXdCounts": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "fullTaskPromotionByThisIncrement": false
+}

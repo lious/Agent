@@ -1,3 +1,6 @@
+import 'package:studio_peer_io/compute_session.dart';
+export 'package:studio_peer_io/compute_session.dart';
+
 import 'dart:convert';
 import 'dart:async';
 
@@ -86,6 +89,25 @@ final class StudioWorkspace {
   }
 
   NativeMedia? get media => _media;
+  List<int>? receivedPeerBlob(String hash) {
+    _requireMetadata();
+    return _repository.receivedPeerBlob(hash);
+  }
+
+  String get peerStorageScope => _repository.namespace.key;
+  // flutter_secure_storage_linux mutates an app-wide aggregate item. All
+  // namespace identities must share this OS-user-root lock, not lock per key.
+  String get peerIdentityLockPath =>
+      '${Directory.systemTemp.path}/studio-peer-identity-store-${contentHash({'userRoot': Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? Directory.systemTemp.path}).substring(7)}.lock';
+  ComputeSessionCoordinator createMetadataComputeSession(String sessionId) {
+    _requireMetadata();
+    return ComputeSessionCoordinator(
+      _repository,
+      _activeProjectId,
+      id: sessionId,
+    );
+  }
+
   String get projectId => _activeProjectId;
   void _requireMetadata() {
     if (!profile.features.contains('project.metadata')) {

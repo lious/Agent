@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkedAt": "2026-11-25T12:56:10.440330+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "baseCommit": "85b9b49d9d9cd4e2b5562e1d7b416c0d48ae52d0",
+  "scope": "Linux native real OS-keyring identity + explicit pairing/consent/revocation UI, original same-session local/remote bounded CPU nodes, SQLite v6 authenticated resumable bounded inbox; same host only. Chrome validates existing editable host/shared core, NOT peer transport.",
+  "counts": {
+    "dartFlutterTests": 119,
+    "nativeRegressionTests": 115,
+    "actualChromeTests": 3,
+    "actualNativeOsKeyringUiTests": 1,
+    "skippedDartFlutterTests": 0,
+    "pythonToolingTests": 6,
+    "nativeCTestCases": 3,
+    "internalSigkillTrials": 50,
+    "cleanLinuxReleaseBuildsAndStarts": 6,
+    "historicalCodeSqliteMigrationProbes": 2
+  },
+  "versions": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "sqlite": "3.54.1 exact approved SOURCE_ID + THREADSAFE=1; system3.46.1 remains rejected",
+    "secureStorage": "flutter_secure_storage11.2.0/Linux3.0.3",
+    "more": "tools.json and captured gate records"
+  },
+  "sourceHashesMatch": true,
+  "sourceHashEvidence": "verification.json/sourceHashes and browser.json/sourceHashes; UI integration/runner source included in exact frozen tree",
+  "implementedUserPath": [
+    "explicit Linux OS identity load/create, no startup endpoint",
+    "full independently confirmed certificate SHA256 and separate metadata/blob consents",
+    "one authorized peer node and other node local under SAME original PlanGraph/current Project revision",
+    "real encrypted upload/resume to bounded peer inbox, exact hashes/bytes, no automatic project CAS attachment",
+    "persisted candidate receipts, revocation and explicit fresh-session re-pair"
+  ],
+  "limits": {
+    "peersPerUiSession": 1,
+    "compute": "two bounded free project-metadata/caption SHA256 CPU nodes; no arbitrary models/FFmpeg/shell",
+    "blobBytes": 16777216,
+    "blobChunksBytes": 65536,
+    "logicalReservedStagePayloadPerNamespaceBytes": 67108864,
+    "logicalNotPhysicalDiskCap": true,
+    "grantBlobs": 2,
+    "uniqueRequestsPerGrant": 10000,
+    "grantTtlSeconds": 600,
+    "identity": "Linux OS encrypted at-rest key; key exists in process memory, not hardware nonextractable; fixed selected IP, no rotation UI",
+    "resourceScope": "one stable local logical slot across sessions within namespace/database; not global physical-host arbitration"
+  },
+  "original87Counts": {
+    "complete": 0,
+    "partial": 21,
+    "planned": 53,
+    "blocked": 13
+  },
+  "separateXd10Counts": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "reviews": "Three executed audit/fix rounds plus final identity-store, text-driver and stable-resource-slot corrections in REVIEW.md",
+  "genuineFailuresRetained": [
+    "migration-harness-failure.log (v5 baseline hard-deadline test expectation corrected, not production gate)",
+    "ui-input-driver-failure.log (native test binding dropped repeat entry; exact controller assertion and public driver cache reset, not authentication bypass)"
+  ],
+  "notImplementedOrUnverified": [
+    "Web authenticated encrypted transport (native mTLS not usable as browser identity)",
+    "macOS/Windows/iOS/Android build and OS stores; mobile/browser background restrictions",
+    "two physical devices/LAN/NAT qualification",
+    "identity rotation, locked/denied OS-store interaction",
+    "general N-device/model/FFmpeg compute/live global resource attestation/full privacy-rights and paid ledger",
+    "interactive coordinator restart/grant recovery (no silent authority restoration), crash-left local slots need explicit trusted-local recovery",
+    "full media project CAS adoption/large transfer/GC; downloaded inbox bytes cannot be retracted by revocation",
+    "original full Schema, seek/cache, real audio/AAC and all remaining original task acceptance"
+  ],
+  "ci": "Local commands executed; foundation-ci.yml is inert updated recipe only, no active workflow or OAuth change",
+  "original104And87AcceptancePreserved": "status-integrity.json",
+  "reports": [
+    "verification.json",
+    "browser.json",
+    "native-ui.json",
+    "V-001.json",
+    "sqlite-upgrade-v4.json",
+    "sqlite-upgrade-v5.json"
+  ]
+}

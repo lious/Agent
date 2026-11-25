@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "asOf": "2026-11-25T12:15:13.476543+08:00",
+  "asOf": "2026-11-25T12:56:10.440330+08:00",
   "timezone": "Asia/Shanghai",
   "sourceRequirements": [
     "t83u",
@@ -26,8 +26,11 @@
       "hardDeps": [
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Native local offline one-use expiring full-certificate-fingerprint confirmation; SQLite scoped plan/node grant epochs, revocation checked on every request/replay; keys only supplied via TLS context. Actual mTLS tests including persisted expiry high-water. OS identity storage, pairing UI, browser identity and physical devices not qualified.",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Linux actual libsecret encrypted OS identity/readback + explicit two-sided full fingerprint pairing UI and ten-minute plan/node consent; one peer/session; SQLite epochs/revocation checked on every message/replay. Actual native UI re-pair creates a fresh session. No hardware nonextractability/rotation UI, browser/mobile/other-desktop identity or physical-device qualification.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-003",
@@ -36,19 +39,25 @@
       "hardDeps": [
         "XD-002"
       ],
-      "verifiedScopeOrRemaining": "Actual native direct mutually authenticated TLS sockets with CA validation + exact SHA256 leaf pin BEFORE HTTP bytes, TLS>=1.2, no redirect/proxy/relay fallback, explicit unreachable, bounded messages/deadlines/concurrency. Tested loopback HTTPS/two local child workers, NOT physical devices/LAN/NAT/Web/mobile.",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Actual native mTLS, CA validation and exact leaf SHA256 before HTTP bytes; no proxy/relay/cloud fallback. Explicit loopback default/LAN-enable UI and listener cleanup. Actual loopback TLS/native UI only: browser encrypted transport, LAN/NAT/mobile/physical devices remain unimplemented or unverified.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-004",
       "title": "Scoped resumable hashed media/result transfer",
-      "status": "planned",
+      "status": "partial",
       "hardDeps": [
         "XD-003",
         "I-004"
       ],
-      "verifiedScopeOrRemaining": "JSON export is not media transfer",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "SQLite v6 separate peer inbox: explicitly whitelisted exact hash/size, <=2 blobs/grant, <=16MiB/blob, 64KiB chunks, <=64MiB logical reserved stage payload/namespace (NOT physical disk cap); durable index/resume, per-chunk/full hash, duplicate-byte idempotency, atomic ready-outbox/receipt rollback, revoked replay denial. Actual TLS disconnect/repository reopen/resume and native UI file freezing/sending/exact owner bytes. Not full project CAS/adoption/export, large media streaming/GC or physical devices.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-005",
@@ -58,8 +67,11 @@
         "I-003",
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Original PlanGraph safe subset and host-qualified runtime/caps/model inventory/foreground/load. Actual transactional one-heavy-slot/device within namespace and restart quarantine. No signed live telemetry, global cross-namespace resource arbitration or UI.",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Original PlanGraph safe subset and host-qualified runtime/caps/model inventory/foreground/load; one-heavy-slot/device within namespace and restart quarantine. Actual UI places one free bounded metadata CPU node remotely and another locally in SAME session. No signed live/global telemetry, arbitrary model/FFmpeg distribution or general N-device UI. Local UI execution uses one stable logical namespace/database slot across sessions (real overlap busy/release/retry test), not a fresh per-session device ID; no global physical-host arbitration.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-006",
@@ -69,8 +81,11 @@
         "XD-005",
         "I-011"
       ],
-      "verifiedScopeOrRemaining": "Actual SQLite v5 authenticated request receipts atomically bind lease/outbox/result source and input/result/schema pins; heartbeat/expiry/retry/revoke/late result/rollback/reopen, two same-host child HTTPS workers. Local-only CAS boot takeover with preserved attempts/wall budget, ABA rejection and conservative old-device quarantine. Full dynamic PlanGraph/physical devices remain. Hard attempt deadline survives reopen/migration; repeated takeover carries old-device quarantine even after node retry overwrote its step row (real reproduced failure + fixed regression).",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Actual SQLite v5/v6 authenticated scope/request receipts atomically bind lease/outbox/result source and input/result/schema pins; expiry/heartbeat/retry/revoke/late result/rollback/reopen. Local-only boot takeover with preserved attempts/wall budget, ABA rejection and old-device quarantine. Linux UI uses current real Project revision/PlanGraph; grant never silently restored on restart. Full interactive recovery/dynamic PlanGraph/physical devices remain.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-007",
@@ -101,8 +116,11 @@
       "hardDeps": [
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Only actual Linux desktop/Chrome proof, other platforms unverified",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Actual Linux native identity/keyring/UI/TLS/inbox and Linux Chrome editable IndexedDB/shared core; Chrome does not exercise peer transport. Non-Linux builds/key stores, mobile background behavior and physical devices remain unverified.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/peer-ui-blob/summary.json"
+      ]
     },
     {
       "id": "XD-010",
@@ -122,8 +140,9 @@
     }
   ],
   "counts": {
-    "partial": 7,
-    "planned": 2,
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
     "blocked": 1
   }
 }

@@ -22,6 +22,9 @@
     "uuid": "^4.5.1",
     "studio_media": {
       "path": "../studio_media"
+    },
+    "studio_peer_io": {
+      "path": "../studio_peer_io"
     }
   },
   "dev_dependencies": {

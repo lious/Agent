@@ -1,0 +1,36 @@
+{
+  "name": "studio_peer_ui",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "flutter": {
+      "sdk": "flutter"
+    },
+    "material_ui": "1.11.1",
+    "flutter_secure_storage": "11.2.0",
+    "studio_peer_io": {
+      "path": "../studio_peer_io"
+    },
+    "studio_harness": {
+      "path": "../studio_harness"
+    },
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    },
+    "crypto": "^3.0.8",
+    "uuid": "^4.6.0"
+  },
+  "dev_dependencies": {
+    "flutter_test": {
+      "sdk": "flutter"
+    },
+    "flutter_lints": "^6.0.0"
+  }
+}
