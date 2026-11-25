@@ -1,18 +1,19 @@
 {
-  "asOf": "2026-11-25T15:09:47.760274+08:00",
+  "asOf": "2026-11-25T16:00:30.983987+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
   "fullTasksCompleted": 0,
   "counts": {
     "complete": 0,
-    "partial": 22,
-    "planned": 52,
+    "partial": 23,
+    "planned": 51,
     "blocked": 13
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-023 real bounded AudioSink ring/presented-sample clock, underrun/pause/rebind and actual timeline listening; offline file sync is not presentation latency",
+    "I-021 proxy generation/strict source-time map and full timeline RenderGraph: audio-only pre-rendered Pulse audition now exists, not presented AV playback",
+    "I-023 qualified PipeWire/P0/hardware AudioSink and60s presented AV sync, full DSP/routes; real software-service clock/fault/monitor slice does not close acceptance",
     "I-002 remaining original full semantic/resource closure and supported read-only app path; typed rich Schema roundtrip does not complete all original business contracts",
     "I-006/I-009 linked ripple/roll/slide, fractional video/audio-grid policy, source/clip-local caption reproject, independent audio import and full routing/effect/duck contracts",
     "I-021 proxy generation/strict source-time map and full timeline RenderGraph preview; current actual source-thumbnail indexed seek/LRU remains qualified",
@@ -83,18 +84,21 @@
     {
       "id": "V-004",
       "title": "seek、音频时钟与热/背压负载",
-      "status": "planned",
+      "status": "partial",
       "implementationStatus": "notApplicableValidationTask",
-      "verificationStatus": "notRun",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Actual Linux Pulse17 software-service noninterpolated clock, bounded ring/server queue, pause/seek/rebind epochs, producer SIGSTOP underrun, device suspension and daemon SIGSTOP stale-clock freeze/recovery. Audio-only monitor/SDK/clicked UI qualification; NOT the original 3-video/2-audio20-seek20-minute thermal/P0 test.",
+      "evidence": [
+        "evidence/audio-sink/summary.json"
+      ],
       "remainingAcceptance": "音画偏差≤20ms；音频无持续underrun；队列不超配置上界；无OOM/死锁。预览drop率目标≤5%，未达只降预览代理并披露。",
       "remainingScope": "含真实设备clock/drop/backpressure；不把吞帧隐藏成成功。",
       "hardDeps": [
         "V-002"
       ],
-      "blockers": []
+      "blockers": [],
+      "remainingImplementation": "Full original load/video/thermal/device/P0 qualification not run. First unreserved parallel semantic/crash gate observed an actual audio underrun and froze correctly; retained failure evidence, not a stress-profile pass. Mandatory positive service cases now run sequentially after CPU-heavy tests."
     },
     {
       "id": "V-005",
@@ -480,11 +484,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls; both Linux native hosts build with actual OS secure-storage plugin and optional peer session panel, default no endpoint. No all-platform parity claim. Added actual persistent-audio extraction, linked split/non-ripple trim/undo, mute/unlink/archive-fork/default-AAC controls to shared native UI. UI split IDs now use shared SDK UUIDv7. Both Linux hosts only; no new platform parity claim.",
+      "implementedScope": "Dart shared workspace and two runnable Linux Flutter hosts with actual shared local-video controls; both Linux native hosts build with actual OS secure-storage plugin and optional peer session panel, default no endpoint. No all-platform parity claim. Added actual persistent-audio extraction, linked split/non-ripple trim/undo, mute/unlink/archive-fork/default-AAC controls to shared native UI. UI split IDs now use shared SDK UUIDv7. Both Linux hosts only; no new platform parity claim. Added actual local-service audio timeline play/pause/seek/rebind/stop controls, confirmed sample/epoch/error UI and background pause/cancel without autoresume. Linux audio-only pre-rendered audition, not full timeline video playback.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/peer-ui-blob/V-001.json",
-        "evidence/persistent-audio/summary.json"
+        "evidence/persistent-audio/summary.json",
+        "evidence/audio-sink/summary.json"
       ],
       "remainingAcceptance": "flutter analyze/dart test零错误；两App同asset字节但session不可互读；runner未知任务非零退出。",
       "remainingScope": "含package依赖/本地端口/namespace；不含模型或真实商业后端。",
@@ -921,10 +926,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. NO AudioSink/ring/presented-device clock or switch qualification. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Still NO AudioSink/ring/presented-device clock, live timeline listening or switch qualification.",
+      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Increment1.7 adds actual optional libpulse17 asynchronous AudioSink with8192-frame ring/4096-frame server maximum; service-confirmed noninterpolated48k position, actual cork/drain, paused exact seek/rebind epochs, underflow/device-loss/stale timing freeze, cancellation and cleanup. SDK freezes persistent audio snapshot and uses existing actual PCM/SWR/Dart AudioBus; both native UIs expose audition controls and background pause/cancel. Physical presented clock remains unverified.",
       "evidence": [
         "evidence/audio-aac/summary.json",
-        "evidence/persistent-audio/summary.json"
+        "evidence/persistent-audio/summary.json",
+        "evidence/audio-sink/summary.json"
       ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",
@@ -933,7 +939,7 @@
         "I-015"
       ],
       "blockers": [],
-      "remainingImplementation": "AudioSink actual presented sample clock, bounded producer/consumer ring, underrun/device rebind and device60s sync; full AudioClip/link/route semantics. Current offline qualification does not satisfy these."
+      "remainingImplementation": "Actual software-service audio-only audition now exists, but full upstream AudioClip/link/route/DSP semantics, timeline video RenderGraph and60s PRESENTED AV sync, PipeWire/P0/physical device clocks and non-Linux adapters remain unqualified. Earlier offline60s file sync is not presentation latency."
     },
     {
       "id": "I-024",

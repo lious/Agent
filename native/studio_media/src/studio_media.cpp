@@ -28,6 +28,13 @@ extern "C" {
 #include <unistd.h>
 #include <vector>
 using J = nlohmann::json;
+#include <sys/stat.h>
+#ifdef STUDIO_ENABLE_PULSE
+#include <pulse/pulseaudio.h>
+#endif
+#include <array>
+#include <chrono>
+#include <thread>
 namespace {
 struct Error : std::runtime_error {
   using std::runtime_error::runtime_error;
@@ -56,9 +63,21 @@ template <class F> char *boundary(F action) {
     return encode(J{{"ok", false}, {"code", "NATIVE_EXCEPTION"}});
   }
 }
+#ifdef STUDIO_ENABLE_PULSE
+#include "pulse_playback.inc"
+constexpr bool pulse_enabled = true;
+#else
+constexpr bool pulse_enabled = false;
+#endif
 struct Engine {
   std::string ns;
   std::mutex busy;
+#ifdef STUDIO_ENABLE_PULSE
+  std::mutex playback_mutex;
+  bool playback_closed = false;
+  std::unique_ptr<PulsePlayback> playback;
+  uint64_t playback_epoch = 0;
+#endif
   std::atomic<uint64_t> epoch{0};
   std::atomic<uint64_t> encoded_audio_samples{0};
   explicit Engine(std::string n) : ns(std::move(n)) {}
@@ -730,6 +749,13 @@ int32_t sm_close(uint64_t h, const char *ns) {
   try {
     auto e = engine(h, ns);
     e->epoch.fetch_add(1);
+#ifdef STUDIO_ENABLE_PULSE
+    {
+      std::lock_guard playback_guard(e->playback_mutex);
+      e->playback_closed = true;
+      e->playback.reset();
+    }
+#endif
     std::lock_guard guard(registry_lock);
     engines.erase(h);
     return 0;
@@ -746,7 +772,14 @@ uint64_t sm_cancel_epoch(uint64_t h, const char *ns) {
 }
 int32_t sm_cancel(uint64_t h, const char *ns) {
   try {
-    engine(h, ns)->epoch.fetch_add(1);
+    auto e = engine(h, ns);
+    e->epoch.fetch_add(1);
+#ifdef STUDIO_ENABLE_PULSE
+    {
+      std::lock_guard playback_guard(e->playback_mutex);
+      e->playback.reset();
+    }
+#endif
     return 0;
   } catch (...) {
     return -1;
@@ -778,10 +811,75 @@ char *sm_capabilities(void) {
         {"pcm48kStereoV1", true},
         {"decoderAAC", avcodec_find_decoder(AV_CODEC_ID_AAC) != nullptr},
         {"deviceAudioClock", false},
+        {"pulseServicePlaybackV1", pulse_enabled},
+        {"pulseTimingInterpolation", false},
         {"swresampleVersion", swresample_version()},
         {"aacMux48kV1", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr},
         {"hardwareAcceleration", false}};
   });
+}
+char *sm_playback(uint64_t h, const char *ns, const char *text) {
+#ifdef STUDIO_ENABLE_PULSE
+  return boundary([&] {
+    auto e = engine(h, ns);
+    std::lock_guard guard(e->playback_mutex);
+    if (e->playback_closed)
+      throw Error("ENGINE_CLOSED");
+    if (!text || std::strlen(text) > 4096)
+      throw Error("RECIPE_LIMIT");
+    auto r = parse_recipe(text);
+    auto op = r.at("op").get<std::string>();
+    if (op == "stop") {
+      e->playback.reset();
+      return J{{"state", "stopped"}, {"epoch", ++e->playback_epoch}};
+    }
+    if (op == "open") {
+      if (e->playback)
+        throw Error("PLAYBACK_BUSY");
+      auto next = std::make_unique<PulsePlayback>(r, ++e->playback_epoch);
+      e->playback = std::move(next);
+    } else if (op == "seek" || op == "rebind") {
+      if (!e->playback)
+        throw Error("PLAYBACK_NOT_OPEN");
+      auto recipe = e->playback->recipe;
+      recipe["startSample"] = op == "seek"
+                                  ? r.at("sample")
+                                  : e->playback->status().at("presentedSample");
+      recipe["paused"] = op == "rebind" ? true : e->playback->paused.load();
+      if (op == "rebind" && r.contains("sink"))
+        recipe["sink"] = r["sink"];
+      if (!recipe["startSample"].is_number_integer() ||
+          recipe["startSample"].get<int64_t>() < 0 ||
+          recipe["startSample"].get<int64_t>() >=
+              recipe["sampleCount"].get<int64_t>())
+        throw Error("PLAYBACK_RANGE");
+      auto sink = recipe.value("sink", std::string{});
+      if (sink.size() > 128 ||
+          sink.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRS"
+                                 "TUVWXYZ0123456789._-") != std::string::npos)
+        throw Error("AUDIO_SINK_NAME");
+      e->playback.reset();
+      e->playback =
+          std::make_unique<PulsePlayback>(recipe, ++e->playback_epoch);
+    } else if (op == "pause" || op == "resume") {
+      if (!e->playback)
+        throw Error("PLAYBACK_NOT_OPEN");
+      auto state = e->playback->status().at("state").get<std::string>();
+      if (state == "interrupted" || state == "finished")
+        throw Error("PLAYBACK_REBIND_OR_SEEK_REQUIRED");
+      e->playback->paused.store(op == "pause");
+    } else if (op != "status")
+      throw Error("PLAYBACK_COMMAND_UNKNOWN");
+    return e->playback ? e->playback->status()
+                       : J{{"state", "stopped"}, {"epoch", e->playback_epoch}};
+  });
+#else
+  (void)h;
+  (void)ns;
+  (void)text;
+  return boundary(
+      []() -> J { throw Error("AUDIO_SINK_PLATFORM_UNAVAILABLE"); });
+#endif
 }
 char *sm_probe(uint64_t h, const char *ns, const char *path) {
   return boundary([&] {

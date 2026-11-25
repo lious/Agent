@@ -1,0 +1,18 @@
+00:00 +0: loading packages/studio_sdk/test/timeline_audio_test.dart
+00:00 +0: REAL Pulse SDK timeline prepare, confirmed clock, pause/seek/rebind/edit fence/cancel/close
+00:03 +1: All tests passed!
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart
+00:00 +0: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+00:04 +1: All tests passed!
+00:00 +0: loading packages/studio_sdk/test/timeline_audio_test.dart
+00:00 +0: REAL Pulse SDK timeline prepare, confirmed clock, pause/seek/rebind/edit fence/cancel/close
+00:04 +1: All tests passed!
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart
+00:00 +0: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+00:04 +1: All tests passed!
+00:00 +0: loading packages/studio_sdk/test/timeline_audio_test.dart
+00:00 +0: REAL Pulse SDK timeline prepare, confirmed clock, pause/seek/rebind/edit fence/cancel/close
+00:04 +1: All tests passed!
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart
+00:00 +0: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+00:05 +1: All tests passed!

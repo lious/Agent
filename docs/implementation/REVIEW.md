@@ -368,3 +368,54 @@ WebRTC remains nonzero/blocked; no managed-policy change or alternate route.
 2. **Atomic linked edit/SQL review.** Reconciled absolute stream origins and48k boundaries; verified positive/negative source availability, link offsets, locks, collisions, duplicate extraction/IDs, unlink preservation, selected-audio split and continued append. Found a real new-unlinked-audio-right version allocation gap; fixed it and added actual undo/re-edit same-ID SQL regression. Added1000 exact linked inverse operations. Real event-trigger failure proves all-table rollback after definitions/pins, followed by exact retry/dedup/stale-CAS/undo/reopen. Corrected test API omissions and used the existing canonical REVISION_CONFLICT code rather than changing production errors.
 
 3. **Actual user-path/export review.** Exercised real codecs and editor clicks, not only models/ports. Found that the UI's previous unconditional ripple trim would reject linked audio; implemented explicitly labelled leave-gap trim/delete in this restricted mode. The real archive/fork user path exposed stale AV group/member/anchor references in the original fork remapper; fixed all declared AV reference keys and added a direct fork regression plus actual SDK archive/fork/AAC export. Also replaced UI timestamp split IDs with the SDK's production UUIDv7 allocator. Fixed widget scroll/hit-testing using actual Scrollable.ensureVisible context after invalid test API/asset-cwd failures, retained those failed logs, and reran owning-package/full gates. Checked mutually exclusive source modes, default persisted audio, actual muted output, archive/fork/reopen and existing frozen export/cancel/atomic-output/resource/security regressions. Preserved no AudioSink/device-clock claims and did not re-run or bypass unchanged managed WebRTC failure.
+
+## Increment1.7 — three actual playback reviews/corrections
+
+Original acceptance is not replaced by this restricted development qualification.
+
+1. **Clock/native ownership review.** Rejected a submitted-frame/wall-time clock and
+   used real asynchronous libpulse timing without interpolation. Added explicit
+   initial timing/cork deadlines and500ms stale-clock invalidation, drain
+   acknowledgment, uncertain tail disclosure and paused rebind. Real producer
+   SIGSTOP0.8s initially hit clock-stale before its queued underflow callback; this
+   is retained failure evidence, not renamed success. A separate300ms actual
+   starvation experiment exercises real underflow, and independent daemon SIGSTOP
+   exercises actual clock staleness. Actual sink suspension exercises device loss.
+2. **SDK/UI lifecycle/resource review.** Found that a non-playing preparation could
+   finish after backgrounding and start sound. Added cancel-preparation/pause-opened
+   lifecycle behavior with no autoresume, actual SDK and clicked UI tests. Moved
+   all throwing recipe validation/snapshot creation before acquiring PCM fd;
+   constructor invalid-type failures no longer leak descriptors. Added close/open
+   fencing. Own preparation directory until isolate work ends; adopted playback
+   cleanup is separate. Fixed the qualification launcher changing toolchain HOME
+   (which generated ephemeral pub-cache references); only daemon HOME is private.
+   Restored pinned workspace dependency resolution offline and re-analyzed.
+3. **Adversarial control/path/load review.** Found FIFO open could block before the
+   regular-file check: added O_NONBLOCK and actual FIFO/symlink/size/nonfinite
+   refusals. Strengthened local-server grammar to reject mixed remote lists, no
+   autospawn or fallback. Busy/open and invalid seek/sink operations preserve the
+   active session; real repeat open/stop and malformed constructor trials leave fd
+   count unchanged. Clicked UI now verifies actual background cork/no-autoresume.
+   Real SDK monitor capture must contain finite nonzero audio, not just clock
+   progress. The first unreserved parallel CPU/crash gate observed a **real underrun**
+   and correctly froze: retained, NOT a V-004 stress pass. Positive real-time service
+   cases now run mandatorily and sequentially after the broad parallel suite; no
+   skips and no weakened underflow/failure assertions. Final lifecycle test lint
+   was found by the real analyzer and corrected, not ignored.
+   A later integrated clicked-UI play timeout is also retained (its original helper
+   lacked native-state detail). Three immediate SDK→UI pairs on the same real
+   service passed, so this does not establish a hardware/stress fix. Added timeout
+   native-state diagnostics and explicit service-tag configuration. Re-read official
+   Pulse buffer docs: request overall latency with PA_STREAM_ADJUST_LATENCY and
+   publish measured latency/sign/validity, without relaxing any queue/underflow
+   assertion. Normalized cancel-vs-isolate-attachment races to CANCELED and added
+   actual in-flight cancellation coverage. Intermittent unreserved/load behavior
+   remains a qualification limit, not silently erased by a later passing gate.
+
+Qualification explicitly stops at a real Pulse17 software service/monitor. No human
+hearing, physical DAC/latency, PipeWire/P0,20-minute thermal or presented video AV
+qualification is asserted. Both Pulse-enabled and explicit-OFF native configurations
+are tested on Linux; OFF is not a non-Linux build. Original87 and XD10 remain separate.
+No original104 snapshot, acceptance or hard dependency was changed; no new RTC policy
+attempt/bypass, production endpoint, paid call, Mac access or workflow activation.
+Detailed exact runs, source hashes, failures and limits: `evidence/audio-sink/`.

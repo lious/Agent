@@ -26,6 +26,9 @@ def skipped(output):
 
 
 def main():
+    if os.environ.get('STUDIO_PULSE_TEST') != '1':
+        return subprocess.call([sys.executable, str(ROOT / 'tools/acceptance/audio_sink/run_private.py'),
+                                sys.executable, __file__, *sys.argv[1:]])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', choices=['linux-dev'], required=True)
     parser.add_argument('--report', type=Path, required=True)
@@ -61,8 +64,12 @@ def main():
         ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib', 'apps/studio_web/lib', 'apps/studio_web/test'], {}),
         ([flutter, 'analyze'], {}),
         ([dart, 'test', 'packages/studio_contracts/test', 'packages/studio_document/test',
-          'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', 'packages/studio_peer_io/test', '--reporter=json'], {}),
-        ([flutter, 'test', 'test', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
+          'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', 'packages/studio_peer_io/test', '--exclude-tags=audio_service', '--reporter=json'], {}),
+        ([flutter, 'test', 'test', '--exclude-tags=audio_service', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
+        # Real-time external-service cases are mandatory but run after CPU-heavy
+        # parallel semantic/SIGKILL cases. They are NOT the V-004 thermal/load profile.
+        ([dart, 'test', 'packages/studio_sdk/test/timeline_audio_test.dart', '--reporter=json'], {}),
+        ([flutter, 'test', 'test/timeline_audio_ui_test.dart', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
         ([sys.executable, '-m', 'unittest', 'discover', '-s', 'tools/tests', '-v'], {}),
         (['sha256sum', '--quiet', '-c', 'SHA256SUMS'], {'cwd': ROOT / 'docs/studio'}),
         ([flutter, '--version', '--machine'], {}),
@@ -76,7 +83,7 @@ def main():
     ok = ok and skipped_tests == 0
     names = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
     source_hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(names)
-                     if (name.startswith(('packages/', 'native/', 'tools/', 'apps/')) or name in ['pubspec.yaml', 'pubspec.lock'])
+                     if (name.startswith(('packages/', 'native/', 'tools/', 'apps/')) or name in ['pubspec.yaml', 'pubspec.lock', 'dart_test.yaml'])
                      and (ROOT / name).is_file()}
     report = {
         'profile': args.profile, 'timezone': 'Asia/Shanghai',

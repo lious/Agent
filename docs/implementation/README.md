@@ -4,12 +4,12 @@
 素材导入 → 单轨 split/trim/slip 等 → SQLite 事务 → 含原件工程 ZIP 保存 → 关闭重开 →
 安全 fork 恢复 → FFmpeg 软件 H264/MP4 导出。原件/数据库不上传，无模型或付费 API。
 
-当前可运行范围严格限制为 silent CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048。
+视频范围仍为 CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048；持久音频/AAC与真实本地服务试听见increment1.7。
 有音轨输入需明确 video-only 确认；未知色彩、VFR、旋转、alpha 等不伪装成可导出。
-原 104 文档不变；全部87项逐项保留原验收：21 partial、53 planned、13 blocked（验证资源）。
+原104文档不变；当前全部87项逐项保留原验收：23 partial、51 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **v1.4 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
+当前操作入口见文末 **increment1.7**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -74,7 +74,7 @@ SQLite3.54.1（启动/测试前设置LD_LIBRARY_PATH，见v1.1/v1.2命令）；�
 在上述基础依赖外，当前开发机实际链接 FFmpeg 7.1.x（不是旧 FFmpegKit binary）：
 
 ```sh
-sudo apt-get install libavformat-dev libavcodec-dev libavutil-dev libswscale-dev nlohmann-json3-dev ffmpeg
+sudo apt-get install libavformat-dev libavcodec-dev libavutil-dev libswscale-dev nlohmann-json3-dev libswresample-dev libpulse-dev pulseaudio pulseaudio-utils ffmpeg
 # 必须检查 pkg-config；Ubuntu24.04 默认 FFmpeg6.1 不等同这里已验证的 7.1 开发机。
 pkg-config --modversion libavformat libavcodec libavutil libswscale
 cmake -S native/studio_media -B /tmp/studio-media-native -G Ninja
@@ -412,3 +412,48 @@ In either Linux demo editor: import a supported audio-bearing video with the exi
 Actual UI coverage clicks import→source seek→extract→linked split/trim/undo→gain→archive/fork→track mute/unmute→unlink→default AAC export. SDK coverage independently decodes output to measure audible/silent samples, reopens SQLite and verifies default AAC export, duplicate-mode refusal, frozen revision and cancellation. Domain tests include1000 exact trim/inverse operations, origin offsets, locks/source/id failure paths, and a rich image/story/plugin roundtrip. SQLite tests inject a failure after definitions/pins, inspect every table, retry/dedup, stale CAS, undo, reopen and retired audio-ID version reuse.
 
 **Not timeline listening:** no AudioSink/presented-clock/ring/playback/device rebind implementation yet. Unsupported linked ripple/roll/slide, caption reprojection, fractional-grid combinations, independent audio import and full Schema app editing remain explicit refusals/unfinished work. The60s test remains offline file sync, not device latency. See ADR0010 and `evidence/persistent-audio/summary.json` for exact results, failures and platform limits. Original87 and XD10 statuses are not inferred from test totals.
+
+## Increment1.7 — real local-service audio timeline audition
+
+After importing supported audio-bearing video and **extract persistent audio**, both
+Linux editors now provide **Play audio timeline / Pause / Resume / Stop**, exact48k
+seek (milliseconds), and explicit sink rebind. Blank sink uses the local service's
+default device; an explicit local Pulse sink name can be entered. **Rebind starts
+paused**: inspect the new clock epoch before Resume. Edits stop an old frozen
+snapshot; backgrounding pauses playback or cancels unfinished preparation, and
+returning never auto-resumes. Save/reopen/archive/default-AAC paths are unchanged.
+
+Use the same approved SQLite3.54.1 PATH/LD_LIBRARY_PATH above and build native with
+libpulse-dev; local playback requires an existing OS-authenticated Pulse Unix
+service (`PULSE_SERVER=unix:/absolute/path` or `$XDG_RUNTIME_DIR/pulse/native`).
+No remote/default cloud fallback or audio daemon autospawn. The UI reports real
+service-confirmed sample position, not elapsed wall time or submitted samples.
+Underrun/device loss/stale timing freezes it; explicit seek/rebind creates an epoch.
+An uncertain queued tail can replay on explicit recovery; no exactly-once claim.
+
+**Bounds/limits:** pre-rendered audio-only <=120s/128regions, admitted one audio
+track/master and1x. Not video timeline playback/full RenderGraph or PipeWire/mobile
+qualification. Actual Pulse17 software monitor output is verified, **not physical
+DAC/human hearing/60s presented AV sync**. Device-clock capability stays false.
+
+```sh
+# Full native gate now starts its own isolated real Pulse service; no skipped tests.
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /workspace/agent-media-native-peer --report artifacts/local-video/audio-sink-native-final.json
+# Actual software-service faults, monitor capture, ring/queue/resource bounds:
+dbus-run-session -- python3 tools/acceptance/audio_sink/pulse_smoke.py
+# Focused mandatory real-service SDK / widget cases; preserve fixture/library env:
+python3 tools/acceptance/audio_sink/run_private.py dart test packages/studio_sdk/test/timeline_audio_test.dart
+(cd packages/studio_editor_ui && python3 ../../tools/acceptance/audio_sink/run_private.py flutter test test/timeline_audio_ui_test.dart)
+# Explicit unavailable adapter still builds without Pulse (not non-Linux evidence):
+cmake -S native/studio_media -B /workspace/agent-media-native-no-pulse -G Ninja -DSTUDIO_ENABLE_PULSE=OFF
+```
+
+The software-service harness requires `pulseaudio`, `pulseaudio-utils` and
+`dbus-run-session`. It isolates its temporary Unix socket/daemon, never alters the
+box desktop's audio service, and does not claim physical devices. The SDK/widget
+cases are mandatory (no service skip). libpulse17 install source is official Debian
+apt; observed LGPL-2.1+ facts are not full App release license clearance.
+See [ADR0011](../adr/0011-local-pulse-audio-audition.md),
+`evidence/audio-sink/summary.json`, and REVIEW for exact runs/failures/limits.
+
+本版最终来源绑定回归：162 native Dart/Flutter +9 Chrome +1真实OS-keyring UI = **172项**，零跳过；另6工具/3个CTest（Pulse开/关各执行）、6次Linux clean/release启动和3次独立最小ABI probe。原87：**0 complete /23 partial /51 planned /13 blocked**；XD10：**0 /8 /1 /1**。先前一次并行门禁真实underrun和一次点击UI超时保留在failures，不冒充V-004热负载通过。原104及原验收/依赖逐项保留。

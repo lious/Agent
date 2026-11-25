@@ -20,6 +20,8 @@ char *sm_preview(uint64_t handle, const char *ns,
                  const char *closed_recipe_json);
 char *sm_export(uint64_t handle, const char *ns,
                 const char *closed_recipe_json);
+/* Actual local Pulse service playback; no wall-clock interpolation. */
+char *sm_playback(uint64_t handle, const char *ns, const char *recipe);
 void sm_string_free(char *text);
 #ifdef __cplusplus
 }

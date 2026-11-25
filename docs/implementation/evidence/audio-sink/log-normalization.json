@@ -1,0 +1,30 @@
+{
+  "normalization": "Log CR progress is line-separated and trailing whitespace removed for git whitespace hygiene. Original raw fingerprints retained; outcomes/messages not changed.",
+  "records": [
+    {
+      "file": "pulse-analyze-final.log",
+      "rawSha256": "19666e76ed5185a585efc917bbc0abbf304e3703349c6a3e94751cf760c5406e",
+      "normalizedSha256": "68a7d03985fa69a89760423deccef6ad4b1e61d9561864bba9b2a003d577eaf4"
+    },
+    {
+      "file": "analyze.log",
+      "rawSha256": "c653b018399ce8808b2afe5fb4bca8f9955b86f30c2d6458d0b4704bdfde2395",
+      "normalizedSha256": "d67745476d0d035a1480f30296404329e44b68b0fd20400227b01df482835172"
+    },
+    {
+      "file": "pulse-analyze-fifth.log",
+      "rawSha256": "35d2b6c6bdd8c45a7562b4cb935026df6abd523b5adedf85e596eacfa9060f58",
+      "normalizedSha256": "a6e082af69c8e5c2256ab04b51311de9518566602dccc9a1e382a306b8abdb2c"
+    },
+    {
+      "file": "libpulse-dev-install.log",
+      "rawSha256": "f12a7f2ed2969f1e8ae0141054ca98cca952dab41fb9319fa021a2924fc0999f",
+      "normalizedSha256": "12c1059dab2d069b57d11ba121324e333542f80a19cd47674e0994a04bb4f327"
+    },
+    {
+      "file": "pulse-build-first.log",
+      "rawSha256": "8e596f9e6a571a58a147b5705e14db83882f7584e915d4bb738f7c75548d5e58",
+      "normalizedSha256": "fa5fd5dd746ad6e607d0505c1e1eda88f20e03360e443b737aedadabde7704ea"
+    }
+  ]
+}

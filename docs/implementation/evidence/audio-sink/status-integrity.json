@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-11-25T16:01:33.653795+08:00",
+  "timezone": "Asia/Shanghai",
+  "original104SnapshotHashCheck": "passed",
+  "original87IdsUnique": 87,
+  "allOriginalAcceptanceScopeTitleDependenciesUnchanged": true,
+  "original87": {
+    "complete": 0,
+    "partial": 23,
+    "planned": 51,
+    "blocked": 13
+  },
+  "additionalXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "verificationBrowserOfflineSourceHashesMatch": true,
+  "osKeyringFinalFrozenScope": "passed",
+  "activeWorkflowsAdded": false,
+  "mainMerged": false,
+  "physicalDevicesQualified": false
+}

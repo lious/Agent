@@ -1,0 +1,16 @@
+[1/3] Building CXX object CMakeFiles/studio_media.dir/src/studio_media.cpp.o
+FAILED: CMakeFiles/studio_media.dir/src/studio_media.cpp.o
+/usr/bin/c++ -Dstudio_media_EXPORTS -I/workspace/agent-foundation-20261125/native/studio_media/include -std=gnu++20 -fPIC -Wall -Wextra -Werror -D_REENTRANT -MD -MT CMakeFiles/studio_media.dir/src/studio_media.cpp.o -MF CMakeFiles/studio_media.dir/src/studio_media.cpp.o.d -o CMakeFiles/studio_media.dir/src/studio_media.cpp.o -c /workspace/agent-foundation-20261125/native/studio_media/src/studio_media.cpp
+In file included from /workspace/agent-foundation-20261125/native/studio_media/src/studio_media.cpp:63:
+/workspace/agent-foundation-20261125/native/studio_media/src/pulse_playback.inc:29:16: error: use of undeclared identifier 'fstat'; did you mean 'stat'?
+   29 |     if(fd<0 || fstat(fd,&st) || !S_ISREG(st.st_mode) || st.st_size!=total*8) {
+      |                ^
+/usr/include/x86_64-linux-gnu/bits/struct_stat.h:26:8: note: 'stat' declared here
+   26 | struct stat
+      |        ^
+In file included from /workspace/agent-foundation-20261125/native/studio_media/src/studio_media.cpp:63:
+/workspace/agent-foundation-20261125/native/studio_media/src/pulse_playback.inc:29:34: error: use of undeclared identifier 'S_ISREG'
+   29 |     if(fd<0 || fstat(fd,&st) || !S_ISREG(st.st_mode) || st.st_size!=total*8) {
+      |                                  ^
+2 errors generated.
+ninja: build stopped: subcommand failed.

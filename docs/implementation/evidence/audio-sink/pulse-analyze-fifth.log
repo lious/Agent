@@ -1,0 +1,7 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_media/lib/studio_media.dart:180:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:676:7 • curly_braces_in_flow_control_structures
+  error • The named parameter 'videoOnlyAcknowledged' isn't defined. Try correcting the name to an existing named parameter's name, or defining a named parameter with the name 'videoOnlyAcknowledged' • packages/studio_sdk/test/timeline_audio_test.dart:65:9 • undefined_named_parameter
+
+3 issues found. (ran in 1.1s)

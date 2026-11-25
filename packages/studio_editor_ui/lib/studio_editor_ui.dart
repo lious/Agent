@@ -36,6 +36,35 @@ class _FoundationAppState extends State<FoundationApp>
         (t) => t['kind'] == 'audio',
       );
   bool _includeEmbeddedAudio = false;
+  Timer? _playbackTimer;
+  Map<String, dynamic> _playback = {'state': 'stopped'};
+  final _playbackSeek = TextEditingController(text: '0'),
+      _playbackSink = TextEditingController();
+  void _pollPlayback() {
+    if (!mounted) return;
+    try {
+      final next = widget.workspace.timelinePlayback;
+      if (next.toString() != _playback.toString()) {
+        setState(() => _playback = next);
+      }
+    } on StudioException catch (e) {
+      setState(() => _error = e.code);
+    }
+  }
+
+  void _playbackControl(String op, {int? sample}) {
+    try {
+      widget.workspace.controlTimelinePlayback(
+        op,
+        sample: sample,
+        sink: op == 'rebind' ? _playbackSink.text : null,
+      );
+      _pollPlayback();
+    } on StudioException catch (e) {
+      setState(() => _error = e.code);
+    }
+  }
+
   ui.Image? _previewImage;
   String? _peerAdoptionId;
   BigInt? _peerAdoptionRevision;
@@ -54,6 +83,10 @@ class _FoundationAppState extends State<FoundationApp>
     _title = TextEditingController(text: _project.title);
     _masterGain.text = '${_project.toJson()['audioBuses'][0]['gainDb']}';
     WidgetsBinding.instance.addObserver(this);
+    _playbackTimer = Timer.periodic(
+      const Duration(milliseconds: 50),
+      (_) => _pollPlayback(),
+    );
     _persistenceSubscription = widget.workspace.persistenceEvents.listen((_) {
       if (mounted) setState(() {});
     });
@@ -143,6 +176,7 @@ class _FoundationAppState extends State<FoundationApp>
         state == AppLifecycleState.hidden ||
         state == AppLifecycleState.detached) {
       try {
+        widget.workspace.pauseTimelinePlaybackForLifecycle();
         widget.workspace.flushCheckpoint();
       } catch (error) {
         if (mounted) {
@@ -182,6 +216,10 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    _playbackTimer?.cancel();
+    widget.workspace.stopTimelinePlayback();
+    _playbackSeek.dispose();
+    _playbackSink.dispose();
     widget.workspace.cancelSourcePreview();
     _previewImage?.dispose();
     _previewTime.dispose();
@@ -481,6 +519,78 @@ class _FoundationAppState extends State<FoundationApp>
           ),
         ),
       ],
+    ),
+    const Text(
+      'Audio-only timeline audition · bounded pre-rendered PCM · local PulseAudio service; not video playback or physical hearing verification.',
+    ),
+    Wrap(
+      spacing: 8,
+      children: [
+        FilledButton(
+          key: const Key('play-timeline'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  await widget.workspace.playTimeline(
+                    sink: _playbackSink.text.isEmpty
+                        ? null
+                        : _playbackSink.text,
+                  );
+                  _pollPlayback();
+                  return 'Audio timeline prepared; waiting for confirmed service clock.';
+                }),
+          child: const Text('Play audio timeline'),
+        ),
+        OutlinedButton(
+          key: const Key('pause-timeline'),
+          onPressed: () => _playbackControl('pause'),
+          child: const Text('Pause'),
+        ),
+        OutlinedButton(
+          key: const Key('resume-timeline'),
+          onPressed: () => _playbackControl('resume'),
+          child: const Text('Resume'),
+        ),
+        OutlinedButton(
+          key: const Key('stop-timeline'),
+          onPressed: () {
+            widget.workspace.stopTimelinePlayback();
+            _pollPlayback();
+          },
+          child: const Text('Stop'),
+        ),
+      ],
+    ),
+    _path(
+      'timeline-seek-ms',
+      'Audio timeline seek milliseconds (exact48k grid)',
+      _playbackSeek,
+    ),
+    OutlinedButton(
+      key: const Key('seek-timeline'),
+      onPressed: () {
+        final ms = int.tryParse(_playbackSeek.text);
+        if (ms == null || ms < 0) {
+          setState(() => _error = 'PLAYBACK_RANGE');
+          return;
+        }
+        _playbackControl('seek', sample: ms * 48);
+      },
+      child: const Text('Seek audio timeline'),
+    ),
+    _path(
+      'timeline-sink',
+      'Explicit local PulseAudio sink name (blank default)',
+      _playbackSink,
+    ),
+    OutlinedButton(
+      key: const Key('rebind-timeline'),
+      onPressed: () => _playbackControl('rebind'),
+      child: const Text('Rebind local audio device'),
+    ),
+    Text(
+      'Audio ${_playback['state']} · confirmed sample ${_playback['presentedSample'] ?? 0}/48000 · clock ${_playback['clockValid'] ?? false} · epoch ${_playback['epoch'] ?? 0} · ${_playback['reason'] ?? ''}',
+      key: const Key('timeline-audio-clock'),
     ),
     _path(
       'archive-path',

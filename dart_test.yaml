@@ -1,0 +1,4 @@
+tags:
+  # Mandatory real external-service cases run sequentially after parallel CPU/crash
+  # regression by run_local_video.py. This is not a V-004 stress qualification.
+  audio_service:

@@ -1,0 +1,109 @@
+{
+  "status": "retained failures, not qualified passes",
+  "initialParallelGate": {
+    "scopeStatus": "failed",
+    "testsExecuted": 162,
+    "skipped": 0,
+    "errors": [
+      {
+        "testID": 180,
+        "error": "Bad state: service timeout {baseSample: 0, clockSource: pulse-service-noninterpolated, clockValid: false, discontinuity: true, epoch: 1, physicalPresentationVerified: false, presentedSample: 2226, reason: underrun, ringCapacityFrames: 8192, ringFrames: 8192, ringHighWaterFrames: 8192, sampleCount: 432000, serverMaxBytes: 32768, sink: studio_test, state: interrupted, submittedSamples: 5168, timingUpdates: 17, unconfirmedTailSamples: 2942, underruns: 1, snapshotHash: sha256:0d669ec1a69146e89954cec2efc98f5b1ec88c56a96f42ddc38d69f12b0a748a}",
+        "stackTrace": "packages/studio_sdk/test/timeline_audio_test.dart 17:3   until\n===== asynchronous gap ===========================\npackages/studio_sdk/test/timeline_audio_test.dart 77:23  main.<fn>\n",
+        "isFailure": false,
+        "type": "error",
+        "time": 15475
+      }
+    ],
+    "interpretation": "The unreserved CPU/crash-parallel gate observed a real underflow and froze output; thermal/load causality remains unqualified. This is not a V-004 thermal/P0 stress pass. Positive service cases are now mandatory serial cases after parallel tests, no skipped tests or weakened fault assertion."
+  },
+  "secondGate": {
+    "scopeStatus": "failed",
+    "testsExecuted": 162,
+    "skipped": 0,
+    "failures": [
+      {
+        "command": [
+          "/workspace/toolchains/flutter/bin/flutter",
+          "analyze"
+        ],
+        "cwd": ".",
+        "exitCode": 1,
+        "output": "Analyzing agent-foundation-20261125...                          \n\n   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/test/timeline_audio_ui_test.dart:179:13 • curly_braces_in_flow_control_structures\n\n1 issue found. (ran in 1.2s)\n",
+        "outputSha256": "19666e76ed5185a585efc917bbc0abbf304e3703349c6a3e94751cf760c5406e"
+      }
+    ]
+  },
+  "additionalFailures": [
+    {
+      "file": "pulse-build-first.log",
+      "sha256": "fa5fd5dd746ad6e607d0505c1e1eda88f20e03360e443b737aedadabde7704ea",
+      "rawSha256": "8e596f9e6a571a58a147b5705e14db83882f7584e915d4bb738f7c75548d5e58"
+    },
+    {
+      "file": "pulse-analyze-fifth.log",
+      "sha256": "a6e082af69c8e5c2256ab04b51311de9518566602dccc9a1e382a306b8abdb2c",
+      "rawSha256": "35d2b6c6bdd8c45a7562b4cb935026df6abd523b5adedf85e596eacfa9060f58"
+    },
+    {
+      "file": "pulse-analyze-final.log",
+      "sha256": "68a7d03985fa69a89760423deccef6ad4b1e61d9561864bba9b2a003d577eaf4",
+      "rawSha256": "19666e76ed5185a585efc917bbc0abbf304e3703349c6a3e94751cf760c5406e"
+    },
+    {
+      "file": "pulse-fault-first.log",
+      "sha256": "1879c3c4b95505492fdb1147387a3096912af4a76fcbaa81b5039b0290f4fc8b",
+      "rawSha256": "1879c3c4b95505492fdb1147387a3096912af4a76fcbaa81b5039b0290f4fc8b"
+    },
+    {
+      "file": "pulse-smoke-first.log",
+      "sha256": "9f7460c29abaa745c0b14b8fe5a830c65b33ec11df7efc12f7d5083818df8cba",
+      "rawSha256": "9f7460c29abaa745c0b14b8fe5a830c65b33ec11df7efc12f7d5083818df8cba"
+    },
+    {
+      "file": "pulse-smoke-second.log",
+      "sha256": "3112bc0c7a75b97c566b8a154fc403bd88ce20980677448e5d37f9e121829217",
+      "rawSha256": "3112bc0c7a75b97c566b8a154fc403bd88ce20980677448e5d37f9e121829217"
+    }
+  ],
+  "thirdGate": {
+    "scopeStatus": "failed",
+    "testsExecuted": 162,
+    "skipped": 0,
+    "failures": [
+      {
+        "command": [
+          "/workspace/toolchains/flutter/bin/flutter",
+          "test",
+          "test/timeline_audio_ui_test.dart",
+          "--reporter=json"
+        ],
+        "exitCode": 1,
+        "messages": [
+          {
+            "testID": 1,
+            "messageType": "print",
+            "message": "Warning: A tag was used that wasn't specified in dart_test.yaml.\n  audio_service was used in the suite itself\n",
+            "type": "print",
+            "time": 2511
+          },
+          {
+            "testID": 3,
+            "messageType": "print",
+            "message": "══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════\nThe following TestFailure was thrown running a test:\nExpected: <true>\n  Actual: <false>\nplay-timeline timed out\n\nWhen the exception was thrown, this was the stack:\n#4      main.<anonymous closure>.asyncTap (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart:105:9)\n<asynchronous suspension>\n#5      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart:140:7)\n<asynchronous suspension>\n#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)\n<asynchronous suspension>\n#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)\n<asynchronous suspension>\n<asynchronous suspension>\n(elided one frame from package:stack_trace)\n\nThis was caught by the test expectation on the following line:\n  file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/timeline_audio_ui_test.dart line 105\nThe test description was:\n  REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline\n════════════════════════════════════════════════════════════════════════════════════════════════════",
+            "type": "print",
+            "time": 25458
+          },
+          {
+            "testID": 3,
+            "error": "Test failed. See exception logs above.\nThe test description was: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline",
+            "stackTrace": "",
+            "isFailure": false,
+            "type": "error",
+            "time": 25461
+          }
+        ]
+      }
+    ],
+    "interpretation": "Clicked play timeout retained. Original helper lacked native-state diagnostics. Three SDK/UI pairs then passed on the same real service; this does not prove a stress/hardware fix. Native-state diagnostics and documented overall latency negotiation added; final result is separate."
+  }
+}

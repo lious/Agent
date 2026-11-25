@@ -1,0 +1,12 @@
+{
+  "component": "libpulse",
+  "version": "17.0",
+  "debPackageVersion": "17.0+dfsg1-2+b1",
+  "source": "http://deb.debian.org/debian trixie/main amd64",
+  "linkage": "dynamic optional Linux native adapter",
+  "observedLibraryLicense": "LGPL-2.1+",
+  "licenseEvidence": "/usr/share/doc/libpulse-dev/copyright; install log retained",
+  "completeAppOrTransitiveSBOM": false,
+  "redistributionApproved": false,
+  "existingFFmpegGPLReleaseGatesUnchanged": true
+}

@@ -144,6 +144,7 @@ final class StudioWorkspace {
   }
 
   ProjectDocument openDemo() {
+    stopTimelinePlayback();
     _requireMetadata();
     _activeProjectId = _repository.selectedProjectId ?? 'demo-project';
     var project = _repository.read(_activeProjectId);
@@ -173,6 +174,7 @@ final class StudioWorkspace {
   ProjectDocument get current => _repository.read(_activeProjectId)!;
   bool get canUndo => _repository.latestCommandId(_activeProjectId) != null;
   ProjectDocument rename(String title, {required BigInt expectedRevision}) {
+    stopTimelinePlayback();
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
     final id = _uuid.v7();
@@ -189,6 +191,7 @@ final class StudioWorkspace {
   }
 
   ProjectDocument undo({required BigInt expectedRevision}) {
+    stopTimelinePlayback();
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
     final target = _repository.latestCommandId(_activeProjectId);
@@ -230,6 +233,7 @@ final class StudioWorkspace {
     EditOperation operation, {
     required BigInt expectedRevision,
   }) {
+    stopTimelinePlayback();
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
     final id = _uuid.v7();
@@ -592,6 +596,7 @@ final class StudioWorkspace {
   }
 
   Future<ProjectDocument> _restoreArchiveLocked(LocalFileGrant source) async {
+    stopTimelinePlayback();
     _requireMedia();
     final verified = ProjectArchive().open(source.file);
     final fork = forkLocalProject(
@@ -624,6 +629,199 @@ final class StudioWorkspace {
   void cancelExport() {
     _exportCancelEpoch++;
     _media?.cancel();
+  }
+
+  NativeMedia? _playbackMedia;
+  Directory? _playbackDirectory;
+  int _playbackGeneration = 0;
+  String? _playbackHash;
+  Map<String, dynamic> get timelinePlayback {
+    final result =
+        _playbackMedia?.playback({'op': 'status'}) ?? {'state': 'stopped'};
+    return {...result, 'snapshotHash': _playbackHash};
+  }
+
+  void stopTimelinePlayback() {
+    _playbackGeneration++;
+    _playbackMedia?.cancel();
+    _playbackMedia?.close();
+    _playbackMedia = null;
+    final dir = _playbackDirectory;
+    _playbackDirectory = null;
+    _playbackHash = null;
+    if (dir != null && dir.existsSync()) dir.deleteSync(recursive: true);
+  }
+
+  /// Backgrounding never auto-resumes or lets an in-flight preparation start audio.
+  void pauseTimelinePlaybackForLifecycle() {
+    if (_playbackMedia == null) return;
+    final state = timelinePlayback['state'];
+    if (state == 'stopped') {
+      stopTimelinePlayback(); // PCM is still being prepared, not opened yet.
+    } else if ({'playing', 'transition', 'connecting'}.contains(state)) {
+      controlTimelinePlayback('pause');
+    }
+  }
+
+  Map<String, dynamic> controlTimelinePlayback(
+    String op, {
+    int? sample,
+    String? sink,
+  }) {
+    if (!{'pause', 'resume', 'seek', 'rebind'}.contains(op)) {
+      throw const StudioException('PLAYBACK_COMMAND_UNKNOWN');
+    }
+    final media = _playbackMedia;
+    if (media == null) throw const StudioException('PLAYBACK_NOT_OPEN');
+    if (current.hash != _playbackHash) {
+      stopTimelinePlayback();
+      throw const StudioException('PLAYBACK_REVISION_CHANGED');
+    }
+    return media.playback({'op': op, 'sample': ?sample, 'sink': ?sink});
+  }
+
+  /// Bounded pre-rendered audio timeline audition, NOT a video RenderGraph.
+  Future<Map<String, dynamic>> playTimeline({String? sink}) async {
+    _requireMedia();
+    if (_media!.capabilities['pulseServicePlaybackV1'] != true) {
+      throw const StudioException('AUDIO_SINK_ADAPTER_UNAVAILABLE');
+    }
+    stopTimelinePlayback();
+    final generation = _playbackGeneration,
+        snapshot = current,
+        d = snapshot.toJson(),
+        sequence = snapshot.toJson()['sequences'][0];
+    requireLocalEditingWritable(snapshot);
+    final tracks = (sequence['tracks'] as List)
+        .where((t) => t['kind'] == 'audio')
+        .toList();
+    if (tracks.isEmpty ||
+        !tracks.any(
+          (t) => (t['items'] as List).any((c) => c['source'] != null),
+        )) {
+      throw const StudioException('PERSISTENT_AUDIO_REQUIRED');
+    }
+    final media = NativeMedia.open(_media!.libraryPath, snapshot.namespace);
+    _playbackMedia = media;
+    _playbackHash = snapshot.hash;
+    Directory? owned;
+    // The preparation owns its directory until all native/isolate calls finish.
+    // Stop/close cancels the handle, but must never delete a file under an isolate.
+    var adopted = false;
+    void check() {
+      if (_closed ||
+          generation != _playbackGeneration ||
+          current.hash != snapshot.hash) {
+        throw const StudioException('CANCELED');
+      }
+    }
+
+    try {
+      final dir = await Directory.systemTemp.createTemp('studio-audition-');
+      owned = dir;
+      check();
+      final segments = <Map<String, dynamic>>[];
+      for (final track in tracks) {
+        if (track['muted'] == true) continue;
+        for (final clip in track['items']) {
+          if (clip['source'] == null || clip['enabled'] == false) continue;
+          if (Q.fromJson(clip['timeMap']['rate']) != Q.of(1)) {
+            throw const StudioException('RETIME_RENDER_NOT_IMPLEMENTED');
+          }
+          final asset = (d['assets'] as List).singleWhere(
+            (a) => a['id'] == clip['source']['id'],
+          );
+          final expected = (asset['streams'] as List).singleWhere(
+            (st) => st['id'] == clip['source']['streamId'],
+          );
+          final file = await _blobs!.resolve(
+            asset['originalBlobHash'] as String,
+          );
+          check();
+          final fact = await media.probeAsync(file);
+          check();
+          final raw = (fact['streams'] as List).singleWhere(
+            (st) =>
+                '${asset['id']}:stream-${st['index']}' ==
+                clip['source']['streamId'],
+          );
+          if (contentHash(
+                streamDocument(
+                  Map<String, dynamic>.from(raw as Map),
+                  assetId: asset['id'] as String,
+                ),
+              ) !=
+              contentHash(expected)) {
+            throw const StudioException('SOURCE_STREAM_CHANGED');
+          }
+          final origin =
+              Q(BigInt.parse(raw['startPTS'] as String), BigInt.one) *
+              Q.of(raw['timeBase']['n'] as int, raw['timeBase']['d'] as int);
+          final start = sampleIndex(
+                Q.fromJson(clip['timelineRange']['start']),
+                48000,
+                Rounding.tiesToEven,
+              ).toInt(),
+              end = sampleIndex(
+                Q.fromJson(clip['timelineRange']['start']) +
+                    Q.fromJson(clip['timelineRange']['duration']),
+                48000,
+                Rounding.tiesToEven,
+              ).toInt();
+          segments.add({
+            'path': file.absolute.path,
+            'streamIndex': raw['index'],
+            'destStart': start,
+            'sampleCount': end - start,
+            'startSample': sampleIndex(
+              origin + Q.fromJson(clip['sourceRange']['start']),
+              48000,
+              Rounding.tiesToEven,
+            ).toInt(),
+          });
+        }
+      }
+      final pcm = await media.prepareAudioAsync({
+        'directory': dir.path,
+        'sampleCount': sampleIndex(
+          Q.fromJson(sequence['duration']),
+          48000,
+          Rounding.tiesToEven,
+        ).toInt(),
+        'segments': segments,
+        'buses': d['audioBuses'],
+        'masterId': sequence['masterBusId'],
+      });
+      check();
+      media.playback({
+        'op': 'open',
+        'path': pcm['path'],
+        'sampleCount': pcm['sampleCount'],
+        'sink': ?sink,
+      });
+      check();
+      _playbackDirectory = dir;
+      adopted = true;
+      return timelinePlayback;
+    } catch (_) {
+      // A canceled owner can close while an isolate is attaching/probing. Do not
+      // leak a stale-handle error as a new current-project media failure.
+      if (_closed || generation != _playbackGeneration) {
+        throw const StudioException('CANCELED');
+      }
+      rethrow;
+    } finally {
+      if (!adopted) {
+        media.close();
+        if (identical(_playbackMedia, media)) {
+          _playbackMedia = null;
+          _playbackHash = null;
+        }
+        if (owned != null && owned.existsSync()) {
+          owned.deleteSync(recursive: true);
+        }
+      }
+    }
   }
 
   bool _exportBusy = false;
@@ -962,6 +1160,7 @@ final class StudioWorkspace {
   }
 
   void close() {
+    stopTimelinePlayback();
     if (!_closed) {
       if (_saves?.pending == true) {
         throw const StudioException('SAVE_IN_PROGRESS');

@@ -1,0 +1,49 @@
+{
+  "scopeStatus": "passed",
+  "scope": "Linux actual historical v4 store -> current v7 on approved SQLite; library-level only",
+  "baselineCommit": "dff15f2c5ecd75ac5a1da9d089f3025545b727f3",
+  "checkedAt": "2026-11-25T15:36:39.002643+08:00",
+  "checks": [
+    {
+      "stage": "old",
+      "command": [
+        "dart",
+        "--packages=/tmp/sqlite-real-upgrade-us6647ka/legacy-config.json",
+        "/tmp/sqlite-real-upgrade-us6647ka/fixture.dart",
+        "/tmp/sqlite-real-upgrade-us6647ka/project.sqlite",
+        "old",
+        "500"
+      ],
+      "actual": {
+        "version": "3.46.1",
+        "schema": 4,
+        "integrity": "ok"
+      }
+    },
+    {
+      "stage": "new",
+      "command": [
+        "dart",
+        "--packages=/workspace/agent-foundation-20261125/.dart_tool/package_config.json",
+        "/tmp/sqlite-real-upgrade-us6647ka/fixture.dart",
+        "/tmp/sqlite-real-upgrade-us6647ka/project.sqlite",
+        "new",
+        "500"
+      ],
+      "actual": {
+        "version": "3.54.1",
+        "schema": 7,
+        "integrity": "ok",
+        "legacyLeaseDeadlineMs": 500
+      }
+    },
+    {
+      "stage": "old-runtime-rejected-by-default",
+      "exitCode": 255,
+      "expectedError": "SQLITE_RUNTIME_NOT_APPROVED"
+    }
+  ],
+  "librarySha256": "c6b8c597174a0adc7342213915d722662a2a52f9866f9e66a188d5938ce527f3",
+  "fullTaskComplete": false,
+  "platformQualification": false
+}

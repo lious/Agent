@@ -174,6 +174,14 @@ final class NativeMedia {
     );
   }
 
+  /// Actual local PulseAudio service, not a submitted-sample or wall clock.
+  Map<String, dynamic> playback(Map<String, dynamic> command) {
+    if (capabilities['pulseServicePlaybackV1'] != true) {
+      throw const StudioException('AUDIO_SINK_ADAPTER_UNAVAILABLE');
+    }
+    return _call('sm_playback', jsonEncode(command));
+  }
+
   void cancel() {
     _control('sm_cancel');
   }
