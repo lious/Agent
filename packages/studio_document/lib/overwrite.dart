@@ -240,7 +240,6 @@ void _repairGroupsAfterOverwrite(Map d, Set<String> removed) {
         if (!removed.contains(m['clipId']) && clips.containsKey(m['clipId'])) m,
     ];
     if (members.length == 2 &&
-        g['syncPolicy'] == 'preserve' &&
         members.length == (g['members'] as List).length) {
       return false;
     }
@@ -395,6 +394,7 @@ ProjectDocument _overwriteMoveClips(
     }
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, needed);
+  _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

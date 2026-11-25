@@ -11,6 +11,7 @@ class _PointerTimeline extends StatefulWidget {
     required this.document,
     required this.selection,
     required this.collisionMode,
+    this.includeLinks = true,
     required this.blocked,
     required this.onSelection,
     required this.onActive,
@@ -20,6 +21,7 @@ class _PointerTimeline extends StatefulWidget {
   final ProjectDocument document;
   final Set<String> selection;
   final String collisionMode;
+  final bool includeLinks;
   final bool blocked;
   final ValueChanged<Set<String>> onSelection;
   final ValueChanged<bool> onActive;
@@ -44,6 +46,7 @@ class _PointerTimelineState extends State<_PointerTimeline>
   double _zoom = 100;
   Q _origin = Q.of(0), _downX = Q.of(0), _reference = Q.of(0);
   List<String> _ids = [];
+  bool _includeLinks = true;
   EditGesture? _gesture;
   TimelineViewport? _captureViewport;
   SnappedMovePlan? _plan;
@@ -224,11 +227,18 @@ class _PointerTimelineState extends State<_PointerTimeline>
       if (!selection.add(hit['id'] as String)) selection.remove(hit['id']);
     } else {
       Set<String> expanded = selection;
+      final includeLinks =
+          widget.includeLinks && !HardwareKeyboard.instance.isAltPressed;
       try {
         if (selection.isNotEmpty) {
           expanded = expandedMoveClipIds(
             widget.document,
-            MoveClips(selection, Q.of(0), mode: widget.collisionMode),
+            MoveClips(
+              selection,
+              Q.of(0),
+              mode: widget.collisionMode,
+              includeLinks: includeLinks,
+            ),
           ).toSet();
         }
       } on StudioException {
@@ -245,6 +255,8 @@ class _PointerTimelineState extends State<_PointerTimeline>
     _row = row;
     _downX = _pointerQ(p.dx);
     _ids = selection.toList()..sort();
+    _includeLinks =
+        widget.includeLinks && !HardwareKeyboard.instance.isAltPressed;
     _released = false;
     _ended = false;
     _upPosition = null;
@@ -264,9 +276,15 @@ class _PointerTimelineState extends State<_PointerTimeline>
         pointerPixel: _downX,
         playhead: Q.of(0),
         mode: widget.collisionMode,
+        includeLinks: _includeLinks,
       ).referenceTime;
       _gesture = widget.workspace.beginGesture(
-        MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
+        MoveClips(
+          _ids,
+          Q.of(0),
+          mode: widget.collisionMode,
+          includeLinks: _includeLinks,
+        ),
         expectedRevision: widget.document.revision,
       );
       _owner = widget.workspace;
@@ -295,7 +313,12 @@ class _PointerTimelineState extends State<_PointerTimeline>
       if (dx == Q.of(0)) {
         widget.workspace.updateGesture(
           g,
-          MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
+          MoveClips(
+            _ids,
+            Q.of(0),
+            mode: widget.collisionMode,
+            includeLinks: _includeLinks,
+          ),
         );
       } else {
         _plan = planMoveSnap(
@@ -305,6 +328,7 @@ class _PointerTimelineState extends State<_PointerTimeline>
           pointerPixel: _captureViewport!.pixelAt(_reference) + dx,
           playhead: Q.of(0),
           mode: widget.collisionMode,
+          includeLinks: _includeLinks,
         );
         widget.workspace.updateSnappedMove(g, _plan!);
       }
@@ -385,7 +409,12 @@ class _PointerTimelineState extends State<_PointerTimeline>
           final d = g.preview.toJson(), starts = <Q>[];
           final moved = expandedMoveClipIds(
             g.base,
-            MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
+            MoveClips(
+              _ids,
+              Q.of(0),
+              mode: widget.collisionMode,
+              includeLinks: _includeLinks,
+            ),
           ).toSet();
           for (final t in d['sequences'][0]['tracks']) {
             for (final c in t['items']) {

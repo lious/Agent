@@ -1,14 +1,19 @@
 part of 'edit_algebra.dart';
 
-/// Current admitted slice: same tracks, includeLinks=true.
-/// mode=reject remains the default; mode=overwrite carves destination intervals.
-/// mode=insert opens a package-span hole at the destination and shifts later
-/// content; the source is vacated as a gap and is not ripple-closed.
+/// Current admitted slice: same tracks. includeLinks defaults to true and
+/// expands AV link and selection-group closure. includeLinks=false moves only
+/// the explicit IDs, marks a partially moved link allowOutOfSync, and does
+/// not rewrite stored offsets. mode=reject remains the default;
+/// mode=overwrite carves destination intervals. mode=insert opens a
+/// package-span hole at the destination and shifts later content; the source
+/// is vacated as a gap and is not ripple-closed. Ripple trim/delete still
+/// always include links.
 final class MoveClips extends EditOperation {
   MoveClips(
     Iterable<String> ids,
     this.delta, {
     String mode = 'reject',
+    this.includeLinks = true,
     Iterable<String>? rippleTrackIds,
   }) : mode = _requireCollisionMode(mode),
        clipIds = List.unmodifiable(ids.take(100001).toList()..sort()),
@@ -25,6 +30,7 @@ final class MoveClips extends EditOperation {
   final List<String> clipIds;
   final Q delta;
   final String mode;
+  final bool includeLinks;
 
   /// Null means the default union of target tracks and unlocked syncLock
   /// media tracks. Only legal with mode=insert.
@@ -35,7 +41,7 @@ final class MoveClips extends EditOperation {
     'clipIds': clipIds,
     'delta': delta.toJson(),
     'mode': mode,
-    'includeLinks': true,
+    'includeLinks': includeLinks,
     'targetTrackId': null,
     if (rippleTrackIds != null) 'rippleTrackIds': rippleTrackIds,
   };
@@ -43,7 +49,58 @@ final class MoveClips extends EditOperation {
 
 /// Read-only preview of the SAME closure used by the pure edit. No filtered IDs.
 List<String> expandedMoveClipIds(ProjectDocument before, MoveClips operation) =>
-    expandedEditClipIds(before, operation.clipIds);
+    operation.includeLinks
+    ? expandedEditClipIds(before, operation.clipIds)
+    : _explicitMoveClipIds(before, operation.clipIds);
+
+/// Validate the requested IDs only. Do not pull in unselected link partners
+/// or unselected selection-group members.
+List<String> _explicitMoveClipIds(
+  ProjectDocument before,
+  Iterable<String> clipIds,
+) {
+  requireLocalEditingWritable(before);
+  final d = before.toJson(), s = d['sequences'][0];
+  final clips = <String, Map>{};
+  final invalid = <String>{
+    for (final cue in d['captions']) cue['id'] as String,
+  };
+  for (final t in s['tracks']) {
+    for (final c in t['items']) {
+      if (c['source'] == null || !['video', 'audio'].contains(t['kind'])) {
+        invalid.add(c['id'] as String);
+      } else {
+        clips[c['id'] as String] = c as Map;
+      }
+    }
+  }
+  final result = <String>{};
+  for (final id in clipIds) {
+    if (!result.add(id)) {
+      continue;
+    }
+    if (invalid.contains(id)) {
+      throw const StudioException('SELECTION_ITEM_UNSUPPORTED');
+    }
+    if (clips[id] == null) {
+      throw const StudioException('CLIP_NOT_FOUND');
+    }
+  }
+  return List.unmodifiable(result.toList()..sort());
+}
+
+/// Mark a link allowOutOfSync when this command moved only some of its members.
+/// Stored offsets stay as originally recorded.
+void _markMovedLinksOutOfSync(Map d, Set<String> movedIds) {
+  for (final g in d['linkGroups'] as List) {
+    final ids = [for (final m in g['members'] as List) m['clipId'] as String];
+    final movedMembers = ids.where(movedIds.contains).length;
+    if (movedMembers == 0 || movedMembers == ids.length) {
+      continue;
+    }
+    g['syncPolicy'] = 'allowOutOfSync';
+  }
+}
 
 ProjectDocument _moveClips(
   ProjectDocument before,
@@ -185,6 +242,7 @@ ProjectDocument _moveClips(
   // Source ranges/time maps, clip-local effects/keyframes/automation, link offsets
   // and admitted absolute captions remain byte-for-byte unchanged. Unsupported
   // source/clip-local caption anchors and richer maps already refuse admission.
+  _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(
     d,
   ); // handles/adjacency/closure revalidated.

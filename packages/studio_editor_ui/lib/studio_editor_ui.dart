@@ -99,6 +99,7 @@ class _FoundationAppState extends State<FoundationApp>
   final _rippleCloseStart = TextEditingController();
   final _rippleCloseDuration = TextEditingController();
   String _collisionMode = 'reject';
+  bool _ignoreLinksThisMove = false;
   String? _clipboardError;
   final _multiSelection = <String>{};
   EditGesture? _multiGesture;
@@ -948,6 +949,7 @@ class _FoundationAppState extends State<FoundationApp>
       document: _project,
       selection: _multiSelection,
       collisionMode: _collisionMode,
+      includeLinks: !_ignoreLinksThisMove,
       blocked: _busy || _gesture != null || _multiGesture != null,
       onSelection: (ids) => setState(() {
         _multiSelection.clear();
@@ -1914,6 +1916,7 @@ class _FoundationAppState extends State<FoundationApp>
               children: [
                 ListView(
                   key: const Key('foundation-scroll'),
+                  scrollCacheExtent: const ScrollCacheExtent.pixels(8000),
                   children: [
                     PeerPanel(
                       storageScope: widget.workspace.peerStorageScope,

@@ -179,8 +179,14 @@ SnappedMovePlan planMoveSnap(
   required Q pointerPixel,
   required Q playhead,
   String mode = 'reject',
+  bool includeLinks = true,
 }) {
-  final initial = MoveClips(clipIds, Q.of(0), mode: mode),
+  final initial = MoveClips(
+        clipIds,
+        Q.of(0),
+        mode: mode,
+        includeLinks: includeLinks,
+      ),
       expanded = expandedMoveClipIds(base, initial),
       moving = expanded.toSet(),
       d = base.toJson(),
@@ -230,7 +236,12 @@ SnappedMovePlan planMoveSnap(
   );
   return SnappedMovePlan._(
     base.hash,
-    MoveClips(initial.clipIds, decision.delta, mode: mode),
+    MoveClips(
+      initial.clipIds,
+      decision.delta,
+      mode: mode,
+      includeLinks: includeLinks,
+    ),
     decision,
     viewport,
     reference,

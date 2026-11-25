@@ -158,7 +158,8 @@ void requireLocalEditingWritable(ProjectDocument project) {
   CaptionStore(cues);
   requireSelectionGroupProfile(d);
   for (final group in d['linkGroups']) {
-    if (group['syncPolicy'] != 'preserve' ||
+    if ((group['syncPolicy'] != 'preserve' &&
+            group['syncPolicy'] != 'allowOutOfSync') ||
         (group['members'] as List).length != 2) {
       throw const StudioException('LINK_MODE_NOT_IMPLEMENTED');
     }

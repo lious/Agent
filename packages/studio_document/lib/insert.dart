@@ -546,6 +546,7 @@ ProjectDocument _insertMoveClips(
     newId,
     opened.minimumDuration,
   );
+  _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

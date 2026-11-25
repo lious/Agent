@@ -373,7 +373,8 @@ void _projectSemantics(
           sequenceFor[c['id']]['id'] != sequenceFor[anchor['id']]['id']) {
         issue('LINK_MEMBERSHIP_MISMATCH', '/linkGroups');
       }
-      if (start(c) - start(anchor) != q(member['offset'])) {
+      if (g['syncPolicy'] != 'allowOutOfSync' &&
+          start(c) - start(anchor) != q(member['offset'])) {
         issue('LINK_OFFSET_MISMATCH', '/linkGroups/members');
       }
     }

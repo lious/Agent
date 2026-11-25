@@ -30,6 +30,7 @@ extension _MultiMoveControls on _FoundationAppState {
             _multiSelection,
             _delta() * Q.of(direction),
             mode: _collisionMode,
+            includeLinks: !_ignoreLinksThisMove,
           );
       // A rejected update must not leave the preceding successful ghost visible.
       _multiImage?.dispose();
@@ -146,7 +147,12 @@ extension _MultiMoveControls on _FoundationAppState {
     if (g != null) {
       closure = expandedMoveClipIds(
         g.base,
-        MoveClips(_multiSelection, _multiDelta!, mode: _collisionMode),
+        MoveClips(
+          _multiSelection,
+          _multiDelta!,
+          mode: _collisionMode,
+          includeLinks: !_ignoreLinksThisMove,
+        ),
       );
     }
     return Focus(
@@ -164,7 +170,21 @@ extension _MultiMoveControls on _FoundationAppState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap / preserve ALL linked members. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; close a vacated interval with Ripple close range. Cross-track moves are not in this slice.',
+            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap. Linked members and selection groups are included by default; Ignore links and groups this move (or hold Alt while dragging) moves only the explicit IDs, marks a partially moved AV link allowOutOfSync, and does not rewrite stored offsets. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; close a vacated interval with Ripple close range. Cross-track moves are not in this slice.',
+          ),
+          Row(
+            children: [
+              Checkbox(
+                key: const Key('move-ignore-links'),
+                value: _ignoreLinksThisMove,
+                onChanged: blocked || g != null
+                    ? null
+                    : (v) => _gestureSetState(
+                        () => _ignoreLinksThisMove = v ?? false,
+                      ),
+              ),
+              const Expanded(child: Text('Ignore links and groups this move')),
+            ],
           ),
           Text(
             'Requested viewport IDs (${_multiSelection.length}): ${_multiSelection.toList()..sort()}',
