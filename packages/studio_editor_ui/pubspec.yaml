@@ -16,6 +16,12 @@
     "material_ui": "1.11.1",
     "studio_peer_ui": {
       "path": "../studio_peer_ui"
+    },
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "studio_contracts": {
+      "path": "../studio_contracts"
     }
   },
   "dev_dependencies": {

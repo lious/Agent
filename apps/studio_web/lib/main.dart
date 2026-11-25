@@ -1,3 +1,5 @@
+import 'package:studio_editor_ui/project_inspector.dart';
+
 import 'dart:async';
 import 'dart:js_interop';
 
@@ -129,6 +131,7 @@ class _WebStudioState extends State<WebStudioApp> {
             const Text(
               'Browser IndexedDB metadata/caption editing only. No media renderer, model or paid service. Peer networking requires separate explicit WebRTC pairing below. Browser storage can be evicted: export JSON; this is not a complete portable media archive.',
             ),
+            const ProjectInspectorPanel(),
             if (_project == null)
               const Text('Opening local browser project…')
             else ...[

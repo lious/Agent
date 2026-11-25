@@ -94,7 +94,7 @@ def main():
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
         'notValidated': ['all 87 full acceptance contracts', 'full P0 hardware/codec release matrix (separate60s Linux offline qualification)', 'device AudioSink presentation clock',
-                         'GPU or hardware adapters', 'full RenderGraph', 'durable SchemaProxy/CAS mapping, full compositor/V003 GPU colour and physical AV presentation (ephemeral RGBA128 original-PTS cache/service-clock CPU/UI qualified)' , 'non-Linux platforms',
+                         'GPU or hardware adapters', 'full RenderGraph', 'durable VFR/multi-pipeline proxies, full other-resource/history closure, full compositor/V003 GPU colour and physical AV presentation (registered CFR/SDR CAS proxies and service-clock CPU/UI dev slice only)' , 'non-Linux platforms',
                          'physical power-loss/disk-full/non-Linux provider durability faults', 'model inference', 'paid/remote services'],
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,36 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart
+00:00 +0: readonly pasted snapshot and exact opaque payload remain isolated; reference search does not resolve resources
+00:01 +1: readonly inspector rejects duplicate JSON, future Schema, invalid FK and excess bytes without replacing good snapshot
+00:01 +2: readonly pending selected loader cannot update a disposed view
+00:01 +3: full rich Schema readonly view exposes all root sections and exact nested/opaque values without mutation
+00:02 +4: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+pumpAndSettle timed out
+
+When the exception was thrown, this was the stack:
+#0      WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:717:11)
+<asynchronous suspension>
+#1      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#2      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart:109:7)
+<asynchronous suspension>
+#3      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#4      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  native explicit JSON file inspection preserves active SQLite head and survives closing/reopening
+  workspace
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +4 -1: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace [E]
+  Test failed. See exception logs above.
+  The test description was: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace
+  
+00:08 +4 -1: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace

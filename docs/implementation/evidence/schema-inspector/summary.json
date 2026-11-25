@@ -1,0 +1,61 @@
+{
+  "increment": "1.9.1 small follow-on checkpoint",
+  "checkedAt": "2026-11-25T18:20:47.575260+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseVerifiedProxyCommit": "e11ce9a8ed2042007c9db9484fba5bb7a5c32004",
+  "scopeStatus": "focusedChecksPassed",
+  "fullTaskComplete": false,
+  "tests": {
+    "nativeUi": 10,
+    "durableProxyRegression": 3,
+    "chrome": 3
+  },
+  "totalTargetedDartFlutterExecutions": 16,
+  "skipped": 0,
+  "full182GateRerunAgainstThisUiIncrement": false,
+  "cleanNativeReleaseRerunForThisUiIncrement": false,
+  "webReleaseRerunForThisUiIncrement": false,
+  "analyzer": "flutter analyze clean",
+  "sourceHashes": {
+    "packages/studio_editor_ui/lib/project_inspector.dart": "fc0a6be9debaa7447e6a4f95021984711c2a38657693edcab177eec1080efce2",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "8c4a66a8698a61c897d91ff5f945232664acbe6d381027edbb100117e10ae54e",
+    "packages/studio_editor_ui/pubspec.yaml": "ba44d24ebcc88cf6e6e1ae45a2e9587197fea6f43a9c2d26c192bc37051f06a9",
+    "packages/studio_editor_ui/test/inspector_cases.dart": "6f35938aedd9955b5c89457a95235778f9982a6af13f2c2c4a80cfe8f8e27d9f",
+    "packages/studio_editor_ui/test/schema_inspector_test.dart": "c1e98fd6ceb1f461070eafb72209f894fc4997234ba21b6d60924900c7d282ed",
+    "apps/studio_web/lib/main.dart": "0d66fe0f1fc3b9ba8df1845973f3e9406f46eefa68473dab2604c82656097b1b",
+    "apps/studio_web/pubspec.yaml": "f61aab1ca6c8d5b0f4420b6a8aa3618efa60e9c5110a95057eed0a7ff6ee5fbd",
+    "apps/studio_web/test/inspector_test.dart": "eee39fef70373d71ea0588d6bae0d70f6b66b1aca6abc7a39d5ff814b333fb71",
+    "tools/acceptance/run_local_video.py": "eee0c5092a81883525abbec2235fad4aec3e3d1c827b8c6a3e5cff23026351aa"
+  },
+  "userPath": [
+    "Native: explicit local JSON path -> Inspect project JSON -> Inspect selected path; full current rich fixture loads without altering active SQLite head/revision or undo",
+    "Web/native: paste JSON -> Validate and inspect; all original root sections, paged entries, exact JSON, id/hash definition lookup",
+    "Unknown payloads/locators stay text; no file/network/resource/plugin resolution or active project switching"
+  ],
+  "limits": [
+    "1MiB inspector input limit only; core32MiB unchanged",
+    "metadata validation is not blob integrity, license, source provenance, capability or plugin admission",
+    "rich project editing/SQLite admission/full resource closure still refused, not silently enabled",
+    "native file inspection Linux verified only; no other-platform or physical-device claim",
+    "prior full regression182 is e11ce9a frozen-source evidence, not a full rerun of this UI increment",
+    "prior intermittent audio/UI service failures remain unresolved stress evidence"
+  ],
+  "retainedFailures": [
+    "first focused native harness: lazy dropdown .last before element built, multiple scrollable ambiguity",
+    "native IO test initially tapped before expanded layout and used fake-time zone; corrected actual hit-test and real IO zone; no ignored warning or weakened completion assertion",
+    "first Chrome harness could not serve a relative test import outside app test root; app-local fixture compiled and passed",
+    "one Shell spawn aborted during steering interruption; no active job left or lost file observed on recovery"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "XD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  }
+}

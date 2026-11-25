@@ -1,0 +1,69 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart
+00:00 +0: readonly pasted snapshot and exact opaque payload remain isolated; reference search does not resolve resources
+00:01 +1: readonly inspector rejects duplicate JSON, future Schema, invalid FK and excess bytes without replacing good snapshot
+00:01 +2: readonly pending selected loader cannot update a disposed view
+00:01 +3: full rich Schema readonly view exposes all root sections and exact nested/opaque values without mutation
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.last (dart:core/iterable.dart:679:7)
+#1      _LastFinderMixin.filter (package:flutter_test/src/finders.dart:1410:28)
+#3      Iterable.isEmpty (dart:core/iterable.dart:560:33)
+#4      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2477:52)
+#6      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#7      WidgetController.dragUntilVisible (package:flutter_test/src/controller.dart:2475:27)
+#8      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2438:13)
+#10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#11     WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2426:27)
+#12     main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart:49:20)
+<asynchronous suspension>
+#13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 4 frames from dart:async, dart:async-patch, and package:stack_trace)
+
+The test description was:
+  full rich Schema readonly view exposes all root sections and exact nested/opaque values without
+  mutation
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +3 -1: full rich Schema readonly view exposes all root sections and exact nested/opaque values without mutation [E]
+  Test failed. See exception logs above.
+  The test description was: full rich Schema readonly view exposes all root sections and exact nested/opaque values without mutation
+  
+00:02 +3 -1: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: Too many elements
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:696:24)
+#1      WidgetController.widget (package:flutter_test/src/controller.dart:827:30)
+#2      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2428:15)
+#4      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#5      WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2426:27)
+#6      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart:87:20)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async and package:stack_trace)
+
+The test description was:
+  native explicit JSON file inspection preserves active SQLite head and survives closing/reopening
+  workspace
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +3 -2: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace [E]
+  Test failed. See exception logs above.
+  The test description was: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace
+  
+00:02 +3 -2: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart: full rich Schema readonly view exposes all root sections and exact nested/opaque values without mutation
+  /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/schema_inspector_test.dart: native explicit JSON file inspection preserves active SQLite head and survives closing/reopening workspace

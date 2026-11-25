@@ -562,3 +562,26 @@ python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /
 ```
 
 Final increment1.9 frozen-source evidence: **172 native +9 Chrome +1 actual OS-keyring UI =182 distinct Dart/Flutter tests,0 skips**; 6 Python tool cases,3 native CTest; six clean Linux release builds/first-frame starts (three per host) and three minimal ABI probes passed. Actual offline60s AAC/mux, private Pulse fault fixture, explicit Pulse-OFF refusal and v4/v5/v6→v7 migrations passed. Evidence: `evidence/durable-proxy/summary.json`. First full gate's four real audio/UI failures remain recorded; final pass does not prove intermittent underrun/load fixed, physical synchronization or P0 qualification.
+
+
+## Increment1.9.1 — bounded readonly Schema inspection checkpoint
+
+Native: enter an explicit local project JSON path → `Inspect project JSON (read-only)` →
+`Inspect explicitly selected local JSON path`. Native/Web can instead paste JSON and
+validate it. Every preserved root section is selectable, entries/JSON are paged,
+exact id/hash lookup reports metadata paths. Opaque plugin data and locators are
+text only: no resource is opened, plugin executed, network connection created or
+active project replaced. Maximum inspection input1MiB; core Schema32MiB unchanged.
+
+The original rich image/story/font/provenance fixture is actually inspected in a
+Flutter widget; native file inspection preserves SQLite head/revision/undo across
+reopen. Duplicate JSON, unsupported version, invalid FK, overlimit and dispose
+while pending have real widget/Chrome tests. This is **not** rich-project editing,
+SQLite import, archive repair, blob-byte/provenance or capability admission.
+
+Small checkpoint only: **10 native UI +3 actual native durable-proxy regressions +3
+Chrome =16 targeted executions,0 skips**, clean analyzer. Prior full182 and six
+release-start results belong to frozen proxy commit e11ce9a; the full gate and
+release builds were deliberately not rerun for this follow-on UI checkpoint.
+Failures/corrections and hashes: `evidence/schema-inspector/summary.json`.
+Original87 stays0 complete/25 partial/49 planned/13 blocked; XD10 stays0/8/1/1.

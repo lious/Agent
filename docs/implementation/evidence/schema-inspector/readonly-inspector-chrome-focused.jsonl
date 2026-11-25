@@ -1,0 +1,7 @@
+org-dartlang-app:///inspector_test.dart:1:8: Error: Error when reading 'org-dartlang-app:///packages/studio_editor_ui/test/inspector_cases.dart': File not found
+import '../../../packages/studio_editor_ui/test/inspector_cases.dart';
+       ^
+org-dartlang-app:///inspector_test.dart:3:16: Error: Method not found: 'inspectorCases'.
+void main() => inspectorCases();
+               ^^^^^^^^^^^^^^
+Failed to compile

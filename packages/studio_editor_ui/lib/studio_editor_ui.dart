@@ -1,3 +1,5 @@
+import 'project_inspector.dart';
+
 import 'package:studio_peer_ui/studio_peer_ui.dart';
 
 import 'dart:async';
@@ -29,6 +31,35 @@ class _FoundationAppState extends State<FoundationApp>
       _captionDuration = TextEditingController(text: '1000'),
       _captionPath = TextEditingController();
   final _peerHash = TextEditingController();
+  final _inspectionPath = TextEditingController();
+
+  Future<List<int>> _readInspectionFile() async {
+    final file = LocalFileGrant.fromUserSelection(File(_inspectionPath.text))
+        .file;
+    if (await FileSystemEntity.type(file.path, followLinks: false) !=
+        FileSystemEntityType.file) {
+      throw const StudioException('REGULAR_JSON_FILE_REQUIRED');
+    }
+    final stat = await file.stat();
+    if (!Platform.isWindows && (stat.mode & 0xf000) != 0x8000) {
+      throw const StudioException('REGULAR_JSON_FILE_REQUIRED');
+    }
+    final handle = await file.open();
+    try {
+      if (await handle.length() > ProjectInspectorPanel.maxInputBytes) {
+        throw const StudioException('DOCUMENT_LIMIT');
+      }
+      final bytes = await handle.read(ProjectInspectorPanel.maxInputBytes + 1);
+      if (bytes.length > ProjectInspectorPanel.maxInputBytes ||
+          (await handle.read(1)).isNotEmpty) {
+        throw const StudioException('DOCUMENT_LIMIT');
+      }
+      return bytes;
+    } finally {
+      await handle.close();
+    }
+  }
+
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
   bool get _hasPersistentAudio =>
@@ -355,6 +386,7 @@ class _FoundationAppState extends State<FoundationApp>
     _previewImage?.dispose();
     _previewTime.dispose();
     _masterGain.dispose();
+    _inspectionPath.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
     for (final c in [
@@ -1233,6 +1265,16 @@ class _FoundationAppState extends State<FoundationApp>
                           'Media adapter not installed. Set STUDIO_MEDIA_LIBRARY to the separately built native adapter. AI generation is not implemented. No media leaves this device.',
                         ),
                       ),
+                    TextField(
+                      key: const Key('inspect-path'),
+                      controller: _inspectionPath,
+                      decoration: const InputDecoration(
+                        labelText: 'Explicit local project JSON path (inspection only)',
+                      ),
+                    ),
+                    ProjectInspectorPanel(
+                      loadSelectedBytes: _readInspectionFile,
+                    ),
                     ExpansionTile(
                       key: const Key('caption-panel'),
                       title: const Text('Caption editor'),

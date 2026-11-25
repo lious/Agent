@@ -544,3 +544,24 @@ keyring UI passed. Final source rerun and fresh-service diagnosis are recorded
 separately; a later pass cannot erase the original failure or qualify P0/AV stress.
 
 Final frozen-source increment1.9 rerun:172 native +9 Chrome +1 actual OS-keyring UI =182 distinct Dart/Flutter,0 skips;6 Python,3 CTest. Six clean Linux release builds/starts and three minimal ABI probes passed. Actual60s offline PCM→AudioBus→AAC/mux, independent private Pulse faults, Pulse-OFF refusal and v4/v5/v6→v7 migrations passed. Verification source hashes match; the first four service failures remain unresolved intermittent-stress evidence, not erased by the passing rerun.
+
+
+## Increment1.9.1 — small checkpoint reviews
+
+1. Reviewed trust/admission boundaries: inspector imports only pure document/UI
+   libraries (no SDK/IO/FFI in reusable widget); arbitrary locators/opaque plugins
+   render as text. Native explicit selection is bounded independently before and
+   after read, refuses symlinks/nonregular Unix files, closes handle in finally;
+   no candidate enters active SQLite or namespace CAS. Core admission unchanged.
+2. Actual UI tests exposed lazy menu finder/scroll ambiguity, then a missed tap
+   before expanded layout and fake-time IO timeout. Retained failures; tests now
+   prove actual menu choice/hit-test, run file IO in real zone with bounded
+   completion and assert unchanged SQLite head,undo,reopen. No ignored warnings.
+   Reviewed disposed load epoch and last-valid-snapshot retention on rejection.
+3. Browser test import outside served app root initially failed compilation.
+   Moved only synthetic browser test fixture inside that app; shared production
+   inspector is unchanged and actual Chrome now passes three cases. Reviewed all
+   root keys/opaque preservation and bounded paged output; no media-byte validity
+   inferred. Clean analyzer,10 non-audio native UI plus3 actual native proxy cases
+   passed. Full182 and release results remain attributed to e11ce9a, not this UI
+   checkpoint; physical/platform/audio-stress gaps unchanged.
