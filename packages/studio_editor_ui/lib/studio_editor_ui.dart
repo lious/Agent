@@ -227,6 +227,9 @@ class _FoundationAppState extends State<FoundationApp>
   BigInt? _peerAdoptionRevision;
   bool _gcConfirmed = false;
   String? _proxyDiscardConsent, _proxyRepairConsent;
+  final _diskLimit = TextEditingController();
+  String? _diskConsent;
+  String _storageView = 'No namespace inventory requested.';
   String? _captionSelected;
   String? _error, _selected;
   String _status =
@@ -388,6 +391,7 @@ class _FoundationAppState extends State<FoundationApp>
     _previewTime.dispose();
     _masterGain.dispose();
     _inspectionPath.dispose();
+    _diskLimit.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
     for (final c in [
@@ -681,6 +685,65 @@ class _FoundationAppState extends State<FoundationApp>
           child: Text(
             _hasPersistentAudio ? 'Delete (leave gap)' : 'Ripple delete',
           ),
+        ),
+      ],
+    ),
+    ExpansionTile(
+      key: const Key('storage-budget-panel'),
+      title: const Text('Namespace storage budget (keep all history)'),
+      children: [
+        const Text(
+          'Logical regular-file bytes in namespace CAS only: includes originals, derived, stages and metadata; excludes DB, archives/exports, filesystem allocation and volume free space. No automatic history deletion. Legacy/shared ownership refuses policy changes.',
+        ),
+        Text(_storageView, key: const Key('storage-inventory')),
+        OutlinedButton(
+          key: const Key('refresh-storage-inventory'),
+          onPressed: _busy
+              ? null
+              : () => _act(() {
+                  final view = widget.workspace.namespaceStorageInventory();
+                  _storageView =
+                      '${view['fileBytes']} namespace file bytes; ${view['entries']} entries; policy ${view['policy']}';
+                  return widget.workspace.current;
+                }),
+          child: const Text('Inventory namespace (read-only)'),
+        ),
+        TextField(
+          key: const Key('storage-byte-limit'),
+          controller: _diskLimit,
+          decoration: const InputDecoration(
+            labelText: 'CAS byte limit as decimal bytes; blank means unlimited',
+          ),
+          onChanged: (_) => setState(() => _diskConsent = null),
+        ),
+        CheckboxListTile(
+          key: const Key('confirm-storage-policy'),
+          value: _diskConsent == _diskLimit.text,
+          onChanged: _busy
+              ? null
+              : (value) => setState(
+                  () => _diskConsent = value == true ? _diskLimit.text : null,
+                ),
+          title: const Text(
+            'Apply this byte budget; preserve ALL history and originals. No deletion, no upload.',
+          ),
+        ),
+        OutlinedButton(
+          key: const Key('apply-storage-policy'),
+          onPressed: _busy || _diskConsent != _diskLimit.text
+              ? null
+              : () => _run(() async {
+                  final view = await widget.workspace
+                      .configureNamespaceDiskBudget(
+                        _diskLimit.text.isEmpty ? null : _diskLimit.text,
+                        confirmed: true,
+                      );
+                  _diskConsent = null;
+                  _storageView =
+                      '${view['fileBytes']} namespace file bytes; policy ${view['policy']}';
+                  return 'Namespace byte budget applied; all history/originals preserved.';
+                }),
+          child: const Text('Apply namespace byte budget (no deletion)'),
         ),
       ],
     ),

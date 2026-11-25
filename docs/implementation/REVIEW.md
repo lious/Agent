@@ -613,3 +613,36 @@ Final frozen sources:63 store/SDK +3 native UI =66 targeted executions,0 skips;
 three focused cases were rerun but are already in63. Analyzer clean. No full182,
 release/browser/P0/physical multi-device or underrun-fix claim. SQLite3.54.1 strict
 runtime and original87/XD10 status/acceptance remain unchanged.
+
+
+## Increment1.9.4 — three actual review/correction rounds
+
+1. Read original s5b StoragePort reserve/freeBytes and s7a storage/export boundaries,
+   existing namespace OS maintenance lease/repair owner binding and peer64MiB /
+   preview64MiB bounds. Kept them; no incompatible budget SQL table/Project field.
+   Inventory includes stages/unknown files/metadata, not just canonical objects.
+   Closed policy schema, explicit namespace UI consent, preserveAll default and
+   exclusive fresh DB authority were reviewed. No pruning/deletion/ENOSPC claim.
+2. Audited reservation lifetime across SDK build/repair/foreign qualification and
+   nested import/map publication. Found source size can grow while an import is
+   queued behind maintenance lease; captured source size now bounds both initial
+   stat and each chunk BEFORE sink.add. Added actual queued256→8192 growth race.
+   Canonical lease paths prevent lexical aliases splitting the in-process queue.
+   Actual child lock/SIGKILL proves no early reclaim;16KiB stage stays inventoried.
+   Caller failure/cancel release accounting, not files. Existing scope/dependency
+   code was inspected; native C++ and approved SQLite runtime gate are unchanged.
+3. Re-read default/disabled cap, metadata journal, shared/legacy authority and
+   UI consent invalidation. Added adversarial numeric/future/malformed policy,
+   unsafe symlink and unmanaged native-stage tests: fail closed without changing
+   project revision or touching outside fixture. Two6000-byte publishers under
+   tight cap admit one, not both. All fixtures are private systemTemp roots;
+   no cleanup was run on user/other-agent data. Actual archive/fork/reopen and
+   existing CAS repair/history/cancel/transaction regression selected below pass.
+
+Final source hashes in namespace-budget/summary.json:66 store/SDK +4 native UI
+=70 targeted successes,0 skips; analyzer/format clean. Earlier65+4 pre-final
+runs are not combined; final includes third malformed/unsafe policy test. No
+full182, native rebuild/CTest/ABI, release/Chrome, full historical migration matrix
+or audio-stress/P0 rerun. Intermittent service underrun remains unresolved.
+Conservative logical-byte budget is not full disk/DB/export reservation, physical
+platform qualification or history pruning; original87/XD10 counts unchanged.

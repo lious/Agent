@@ -1,0 +1,84 @@
+{
+  "asOf": "2026-11-25T18:57:39.374689+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "cbdc34b2c2fdfc1c20c93797c46090b13c78d912",
+  "freeze": "Commit containing these exact source hashes; self-referential commit SHA intentionally omitted. Prior e11ce182 and cbdc66 are historical only, not this freeze.",
+  "sourceHashes": {
+    "packages/studio_store/lib/blob_store.dart": "f33d59cdb7f07cd3b65a912fe3242c3bd38c79f5557b29a93fa2a8e49259de36",
+    "packages/studio_store/lib/namespace_budget.dart": "d924a214154edbf8e62f815687a8750684a0a31223e0743d3542ecf3050d0649",
+    "packages/studio_sdk/lib/studio_sdk.dart": "1f5735d6cb93a0b2d2e29670f075458db80d22fd4156906a0ce77f4de9d2c091",
+    "packages/studio_sdk/test/namespace_budget_test.dart": "b933bb374ae0e5692667d3f6208c2e7696e904a06a4df20685e7a13630e7831b",
+    "packages/studio_sdk/tool/disk_reservation_worker.dart": "665c9a2d44652d4806bef8e141fb0fe8bbc89113c713ab819fec48e709532c60",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "b384200fcb7e6ddf8a845ca0f8270ba2744f96d6a600b720b70b3fa9e4ab4b83",
+    "packages/studio_editor_ui/test/namespace_budget_ui_test.dart": "54941785d46a05372af0388605710caa3afea83e37dfa36f1e8e3359b9f41cba"
+  },
+  "toolchain": {
+    "Flutter": "3.50.1",
+    "Dart": "3.14.0",
+    "SQLite": "3.54.1 exact approved runtime; strict gate unchanged",
+    "FFmpeg": "7.1.5; native library unchanged",
+    "platform": "Linux x86_64 only"
+  },
+  "environment": {
+    "PATH_prefix": "/workspace/toolchains/flutter/bin",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4"
+  },
+  "commands": [
+    "flutter analyze",
+    "dart test packages/studio_sdk/test/namespace_budget_test.dart packages/studio_sdk/test/proxy_repair_test.dart packages/studio_sdk/test/proxy_discard_test.dart packages/studio_sdk/test/durable_proxy_test.dart packages/studio_sdk/test/save_test.dart packages/studio_store/test --concurrency=2 --reporter=json",
+    "(cd packages/studio_editor_ui && flutter test test/namespace_budget_ui_test.dart test/proxy_repair_ui_test.dart test/proxy_discard_ui_test.dart test/foundation_app_test.dart --reporter=json)",
+    "dart format --output=none --set-exit-if-changed <seven sourceHashes files>"
+  ],
+  "results": {
+    "namespace-budget-frozen-regression.jsonl": {
+      "success": 66
+    },
+    "namespace-budget-frozen-ui.jsonl": {
+      "success": 4
+    }
+  },
+  "totalTargetedTests": 70,
+  "newCases": {
+    "sdk": 3,
+    "ui": 1
+  },
+  "analyzer": "No issues found",
+  "actualExperiments": [
+    "Source/native budget denial before staging or revision change; explicit UI apply and unchanged project hash",
+    "Actual source import/native proxy build and archive-fork/reopen retain originals and namespace policy",
+    "Injected caller failure and real cancellation release accounting; not ENOSPC",
+    "Actual child SIGKILL while holding OS lease with16KiB stage; waiter blocked until kill, accounting reclaimed and physical stage remains counted",
+    "Concurrent6000-byte CAS publishers: only one admission; queued256-byte source grows to8192 and import refuses before staging",
+    "Malformed/future policy, invalid signed64 byte limits, unsafe namespace symlink and unreserved native stage refuse without following/removing external fixture"
+  ],
+  "notRerun": [
+    "full182 or newer whole-repo suite",
+    "Chrome/WebRTC",
+    "native release/rebuild/CTest/ABI",
+    "full v4-v7 migration matrix and old-runtime probe (runtime gate and unchanged migration sources exercised by selected store suite, not full matrix)",
+    "real audio/Pulse stress/AV UI/P0 performance; intermittent underrun remains unresolved",
+    "physical multi-device and non-Linux platform qualification"
+  ],
+  "scopeLimits": [
+    "CAS logical regular-file bytes only, not filesystem allocation/free volume/DB/WAL/export/archive quota",
+    "Conservative native peak may reject small preview under small cap",
+    "No history pruning; preserveAll only; no automatic deletion or upload",
+    "Fresh exclusive single-database ownership required for policy change; shared/legacy fail closed",
+    "Cooperative SDK serialization, not an OS quota for arbitrary same-user writers",
+    "Crash accounting journal latest record only; stage bytes stay counted; no full-disk/ENOSPC experiment"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "separateXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  }
+}

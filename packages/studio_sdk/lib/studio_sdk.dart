@@ -479,9 +479,17 @@ final class StudioWorkspace {
     }
 
     if (ownsLease) {
-      await qualify();
+      await _blobs!.withNamespaceDiskReservation(
+        64 * 1024 * 1024 + 8192,
+        qualify,
+      );
     } else {
-      await _blobs!.withMaintenanceLease(qualify);
+      await _blobs!.withMaintenanceLease(
+        () => _blobs!.withNamespaceDiskReservation(
+          64 * 1024 * 1024 + 8192,
+          qualify,
+        ),
+      );
     }
   }
 
@@ -582,6 +590,27 @@ final class StudioWorkspace {
     return result;
   }
 
+  Map<String, dynamic> namespaceStorageInventory() {
+    _requireMedia();
+    return _blobs!.namespaceInventory();
+  }
+
+  Future<Map<String, dynamic>> configureNamespaceDiskBudget(
+    String? bytes, {
+    required bool confirmed,
+  }) {
+    _requireMedia();
+    return _blobs!.configureNamespaceBudget(
+      bytes,
+      databasePath: _databasePath,
+      confirmed: confirmed,
+    );
+  }
+
+  int _previewDiskPeak(ProjectDocument snapshot) =>
+      192 * 1024 * 1024 +
+      (snapshot.toJson()['assets'] as List).length * (1024 * 1024 + 8192);
+
   /// Regenerate from verified originals, then repair only exact existing hashes.
   /// No recipe conversion, metadata revision, original write or cross-project heal.
   Future<Map<String, dynamic>> repairTimelinePreviewProxies({
@@ -626,90 +655,101 @@ final class StudioWorkspace {
     }
 
     try {
-      return await _blobs!.withMaintenanceLease(() async {
-        check();
-        _blobs!.requireExclusiveRepairDatabase(_databasePath);
-        final source = await _blobs!.resolve(asset['originalBlobHash']);
-        final actual = await _media!.probeAsync(source);
-        final expected = Map<String, dynamic>.from(
-          (asset['streams'] as List).singleWhere((v) => v['type'] == 'video'),
-        )..remove('id');
-        final observed = streamDocument(
-          Map<String, dynamic>.from(
-            (actual['streams'] as List).singleWhere(
-              (v) => v['type'] == 'video',
-            ),
-          ),
-          assetId: assetId,
-        )..remove('id');
-        if (contentHash(expected) != contentHash(observed)) {
-          throw const StudioException('PROXY_SOURCE_FACTS_MISMATCH');
-        }
-        check();
-        final raw = _blobs!.newProxyStage(),
-            map = File('${_blobs!.directory.path}/.restore-${_uuid.v7()}');
-        FrameProxy? proxy;
-        try {
-          final facts = await builder.buildPreviewProxyAsync(source, raw);
-          check();
-          proxy = await FrameProxy.admit(raw.parent, facts, dataFile: raw);
-          final bytes = utf8.encode(
-            jsonEncode({
-              'protocol': 'studio.preview-pts',
-              'version': 1,
-              'sourceHash': asset['originalBlobHash'],
-              'pipelineHash': previewProxyPipelineHash,
-              'rgbaHash': proxy.blobHash,
-              'facts': facts,
-              'frameHashes': proxy.frameHashes,
-            }),
-          );
-          if (proxy.blobHash != ref['blobHash'] ||
-              rawBytesHash(bytes) != ref['ptsMapBlobHash']) {
-            throw const StudioException('PROXY_REPAIR_DERIVATION_MISMATCH');
-          }
-          if (raw.lengthSync() != int.parse(blobs[ref['blobHash']]['bytes']) ||
-              bytes.length !=
-                  int.parse(blobs[ref['ptsMapBlobHash']]['bytes'])) {
-            throw const StudioException('BLOB_SIZE_MISMATCH');
-          }
-          validateProxyResourceBytes(
-            asset,
-            ref,
-            bytes,
-            await raw.readAsBytes(),
-          );
-          map.createSync(exclusive: true);
-          map.writeAsBytesSync(bytes, flush: true);
-          await _blobs!.resolve(asset['originalBlobHash']);
-          check();
-          final result = _repository.withExclusivePreviewRepair(
-            writer: writer,
-            expectedRevision: expectedRevision,
-            expectedSnapshot: snapshot.hash,
-            sourceHash: asset['originalBlobHash'],
-            roles: {ref['blobHash']: 'proxy', ref['ptsMapBlobHash']: 'ptsMap'},
-            publish: () => _blobs!.repairPreviewStagesSync(
-              {ref['blobHash']: raw, ref['ptsMapBlobHash']: map},
-              {
-                'projectId': snapshot.projectId,
-                'revision': expectedRevision.toString(),
-                'snapshotHash': snapshot.hash,
-                'sourceHash': asset['originalBlobHash'],
-                'pipelineHash': previewProxyPipelineHash,
-                'writerFence': writer.epoch,
-              },
-              databasePath: _databasePath,
-            ),
-          );
-          _blobs!.markPreviewProof(_previewProof(asset, ref));
-          return result;
-        } finally {
-          proxy?.dispose();
-          if (raw.existsSync()) raw.deleteSync();
-          if (map.existsSync()) map.deleteSync();
-        }
-      });
+      return await _blobs!.withMaintenanceLease(
+        () => _blobs!.withNamespaceDiskReservation(
+          _previewDiskPeak(snapshot),
+          () async {
+            check();
+            _blobs!.requireExclusiveRepairDatabase(_databasePath);
+            final source = await _blobs!.resolve(asset['originalBlobHash']);
+            final actual = await _media!.probeAsync(source);
+            final expected = Map<String, dynamic>.from(
+              (asset['streams'] as List).singleWhere(
+                (v) => v['type'] == 'video',
+              ),
+            )..remove('id');
+            final observed = streamDocument(
+              Map<String, dynamic>.from(
+                (actual['streams'] as List).singleWhere(
+                  (v) => v['type'] == 'video',
+                ),
+              ),
+              assetId: assetId,
+            )..remove('id');
+            if (contentHash(expected) != contentHash(observed)) {
+              throw const StudioException('PROXY_SOURCE_FACTS_MISMATCH');
+            }
+            check();
+            final raw = _blobs!.newProxyStage(),
+                map = File('${_blobs!.directory.path}/.restore-${_uuid.v7()}');
+            FrameProxy? proxy;
+            try {
+              final facts = await builder.buildPreviewProxyAsync(source, raw);
+              check();
+              proxy = await FrameProxy.admit(raw.parent, facts, dataFile: raw);
+              final bytes = utf8.encode(
+                jsonEncode({
+                  'protocol': 'studio.preview-pts',
+                  'version': 1,
+                  'sourceHash': asset['originalBlobHash'],
+                  'pipelineHash': previewProxyPipelineHash,
+                  'rgbaHash': proxy.blobHash,
+                  'facts': facts,
+                  'frameHashes': proxy.frameHashes,
+                }),
+              );
+              if (proxy.blobHash != ref['blobHash'] ||
+                  rawBytesHash(bytes) != ref['ptsMapBlobHash']) {
+                throw const StudioException('PROXY_REPAIR_DERIVATION_MISMATCH');
+              }
+              if (raw.lengthSync() !=
+                      int.parse(blobs[ref['blobHash']]['bytes']) ||
+                  bytes.length !=
+                      int.parse(blobs[ref['ptsMapBlobHash']]['bytes'])) {
+                throw const StudioException('BLOB_SIZE_MISMATCH');
+              }
+              validateProxyResourceBytes(
+                asset,
+                ref,
+                bytes,
+                await raw.readAsBytes(),
+              );
+              map.createSync(exclusive: true);
+              map.writeAsBytesSync(bytes, flush: true);
+              await _blobs!.resolve(asset['originalBlobHash']);
+              check();
+              final result = _repository.withExclusivePreviewRepair(
+                writer: writer,
+                expectedRevision: expectedRevision,
+                expectedSnapshot: snapshot.hash,
+                sourceHash: asset['originalBlobHash'],
+                roles: {
+                  ref['blobHash']: 'proxy',
+                  ref['ptsMapBlobHash']: 'ptsMap',
+                },
+                publish: () => _blobs!.repairPreviewStagesSync(
+                  {ref['blobHash']: raw, ref['ptsMapBlobHash']: map},
+                  {
+                    'projectId': snapshot.projectId,
+                    'revision': expectedRevision.toString(),
+                    'snapshotHash': snapshot.hash,
+                    'sourceHash': asset['originalBlobHash'],
+                    'pipelineHash': previewProxyPipelineHash,
+                    'writerFence': writer.epoch,
+                  },
+                  databasePath: _databasePath,
+                ),
+              );
+              _blobs!.markPreviewProof(_previewProof(asset, ref));
+              return result;
+            } finally {
+              proxy?.dispose();
+              if (raw.existsSync()) raw.deleteSync();
+              if (map.existsSync()) map.deleteSync();
+            }
+          },
+        ),
+      );
     } catch (_) {
       if (_closed || epoch != _proxyEpoch) {
         throw const StudioException('CANCELED');
@@ -745,131 +785,140 @@ final class StudioWorkspace {
     }
 
     try {
-      return await _blobs!.withMaintenanceLease(() async {
-        final orphans = _blobs!.collectProxyOrphans();
-        final resources = <Map<String, dynamic>>[];
-        var pendingBytes = 0;
-        for (final raw in snapshot.toJson()['assets']) {
-          check();
-          final asset = Map<String, dynamic>.from(raw as Map);
-          if ((asset['proxyRefs'] as List).isNotEmpty) {
-            await _loadStoredProxy(asset, {
-              for (final b in snapshot.toJson()['blobs']) b['hash']: b,
-            }, ownsLease: true);
-            check();
-            continue;
-          }
-          final source = await _blobs!.resolve(asset['originalBlobHash']);
-          check();
-          final stage = _blobs!.newProxyStage();
-          FrameProxy? staged;
-          try {
-            final facts = await builder.buildPreviewProxyAsync(source, stage);
-            check();
-            staged = await FrameProxy.admit(
-              stage.parent,
-              facts,
-              dataFile: stage,
-            );
-            check();
-            pendingBytes += staged.bytes;
-            if (previewProxyBytes + pendingBytes > 64 * 1024 * 1024) {
-              throw const StudioException('PROXY_CACHE_QUOTA');
+      return await _blobs!.withMaintenanceLease(
+        () => _blobs!.withNamespaceDiskReservation(
+          _previewDiskPeak(snapshot),
+          () async {
+            final orphans = _blobs!.collectProxyOrphans();
+            final resources = <Map<String, dynamic>>[];
+            var pendingBytes = 0;
+            for (final raw in snapshot.toJson()['assets']) {
+              check();
+              final asset = Map<String, dynamic>.from(raw as Map);
+              if ((asset['proxyRefs'] as List).isNotEmpty) {
+                await _loadStoredProxy(asset, {
+                  for (final b in snapshot.toJson()['blobs']) b['hash']: b,
+                }, ownsLease: true);
+                check();
+                continue;
+              }
+              final source = await _blobs!.resolve(asset['originalBlobHash']);
+              check();
+              final stage = _blobs!.newProxyStage();
+              FrameProxy? staged;
+              try {
+                final facts = await builder.buildPreviewProxyAsync(
+                  source,
+                  stage,
+                );
+                check();
+                staged = await FrameProxy.admit(
+                  stage.parent,
+                  facts,
+                  dataFile: stage,
+                );
+                check();
+                pendingBytes += staged.bytes;
+                if (previewProxyBytes + pendingBytes > 64 * 1024 * 1024) {
+                  throw const StudioException('PROXY_CACHE_QUOTA');
+                }
+                final original = await _blobs!.importDerivedStage(
+                  stage,
+                  staged.blobHash,
+                );
+                check();
+                final manifest = {
+                  'protocol': 'studio.preview-pts',
+                  'version': 1,
+                  'sourceHash': asset['originalBlobHash'],
+                  'pipelineHash': previewProxyPipelineHash,
+                  'rgbaHash': original.hash,
+                  'facts': facts,
+                  'frameHashes': staged.frameHashes,
+                };
+                final mapBytes = utf8.encode(jsonEncode(manifest)),
+                    mapHash = rawBytesHash(utf8.encode(jsonEncode(manifest)));
+                await _blobs!.putVerifiedBytes(mapHash, mapBytes);
+                check();
+                final stream = (asset['streams'] as List).singleWhere(
+                  (v) => v['type'] == 'video',
+                );
+                final proxy = {
+                  'blobHash': original.hash,
+                  'pipelineHash': previewProxyPipelineHash,
+                  'sourceVersion': asset['version'],
+                  'ptsMapBlobHash': mapHash,
+                  'width': staged.width,
+                  'height': staged.height,
+                  'frameRate': stream['nominalFrameRate'],
+                  'colorPolicy': previewProxyColorPolicy,
+                };
+                await _blobs!.resolve(asset['originalBlobHash']);
+                check();
+                _blobs!.markPreviewProof(_previewProof(asset, proxy));
+                validateProxyResourceBytes(
+                  asset,
+                  proxy,
+                  mapBytes,
+                  await original.file.readAsBytes(),
+                );
+                check();
+                Map<String, dynamic> record(
+                  String hash,
+                  int bytes,
+                  String role,
+                  String extension,
+                ) => {
+                  'hash': hash,
+                  'bytes': bytes.toString(),
+                  'mime': 'application/octet-stream',
+                  'packagePath': 'proxies/${hash.substring(7)}.$extension',
+                  'role': role,
+                };
+                resources.add({
+                  'assetId': asset['id'],
+                  'sourceHash': asset['originalBlobHash'],
+                  'proxy': proxy,
+                  'blobs': [
+                    record(original.hash, original.bytes, 'proxy', 'rgba'),
+                    record(mapHash, mapBytes.length, 'ptsMap', 'pts.json'),
+                  ],
+                });
+              } finally {
+                staged?.dispose();
+                if (stage.existsSync()) stage.deleteSync();
+              }
             }
-            final original = await _blobs!.importDerivedStage(
-              stage,
-              staged.blobHash,
-            );
             check();
-            final manifest = {
-              'protocol': 'studio.preview-pts',
-              'version': 1,
-              'sourceHash': asset['originalBlobHash'],
-              'pipelineHash': previewProxyPipelineHash,
-              'rgbaHash': original.hash,
-              'facts': facts,
-              'frameHashes': staged.frameHashes,
+            if (resources.isNotEmpty) {
+              _commitImportedEdit(
+                AttachPreviewProxies(resources),
+                expectedRevision: snapshot.revision,
+              );
+            }
+            for (final reader in _frameProxies.values) {
+              reader.dispose();
+            }
+            _frameProxies.clear();
+            for (final a in current.toJson()['assets']) {
+              await _loadStoredProxy(Map<String, dynamic>.from(a), {
+                for (final b in current.toJson()['blobs']) b['hash']: b,
+              }, ownsLease: true);
+            }
+            return {
+              'pipeline': FrameProxy.pipeline,
+              'proxies': previewProxyCount,
+              'bytes': previewProxyBytes,
+              'persistent': true,
+              'built': resources.length,
+              'reused':
+                  (snapshot.toJson()['assets'] as List).length -
+                  resources.length,
+              'orphanFiles': orphans['files'],
             };
-            final mapBytes = utf8.encode(jsonEncode(manifest)),
-                mapHash = rawBytesHash(utf8.encode(jsonEncode(manifest)));
-            await _blobs!.putVerifiedBytes(mapHash, mapBytes);
-            check();
-            final stream = (asset['streams'] as List).singleWhere(
-              (v) => v['type'] == 'video',
-            );
-            final proxy = {
-              'blobHash': original.hash,
-              'pipelineHash': previewProxyPipelineHash,
-              'sourceVersion': asset['version'],
-              'ptsMapBlobHash': mapHash,
-              'width': staged.width,
-              'height': staged.height,
-              'frameRate': stream['nominalFrameRate'],
-              'colorPolicy': previewProxyColorPolicy,
-            };
-            await _blobs!.resolve(asset['originalBlobHash']);
-            check();
-            _blobs!.markPreviewProof(_previewProof(asset, proxy));
-            validateProxyResourceBytes(
-              asset,
-              proxy,
-              mapBytes,
-              await original.file.readAsBytes(),
-            );
-            check();
-            Map<String, dynamic> record(
-              String hash,
-              int bytes,
-              String role,
-              String extension,
-            ) => {
-              'hash': hash,
-              'bytes': bytes.toString(),
-              'mime': 'application/octet-stream',
-              'packagePath': 'proxies/${hash.substring(7)}.$extension',
-              'role': role,
-            };
-            resources.add({
-              'assetId': asset['id'],
-              'sourceHash': asset['originalBlobHash'],
-              'proxy': proxy,
-              'blobs': [
-                record(original.hash, original.bytes, 'proxy', 'rgba'),
-                record(mapHash, mapBytes.length, 'ptsMap', 'pts.json'),
-              ],
-            });
-          } finally {
-            staged?.dispose();
-            if (stage.existsSync()) stage.deleteSync();
-          }
-        }
-        check();
-        if (resources.isNotEmpty) {
-          _commitImportedEdit(
-            AttachPreviewProxies(resources),
-            expectedRevision: snapshot.revision,
-          );
-        }
-        for (final reader in _frameProxies.values) {
-          reader.dispose();
-        }
-        _frameProxies.clear();
-        for (final a in current.toJson()['assets']) {
-          await _loadStoredProxy(Map<String, dynamic>.from(a), {
-            for (final b in current.toJson()['blobs']) b['hash']: b,
-          }, ownsLease: true);
-        }
-        return {
-          'pipeline': FrameProxy.pipeline,
-          'proxies': previewProxyCount,
-          'bytes': previewProxyBytes,
-          'persistent': true,
-          'built': resources.length,
-          'reused':
-              (snapshot.toJson()['assets'] as List).length - resources.length,
-          'orphanFiles': orphans['files'],
-        };
-      });
+          },
+        ),
+      );
     } catch (_) {
       if (_closed || epoch != _proxyEpoch) {
         throw const StudioException('CANCELED');

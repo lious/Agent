@@ -641,3 +641,30 @@ checkpoint; unrelated checkpoint failures still propagate. Evidence:
 No full182/release/Chrome/physical-platform rerun; older frozen SHAs keep their
 own coverage. Prior intermittent audio underruns remain unresolved. Original87
 stays0/25/49/13 and XD10 stays0/8/1/1 (complete/partial/planned/blocked).
+
+
+## Increment1.9.4 — namespace用量、写入预算与崩溃记账回收
+
+Native App展开 **Namespace storage budget (keep all history)**：只读盘点 →
+输入十进制字节上限（空白不限额）→ 显式勾选 → Apply。默认保留全部历史和原件，
+不删除、不上传；旧/共享且无法证明单DB所有权的namespace拒绝改策略。
+
+实际导入、map/CAS写入、native代理生成/安全修复与foreign来源资格都复用同一维护
+OS锁预留空间；不足明确拒绝，不以删历史换空间。实际SIGKILL后只回收失效预留记账，
+16KiB残留stage仍存在并计入盘点；失败/取消释放记账。排队源文件增长被拒绝，两个
+并发6000字节写入在不足双份空间时恰好一个成功。策略随namespace重开/归档fork保留，
+工程revision与原件不因配置改动。
+
+**不是整盘quota**：仅CAS目录regular-file逻辑字节（含stage/未知文件/元数据），
+不含DB/WAL、外部归档/导出/音频临时卷、分配块和volume可用空间。native保守预留
+192MiB+每asset约1MiB，可因此拒绝小预算下的小代理；不是实际空间/RSS预测。
+只新增固定preserveAll策略，**可配置历史pruning仍未实现**，无自动删历史功能。
+
+本冻结源码：**66个store/SDK +4个native UI =70个定向测试，0跳过；analyzer与格式检查通过**。
+新增3个SDK复合case和1个实际widget操作case，内部实验不重复计数。
+证据/sourceHashes/复跑命令：[summary](evidence/namespace-budget/summary.json)、
+[ADR0015](../adr/0015-namespace-cas-byte-budget.md)。全量182、release/CTest/Chrome、
+完整迁移矩阵和音频压力未重跑，间歇underrun仍未解决。非Linux/物理多设备未验证。
+原87仍0 complete/25 partial/49 planned/13 blocked；XD10仍0/8/1/1，原验收依赖不变。
+下一接续：默认preserveAll的可配置历史保留/剪枝，需要显式dry-run和确认，保护所有
+有效pins/角色/当前工程/其他工程/跨DB共享；先仅在隔离fixture验收，不能清理真实资料。

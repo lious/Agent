@@ -10,6 +10,8 @@ import 'package:uuid/uuid.dart' show Uuid;
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 
+part 'namespace_budget.dart';
+
 /// Created only by the trusted host after an explicit local file selection.
 /// Never obtained from an LLM, archive, URL or model tool argument.
 final class LocalFileGrant {
@@ -128,7 +130,10 @@ final class BlobStore {
   /// All SDK publishers hold this through SQLite pin commit; GC uses the SAME
   /// stable lock. Do not unlink the lock file or nest this lease.
   Future<T> withMaintenanceLease<T>(Future<T> Function() action) async {
-    final key = p.join(directory.parent.path, '.cas-maintenance.lock');
+    final key = p.join(
+      directory.parent.resolveSymbolicLinksSync(),
+      '.cas-maintenance.lock',
+    );
     final prior = _maintenance[key] ?? Future<void>.value(),
         done = Completer<void>();
     _maintenance[key] = done.future;
@@ -140,7 +145,7 @@ final class BlobStore {
       lock = await File(key).open(mode: FileMode.append);
       await lock.lock(FileLock.blockingExclusive);
       locked = true;
-      return await action();
+      return await runZoned(action, zoneValues: {_casLeaseZoneKey: key});
     } finally {
       try {
         if (lock != null) {
@@ -262,8 +267,11 @@ final class BlobStore {
     );
   }
 
-  File newProxyStage() =>
-      File(p.join(directory.path, '.proxy-v1-${const Uuid().v7()}.rgba'));
+  File newProxyStage() {
+    requireNativeDiskReservation();
+    return File(p.join(directory.path, '.proxy-v1-${const Uuid().v7()}.rgba'));
+  }
+
   Map<String, int> collectProxyOrphans() {
     _checkDirectory();
     var files = 0, bytes = 0;
@@ -308,12 +316,35 @@ final class BlobStore {
     LocalFileGrant grant, {
     String? expectedHash,
   }) async {
+    if (FileSystemEntity.typeSync(grant.file.path, followLinks: false) !=
+        FileSystemEntityType.file) {
+      throw const StudioException('LOCAL_FILE_REQUIRED');
+    }
+    final sourceLimit = grant.file.lengthSync();
+    return withNamespaceDiskReservation(
+      sourceLimit,
+      () => _importFile(
+        grant,
+        expectedHash: expectedHash,
+        sourceLimit: sourceLimit,
+      ),
+    );
+  }
+
+  Future<ImportedBlob> _importFile(
+    LocalFileGrant grant, {
+    String? expectedHash,
+    required int sourceLimit,
+  }) async {
     _checkDirectory();
     if (FileSystemEntity.typeSync(grant.file.path, followLinks: false) !=
         FileSystemEntityType.file) {
       throw const StudioException('LOCAL_FILE_REQUIRED');
     }
     final before = grant.file.statSync();
+    if (before.size > sourceLimit) {
+      throw const StudioException('SOURCE_CHANGED_DURING_IMPORT');
+    }
     if (before.size > maxImportBytes) {
       throw const StudioException('IMPORT_LIMIT');
     }
@@ -324,6 +355,9 @@ final class BlobStore {
       try {
         await for (final chunk in grant.file.openRead()) {
           size += chunk.length;
+          if (size > sourceLimit) {
+            throw const StudioException('SOURCE_CHANGED_DURING_IMPORT');
+          }
           if (size > maxImportBytes) {
             throw const StudioException('IMPORT_LIMIT');
           }
@@ -370,7 +404,13 @@ final class BlobStore {
     return file;
   }
 
-  Future<void> putVerifiedBytes(String hash, List<int> bytes) async {
+  Future<void> putVerifiedBytes(String hash, List<int> bytes) =>
+      withNamespaceDiskReservation(
+        bytes.length,
+        () => _putVerifiedBytes(hash, bytes),
+      );
+
+  Future<void> _putVerifiedBytes(String hash, List<int> bytes) async {
     if (bytes.length > maxImportBytes || rawBytesHash(bytes) != hash) {
       throw const StudioException('BLOB_HASH_MISMATCH');
     }
