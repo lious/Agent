@@ -26,7 +26,11 @@ extension _MultiMoveControls on _FoundationAppState {
     try {
       final op =
           snap?.operation ??
-          MoveClips(_multiSelection, _delta() * Q.of(direction));
+          MoveClips(
+            _multiSelection,
+            _delta() * Q.of(direction),
+            mode: _collisionMode,
+          );
       // A rejected update must not leave the preceding successful ghost visible.
       _multiImage?.dispose();
       _multiImage = null;
@@ -142,7 +146,7 @@ extension _MultiMoveControls on _FoundationAppState {
     if (g != null) {
       closure = expandedMoveClipIds(
         g.base,
-        MoveClips(_multiSelection, _multiDelta!),
+        MoveClips(_multiSelection, _multiDelta!, mode: _collisionMode),
       );
     }
     return Focus(
@@ -160,7 +164,7 @@ extension _MultiMoveControls on _FoundationAppState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap / preserve ALL linked members. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. No ripple, cross-track, insert or overwrite.',
+            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap / preserve ALL linked members. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. Uses the shared Collision mode below for reject or overwrite. Insert/ripple and cross-track are not in this slice.',
           ),
           Text(
             'Requested viewport IDs (${_multiSelection.length}): ${_multiSelection.toList()..sort()}',

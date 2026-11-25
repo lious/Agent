@@ -109,18 +109,21 @@ final class LiftClips extends EditOperation {
   Map<String, Object?> toJson() => {'kind': 'liftClips', 'clipIds': clipIds};
 }
 
-/// Same-project paste onto existing same-kind tracks, collision mode=reject.
-/// Cross-project import, overwrite, insert/ripple and new-track creation are
-/// intentionally not opened in this slice.
+/// Same-project paste onto existing same-kind tracks.
+/// mode=reject is default; mode=overwrite carves destination intervals and
+/// does not move later content. Cross-project import, insert/ripple and
+/// new-track creation are not opened in this slice.
 final class PasteClips extends EditOperation {
   PasteClips(
     ClipboardPayload payload, {
     required this.at,
     Map<String, String>? targetTrackMap,
+    String mode = 'reject',
   }) : payload = ClipboardPayload.fromJson(payload.toJson()),
        targetTrackMap = Map.unmodifiable(
          Map<String, String>.from(targetTrackMap ?? const {}),
-       ) {
+       ),
+       mode = _requireCollisionMode(mode) {
     if (at < Q.of(0)) {
       throw const StudioException('NEGATIVE_TIMELINE_START');
     }
@@ -134,13 +137,14 @@ final class PasteClips extends EditOperation {
   final ClipboardPayload payload;
   final Q at;
   final Map<String, String> targetTrackMap;
+  final String mode;
   @override
   Map<String, Object?> toJson() => {
     'kind': 'pasteClips',
     'payloadHash': payload.hash,
     'at': at.toJson(),
     'targetTrackMap': targetTrackMap,
-    'mode': 'reject',
+    'mode': mode,
     'payload': payload.toJson(),
   };
 }
@@ -659,6 +663,7 @@ ProjectDocument _pasteClips(
   for (final t in payload.transitions) {
     remap(t['id'] as String);
   }
+  final incoming = <Map<String, dynamic>>[];
   final affected = <String>{};
   for (final raw in payload.clips) {
     final c = Map<String, dynamic>.from(jsonDecode(jsonEncode(raw)) as Map);
@@ -694,8 +699,23 @@ ProjectDocument _pasteClips(
     c['selectionGroupId'] = raw['selectionGroupId'] == null
         ? null
         : remap(raw['selectionGroupId'] as String);
-    (dest['items'] as List).add(c);
+    incoming.add(c);
     affected.add(destId);
+  }
+  if (operation.mode == 'overwrite') {
+    _pasteOverwriteCarve(
+      d,
+      incoming,
+      {
+        for (final c in incoming)
+          c['trackId'] as String: c['trackId'] as String,
+      },
+      version,
+      newId,
+    );
+  }
+  for (final c in incoming) {
+    (trackById[c['trackId']]['items'] as List).add(c);
   }
   for (final raw in payload.effects) {
     final e = Map<String, dynamic>.from(jsonDecode(jsonEncode(raw)) as Map);

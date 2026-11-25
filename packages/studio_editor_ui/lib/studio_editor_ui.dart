@@ -96,6 +96,7 @@ class _FoundationAppState extends State<FoundationApp>
   bool _snapExpanded = false;
   bool _pointerActive = false;
   final _pasteAt = TextEditingController();
+  String _collisionMode = 'reject';
   String? _clipboardError;
   final _multiSelection = <String>{};
   EditGesture? _multiGesture;
@@ -940,6 +941,7 @@ class _FoundationAppState extends State<FoundationApp>
       workspace: widget.workspace,
       document: _project,
       selection: _multiSelection,
+      collisionMode: _collisionMode,
       blocked: _busy || _gesture != null || _multiGesture != null,
       onSelection: (ids) => setState(() {
         _multiSelection.clear();
@@ -961,6 +963,7 @@ class _FoundationAppState extends State<FoundationApp>
       }),
     ),
     _buildMultiMoveControls(),
+    _buildCollisionModeControls(),
     _buildClipboardControls(),
     for (final c in _clips)
       ListTile(

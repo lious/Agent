@@ -1,0 +1,95 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":753426,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/overwrite_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/overwrite_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/clipboard_ui_test.dart"},"type":"suite","time":4}
+{"test":{"id":3,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/clipboard_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4}
+{"suite":{"id":4,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/multi_move_ui_test.dart"},"type":"suite","time":4}
+{"test":{"id":5,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/multi_move_ui_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4}
+{"suite":{"id":6,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart"},"type":"suite","time":5}
+{"test":{"id":7,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"count":4,"time":6,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2205}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2207}
+{"test":{"id":9,"name":"REAL overwrite paste and move: one history each, reject still collides, SQL/reopen/fork/AAC MP4","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/overwrite_ui_test.dart"},"type":"testStart","time":2208}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2592}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2593}
+{"test":{"id":11,"name":"REAL internal copy/cut/paste/group: one history, refuse collision/SQL, reopen/fork/AAC MP4","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/clipboard_ui_test.dart"},"type":"testStart","time":2593}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2943}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2944}
+{"test":{"id":13,"name":"REAL four-member checkbox move -> native ghost -> one undo/redo -> Escape/SQL/collision refusal -> archive fork MP4","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/multi_move_ui_test.dart"},"type":"testStart","time":2944}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3269}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3270}
+{"test":{"id":15,"name":"REAL zoom/pan8px snap -> linked native ghost -> one history -> invalid input/SQL/collision refusal -> archive AAC MP4","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/snap_move_ui_test.dart"},"type":"testStart","time":3270}
+{"testID":13,"messageType":"print","message":"multi-move-ui: selection ready","type":"print","time":4881}
+{"testID":15,"messageType":"print","message":"snap-move-ui: selection ready","type":"print","time":5158}
+{"testID":15,"messageType":"print","message":"snap-move-ui: atomic/error matrix done","type":"print","time":8437}
+{"testID":13,"messageType":"print","message":"multi-move-ui: atomic/error matrix done","type":"print","time":9112}
+Shell: [libx264 @ 0x7f41a400cac0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f41a400cac0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f41a400cac0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f41a400cac0] frame I:3     Avg QP: 9.94  size:  3328
+Shell: [libx264 @ 0x7f41a400cac0] frame P:87    Avg QP:14.69  size:  1112
+Shell: [libx264 @ 0x7f41a400cac0] mb I  I16..4: 77.4%  0.0% 22.6%
+Shell: [libx264 @ 0x7f41a400cac0] mb P  I16..4:  6.6%  0.0%  1.5%  P16..4:  9.0%  5.6%  3.5%  0.0%  0.0%    skip:73.9%
+Shell: [libx264 @ 0x7f41a400cac0] coded y,uvDC,uvAC intra: 17.1% 42.3% 35.7% inter: 4.6% 14.5% 11.0%
+Shell: [libx264 @ 0x7f41a400cac0] i16 v,h,dc,p: 87% 10%  3%  0%
+Shell: [libx264 @ 0x7f41a400cac0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 22% 20%  3%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f41a400cac0] i8c dc,h,v,p: 55% 18% 26%  1%
+Shell: [libx264 @ 0x7f41a400cac0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f41a400cac0] kb/s:284.56
+Shell: [aac @ 0x7f41a412a740] Qavg: 45186.426
+{"testID":15,"messageType":"print","message":"snap-move-ui: archive fork done","type":"print","time":10499}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10772}
+{"testID":13,"messageType":"print","message":"multi-move-ui: archive fork done","type":"print","time":11062}
+Shell: [libx264 @ 0x7f95a800cd00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f95a800cd00] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f95a800cd00] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f95a800cd00] frame I:4     Avg QP:10.37  size:  3937
+Shell: [libx264 @ 0x7f95a800cd00] frame P:116   Avg QP:15.99  size:  1244
+Shell: [libx264 @ 0x7f95a800cd00] mb I  I16..4: 73.8%  0.0% 26.2%
+Shell: [libx264 @ 0x7f95a800cd00] mb P  I16..4:  7.1%  0.0%  1.5%  P16..4:  9.7%  6.4%  4.0%  0.0%  0.0%    skip:71.3%
+Shell: [libx264 @ 0x7f95a800cd00] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.2% 16.4% 12.8%
+Shell: [libx264 @ 0x7f95a800cd00] i16 v,h,dc,p: 87%  9%  3%  0%
+Shell: [libx264 @ 0x7f95a800cd00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f95a800cd00] i8c dc,h,v,p: 54% 18% 27%  1%
+Shell: [libx264 @ 0x7f95a800cd00] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f95a800cd00] kb/s:320.16
+Shell: [aac @ 0x7f95a812b240] Qavg: 43271.508
+{"testID":15,"messageType":"print","message":"snap-move-ui: MP4 done","type":"print","time":11623}
+{"testID":15,"messageType":"print","message":"snap-move-ui: unmounted inside live binding","type":"print","time":11635}
+{"testID":15,"messageType":"print","message":"snap-move-ui: archive queue drained and workspace closed","type":"print","time":11638}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11646}
+Shell: [libx264 @ 0x7fdee800ccc0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7fdee800ccc0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7fdee800ccc0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f671800cb40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f671800cb40] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f671800cb40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f671800cb40] frame I:4     Avg QP:10.37  size:  3937
+Shell: [libx264 @ 0x7f671800cb40] frame P:116   Avg QP:15.99  size:  1244
+Shell: [libx264 @ 0x7f671800cb40] mb I  I16..4: 73.8%  0.0% 26.2%
+Shell: [libx264 @ 0x7f671800cb40] mb P  I16..4:  7.1%  0.0%  1.5%  P16..4:  9.7%  6.4%  4.0%  0.0%  0.0%    skip:71.3%
+Shell: [libx264 @ 0x7f671800cb40] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.2% 16.4% 12.8%
+Shell: [libx264 @ 0x7f671800cb40] i16 v,h,dc,p: 87%  9%  3%  0%
+Shell: [libx264 @ 0x7f671800cb40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f671800cb40] i8c dc,h,v,p: 54% 18% 27%  1%
+Shell: [libx264 @ 0x7f671800cb40] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f671800cb40] kb/s:320.16
+Shell: [aac @ 0x7f671812adc0] Qavg: 43271.508
+Shell: [libx264 @ 0x7fdee800ccc0] frame I:6     Avg QP:11.98  size:  5144
+Shell: [libx264 @ 0x7fdee800ccc0] frame P:174   Avg QP:18.98  size:  1655
+Shell: [libx264 @ 0x7fdee800ccc0] mb I  I16..4: 65.4%  0.0% 34.6%
+Shell: [libx264 @ 0x7fdee800ccc0] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.9%  8.6%  5.3%  0.0%  0.0%    skip:61.5%
+Shell: [libx264 @ 0x7fdee800ccc0] coded y,uvDC,uvAC intra: 18.1% 46.0% 39.0% inter: 7.2% 22.3% 17.5%
+Shell: [libx264 @ 0x7fdee800ccc0] i16 v,h,dc,p: 87% 10%  3%  0%
+Shell: [libx264 @ 0x7fdee800ccc0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7fdee800ccc0] i8c dc,h,v,p: 51% 19% 29%  1%
+Shell: [libx264 @ 0x7fdee800ccc0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7fdee800ccc0] kb/s:425.11
+Shell: [aac @ 0x7fdee800afc0] Qavg: 674.290
+{"testID":13,"messageType":"print","message":"multi-move-ui: MP4 done","type":"print","time":12165}
+{"testID":13,"messageType":"print","message":"multi-move-ui: unmounted inside live binding","type":"print","time":12178}
+{"testID":13,"messageType":"print","message":"multi-move-ui: archive queue drained and workspace closed","type":"print","time":12181}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12189}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12382}
+{"success":true,"type":"done","time":12417}

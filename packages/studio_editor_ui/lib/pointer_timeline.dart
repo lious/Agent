@@ -10,6 +10,7 @@ class _PointerTimeline extends StatefulWidget {
     required this.workspace,
     required this.document,
     required this.selection,
+    required this.collisionMode,
     required this.blocked,
     required this.onSelection,
     required this.onActive,
@@ -18,6 +19,7 @@ class _PointerTimeline extends StatefulWidget {
   final StudioWorkspace workspace;
   final ProjectDocument document;
   final Set<String> selection;
+  final String collisionMode;
   final bool blocked;
   final ValueChanged<Set<String>> onSelection;
   final ValueChanged<bool> onActive;
@@ -226,7 +228,7 @@ class _PointerTimelineState extends State<_PointerTimeline>
         if (selection.isNotEmpty) {
           expanded = expandedMoveClipIds(
             widget.document,
-            MoveClips(selection, Q.of(0)),
+            MoveClips(selection, Q.of(0), mode: widget.collisionMode),
           ).toSet();
         }
       } on StudioException {
@@ -261,9 +263,10 @@ class _PointerTimelineState extends State<_PointerTimeline>
         viewport: _captureViewport!,
         pointerPixel: _downX,
         playhead: Q.of(0),
+        mode: widget.collisionMode,
       ).referenceTime;
       _gesture = widget.workspace.beginGesture(
-        MoveClips(_ids, Q.of(0)),
+        MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
         expectedRevision: widget.document.revision,
       );
       _owner = widget.workspace;
@@ -290,7 +293,10 @@ class _PointerTimelineState extends State<_PointerTimeline>
     try {
       final dx = _pointerQ(_contentPosition(global).dx) - _downX;
       if (dx == Q.of(0)) {
-        widget.workspace.updateGesture(g, MoveClips(_ids, Q.of(0)));
+        widget.workspace.updateGesture(
+          g,
+          MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
+        );
       } else {
         _plan = planMoveSnap(
           g.base,
@@ -298,6 +304,7 @@ class _PointerTimelineState extends State<_PointerTimeline>
           viewport: _captureViewport!,
           pointerPixel: _captureViewport!.pixelAt(_reference) + dx,
           playhead: Q.of(0),
+          mode: widget.collisionMode,
         );
         widget.workspace.updateSnappedMove(g, _plan!);
       }
@@ -378,7 +385,7 @@ class _PointerTimelineState extends State<_PointerTimeline>
           final d = g.preview.toJson(), starts = <Q>[];
           final moved = expandedMoveClipIds(
             g.base,
-            MoveClips(_ids, Q.of(0)),
+            MoveClips(_ids, Q.of(0), mode: widget.collisionMode),
           ).toSet();
           for (final t in d['sequences'][0]['tracks']) {
             for (final c in t['items']) {

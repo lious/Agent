@@ -29,6 +29,7 @@ extension WorkspaceClipboard on StudioWorkspace {
   ProjectDocument pasteClipboard({
     required Q at,
     Map<String, String>? targetTrackMap,
+    String mode = 'reject',
     required BigInt expectedRevision,
   }) {
     _requireMetadata();
@@ -37,7 +38,7 @@ extension WorkspaceClipboard on StudioWorkspace {
       throw const StudioException('CLIPBOARD_EMPTY');
     }
     return edit(
-      PasteClips(payload, at: at, targetTrackMap: targetTrackMap),
+      PasteClips(payload, at: at, targetTrackMap: targetTrackMap, mode: mode),
       expectedRevision: expectedRevision,
     );
   }

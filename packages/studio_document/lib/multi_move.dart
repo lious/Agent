@@ -1,10 +1,12 @@
 part of 'edit_algebra.dart';
 
-/// Current admitted slice: same tracks, reject collisions, always preserve links.
-/// Canonical immutable selection makes order irrelevant, not duplicates invisible.
+/// Current admitted slice: same tracks, includeLinks=true.
+/// mode=reject remains the default; mode=overwrite carves destination intervals.
+/// mode=insert is not opened in this slice.
 final class MoveClips extends EditOperation {
-  MoveClips(Iterable<String> ids, this.delta)
-    : clipIds = List.unmodifiable(ids.take(100001).toList()..sort()) {
+  MoveClips(Iterable<String> ids, this.delta, {String mode = 'reject'})
+    : mode = _requireCollisionMode(mode),
+      clipIds = List.unmodifiable(ids.take(100001).toList()..sort()) {
     if (clipIds.isEmpty) throw const StudioException('EMPTY_SELECTION');
     if (clipIds.length > 100000) throw const StudioException('SELECTION_LIMIT');
     for (final id in clipIds) {
@@ -16,12 +18,13 @@ final class MoveClips extends EditOperation {
   }
   final List<String> clipIds;
   final Q delta;
+  final String mode;
   @override
   Map<String, Object?> toJson() => {
     'kind': 'moveClips',
     'clipIds': clipIds,
     'delta': delta.toJson(),
-    'mode': 'reject',
+    'mode': mode,
     'includeLinks': true,
     'targetTrackId': null,
   };
@@ -37,6 +40,9 @@ ProjectDocument _moveClips(
   VersionAllocator version,
   IdAllocator newId,
 ) {
+  if (operation.mode == 'overwrite') {
+    return _overwriteMoveClips(before, operation, version, newId);
+  }
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
   final tracks = s['tracks'] as List;

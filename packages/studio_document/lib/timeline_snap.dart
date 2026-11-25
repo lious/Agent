@@ -178,8 +178,9 @@ SnappedMovePlan planMoveSnap(
   required TimelineViewport viewport,
   required Q pointerPixel,
   required Q playhead,
+  String mode = 'reject',
 }) {
-  final initial = MoveClips(clipIds, Q.of(0)),
+  final initial = MoveClips(clipIds, Q.of(0), mode: mode),
       expanded = expandedMoveClipIds(base, initial),
       moving = expanded.toSet(),
       d = base.toJson(),
@@ -229,7 +230,7 @@ SnappedMovePlan planMoveSnap(
   );
   return SnappedMovePlan._(
     base.hash,
-    MoveClips(initial.clipIds, decision.delta),
+    MoveClips(initial.clipIds, decision.delta, mode: mode),
     decision,
     viewport,
     reference,

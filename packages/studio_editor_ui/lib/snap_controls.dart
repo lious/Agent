@@ -32,6 +32,7 @@ extension _SnapControls on _FoundationAppState {
         ),
         pointerPixel: _snapDecimal(_snapPointer.text),
         playhead: fps.frameTime(BigInt.from(playhead)),
+        mode: _collisionMode,
       );
       await _previewMultiMove(0, snap: plan);
     } catch (e) {

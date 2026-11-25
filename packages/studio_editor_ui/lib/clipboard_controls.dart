@@ -1,6 +1,38 @@
 part of 'studio_editor_ui.dart';
 
 extension _ClipboardControls on _FoundationAppState {
+  Widget _buildCollisionModeControls() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Collision mode for paste and same-track moves. Reject leaves existing clips and refuses overlap. Overwrite cuts intersecting destination intervals, keeps front/back source fragments, does not move later content, deletes affected transitions, and sets duration to max(old end, new end). Insert/ripple is not in this slice. Absolute captions stay; locks and incomplete handles refuse the whole group. Linked partners are included. New tracks and cross-project paste remain closed.',
+        ),
+        Text(
+          'Collision mode: $_collisionMode',
+          key: const Key('collision-mode-status'),
+        ),
+        Wrap(
+          children: [
+            for (final mode in const ['reject', 'overwrite'])
+              TextButton(
+                key: Key('collision-mode-$mode'),
+                onPressed: _clipboardBlocked
+                    ? null
+                    : () => _gestureSetState(() {
+                        _collisionMode = mode;
+                        _clipboardError = null;
+                      }),
+                child: Text(
+                  mode == 'overwrite' ? 'Overwrite' : 'Reject overlap',
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
   bool get _clipboardBlocked =>
       _busy ||
       _multiPreviewBusy ||
@@ -49,7 +81,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only; collisions are refused. Overwrite, insert/ripple, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
+          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject or overwrite; insert/ripple, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
         ),
         Text(
           payload == null
@@ -95,6 +127,7 @@ extension _ClipboardControls on _FoundationAppState {
                   : () => _clipboardAct(
                       () => widget.workspace.pasteClipboard(
                         at: _pasteTime(),
+                        mode: _collisionMode,
                         expectedRevision: _project.revision,
                       ),
                     ),
