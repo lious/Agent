@@ -1,0 +1,54 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":607735,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/edit_gesture_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/edit_gesture_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":2,"time":8,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":541}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":543}
+{"test":{"id":3,"name":"REAL40 ghost changes -> one command/inverse; preview=commit; reopen redo, archive fork and MP4","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":64,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":544}
+[libx264 @ 0x7fc9ec007600] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7fc9ec007600] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7fc9ec007600] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7fc9ec007600] frame I:2     Avg QP: 5.50  size:    50
+[libx264 @ 0x7fc9ec007600] frame P:58    Avg QP: 7.05  size:    14
+[libx264 @ 0x7fc9ec007600] mb I  I16..4: 97.5%  0.0%  2.5%
+[libx264 @ 0x7fc9ec007600] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+[libx264 @ 0x7fc9ec007600] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7fc9ec007600] i16 v,h,dc,p: 82%  0% 18%  0%
+[libx264 @ 0x7fc9ec007600] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7fc9ec007600] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7fc9ec007600] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7fc9ec007600] kb/s:3.65
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1897}
+{"test":{"id":4,"name":"explicit cancellation/no-op preserve redo; new different gesture truncates redo, never another target","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":106,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":1899}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2457}
+{"test":{"id":5,"name":"basic move/trim/slip absolute-from-base matrix, collision/handles/edge targets and invalid release","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":147,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":2458}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3057}
+{"test":{"id":6,"name":"SQL late abort keeps candidate and journal atomic; explicit retry; revision and writer fencing","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":203,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":3059}
+{"testID":6,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3620}
+{"test":{"id":7,"name":"transform/crop/color gesture matrix uses same native preview and commit nodes","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":252,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":3621}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4376}
+{"test":{"id":8,"name":"actual child SIGKILL while100 updates staged preserves committed journal on reopen","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":277,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":4378}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":9474}
+{"test":{"id":9,"name":"keyframe coordinate isolation, unknown-history refusal, superseded/canceled image never admitted","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":312,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/edit_gesture_test.dart"},"type":"testStart","time":9475}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":9932}
+{"suite":{"id":10,"platform":"vm","path":"packages/studio_sdk/test/command_history_media_test.dart"},"type":"suite","time":9938}
+{"test":{"id":11,"name":"loading packages/studio_sdk/test/command_history_media_test.dart","suiteID":10,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":9938}
+{"testID":11,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":10083}
+{"group":{"id":12,"suiteID":10,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":10084}
+{"test":{"id":13,"name":"REAL AV effects/audio/captions/proxy multiundo-redo, durable reopen, empty fork history and preview/MP4","suiteID":10,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/command_history_media_test.dart"},"type":"testStart","time":10084}
+[libx264 @ 0x7fc9d8056f80] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7fc9d8056f80] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7fc9d8056f80] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7fc9d8056f80] frame I:3     Avg QP:10.73  size:  3605
+[libx264 @ 0x7fc9d8056f80] frame P:87    Avg QP:19.57  size:  1525
+[libx264 @ 0x7fc9d8056f80] mb I  I16..4: 73.5%  0.0% 26.5%
+[libx264 @ 0x7fc9d8056f80] mb P  I16..4:  6.0%  0.0%  1.9%  P16..4:  9.9%  6.4%  4.3%  0.0%  0.0%    skip:71.5%
+[libx264 @ 0x7fc9d8056f80] coded y,uvDC,uvAC intra: 22.3% 51.4% 44.3% inter: 6.6% 16.3% 13.7%
+[libx264 @ 0x7fc9d8056f80] i16 v,h,dc,p: 88%  7%  5%  0%
+[libx264 @ 0x7fc9d8056f80] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 43% 19% 20%  4%  2%  2%  3%  3%  4%
+[libx264 @ 0x7fc9d8056f80] i8c dc,h,v,p: 51% 13% 34%  2%
+[libx264 @ 0x7fc9d8056f80] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7fc9d8056f80] kb/s:382.69
+[aac @ 0x7fc9d8263880] Qavg: 411.628
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":14288}
+{"success":true,"type":"done","time":14292}

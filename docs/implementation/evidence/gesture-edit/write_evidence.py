@@ -1,0 +1,41 @@
+import collections,datetime,hashlib,json
+from pathlib import Path
+root=Path('/workspace/agent-foundation-20261125');art=root/'artifacts/gesture-edit';dst=root/'docs/implementation/evidence/gesture-edit'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def copy(path,name=None):
+ raw=path.read_bytes();name=name or path.name
+ data=raw if name.endswith(('.json','.jsonl','.py')) else ('\n'.join(l.rstrip() for l in raw.decode().splitlines())+'\n').encode()
+ (dst/name).write_bytes(data)
+ return {'log':name,'sha256':sha(data),**({'rawSha256':sha(raw)} if raw!=data else {})}
+def parsed(path):
+ tests={};done=None
+ for line in path.read_text().splitlines():
+  try:r=json.loads(line)
+  except ValueError:continue
+  if r.get('type')=='testStart':tests[r['test']['id']]={'name':r['test']['name']}
+  if r.get('type')=='testDone' and not r.get('hidden'):tests.setdefault(r['testID'],{}).update(result='skipped' if r.get('skipped') else r['result'])
+  if r.get('type')=='done':done=r
+ cases=[t for t in tests.values() if 'result' in t];c=collections.Counter(t['result'] for t in cases)
+ return {'passed':c['success'],'failed':c['failure']+c['error'],'skipped':c['skipped'],'runnerDone':done,'cases':cases}
+freeze=json.loads((art/'source-freeze.json').read_text())
+for f,h in freeze['sourceSha256'].items():assert sha((root/f).read_bytes())==h,f
+for f,h in freeze['nativeLibrarySha256'].items():assert sha(Path(f).read_bytes())==h,f
+runs=json.loads((art/'commands.json').read_text());assert all('exitCode' in r for r in runs['runs'])
+dst.mkdir(parents=True,exist_ok=True);results={};finals={}
+for r in runs['runs']:
+ name=r['name'];ext='.jsonl' if name in ['native','ui','chrome','pulse'] else '.log'
+ proof=copy(root/r['log'],'final-'+name+ext);proof.update(exitCode=r['exitCode'],elapsedSeconds=r['elapsedSeconds']);finals[name]=proof
+ if name in ['native','ui','chrome','pulse']:results[name]={**parsed(root/r['log']),**proof}
+commands=copy(art/'commands.json');copy(art/'run_selected.py');copy(art/'write_evidence.py')
+aux=[]
+for p in sorted(art.iterdir()):
+ if p.name in ['final-actual-legacy.json','final-undo-redo-kill.json','preliminary-events.json','pub-get-offline.log'] or (p.suffix in ['.jsonl','.log'] and not p.name.startswith('final-')):aux.append(copy(p))
+copy(root/'docs/implementation/evidence/audio-event-pump/toolchain-reused.json','toolchain-reused.json')
+original=json.loads((root/'docs/implementation/task-status.json').read_text());xd=json.loads((root/'docs/implementation/multidevice-status.json').read_text())
+def counts(d):
+ c=collections.Counter(t['status'] for t in d['tasks']);return {k:c[k] for k in ['complete','partial','planned','blocked']}
+cancels=[r for r in runs['runs'] if '100cancel' in r['name']]
+d={**freeze,'asOf':datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),'timezone':'Asia/Shanghai','freezeIdentity':'Containing LOCAL commit matches all26 source/test/package hashes. Final groups rerun after last source edit, docs/evidence only afterward. Not all repository/all87 qualification. No borrowed239/233/182.','commands':commands,'results':results,'totalPassed':sum(r['passed'] for r in results.values()),'totalFailed':sum(r['failed'] for r in results.values()),'totalSkipped':sum(r['skipped'] for r in results.values()),'additionalRuns':finals,'auxiliaryPreFreezeEvidence':aux,'gestureScope':{'authority':'Immutable base+writer+closed target; update pure from original base. One changed release is one normal repository command with gesture.id as commandId/receiptKey. No rewritten history/new tables/registry.','matrix':'SDK move/trim fixed edge+ripple/slip/static opacity/fixed-Q opacity-keyframe VALUE+interpolation/transform/crop/colorBasic. Different object/type/edge/mode/keyframe target refuses. Not full NLE/UI matrix.','failure':'Rejected update prevents older-value commit; valid update needed. Existing SQL/fence/revision/idempotency/pins transaction, late SQL abort retains candidate and manual same-ID retry. No conflict auto-rebase/retry.','cancel':'Known geometry return-zero and UI opacity start=end cancel without edit. Escape/pointer cancel/scroll arena/lifecycle/selection switch/close discard pending ghost. Existing autosave committed head only. Actual separate native SDK child SIGKILL after100 staged updates leaves journal/content exact after reopen.','UI':'Real pointer40 movement, native ghost image, one undo/redo, actual held-before-scroll arena cancel, Escape/pointerCancel/identity tap/SQL-failure visible inline then explicit Cancel. Slider onChangeEnd alone is not release authority; matched pointer UP required. Other UI actions refuse while ghost active.','resources':'One UI native preview in flight plus latest-dirty flag. Shared graph/source-Q/registry/native YUV preencoder node; late/canceled/generation/project/fence mismatches cannot display. Ghost versions/IDs not persisted.','richMedia':'Actual A/V+extracted AudioClip/link, crop/color coalescing, another changed color gesture with subtitle and persistent proxy present; multiundo/redo/reopen/archive fork/explicit unsupported-caption undo/preview preencoder pixel equality/AAC MP4. No silent caption omission.','notClaimed':'Only static-opacity physical drag UI added. SDK8 targets are not all interactive timeline gestures; keyframe TIME drag, full I-005/multiselect/snapping/clipboard/groups/insert/overwrite/cooperative field inverse and O(n) history performance remain incomplete.'},'threeReviews':'../../REVIEW.md increment1.21 / ADR0028: original gesture boundaries; invalid update/fence/cancel/physical-UP and no-motion; real rich media, SQL UI visibility, legacy/SIGKILL/resource regressions. Preliminary failures kept and not counted as final.','priorUnresolved':[{'commit':'e23a559c7178c5ee9a127780d199d098e60927c5','summary':'../raster-effects/summary.json','failure':'raster_clock first-play underrun presented2877; still not proven solved'},{'commit':'00c2e5d4b6e93d71ff3b19d8ddf5d30f95fdd77d','summary':'../dissolve/summary.json','failure':'opacity_clock Pulse timeout/underrun; still not proven solved'}],'cancelQualification':{'iterationsFinalOnlyVerified':sum(100 for r in cancels if r['exitCode']==0),'scope':'Four video active modes regular/ASan100 each; app-owned AVFrame/FD only, no actual Pulse ASan/TSan or whole codec/GPU internals qualification'},'notRun':['Full repository or original87 acceptance/hard-dependency closure, whole I-005 each-operation positive-negative/random1000 NLE matrix','All timeline drag UIs, keyframe TIME coordinate dragging, field-aware cooperative inverse, peer/agent gesture protocol','Large/million-entry history realtime performance; O(n) cursor unchanged','Fresh release App/window build; actual DAC/human hearing/physical AV sync/stable fps/GPU/non-Linux/mobile/physical multi-device','Statistical elimination of startup/resume underrun (old failures retained)','New independent60s/VFR/HDR/P0/whole historical v4-v8 old-executable qualification; selected current migration tests and actual old-library/SQL/SIGKILL ran','Unselected Harness/security/peer suites; mechanisms unchanged','Positive RTC unchanged managed-network policy blocked, no retry or bypass','Remote reads/diagnosis/push/rule/identity/branch/protocol/permission changes'],'statusCounts':{'original87':counts(original),'XD10':counts(xd)},'publication':'No push or new remote reads this batch. Existing e23a559/c8c12d8/c948c56 ancestors preserved; new ordinary local commit only, no new GitHub commit URL. Existing commit_refs_rules cause unknown, no confirmed user action or compliant recovery evidence.','toolchain':'Existing Flutter3.50.1/Dart3.14; approved strict SQLite3.54.1 source/runtime gate unchanged; FFmpeg7.1.5/Pulse17/clang19/CMake3.31.6/Chrome156. Existing sqlite3 UI dev dependency added offline, no new package version/model/install. Native hashes unchanged.'}
+if (dst/'toolchain-current.json').exists():d['toolchainCurrent']={'log':'toolchain-current.json','sha256':sha((dst/'toolchain-current.json').read_bytes())}
+(dst/'summary.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'passed':d['totalPassed'],'failed':d['totalFailed'],'skipped':d['totalSkipped'],'groups':{k:v['exitCode'] for k,v in finals.items()},'cancelIterations':d['cancelQualification']['iterationsFinalOnlyVerified']},indent=2))

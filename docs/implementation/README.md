@@ -9,7 +9,7 @@
 原104文档不变；当前全部87项逐项保留原验收：26 partial、48 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **increment1.14**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
+当前操作入口见文末 **increment1.21**；此前旧计数是各自冻结源码的历史切片，以task-status和最新summary为准。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -906,3 +906,13 @@ Native编辑器可连续编辑crop/color/标题等→多次`Undo`→多次`Redo`
 原104/87验收依赖、SQLite3.54.1严格门禁、87与XD10分列保持。startup/resume underrun仍未证解；旧writer共写、Linux CPU/GPU/物理同步/其他平台及RTC限制不变。本批不push、不换分支/身份/协议、不重新无证据诊断远端；e23a559、c8c12d8和本批均只在云端checkout本地普通提交中保存。
 
 本冻结20份生产/测试源码实际所选**239项全过，0失败/0跳过**：214领域/SQLite/nativeSDK、13真实FFI UI、5 Chrome资源/Inspector、7私有Pulse。另CTest3项、真实旧库/SQL-barrier/SIGKILL及新增Undo/Redo三次SIGKILL、真实音频monitor/故障probe全过；四种active视频取消普通/ASan各100共800轮，自有AVFrame/FD回基线。是本批重新运行，不借旧233/182；早期风格检查与辅助脚本编辑失败单列保留。当前7项Pulse通过**不证明旧startup/resume underrun已修复**。本批没跑全仓、全87验收、fresh release窗口构建、物理/其他平台或大型历史性能；完整未跑清单见证据。原87仍0 complete/26 partial/48 planned/13 blocked，XD10仍0/8/1/1。
+
+
+## increment1.21 — 连续手势只产生一次Undo（仅本地）
+
+选视频片段→拖动新的static-opacity slider：按下固定project/revision/目标，移动显示未提交ghost及真实共享native静帧，松手才一条持久Command。一次Undo回到拖前，Redo还原拖后；保存重开继续历史，归档fork依原规格空本地undo栈。无变化tap/回到起点、Escape、pointer CANCEL、竖向滚动夺走gesture、切目标/关闭等不写gesture；SQL失败就在控件旁明确显示并保留候选，用户可取消，冲突不自动覆盖。旧数值Apply仍是离散替代；不把不同对象或不同手势偷偷合并。
+
+SDK另对move/trim/slip、opacity固定时间关键帧值、transform/crop/color提供同base绝对更新/一次提交，验证边界和实际共享预览。**不是这些全部已有timeline拖动UI**，不是全I-005：多选/吸附/剪贴板/编组/插入覆盖完整矩阵、时间坐标关键帧拖动、字段级协作逆操作和巨量历史性能仍缺。仅现有黑底SDR CPU子集；ghost不保存、不导出，release后才走原版本/事务/pins/receipt，未加新存储或指纹体系。详情见[ADR0028](../adr/0028-gesture-ghost-single-command.md)及[本冻结证据](evidence/gesture-edit/summary.json)。原underrun间歇失败和旧writer共写限制不因本批通过而闭合。原104/87依赖保护，原87与XD10独立状态；不push、不再诊断远端，不改分支/身份/协议或规则。
+
+
+本批最后26份源码/测试/package冻结后的**248项：248通过、0失败/0跳过**，分别222领域/SQLite/nativeSDK、14真实FFI widget UI、5 Chrome资源/Inspector、7真实私有Pulse；不是首次247的混算。另CTest3、真实monitor/故障probe、真实旧库与SQL/Undo三次SIGKILL、SDK独立child staged100次更新后的SIGKILL，以及四种视频active取消普通/ASan各100共800轮通过。原underrun两次历史失败仍未证解。前期shader/cwd/SQL错误可见性/格式/公共preview回归的真实失败均保留，最后修正后才重新冻结运行。未跑fresh release窗口构建、全仓/全87/全I-005、非Linux/物理设备/GPU及巨量历史资格。原87仍0 complete/26 partial/48 planned/13 blocked；XD10仍0/8/1/1。本地保留全部未发布祖先，不push、不重试远端诊断。

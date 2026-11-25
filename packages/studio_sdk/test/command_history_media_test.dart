@@ -67,10 +67,22 @@ void main() {
           'left': .25,
         }, expectedRevision: w.current.revision);
         states.add(contents());
-        w.setClipColorBasic(clip, {
-          ...identityColorBasic,
-          'exposureStops': 1,
-        }, expectedRevision: w.current.revision);
+        final colorGesture = w.beginGesture(
+          SetClipColorBasic(clip, identityColorBasic),
+          expectedRevision: w.current.revision,
+        );
+        final colorBase = w.current.hash;
+        for (var i = 1; i <= 20; i++) {
+          w.updateGesture(
+            colorGesture,
+            SetClipColorBasic(clip, {
+              ...identityColorBasic,
+              'exposureStops': i / 20,
+            }),
+          );
+        }
+        expect(w.current.hash, colorBase);
+        w.commitGesture(colorGesture);
         states.add(contents());
         final beforePixels = await w.previewTimelineAt(Q.of(1));
         final caption = File('${root.path}/sub.srt')
@@ -84,6 +96,14 @@ void main() {
         );
         states.add(contents());
         await w.buildTimelinePreviewProxies();
+        states.add(contents());
+        // A real changed gesture must preserve AudioClip/link, captions and proxy
+        // refs, not just work on a silent single-clip toy project.
+        final rich = w.beginGesture(
+          SetClipColorBasic(clip, {...identityColorBasic, 'exposureStops': .5}),
+          expectedRevision: w.current.revision,
+        );
+        w.commitGesture(rich);
         states.add(contents());
         for (var i = states.length - 2; i >= 0; i--) {
           w.undo(expectedRevision: w.current.revision);
@@ -109,6 +129,7 @@ void main() {
         w.openDemo();
         expect(w.current.hash, selected);
         expect(w.canRedo, isFalse);
+        w.undo(expectedRevision: w.current.revision); // rich color gesture
         w.undo(expectedRevision: w.current.revision); // proxy metadata only
         w.undo(
           expectedRevision: w.current.revision,
@@ -123,6 +144,7 @@ void main() {
         expect(out['preEncoderSamples'][0]['rgba'], orderedEquals(pixels.rgba));
         w.redo(expectedRevision: w.current.revision);
         w.redo(expectedRevision: w.current.revision);
+        w.redo(expectedRevision: w.current.revision); // rich color gesture
         await w.restoreArchive(LocalFileGrant.fromUserSelection(archive));
         expect(w.canUndo, isFalse);
         expect(w.canRedo, isFalse);

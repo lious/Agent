@@ -1,0 +1,9 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":609653,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/edit_gesture_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/edit_gesture_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":1,"time":4,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2589}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2591}
+{"test":{"id":3,"name":"REAL drag40 -> one undo; native ghost image; Escape, pointer CANCEL and scroll arena loss have no commit","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":13,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/edit_gesture_ui_test.dart"},"type":"testStart","time":2592}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":9316}
+{"success":true,"type":"done","time":9349}

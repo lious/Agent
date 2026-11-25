@@ -1,0 +1,15 @@
+{
+  "nonFinalOnly": true,
+  "events": [
+    "Initial part placed before trailing exports: formatter parse refusal, reordered.",
+    "dart fix with two file arguments refused; corrected owning directories.",
+    "First SDK test compilation used nonexistent save/openArchive; switched real saveArchive/restoreArchive.",
+    "UI root-cwd shader asset failure; owning-package unchanged production code ran correctly.",
+    "Third UI SQL-fault message assertion failed: global lazy Text offscreen; inline control error added, original fault assertion retained.",
+    "Fourth UI repeated same failure because auxiliary patch used wrong cwd and did not apply; both failure logs preserved.",
+    "Auxiliary substring mismatch during test insertion; corrected exact formatted anchor, no partial production replacement.",
+    "All early analyzer style/dependency errors kept; existing sqlite3 added explicit UI dev-dependency offline, no new version/download.",
+    "Review after initial247 selected pass found still-preview expression wrapper sync/current-before-capability regression. New unopened/no-adapter case actually failed Null check; restored original async capability-first contract, same case passed, refroze26 sources and reran complete selected matrix. Initial247 not current proof."
+  ],
+  "finalResults": "Only final-* from frozen-source serial command groups count as final, never preliminary."
+}

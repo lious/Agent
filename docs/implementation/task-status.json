@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-26T00:10:51.997387+08:00",
+  "asOf": "2026-11-26T00:33:32.369955+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,7 +12,7 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-005 remaining basic operations/multiselect/snapping/clipboard/grouping and gesture coalescing; new persistent tip/full-content undo/redo is only a tested slice, not field-aware collaboration or full task closure. No storage/fingerprint expansion.",
+    "Continue original I-005 remaining multiselect/snap/clipboard/grouping/insert-overwrite and full operation positive-negative matrix; explicit eight-target SDK ghost + static-opacity UI coalescing now exercised, not all timeline gestures/field-aware inverse. Do not expand storage/fingerprints.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
     "Remote publication blocked: read-only applicable rules=[] / repo rulesets=[] / protected=false does not explain commit_refs_rules rejection. No confirmed user-side corrective action. No further push until cause and compliant resolution evidence reported; continue ordinary local commits for authorized work.",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
@@ -551,7 +551,8 @@
         "evidence/recovery-adoption/summary.json",
         "evidence/persistent-audio/summary.json",
         "evidence/checkpoint-retention/summary.json",
-        "evidence/command-history/summary.json"
+        "evidence/command-history/summary.json",
+        "evidence/gesture-edit/summary.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
       "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
@@ -586,10 +587,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite Increment1.20: actual SDK/UI persistent multi-level undo/redo derived from existing immutable commands/revisions journal, no new tables; monotonic commit revisions/exact saved entity definitions, no-op/branch-redo invalidation/idempotency, same-snapshot cursor reads and existing writer-fence transaction atomicity. Legacy undoLatest transitions retained byte-exact as real historical restore commands. Real AV/effects/audio/caption/proxy/save/reopen/archive-fork/preview/preencoder/MP4,1000 seeded title-root history undo/redo, real concurrent connections and SQL/kill/actual-old-library tests recorded. Conservative tip/full-root inverse, not field-aware collaboration or coalescing/full NLE matrix.",
+      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite Increment1.20: actual SDK/UI persistent multi-level undo/redo derived from existing immutable commands/revisions journal, no new tables; monotonic commit revisions/exact saved entity definitions, no-op/branch-redo invalidation/idempotency, same-snapshot cursor reads and existing writer-fence transaction atomicity. Legacy undoLatest transitions retained byte-exact as real historical restore commands. Real AV/effects/audio/caption/proxy/save/reopen/archive-fork/preview/preencoder/MP4,1000 seeded title-root history undo/redo, real concurrent connections and SQL/kill/actual-old-library tests recorded. Conservative tip/full-root inverse, not field-aware collaboration or coalescing/full NLE matrix. Increment1.21: explicit base/writer/target-bound ghost interaction for8 existing SDK operations, no per-pointer history writes; real Linux static-opacity slider40 moves -> one durable edit/undo/redo. Physical-UP gate, identity/no-motion, Escape/pointer/scroll-arena cancel, invalid-update refusal, same-ID SQL retry and revision/fence refusal. Shared exact-time native preview, rich AV/caption/proxy/archive history and staged child SIGKILL evidence. Not complete basic-operation/all drag UI/field-aware inverse or large-history qualification.",
       "evidence": [
         "evidence/local-video/verification.json",
-        "evidence/command-history/summary.json"
+        "evidence/command-history/summary.json",
+        "evidence/gesture-edit/summary.json"
       ],
       "remainingAcceptance": "第3节每操作正反例通过；1千随机序列undo后文档hash相等；锁定成员与负区间整组拒。",
       "remainingScope": "含Gap/多选/吸附/复制粘贴/编组；不含高级trim。",
@@ -597,7 +599,7 @@
         "I-003"
       ],
       "blockers": [
-        "Full Gap/multiselection/snapping/clipboard/grouping/basic-operation positive-negative matrix, gesture coalescing and field-aware concurrent inverse policy remain incomplete;1000 title-history transitions are not full randomized NLE acceptance. Current cursor reconstruction is O(n), not large-history UI performance qualification."
+        "Full Gap/multiselection/snapping/clipboard/grouping/basic-operation positive-negative matrix, full operation/UI gesture matrix and field-aware concurrent inverse policy remain incomplete;1000 title-history transitions are not full randomized NLE acceptance. Current cursor reconstruction is O(n), not large-history UI performance qualification."
       ]
     },
     {
@@ -648,7 +650,8 @@
         "evidence/opacity-keyframes/summary.json",
         "evidence/static-transform/summary.json",
         "evidence/dissolve/summary.json",
-        "evidence/raster-effects/summary.json"
+        "evidence/raster-effects/summary.json",
+        "evidence/gesture-edit/summary.json"
       ],
       "remainingAcceptance": "缺handles拒；未知技术UNSUPPORTED_EDIT_TECHNIQUE；关键帧边界连续；一次提案原子undo恢复hash。",
       "remainingScope": "含基础变换/透明度/叠化/注册luma；不默认未注册插件或高级调色。",
@@ -1686,5 +1689,5 @@
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
   },
-  "iterationBaseCommit": "c8c12d88d751b87ad55556cb1f03defc011d83fb"
+  "iterationBaseCommit": "c948c567662b16e5e5fb40529019e6072cf626fd"
 }

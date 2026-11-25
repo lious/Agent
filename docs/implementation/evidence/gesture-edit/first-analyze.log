@@ -1,0 +1,10 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:47:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:49:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:52:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:84:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:180:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/edit_gesture.dart:204:7 • curly_braces_in_flow_control_structures
+
+6 issues found. (ran in 1.9s)

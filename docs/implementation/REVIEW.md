@@ -887,3 +887,16 @@ the historical intermittent underrun. Full original tasks remain partial.
 3. **真实用户/历史/媒体审查**：新SDK/真实UI按钮多步撤销重做；实际AV导入/抽取音频/link、crop/color、字幕、持久proxy逐态hash恢复及关闭重开；字幕不能静默丢给MP4，显式undo字幕后原件preview/编码前像素/MP4，再redo并归档fork检查空本地栈。真实旧store+document含seq.version0歧义记录执行四undo四redo/re-edit，旧row/snapshot bytes保持、新版本>历史max；不只是新fixture假兼容。复用源码mirror故障策略做两次COMMIT前/一次未改代码COMMIT后SIGKILL，所有重开都用未改当前库。1000次seeded标题历史完整undo/redo不冒称全部NLE随机序列；UI百万历史/字段级协作/coalescing/其他平台仍缺。新增旧库probe的3条style失败修正后再冻结，选定矩阵重新运行，不借旧233或定向通过。
 
 本轮最终20份源码冻结后，fresh所选239/239、CTest3/3、真实monitor/故障probe、实际旧库与COMMIT前后SIGKILL全部通过；视频四模式普通/ASan各100共800轮，未混算旧结果。`evidence/command-history/summary.json`及逐命令日志记录版本、hash、边界和未跑项。没有新失败不表示原间歇underrun闭合；本批未重试远端、未push，原两未发布提交原样保留。格式/analyzer最终通过，早期style和辅助编辑失败另保留，不删失败证据。
+
+
+## increment1.21 — 手势ghost/单Command（三轮实审/修正）
+
+1. **原合同与边界审查**：逐条核对原s3“pointer move仅ghost、松手一Command、Escape无写”、固定baseRevision、关键帧coalesce及真实undo/redo。未做时间窗口合并或改写journal；闭合8种现有SDK操作的同clip/同字段组边界（trim edge/ripple、关键帧localTime/interpolation也固定），未知操作/历史版本拒绝。所有candidate从base纯计算，真实版本仍由原事务历史max+1分配；取消/新编辑redo逻辑复用原实现。首轮part必须放export后、brace风格及测试误用save/openArchive API均实际修正，不关闭规则。
+2. **并发/资源/取消审查**：失败update必须阻止提交旧值；读取base与writer-fence，最终仍在原事务检查，不自动重试冲突。检查安装版本Slider源码，发现onChangeEnd也可能是arena cancel，添加匹配physical-UP授权门；实际hold后丢给竖向scroll的ghost必须无写。Escape/pointer cancel/切目标/生命周期/close都取消；native image最多一请求+一dirty，generation/hash/handle验晚到结果。发现新clip opacity=1无变化点击仍可能创建identity effect，UI起终值相同取消；move/trim/slip回零明确不分配无意义Gap/version。未泛化剥version做危险语义hash。真实SQL late-abort保留候选和同ID手工重试，不清history或pins。
+3. **真实UI/旧库/媒体故障审查**：实际UI40连续MOVE→一undo/redo、真实native ghost图、Escape/CANCEL/scroll-arena、无变化tap及SQL失败后显式Cancel。SQL错误原全局Text在滚动区外未构建，第三次UI测试实际失败；补当前control旁错误，保持原异常断言而非忽略SQL，失败log保留。第四次因辅助脚本cwd错误未应用补丁而再次失败，未算成功；后续正确补丁后重测。首次root运行缺material_ui shader，改用原既有owning-package cwd构建声明资产，不修改主题/渲染或跳过测试。SDK真实多目标拒绝/invalid-release、SQL/并发fence/旧格式、实际child SIGKILL staged100次更新重开；已有AV+AudioClip/link/字幕/proxy测试改真实color手势并保留多级恢复/归档fork/MP4像素。最后冻结26份源码/测试/manifest，重新跑选择矩阵；结果和未跑项另列，不借旧239或182。
+
+
+第三轮补充公共API回归审查：首份247所选成功后主动检查共享preview helper的调用边界，发现初版expression wrapper会在_requireMedia之前同步求值current；未打开且无adapter时报Null check而非原异步MEDIA_ADAPTER_NOT_INSTALLED。补新反例先真实失败（wrapper-regression-before-fix.jsonl），恢复async/capability-first后该反例通过；重新冻结全部26源码/测试/manifest并完整重跑所选矩阵，首份247不冒充最后SHA。没有更改媒体断言、Pulse队列或通过条件。
+
+
+最后refreeze实际248/248，222 native/领域/存储/SDK+14 FFI widget+5 Chrome+7私有Pulse，另CTest3、真实monitor/故障probe/旧库与SQL/SIGKILL、四模式普通/ASan800取消全部本次重跑。首轮247不算最后SHA结果；wrapper反例先失败再修正且完整refreeze，不放宽断言。尚未做fresh窗口构建/全仓/全87/完整操作随机矩阵/巨量历史/非Linux/GPU/物理验收，旧underrun两失败继续保留。工具CLI版本当前重新只读查询存toolchain-current.json；没有native重编、SDK安装、模型、付费或网络策略变化。全部旧祖先、原104、87验收依赖保持；仅普通本地提交。

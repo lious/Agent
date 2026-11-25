@@ -37,6 +37,8 @@ export 'ports.dart';
 export 'package:studio_store/blob_store.dart' show LocalFileGrant;
 export 'package:studio_media/studio_media.dart' show NativeMedia;
 
+part 'edit_gesture.dart';
+
 /// Composition root for both hosts. No media, model, payment or upload port is
 /// implicitly installed. All mutating calls use the same repository coordinator.
 final class StudioWorkspace {
@@ -78,6 +80,7 @@ final class StudioWorkspace {
   /// Production editing entity IDs, shared with persistent-store allocation.
   String newEntityId() => _uuid.v7();
   WriterToken? _writer;
+  EditGesture? _editGesture;
   BlobStore? _blobs;
   NativeMedia? _media;
   AutosaveScheduler? _autosave;
@@ -152,6 +155,7 @@ final class StudioWorkspace {
   }
 
   ProjectDocument openDemo() {
+    _cancelActiveGesture();
     clearPreviewProxies();
     _requireMetadata();
     _activeProjectId = _repository.selectedProjectId ?? 'demo-project';
@@ -1304,10 +1308,19 @@ final class StudioWorkspace {
   /// Explicit still timeline preview uses the SAME full-size native CPU node and
   /// YUV420 buffer conversion as final export, then downsamples for display.
   Future<SourcePreviewFrame> previewTimelineAt(Q time) async {
+    // Keep the original public async/capability-first contract even before open.
     _requireMedia();
-    _requireTransformAdapter(current);
+    return _previewTimelineDocument(current, time);
+  }
+
+  Future<SourcePreviewFrame> _previewTimelineDocument(
+    ProjectDocument document,
+    Q time,
+  ) async {
+    _requireMedia();
+    _requireTransformAdapter(document);
     final snapshot = current,
-        graph = TimelineVideoGraph(current),
+        graph = TimelineVideoGraph(document),
         point = graph.sampleFrame(time);
     if (point.isGap) {
       final rgba = List<int>.filled(
@@ -1839,6 +1852,7 @@ final class StudioWorkspace {
         );
         _autosave?.dispose();
         clearPreviewProxies();
+        _cancelActiveGesture();
         _activeProjectId = imported.project.projectId;
         _writer = imported.writer;
         _autosave = AutosaveScheduler(
@@ -1900,6 +1914,7 @@ final class StudioWorkspace {
     _autosave?.dispose();
     _repository.create(fork);
     _repository.selectProject(fork.projectId);
+    _cancelActiveGesture();
     _activeProjectId = fork.projectId;
     _writer = _repository.acquireWriter(
       fork.projectId,
@@ -2491,6 +2506,7 @@ final class StudioWorkspace {
   }
 
   void close() {
+    _cancelActiveGesture();
     cancelResourceImport();
     stopTimelinePlayback();
     if (!_closed) {

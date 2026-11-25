@@ -7,8 +7,12 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/services.dart';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:studio_sdk/studio_sdk.dart';
+
+part 'edit_gesture_controls.dart';
 
 /// Shared local-video workbench. Unsupported media/operations fail explicitly;
 /// this is not the complete timeline, preview, audio mixer, or AI product UI.
@@ -78,6 +82,13 @@ class _FoundationAppState extends State<FoundationApp>
   final _opacity = TextEditingController(text: '0.5');
   final _opacityFrame = TextEditingController(text: '0');
   bool _opacityHold = false;
+  EditGesture? _gesture;
+  final _gestureFocus = FocusNode();
+  ui.Image? _gestureImage;
+  double _gestureValue = 1, _gestureStartValue = 1;
+  int? _gesturePointer;
+  bool _gesturePointerReleased = false;
+  bool _gestureRendering = false, _gestureDirty = false;
   bool get _hasPersistentAudio =>
       (widget.workspace.current.toJson()['sequences'][0]['tracks'] as List).any(
         (t) => t['kind'] == 'audio',
@@ -295,7 +306,15 @@ class _FoundationAppState extends State<FoundationApp>
     }
   }
 
+  void _gestureSetState(VoidCallback action) {
+    if (mounted) setState(action);
+  }
+
   void _act(ProjectDocument Function() action) {
+    if (_gesture != null) {
+      setState(() => _error = 'GESTURE_IN_PROGRESS');
+      return;
+    }
     try {
       action();
       setState(() {
@@ -308,6 +327,10 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   Future<void> _run(Future<String> Function() action) async {
+    if (_gesture != null) {
+      setState(() => _error = 'GESTURE_IN_PROGRESS');
+      return;
+    }
     setState(() {
       _busy = true;
       _error = null;
@@ -356,6 +379,7 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) _cancelGestureUi();
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused ||
         state == AppLifecycleState.hidden ||
@@ -401,6 +425,10 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    final gesture = _gesture;
+    if (gesture != null) widget.workspace.cancelGesture(gesture);
+    _gestureImage?.dispose();
+    _gestureFocus.dispose();
     _playbackTimer?.cancel();
     _videoPulse.dispose();
     _clearTimelineVideo();
@@ -751,6 +779,7 @@ class _FoundationAppState extends State<FoundationApp>
       'Selected VIDEO opacity [0,1], linear Rec.709 over black',
       _opacity,
     ),
+    _buildGestureControls(),
     OutlinedButton(
       key: const Key('apply-clip-opacity'),
       onPressed: _busy || _selected == null
@@ -882,7 +911,10 @@ class _FoundationAppState extends State<FoundationApp>
         onTap: _busy
             ? null
             : () => setState(() {
-                if (_selected != c['id']) _clearPreview();
+                if (_selected != c['id']) {
+                  _cancelGestureUi();
+                  _clearPreview();
+                }
                 _selected = c['id'] as String;
               }),
       ),
