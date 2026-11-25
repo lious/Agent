@@ -15,6 +15,7 @@ import 'time.dart';
 import 'validator.dart';
 export 'time.dart';
 export 'caption.dart';
+export 'marker.dart';
 export 'audio_bus.dart';
 export 'validator.dart';
 export 'strict_json.dart';

@@ -116,6 +116,7 @@ ProjectDocument _moveClips(
   }
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -243,6 +244,7 @@ ProjectDocument _moveClips(
   // offsets remain unchanged. Absolute captions stay at authored times.
   // clipLocal cues translate with their host clip; source anchors still refuse.
   followClipLocalCaptions(d, nextVersion: version);
+  applyClipLocalMarkerLocals(d, markerLocals);
   _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(
     d,

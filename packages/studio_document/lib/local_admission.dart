@@ -8,7 +8,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
   final d = project.toJson();
   requireDissolveProfile(d);
   for (final table in [
-    'markers',
     'imageDocuments',
     'briefs',
     'scripts',
@@ -38,10 +37,10 @@ void requireLocalEditingWritable(ProjectDocument project) {
   if (s['masterBusId'] != b['id'] ||
       b['outputBusId'] != null ||
       (b['inputBusIds'] as List).isNotEmpty ||
-      (b['effectIds'] as List).isNotEmpty ||
-      (s['markerIds'] as List).isNotEmpty) {
+      (b['effectIds'] as List).isNotEmpty) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
+  requireWritableMarkers(d);
   AudioBus.fromJson(Map<String, dynamic>.from(b as Map));
   final consumed = <String>{
     for (final t in s['tracks'])

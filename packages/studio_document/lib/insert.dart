@@ -374,6 +374,7 @@ _InsertOpening _openInsertHole(
   required VersionAllocator version,
   required IdAllocator newId,
   bool applyCaptions = true,
+  bool applyMarkers = true,
 }) {
   if (at < Q.of(0)) {
     throw const StudioException('NEGATIVE_TIMELINE_START');
@@ -401,6 +402,9 @@ _InsertOpening _openInsertHole(
     at: at,
     protected: protected,
   );
+  final markerLocals = applyMarkers
+      ? snapshotClipLocalMarkerLocals(d)
+      : const <String, Q>{};
   final splitMap = _splitRippleAt(d, ripple, at, protected, version, newId);
   _shiftRippleFrom(d, ripple, at, length, protected, version);
   _rebuildSplitLinkGroups(d, splitMap, newId);
@@ -412,6 +416,16 @@ _InsertOpening _openInsertHole(
       opening: true,
       newId: newId,
       nextVersion: version,
+    );
+  }
+  if (applyMarkers) {
+    applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+    applyMarkerIntervalEdit(
+      d,
+      at: at,
+      length: length,
+      opening: true,
+      newId: newId,
     );
   }
   final old = Q.fromJson(s['duration']);
@@ -461,6 +475,7 @@ ProjectDocument _insertMoveClips(
 ) {
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -520,6 +535,7 @@ ProjectDocument _insertMoveClips(
     version: version,
     newId: newId,
     applyCaptions: false,
+    applyMarkers: false,
   );
   for (final id in moved) {
     final c = clips[id] as Map;
@@ -553,6 +569,14 @@ ProjectDocument _insertMoveClips(
     nextVersion: version,
   );
   followClipLocalCaptions(d, nextVersion: version);
+  applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+  applyMarkerIntervalEdit(
+    d,
+    at: at,
+    length: span.duration,
+    opening: true,
+    newId: newId,
+  );
   _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

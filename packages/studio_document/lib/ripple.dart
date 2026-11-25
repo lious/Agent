@@ -158,6 +158,7 @@ ProjectDocument _rippleDeleteClips(
   IdAllocator newId,
 ) {
   final d = before.toJson(), s = d['sequences'][0];
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -269,6 +270,14 @@ ProjectDocument _rippleDeleteClips(
     opening: false,
     newId: newId,
     nextVersion: version,
+  );
+  applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+  applyMarkerIntervalEdit(
+    d,
+    at: at,
+    length: length,
+    opening: false,
+    newId: newId,
   );
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

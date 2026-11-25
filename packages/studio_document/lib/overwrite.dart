@@ -311,6 +311,7 @@ ProjectDocument _overwriteMoveClips(
 ) {
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -395,6 +396,7 @@ ProjectDocument _overwriteMoveClips(
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, needed);
   followClipLocalCaptions(d, nextVersion: version);
+  applyClipLocalMarkerLocals(d, markerLocals);
   _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

@@ -1,0 +1,2 @@
+Frozen selected evidence for Increment 1.36 (admit sequence markers with clipLocal follow, ripple interval, and snap). Parent 0b309c8d492b129bc1a253cab7bfe323ec2665d2. Aggregate SHA256 6588a3755f2e0e2660b40fc74b7029ac19c3b7342077c08990d595320a428ac3 (sha256 of sorted "digest  path
+" lines of sourceSha256). Selected document+SDK+UI 152/0/0 (95+43+14) plus analyzer, actual old-library, SIGKILL undo/redo and 100 opacity_cancel, all exit 0. Previous 134/128/119/104/95/85/75/64/51/37/7/281 counts are not mixed in. I-005 stays partial.

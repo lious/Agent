@@ -39,6 +39,11 @@ class _FoundationAppState extends State<FoundationApp>
       _captionStart = TextEditingController(text: '0'),
       _captionDuration = TextEditingController(text: '1000'),
       _captionPath = TextEditingController();
+  final _markerLabel = TextEditingController(text: 'Marker'),
+      _markerTime = TextEditingController(text: '0'),
+      _markerDuration = TextEditingController(text: '0');
+  bool _markerRipple = false;
+  String? _markerSelected;
   final _peerHash = TextEditingController();
   final _inspectionPath = TextEditingController();
 
@@ -333,6 +338,11 @@ class _FoundationAppState extends State<FoundationApp>
     )) {
       _captionSelected = null;
     }
+    if (!(_project.toJson()['markers'] as List).any(
+      (m) => m['id'] == _markerSelected,
+    )) {
+      _markerSelected = null;
+    }
   }
 
   void _gestureSetState(VoidCallback action) {
@@ -510,6 +520,9 @@ class _FoundationAppState extends State<FoundationApp>
       _captionStart,
       _captionDuration,
       _captionPath,
+      _markerLabel,
+      _markerTime,
+      _markerDuration,
       _peerHash,
     ]) {
       c.dispose();
@@ -1713,6 +1726,216 @@ class _FoundationAppState extends State<FoundationApp>
     Text(_status, key: const Key('operation-status')),
   ];
 
+  List<TimelineMarker> get _markers => (_project.toJson()['markers'] as List)
+      .map((m) => TimelineMarker.fromJson(m as Map<String, dynamic>))
+      .toList();
+  Q _markerMilliseconds(TextEditingController field) {
+    final n = int.tryParse(field.text.trim());
+    if (n == null || n < 0) {
+      throw const StudioException('INVALID_RANGE');
+    }
+    return Q.of(n, 1000);
+  }
+
+  String _markerMillisecondsText(Q time) =>
+      (time.n * BigInt.from(1000) ~/ time.d).toString();
+
+  void _setMarkers(
+    List<TimelineMarker> Function(List<TimelineMarker>) change,
+  ) => _edit(() => SetMarkers(MarkerStore(change(_markers))));
+
+  List<Widget> _markerControls() => [
+    const Divider(),
+    const Text(
+      'Sequence markers · metadata only · never burned into preview or MP4',
+      style: TextStyle(fontSize: 20),
+    ),
+    _path('marker-label', 'Marker label', _markerLabel),
+    _path(
+      'marker-time',
+      'Marker time (milliseconds on the sequence, not frames)',
+      _markerTime,
+    ),
+    _path(
+      'marker-duration',
+      'Marker duration (milliseconds, 0 is a point)',
+      _markerDuration,
+    ),
+    CheckboxListTile(
+      key: const Key('marker-ripple'),
+      value: _markerRipple,
+      title: const Text(
+        'Ripple this marker with interval edits (absolute markers only; off keeps later markers put)',
+      ),
+      onChanged: _busy
+          ? null
+          : (v) => setState(() => _markerRipple = v ?? false),
+    ),
+    Wrap(
+      spacing: 8,
+      children: [
+        OutlinedButton(
+          key: const Key('marker-add'),
+          onPressed: _busy
+              ? null
+              : () => _setMarkers(
+                  (m) => [
+                    ...m,
+                    TimelineMarker(
+                      'marker-${DateTime.now().microsecondsSinceEpoch}',
+                      sequenceId: _project.toJson()['rootSequenceId'] as String,
+                      label: _markerLabel.text,
+                      time: _markerMilliseconds(_markerTime),
+                      duration: _markerMilliseconds(_markerDuration),
+                      ripple: _markerRipple,
+                    ),
+                  ],
+                ),
+          child: const Text('Add marker'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-add-anchored'),
+          onPressed: _busy
+              ? null
+              : () => _setMarkers((m) {
+                  final created = TimelineMarker(
+                    'marker-${DateTime.now().microsecondsSinceEpoch}',
+                    sequenceId: _project.toJson()['rootSequenceId'] as String,
+                    label: _markerLabel.text,
+                    time: _markerMilliseconds(_markerTime),
+                    duration: _markerMilliseconds(_markerDuration),
+                    ripple: _markerRipple,
+                  );
+                  final id = coveringMarkerHostClipId(
+                    _project.toJson(),
+                    created.time,
+                    created.duration,
+                  );
+                  if (id == null) {
+                    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+                  }
+                  Map? host;
+                  for (final t in _project.toJson()['sequences'][0]['tracks']) {
+                    for (final item in t['items']) {
+                      if (item['id'] == id) host = item as Map;
+                    }
+                  }
+                  return [
+                    ...m,
+                    created.anchoredToClip(
+                      id,
+                      Q.fromJson(host!['timelineRange']['start']),
+                      Q.fromJson(host['timelineRange']['duration']),
+                    ),
+                  ];
+                }),
+          child: const Text('Add marker on covering clip'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-edit'),
+          onPressed: _busy || _markerSelected == null
+              ? null
+              : () => _setMarkers(
+                  (m) => [
+                    for (final marker in m)
+                      if (marker.id == _markerSelected)
+                        marker.edit(
+                          label: _markerLabel.text,
+                          time: _markerMilliseconds(_markerTime),
+                          duration: _markerMilliseconds(_markerDuration),
+                          ripple: _markerRipple,
+                        )
+                      else
+                        marker,
+                  ],
+                ),
+          child: const Text('Edit selected marker'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-delete'),
+          onPressed: _busy || _markerSelected == null
+              ? null
+              : () => _setMarkers(
+                  (m) => m.where((v) => v.id != _markerSelected).toList(),
+                ),
+          child: const Text('Delete selected marker'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-follow-clip'),
+          onPressed: _busy || _markerSelected == null
+              ? null
+              : () => _setMarkers((markers) {
+                  final selected = markers.singleWhere(
+                    (m) => m.id == _markerSelected,
+                  );
+                  final id = coveringMarkerHostClipId(
+                    _project.toJson(),
+                    selected.time,
+                    selected.duration,
+                  );
+                  if (id == null) {
+                    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+                  }
+                  Map? host;
+                  for (final t in _project.toJson()['sequences'][0]['tracks']) {
+                    for (final item in t['items']) {
+                      if (item['id'] == id) host = item as Map;
+                    }
+                  }
+                  return [
+                    for (final marker in markers)
+                      if (marker.id == _markerSelected)
+                        marker.anchoredToClip(
+                          id,
+                          Q.fromJson(host!['timelineRange']['start']),
+                          Q.fromJson(host['timelineRange']['duration']),
+                        )
+                      else
+                        marker,
+                  ];
+                }),
+          child: const Text('Anchor selected marker to covering clip'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-make-absolute'),
+          onPressed: _busy || _markerSelected == null
+              ? null
+              : () => _setMarkers(
+                  (m) => [
+                    for (final marker in m)
+                      if (marker.id == _markerSelected)
+                        marker.makeAbsolute()
+                      else
+                        marker,
+                  ],
+                ),
+          child: const Text('Make selected marker absolute'),
+        ),
+      ],
+    ),
+    for (final marker in _markers)
+      OutlinedButton(
+        key: Key('marker-${marker.id}'),
+        onPressed: _busy
+            ? null
+            : () => setState(() {
+                _markerSelected = marker.id;
+                _markerLabel.text = marker.label;
+                _markerTime.text = _markerMillisecondsText(marker.time);
+                _markerDuration.text = _markerMillisecondsText(marker.duration);
+                _markerRipple = marker.ripple;
+              }),
+        child: Text(
+          marker.anchorKind == 'clipLocal'
+              ? '${marker.label} · ${marker.time} · follows ${marker.anchorClipId}'
+              : '${marker.label} · ${marker.time} · absolute · ripple ${marker.ripple}',
+        ),
+      ),
+    const Text(
+      'New markers are sequence-absolute and stay put unless Ripple this marker is on, or the marker is anchored to a covering clip and follows that host. A ripple or insert interval drops markers wholly inside a closed range (undo restores them) and shifts later ripple=true absolute markers; ripple=false later markers do not move. Insert-move still leaves a source gap. Marker labels are not burned into preview or export. Split/roll/slip/slide rebinding, new tracks, and auto-close-on-move stay closed.',
+    ),
+  ];
+
   List<CaptionCue> get _cues => (_project.toJson()['captions'] as List)
       .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
       .toList();
@@ -2093,6 +2316,11 @@ class _FoundationAppState extends State<FoundationApp>
                       key: const Key('caption-panel'),
                       title: const Text('Caption editor'),
                       children: _captionControls(),
+                    ),
+                    ExpansionTile(
+                      key: const Key('marker-panel'),
+                      title: const Text('Markers'),
+                      children: _markerControls(),
                     ),
                   ],
                 ),

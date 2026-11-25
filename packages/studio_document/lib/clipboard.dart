@@ -594,6 +594,7 @@ ProjectDocument _pasteClips(
 ) {
   final payload = operation.payload;
   final d = before.toJson();
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   if (payload.projectId != d['projectId']) {
     throw const StudioException('CROSS_PROJECT_PASTE_NOT_IMPLEMENTED');
   }
@@ -783,6 +784,9 @@ ProjectDocument _pasteClips(
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, minimumDuration);
   followClipLocalCaptions(d, nextVersion: version);
+  if (operation.mode != 'insert') {
+    applyClipLocalMarkerLocals(d, markerLocals);
+  }
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

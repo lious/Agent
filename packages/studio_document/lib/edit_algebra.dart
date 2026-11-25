@@ -782,6 +782,22 @@ final class SetCaptions extends EditOperation {
   };
 }
 
+/// One atomic marker-set command. Labels stay as project metadata and are
+/// never burned into preview or export media.
+final class SetMarkers extends EditOperation {
+  SetMarkers(MarkerStore value)
+    : _json = jsonEncode([for (final m in value.markers) m.toJson()]);
+  final String _json;
+  List<TimelineMarker> get markers => (jsonDecode(_json) as List)
+      .map((m) => TimelineMarker.fromJson(m as Map<String, dynamic>))
+      .toList();
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setMarkers',
+    'markers': jsonDecode(_json),
+  };
+}
+
 final class AppendVideoAsset extends EditOperation {
   AppendVideoAsset({
     required Map<String, dynamic> asset,
@@ -981,6 +997,7 @@ ProjectDocument applyEdit(
           operation is! SetMasterAudio &&
           operation is! RenameProject &&
           operation is! SetCaptions &&
+          operation is! SetMarkers &&
           operation is! AppendVideoAsset)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
   }
@@ -1018,6 +1035,9 @@ ProjectDocument applyEdit(
   }
   if (operation is SetCaptions) {
     return _setCaptions(before, operation, nextVersion, newId);
+  }
+  if (operation is SetMarkers) {
+    return _setMarkers(before, operation, nextVersion);
   }
   if ((before.toJson()['captions'] as List).isNotEmpty &&
       operation is! AppendVideoAsset) {
@@ -1169,6 +1189,8 @@ ProjectDocument applyEdit(
       throw StateError('Handled master audio edit');
     case SetCaptions():
       throw StateError('Handled caption edit');
+    case SetMarkers():
+      throw StateError('Handled marker edit');
     case RenameProject():
       throw StateError('Handled before sequence edit');
     case AppendVideoAsset():
@@ -1607,6 +1629,38 @@ ProjectDocument _setCaptions(
     if (captionEnd > end) end = captionEnd;
   }
   s['duration'] = end.toJson();
+  s['version'] = nextVersion(s['id'] as String);
+  final after = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(after);
+  return after;
+}
+
+ProjectDocument _setMarkers(
+  ProjectDocument before,
+  SetMarkers operation,
+  VersionAllocator nextVersion,
+) {
+  final d = before.toJson();
+  final s = d['sequences'][0];
+  final old = d['markers'] as List;
+  if (old.isEmpty && operation.markers.isEmpty) {
+    return before;
+  }
+  final sequenceId = s['id'] as String;
+  final result = <Map<String, Object?>>[];
+  for (final m in operation.markers) {
+    if (m.sequenceId != sequenceId) {
+      throw const StudioException('PARENT_MISMATCH');
+    }
+    result.add(m.toJson());
+  }
+  d['markers'] = result;
+  syncSequenceMarkerIds(d);
+  if (contentHash(old) == contentHash(result) &&
+      contentHash(before.toJson()['sequences'][0]['markerIds']) ==
+          contentHash(s['markerIds'])) {
+    return before;
+  }
   s['version'] = nextVersion(s['id'] as String);
   final after = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(after);

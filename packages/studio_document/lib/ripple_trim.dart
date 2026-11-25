@@ -75,6 +75,7 @@ ProjectDocument _rippleTrimClip(
       ? operation.delta
       : Q.of(0) - operation.delta;
   final d = before.toJson(), s = d['sequences'][0];
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -254,6 +255,14 @@ ProjectDocument _rippleTrimClip(
     opening: durationDelta > Q.of(0),
     newId: newId,
     nextVersion: version,
+  );
+  applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+  applyMarkerIntervalEdit(
+    d,
+    at: closeStart,
+    length: span,
+    opening: durationDelta > Q.of(0),
+    newId: newId,
   );
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

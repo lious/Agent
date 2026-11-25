@@ -1,0 +1,27 @@
+{
+  "baseCommit": "0b309c8d492b129bc1a253cab7bfe323ec2665d2",
+  "sourceSha256": {
+    "packages/studio_document/lib/marker.dart": "20b124afdbe255a05fd412cc0ae6c236e9836387818d9a2a2b172940efb50f1d",
+    "packages/studio_document/lib/edit_algebra.dart": "7d0741203622a6af0dadc2d7674e76b7aa9efed00c2d29280d64f5bf5cfb0c04",
+    "packages/studio_document/lib/insert.dart": "103b7af2c89e8d2615053f89254e87ac93dd7e99928f6c3a14b414d869e996dd",
+    "packages/studio_document/lib/ripple.dart": "4c0e0536578721eb72fd5501598c5b7fa9bde123d528bf121ab2c1f2aded8bfc",
+    "packages/studio_document/lib/ripple_trim.dart": "3280b49a3097d40c05400e307b8bbc4ce62a8b21c455c8a664ed3ed684d65771",
+    "packages/studio_document/lib/multi_move.dart": "d9bf5e1c27aa52d258469b11048ccb1f4e8078174a091826340a5ff3352e06fe",
+    "packages/studio_document/lib/overwrite.dart": "257dd9892d571f07ac2ea87a140246b0d5327e03e172251f1bc707f81ad06d91",
+    "packages/studio_document/lib/clipboard.dart": "a03d0ab0a388b23f4a494dcc49f0637048701eea1920c91cc9bfbc72edf55ebc",
+    "packages/studio_document/lib/timeline_snap.dart": "7e4a9a922c5847ed4ddb384f0bfa0d3a305cbeca3f72f563062d61284b93b22f",
+    "packages/studio_document/lib/local_admission.dart": "8d9fec2d579a4d4916a05096f9ef359c9c17cfc92c3dcd8ff98bf8e76f64c14e",
+    "packages/studio_document/lib/studio_document.dart": "ea87bd93852d61dd67447b3fdec796849184d6a901c9b99c42fa07bdfb7cb20f",
+    "packages/studio_document/test/marker_edit_test.dart": "2b8d9703460e74d065dd41f26cfc256d43a4d1c003fab7a1a46e4bcfefdbdec1",
+    "packages/studio_document/test/timeline_snap_test.dart": "d5e2e96fec2dd98846bab2ec8ea02598e7b9ed1e76e340c80368602dd62cd16f",
+    "packages/studio_sdk/test/marker_edit_test.dart": "4b855448d13d8c8c6c18496b7a7745578b1e84f54798bcaace78bade83aef2cd",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "00ed600bfc1e78954fec471c7f2368e548d724ce7c00ea7c4cd74bc5ef5a9634",
+    "packages/studio_editor_ui/lib/clipboard_controls.dart": "ca079910a4faef28195121eff3765ea1a4dd7eb382dc6179442f478a0e99eb0e",
+    "packages/studio_editor_ui/test/marker_edit_ui_test.dart": "9333a80a6714be07b43f247aa6edfb19e724281c1441e99b2679b27dc82638f5"
+  },
+  "aggregateSha256": "6588a3755f2e0e2660b40fc74b7029ac19c3b7342077c08990d595320a428ac3",
+  "nativeLibrarySha256": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T05:29:52+08:00",
+  "timezone": "Asia/Shanghai"
+}

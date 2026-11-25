@@ -141,7 +141,7 @@ void main() {
     );
     expect(translated.operation.delta, all.operation.delta);
   });
-  test('valid marker project remains refused by existing admission, not stripped for snap', () {
+  test('admitted markers are snap targets and are not stripped', () {
     final d = f.three().toJson(), s = d['sequences'][0];
     s['markerIds'] = ['marker'];
     d['markers'] = [
@@ -151,23 +151,23 @@ void main() {
         'label': 'retained',
         'colorRGBA': [1, 0, 0, 1],
         'anchor': {'kind': 'absolute', 'clipId': null},
-        'time': Q.of(1).toJson(),
+        'time': Q.of(3, 2).toJson(),
         'duration': Q.of(0).toJson(),
         'ripple': false,
       },
     ];
     final p = ProjectDocument.fromJson(d),
         id = f.items(p).first['id'] as String;
-    expect(
-      () => planMoveSnap(
-        p,
-        clipIds: [id],
-        viewport: TimelineViewport(origin: Q.of(0), pixelsPerSecond: Q.of(100)),
-        pointerPixel: Q.of(96),
-        playhead: Q.of(1),
-      ),
-      code('FEATURE_NOT_IMPLEMENTED'),
+    final plan = planMoveSnap(
+      p,
+      clipIds: [id],
+      viewport: TimelineViewport(origin: Q.of(0), pixelsPerSecond: Q.of(100)),
+      pointerPixel: Q.of(146),
+      playhead: Q.of(0),
     );
+    expect(plan.decision.target!.kind, SnapKind.marker);
+    expect(plan.decision.target!.id, 'marker');
+    expect(plan.decision.target!.time, Q.of(3, 2));
     expect(p.toJson()['markers'], d['markers']);
   });
   test('even excluded target stream is bounded; empty sources and missing selection refuse', () {

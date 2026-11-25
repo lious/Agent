@@ -170,8 +170,9 @@ final class SnappedMovePlan {
   final List<String> trackIds, expandedIds;
 }
 
-/// Current admitted media-clip closure only. Marker-bearing projects deliberately
-/// retain existing read-only/refusal admission until marker editing is implemented.
+/// Admitted media-clip closure plus sequence markers as snap targets. Marker
+/// times are sequence positions; clipLocal markers use their current (followed)
+/// timeline time. Destination cuts still win over a marker at the same time.
 SnappedMovePlan planMoveSnap(
   ProjectDocument base, {
   required Iterable<String> clipIds,
@@ -216,6 +217,16 @@ SnappedMovePlan planMoveSnap(
       } else {
         targets.addAll(points);
       }
+    }
+  }
+  for (final raw in d['markers'] as List) {
+    final m = raw as Map;
+    final start = Q.fromJson(m['time']);
+    final duration = Q.fromJson(m['duration']);
+    final id = m['id'] as String;
+    targets.add(SnapPoint(SnapKind.marker, id, start));
+    if (duration > Q.of(0)) {
+      targets.add(SnapPoint(SnapKind.marker, id, start + duration, end: true));
     }
   }
   final starts = videoStarts.isNotEmpty ? videoStarts : audioStarts;
