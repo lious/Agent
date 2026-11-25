@@ -27,6 +27,7 @@ extern "C" {
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <utility>
 using J = nlohmann::json;
 #include <sys/stat.h>
 #ifdef STUDIO_ENABLE_PULSE
@@ -36,6 +37,10 @@ using J = nlohmann::json;
 #include <chrono>
 #include <thread>
 namespace {
+// Counts application-owned AVFrame headers, not opaque codec/GPU internals.
+std::atomic<uint64_t> live_owned_frames{0};
+AVFrame *owned_frame_alloc(){auto *f=av_frame_alloc();if(f)++live_owned_frames;return f;}
+void owned_frame_free(AVFrame **f){if(f && *f){av_frame_free(f);--live_owned_frames;}}
 struct Error : std::runtime_error {
   using std::runtime_error::runtime_error;
 };
@@ -80,6 +85,7 @@ struct Engine {
 #endif
   std::atomic<uint64_t> epoch{0};
   std::atomic<uint64_t> encoded_audio_samples{0};
+  std::atomic<uint64_t> rendered_video_frames{0};
   explicit Engine(std::string n) : ns(std::move(n)) {}
 };
 std::mutex registry_lock;
@@ -114,8 +120,8 @@ struct Input {
   Input(const Input &) = delete;
   Input &operator=(const Input &) = delete;
   ~Input() {
-    av_frame_free(&current);
-    av_frame_free(&next);
+    owned_frame_free(&current);
+    owned_frame_free(&next);
     av_packet_free(&packet);
     avcodec_free_context(&decoder);
     avformat_close_input(&format);
@@ -159,7 +165,7 @@ struct Input {
       throw Error("OUT_OF_MEMORY");
   }
   AVFrame *decode() {
-    auto *frame = av_frame_alloc();
+    auto *frame = owned_frame_alloc();
     if (!frame)
       throw Error("OUT_OF_MEMORY");
     try {
@@ -169,7 +175,7 @@ struct Input {
         if (r == 0)
           return frame;
         if (r == AVERROR_EOF) {
-          av_frame_free(&frame);
+          owned_frame_free(&frame);
           return nullptr;
         }
         if (r != AVERROR(EAGAIN))
@@ -199,7 +205,7 @@ struct Input {
         }
       }
     } catch (...) {
-      av_frame_free(&frame);
+      owned_frame_free(&frame);
       throw;
     }
   }
@@ -223,8 +229,8 @@ struct Input {
     while (next && pts(next) <= target) {
       if (pts(next) <= pts(current))
         throw Error("NON_MONOTONIC_PTS");
-      av_frame_free(&current);
-      current = next;
+      owned_frame_free(&current);
+      current = std::exchange(next,nullptr);
       next = decode();
     }
     if (!next) {
@@ -345,7 +351,7 @@ J probe(Input &in) {
     int frames = 0;
     while (auto *frame = in.decode()) {
       const auto timestamp = in.pts(frame);
-      av_frame_free(&frame);
+      owned_frame_free(&frame);
       if (frames == 0 && timestamp != in.format->streams[in.video]->start_time)
         throw Error("START_PTS_POLICY_REQUIRED");
       if (++frames > 120000)
@@ -451,7 +457,7 @@ struct Output {
   ~Output() {
     sws_freeContext(scaler);
     av_packet_free(&packet);
-    av_frame_free(&frame);
+    owned_frame_free(&frame);
     avcodec_free_context(&encoder);
     if (format) {
       if (format->pb)
@@ -511,7 +517,7 @@ struct Output {
     ok(avio_open2(&format->pb, ("file:" + path).c_str(), AVIO_FLAG_WRITE,
                   nullptr, nullptr));
     ok(avformat_write_header(format, nullptr));
-    frame = av_frame_alloc();
+    frame = owned_frame_alloc();
     packet = av_packet_alloc();
     if (!frame || !packet)
       throw Error("OUT_OF_MEMORY");
@@ -664,10 +670,10 @@ J preview(Engine &engine, const J &recipe) {
     in.next = in.decode();
   }
   AVFrame *frame = in.at(target);
-  std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){av_frame_free(&p);});
+  std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){owned_frame_free(&p);});
   if(recipe.contains("opacityQ16")) {
     const int opacity=integer(recipe,"opacityQ16",0,65536);
-    effected.reset(av_frame_alloc());
+    effected.reset(owned_frame_alloc());
     if(!effected) throw Error("ALLOCATION_FAILED");
     effected->format=AV_PIX_FMT_YUV420P;effected->width=frame->width;effected->height=frame->height;
     ok(av_frame_copy_props(effected.get(),frame));ok(av_frame_get_buffer(effected.get(),32));
@@ -741,7 +747,7 @@ J build_proxy(Engine &engine, const J &recipe) {
   int width = 0, height = 0;
   while (auto *raw = in.decode()) {
     std::unique_ptr<AVFrame, void (*)(AVFrame *)> frame(
-        raw, [](AVFrame *p) { av_frame_free(&p); });
+        raw, [](AVFrame *p) { owned_frame_free(&p); });
     in.check();
     const auto pts = in.pts(raw);
     if (frames.empty() && pts != stream->start_time)
@@ -827,11 +833,16 @@ J render(Engine &engine, const J &recipe) {
     throw Error("SEGMENT_LIMIT");
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
     const auto begin = integer(segment, "startFrame", 0, count - 1),
                length = integer(segment, "frameCount", 1, count);
+    if(segment.contains("opacityFramesQ16")){
+      const auto &values=segment["opacityFramesQ16"];
+      if(segment.contains("opacityQ16") || !values.is_array() || values.size()!=static_cast<size_t>(length))throw Error("OPACITY_SCHEDULE_RANGE");
+      for(const auto &v:values)if(!v.is_number_integer() || v<0 || v>65536)throw Error("OPACITY_RANGE");
+    }
     integer(segment, "streamIndex", 0, 63);
     if (begin < last_end || length > count - begin)
       throw Error("SEGMENT_OVERLAP_OR_RANGE");
@@ -859,6 +870,7 @@ J render(Engine &engine, const J &recipe) {
   }
   const auto epoch = engine.epoch.load();
   engine.encoded_audio_samples = 0;
+  engine.rendered_video_frames = 0;
   Output out;
   out.open(recipe.at("outputPath").get<std::string>(), w, h, fps,
            recipe.value("audio", J(nullptr)));
@@ -902,7 +914,8 @@ J render(Engine &engine, const J &recipe) {
           av_inv_q(fps), input->format->streams[input->video]);
       source = input->at(target);
     }
-    const int opacity = source ? segments[si].value("opacityQ16",65536) : 65536;
+    int opacity = source ? segments[si].value("opacityQ16",65536) : 65536;
+    if(source && segments[si].contains("opacityFramesQ16"))opacity=segments[si]["opacityFramesQ16"][frame-segments[si]["startFrame"].get<int64_t>()].get<int>();
     out.render(source,frame,opacity,[&]{if(engine.epoch.load()!=epoch) throw Error("CANCELED");},
       [&](AVFrame *actual){
         if(capture_frames.count(frame)) {
@@ -910,6 +923,7 @@ J render(Engine &engine, const J &recipe) {
           captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
         }
       });
+    engine.rendered_video_frames=frame+1;
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
           frame + 1, av_inv_q(fps), AVRational{1, 48000}, AV_ROUND_NEAR_INF);
@@ -930,6 +944,8 @@ J render(Engine &engine, const J &recipe) {
 }
 } // namespace
 extern "C" {
+uint64_t sm_live_owned_frames(void){return live_owned_frames.load();}
+uint64_t sm_rendered_video_frames(uint64_t h,const char *ns){try{return engine(h,ns)->rendered_video_frames.load();}catch(...){return 0;}}
 uint32_t sm_abi_version(void) { return 1; }
 uint64_t sm_create(const char *ns) {
   try {
@@ -1005,6 +1021,7 @@ char *sm_capabilities(void) {
         {"networkAllowed", false},
         {"sourcePreview128", true},
         {"linearOpacityV1", true},
+        {"linearOpacityKeyframesV1", true},
         {"rgba128PtsProxyV1", true},
         {"audioExport", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr &&
                             avcodec_find_encoder_by_name("libx264") != nullptr},

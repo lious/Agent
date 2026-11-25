@@ -64,6 +64,8 @@ class _FoundationAppState extends State<FoundationApp>
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
   final _opacity = TextEditingController(text: '0.5');
+  final _opacityFrame = TextEditingController(text: '0');
+  bool _opacityHold = false;
   bool get _hasPersistentAudio =>
       (widget.workspace.current.toJson()['sequences'][0]['tracks'] as List).any(
         (t) => t['kind'] == 'audio',
@@ -398,6 +400,7 @@ class _FoundationAppState extends State<FoundationApp>
     _previewTime.dispose();
     _masterGain.dispose();
     _opacity.dispose();
+    _opacityFrame.dispose();
     _inspectionPath.dispose();
     _diskLimit.dispose();
     _historyKeep.dispose();
@@ -437,7 +440,7 @@ class _FoundationAppState extends State<FoundationApp>
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Static clip opacity over black (linear Rec.709 CPU); other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Clip-local hold/linear opacity over black (linear Rec.709 CPU); other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
@@ -602,6 +605,58 @@ class _FoundationAppState extends State<FoundationApp>
             }),
       child: const Text('Apply persisted clip opacity'),
     ),
+    _path(
+      'opacity-keyframe-frame',
+      'Clip-local project frame (0..duration endpoint)',
+      _opacityFrame,
+    ),
+    CheckboxListTile(
+      key: const Key('opacity-keyframe-hold'),
+      value: _opacityHold,
+      onChanged: _busy
+          ? null
+          : (v) => setState(() => _opacityHold = v ?? false),
+      title: const Text('Hold until next key (otherwise linear)'),
+    ),
+    OutlinedButton(
+      key: const Key('set-opacity-keyframe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final frame = int.tryParse(_opacityFrame.text),
+                  value = double.tryParse(_opacity.text);
+              if (frame == null || value == null) {
+                throw const StudioException('INVALID_KEYFRAME');
+              }
+              final fps = _project.toJson()['sequences'][0]['frameRate'];
+              return widget.workspace.setOpacityKeyframe(
+                _selected!,
+                FrameRate(fps['n'], fps['d']).frameTime(BigInt.from(frame)),
+                value,
+                interpolation: _opacityHold ? 'hold' : 'linear',
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Set / replace opacity keyframe (atomic undo)'),
+    ),
+    OutlinedButton(
+      key: const Key('remove-opacity-keyframe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final frame = int.tryParse(_opacityFrame.text);
+              if (frame == null) {
+                throw const StudioException('INVALID_KEYFRAME');
+              }
+              final fps = _project.toJson()['sequences'][0]['frameRate'];
+              return widget.workspace.removeOpacityKeyframe(
+                _selected!,
+                FrameRate(fps['n'], fps['d']).frameTime(BigInt.from(frame)),
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Remove opacity keyframe at this local frame'),
+    ),
     OutlinedButton(
       key: const Key('preview-clip-opacity'),
       onPressed: _busy || _selected == null
@@ -609,8 +664,17 @@ class _FoundationAppState extends State<FoundationApp>
           : () => _run(() async {
               final snapshot = _project.hash, selected = _selected;
               final clip = _clips.singleWhere((c) => c['id'] == selected);
+              final fps = _project.toJson()['sequences'][0]['frameRate'];
+              final local = FrameRate(
+                fps['n'],
+                fps['d'],
+              ).frameTime(BigInt.parse(_opacityFrame.text));
+              if (local < Q.of(0) ||
+                  local >= Q.fromJson(clip['timelineRange']['duration'])) {
+                throw const StudioException('KEYFRAME_ENDPOINT_NOT_RENDERED');
+              }
               final frame = await widget.workspace.previewTimelineAt(
-                Q.fromJson(clip['timelineRange']['start']),
+                Q.fromJson(clip['timelineRange']['start']) + local,
               );
               final decoded = Completer<ui.Image>();
               var abandoned = false;

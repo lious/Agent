@@ -27,6 +27,9 @@ void main() {
     expect(graph.sample(Q.of(999, 1000)).clipId, id);
     expect(graph.sample(Q.of(1)).clipId, 'graph-right');
     expect(graph.sample(Q.of(5, 4)).sourceTime, Q.of(5, 4));
+    expect(graph.sampleFrame(Q.of(5, 4)).sourceTime, Q.of(37, 30));
+    expect(() => graph.sampleFrame(Q.of(3)), throwsA(isA<StudioException>()));
+    expect(() => graph.sampleFrame(Q.of(-1)), throwsA(isA<StudioException>()));
     final trimmed = edit(
       split,
       TrimClip('graph-right', 'in', Q.of(1, 2), ripple: false),

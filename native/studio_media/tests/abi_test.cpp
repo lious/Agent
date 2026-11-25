@@ -136,6 +136,23 @@ int main(int argc, char **argv) {
                 "INVALID_HANDLE");
       }
       std::filesystem::remove_all(root);
+    } else if(test=="opacity_cancel") {
+      const auto *source=std::getenv("STUDIO_TEST_VIDEO");require(source && std::filesystem::is_regular_file(source));
+      const auto root=std::filesystem::temp_directory_path()/("opacity-cancel-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));std::filesystem::create_directory(root);
+      const auto initial=sm_live_owned_frames();
+      for(int i=0;i<100;i++){
+        const auto h=sm_create("opacity-cancel");std::atomic<bool> done=false;J result;
+        J recipe={{"outputPath",(root/(std::to_string(i)+".mp4")).string()},{"width",320},{"height",180},{"fps",{{"n",30},{"d",1}}},{"frameCount",120000},{"segments",J::array({{{"path",source},{"startFrame",0},{"frameCount",90},{"sourceStart",{{"n","0"},{"d",1}}},{"streamIndex",0},{"opacityQ16",32768}}})}};
+        auto &seg=recipe["segments"][0];seg.erase("opacityQ16");seg["opacityFramesQ16"]=J::array();for(int f=0;f<90;f++)seg["opacityFramesQ16"].push_back(f*65536/89);
+        std::thread work([&]{result=response(sm_export(h,"opacity-cancel",recipe.dump().c_str()));done=true;});
+        const auto limit=std::chrono::steady_clock::now()+std::chrono::seconds(8);
+        while(!done && sm_rendered_video_frames(h,"opacity-cancel")<2 && std::chrono::steady_clock::now()<limit)std::this_thread::yield();
+        const bool active=!done && sm_rendered_video_frames(h,"opacity-cancel")>=2;
+        sm_cancel(h,"opacity-cancel");work.join();
+        require(sm_close(h,"opacity-cancel")==0);
+        require(active && result["code"]=="CANCELED");require(sm_live_owned_frames()==initial);
+      }
+      std::filesystem::remove_all(root);std::cout<<"100 active-opacity cancellations; app-owned AVFrame delta=0; codec/GPU internal leak qualification NOT claimed\n";
     } else
       throw std::runtime_error("unknown test");
     require(fds() == before);

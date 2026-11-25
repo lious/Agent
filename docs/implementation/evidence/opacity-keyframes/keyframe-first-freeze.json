@@ -1,0 +1,22 @@
+{
+  "baseCommit": "3188b576a17af09cde0b872fa5ddaefba268d589",
+  "freezeStarted": "2026-11-25T22:08:28.690322+08:00",
+  "sourceSha256": {
+    "native/studio_media/include/studio_media.h": "f4834941cb831ed4d719666803308db5eae6936a163e90080e7dfe3749c7e6b4",
+    "native/studio_media/src/audio_io.inc": "bc59910db32ead25d2a485b823f9e405e9c2bc2deb5f4a2c2b7aa31cd8ba37d2",
+    "native/studio_media/src/studio_media.cpp": "7435a61ab532729bd499ef42c90e4b4cbd69ea6921da690a9e04dcc9ac8d25e0",
+    "native/studio_media/tests/abi_test.cpp": "d552f3bebf3711213b4ed56045371041737ded8438b99d6f411b64e8482abe71",
+    "packages/studio_document/lib/edit_algebra.dart": "101b9ed0b32b2777824903eb08ee416e889d10289b6388785a33799bb3b44176",
+    "packages/studio_document/lib/effect_registry.dart": "7fd18310b95ec85329cb87b847ce5a37a20d376e754a17b58b38544948e26b1a",
+    "packages/studio_document/lib/persistent_audio.dart": "5303bcbad9cf6b29c5d26b55023dfa410aa969aac4bfd282cb2be7f35c4b6c86",
+    "packages/studio_document/lib/timeline_graph.dart": "926d1f78e6a490c0b0c2070f6d2c29e22f27f1f2315416fc9112ea881a8421a1",
+    "packages/studio_document/test/opacity_keyframe_test.dart": "f810b2f569ba1c1459348d204b41e2df67f6dc919403ce23a66e4663b0a47da2",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "a9ac3a1a4878acb9695e7662d041f4f64526f65507324535791e48d8d2f961f9",
+    "packages/studio_editor_ui/test/opacity_keyframe_ui_test.dart": "9db1d5070682ad19b31fc5c3f0664bd45ad1fc9b3dfcd3b19a9805f84ce8890c",
+    "packages/studio_sdk/lib/studio_sdk.dart": "20695a23b0d60413e3fff4324f5057a0d9200d0bfaefe1a41046d5dc0e32676c",
+    "packages/studio_sdk/test/opacity_keyframe_clock_test.dart": "41b5bfd0d95da6abad1818822d676a0a598cf58e672f9dcce93acd1ec9031637",
+    "packages/studio_sdk/test/opacity_keyframe_render_test.dart": "cd93754cf3ab3d6bd85b111824fdedb3b72e94477c22c4bfcb1a9002204f85a3"
+  },
+  "nativeLibrarySha256": "8dfb1793bcfa94fdab47c383850bccb475cc842ea664fc04e5fb5eed058f9c27",
+  "sanitizerLibrarySha256": "16ca8aef6338a52a7d82f51976f40b230d7206ac3f7bf464377a78384ff015b5"
+}

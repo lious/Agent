@@ -2,8 +2,8 @@ import 'package:studio_contracts/studio_contracts.dart';
 
 import 'studio_document.dart';
 
-/// Admitted single-video-track graph with static opacity over black.
-/// Not the complete multi-track/keyframed/GPU RenderGraph.
+/// Admitted single-video-track graph with scalar/keyframed opacity over black.
+/// Not the complete multi-track/all-parameters/GPU RenderGraph.
 /// Selection and source mapping use exact project rationals and half-open ranges.
 final class TimelineVideoPoint {
   const TimelineVideoPoint(
@@ -49,6 +49,7 @@ final class TimelineVideoGraph {
         ? height
         : (height * 128 ~/ longest).clamp(1, 128);
     _document = d;
+    _frameRate = FrameRate(s['frameRate']['n'], s['frameRate']['d']);
     final assets = {for (final a in d['assets']) a['id']: a};
     final tracks = (s['tracks'] as List)
         .where((t) => t['kind'] == 'video')
@@ -61,6 +62,12 @@ final class TimelineVideoGraph {
             ),
           );
     for (final clip in _items) {
+      for (final field in ['start', 'duration']) {
+        final t = Q.fromJson(clip['timelineRange'][field]);
+        if (_frameRate.quantize(t, Rounding.tiesToEven) != t) {
+          throw const StudioException('TIMELINE_FRAME_GRID_UNSUPPORTED');
+        }
+      }
       if (clip['source'] != null) {
         final source = clip['source'], asset = assets[source['id']];
         final stream = (asset['streams'] as List).singleWhere(
@@ -80,6 +87,7 @@ final class TimelineVideoGraph {
   final String snapshotHash;
   late final Q duration;
   late final Map<String, dynamic> _document;
+  late final FrameRate _frameRate;
   late final int previewWidth, previewHeight;
   late final List<Map<String, dynamic>> _items;
 
@@ -111,15 +119,33 @@ final class TimelineVideoGraph {
           .toInt(),
       'sourceStart': Q.fromJson(clip['sourceRange']['start']).toJson(),
       'streamIndex': streamIndex,
-      if (clipOpacityQ16(_document, clip) != 65536)
+      if ((clip['effectIds'] as List).isNotEmpty &&
+          (_document['effects'] as List).any(
+            (e) =>
+                (clip['effectIds'] as List).contains(e['id']) &&
+                (e['keyframes'] as List).isNotEmpty,
+          ))
+        'opacityFramesQ16': opacityScheduleQ16(_document, clip, frameRate)
+      else if (clipOpacityQ16(_document, clip) != 65536)
         'opacityQ16': clipOpacityQ16(_document, clip),
     };
   }
 
-  TimelineVideoPoint sample(Q time) {
+  /// A presentation sample, phased to the same delivery frame as the encoder.
+  /// Exact source-time queries retain their original semantics via [sample].
+  TimelineVideoPoint sampleFrame(Q time) {
+    _requireTime(time);
+    return sample(_frameRate.quantize(time, Rounding.floor));
+  }
+
+  void _requireTime(Q time) {
     if (time < Q.of(0) || time >= duration) {
       throw const StudioException('TIMELINE_TIME_OUT_OF_RANGE');
     }
+  }
+
+  TimelineVideoPoint sample(Q time) {
+    _requireTime(time);
     for (final c in _items) {
       final range = c['timelineRange'],
           start = Q.fromJson(range['start']),
@@ -136,7 +162,7 @@ final class TimelineVideoGraph {
         source['version'] as String,
         Q.fromJson(c['sourceRange']['start']) +
             (time - start) * Q.fromJson(c['timeMap']['rate']),
-        clipOpacityQ16(_document, c),
+        clipOpacityQ16(_document, c, time - start),
       );
     }
     return TimelineVideoPoint('gap', null, null, Q.of(0));

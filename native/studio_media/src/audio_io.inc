@@ -97,8 +97,8 @@ J decode_audio(Engine &engine, const J &r) {
   in.packet = av_packet_alloc();
   if (!in.packet)
     throw Error("OUT_OF_MEMORY");
-  auto free_frame = [](AVFrame *p) { av_frame_free(&p); };
-  std::unique_ptr<AVFrame, decltype(free_frame)> frame(av_frame_alloc(),
+  auto free_frame = [](AVFrame *p) { owned_frame_free(&p); };
+  std::unique_ptr<AVFrame, decltype(free_frame)> frame(owned_frame_alloc(),
                                                        free_frame);
   if (!frame)
     throw Error("OUT_OF_MEMORY");
@@ -262,7 +262,7 @@ struct AudioEncoder {
   std::function<void()> check = [] {};
   ~AudioEncoder() {
     av_packet_free(&packet);
-    av_frame_free(&frame);
+    owned_frame_free(&frame);
     avcodec_free_context(&encoder);
   }
   void open(AVFormatContext *f, const J &r) {
@@ -302,7 +302,7 @@ struct AudioEncoder {
       throw Error("OUT_OF_MEMORY");
     stream->time_base = encoder->time_base;
     ok(avcodec_parameters_from_context(stream->codecpar, encoder));
-    frame = av_frame_alloc();
+    frame = owned_frame_alloc();
     packet = av_packet_alloc();
     if (!frame || !packet)
       throw Error("OUT_OF_MEMORY");

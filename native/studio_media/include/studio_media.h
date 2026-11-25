@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 uint32_t sm_abi_version(void);
+uint64_t sm_live_owned_frames(void);
+uint64_t sm_rendered_video_frames(uint64_t handle,const char *ns);
 uint64_t sm_create(const char *ns);
 int32_t sm_close(uint64_t handle, const char *ns);
 /* Submitted AAC input diagnostic, NEVER a presented AudioSink clock. */

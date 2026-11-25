@@ -1,0 +1,22 @@
+-- The CXX compiler identification is Clang 19.1.7
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+-- Checking for modules 'libavformat>=61;libavcodec>=61;libavutil>=59;libswscale>=8;libswresample>=5'
+--   Found libavformat, version 61.7.103
+--   Found libavcodec, version 61.19.101
+--   Found libavutil, version 59.39.100
+--   Found libswscale, version 8.3.100
+--   Found libswresample, version 5.3.100
+-- Found nlohmann_json: /usr/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable version "3.11.3", minimum required is "3.11")
+-- Checking for module 'libpulse>=16'
+--   Found libpulse, version 17.0
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (1.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/agent-media-native-asan-opacity

@@ -1,0 +1,21 @@
+{
+  "originalSnapshotCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
+  "iterationBaseCommit": "3188b576a17af09cde0b872fa5ddaefba268d589",
+  "originalSnapshotFileCount": 104,
+  "snapshotUnchanged": true,
+  "originalTasks": 87,
+  "acceptanceAndHardDependenciesExact87": true,
+  "allOriginalScopeTextRetained": true,
+  "preexistingTrackerScopeAnnotations": [
+    {
+      "id": "I-003",
+      "note": "Existing tracker remainingScope appends evidence commentary after unchanged original scope; not changed this batch."
+    }
+  ],
+  "counts": {
+    "partial": 26,
+    "planned": 48,
+    "blocked": 13
+  },
+  "noNewCompletedTaskClaim": true
+}

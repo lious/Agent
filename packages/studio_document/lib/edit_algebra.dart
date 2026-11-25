@@ -153,11 +153,170 @@ final class SetClipOpacity extends EditOperation {
   };
 }
 
+final class SetOpacityKeyframe extends EditOperation {
+  const SetOpacityKeyframe(
+    this.clipId,
+    this.time,
+    this.value, {
+    this.interpolation = 'linear',
+  });
+  final String clipId;
+  final Q time;
+  final double value;
+  final String interpolation;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setOpacityKeyframe',
+    'clipId': clipId,
+    'localTime': time.toJson(),
+    'value': value,
+    'interpolation': interpolation,
+  };
+}
+
+final class RemoveOpacityKeyframe extends EditOperation {
+  const RemoveOpacityKeyframe(this.clipId, this.time);
+  final String clipId;
+  final Q time;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'removeOpacityKeyframe',
+    'clipId': clipId,
+    'localTime': time.toJson(),
+  };
+}
+
+ProjectDocument _opacityKeyframeEdit(
+  ProjectDocument before,
+  EditOperation operation,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  final adding = operation is SetOpacityKeyframe;
+  final clipId = adding
+      ? operation.clipId
+      : (operation as RemoveOpacityKeyframe).clipId;
+  final time = adding
+      ? operation.time
+      : (operation as RemoveOpacityKeyframe).time;
+  var d = before.toJson();
+  final sequence = d['sequences'][0];
+  Map? selected;
+  Map? track;
+  for (final t in sequence['tracks']) {
+    for (final c in t['items']) {
+      if (c['id'] == clipId && c['source'] != null) {
+        selected = c;
+        track = t;
+      }
+    }
+  }
+  if (selected == null) throw const StudioException('CLIP_NOT_FOUND');
+  if (track!['kind'] != 'video') {
+    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+  }
+  if (track['locked'] == true ||
+      (selected['lockedFields'] as List).any(
+        (v) =>
+            v == '*' ||
+            v == 'effects' ||
+            v == 'effectIds' ||
+            (v as String).startsWith('effects.') ||
+            v.startsWith('effectIds.'),
+      )) {
+    throw const StudioException('FIELD_LOCKED');
+  }
+  if (time < Q.of(0) ||
+      time > Q.fromJson(selected['timelineRange']['duration'])) {
+    throw const StudioException('KEYFRAME_OUT_OF_RANGE');
+  }
+  final fps = FrameRate(sequence['frameRate']['n'], sequence['frameRate']['d']);
+  if (fps.quantize(time, Rounding.tiesToEven) != time) {
+    throw const StudioException('KEYFRAME_NOT_ON_FRAME');
+  }
+  if (adding &&
+      (!operation.value.isFinite ||
+          operation.value < 0 ||
+          operation.value > 1)) {
+    throw const StudioException('OPACITY_RANGE');
+  }
+  if (adding && !['hold', 'linear'].contains(operation.interpolation)) {
+    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+  }
+  final ids = selected['effectIds'] as List;
+  Map effect;
+  if (ids.isEmpty) {
+    if (!adding) throw const StudioException('KEYFRAME_NOT_FOUND');
+    final eid = id();
+    effect = {
+      'id': eid,
+      'version': '0',
+      'owner': {'kind': 'clip', 'id': clipId},
+      'type': 'opacity',
+      'pluginVersion': '1.0.0',
+      'enabled': true,
+      'parameters': {'value': operation.value},
+      'keyframes': <Map>[],
+      'extensions': <String, dynamic>{},
+    };
+    (d['effects'] as List).add(effect);
+    selected['effectIds'] = [eid];
+  } else {
+    effect =
+        (d['effects'] as List).singleWhere((e) => e['id'] == ids.single) as Map;
+  }
+  final points = List<Map>.from(effect['keyframes']);
+  final index = points.indexWhere((k) => Q.fromJson(k['localTime']) == time);
+  if (adding) {
+    final op = operation;
+    if (index >= 0 &&
+        points[index]['value'] == op.value &&
+        points[index]['interpolation'] == op.interpolation) {
+      return before;
+    }
+    final key = {
+      'id': index >= 0 ? points[index]['id'] : id(),
+      'param': 'value',
+      'localTime': time.toJson(),
+      'value': op.value,
+      'interpolation': op.interpolation,
+      'easing': null,
+    };
+    if (index >= 0) {
+      points[index] = key;
+    } else {
+      points.add(key);
+    }
+  } else {
+    if (index < 0) throw const StudioException('KEYFRAME_NOT_FOUND');
+    points.removeAt(index);
+  }
+  points.sort(
+    (a, b) => Q.fromJson(a['localTime']).compareTo(Q.fromJson(b['localTime'])),
+  );
+  effect['keyframes'] = points;
+  effect['version'] = version(effect['id']);
+  selected['version'] = version(clipId);
+  sequence['version'] = version(sequence['id']);
+  final result = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(result);
+  return result;
+}
+
 void _normalizeOpacityOwners(
   Map<String, dynamic> d,
   VersionAllocator version,
   IdAllocator id,
+  ProjectDocument before,
+  EditOperation operation,
 ) {
+  final previous = before.toJson();
+  final oldClips = {
+    for (final sequence in previous['sequences'])
+      for (final track in sequence['tracks'])
+        for (final c in track['items'])
+          if (c['source'] != null) c['id']: c,
+  };
   final effects = {for (final e in d['effects']) e['id']: e};
   final kept = <String, Map>{};
   for (final s in d['sequences']) {
@@ -175,6 +334,53 @@ void _normalizeOpacityOwners(
               'version': version(fresh),
               'owner': {'kind': 'clip', 'id': c['id']},
             };
+          }
+          final old =
+              oldClips[c['id']] ?? oldClips[effects[eid]['owner']['id']];
+          if ((e['keyframes'] as List).isNotEmpty && old != null) {
+            final ownerChanged = e['id'] != eid;
+            final duration = Q.fromJson(c['timelineRange']['duration']);
+            var offset = Q.of(0);
+            if (operation is SplitClip) {
+              offset =
+                  Q.fromJson(c['timelineRange']['start']) -
+                  Q.fromJson(old['timelineRange']['start']);
+            } else if (operation is TrimClip ||
+                operation is RollCut ||
+                operation is SlideClip) {
+              offset =
+                  (Q.fromJson(c['sourceRange']['start']) -
+                      Q.fromJson(old['sourceRange']['start'])) /
+                  Q.fromJson(old['timeMap']['rate']);
+            }
+            final crop =
+                offset != Q.of(0) ||
+                duration != Q.fromJson(old['timelineRange']['duration']);
+            if (crop &&
+                (old['lockedFields'] as List).any(
+                  (v) =>
+                      v == '*' ||
+                      v == 'effects' ||
+                      v == 'effectIds' ||
+                      (v as String).startsWith('effects.') ||
+                      v.startsWith('effectIds.'),
+                )) {
+              throw const StudioException('FIELD_LOCKED');
+            }
+            if (crop || ownerChanged) {
+              e = {
+                ...e,
+                'version': ownerChanged ? e['version'] : version(e['id']),
+                'keyframes': crop
+                    ? cropOpacityPoints(e, offset, duration, id)
+                    : List<Map>.from(e['keyframes']),
+              };
+              if (ownerChanged) {
+                e['keyframes'] = [
+                  for (final k in e['keyframes']) {...k, 'id': id()},
+                ];
+              }
+            }
           }
           ids.add(e['id'] as String);
           kept[e['id'] as String] = e;
@@ -214,6 +420,16 @@ ProjectDocument _setOpacity(
         throw const StudioException('FIELD_LOCKED');
       }
       final ids = c['effectIds'] as List;
+      if (ids.isNotEmpty &&
+          ((d['effects'] as List).singleWhere(
+                    (e) => e['id'] == ids.single,
+                  )['keyframes']
+                  as List)
+              .isNotEmpty) {
+        throw const StudioException(
+          'ANIMATED_OPACITY_REQUIRES_EXPLICIT_KEYFRAME_EDIT',
+        );
+      }
       if (ids.isEmpty && op.value == 1) return before;
       Map? existing = ids.isEmpty
           ? null
@@ -426,6 +642,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
+    return _opacityKeyframeEdit(before, operation, nextVersion, newId);
+  }
   if (operation is SetClipOpacity) {
     return _setOpacity(before, operation, nextVersion, newId);
   }
@@ -608,6 +827,8 @@ ProjectDocument applyEdit(
     case SetAudioTrackState():
       throw StateError('persistent audio dispatch');
     case SetClipOpacity():
+    case SetOpacityKeyframe():
+    case RemoveOpacityKeyframe():
     case SetMasterAudio():
       throw StateError('Handled master audio edit');
     case SetCaptions():
@@ -946,7 +1167,7 @@ ProjectDocument applyEdit(
   }
   s['duration'] = end.toJson();
   s['version'] = nextVersion(s['id'] as String);
-  _normalizeOpacityOwners(d, nextVersion, newId);
+  _normalizeOpacityOwners(d, nextVersion, newId, before, operation);
   final after = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(after);
   return after;

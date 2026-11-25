@@ -838,3 +838,12 @@ Linux Native 编辑器：导入本机 SDR/CFR 视频→点选 VIDEO clip→`Sele
 限制：完整 registry、变换/关键帧/转场/GPU/100次取消 frame-leak 资格未完成；非Linux、物理多设备、物理声画同步没有新验证。已有 resume underrun 未解，不因本次隔离测试通过消除；RTC 策略阻塞不重复尝试或绕过。下一接续是原 I-008/I-022 有用变换/关键帧或同一消费者的逐项像素/生命周期验收，而非继续扩存储。
 
 本冻结代码实际通过 **200项所选 Dart/Flutter/Chrome 测试**（183领域/SQLite/原生SDK，9真实native UI，5 Chrome保全/检查器，3真实私有Pulse服务）及 **3项CTest**，analyzer无问题；另跑真实旧库/SQL-barrier SIGKILL恢复实验，不计入200。不是全仓库/全部87验收全过，也未重跑早期60秒资格矩阵。完整日志、精确源码及native library哈希见同目录证据。
+
+
+## increment1.15 — clip-local透明度关键帧与取消修复
+
+Native编辑器导入→点选video→在opacity value和`Clip-local project frame`填值→选择Hold或Linear→`Set / replace opacity keyframe`。例如本地frame0/value0、frame60/value1构成两秒线性淡入。frame30预览会消费真实原件/相同native节点；可Remove显式点、一次Undo恢复、保存/重开/归档fork/MP4导出。静态Apply不会悄悄清空曲线；duration endpoint仅是控制点，不能预览成下一clip。
+
+曲线依clip-local project time，不随slip移动；split/trim边界插值/右侧重基准，move不改局部点、延伸hold裁切后边值。详细坐标、半开边界和CPU/资源限制见 [ADR0022](../adr/0022-clip-local-opacity-keyframes-and-cancel-ownership.md)。完整多级undo/redo栈、gesture coalescing、其他effect/keyframe参数/转场/GPU仍未完成。
+
+新的100轮active取消测试发现并修复了decode取消抛异常时current/next指针别名导致的double-free；自有AVFrame与FD回到baseline，另跑ASan/UBSan（leak检测开启）。本冻结源码定向209个Dart/Flutter测试（190 native/domain/store、10 UI、5 Chrome资源/Inspector、4真实私有Pulse）全部通过，另CTest3项、实际legacy/SQL barrier/SIGKILL重开实验、普通与ASan/UBSan各100轮scheduled-opacity取消均exit0；analyzer无问题。非全仓全测。具体通过/失败数和精确冻结源代码证据见 [本批summary](evidence/opacity-keyframes/summary.json)，不是旧200套复用；GPU/第三方内部未instrument资源不能假称全资格。原87仍0 complete /26 partial /48 planned /13 blocked，XD10仍0/8/1/1，原104/验收/依赖不改。

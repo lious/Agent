@@ -1,0 +1,96 @@
+{
+  "flutter": {
+    "command": [
+      "flutter",
+      "--version",
+      "--machine"
+    ],
+    "exitCode": 0,
+    "output": "{\n  \"frameworkVersion\": \"3.50.1\",\n  \"channel\": \"stable\",\n  \"repositoryUrl\": \"https://github.com/flutter/flutter.git\",\n  \"frameworkRevision\": \"ae9b586f34a8443573f82ef57c3bf914a908cbf7\",\n  \"frameworkCommitDate\": \"2026-11-18 17:01:07 -0800\",\n  \"engineRevision\": \"4d35714800b9266b6693a58e1225ecd7e9e45ed7\",\n  \"engineCommitDate\": \"2026-11-18 01:50:07.000Z\",\n  \"engineContentHash\": \"51379e6df48ea8ee7205623b90fe66491cad8df3\",\n  \"engineBuildDate\": \"2026-11-17 23:29:07.499\",\n  \"dartSdkVersion\": \"3.14.0\",\n  \"devToolsVersion\": \"2.61.0\",\n  \"flutterVersion\": \"3.50.1\",\n  \"flutterRoot\": \"/workspace/toolchains/flutter\"\n}\n"
+  },
+  "dart": {
+    "command": [
+      "dart",
+      "--version"
+    ],
+    "exitCode": 0,
+    "output": "Dart SDK version: 3.14.0 (stable) (Wed Nov 4 16:28:39 2026 -0800) on \"linux_x64\"\n"
+  },
+  "cmake": {
+    "command": [
+      "cmake",
+      "--version"
+    ],
+    "exitCode": 0,
+    "output": "cmake version 3.31.6\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n"
+  },
+  "clang": {
+    "command": [
+      "clang++",
+      "--version"
+    ],
+    "exitCode": 0,
+    "output": "Debian clang version 19.1.7 (3+b1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n"
+  },
+  "chrome": {
+    "command": [
+      "/workspace/toolchains/browser/chrome-test",
+      "--version"
+    ],
+    "exitCode": 0,
+    "output": "Google Chrome 156.0.8078.47 \n"
+  },
+  "sqlite": {
+    "library": "/workspace/toolchains/sqlite-3.54.1/libsqlite3.so",
+    "version": "3.54.1",
+    "sourceid": "2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76"
+  },
+  "ffmpegFailedLookup": {
+    "command": [
+      "/workspace/toolchains/ffmpeg-7.1.5/bin/ffmpeg",
+      "-version"
+    ],
+    "error": "[Errno 2] No such file or directory: '/workspace/toolchains/ffmpeg-7.1.5/bin/ffmpeg'"
+  },
+  "ffmpeg": {
+    "command": [
+      "ffmpeg",
+      "-version"
+    ],
+    "exitCode": 0,
+    "output": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 14 (Debian 14.2.0-19)\nconfiguration: --prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\nlibavutil      59. 39.100 / 59. 39.100\nlibavcodec     61. 19.101 / 61. 19.101\nlibavformat    61.  7.103 / 61.  7.103\nlibavdevice    61.  3.100 / 61.  3.100\nlibavfilter    10.  5.100 / 10.  5.100\nlibswscale      8.  3.100 /  8.  3.100\nlibswresample   5.  3.100 /  5.  3.100\nlibpostproc    58.  3.100 / 58.  3.100\n"
+  },
+  "linkedLibraryVersions": {
+    "command": [
+      "pkg-config",
+      "--modversion",
+      "libavcodec",
+      "libavformat",
+      "libswscale",
+      "libpulse"
+    ],
+    "exitCode": 0,
+    "output": "61.19.101\n61.7.103\n8.3.100\n17.0\n"
+  },
+  "actualCmakeCompiler": {
+    "path": "/usr/lib/llvm-19/bin/clang",
+    "output": "Debian clang version 19.1.7 (3+b1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin\n",
+    "exitCode": 0
+  },
+  "nativeConfigurations": {
+    "agent-media-native-peer": [
+      "CMAKE_BUILD_TYPE:STRING=",
+      "CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++",
+      "CMAKE_CXX_FLAGS:STRING=",
+      "CMAKE_EXE_LINKER_FLAGS:STRING=",
+      "CMAKE_SHARED_LINKER_FLAGS:STRING="
+    ],
+    "agent-media-native-asan-opacity": [
+      "CMAKE_BUILD_TYPE:STRING=Debug",
+      "CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++",
+      "CMAKE_CXX_FLAGS:STRING=-fsanitize=address,undefined -fno-omit-frame-pointer -g -O1",
+      "CMAKE_EXE_LINKER_FLAGS:STRING=-fsanitize=address,undefined",
+      "CMAKE_SHARED_LINKER_FLAGS:STRING=-fsanitize=address,undefined"
+    ]
+  }
+}

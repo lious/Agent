@@ -837,6 +837,12 @@ final class StudioWorkspace {
     _requireMedia();
     if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
     final snapshot = current;
+    if ((snapshot.toJson()['effects'] as List).any(
+          (e) => (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
     requireLocalEditingWritable(snapshot);
     stopTimelinePlayback();
     for (final reader in _frameProxies.values) {
@@ -1041,7 +1047,7 @@ final class StudioWorkspace {
     if (time >= graph.duration && time - graph.duration <= Q.of(1, 48000)) {
       time = time - Q.of(1, 48000);
     }
-    final point = graph.sample(time);
+    final point = graph.sampleFrame(time);
     SourcePreviewFrame pixels;
     var index = -1;
     if (point.isGap) {
@@ -1191,7 +1197,7 @@ final class StudioWorkspace {
   Future<SourcePreviewFrame> previewTimelineAt(Q time) async {
     final snapshot = current,
         graph = TimelineVideoGraph(current),
-        point = graph.sample(time);
+        point = graph.sampleFrame(time);
     if (point.isGap) {
       final rgba = List<int>.filled(
         graph.previewWidth * graph.previewHeight * 4,
@@ -1220,6 +1226,37 @@ final class StudioWorkspace {
     }
     return result;
   }
+
+  ProjectDocument setOpacityKeyframe(
+    String clipId,
+    Q localTime,
+    double value, {
+    String interpolation = 'linear',
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetOpacityKeyframe(
+        clipId,
+        localTime,
+        value,
+        interpolation: interpolation,
+      ),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  ProjectDocument removeOpacityKeyframe(
+    String clipId,
+    Q localTime, {
+    required BigInt expectedRevision,
+  }) => edit(
+    RemoveOpacityKeyframe(clipId, localTime),
+    expectedRevision: expectedRevision,
+  );
 
   ProjectDocument setClipOpacity(
     String clipId,
@@ -1311,6 +1348,12 @@ final class StudioWorkspace {
     _requireMetadata();
     _protectOutput(target);
     final snapshot = current;
+    if ((snapshot.toJson()['effects'] as List).any(
+          (e) => (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
     requireLocalEditingWritable(snapshot);
     final cues = (snapshot.toJson()['captions'] as List)
         .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
@@ -1394,6 +1437,12 @@ final class StudioWorkspace {
     final resources = session.writableCollection(expectedCollectionReviewHash);
     final source = session.project;
     final graph = TimelineVideoGraph(source);
+    if ((source.toJson()['effects'] as List).any(
+          (e) => (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
     if ((source.toJson()['effects'] as List).isNotEmpty &&
         _media!.capabilities['linearOpacityV1'] != true) {
       throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
@@ -1868,6 +1917,12 @@ final class StudioWorkspace {
     _requireMedia();
     _protectOutput(destination);
     final snapshot = current;
+    if ((snapshot.toJson()['effects'] as List).any(
+          (e) => (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
     requireLocalEditingWritable(snapshot);
     if ((snapshot.toJson()['captions'] as List).isNotEmpty) {
       throw const StudioException('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED');
@@ -1903,6 +1958,9 @@ final class StudioWorkspace {
         .frameIndex(Q.fromJson(s['duration']), Rounding.tiesToEven)
         .toInt();
     if (count <= 0) throw const StudioException('EMPTY_SEQUENCE');
+    // Bound the TOTAL before allocating any per-clip keyframe schedules.
+    // Native already enforces this same delivery-frame resource limit.
+    if (count > 120000) throw const StudioException('RENDER_FRAME_LIMIT');
     if (captureFrames.any((n) => n < 0 || n >= count)) {
       throw const StudioException('CAPTURE_RANGE');
     }

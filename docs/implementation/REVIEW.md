@@ -831,3 +831,10 @@ the historical intermittent underrun. Full original tasks remain partial.
 3. **用户路径/准入/失效审查**：初稿误用不存在的 UI 解码 API，换真实 callback+Completer、2秒deadline、迟到 dispose、mounted/hash/selection fence。资源采纳不能只查 capability，必须实际执行 bounded native effect 后才原子 fork；真实采纳/ZIP fork/重开/undo/预览/MP4/UI点击测试。无效 NativeMedia 参数是同步 throw，修测试捕获方式；最终 analyzer 一条括号风格失败保留并修复，冻结后重新跑选定套件。数量不等于原任务完成，未重跑项和未解 underrun 单列证据。
 
 补充真实失败：冻结后旧 local_video_ui_test 的 restore-archive 点击落在未绘制的视口边缘并超时（保留 hit-test 日志），不是把超时放宽或关 warning。新旧测试均改为居中 ensureVisible→pumpAndSettle→hitTestable 断言后真实点击，完整9项 UI 重新通过。新增 AudioSink-clock opacity 测试起初给纯视频直接播放，正确触发 PERSISTENT_AUDIO_REQUIRED；改为实际生成 AAC 输入并持久抽取 AudioClip，不放松门禁，再进行隔离服务资格。最终测试以新冻结哈希列出。
+
+
+## increment1.15 — 真实clip-local关键帧/取消（三轮实审）
+
+1. **原合同/时间/编辑**：逐条读s3/s5a owner-local/数值合同，采用项目交付帧→clip-local→source映射；拒off-grid执行，不复制C++插值器。补hold半开边界、端点hold、replace/noop/remove、split/right owner+point独立ID、边界裁切重基准、linked音频不继承视觉曲线、slip保持本地曲线。发现静态Apply会丢动画、裁切绕过effects锁、编辑会启用disabled节点，均改显式拒绝/保护并加测试；schedule验证排序每segment一次/二分查找，限制256点和帧数预算。
+2. **生命周期/实测失败修正**：100次已呈交encoder至少2帧后的真实取消首轮malloc heap corruption（原始日志保留）。定位Input.at在throwing decode前留下current/next别名，修std::exchange转移所有权，非放宽断言。新增应用自有AVFrame计数/真实进度、100 scheduled cancels、FD检查、ASan/UBSan leak detector（未instrument第三方/GPU，不假称完整lease）。原audio_io只把自有frame alloc/free接到相同计数器，原音频回归单独继续。
+3. **可用UI/持久与反例**：真实UI整数frame/value/hold输入→原子set/remove→preview→undo/save/fork/export；SDK验归档重开仍有动态非黑帧，split/reopen后cut两侧实际encoder-input像素保持。最初测试误把连续两次last-commit inverse当成多级undo，修为一次命令undo断言，不改存储合同并明确多级栈未完成。原 malformed schedule边界检查在创建输出前拒绝。保留初稿style/脚本路径错误/错误undo假设，最终所有结果按新冻结哈希；旧underrun/旧writer限制不消除。最终回归发现将旧sample强制帧量化破坏原精确source映射断言，未改旧断言：恢复sample精确语义，新增显式sampleFrame供SDK呈现消费者使用，二者补边界回归并重新冻结。真实Pulse新增曲线测试又发现初稿将YUV420→RGB8 nominal black误当理想RGB0，实际1；沿既有static-node golden的0..1及原V-003≤2/255（非新放宽）补独立显式opacity0参考逐字节相等，alpha仍必须255，保留失败日志并重跑冻结矩阵。最后预算复核发现分片schedule已有120000上限但SDK整体上限只在native端拦截，补在分配任何曲线数组之前的总帧数门禁（复用同一120000），真实MoveClip形成5000秒以上工程/拒导出/无产物测试（初始外来JSON fixture先被duration一致性/已有导入时长门禁拒绝，保留两次失败，未放松这些门禁），不默裁短片或更改原验收。

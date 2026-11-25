@@ -1,0 +1,33 @@
+Analyzing agent-foundation-20261125...
+
+warning • Unnecessary cast. Try removing the cast • packages/studio_document/lib/edit_algebra.dart:200:10 • unnecessary_cast
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:216:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:226:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:229:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:232:5 • curly_braces_in_flow_control_structures
+warning • Unnecessary cast. Try removing the cast • packages/studio_document/lib/edit_algebra.dart:234:10 • unnecessary_cast
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:237:5 • curly_braces_in_flow_control_structures
+warning • Unnecessary cast. Try removing the cast • packages/studio_document/lib/edit_algebra.dart:242:19 • unnecessary_cast
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:243:5 • curly_braces_in_flow_control_structures
+warning • Unnecessary cast. Try removing the cast • packages/studio_document/lib/edit_algebra.dart:256:32 • unnecessary_cast
+warning • Unnecessary cast. Try removing the cast • packages/studio_document/lib/edit_algebra.dart:269:16 • unnecessary_cast
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:274:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:367:17 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:416:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:32:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:41:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:44:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:51:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:54:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:57:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:77:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:112:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/studio_editor_ui.dart:629:17 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/studio_editor_ui.dart:648:17 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:844:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1238:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1353:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1441:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1920:7 • curly_braces_in_flow_control_structures
+
+29 issues found. (ran in 2.5s)

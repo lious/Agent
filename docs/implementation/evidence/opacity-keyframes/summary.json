@@ -1,0 +1,301 @@
+{
+  "baseCommit": "3188b576a17af09cde0b872fa5ddaefba268d589",
+  "freezeStarted": "2026-11-25T22:21:24.344437+08:00",
+  "sourceSha256": {
+    "native/studio_media/include/studio_media.h": "f4834941cb831ed4d719666803308db5eae6936a163e90080e7dfe3749c7e6b4",
+    "native/studio_media/src/audio_io.inc": "bc59910db32ead25d2a485b823f9e405e9c2bc2deb5f4a2c2b7aa31cd8ba37d2",
+    "native/studio_media/src/studio_media.cpp": "7435a61ab532729bd499ef42c90e4b4cbd69ea6921da690a9e04dcc9ac8d25e0",
+    "native/studio_media/tests/abi_test.cpp": "d552f3bebf3711213b4ed56045371041737ded8438b99d6f411b64e8482abe71",
+    "packages/studio_document/lib/edit_algebra.dart": "101b9ed0b32b2777824903eb08ee416e889d10289b6388785a33799bb3b44176",
+    "packages/studio_document/lib/effect_registry.dart": "7fd18310b95ec85329cb87b847ce5a37a20d376e754a17b58b38544948e26b1a",
+    "packages/studio_document/lib/persistent_audio.dart": "5303bcbad9cf6b29c5d26b55023dfa410aa969aac4bfd282cb2be7f35c4b6c86",
+    "packages/studio_document/lib/timeline_graph.dart": "fb89537ce3dc50071258e8ab555927a0f8c2073b47177d61c794ac6c5239a4c7",
+    "packages/studio_document/test/opacity_keyframe_test.dart": "c59ea3cc63deba0c1f393140f10702ddc9d8a3392544c0346140c140b5e49c53",
+    "packages/studio_document/test/timeline_graph_test.dart": "e01b1f7afc1df7a89c6fea50f56c2cc36e30369a5077c57646399a15abbdd734",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "a9ac3a1a4878acb9695e7662d041f4f64526f65507324535791e48d8d2f961f9",
+    "packages/studio_editor_ui/test/opacity_keyframe_ui_test.dart": "9db1d5070682ad19b31fc5c3f0664bd45ad1fc9b3dfcd3b19a9805f84ce8890c",
+    "packages/studio_sdk/lib/studio_sdk.dart": "c6f11e5d65ac4d7fa53fa73cecbad2cc21b3dd08c9ab45be282906b8f1bc0c81",
+    "packages/studio_sdk/test/opacity_keyframe_clock_test.dart": "08db6c7b2fc15751f3431d79c869a6137a79f4aaa28b7c8ed58669c5d41e9aca",
+    "packages/studio_sdk/test/opacity_keyframe_render_test.dart": "67914e6b3a02053eb7d2386cab052c28168d7a12e6246a2345f8cb568aac716d"
+  },
+  "nativeLibrarySha256": "8dfb1793bcfa94fdab47c383850bccb475cc842ea664fc04e5fb5eed058f9c27",
+  "sanitizerLibrarySha256": "16ca8aef6338a52a7d82f51976f40b230d7206ac3f7bf464377a78384ff015b5",
+  "asOf": "2026-11-25T22:23:52.584562+08:00",
+  "timezone": "Asia/Shanghai",
+  "freezeIdentity": "Exact production/test hashes apply to containing commit. All selected final commands rerun after last production AND test edits; only documentation/evidence changes afterward. Not full repository/87-task qualification; no old182/200 pass count borrowed.",
+  "commands": {
+    "log": "commands.json",
+    "sha256": "b706b55744f5c55dad84ab385f9d161fe24bdf1b7b0304790994443157eb1d47"
+  },
+  "results": {
+    "native": {
+      "passed": 190,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 50746
+      },
+      "log": "final-native.jsonl",
+      "sha256": "34e9108daec43f34c6b747c3edabbe01a6deb5dc1088c59a0bddac0f218303ab",
+      "exitCode": 0,
+      "elapsedSeconds": 51.589
+    },
+    "ui": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 28950
+      },
+      "log": "final-ui.jsonl",
+      "sha256": "e21a08d79a2e2cdee3f4cfa1da655cbffd954b377dd78e6c9c90a26094676b16",
+      "exitCode": 0,
+      "elapsedSeconds": 30.109
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 7601
+      },
+      "log": "final-chrome.jsonl",
+      "sha256": "36c013e6ae0b3ae03a9b6361059d1479055c796183e991ac630190cb159bc9ee",
+      "exitCode": 0,
+      "elapsedSeconds": 27.35
+    },
+    "pulse": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 15264
+      },
+      "log": "final-pulse.jsonl",
+      "sha256": "2f53a6f0734b4cfc1a088967b3d219f6e29a4eb77395359726385e696179c9a6",
+      "exitCode": 0,
+      "elapsedSeconds": 15.945
+    }
+  },
+  "totalPassed": 209,
+  "totalFailed": 0,
+  "additionalRuns": {
+    "analyzer": {
+      "log": "final-analyzer.log",
+      "sha256": "54dedfdc7941faf06cb633c00392af82a6b88ce38e96d3a9643f290b9eac99b3",
+      "rawSha256": "a638e35cc60f5a7fed14d8be665b53c9a63ea1a4016552e9bb0ba323bfc30912",
+      "exitCode": 0,
+      "elapsedSeconds": 2.039
+    },
+    "native": {
+      "log": "final-native.jsonl",
+      "sha256": "34e9108daec43f34c6b747c3edabbe01a6deb5dc1088c59a0bddac0f218303ab",
+      "exitCode": 0,
+      "elapsedSeconds": 51.589
+    },
+    "actual-legacy-and-kill": {
+      "log": "final-actual-legacy-and-kill.log",
+      "sha256": "61e30f6da522bc852b8184b27ae9b20ca785fd9f409ef1f57a15f41b17bcff56",
+      "exitCode": 0,
+      "elapsedSeconds": 15.152
+    },
+    "ui": {
+      "log": "final-ui.jsonl",
+      "sha256": "e21a08d79a2e2cdee3f4cfa1da655cbffd954b377dd78e6c9c90a26094676b16",
+      "exitCode": 0,
+      "elapsedSeconds": 30.109
+    },
+    "chrome": {
+      "log": "final-chrome.jsonl",
+      "sha256": "36c013e6ae0b3ae03a9b6361059d1479055c796183e991ac630190cb159bc9ee",
+      "exitCode": 0,
+      "elapsedSeconds": 27.35
+    },
+    "pulse": {
+      "log": "final-pulse.jsonl",
+      "sha256": "2f53a6f0734b4cfc1a088967b3d219f6e29a4eb77395359726385e696179c9a6",
+      "exitCode": 0,
+      "elapsedSeconds": 15.945
+    },
+    "ctest": {
+      "log": "final-ctest.log",
+      "sha256": "6b83d6ca31d824a179c73b45868c44b66da0a0c23dc6371e0969b87e74c1969b",
+      "exitCode": 0,
+      "elapsedSeconds": 0.265
+    },
+    "100cancel": {
+      "log": "final-100cancel.log",
+      "sha256": "f03c49dca615408f93dec26214defac236e0fcd1b902a6ab09b63005bcc194c6",
+      "exitCode": 0,
+      "elapsedSeconds": 0.845
+    },
+    "asan-100cancel": {
+      "log": "final-asan-100cancel.log",
+      "sha256": "f9911912568dda10408d5e4847d7aaca7b8e5c53c38bf33624d28477a8bbe3e8",
+      "exitCode": 0,
+      "elapsedSeconds": 1.521
+    }
+  },
+  "auxiliaryEvidence": [
+    {
+      "log": "keyframe-toolchain.json",
+      "sha256": "c717042c6bdd89516e079b6d89426dd60cffb29411cc46489b43a7f82ddcbd26"
+    },
+    {
+      "log": "keyframe-spec-integrity.json",
+      "sha256": "056464c36da9fe8f061de578424017fff9fc94d50cdad620c7c84fbca5493fab"
+    },
+    {
+      "log": "keyframe-final-actual-legacy.json",
+      "sha256": "61e30f6da522bc852b8184b27ae9b20ca785fd9f409ef1f57a15f41b17bcff56"
+    },
+    {
+      "log": "keyframe-first-freeze.json",
+      "sha256": "c466959de6d3a9d4fcde1eecd3f97bbebad8e973b46f54af06e4f4e4c2b15e6c"
+    },
+    {
+      "log": "keyframe-first-runs.json",
+      "sha256": "9a8b362b160246220dd1105522d09d749714ef90b7d8efc7ab39abc7e2b50831"
+    },
+    {
+      "log": "keyframe-second-freeze.json",
+      "sha256": "fe031bfc3ea7f0bd28603c4e3ada51a8a100950af133984f000115cf2a0ac8e0"
+    },
+    {
+      "log": "keyframe-second-runs.json",
+      "sha256": "dedb114472ba9c68e5eba3061a72d4fb9198b48fc4865c1365bf745950ace619"
+    },
+    {
+      "log": "keyframe-third-freeze.json",
+      "sha256": "ff690da9d7905585be5ea351bd7136a51ca07aa9620d532d90a53eab89720899"
+    },
+    {
+      "log": "keyframe-third-runs.json",
+      "sha256": "67f429f1b2b4f65136c3aee912090998671610d54dab0806112feb6e6d94f0fa"
+    },
+    {
+      "log": "keyframe-final-build.log",
+      "sha256": "4a091b1e0703e20e0eb04fa76d1fe143b21f746217b4a361c63f3efa7e54d720"
+    },
+    {
+      "log": "keyframe-final-asan-build.log",
+      "sha256": "4a091b1e0703e20e0eb04fa76d1fe143b21f746217b4a361c63f3efa7e54d720"
+    },
+    {
+      "log": "keyframe-sanitizer-configure.log",
+      "sha256": "d5c58d71533d44f5e6e28d4a7f66e09644d4624ff67650f40b4cdec5927ee50e"
+    },
+    {
+      "log": "keyframe-sanitizer-build.log",
+      "sha256": "064691baf4ddaf923590c6237bb20cc0144abbf769672562800eaba9bed5aa74"
+    }
+  ],
+  "failuresRetained": [
+    {
+      "finalSource": false,
+      "log": "keyframe-first-100cancel.log",
+      "sha256": "73662cccec7b439d7b0f6d4807c952c93ed3eb2a81544a3fc9d741a509e60ec6"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-first-analyzer.log",
+      "sha256": "eafc77e9598488d81d549c736884d80ac5e5dda2dbd631a9ce9a4034cae43e28",
+      "rawSha256": "7c833717c5c16ed72d63a3428e692a718fcc5115c693d4e6149937c8596102bc"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-first-format.log",
+      "sha256": "a61b3d22b0aef4c622440c76eb8fb7fef4d5f53b02b8841de0339c6c78e2a6ca"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-third-analyzer.log",
+      "sha256": "cda24a42d3fab0644b92b8a9aeb4afdb89faee8cd94aeed410e64094e98ab7aa",
+      "rawSha256": "c2d519c33327f1fa2fccd229bc6af965a8104104fb7363bc26dad20ef07d5486"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-new-tests.log",
+      "sha256": "538af32155ba9ba87f6ecb2064e0332911f392a4311f51917b8f56798efb3593",
+      "rawSha256": "0650e43b21c2b04b1a2b1d7dc8c83d64d8230e6cc65d0c0d4861f016b26996b2"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-first-matrix-native.log",
+      "sha256": "6275296944a4e4c72715c03b61b4b843ba83cf10b5e5ac9709809b23ce98a69a"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-clock-black-assertion-failure.log",
+      "sha256": "6b8425b69e80982ed42a33c7fab8a7db013857e57ff97d5c822dcda1762b07f6"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-total-budget-review.log",
+      "sha256": "378a8c97d1d6ad2ad2c22a752b330840ea4c5cc669754cce061aa3ed96eca6f5"
+    },
+    {
+      "finalSource": false,
+      "log": "keyframe-total-budget-fixed.log",
+      "sha256": "ff595500f617fecd02609d96bce96ca8053c048462bea55cf21bd720481f2bc3"
+    }
+  ],
+  "regularAbiBinarySha256": "0dcdf48ebfe7c214cb0d673436ec042297e19e9c1d625d4c333c5cafe815ac0d",
+  "sanitizerAbiBinarySha256": "61377598edb7ace19f08fb3aec4813d4a7a87a003501411d3aea27d45dcb5397",
+  "cancelQualification": {
+    "regularIterations": 100,
+    "sanitizerIterations": 100,
+    "scheduledOpacity": true,
+    "cancelAfter": "At least2 frames actually rendered and submitted to encoder, not preparation-only cancellation",
+    "invariants": "Every iteration application-owned AVFrame delta0 after join/close; final FD delta0",
+    "sanitizer": "address,undefined; detect_leaks=1:halt_on_error=1, no suppressions. Third-party shared FFmpeg/x264 not instrumented.",
+    "scope": "CPU isolated single-video opacity path only; not GPU FrameLease/opaque codec-internal frame accounting or all-device qualification"
+  },
+  "pixelProof": {
+    "native": "Two actual preencoder YUV420-display samples at frames0/10 equal shared full-source previews; archive fork preserves nonzero curve; after SQL close/reopen, split cut-adjacent encoder samples29/30 still equal before-cut preview. Not every full-resolution pixel/frame/GPU proof.",
+    "clock": "Private real Pulse confirmed sample48000 paused seek equals exact timeline still; seek0 compared against explicit native opacity0 reference and original nominal-black0..1 RGB8 golden, alpha255. Not physical AV sync/stable moving frame rate.",
+    "sourceQuery": "Existing graph.sample remains exact, sampleFrame is explicit project-frame quantization for UI/service-clock and export-phase consistency; original exact mapping assertion retained."
+  },
+  "threeReviewRounds": "../../REVIEW.md increment1.15 and ADR0022; cancellation heap corruption, exact-sample regression and nominal-black assertion failures retained, investigated and corrected without changing original acceptance.",
+  "knownUnresolved": [
+    "Existing real resume underrun remains unresolved despite isolated passes; prior failure evidence retained in definition-identity.",
+    "Schema9 does not fence old executable co-writers; all writers must use updated guarded runtime.",
+    "Current undo is last-commit inverse, not full multi-level user undo/redo stack/coalescing.",
+    "CPU SDR over-black same-size CFR1x profile uses FP32 transfer with RGB8 staging; not GPU/FP16/full compositor."
+  ],
+  "notRun": [
+    "Full repository/all87 release acceptance adapters/hard-dependency completion",
+    "Other registry parameters/transforms/transitions/luma/handles and complete I005",
+    "GPU texture fence, full FrameLease, opaque FFmpeg/GPU internal headers and independent P0 device matrix",
+    "Fresh desktop release App/window/manual/heard audio/physical AV/stable fps",
+    "Independent fresh60s/VFR/HDR/GPU effect qualification (selected audio-export tests DID run)",
+    "Earlier separate full old-executable v4-v8 migration matrix (store migration/fault and actual legacy SQL barrier/SIGKILL tests DID run)",
+    "Non-Linux/mobile/physical multiple devices/positive RTC (unchanged network policy blocker)",
+    "Unselected Harness/pairing/secure-store/lease suites (no relevant production changes); no new endpoint/auth/budget behavior"
+  ],
+  "statusCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 26,
+      "planned": 48,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "originalSnapshotsUnmodified": true,
+  "installsThisIncrement": [],
+  "toolchain": "keyframe-toolchain.json; previously installed official Flutter SDK and approved SQLite3.54.1, system Debian FFmpeg/Pulse. No new dependencies/models/paid services."
+}

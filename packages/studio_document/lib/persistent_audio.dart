@@ -418,7 +418,7 @@ ProjectDocument _persistentAudioEdit(
   }
   s['duration'] = maximum.toJson();
   s['version'] = version(s['id'] as String);
-  _normalizeOpacityOwners(d, version, id);
+  _normalizeOpacityOwners(d, version, id, before, operation);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;
