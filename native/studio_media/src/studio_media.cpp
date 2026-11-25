@@ -186,6 +186,9 @@ struct Input {
       current = decode();
       if (!current)
         throw Error("EMPTY_VIDEO");
+      if (format->streams[video]->start_time == AV_NOPTS_VALUE ||
+          pts(current) != format->streams[video]->start_time)
+        throw Error("START_PTS_POLICY_REQUIRED");
       next = decode();
     }
     if (pts(current) > target)
@@ -253,10 +256,8 @@ J probe(Input &in) {
     const auto fps = av_guess_frame_rate(in.format, st, nullptr);
     int64_t ticks = st->duration;
     AVRational duration_tb = st->time_base;
-    if (ticks == AV_NOPTS_VALUE) {
-      ticks = in.format->duration;
-      duration_tb = AV_TIME_BASE_Q;
-    }
+    if (ticks == AV_NOPTS_VALUE || st->start_time == AV_NOPTS_VALUE)
+      throw Error("STREAM_TIMESTAMP_METADATA_UNAVAILABLE");
     if (ticks == AV_NOPTS_VALUE || ticks <= 0 || st->time_base.num <= 0 ||
         st->time_base.den <= 0)
       throw Error("DURATION_UNAVAILABLE");
@@ -317,6 +318,8 @@ J probe(Input &in) {
     while (auto *frame = in.decode()) {
       const auto timestamp = in.pts(frame);
       av_frame_free(&frame);
+      if (frames == 0 && timestamp != in.format->streams[in.video]->start_time)
+        throw Error("START_PTS_POLICY_REQUIRED");
       if (++frames > 120000)
         throw Error("PROBE_FRAME_LIMIT");
       if (previous != AV_NOPTS_VALUE) {
@@ -467,6 +470,8 @@ struct Output {
 };
 int64_t target_ticks(const J &source, int64_t frame, AVRational output_tb,
                      AVStream *stream) {
+  if (stream->start_time == AV_NOPTS_VALUE)
+    throw Error("STREAM_TIMESTAMP_METADATA_UNAVAILABLE");
   keys(source, {"n", "d"});
   if (!source["n"].is_string())
     throw Error("RECIPE_TYPE");

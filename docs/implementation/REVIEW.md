@@ -62,3 +62,10 @@
 
 最终命令、版本、退出码、非跳过测试计数见 evidence/local-video/verification.json；
 全平台/全模型未运行范围和 TOCTOU/流式/完整撤销栈等已知缺口见 ADR 0002，不声称全部87项完成。
+
+### 提交后连续时间戳复核（同一批次）
+
+复核发现 native 曾在 stream 起点未知时 fallback 0、时长未知时 fallback 容器时长；
+这可能隐瞒未验证的起点语义。改为明确拒绝未知流时间戳及首帧/stream 起点不一致。
+额外真实 remux 一个 +7秒非零起点 fixture，经相同导入/剪辑/导出后与零起点成片逐字节一致。
+这仅验证一个非零PTS组合，不升级为20点seek、VFR或CPU/GPU golden资格通过。

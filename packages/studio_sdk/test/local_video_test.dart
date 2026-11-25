@@ -174,6 +174,57 @@ void main() {
             ),
           ),
         );
+        final offsetFile = File('${dir.path}/offset.mp4');
+        final remux = Process.runSync('ffmpeg', [
+          '-v',
+          'error',
+          '-i',
+          source.path,
+          '-c',
+          'copy',
+          '-output_ts_offset',
+          '7',
+          offsetFile.path,
+        ]);
+        expect(remux.exitCode, 0, reason: remux.stderr.toString());
+        final offset = open('offset');
+        try {
+          offset.openDemo();
+          await offset.importVideo(
+            LocalFileGrant.fromUserSelection(offsetFile),
+            expectedRevision: BigInt.zero,
+          );
+          final raw = await offset.media!.probeAsync(offsetFile);
+          expect(
+            BigInt.parse(raw['streams'][0]['startPTS'] as String),
+            greaterThan(BigInt.zero),
+          );
+          final id =
+              offset.current
+                      .toJson()['sequences'][0]['tracks'][0]['items'][0]['id']
+                  as String;
+          offset.edit(
+            SplitClip(id, Q.of(1), 'offset-right'),
+            expectedRevision: offset.current.revision,
+          );
+          offset.edit(
+            DeleteClip(id, ripple: true),
+            expectedRevision: offset.current.revision,
+          );
+          offset.edit(
+            TrimClip('offset-right', 'out', Q.of(-1, 2), ripple: true),
+            expectedRevision: offset.current.revision,
+          );
+          offset.edit(
+            SlipClip('offset-right', Q.of(1, 2)),
+            expectedRevision: offset.current.revision,
+          );
+          final output = File('${dir.path}/offset-result.mp4');
+          await offset.exportVideo(output);
+          expect(output.readAsBytesSync(), exported.readAsBytesSync());
+        } finally {
+          offset.close();
+        }
         expect(source.existsSync(), true);
       } finally {
         restored?.close();

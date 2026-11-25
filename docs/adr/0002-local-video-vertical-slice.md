@@ -19,6 +19,7 @@ libavformat/libavcodec/libswscale → 冻结 revision 的软件 H264/MP4 → 完
 - 支持单视频轨、1×、CFR、Rec709 limited 8bit、像素宽高比 1、黑色背景、偶数边长
   ≤2048、≤120fps、≤120000 帧。没有音频输出、缩放、GPU、预览、代理或随机 seek。
   含音轨输入必须明确确认 video-only；未知色彩/VFR/旋转/alpha 不静默当已支持。
+  stream 起点/时长未知或首解码帧 PTS 不匹配起点时明确拒绝，不以零点/全容器时长冒充流事实。
 - 编辑支持 append/split/move/lift/ripple delete/trim/roll/slip/slide；有轨锁和字段锁。
   尚无多轨/编组/link/snap/复制粘贴/compound/关键帧/字幕。复杂合法工程拒绝写入，
   不降级重写。normal trim/lift 保留尾 Gap；ripple 才缩短总长。
