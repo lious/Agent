@@ -1,0 +1,51 @@
+{
+  "increment": "1.38",
+  "title": "Qualify opened I-005 commands with 1000 seeded random undo",
+  "baseCommit": "08538f58227a4895beddd2ce6e673de649830e28",
+  "aggregateSha256": "ab1acfe6ba7b54b2525110bba4695ba6b12f248320091e471ce5e226188f3602",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "selected": {
+    "document": {
+      "passed": 108,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sdk": {
+      "passed": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ui": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "passed": 171,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "1000 seeded random sequences over already-opened MoveClips (reject/overwrite/insert, includeLinks true/false), ripple delete/close/trim, SetCaptions and SetMarkers undo to an equal content hash (revision excluded).",
+    "A locked host or a negative timeline start refuses the whole group and leaves captions and markers unchanged. Source-anchored cues are never silently dropped.",
+    "Document applyEdit is a pure function: before and start hashes stay equal after every success or refusal. Workspace journal undo of 1000 mutating NLE edits restores the start hash; redo restores the post-edit hash.",
+    "A short UI/SDK path covers one persistent host move with a default clipLocal cue and an absolute marker, undo/redo, archive fork, VTT sidecar, and refused preview/MP4 burn-in. After a fork, IDs may be remapped; assertions use text, kind, and time.",
+    "Already-delivered leave-gap, single-range ripple delete/close, shorten and lengthen ripple trim, reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default clipLocal / follow / interval / source-window, and marker absolute default / clipLocal follow / ripple interval stay unchanged. Lifting a clipLocal marker host is still an atomic REF_NOT_FOUND.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, marker sidecar formats, or the full section-3 matrix. No new persistence table.",
+    "I-005 and I-010 remain partial; 87 counts stay 26/48/13/0; XD10 unchanged.",
+    "Previous 166/152/134/128/119/104/95/85/75/64/51/37/7/281 counts are not mixed in."
+  ],
+  "asOf": "2026-11-26T06:33:55.904285+08:00",
+  "timezone": "Asia/Shanghai",
+  "fullTaskComplete": false
+}
