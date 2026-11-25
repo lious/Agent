@@ -2,11 +2,17 @@ part of 'edit_algebra.dart';
 
 /// Current admitted slice: same tracks, includeLinks=true.
 /// mode=reject remains the default; mode=overwrite carves destination intervals.
-/// mode=insert is not opened in this slice.
+/// mode=insert opens a package-span hole at the destination and shifts later
+/// content; the source is vacated as a gap and is not ripple-closed.
 final class MoveClips extends EditOperation {
-  MoveClips(Iterable<String> ids, this.delta, {String mode = 'reject'})
-    : mode = _requireCollisionMode(mode),
-      clipIds = List.unmodifiable(ids.take(100001).toList()..sort()) {
+  MoveClips(
+    Iterable<String> ids,
+    this.delta, {
+    String mode = 'reject',
+    Iterable<String>? rippleTrackIds,
+  }) : mode = _requireCollisionMode(mode),
+       clipIds = List.unmodifiable(ids.take(100001).toList()..sort()),
+       rippleTrackIds = _validatedRippleTrackIds(mode, rippleTrackIds) {
     if (clipIds.isEmpty) throw const StudioException('EMPTY_SELECTION');
     if (clipIds.length > 100000) throw const StudioException('SELECTION_LIMIT');
     for (final id in clipIds) {
@@ -19,6 +25,10 @@ final class MoveClips extends EditOperation {
   final List<String> clipIds;
   final Q delta;
   final String mode;
+
+  /// Null means the default union of target tracks and unlocked syncLock
+  /// media tracks. Only legal with mode=insert.
+  final List<String>? rippleTrackIds;
   @override
   Map<String, Object?> toJson() => {
     'kind': 'moveClips',
@@ -27,6 +37,7 @@ final class MoveClips extends EditOperation {
     'mode': mode,
     'includeLinks': true,
     'targetTrackId': null,
+    if (rippleTrackIds != null) 'rippleTrackIds': rippleTrackIds,
   };
 }
 
@@ -42,6 +53,9 @@ ProjectDocument _moveClips(
 ) {
   if (operation.mode == 'overwrite') {
     return _overwriteMoveClips(before, operation, version, newId);
+  }
+  if (operation.mode == 'insert') {
+    return _insertMoveClips(before, operation, version, newId);
   }
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];

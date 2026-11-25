@@ -8,6 +8,7 @@ part 'persistent_audio.dart';
 part 'multi_move.dart';
 part 'clipboard.dart';
 part 'overwrite.dart';
+part 'insert.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();

@@ -115,13 +115,6 @@ void main() {
   test('overwrite move is one command; locks/SQL/fence refuse wholly; reject is unchanged', () async {
     final firstId = moveVideos(w.current).first['id'] as String;
     final lastId = moveVideos(w.current).last['id'] as String;
-    expect(
-      () => w.edit(
-        MoveClips([firstId], Q.of(1), mode: 'insert'),
-        expectedRevision: w.current.revision,
-      ),
-      code('INSERT_MODE_NOT_IMPLEMENTED'),
-    );
     final baseline = w.current;
     expect(
       () => w.edit(

@@ -6,7 +6,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Collision mode for paste and same-track moves. Reject leaves existing clips and refuses overlap. Overwrite cuts intersecting destination intervals, keeps front/back source fragments, does not move later content, deletes affected transitions, and sets duration to max(old end, new end). Insert/ripple is not in this slice. Absolute captions stay; locks and incomplete handles refuse the whole group. Linked partners are included. New tracks and cross-project paste remain closed.',
+          'Collision mode for paste and same-track moves. Reject leaves existing clips and refuses overlap. Overwrite cuts intersecting destination intervals and does not move later content. Insert splits ripple tracks at the destination, shifts later content by the package span, fills gaps on non-target ripple tracks, and grows duration by that span; a move vacates its source as a gap and does not ripple-close it. Ripple-delete/trim, new tracks and cross-project paste remain closed. Caption cue follow is not opened (mid-timeline insert with cues is refused). Locks, sync-locked locked tracks and incomplete handles refuse the whole group. Linked partners are included.',
         ),
         Text(
           'Collision mode: $_collisionMode',
@@ -14,7 +14,7 @@ extension _ClipboardControls on _FoundationAppState {
         ),
         Wrap(
           children: [
-            for (final mode in const ['reject', 'overwrite'])
+            for (final mode in const ['reject', 'overwrite', 'insert'])
               TextButton(
                 key: Key('collision-mode-$mode'),
                 onPressed: _clipboardBlocked
@@ -24,7 +24,11 @@ extension _ClipboardControls on _FoundationAppState {
                         _clipboardError = null;
                       }),
                 child: Text(
-                  mode == 'overwrite' ? 'Overwrite' : 'Reject overlap',
+                  mode == 'overwrite'
+                      ? 'Overwrite'
+                      : mode == 'insert'
+                      ? 'Insert'
+                      : 'Reject overlap',
                 ),
               ),
           ],
@@ -81,7 +85,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject or overwrite; insert/ripple, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
+          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject, overwrite or insert. Ripple-delete/trim, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
         ),
         Text(
           payload == null

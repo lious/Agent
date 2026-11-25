@@ -30,22 +30,23 @@ Q seqDur(ProjectDocument p) =>
     Q.fromJson(p.toJson()['sequences'][0]['duration']);
 
 void main() {
-  test('insert mode is refused at the command; reject still collides', () {
+  test('reject still collides; rippleTrackIds are illegal on overwrite', () {
     final p = f.three();
     final ids = media(p).map((c) => c['id'] as String).toList();
-    expect(
-      () => MoveClips(ids, Q.of(1), mode: 'insert'),
-      code('INSERT_MODE_NOT_IMPLEMENTED'),
-    );
     expect(
       () => MoveClips([ids.first], Q.of(1), mode: 'bogus'),
       code('UNSUPPORTED_EDIT_MODE'),
     );
-    final payload = buildClipboard(p, [ids.first]);
     expect(
-      () => PasteClips(payload, at: Q.of(0), mode: 'insert'),
-      code('INSERT_MODE_NOT_IMPLEMENTED'),
+      () => MoveClips(
+        [ids.first],
+        Q.of(1),
+        mode: 'overwrite',
+        rippleTrackIds: ['x'],
+      ),
+      code('RIPPLE_TRACKS_REQUIRE_INSERT'),
     );
+    final payload = buildClipboard(p, [ids.first]);
     expect(
       () => move.change(p, PasteClips(payload, at: Q.of(0))),
       code('COLLISION'),

@@ -1,11 +1,8 @@
 part of 'edit_algebra.dart';
 
 String _requireCollisionMode(String mode) {
-  if (mode == 'reject' || mode == 'overwrite') {
+  if (mode == 'reject' || mode == 'overwrite' || mode == 'insert') {
     return mode;
-  }
-  if (mode == 'insert') {
-    throw const StudioException('INSERT_MODE_NOT_IMPLEMENTED');
   }
   throw const StudioException('UNSUPPORTED_EDIT_MODE');
 }

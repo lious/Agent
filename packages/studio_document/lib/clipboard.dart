@@ -111,19 +111,23 @@ final class LiftClips extends EditOperation {
 
 /// Same-project paste onto existing same-kind tracks.
 /// mode=reject is default; mode=overwrite carves destination intervals and
-/// does not move later content. Cross-project import, insert/ripple and
-/// new-track creation are not opened in this slice.
+/// does not move later content. mode=insert splits ripple tracks at [at],
+/// shifts later content by the package span, and fills gaps on non-target
+/// ripple tracks. Cross-project import, new-track creation, ripple-close
+/// of a move source, and OS clipboard are not opened in this slice.
 final class PasteClips extends EditOperation {
   PasteClips(
     ClipboardPayload payload, {
     required this.at,
     Map<String, String>? targetTrackMap,
     String mode = 'reject',
+    Iterable<String>? rippleTrackIds,
   }) : payload = ClipboardPayload.fromJson(payload.toJson()),
        targetTrackMap = Map.unmodifiable(
          Map<String, String>.from(targetTrackMap ?? const {}),
        ),
-       mode = _requireCollisionMode(mode) {
+       mode = _requireCollisionMode(mode),
+       rippleTrackIds = _validatedRippleTrackIds(mode, rippleTrackIds) {
     if (at < Q.of(0)) {
       throw const StudioException('NEGATIVE_TIMELINE_START');
     }
@@ -138,6 +142,7 @@ final class PasteClips extends EditOperation {
   final Q at;
   final Map<String, String> targetTrackMap;
   final String mode;
+  final List<String>? rippleTrackIds;
   @override
   Map<String, Object?> toJson() => {
     'kind': 'pasteClips',
@@ -146,6 +151,7 @@ final class PasteClips extends EditOperation {
     'targetTrackMap': targetTrackMap,
     'mode': mode,
     'payload': payload.toJson(),
+    if (rippleTrackIds != null) 'rippleTrackIds': rippleTrackIds,
   };
 }
 
@@ -714,6 +720,18 @@ ProjectDocument _pasteClips(
       newId,
     );
   }
+  var minimumDuration = Q.fromJson(s['duration']);
+  if (operation.mode == 'insert') {
+    final opened = _pasteInsertOpen(
+      d,
+      incoming,
+      operation.rippleTrackIds,
+      version,
+      newId,
+    );
+    affected.addAll(opened.rippleTrackIds);
+    minimumDuration = opened.minimumDuration;
+  }
   for (final c in incoming) {
     (trackById[c['trackId']]['items'] as List).add(c);
   }
@@ -763,14 +781,7 @@ ProjectDocument _pasteClips(
     t['cut'] = (Q.fromJson(raw['cut']) + delta).toJson();
     (d['transitions'] as List).add(t);
   }
-  _rewriteMediaTracks(
-    s,
-    tracks,
-    affected,
-    version,
-    newId,
-    Q.fromJson(s['duration']),
-  );
+  _rewriteMediaTracks(s, tracks, affected, version, newId, minimumDuration);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;
