@@ -12,6 +12,13 @@ final class DefinitionFingerprinter {
   final Map<String, Uint8List> bytes;
   final _cache = <String, String>{}, _versions = <String, String>{};
   final _active = <String>{};
+  final _resolved = <String, Map<String, String>>{};
+
+  /// Read-only projection of already resolved versioned nodes, not a registry
+  /// or render certificate. Used by the existing immutable history contract.
+  List<Map<String, String>> get resolvedDefinitions => List.unmodifiable(
+    _resolved.values.map((v) => Map<String, String>.unmodifiable(v)),
+  );
   final _snapshots = <String, ProjectDocument>{};
   final _documents = Map<ProjectDocument, Map<String, dynamic>>.identity();
   final _hashes = Map<ProjectDocument, String>.identity();
@@ -331,6 +338,12 @@ final class DefinitionFingerprinter {
           throw const StudioException('IMMUTABLE_VERSION_CONFLICT');
         }
         _versions[identity] = hash;
+        _resolved[identity] = {
+          'kind': kind,
+          'id': entity['id'],
+          'version': entity['version'],
+          'hash': hash,
+        };
       }
       _cache[scoped] = hash;
       return hash;

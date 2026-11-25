@@ -801,3 +801,27 @@ failure remains retained. Final isolated success does not mean it is fixed. This
 is not a full-repo/release/physical platform or 60s stress requalification. Existing
 historical migration/fault unit paths reran; the previous five separate old-binary
 v4-v8 experiments did not. No fresh native/window build or native code change.
+
+## increment1.13 — existing project history remains usable and immutable
+
+The current Linux/runtime edit path now checks exact resolved versions against
+real anchored historical snapshots, including noncurrent versions. Legacy raw
+hash rows and original bytes are not rewritten. Actual old bus edits that reused
+sequence version0 remain readable; validated undoLatest can restore their exact
+old state, then normal edits allocate new versions. Arbitrary new reuse of that
+ambiguous version still refuses. Existing archives/forks/save/reopen stay isolated.
+
+No schema migration/new tables or renderer expansion. The rebuildable proof cache
+is bounded; zero cache performs the same checks by streaming, not by bypass.
+Unsupported resources remain preserved read-only/refused for execution. See
+[ADR0020](../adr/0020-legacy-definition-history-compatibility.md). Current schema9
+does not prevent old executable co-writers; all writers must use the guarded
+runtime. This is not full historical-story/session migration or all-I-002 closure.
+
+Frozen increment1.13: **187 selected passes** (174 native/domain/SQL/SDK +1 real
+isolated Pulse service +7 Flutter widget/native FFI flows +5 actual Chrome),
+including9 new store cases; analyzer/format clean. Separate actual old-library and
+instrumented-temp SIGKILL/reopen experiment is not counted as Dart/App tests.
+[Exact source, commands and failures](evidence/definition-history/summary.json).
+The existing intermittent resume underrun is not fixed by this isolated pass.
+Full repository/release/platform/60s and new RenderGraph consumers not qualified.

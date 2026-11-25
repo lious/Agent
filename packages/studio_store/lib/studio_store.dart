@@ -19,6 +19,7 @@ part 'peer_recovery.dart';
 part 'derived_repair.dart';
 part 'checkpoint_retention.dart';
 part 'resource_import.dart';
+part 'definition_history.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -148,8 +149,13 @@ final class DocumentRepository {
     String path,
     this.namespace, {
     bool allowUnqualifiedSqliteForDevelopment = false,
-  }) : _db = sqlite3.open(path) {
+    int definitionHistoryCacheLimit = 16384,
+  }) : _db = sqlite3.open(path),
+       _definitionHistoryLimit = definitionHistoryCacheLimit {
     try {
+      if (_definitionHistoryLimit < 0 || _definitionHistoryLimit > 16384) {
+        throw const StudioException('DEFINITION_CACHE_LIMIT_INVALID');
+      }
       if (!allowUnqualifiedSqliteForDevelopment) {
         final runtime = _db
             .select(
@@ -299,6 +305,16 @@ final class DocumentRepository {
   String get _ns => namespace.key;
   bool _closed = false;
   int _transactionDepth = 0;
+  final int _definitionHistoryLimit;
+  String? _definitionProject;
+  int? _definitionDataVersion;
+  _DefinitionLedger? _definitionLedger;
+  void _clearDefinitionHistory() {
+    _definitionProject = null;
+    _definitionDataVersion = null;
+    _definitionLedger = null;
+  }
+
   T _transaction<T>(T Function() action) {
     final depth = _transactionDepth++,
         savepoint = 'studio_nested_$_transactionDepth';
@@ -309,6 +325,7 @@ final class DocumentRepository {
         _db.execute(depth == 0 ? 'COMMIT' : 'RELEASE $savepoint');
         return result;
       } catch (_) {
+        _clearDefinitionHistory();
         if (depth == 0) {
           _db.execute('ROLLBACK');
         } else {
@@ -494,7 +511,7 @@ final class DocumentRepository {
     operation: operation,
   );
 
-  void _registerDefinitions(ProjectDocument project) {
+  List<Map<String, dynamic>> _legacyDefinitions(ProjectDocument project) {
     final d = project.toJson();
     final definitions = <Map<String, dynamic>>[];
     // Only declared versioned entities: opaque plugin/provider/extension maps
@@ -512,7 +529,17 @@ final class DocumentRepository {
       'shots',
     ]) {
       for (final entity in d[table] as List) {
-        definitions.add(entity as Map<String, dynamic>);
+        definitions.add({
+          ...entity as Map<String, dynamic>,
+          '_kind': switch (table) {
+            'assets' => 'asset',
+            'imageDocuments' => 'imageDocument',
+            'captions' => 'caption',
+            'effects' => 'effect',
+            _ => table,
+          },
+          '_legacyHash': contentHash(entity),
+        });
       }
     }
     for (final seq in d['sequences'] as List) {
@@ -521,7 +548,11 @@ final class DocumentRepository {
         for (final c in t['items']) {
           if (c['source'] != null) {
             used.add(c['source']['id'] as String);
-            definitions.add(c as Map<String, dynamic>);
+            definitions.add({
+              ...c as Map<String, dynamic>,
+              '_kind': 'clip',
+              '_legacyHash': contentHash(c),
+            });
           }
         }
       }
@@ -547,35 +578,55 @@ final class DocumentRepository {
       final seqHash = cues.isEmpty
           ? baseHash
           : contentHash({'base': baseHash, 'captions': cues});
+      definitions.add({
+        ...seq as Map<String, dynamic>,
+        '_kind': 'sequence',
+        '_legacyHash': seqHash,
+      });
+    }
+    return definitions;
+  }
+
+  void _registerDefinitions(
+    ProjectDocument project, {
+    ProjectDocument? previous,
+    bool restoringHistory = false,
+  }) {
+    final legacy = _legacyDefinitions(project);
+    final proof = _definitionProof(project, legacy);
+    final compatible = _verifyDefinitionHistory(
+      project,
+      proof,
+      previous: previous,
+      restoringHistory: restoringHistory,
+    );
+    for (final entity in legacy) {
       _registerVersion(
         project.projectId,
-        seq['id'] as String,
-        seq['version'] as String,
-        seqHash,
+        entity['id'],
+        entity['version'],
+        entity['_legacyHash'],
+        compatibleRawHash: compatible.contains(
+          _definitionKey(entity['_kind'], entity['id'], entity['version']),
+        ),
       );
     }
-    for (final entity in definitions) {
-      _registerVersion(
-        project.projectId,
-        entity['id'] as String,
-        entity['version'] as String,
-        contentHash(entity),
-      );
-    }
+    _definitionLedger?.add(proof);
   }
 
   void _registerVersion(
     String projectId,
     String id,
     String version,
-    String hash,
-  ) {
+    String hash, {
+    bool compatibleRawHash = false,
+  }) {
     final previous = _db.select(
       'SELECT content_hash FROM entity_versions WHERE ns=? AND project_id=? AND entity_id=? AND version=?',
       [_ns, projectId, id, int.parse(version)],
     );
     if (previous.isNotEmpty) {
-      if (previous.single['content_hash'] != hash) {
+      if (previous.single['content_hash'] != hash && !compatibleRawHash) {
         throw const StudioException('IMMUTABLE_VERSION_CONFLICT');
       }
       return;
@@ -762,9 +813,13 @@ final class DocumentRepository {
         'warnings': [],
       };
       if (changed) {
-        verifyDefinitionTransition(before, after);
+        if (operation != null) verifyDefinitionTransition(before, after);
         _put(after.hash, after.canonicalJson);
-        _registerDefinitions(after);
+        _registerDefinitions(
+          after,
+          previous: before,
+          restoringHistory: operation == null,
+        );
         _pinBlobs(after);
         _put(inverseHash, jsonEncode(inverse));
         _db.execute(

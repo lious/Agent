@@ -797,3 +797,28 @@ the historical intermittent underrun. Full original tasks remain partial.
    known resume underrun (full log retained, no timing/assertion relaxation).
    Digest reporting always says no render-equivalence proof. No old full-suite,
    GPU/physical/nonLinux/RTC result is borrowed; underrun remains unresolved.
+
+## Increment1.13 — three executed history compatibility reviews
+
+1. **Source authority/old history.** Inspected actual old `_registerDefinitions`
+   algorithms and existing publication/undo ordering. Kept all legacy hashes and
+   schema9 unchanged; only exact anchored, hash/namespace/project/revision-checked
+   snapshots certify known typed definitions. Added noncurrent reuse/orphan/raw
+   corruption tests. Recognized old same-version bus ambiguity must allow exact
+   validated undo, not grant arbitrary restoration or falsely flag the old file
+   corrupt. Current-head-only guard now defers to full history for that undo path.
+2. **Rollback/concurrency/bounds.** Checked every root publication site (create and
+   _commit), savepoint failures and PRAGMA data_version. Cache clears on rollback,
+   external connection change and project switches. Failed or read-only proposed
+   checks never teach it. Removed duplicate candidate resolution and an unused
+   scan. Added true late SQL abort, other-connection, zero-cache/invalid-limit,
+   missing-counter and bad historical source tests. No new disk index/protocol.
+3. **Positive compatibility/fault evidence.** Added a real SQL parent-location
+   fixture to execute the valid canonical-equal/raw-different publication branch
+   while asserting the old row/source bytes stay identical. Actual old libraries
+   for BOTH store+document produced legacy ambiguity; current undo/rename/re-edit
+   and SIGKILL/reopen checked old byte preservation. Corrected only fixture barrier
+   quoting and probe braces after actual failure; logs kept. Archive/fork/reopen and
+   long1000 edit/undo tests reran. No production native audio/timing change and no
+   renderer admission widened; historical underrun still unresolved. Instrumented
+   crash mirror is explicitly separate from unmodified frozen test execution.

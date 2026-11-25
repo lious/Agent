@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/acceptance/verify_definition_history.py", line 121, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/agent-foundation-20261125/tools/acceptance/verify_definition_history.py", line 100, in main
+    raise RuntimeError(f'barrier failed: {ready}: {proc.stderr.read()}')
+RuntimeError: barrier failed: : /tmp/definition-compat-6ktoso2n/mirror/packages/studio_store/lib/studio_store.dart:818:57: Error: String starting with ' must end with '.
+        fixtureIo.File('/dev/stdout').writeAsStringSync('HISTORY_VERIFIED_UNCOMMITTED
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/tmp/definition-compat-6ktoso2n/mirror/packages/studio_store/lib/studio_store.dart:819:1: Error: String starting with ' must end with '.
+',mode:fixtureIo.FileMode.writeOnly);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/tmp/definition-compat-6ktoso2n/mirror/packages/studio_store/lib/studio_store.dart:818:56: Error: Can't find ')' to match '('.
+        fixtureIo.File('/dev/stdout').writeAsStringSync('HISTORY_VERIFIED_UNCOMMITTED
+                                                       ^
+/tmp/definition-compat-6ktoso2n/mirror/packages/studio_store/lib/studio_store.dart:820:9: Error: Expected ',' before this.
+        fixtureIo.stdin.readByteSync();
+        ^^^^^^^^^
+/tmp/definition-compat-6ktoso2n/mirror/packages/studio_store/lib/studio_store.dart:818:56: Error: Too many positional arguments: 1 allowed, but 2 found.
+Try removing the extra positional arguments.
+        fixtureIo.File('/dev/stdout').writeAsStringSync('HISTORY_VERIFIED_UNCOMMITTED
+                                                       ^

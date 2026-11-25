@@ -1,0 +1,104 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test unchanged"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/history-final-analyzer.log"
+    },
+    {
+      "name": "native",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/resource_admission_test.dart",
+        "packages/studio_sdk/test/resource_preservation_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/namespace_budget_test.dart",
+        "packages/studio_sdk/test/proxy_repair_test.dart",
+        "packages/studio_sdk/test/proxy_discard_test.dart",
+        "packages/studio_sdk/test/durable_proxy_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/audio_export_test.dart",
+        "packages/studio_store/test",
+        "packages/studio_document/test",
+        "--concurrency=2",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/history-final-native.log"
+    },
+    {
+      "name": "pulse",
+      "command": [
+        "python3",
+        "tools/acceptance/audio_sink/run_private.py",
+        "dart",
+        "test",
+        "packages/studio_sdk/test/timeline_audio_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/history-final-pulse.log"
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/resource_preservation_ui_test.dart",
+        "test/checkpoint_retention_ui_test.dart",
+        "test/namespace_budget_ui_test.dart",
+        "test/proxy_repair_ui_test.dart",
+        "test/proxy_discard_ui_test.dart",
+        "test/foundation_app_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "exitCode": 0,
+      "log": "artifacts/local-video/history-final-ui.log"
+    },
+    {
+      "name": "chrome",
+      "command": [
+        "flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "test/resource_closure_test.dart",
+        "test/inspector_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "exitCode": 0,
+      "log": "artifacts/local-video/history-final-chrome.log"
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/local-video/history-final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/history-final-actual-legacy.log",
+      "exitCode": 0
+    }
+  ],
+  "toolVersions": "Flutter3.50.1/Dart3.14.0/SQLite3.54.1/Chrome156.0.8078.47; unchanged approved toolchains/FFmpeg7.1.5 native; no installs. Actual version output retained in prior definition-identity/tools.json; strict native SQLite runtime gate executed in this run."
+}

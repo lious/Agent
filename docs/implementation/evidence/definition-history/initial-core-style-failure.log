@@ -1,0 +1,7 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/lib/definition_history.dart:56:11 • curly_braces_in_flow_control_structures
+warning • The value of the local variable 'd' isn't used. Try removing the variable or using it • packages/studio_store/lib/definition_history.dart:163:16 • unused_local_variable
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/lib/definition_history.dart:208:11 • curly_braces_in_flow_control_structures
+
+3 issues found. (ran in 2.9s)

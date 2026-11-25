@@ -1,0 +1,103 @@
+{
+  "asOf": "2026-11-25T21:21:41.294242+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "7fb10e4855f1bc52fb9baa44fb16426dcccc18b2",
+  "sourceSha256": {
+    "packages/studio_document/lib/definition_fingerprint.dart": "8c96a8c85bd198f0b19b5194cb865a04a706e2d91a668ebb5d7bf524a0d56d55",
+    "packages/studio_store/lib/definition_history.dart": "d8e06e9ff08217bd0421d2c63e3290f003ab22dbfe91b47cf985162bee3dd087",
+    "packages/studio_store/lib/studio_store.dart": "547303ad723b1c4a3e663886bb804feeb5bce17d49c5864f0b9ba8581375a997",
+    "packages/studio_store/test/definition_history_test.dart": "2348cd847ceaeb613a9462bb48fa3199c2a77a747482c3ddb6ca596b7aa8bc25",
+    "packages/studio_store/tool/definition_history_probe.dart": "6fa079c391a7edb830b094b3224908554f552c939bb61f0b841861e4830aca4d",
+    "tools/acceptance/verify_definition_history.py": "c9a464fff7916b0d3d791e4a3daafaaf9def6fe89cfe913889674bd4e0c1e5b0"
+  },
+  "freezeStarted": "2026-11-25T21:18:42.328437+08:00",
+  "freezeIdentity": "Final production/test/probe/Python hashes;187 selected cases plus separate old-library/crash experiment after last source change. Later changes docs/evidence only, applies to commit containing these exact hashes. No old182/178 result borrowed.",
+  "analyzer": "No issues found",
+  "results": {
+    "native": {
+      "passed": 174,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-native.jsonl",
+      "sha256": "cc1aa3413774798d5d879b59ab1f37e2236d6442324d3dcc4ec5258b7a7a4912"
+    },
+    "pulse": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-pulse.jsonl",
+      "sha256": "9e9bae27e6652eacd85040e4c81566d543c646fc5d52f2aaa2919c9fc7acf68a"
+    },
+    "ui": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-ui.jsonl",
+      "sha256": "373e217a92d44e61c3f693d9cda0bf1510d3ce4ad5af834619068fd269580819"
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-chrome.jsonl",
+      "sha256": "f6ccfdb0a5bd50822f7b58911cc9896ad55d0b3288e3691cedffaa15a1e1d157"
+    }
+  },
+  "totalPassed": 187,
+  "newCases": {
+    "storeHistory": 9
+  },
+  "additionalExperiments": {
+    "report": "actual-old-library-and-kill.json",
+    "actualBaselineStoreANDDocumentCommit": "06a254506c7eae2e585e363978eede4cd40cf851",
+    "passed": true,
+    "countedAsDartCases": false,
+    "crashInstrumentation": "One barrier in temp current store mirror AFTER actual definition history/legacy rows and BEFORE pins/head/COMMIT; actual SIGKILL then unmodified current reopen. No production crash hook. Not App/physical or unmodified-binary crash qualification."
+  },
+  "failuresRetained": [
+    {
+      "log": "initial-core-style-failure.log",
+      "sha256": "5c0104b30c6bb74b3366332110ab86123b04e3245928c8c07cafbdfc9e24421e",
+      "finalSource": false
+    },
+    {
+      "log": "initial-instrumented-fixture-quoting-failure.log",
+      "sha256": "5ba55ecf06e983f1f6412b71b78bd992976e82c8497a6f7fafbf9a3a160efed2",
+      "finalSource": false
+    },
+    {
+      "log": "initial-probe-style-failure.log",
+      "sha256": "e4af440b304c3d8e59f9f68f62217d4ebd7efcf363fb8fded28eaac1c75b1566",
+      "finalSource": false
+    }
+  ],
+  "threeReviewRounds": "../../REVIEW.md increment1.13 and ADR0020",
+  "knownUnresolved": "Existing real resume underrun from definition-identity/intermediate-service-underrun-failure.jsonl remains unresolved. This final isolated service pass does not close it. No native audio/timing/assertions changed.",
+  "storage": "Existing schema9, SQLite3.54.1 exact strict runtime. No SQL table/migration/hash rewrite/history deletion. Memory proof cache bound16384; zero-cache streaming actually tested.",
+  "oldClientLimit": "No schema bump; old executables are not fenced from co-writing. All file writers must use guarded runtime; trusted-local logical namespace is not an OS sandbox.",
+  "notRun": [
+    "Full repository/all87/release acceptance",
+    "I-022 actual new consumers/effects/GPU/100cancel/preencoder pixel qualifications",
+    "Fresh OS app build/window/manual or physical sound/sync",
+    "Native ABI/CTest/rebuild and independent60s stress/cancel matrix",
+    "Earlier separate v4-v8 old-binary migration matrix (existing store migration/fault tests DID rerun)",
+    "Non-Linux/mobile/physical multiple devices/positive RTC (unchanged policy blocker)",
+    "Whole story/session/retained execution/hash semantics outside existing known core profile"
+  ],
+  "statuses": {
+    "original87": {
+      "complete": 0,
+      "partial": 25,
+      "planned": 49,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "original104Modified": false,
+  "logNormalization": "Analyzer/failure display logs trailing whitespace removed for git diff --check. Test JSONL unchanged. Raw originals in artifacts/local-video."
+}
