@@ -646,3 +646,9 @@ full182, native rebuild/CTest/ABI, release/Chrome, full historical migration mat
 or audio-stress/P0 rerun. Intermittent service underrun remains unresolved.
 Conservative logical-byte budget is not full disk/DB/export reservation, physical
 platform qualification or history pruning; original87/XD10 counts unchanged.
+
+Final hygiene correction: cached diff check detected trailing Flutter console progress
+padding in the newly added analyzer evidence. Initial source commit retained;
+normal documentation-only follow-up removes padding, records testedSourceCommit,
+and reruns full base-to-index text/credential/whitespace checks. No source or
+test-result change; source hashes remain the exact70-test freeze.

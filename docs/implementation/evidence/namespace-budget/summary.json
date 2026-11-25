@@ -80,5 +80,7 @@
     "partial": 8,
     "planned": 1,
     "blocked": 1
-  }
+  },
+  "testedSourceCommit": "1d8cbd002ecf55fc6e2f1087b3076da56f54cfd1",
+  "analyzerLogNormalization": "Trailing console progress padding removed after cached diff check caught it; raw console log retained under artifacts/local-video. Follow-up changes evidence/docs only; sourceHashes unchanged."
 }
