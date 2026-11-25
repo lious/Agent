@@ -1,0 +1,116 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.844
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/ripple_delete_test.dart",
+        "packages/studio_document/test/insert_test.dart",
+        "packages/studio_document/test/overwrite_test.dart",
+        "packages/studio_document/test/clipboard_test.dart",
+        "packages/studio_document/test/multi_move_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.44
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/ripple_delete_test.dart",
+        "packages/studio_sdk/test/insert_test.dart",
+        "packages/studio_sdk/test/overwrite_test.dart",
+        "packages/studio_sdk/test/clipboard_test.dart",
+        "packages/studio_sdk/test/multi_move_test.dart",
+        "packages/studio_sdk/test/snap_move_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 33.282
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/ripple_delete_ui_test.dart",
+        "test/insert_ui_test.dart",
+        "test/overwrite_ui_test.dart",
+        "test/clipboard_ui_test.dart",
+        "test/multi_move_ui_test.dart",
+        "test/snap_move_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/ripple-delete/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 22.361
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/ripple-delete/final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-actual-legacy-and-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 13.365
+    },
+    {
+      "name": "undo-redo-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_command_history.py",
+        "--report",
+        "artifacts/ripple-delete/final-undo-redo-kill.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-undo-redo-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 20.253
+    },
+    {
+      "name": "100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/ripple-delete/final-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.767
+    }
+  ]
+}

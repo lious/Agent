@@ -1,14 +1,8 @@
 part of 'edit_algebra.dart';
 
-List<String>? _validatedRippleTrackIds(
-  String mode,
-  Iterable<String>? rippleTrackIds,
-) {
+List<String>? _optionalRippleTrackList(Iterable<String>? rippleTrackIds) {
   if (rippleTrackIds == null) {
     return null;
-  }
-  if (mode != 'insert') {
-    throw const StudioException('RIPPLE_TRACKS_REQUIRE_INSERT');
   }
   final ids = List<String>.unmodifiable(
     rippleTrackIds.take(100001).toList()..sort(),
@@ -23,6 +17,16 @@ List<String>? _validatedRippleTrackIds(
     requireId(id);
   }
   return ids;
+}
+
+List<String>? _validatedRippleTrackIds(
+  String mode,
+  Iterable<String>? rippleTrackIds,
+) {
+  if (rippleTrackIds != null && mode != 'insert') {
+    throw const StudioException('RIPPLE_TRACKS_REQUIRE_INSERT');
+  }
+  return _optionalRippleTrackList(rippleTrackIds);
 }
 
 void _requireGrid(Map track, Q t, FrameRate fps) {

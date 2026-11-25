@@ -349,6 +349,8 @@ class _FoundationAppState extends State<FoundationApp>
       });
     } on StudioException catch (e) {
       setState(() => _error = e.code);
+    } catch (_) {
+      setState(() => _error = 'LOCAL_COMMIT_FAILED');
     }
   }
 
@@ -1082,6 +1084,17 @@ class _FoundationAppState extends State<FoundationApp>
           child: Text(
             _hasPersistentAudio ? 'Delete (leave gap)' : 'Ripple delete',
           ),
+        ),
+        OutlinedButton(
+          key: const Key('ripple-delete'),
+          onPressed: _busy || (_selected == null && _multiSelection.isEmpty)
+              ? null
+              : () => _edit(
+                  () => RippleDeleteClips(
+                    _multiSelection.isNotEmpty ? _multiSelection : [_selected!],
+                  ),
+                ),
+          child: const Text('Ripple delete range'),
         ),
       ],
     ),
