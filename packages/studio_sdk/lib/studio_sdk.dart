@@ -38,6 +38,7 @@ export 'package:studio_store/blob_store.dart' show LocalFileGrant;
 export 'package:studio_media/studio_media.dart' show NativeMedia;
 
 part 'edit_gesture.dart';
+part 'clipboard_workspace.dart';
 
 /// Composition root for both hosts. No media, model, payment or upload port is
 /// implicitly installed. All mutating calls use the same repository coordinator.
@@ -81,6 +82,7 @@ final class StudioWorkspace {
   String newEntityId() => _uuid.v7();
   WriterToken? _writer;
   EditGesture? _editGesture;
+  ClipboardPayload? _clipboard;
   BlobStore? _blobs;
   NativeMedia? _media;
   AutosaveScheduler? _autosave;
@@ -156,6 +158,7 @@ final class StudioWorkspace {
 
   ProjectDocument openDemo() {
     _cancelActiveGesture();
+    _clipboard = null;
     clearPreviewProxies();
     _requireMetadata();
     _activeProjectId = _repository.selectedProjectId ?? 'demo-project';
@@ -1853,6 +1856,7 @@ final class StudioWorkspace {
         _autosave?.dispose();
         clearPreviewProxies();
         _cancelActiveGesture();
+        _clipboard = null;
         _activeProjectId = imported.project.projectId;
         _writer = imported.writer;
         _autosave = AutosaveScheduler(
@@ -1915,6 +1919,7 @@ final class StudioWorkspace {
     _repository.create(fork);
     _repository.selectProject(fork.projectId);
     _cancelActiveGesture();
+    _clipboard = null;
     _activeProjectId = fork.projectId;
     _writer = _repository.acquireWriter(
       fork.projectId,
@@ -2507,6 +2512,7 @@ final class StudioWorkspace {
 
   void close() {
     _cancelActiveGesture();
+    _clipboard = null;
     cancelResourceImport();
     stopTimelinePlayback();
     if (!_closed) {

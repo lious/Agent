@@ -1,0 +1,140 @@
+part of 'studio_editor_ui.dart';
+
+extension _ClipboardControls on _FoundationAppState {
+  bool get _clipboardBlocked =>
+      _busy ||
+      _multiPreviewBusy ||
+      _gesture != null ||
+      _multiGesture != null ||
+      _pointerActive;
+
+  void _clipboardAct(void Function() action) {
+    if (_clipboardBlocked) {
+      _gestureSetState(() => _clipboardError = 'GESTURE_IN_PROGRESS');
+      return;
+    }
+    try {
+      action();
+      _gestureSetState(() {
+        _refresh();
+        _clipboardError = null;
+        _error = null;
+      });
+    } catch (e) {
+      _gestureSetState(
+        () => _clipboardError = e is StudioException
+            ? e.code
+            : 'LOCAL_COMMIT_FAILED',
+      );
+    }
+  }
+
+  Q _pasteTime() {
+    final raw = _pasteAt.text.trim();
+    if (raw.isEmpty) {
+      return Q.fromJson(_project.toJson()['sequences'][0]['duration']);
+    }
+    return _snapDecimal(raw);
+  }
+
+  Widget _buildClipboardControls() {
+    final payload = widget.workspace.clipboard;
+    final groups = {
+      for (final id in _multiSelection)
+        for (final c in _clips)
+          if (c['id'] == id && c['selectionGroupId'] != null)
+            c['selectionGroupId'] as String,
+    };
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only; collisions are refused. Overwrite, insert/ripple, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
+        ),
+        Text(
+          payload == null
+              ? 'Internal clipboard empty'
+              : 'Internal clipboard ${payload.hash} · ${payload.clipIds.length} clips · origin ${payload.origin}',
+          key: const Key('clipboard-status'),
+        ),
+        TextField(
+          key: const Key('clipboard-paste-at'),
+          controller: _pasteAt,
+          enabled: !_clipboardBlocked,
+          decoration: const InputDecoration(
+            labelText: 'Paste at (seconds; empty = current duration)',
+          ),
+        ),
+        Wrap(
+          children: [
+            TextButton(
+              key: const Key('clipboard-copy'),
+              onPressed: _clipboardBlocked
+                  ? null
+                  : () => _clipboardAct(
+                      () => widget.workspace.copySelection(_multiSelection),
+                    ),
+              child: const Text('Copy selection'),
+            ),
+            TextButton(
+              key: const Key('clipboard-cut'),
+              onPressed: _clipboardBlocked
+                  ? null
+                  : () => _clipboardAct(
+                      () => widget.workspace.cutSelection(
+                        _multiSelection,
+                        expectedRevision: _project.revision,
+                      ),
+                    ),
+              child: const Text('Cut selection'),
+            ),
+            TextButton(
+              key: const Key('clipboard-paste'),
+              onPressed: _clipboardBlocked
+                  ? null
+                  : () => _clipboardAct(
+                      () => widget.workspace.pasteClipboard(
+                        at: _pasteTime(),
+                        expectedRevision: _project.revision,
+                      ),
+                    ),
+              child: const Text('Paste internal clipboard'),
+            ),
+            TextButton(
+              key: const Key('clipboard-group'),
+              onPressed: _clipboardBlocked
+                  ? null
+                  : () => _clipboardAct(
+                      () => widget.workspace.groupSelection(
+                        _multiSelection,
+                        expectedRevision: _project.revision,
+                      ),
+                    ),
+              child: const Text('Group selection'),
+            ),
+            TextButton(
+              key: const Key('clipboard-ungroup'),
+              onPressed: _clipboardBlocked
+                  ? null
+                  : () => _clipboardAct(() {
+                      if (groups.isEmpty) {
+                        throw const StudioException('GROUP_NOT_FOUND');
+                      }
+                      widget.workspace.ungroupSelection(
+                        groups,
+                        expectedRevision: _project.revision,
+                      );
+                    }),
+              child: const Text('Ungroup selection'),
+            ),
+          ],
+        ),
+        if (_clipboardError != null)
+          Text(
+            'Clipboard: $_clipboardError',
+            key: const Key('clipboard-error'),
+          ),
+      ],
+    );
+  }
+}

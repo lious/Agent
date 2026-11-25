@@ -16,6 +16,7 @@ part 'edit_gesture_controls.dart';
 part 'multi_move_controls.dart';
 part 'snap_controls.dart';
 part 'pointer_timeline.dart';
+part 'clipboard_controls.dart';
 
 /// Shared local-video workbench. Unsupported media/operations fail explicitly;
 /// this is not the complete timeline, preview, audio mixer, or AI product UI.
@@ -94,6 +95,8 @@ class _FoundationAppState extends State<FoundationApp>
   bool _multiInputInvalid = false;
   bool _snapExpanded = false;
   bool _pointerActive = false;
+  final _pasteAt = TextEditingController();
+  String? _clipboardError;
   final _multiSelection = <String>{};
   EditGesture? _multiGesture;
   String? _multiError;
@@ -450,6 +453,7 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    _pasteAt.dispose();
     for (final c in [_snapZoom, _snapOrigin, _snapPointer, _snapPlayhead]) {
       c.dispose();
     }
@@ -957,6 +961,7 @@ class _FoundationAppState extends State<FoundationApp>
       }),
     ),
     _buildMultiMoveControls(),
+    _buildClipboardControls(),
     for (final c in _clips)
       ListTile(
         key: Key('clip-${c['id']}'),
@@ -1827,6 +1832,7 @@ class _FoundationAppState extends State<FoundationApp>
             child: Stack(
               children: [
                 ListView(
+                  key: const Key('foundation-scroll'),
                   children: [
                     PeerPanel(
                       storageScope: widget.workspace.peerStorageScope,

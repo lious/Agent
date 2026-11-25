@@ -6,6 +6,7 @@ import 'studio_document.dart';
 
 part 'persistent_audio.dart';
 part 'multi_move.dart';
+part 'clipboard.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -899,6 +900,12 @@ ProjectDocument applyEdit(
   if (operation is MoveClips) {
     return _moveClips(before, operation, nextVersion, newId);
   }
+  if (operation is GroupClips ||
+      operation is UngroupClips ||
+      operation is LiftClips ||
+      operation is PasteClips) {
+    return _clipboardEdit(before, operation, nextVersion, newId);
+  }
   if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
     return _opacityKeyframeEdit(before, operation, nextVersion, newId);
   }
@@ -1081,6 +1088,10 @@ ProjectDocument applyEdit(
   if (zeroDelta) {
     switch (operation) {
       case MoveClips():
+      case GroupClips():
+      case UngroupClips():
+      case LiftClips():
+      case PasteClips():
       case DiscardPreviewProxies():
       case AttachPreviewProxies():
         throw StateError("handled above");
@@ -1120,6 +1131,10 @@ ProjectDocument applyEdit(
   }
   switch (operation) {
     case MoveClips():
+    case GroupClips():
+    case UngroupClips():
+    case LiftClips():
+    case PasteClips():
     case DiscardPreviewProxies():
     case AttachPreviewProxies():
       throw StateError("handled above");

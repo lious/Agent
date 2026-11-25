@@ -1,0 +1,99 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 2.188
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/clipboard_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.052
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/clipboard_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 4.678
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/clipboard_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/clipboard/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 13.157
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/clipboard/final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-actual-legacy-and-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 13.826
+    },
+    {
+      "name": "undo-redo-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_command_history.py",
+        "--report",
+        "artifacts/clipboard/final-undo-redo-kill.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-undo-redo-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 21.69
+    },
+    {
+      "name": "100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/clipboard/final-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.825
+    }
+  ]
+}

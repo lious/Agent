@@ -28,44 +28,8 @@ final class MoveClips extends EditOperation {
 }
 
 /// Read-only preview of the SAME closure used by the pure edit. No filtered IDs.
-List<String> expandedMoveClipIds(ProjectDocument before, MoveClips operation) {
-  requireLocalEditingWritable(before);
-  final d = before.toJson(), s = d['sequences'][0];
-  final clips = <String, Map>{};
-  final invalid = <String>{
-    for (final cue in d['captions']) cue['id'] as String,
-  };
-  for (final t in s['tracks']) {
-    for (final c in t['items']) {
-      if (c['source'] == null || !['video', 'audio'].contains(t['kind'])) {
-        invalid.add(c['id'] as String);
-      } else {
-        clips[c['id'] as String] = c as Map;
-      }
-    }
-  }
-  final groups = {for (final g in d['linkGroups']) g['id']: g};
-  final result = <String>{};
-  final queue = operation.clipIds.toList();
-  for (var i = 0; i < queue.length; i++) {
-    final id = queue[i];
-    if (!result.add(id)) continue;
-    if (invalid.contains(id)) {
-      throw const StudioException('SELECTION_ITEM_UNSUPPORTED');
-    }
-    final c = clips[id];
-    if (c == null) throw const StudioException('CLIP_NOT_FOUND');
-    final group = c['linkGroupId'];
-    if (group != null) {
-      final g = groups[group];
-      if (g == null) throw const StudioException('LINK_MEMBERSHIP_MISMATCH');
-      for (final m in g['members']) {
-        queue.add(m['clipId'] as String);
-      }
-    }
-  }
-  return List.unmodifiable(result.toList()..sort());
-}
+List<String> expandedMoveClipIds(ProjectDocument before, MoveClips operation) =>
+    expandedEditClipIds(before, operation.clipIds);
 
 ProjectDocument _moveClips(
   ProjectDocument before,

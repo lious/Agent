@@ -460,6 +460,7 @@ ProjectDocument forkLocalProject(
     'effects',
     'transitions',
     'linkGroups',
+    'selectionGroups',
   ]) {
     for (final x in d[table]) {
       define(x as Map);
@@ -496,6 +497,7 @@ ProjectDocument forkLocalProject(
     'rightClipId',
     'effectId',
     'linkGroupId',
+    'selectionGroupId',
   };
   void replace(dynamic x) {
     if (x is Map) {
@@ -506,7 +508,8 @@ ProjectDocument forkLocalProject(
           x[e.key] = ids[e.value];
         } else if (e.key == 'assetIds' ||
             e.key == 'inputBusIds' ||
-            e.key == 'effectIds') {
+            e.key == 'effectIds' ||
+            e.key == 'memberClipIds') {
           x[e.key] = (e.value as List).map((v) => ids[v] ?? v).toList();
         } else if (e.key != 'namespace') {
           replace(e.value);

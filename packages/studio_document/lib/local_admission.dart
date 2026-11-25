@@ -9,7 +9,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
   requireDissolveProfile(d);
   for (final table in [
     'markers',
-    'selectionGroups',
     'imageDocuments',
     'briefs',
     'scripts',
@@ -157,6 +156,7 @@ void requireLocalEditingWritable(ProjectDocument project) {
     cues.add(CaptionCue.fromProjectJson(c as Map<String, dynamic>));
   }
   CaptionStore(cues);
+  requireSelectionGroupProfile(d);
   for (final group in d['linkGroups']) {
     if (group['syncPolicy'] != 'preserve' ||
         (group['members'] as List).length != 2) {
@@ -181,7 +181,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
       if (c['source'] == null) continue;
       if (c['source']['kind'] != 'asset' ||
           c['timeMap']['kind'] != 'linear' ||
-          c['selectionGroupId'] != null ||
           c['shotId'] != null ||
           c['candidateId'] != null ||
           c['provenanceId'] != null) {
@@ -257,6 +256,43 @@ void requireDissolveProfile(Map<String, dynamic> d) {
       if (fps.quantize(q, Rounding.tiesToEven) != q) {
         throw const StudioException('TRANSITION_NOT_ON_FRAME');
       }
+    }
+  }
+}
+
+/// Admitted selection groups only affect selection/move/copy closure. They are
+/// not AV links and must remain bidirectionally consistent.
+void requireSelectionGroupProfile(Map<String, dynamic> d) {
+  final clips = {
+    for (final t in d['sequences'][0]['tracks'])
+      for (final c in t['items'])
+        if (c['source'] != null) c['id']: c,
+  };
+  final seen = <String>{};
+  for (final g in d['selectionGroups']) {
+    final members = List<String>.from(g['memberClipIds'] as List);
+    if (members.isEmpty || members.toSet().length != members.length) {
+      throw const StudioException('GROUP_MEMBERSHIP_MISMATCH');
+    }
+    for (final id in members) {
+      if (!seen.add(id)) {
+        throw const StudioException('GROUP_MEMBERSHIP_MISMATCH');
+      }
+      final c = clips[id];
+      if (c == null || c['selectionGroupId'] != g['id']) {
+        throw const StudioException('GROUP_MEMBERSHIP_MISMATCH');
+      }
+    }
+  }
+  for (final c in clips.values) {
+    final group = c['selectionGroupId'];
+    if (group != null &&
+        !(d['selectionGroups'] as List).any(
+          (g) =>
+              g['id'] == group &&
+              (g['memberClipIds'] as List).contains(c['id']),
+        )) {
+      throw const StudioException('GROUP_MEMBERSHIP_MISMATCH');
     }
   }
 }

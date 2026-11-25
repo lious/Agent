@@ -1,0 +1,22 @@
+{
+  "baseCommit": "30a12eca956f2bf47014b12848645cf51d6d9aad",
+  "sourceSha256": {
+    "packages/studio_document/lib/clipboard.dart": "a757d2aadc66a53b34c1401aeb84b201d7bb96b15ecf09b9c9e237b91f90cb25",
+    "packages/studio_document/lib/edit_algebra.dart": "bc20c12e9228f6bc7c109b077b080f6905d532cf65a0ae97194e4c1f13b6de95",
+    "packages/studio_document/lib/local_admission.dart": "775816bdd19559f652543cb1e160b3c3da98751ad11990dfe30985153aaa6ac4",
+    "packages/studio_document/lib/multi_move.dart": "e1e0de3b54491c5ff9b3a586f0bfe86b0adc4e711291b87ccc72b138743c2ef2",
+    "packages/studio_document/test/clipboard_test.dart": "7a634a273764950141114a6d7e67966b4c9d13b48f6abf6258b80e3e3efba58b",
+    "packages/studio_editor_ui/lib/clipboard_controls.dart": "7f2d059af1b76e41dad5cf89faf0ca0012bb910812246d5d609d7127ab6bdf20",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "d4ed19b61bfac45cded3e90c49ed12af7e45711c7e280be56321e24dddbf901e",
+    "packages/studio_editor_ui/test/clipboard_ui_test.dart": "34576986a76596220771cbde625fca7116631f2bedc02f3ff10f2e47b98ca07c",
+    "packages/studio_sdk/lib/clipboard_workspace.dart": "11bb688eb05a83062590dbdbd57814e31068cae42c4fcd30517b6b0b6ff60c49",
+    "packages/studio_sdk/lib/studio_sdk.dart": "666139e3ccbab1cfe1cce8a029059261c4ddd3e490423adc52fb9cea2dea4a81",
+    "packages/studio_sdk/test/clipboard_test.dart": "1239e5281800ab2b05388bcefd4ffa02c1dcccba250bde5c1868966ed5ab78f9",
+    "packages/studio_sdk/test/multi_move_fixture.dart": "99587e8978b18460ce157141f71b14ec7a13115af3f33c039004fe37edeed514",
+    "packages/studio_store/lib/project_archive.dart": "39dab90ad6b88389df67d14df951d98d863886ac2691c23585138a23282564f1"
+  },
+  "aggregateSha256": "3a36f2b4331f485a5b9a7acdd6912412d311604cefdaf7a9611b0db28434cd76",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  }
+}
