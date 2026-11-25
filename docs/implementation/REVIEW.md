@@ -497,3 +497,16 @@ positive RTC rerun/policy change/relay, production/paid/OAuth/workflow/Mac actio
    plain pause/resume (previous cases mainly sought first), duplicates, real
    SIGSTOP starvation, device suspend, server stall and cleanup. This is NOT a
    proof of Pulse internals, seamless DAC resume or physical AV/performance closure.
+
+
+   Final frozen-source rerun:169 native Dart/Flutter +9 Chrome +1 actual isolated
+   OS-keyring UI =179 distinct,0 skips. Six actual clean release builds/starts
+   (three per native host) and three independent minimal ABI probes passed.
+   Actual Pulse fault/monitor/plain-resume regression,60s offline PCM/AudioBus/AAC,
+   explicit Pulse-OFF CTest/proxy/refusal, and v4/v5/v6->v7 migrations passed.
+   First direct fault-harness launch genuinely failed because its D-Bus name was
+   already held; retained stdout/stderr, then used the existing isolation contract
+   (a NEW dbus-run-session for its own synthetic server), not an owner service or
+   relaxed assertion. Final verification source hashes match the checkpoint source.
+   Original87 remain0 complete/25 partial/49 planned/13 blocked; XD10 separate
+   0/8/1/1. No platform/hardware/P0 or physical-device claim follows these counts.

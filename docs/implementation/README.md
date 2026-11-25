@@ -496,7 +496,7 @@ GPU/P0/全资源生命周期与其他平台未验证，不能据测试数推导�
 * v4/v5/v6→v7实际SQLite迁移及旧runtime拒绝通过；原104 SHA256与87项原验收/依赖保持。
 * Linux C++异常在真实Flutter宿主触发的abort已定位并隔离GNU runtime，C ABI只导出sm_*；
   真引擎加载时sync/async错误回归通过。仅Linux验证，不声称其他系统ABI或生产再分发资格。
-* 当前6次clean/release构建启动复验记录以summary最终状态为准，不借用旧构建结果。
+* 当前最终源代码双Linux宿主各3次clean/release构建启动通过（共6次），另3次最小ABI探针通过；不是借用旧结果。
 * 已知RTC受管网络策略阻塞保持；本批未无变化重跑正向资格、改策略、加中继或绕过限制。
 
 细节：[ADR0012](../adr/0012-clock-driven-derived-video-preview.md)、

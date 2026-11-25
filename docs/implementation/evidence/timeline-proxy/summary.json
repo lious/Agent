@@ -1,6 +1,6 @@
 {
   "increment": "1.8",
-  "checkedAt": "2026-11-25T17:19:12.161014+08:00",
+  "checkedAt": "2026-11-25T17:24:10.892706+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "f240b7de9f06cf841868ae6369ea34f8bf6b6b78",
   "branch": "feat/studio-foundation-20261125",
@@ -35,7 +35,8 @@
     "internalAacActiveCancelTrials": 10,
     "internalSilentCancelTrials": 10,
     "repeatCountersAreNotExtraDistinctTests": true,
-    "cleanReleaseRerun": "running at checkpoint; not counted as final pass"
+    "cleanLinuxReleaseBuildsAndStarts": 6,
+    "independentMinimalAbiProbes": 3
   },
   "userPath": [
     "import admitted AV and extract persistent linked audio",
@@ -109,5 +110,6 @@
     "browser-native or physical-device network session; existing managed RTC policy blocker unchanged",
     "model/paid/production redistribution/activation"
   ],
-  "next": "I-002 durable proxy/CAS mapping + history/resource pins/ownership and readonly rich app; then CPU/GPU/effects/preencoder qualification. Do not silently insert ephemeral RGBA into original Schema."
+  "next": "I-002 durable proxy/CAS mapping + history/resource pins/ownership and readonly rich app; then CPU/GPU/effects/preencoder qualification. Do not silently insert ephemeral RGBA into original Schema.",
+  "implementationCommit": "39787c34b209a4c9365b34afaac6ec369d504bd7"
 }
