@@ -405,10 +405,14 @@ _InsertOpening _openInsertHole(
   final markerLocals = applyMarkers
       ? snapshotClipLocalMarkerLocals(d)
       : const <String, Q>{};
+  final sourceAbs = applyCaptions
+      ? snapshotSourceCaptionAbsolutes(d)
+      : const <String, SourceCaptionAbsolute>{};
   final splitMap = _splitRippleAt(d, ripple, at, protected, version, newId);
   _shiftRippleFrom(d, ripple, at, length, protected, version);
   _rebuildSplitLinkGroups(d, splitMap, newId);
   if (applyCaptions) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
     applyCaptionIntervalEdit(
       d,
       at: at,
@@ -476,6 +480,7 @@ ProjectDocument _insertMoveClips(
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
   final markerLocals = snapshotClipLocalMarkerLocals(d);
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -560,6 +565,7 @@ ProjectDocument _insertMoveClips(
     newId,
     opened.minimumDuration,
   );
+  applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   applyCaptionIntervalEdit(
     d,
     at: at,

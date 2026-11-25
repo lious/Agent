@@ -2099,6 +2099,49 @@ class _FoundationAppState extends State<FoundationApp>
           child: const Text('Anchor selected cue to covering clip'),
         ),
         OutlinedButton(
+          key: const Key('caption-follow-source'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues((cues) {
+                  final selected = cues.singleWhere(
+                    (c) => c.id == _captionSelected,
+                  );
+                  final id = coveringCaptionHostClipId(
+                    _project.toJson(),
+                    selected.range,
+                  );
+                  if (id == null) {
+                    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+                  }
+                  Map? host;
+                  for (final t in _project.toJson()['sequences'][0]['tracks']) {
+                    for (final item in t['items']) {
+                      if (item['id'] == id) host = item as Map;
+                    }
+                  }
+                  return [
+                    for (final cue in cues)
+                      if (cue.id == _captionSelected)
+                        cue.anchoredToSource(
+                          clipId: id,
+                          clipStart: Q.fromJson(
+                            host!['timelineRange']['start'],
+                          ),
+                          clipDuration: Q.fromJson(
+                            host['timelineRange']['duration'],
+                          ),
+                          sourceDuration: Q.fromJson(
+                            host['sourceRange']['duration'],
+                          ),
+                          rate: Q.fromJson(host['timeMap']['rate']),
+                        )
+                      else
+                        cue,
+                  ];
+                }),
+          child: const Text('Anchor selected cue to source of covering clip'),
+        ),
+        OutlinedButton(
           key: const Key('caption-make-absolute'),
           onPressed: _busy || _captionSelected == null
               ? null
@@ -2121,7 +2164,9 @@ class _FoundationAppState extends State<FoundationApp>
         selected: cue.id == _captionSelected,
         title: Text(cue.text),
         subtitle: Text(
-          cue.anchorKind == 'clipLocal'
+          cue.anchorKind == 'source'
+              ? '${cue.range.start} → ${cue.range.end} · source of ${cue.anchorClipId}'
+              : cue.anchorKind == 'clipLocal'
               ? '${cue.range.start} → ${cue.range.end} · follows ${cue.anchorClipId}'
               : '${cue.range.start} → ${cue.range.end} · absolute',
         ),
@@ -2133,7 +2178,7 @@ class _FoundationAppState extends State<FoundationApp>
               }),
       ),
     const Text(
-      'Deterministic single caption-track overlap rejection. New and imported cues that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips; cues in a gap or spanning a cut stay absolute. Make selected cue absolute keeps that cue at authored times; Anchor selected cue to covering clip re-attaches an absolute cue. Source anchors and MP4 text burn-in remain refused. Ripple and insert interval crop/split stay as already delivered. No silent text loss.',
+      'Deterministic single caption-track overlap rejection. New and imported cues that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips; cues in a gap or spanning a cut stay absolute. Make selected cue absolute keeps that cue at authored times; Anchor selected cue to covering clip re-attaches an absolute cue as clipLocal. Anchor selected cue to source of covering clip stores a source-window range and reprojects from the host linear time map when that window still covers the cue; an interval that would uncover or crop a source cue refuses the whole command. New cues never default to source. Styles, words, speakers, and MP4 text burn-in remain refused. Ripple and insert interval crop/split of absolute and clipLocal cues stay as already delivered. No silent text loss.',
     ),
     _path(
       'caption-path',

@@ -5,8 +5,13 @@ import 'time.dart';
 /// Plain captions. New cues with a unique covering host default to clipLocal and
 /// follow that host on MoveClips. Existing or explicitly made-absolute cues stay
 /// at authored timeline times. A cue with no unique covering host stays absolute.
-/// Source anchors, styles, words and speakers remain refused on admission. MP4
-/// text burn-in stays refused.
+/// Source anchors are explicit: [CaptionCue.anchoredToSource] stores a range in
+/// the host's source window (offset from sourceRange.start) and keeps
+/// timelineRange as the linear projection. Source cues reproject when the host
+/// still covers that source window; an interval or rewrite that uncovers them
+/// refuses the whole command (ANCHOR_OUT_OF_RANGE) instead of silently cropping.
+/// Styles, words and speakers remain refused on admission. MP4 text burn-in
+/// stays refused.
 final class CaptionCue {
   CaptionCue(
     this.id,
@@ -30,7 +35,7 @@ final class CaptionCue {
       if (anchorClipId != null || anchorRange != null) {
         throw const StudioException('ANCHOR_INVALID');
       }
-    } else if (anchorKind == 'clipLocal') {
+    } else if (anchorKind == 'clipLocal' || anchorKind == 'source') {
       if (anchorClipId == null ||
           anchorRange == null ||
           anchorRange!.start < Q.of(0) ||
@@ -84,6 +89,7 @@ final class CaptionCue {
     if (r == null) throw const StudioException('CAPTION_EMPTY_TRIM');
     return _copy(
       range: r,
+      anchorRange: _splitSourceRange(r.start, r.duration) ?? anchorRange,
       manualFields: {...manualFields, if (!automatic) 'timing'},
     );
   }
@@ -92,20 +98,23 @@ final class CaptionCue {
     if (at <= range.start || at >= range.end) {
       throw const StudioException('CAPTION_SPLIT_RANGE');
     }
+    final leftDur = at - range.start;
+    final rightDur = range.end - at;
     return [
       _copy(
-        range: TimeRange(range.start, at - range.start),
+        range: TimeRange(range.start, leftDur),
+        anchorRange: _splitSourceRange(range.start, leftDur) ?? anchorRange,
         manualFields: {...manualFields, 'timing'},
       ),
       CaptionCue(
         rightId,
-        TimeRange(at, range.end - at),
+        TimeRange(at, rightDur),
         text,
         language: language,
         manualFields: {...manualFields, 'timing'},
         anchorKind: anchorKind,
         anchorClipId: anchorClipId,
-        anchorRange: anchorRange,
+        anchorRange: _splitSourceRange(at, rightDur) ?? anchorRange,
       ),
     ];
   }
@@ -168,6 +177,53 @@ final class CaptionCue {
     );
   }
 
+  /// Bind this cue to the unique covering host in the source window.
+  /// [anchorRange] is the offset from the clip's sourceRange.start under a
+  /// linear time map of [rate]. The timeline range is left as authored and
+  /// must already be the projection of that source window.
+  CaptionCue anchoredToSource({
+    required String clipId,
+    required Q clipStart,
+    required Q clipDuration,
+    required Q sourceDuration,
+    required Q rate,
+  }) {
+    if (rate <= Q.of(0)) {
+      throw const StudioException('TIME_MAP_MISMATCH');
+    }
+    if (range.start < clipStart || range.end > clipStart + clipDuration) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    final local = TimeRange(
+      (range.start - clipStart) * rate,
+      range.duration * rate,
+    );
+    if (local.start < Q.of(0) ||
+        local.start + local.duration > sourceDuration) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    return _copy(
+      anchorKind: 'source',
+      anchorClipId: clipId,
+      anchorRange: local,
+    );
+  }
+
+  /// Slice this cue's source-window range to the timeline piece
+  /// [start, start+duration).
+  TimeRange? _splitSourceRange(Q start, Q duration) {
+    if (anchorKind != 'source' ||
+        anchorRange == null ||
+        range.duration <= Q.of(0)) {
+      return null;
+    }
+    final rate = anchorRange!.duration / range.duration;
+    return TimeRange(
+      anchorRange!.start + (start - range.start) * rate,
+      duration * rate,
+    );
+  }
+
   CaptionCue makeAbsolute() => _copy(clearAnchor: true);
 
   factory CaptionCue.fromProjectJson(Map<String, dynamic> c) {
@@ -178,12 +234,12 @@ final class CaptionCue {
     }
     final anchor = c['anchor'];
     final kind = anchor['kind'] as String;
-    if (kind == 'source' || (kind != 'absolute' && kind != 'clipLocal')) {
+    if (kind != 'absolute' && kind != 'clipLocal' && kind != 'source') {
       throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
     }
     String? clipId;
     TimeRange? local;
-    if (kind == 'clipLocal') {
+    if (kind == 'clipLocal' || kind == 'source') {
       if (anchor['clipId'] == null || anchor['range'] == null) {
         throw const StudioException('ANCHOR_INVALID');
       }
@@ -224,8 +280,189 @@ Map<String, Map> _mediaClipsById(Map d) {
   return clips;
 }
 
-/// Rewrite clipLocal cue timelineRange from the host clip's current start.
-/// Absolute cues are left unchanged. Missing hosts or source anchors refuse.
+Q _linearRate(Map clip) {
+  final tm = clip['timeMap'];
+  if (tm is! Map || tm['kind'] != 'linear') {
+    throw const StudioException('TIME_MAP_MISMATCH');
+  }
+  final rate = Q.fromJson(tm['rate']);
+  if (rate <= Q.of(0)) {
+    throw const StudioException('TIME_MAP_MISMATCH');
+  }
+  return rate;
+}
+
+bool _sourceWindowCovers(Map clip, TimeRange local) {
+  if (local.start < Q.of(0) || local.duration <= Q.of(0)) {
+    return false;
+  }
+  final srcDur = Q.fromJson(clip['sourceRange']['duration']);
+  return local.start + local.duration <= srcDur;
+}
+
+TimeRange projectSourceCaptionTimeline(Map clip, TimeRange sourceLocal) {
+  if (!_sourceWindowCovers(clip, sourceLocal)) {
+    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+  }
+  final rate = _linearRate(clip);
+  final tlStart = Q.fromJson(clip['timelineRange']['start']);
+  return TimeRange(
+    tlStart + sourceLocal.start / rate,
+    sourceLocal.duration / rate,
+  );
+}
+
+/// Snapshot of a source-anchored cue as absolute media source time
+/// (`host.sourceRange.start + anchor.range.start`) so a later rewrite that
+/// shifts the host's source window can restore the same picture.
+String _clipStreamId(Map clip) {
+  final source = clip['source'];
+  if (source is! Map || source['streamId'] is! String) {
+    throw const StudioException('REF_NOT_FOUND');
+  }
+  return source['streamId'] as String;
+}
+
+bool _absSourceCoveredBy(Map clip, SourceCaptionAbsolute snap) {
+  if (_clipStreamId(clip) != snap.streamId) {
+    return false;
+  }
+  final srcStart = Q.fromJson(clip['sourceRange']['start']);
+  return _sourceWindowCovers(
+    clip,
+    TimeRange(snap.absStart - srcStart, snap.duration),
+  );
+}
+
+/// The unique current media clip, if any, whose source window still holds
+/// [snap]'s absolute source range on the same stream (including a split remnant
+/// that inherited the original host's id only on one side).
+Map? _uniqueCoveringSourceCaptionHost(
+  Map<String, Map> clips,
+  SourceCaptionAbsolute snap,
+) {
+  Map? found;
+  for (final clip in clips.values) {
+    if (!_absSourceCoveredBy(clip, snap)) {
+      continue;
+    }
+    if (found != null) {
+      return null;
+    }
+    found = clip;
+  }
+  return found;
+}
+
+final class SourceCaptionAbsolute {
+  const SourceCaptionAbsolute({
+    required this.clipId,
+    required this.streamId,
+    required this.absStart,
+    required this.duration,
+  });
+  final String clipId;
+  final String streamId;
+  final Q absStart;
+  final Q duration;
+}
+
+Map<String, SourceCaptionAbsolute> snapshotSourceCaptionAbsolutes(Map d) {
+  final clips = _mediaClipsById(d);
+  final out = <String, SourceCaptionAbsolute>{};
+  for (final cue in d['captions'] as List) {
+    final anchor = cue['anchor'];
+    if (anchor['kind'] != 'source') {
+      continue;
+    }
+    final clipId = anchor['clipId'] as String;
+    final clip = clips[clipId];
+    if (clip == null) {
+      throw const StudioException('REF_NOT_FOUND');
+    }
+    final srcStart = Q.fromJson(clip['sourceRange']['start']);
+    final local = TimeRange(
+      Q.fromJson(anchor['range']['start']),
+      Q.fromJson(anchor['range']['duration']),
+    );
+    out[cue['id'] as String] = SourceCaptionAbsolute(
+      clipId: clipId,
+      streamId: _clipStreamId(clip),
+      absStart: srcStart + local.start,
+      duration: local.duration,
+    );
+  }
+  return out;
+}
+
+/// Restore source-local ranges from [snaps] after a media rewrite, then
+/// reproject timelineRange. A host that no longer covers the absolute source
+/// window refuses the whole command when [refuseUncovered] is true (the default
+/// for this slice: no silent crop or drop of source-anchored cues).
+void applySourceCaptionAbsolutes(
+  Map d,
+  Map<String, SourceCaptionAbsolute> snaps, {
+  bool refuseUncovered = true,
+  String Function(String id)? nextVersion,
+}) {
+  if (snaps.isEmpty) {
+    return;
+  }
+  final clips = _mediaClipsById(d);
+  for (final cue in d['captions'] as List) {
+    final snap = snaps[cue['id']];
+    if (snap == null) {
+      continue;
+    }
+    final anchor = cue['anchor'];
+    if (anchor['kind'] != 'source') {
+      continue;
+    }
+    var clip = clips[snap.clipId] ?? clips[anchor['clipId']];
+    if (clip == null || !_absSourceCoveredBy(clip, snap)) {
+      clip = _uniqueCoveringSourceCaptionHost(clips, snap);
+    }
+    if (clip == null) {
+      if (refuseUncovered) {
+        throw const StudioException('ANCHOR_OUT_OF_RANGE');
+      }
+      continue;
+    }
+    final srcStart = Q.fromJson(clip['sourceRange']['start']);
+    final local = TimeRange(snap.absStart - srcStart, snap.duration);
+    final projected = projectSourceCaptionTimeline(clip, local);
+    final hostId = clip['id'] as String;
+    final prevStart = Q.fromJson(cue['timelineRange']['start']);
+    final prevDur = Q.fromJson(cue['timelineRange']['duration']);
+    final prevLocalStart = Q.fromJson(anchor['range']['start']);
+    final prevLocalDur = Q.fromJson(anchor['range']['duration']);
+    final prevHost = anchor['clipId'];
+    final changed =
+        prevHost != hostId ||
+        prevStart != projected.start ||
+        prevDur != projected.duration ||
+        prevLocalStart != local.start ||
+        prevLocalDur != local.duration;
+    if (anchor['clipId'] != hostId) {
+      anchor['clipId'] = hostId;
+    }
+    anchor['range'] = {
+      'start': local.start.toJson(),
+      'duration': local.duration.toJson(),
+    };
+    cue['timelineRange'] = {
+      'start': projected.start.toJson(),
+      'duration': projected.duration.toJson(),
+    };
+    if (changed && nextVersion != null) {
+      cue['version'] = nextVersion(cue['id'] as String);
+    }
+  }
+}
+
+/// Rewrite clipLocal cue timelineRange from the host clip's current start, and
+/// reproject source-anchored cues from the host linear time map when the source
+/// window still covers them. Absolute cues are left unchanged. Missing hosts refuse.
 void followClipLocalCaptions(Map d, {String Function(String id)? nextVersion}) {
   final clips = _mediaClipsById(d);
   for (final cue in d['captions'] as List) {
@@ -234,12 +471,32 @@ void followClipLocalCaptions(Map d, {String Function(String id)? nextVersion}) {
     if (kind == 'absolute') {
       continue;
     }
-    if (kind != 'clipLocal') {
+    if (kind != 'clipLocal' && kind != 'source') {
       throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
     }
     final clip = clips[anchor['clipId']];
     if (clip == null || anchor['range'] == null) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
+    }
+    if (kind == 'source') {
+      final local = TimeRange(
+        Q.fromJson(anchor['range']['start']),
+        Q.fromJson(anchor['range']['duration']),
+      );
+      final next = projectSourceCaptionTimeline(clip, local);
+      final prevStart = Q.fromJson(cue['timelineRange']['start']);
+      final prevDur = Q.fromJson(cue['timelineRange']['duration']);
+      if (prevStart == next.start && prevDur == next.duration) {
+        continue;
+      }
+      cue['timelineRange'] = {
+        'start': next.start.toJson(),
+        'duration': next.duration.toJson(),
+      };
+      if (nextVersion != null) {
+        cue['version'] = nextVersion(cue['id'] as String);
+      }
+      continue;
     }
     final localStart = Q.fromJson(anchor['range']['start']);
     final localDur = Q.fromJson(anchor['range']['duration']);
@@ -273,7 +530,7 @@ void syncClipLocalCaptionRanges(Map d) {
     if (kind == 'absolute') {
       continue;
     }
-    if (kind != 'clipLocal') {
+    if (kind != 'clipLocal' && kind != 'source') {
       throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
     }
     final clip = clips[anchor['clipId']];
@@ -284,6 +541,21 @@ void syncClipLocalCaptionRanges(Map d) {
     final clipDur = Q.fromJson(clip['timelineRange']['duration']);
     final start = Q.fromJson(cue['timelineRange']['start']);
     final duration = Q.fromJson(cue['timelineRange']['duration']);
+    if (start < clipStart || start + duration > clipStart + clipDur) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    if (kind == 'source') {
+      final rate = _linearRate(clip);
+      final local = TimeRange((start - clipStart) * rate, duration * rate);
+      if (!_sourceWindowCovers(clip, local)) {
+        throw const StudioException('ANCHOR_OUT_OF_RANGE');
+      }
+      anchor['range'] = {
+        'start': local.start.toJson(),
+        'duration': local.duration.toJson(),
+      };
+      continue;
+    }
     final localStart = start - clipStart;
     if (localStart < Q.of(0) || localStart + duration > clipDur) {
       throw const StudioException('ANCHOR_OUT_OF_RANGE');
@@ -354,8 +626,9 @@ CaptionCue defaultClipLocalIfCovered(Map d, CaptionCue cue) {
 /// [length]. An open splits at [at] and shifts the right side and later
 /// absolute cues right by [length]. Text is never rewritten. A right remnant
 /// gets a new id. A cue wholly inside a closed interval is dropped as a
-/// crop-to-empty, not as a silent loss, and comes back on undo. Source
-/// anchors stay refused.
+/// crop-to-empty, not as a silent loss, and comes back on undo. A source-anchored cue whose host still covers
+/// its source window is reprojected; one that would be uncovered or cropped
+/// refuses (ANCHOR_OUT_OF_RANGE).
 ///
 /// clipLocal cues follow their current host when the host still fully covers
 /// the local range, so an insert-move of an unsplit host does not split its
@@ -392,14 +665,33 @@ void applyCaptionIntervalEdit(
   for (final raw in captions) {
     final cue = _cloneCaptionMap(raw as Map);
     final kind = cue['anchor']['kind'] as String;
-    if (kind == 'source') {
-      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
-    }
-    if (kind != 'absolute' && kind != 'clipLocal') {
+    if (kind != 'absolute' && kind != 'clipLocal' && kind != 'source') {
       throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
     }
     final start = Q.fromJson(cue['timelineRange']['start']);
     final duration = Q.fromJson(cue['timelineRange']['duration']);
+    if (kind == 'source') {
+      final host = clips[cue['anchor']['clipId']];
+      if (host == null) {
+        throw const StudioException('REF_NOT_FOUND');
+      }
+      final local = TimeRange(
+        Q.fromJson(cue['anchor']['range']['start']),
+        Q.fromJson(cue['anchor']['range']['duration']),
+      );
+      final followed = projectSourceCaptionTimeline(host, local);
+      _emitCaptionPieces(
+        cue,
+        [(start: followed.start, duration: followed.duration)],
+        originalStart: start,
+        originalDuration: duration,
+        lockedTracks: lockedTracks,
+        next: next,
+        newId: newId,
+        nextVersion: nextVersion,
+      );
+      continue;
+    }
     if (kind == 'clipLocal' &&
         _clipLocalStillCoveredByHost(clips, cue, start, duration)) {
       final followed = _clipLocalFollowedRange(clips, cue);

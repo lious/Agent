@@ -1,0 +1,37 @@
+{
+  "asOf": "2026-11-26T05:53:32.862859+08:00",
+  "timezone": "Asia/Shanghai",
+  "result": "passed",
+  "checks": [
+    {
+      "phase": "undo",
+      "marker": "UNCOMMITTED",
+      "SIGKILL": true,
+      "instrumentedMirrorOnly": true
+    },
+    {
+      "phase": "undoWait",
+      "marker": "COMMITTED",
+      "SIGKILL": true,
+      "instrumentedMirrorOnly": false
+    },
+    {
+      "phase": "redo",
+      "marker": "UNCOMMITTED",
+      "SIGKILL": true,
+      "instrumentedMirrorOnly": true
+    },
+    {
+      "phase": "unmodified-reopen-redo",
+      "actual": {
+        "title": "B",
+        "revision": "4",
+        "undo": 2,
+        "redo": 0
+      }
+    }
+  ],
+  "instrumentedMirrorSha256": "cfca376537493a9985b916d0d0800a8b53797e7a136d7deef5d27ccb6b0f2734",
+  "scope": "Actual3 SIGKILLs, two pre-COMMIT instrumented owned-mirror transactions and one after real unmodified COMMIT; current unmodified reopen each time, no DB outside temp fixture",
+  "fullTaskComplete": false
+}

@@ -117,6 +117,7 @@ ProjectDocument _moveClips(
   final moved = expandedMoveClipIds(before, operation).toSet();
   final d = before.toJson(), s = d['sequences'][0];
   final markerLocals = snapshotClipLocalMarkerLocals(d);
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -242,7 +243,9 @@ ProjectDocument _moveClips(
   s['version'] = version(s['id'] as String);
   // Source ranges/time maps, clip-local effects/keyframes/automation and link
   // offsets remain unchanged. Absolute captions stay at authored times.
-  // clipLocal cues translate with their host clip; source anchors still refuse.
+  // clipLocal and source-anchored cues translate with their host;
+  // uncovering a source window refuses the whole command.
+  applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   followClipLocalCaptions(d, nextVersion: version);
   applyClipLocalMarkerLocals(d, markerLocals);
   _markMovedLinksOutOfSync(d, moved);

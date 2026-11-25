@@ -133,20 +133,32 @@ void main() {
     );
   });
 
-  test('source anchors and cues past the host still refuse', () {
+  test('source-anchored cue follows a reject move; cues past the host still refuse', () {
     final (base, video, _) = linked();
     final p = attachCue(base, video);
-    final d = p.toJson();
-    d['captions'][0]['anchor'] = {
-      'kind': 'source',
-      'clipId': video,
-      'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1, 2).toJson()},
-    };
-    final unsupported = ProjectDocument.fromJson(d);
-    expect(
-      () => expandedMoveClipIds(unsupported, MoveClips([video], Q.of(1, 2))),
-      code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
+    final host = clipOf(p, video);
+    final sourced = move.change(
+      p,
+      SetCaptions(
+        CaptionStore([
+          CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p)))
+              .anchoredToSource(
+                clipId: video,
+                clipStart: Q.fromJson(host['timelineRange']['start']),
+                clipDuration: Q.fromJson(host['timelineRange']['duration']),
+                sourceDuration: Q.fromJson(host['sourceRange']['duration']),
+                rate: Q.fromJson(host['timeMap']['rate']),
+              ),
+        ]),
+      ),
     );
+    expect(cueOf(sourced)['anchor']['kind'], 'source');
+    final out = move.change(sourced, MoveClips([video], Q.of(1, 2)));
+    expect(startOf(out, video), Q.of(1, 2));
+    expect(cueStart(out), Q.of(1, 2));
+    expect(cueOf(out)['anchor']['kind'], 'source');
+    expect(cueOf(out)['text'], 'hello');
+    expect(Q.fromJson(cueOf(out)['anchor']['range']['start']), Q.of(0));
     expect(
       () => attachCue(base, video, start: Q.of(5, 2), duration: Q.of(1)),
       code('ANCHOR_OUT_OF_RANGE'),

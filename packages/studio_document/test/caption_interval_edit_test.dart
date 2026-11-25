@@ -274,47 +274,44 @@ void main() {
     // SDK packed-clip tests cover ripple-trim lengthen with captions.
   });
 
-  test(
-    'source anchors and a locked caption track still refuse the whole command',
-    () {
-      final (base, video, _) = linked();
-      final p = attachCue(
-        base,
-        start: Q.of(0),
-        duration: Q.of(2),
-        forceAbsolute: true,
-      );
-      final d = p.toJson();
-      d['captions'][0]['anchor'] = {
-        'kind': 'source',
-        'clipId': video,
-        'range': {'start': Q.of(0).toJson(), 'duration': Q.of(2).toJson()},
-      };
-      final sourced = ProjectDocument.fromJson(d);
-      expect(
-        () => move.change(
-          sourced,
-          RippleDeleteClips(const [], range: TimeRange(Q.of(1), Q.of(1))),
-        ),
-        code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
-      );
-      expect(content(sourced), content(ProjectDocument.fromJson(d)));
+  test('uncovering a source cue or a locked caption track still refuse the whole command', () {
+    final (base, video, _) = linked();
+    final p = attachCue(
+      base,
+      start: Q.of(0),
+      duration: Q.of(2),
+      forceAbsolute: true,
+    );
+    final d = p.toJson();
+    d['captions'][0]['anchor'] = {
+      'kind': 'source',
+      'clipId': video,
+      'range': {'start': Q.of(0).toJson(), 'duration': Q.of(2).toJson()},
+    };
+    final sourced = ProjectDocument.fromJson(d);
+    expect(
+      () => move.change(
+        sourced,
+        RippleDeleteClips(const [], range: TimeRange(Q.of(1), Q.of(1))),
+      ),
+      code('ANCHOR_OUT_OF_RANGE'),
+    );
+    expect(content(sourced), content(ProjectDocument.fromJson(d)));
 
-      final lockedJson = p.toJson();
-      for (final t in lockedJson['sequences'][0]['tracks'] as List) {
-        if (t['kind'] == 'caption') {
-          t['locked'] = true;
-        }
+    final lockedJson = p.toJson();
+    for (final t in lockedJson['sequences'][0]['tracks'] as List) {
+      if (t['kind'] == 'caption') {
+        t['locked'] = true;
       }
-      final locked = ProjectDocument.fromJson(lockedJson);
-      expect(
-        () => move.change(
-          locked,
-          RippleDeleteClips(const [], range: TimeRange(Q.of(1), Q.of(1))),
-        ),
-        code('FIELD_LOCKED'),
-      );
-      expect(content(locked), content(ProjectDocument.fromJson(lockedJson)));
-    },
-  );
+    }
+    final locked = ProjectDocument.fromJson(lockedJson);
+    expect(
+      () => move.change(
+        locked,
+        RippleDeleteClips(const [], range: TimeRange(Q.of(1), Q.of(1))),
+      ),
+      code('FIELD_LOCKED'),
+    );
+    expect(content(locked), content(ProjectDocument.fromJson(lockedJson)));
+  });
 }

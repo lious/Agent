@@ -595,6 +595,7 @@ ProjectDocument _pasteClips(
   final payload = operation.payload;
   final d = before.toJson();
   final markerLocals = snapshotClipLocalMarkerLocals(d);
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   if (payload.projectId != d['projectId']) {
     throw const StudioException('CROSS_PROJECT_PASTE_NOT_IMPLEMENTED');
   }
@@ -783,6 +784,7 @@ ProjectDocument _pasteClips(
     (d['transitions'] as List).add(t);
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, minimumDuration);
+  applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   followClipLocalCaptions(d, nextVersion: version);
   if (operation.mode != 'insert') {
     applyClipLocalMarkerLocals(d, markerLocals);

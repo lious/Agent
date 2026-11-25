@@ -99,59 +99,62 @@ void main() {
     expect(cueOf(gapped, 'cue-gap')['anchor']['kind'], 'absolute');
   });
 
-  test('makeAbsolute is not re-anchored; source anchors still refuse', () {
-    var p = avFixture();
-    final video = media(p).single['id'] as String;
-    p = move.change(
-      p,
-      SetCaptions(
-        CaptionStore([
-          CaptionCue(
-            'cue-1',
-            TimeRange(Q.of(0), Q.of(1, 2)),
-            'hello',
-            manualFields: {'text', 'timing'},
-          ),
-        ]),
-      ),
-    );
-    expect(cueOf(p)['anchor']['kind'], 'clipLocal');
-    p = move.change(
-      p,
-      SetCaptions(
-        CaptionStore([
-          CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p)))
-              .makeAbsolute(),
-        ]),
-      ),
-    );
-    expect(cueOf(p)['anchor']['kind'], 'absolute');
-    final edited = move.change(
-      p,
-      SetCaptions(
-        CaptionStore([
-          CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p)))
-              .editText('still absolute'),
-        ]),
-      ),
-    );
-    expect(cueOf(edited)['anchor']['kind'], 'absolute');
-    expect(cueOf(edited)['text'], 'still absolute');
-    final out = move.change(edited, MoveClips([video], Q.of(1, 2)));
-    expect(startOf(out, video), Q.of(1, 2));
-    expect(cueStart(out), Q.of(0));
+  test(
+    'makeAbsolute is not re-anchored; planted source cues follow their host',
+    () {
+      var p = avFixture();
+      final video = media(p).single['id'] as String;
+      p = move.change(
+        p,
+        SetCaptions(
+          CaptionStore([
+            CaptionCue(
+              'cue-1',
+              TimeRange(Q.of(0), Q.of(1, 2)),
+              'hello',
+              manualFields: {'text', 'timing'},
+            ),
+          ]),
+        ),
+      );
+      expect(cueOf(p)['anchor']['kind'], 'clipLocal');
+      p = move.change(
+        p,
+        SetCaptions(
+          CaptionStore([
+            CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p)))
+                .makeAbsolute(),
+          ]),
+        ),
+      );
+      expect(cueOf(p)['anchor']['kind'], 'absolute');
+      final edited = move.change(
+        p,
+        SetCaptions(
+          CaptionStore([
+            CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p)))
+                .editText('still absolute'),
+          ]),
+        ),
+      );
+      expect(cueOf(edited)['anchor']['kind'], 'absolute');
+      expect(cueOf(edited)['text'], 'still absolute');
+      final out = move.change(edited, MoveClips([video], Q.of(1, 2)));
+      expect(startOf(out, video), Q.of(1, 2));
+      expect(cueStart(out), Q.of(0));
 
-    final d = p.toJson();
-    d['captions'][0]['anchor'] = {
-      'kind': 'source',
-      'clipId': video,
-      'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1, 2).toJson()},
-    };
-    final sourced = ProjectDocument.fromJson(d);
-    expect(
-      () => expandedMoveClipIds(sourced, MoveClips([video], Q.of(1, 2))),
-      code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
-    );
-    expect(content(sourced), content(ProjectDocument.fromJson(d)));
-  });
+      final d = p.toJson();
+      d['captions'][0]['anchor'] = {
+        'kind': 'source',
+        'clipId': video,
+        'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1, 2).toJson()},
+      };
+      final sourced = ProjectDocument.fromJson(d);
+      final followed = move.change(sourced, MoveClips([video], Q.of(1, 2)));
+      expect(startOf(followed, video), Q.of(1, 2));
+      expect(cueStart(followed), Q.of(1, 2));
+      expect(cueOf(followed)['anchor']['kind'], 'source');
+      expect(cueOf(followed)['text'], 'hello');
+    },
+  );
 }

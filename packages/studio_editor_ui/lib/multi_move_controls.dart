@@ -170,7 +170,7 @@ extension _MultiMoveControls on _FoundationAppState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap. Linked members and selection groups are included by default; Ignore links and groups this move (or hold Alt while dragging) moves only the explicit IDs, marks a partially moved AV link allowOutOfSync, and does not rewrite stored offsets. Absolute captions stay at their authored times; clipLocal cues follow their host clip on this move; source anchors still refuse. Ripple cue crop/split is not opened. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; close a vacated interval with Ripple close range. Cross-track moves are not in this slice.',
+            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap. Linked members and selection groups are included by default; Ignore links and groups this move (or hold Alt while dragging) moves only the explicit IDs, marks a partially moved AV link allowOutOfSync, and does not rewrite stored offsets. Absolute captions stay at their authored times; clipLocal cues follow their host clip on this move; source-anchored cues reproject from the host time map when the source window still covers them. An uncovering interval refuses the whole command rather than silently cropping a source cue. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; close a vacated interval with Ripple close range. Cross-track moves are not in this slice.',
           ),
           Row(
             children: [

@@ -1,0 +1,52 @@
+{
+  "increment": "1.37",
+  "title": "Admit explicit source caption anchors with linear reprojection",
+  "baseCommit": "0951dd8197bdf556e21877f9811f5dbe35aa9002",
+  "aggregateSha256": "41774471712fd67dd2c95b7002246386fbbe48e7167246e65a23061b0aff4827",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "selected": {
+    "document": {
+      "passed": 106,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sdk": {
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ui": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "passed": 166,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "A uniquely covered cue can be explicitly anchored to the host source window (offset from sourceRange.start under a linear time map). timelineRange stays the projection of that window.",
+    "New and imported uniquely covered cues still default to clipLocal, never source. Made-absolute cues stay at authored times until re-anchored.",
+    "Source cues reproject on already-opened MoveClips, overwrite, paste, insert-move, and ripple delete/close/trim when a unique same-stream host still fully covers that source window, including a split remnant. Cue versions are bumped when the projection changes.",
+    "An interval or rewrite that would uncover or crop a source cue refuses the whole command (ANCHOR_OUT_OF_RANGE) and leaves the document unchanged. This slice does not silently crop, split, or drop source-anchored text.",
+    "Non-linear or non-positive rates refuse TIME_MAP_MISMATCH. Styles, words, speakers, and MP4 / preview text burn-in stay refused (CAPTION_RICH_EDIT_NOT_IMPLEMENTED / CAPTION_RENDER_POLICY_NOT_IMPLEMENTED). Sidecar export is used.",
+    "Already-delivered leave-gap, single-range ripple delete/close, shorten and lengthen ripple trim, reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default clipLocal / follow / interval crop, and marker absolute default / clipLocal follow / ripple interval stay unchanged. Lifting a clipLocal marker host is still an atomic REF_NOT_FOUND.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, 1000 random NLE undo, or marker sidecar formats.",
+    "I-005 and I-010 remain partial; 87 counts stay 26/48/13/0; XD10 unchanged.",
+    "Previous 152/134/128/119/104/95/85/75/64/51/37/7/281 counts are not mixed in."
+  ],
+  "asOf": "2026-11-26T05:54:07.285132+08:00",
+  "timezone": "Asia/Shanghai",
+  "fullTaskComplete": false
+}

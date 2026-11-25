@@ -76,6 +76,7 @@ ProjectDocument _rippleTrimClip(
       : Q.of(0) - operation.delta;
   final d = before.toJson(), s = d['sequences'][0];
   final markerLocals = snapshotClipLocalMarkerLocals(d);
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   final tracks = s['tracks'] as List;
   final clips = {
     for (final t in tracks)
@@ -248,6 +249,7 @@ ProjectDocument _rippleTrimClip(
     minimum = Q.of(0);
   }
   _rewriteMediaTracks(s, tracks, ripple, version, newId, minimum);
+  applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   applyCaptionIntervalEdit(
     d,
     at: closeStart,

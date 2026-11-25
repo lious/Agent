@@ -267,10 +267,13 @@ void main() {
       'clipId': clip,
       'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1).toJson()},
     };
-    final unsupported = ProjectDocument.fromJson(d);
+    final sourced = ProjectDocument.fromJson(d);
+    // Admission of a planted source cue must not itself move the project;
+    // the follow is a later MoveClips, covered in caption_source_anchor_test.
+    expect(sourced.toJson()['captions'][0]['anchor']['kind'], 'source');
     expect(
-      () => expandedMoveClipIds(unsupported, MoveClips([clip], Q.of(1))),
-      code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
+      Q.fromJson(sourced.toJson()['captions'][0]['timelineRange']['start']),
+      Q.of(0),
     );
   });
   test('mixed exact grids reject fractional audio samples; nonzero link offsets remain exact', () async {
