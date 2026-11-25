@@ -1550,7 +1550,8 @@ ProjectDocument _setCaptions(
   }
   for (final c in captions) {
     final prev = byId[c.id];
-    var next = c.toProjectJson(trackId);
+    final cue = prev == null ? defaultClipLocalIfCovered(d, c) : c;
+    var next = cue.toProjectJson(trackId);
     if (operation.automatic && prev != null) {
       next = {
         ...next,

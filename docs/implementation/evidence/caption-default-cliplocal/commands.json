@@ -1,0 +1,139 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 2.654
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/caption_default_cliplocal_test.dart",
+        "packages/studio_document/test/caption_interval_edit_test.dart",
+        "packages/studio_document/test/caption_follow_move_test.dart",
+        "packages/studio_document/test/caption_test.dart",
+        "packages/studio_document/test/ignore_links_move_test.dart",
+        "packages/studio_document/test/multi_move_test.dart",
+        "packages/studio_document/test/ripple_trim_lengthen_test.dart",
+        "packages/studio_document/test/ripple_trim_test.dart",
+        "packages/studio_document/test/ripple_close_test.dart",
+        "packages/studio_document/test/ripple_delete_test.dart",
+        "packages/studio_document/test/insert_test.dart",
+        "packages/studio_document/test/overwrite_test.dart",
+        "packages/studio_document/test/clipboard_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 5.27
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_default_cliplocal_test.dart",
+        "packages/studio_sdk/test/caption_interval_edit_test.dart",
+        "packages/studio_sdk/test/caption_follow_move_test.dart",
+        "packages/studio_sdk/test/ignore_links_move_test.dart",
+        "packages/studio_sdk/test/multi_move_test.dart",
+        "packages/studio_sdk/test/snap_move_test.dart",
+        "packages/studio_sdk/test/ripple_trim_lengthen_test.dart",
+        "packages/studio_sdk/test/ripple_trim_test.dart",
+        "packages/studio_sdk/test/ripple_close_test.dart",
+        "packages/studio_sdk/test/ripple_delete_test.dart",
+        "packages/studio_sdk/test/insert_test.dart",
+        "packages/studio_sdk/test/overwrite_test.dart",
+        "packages/studio_sdk/test/clipboard_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 43.065
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_default_cliplocal_ui_test.dart",
+        "test/caption_interval_edit_ui_test.dart",
+        "test/caption_follow_move_ui_test.dart",
+        "test/ignore_links_move_ui_test.dart",
+        "test/multi_move_ui_test.dart",
+        "test/snap_move_ui_test.dart",
+        "test/ripple_trim_lengthen_ui_test.dart",
+        "test/ripple_trim_ui_test.dart",
+        "test/ripple_close_ui_test.dart",
+        "test/ripple_delete_ui_test.dart",
+        "test/insert_ui_test.dart",
+        "test/overwrite_ui_test.dart",
+        "test/clipboard_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/caption-default-cliplocal/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 42.056
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/caption-default-cliplocal/final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-actual-legacy-and-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 13.602
+    },
+    {
+      "name": "undo-redo-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_command_history.py",
+        "--report",
+        "artifacts/caption-default-cliplocal/final-undo-redo-kill.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-undo-redo-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 20.901
+    },
+    {
+      "name": "100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-default-cliplocal/final-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.839
+    }
+  ]
+}

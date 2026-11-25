@@ -1910,7 +1910,7 @@ class _FoundationAppState extends State<FoundationApp>
               }),
       ),
     const Text(
-      'Deterministic single caption-track overlap rejection. New and imported cues stay absolute until you anchor them. Anchor selected cue to covering clip makes a cue clipLocal so MoveClips (including insert-move later hosts) translates it with that clip; stored clip-local range is unchanged. Absolute cues stay at authored times. Source anchors, cue crop/split on ripple/insert-paste, and MP4 text burn-in remain refused. No silent text loss.',
+      'Deterministic single caption-track overlap rejection. New and imported cues that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips; cues in a gap or spanning a cut stay absolute. Make selected cue absolute keeps that cue at authored times; Anchor selected cue to covering clip re-attaches an absolute cue. Source anchors and MP4 text burn-in remain refused. Ripple and insert interval crop/split stay as already delivered. No silent text loss.',
     ),
     _path(
       'caption-path',

@@ -81,6 +81,17 @@ void main() {
         ]),
       ),
     );
+    p = move.change(
+      p,
+      SetCaptions(
+        CaptionStore([
+          CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p))),
+          CaptionCue.fromProjectJson(
+            Map<String, dynamic>.from(cueOf(p, 'cue-abs')),
+          ).makeAbsolute(),
+        ]),
+      ),
+    );
     final localBefore = cueOf(p)['anchor'];
     final textBefore = cueOf(p)['text'];
     final out = move.change(p, MoveClips([video], Q.of(1, 2)));

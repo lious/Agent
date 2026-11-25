@@ -105,11 +105,10 @@ void main() {
       expect(workspace.current.toJson()['captions'], hasLength(1));
       expect(
         workspace.current.toJson()['captions'][0]['anchor']['kind'],
-        'absolute',
+        'clipLocal',
       );
       final cueKey = 'cue-${workspace.current.toJson()['captions'][0]['id']}';
       await tap(cueKey);
-      await tap('caption-follow-clip');
       expect(
         workspace.current.toJson()['captions'][0]['anchor']['kind'],
         'clipLocal',

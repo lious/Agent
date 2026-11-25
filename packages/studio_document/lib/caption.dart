@@ -2,9 +2,11 @@ import 'package:studio_contracts/studio_contracts.dart';
 
 import 'time.dart';
 
-/// Plain captions. Absolute cues stay at authored timeline times. clipLocal cues
-/// follow their host media clip on MoveClips. Source anchors, styles, words and
-/// speakers remain refused on admission. Cue crop/split on ripple is not opened.
+/// Plain captions. New cues with a unique covering host default to clipLocal and
+/// follow that host on MoveClips. Existing or explicitly made-absolute cues stay
+/// at authored timeline times. A cue with no unique covering host stays absolute.
+/// Source anchors, styles, words and speakers remain refused on admission. MP4
+/// text burn-in stays refused.
 final class CaptionCue {
   CaptionCue(
     this.id,
@@ -325,6 +327,25 @@ String? coveringCaptionHostClipId(Map d, TimeRange cue) {
     return mediaId;
   }
   return null;
+}
+
+/// Default a newly authored absolute cue to clipLocal when a unique host fully
+/// covers it. Existing absolute IDs are not converted; spanning or gapped cues
+/// stay absolute.
+CaptionCue defaultClipLocalIfCovered(Map d, CaptionCue cue) {
+  if (cue.anchorKind != 'absolute') {
+    return cue;
+  }
+  final id = coveringCaptionHostClipId(d, cue.range);
+  if (id == null) {
+    return cue;
+  }
+  final host = _mediaClipsById(d)[id]!;
+  return cue.anchoredToClip(
+    id,
+    Q.fromJson(host['timelineRange']['start']),
+    Q.fromJson(host['timelineRange']['duration']),
+  );
 }
 
 /// Crop, split, and shift admitted cues across one interval.

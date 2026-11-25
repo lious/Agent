@@ -50,6 +50,7 @@ ProjectDocument attachCue(
   required Q start,
   required Q duration,
   String? clipId,
+  bool forceAbsolute = false,
 }) {
   var cue = CaptionCue(
     id,
@@ -60,7 +61,19 @@ ProjectDocument attachCue(
   if (clipId != null) {
     cue = cue.anchoredToClip(clipId, startOf(p, clipId), durOf(p, clipId));
   }
-  return move.change(p, SetCaptions(CaptionStore([cue])));
+  p = move.change(p, SetCaptions(CaptionStore([cue])));
+  if (!forceAbsolute) {
+    return p;
+  }
+  return move.change(
+    p,
+    SetCaptions(
+      CaptionStore([
+        CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p, id)))
+            .makeAbsolute(),
+      ]),
+    ),
+  );
 }
 
 String content(ProjectDocument p) =>
@@ -69,7 +82,12 @@ String content(ProjectDocument p) =>
 void main() {
   test('ripple close crops, splits, and shifts absolute cues without rewriting text', () {
     final (base, video, _) = linked();
-    var p = attachCue(base, start: Q.of(1, 2), duration: Q.of(2));
+    var p = attachCue(
+      base,
+      start: Q.of(1, 2),
+      duration: Q.of(2),
+      forceAbsolute: true,
+    );
     p = move.change(
       p,
       SetCaptions(
@@ -110,6 +128,7 @@ void main() {
       text: 'gone',
       start: Q.of(5, 4),
       duration: Q.of(1, 4),
+      forceAbsolute: true,
     );
     dropped = move.change(
       dropped,
@@ -186,6 +205,17 @@ void main() {
         ]),
       ),
     );
+    p = move.change(
+      p,
+      SetCaptions(
+        CaptionStore([
+          CaptionCue.fromProjectJson(Map<String, dynamic>.from(cueOf(p))),
+          CaptionCue.fromProjectJson(
+            Map<String, dynamic>.from(cueOf(p, 'cue-abs')),
+          ).makeAbsolute(),
+        ]),
+      ),
+    );
     p = move.change(p, MoveClips([video], Q.of(1), mode: 'insert'));
     expect(startOf(p, video), Q.of(1));
     expect(durOf(p, video), Q.of(3));
@@ -204,7 +234,12 @@ void main() {
 
   test('insert opening splits an absolute cue that spans the hole', () {
     final (base, video, _) = linked();
-    var p = attachCue(base, start: Q.of(0), duration: Q.of(2));
+    var p = attachCue(
+      base,
+      start: Q.of(0),
+      duration: Q.of(2),
+      forceAbsolute: true,
+    );
     p = move.change(p, MoveClips([video], Q.of(1), mode: 'insert'));
     final left = cueOf(p);
     final right = cuesOf(p).singleWhere((c) => c['id'] != left['id']);
@@ -219,7 +254,12 @@ void main() {
 
   test('ripple trim shorten reuses the same interval transform', () {
     final (base, video, _) = linked();
-    final p = attachCue(base, start: Q.of(0), duration: Q.of(7, 2));
+    final p = attachCue(
+      base,
+      start: Q.of(0),
+      duration: Q.of(7, 2),
+      forceAbsolute: true,
+    );
     final shortened = move.change(p, RippleTrimClip(video, 'out', Q.of(-1)));
     expect(durOf(shortened, video), Q.of(2));
     final shortLeft = cueOf(shortened);
@@ -238,7 +278,12 @@ void main() {
     'source anchors and a locked caption track still refuse the whole command',
     () {
       final (base, video, _) = linked();
-      final p = attachCue(base, start: Q.of(0), duration: Q.of(2));
+      final p = attachCue(
+        base,
+        start: Q.of(0),
+        duration: Q.of(2),
+        forceAbsolute: true,
+      );
       final d = p.toJson();
       d['captions'][0]['anchor'] = {
         'kind': 'source',

@@ -209,19 +209,24 @@ void main() {
     expect(w.current.hash, before);
     expect(journal(), counts);
   });
-  test('absolute captions preserved; clipLocal now follows; source anchors still refuse; no implicit caption loss on preview/export', () async {
+  test('imported covered cues default to clipLocal and follow; made-absolute cues stay; source still refuses; no MP4 burn-in', () async {
     final srt = File('${root.path}/cue.srt')
       ..writeAsStringSync(
-        '1\n00:00:00,000 --> 00:00:01,000\nAbsolute cue stays\n',
+        '1\n00:00:00,000 --> 00:00:01,000\nCovered cue follows\n',
       );
     await w.importCaptions(
       LocalFileGrant.fromUserSelection(srt),
       CaptionFormat.srt,
       expectedRevision: w.current.revision,
     );
-    final captions = w.current.toJson()['captions'];
+    expect(w.current.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
+    final imported = w.current;
     w.edit(MoveClips(ids(), Q.of(1)), expectedRevision: w.current.revision);
-    expect(w.current.toJson()['captions'], captions);
+    expect(
+      Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
+      Q.of(1),
+    );
+    expect(w.current.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
     await expectLater(
       w.previewTimelineAt(Q.of(3, 2)),
       code('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED'),
@@ -232,37 +237,31 @@ void main() {
     );
     expect(File('${root.path}/must-not.mp4').existsSync(), false);
     w.undo(expectedRevision: w.current.revision);
-    expect(w.current.toJson()['captions'], captions);
-    final d = w.current.toJson(), clip = ids().first;
-    final cue = CaptionCue.fromProjectJson(
-      Map<String, dynamic>.from(d['captions'][0] as Map),
-    );
-    final host = moveVideos(w.current).first;
+    expect(contents(w.current), contents(imported));
     w.edit(
       SetCaptions(
         CaptionStore([
-          cue.anchoredToClip(
-            clip,
-            Q.fromJson(host['timelineRange']['start']),
-            Q.fromJson(host['timelineRange']['duration']),
-          ),
+          CaptionCue.fromProjectJson(
+            Map<String, dynamic>.from(w.current.toJson()['captions'][0] as Map),
+          ).makeAbsolute(),
         ]),
       ),
       expectedRevision: w.current.revision,
     );
-    final beforeFollow = w.current;
+    final frozenAbs = w.current;
     w.edit(MoveClips(ids(), Q.of(1)), expectedRevision: w.current.revision);
-    expect(
-      Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
-      Q.of(1),
-    );
-    expect(w.current.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
-    w.undo(expectedRevision: w.current.revision);
-    expect(contents(w.current), contents(beforeFollow));
     expect(
       Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
       Q.of(0),
     );
+    expect(w.current.toJson()['captions'][0]['anchor']['kind'], 'absolute');
+    w.undo(expectedRevision: w.current.revision);
+    expect(contents(w.current), contents(frozenAbs));
+    expect(
+      Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
+      Q.of(0),
+    );
+    final d = w.current.toJson(), clip = ids().first;
     d['captions'][0]['anchor'] = {
       'kind': 'source',
       'clipId': clip,

@@ -1,0 +1,50 @@
+{
+  "increment": "1.35",
+  "title": "New and imported cues default to clipLocal when uniquely covered",
+  "baseCommit": "0c727a748f2713c2991f38dfa3e999fa80f08261",
+  "aggregateSha256": "d37e5331166d79ecdb864f9facc1faf4edd9935d03c31e0ca99c2411598a3ce4",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "selected": {
+    "document": {
+      "passed": 80,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sdk": {
+      "passed": 41,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ui": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "passed": 134,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "New SetCaptions/import/UI-add cue IDs that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips.",
+    "Cues in a gap or spanning a cut stay absolute. Existing IDs that are or are made absolute are not re-anchored.",
+    "Source anchors stay CAPTION_RICH_EDIT_NOT_IMPLEMENTED; MP4 text burn-in stays CAPTION_RENDER_POLICY_NOT_IMPLEMENTED; sidecar VTT is the export path.",
+    "Already-delivered insert-move leave-gap, explicit range close, includeLinks=false, MoveClips follow, and ripple/insert interval crop/split/shift stay unchanged.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, marker business, I-006, source caption anchors, or 1000 random NLE undo.",
+    "I-005 remains partial; I-010 remainingAcceptance unchanged; 87 counts stay 26/48/13/0; XD10 unchanged.",
+    "Previous 128/119/104/95/85/75/64/51/37/7/281 counts are not mixed in."
+  ],
+  "asOf": "2026-11-26T05:04:14.552352+08:00",
+  "timezone": "Asia/Shanghai",
+  "fullTaskComplete": false
+}
