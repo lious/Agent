@@ -419,3 +419,81 @@ are tested on Linux; OFF is not a non-Linux build. Original87 and XD10 remain se
 No original104 snapshot, acceptance or hard dependency was changed; no new RTC policy
 attempt/bypass, production endpoint, paid call, Mac access or workflow activation.
 Detailed exact runs, source hashes, failures and limits: `evidence/audio-sink/`.
+
+## Increment1.8 — three actual review/fix rounds
+
+1. **Native time/resource admission.** Reused the real preview conversion in bounded
+   one-time original-PTS RGBA proxy generation, not FFmpeg CLI in production.
+   Added monotonic original PTS/first-origin/duration checks, pre-codec2048² gate,
+   exclusive0600 output, write/cancel/fsync rollback,64MiB/2048frame limits. Actual
+   generated CFR/VFR/nonzero fixtures compare20 exact points each, plus malformed
+   manifests, hash corruption, actual mid-output cancel and real quota rollback.
+   Native decoder pixel conversion remains independently unqualified for V003 GPU
+   colour patches: shared helper equivalence is not that acceptance.
+2. **SDK ownership/clock review.** Fixed busy acquisition around NativeMedia.open,
+   reader-vs-dispose lifetime, queued cancellation/project hash fences and per-source
+   cache mapping identity (equal image bytes must not alias different PTS metadata).
+   Added single in-flight read backpressure and separate playback generation because
+   a new native handle can repeat epoch1. Real service tests cover frozen pause,
+   exact seek, rebind, restart, linked edit invalidation, cancellation and cleanup.
+   Export compiles the same admitted graph's source ranges against original files,
+   retaining the pre-existing unsupported-canvas refusal precedence.
+3. **Actual UI/readiness review.** FakeAsync widget video pause timed out twice;
+   retained, not converted to a passing mock. Reserved the preview layout so image
+   arrival cannot move controls. Moved new AV assertions to real Linux native
+   IntegrationTest binding (retaining baseline audio widget regression). Its first
+   actual run correctly found repeated native driver input had stayed0 instead of
+   500ms; reset the driver's focusedEditable cache and assert actual input text.
+   Added real moving-RGBA and paused0/500ms pixel assertions, bounded image decode
+   timeout/late-image disposal, generation fences and visible skipped/late counters.
+   This is software-service/native-UI evidence, not physical AV or full texture
+   lifetime/100-cancel/GPU qualification. Actual failed logs remain evidence.
+
+Original104, exact acceptance/title/scope/dependencies of all87, separateXD10,
+strict approved SQLite runtime and v4-v7 migrations remain unchanged. No unchanged
+positive RTC rerun/policy change/relay, production/paid/OAuth/workflow/Mac action.
+
+   The first full gate also genuinely failed two existing source-preview widget
+   paths: the busy indicator had become unbuilt below the lazy viewport, so a
+   fake-time pumpAndSettle spun while real codec completion was outstanding. Moved
+   the actual busy indicator to an always-built fixed overlay (no assertion
+   removal) and cleared the closed preview adapter reference so widget disposal
+   after workspace close is idempotent. The audio-only rebind/resume widget also
+   observed a real underrun at25266 samples and correctly invalidated the clock;
+   retained the entire failing gate. Added actual worker-loop maximum scheduling
+   gap and negotiated target/prebuffer telemetry, NOT a wall-derived media clock,
+   larger queues or relaxed fault assertions. A later positive run cannot prove
+   that this unreserved-host scheduling problem is fixed or qualify V004 stress.
+
+   Final geometry inspection caught a real portrait-gap defect: black gap pixels
+   were hardcoded16:9. Gap geometry now comes from the same exact integer canvas
+   scaling as native preview; portrait dimensions and disabled-gap behavior have
+   a domain regression. Also made new native AV integration fullyLive so engine
+   frames continue between driver operations; earlier driver-paced diagnostics
+   are retained, not presented as display performance. Re-run the complete gate
+   against the final production/test sources after both corrections.
+
+
+   FullyLive进一步真实失败后，逐帧完整Schema解析/hash和全表单setState已移出视频热路径：
+   仅复用第一次完整验证的不可变snapshot/graph，并逐帧检查namespace/head coherency。
+   新增第二连接修改HEAD/跨namespace回归；不是用廉价查询取代初始完整性检查。
+   独立player notifier使实际引擎帧能在driver操作之间推进；暂停稳定帧才做像素readback。
+   对新帧的20ms采纳检查不是已显示图像最大年龄，明确保留best-effort hold-last-frame限制。
+
+   Actual native abort was traced in our synthetic child (both default Impeller
+   and supported Skia failed). GDB showed GNU rethrow entering Flutter's unwind
+   implementation. Linux now links a PRIVATE static GNU runtime with only sm_*
+   C ABI exports; final ELF symbol/NEEDED audit and actual loaded-Flutter sync +
+   async missing-file exceptions are mandatory, not replaced by CLI coverage.
+   No kernel/core-policy elevation; the rejected core-limit request was not retried.
+
+   After containing exceptions, plain Pause->Resume still genuinely underflowed,
+   with a full ring and worker-loop gaps under6ms in the retained run. A larger
+   requested target/prebuffer also failed; reverted original requests/hard bounds.
+   Resume now rebuilds from the confirmed paused SERVICE sample with a fresh
+   epoch, exposing snapshot unconfirmed-tail uncertainty and awaiting a new clock.
+   Duplicate active resume is idempotent. Tail uses ONE locked published status,
+   not racing reads of worker counters. Extended actual-service qualification to
+   plain pause/resume (previous cases mainly sought first), duplicates, real
+   SIGSTOP starvation, device suspend, server stall and cleanup. This is NOT a
+   proof of Pulse internals, seamless DAC resume or physical AV/performance closure.

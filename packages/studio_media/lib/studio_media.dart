@@ -174,6 +174,23 @@ final class NativeMedia {
     );
   }
 
+  Future<Map<String, dynamic>> buildPreviewProxyAsync(
+    File source,
+    File output,
+  ) {
+    if (capabilities['rgba128PtsProxyV1'] != true) {
+      throw const StudioException('PROXY_ADAPTER_UNAVAILABLE');
+    }
+    final p = libraryPath, ns = namespace, h = handle;
+    final recipe = jsonEncode({
+      'path': source.absolute.path,
+      'outputPath': output.absolute.path,
+    });
+    return Isolate.run(
+      () => NativeMedia._attach(p, ns, h)._call('sm_build_proxy', recipe),
+    );
+  }
+
   /// Actual local PulseAudio service, not a submitted-sample or wall clock.
   Map<String, dynamic> playback(Map<String, dynamic> command) {
     if (capabilities['pulseServicePlaybackV1'] != true) {

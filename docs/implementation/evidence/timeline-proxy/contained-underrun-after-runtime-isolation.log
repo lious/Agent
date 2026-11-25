@@ -1,0 +1,44 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/timeline_video_test.dart
+Building Linux application...
+✓ Built build/linux/x64/debug/bundle/studio_demo
+00:00 +0: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+AV_UI_FIRST {baseSample: 0, clockSource: pulse-service-noninterpolated, clockValid: true, discontinuity: false, epoch: 1, lastServiceLatencyUsec: 27854, maxWorkerLoopGapUsec: 4265, physicalPresentationVerified: false, presentedSample: 11041, reason: , ringCapacityFrames: 8192, ringFrames: 8192, ringHighWaterFrames: 8192, sampleCount: 432000, serverMaxBytes: 32768, serverPrebufferBytes: 8192, serverTargetBytes: 16576, serviceLatencyNegative: false, serviceLatencyValid: true, sink: studio_test, state: playing, submittedSamples: 12378, timingUpdates: 56, unconfirmedTailSamples: 0, underruns: 0, snapshotHash: sha256:bd904c595a7c9bb582a29d9696ca97dcaeaaaf911398e4f08dd8a52bcd352fdf, playbackGeneration: 4} Video delivered 4 · committed 3 · stale dropped 5 · source skipped 1 · late commits 1 · sample 6034 · epoch 1 · clip 01a211f3-d7ae-7968-9c99-54981531df82
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <true>
+  Actual: <false>
+resume-timeline timed out: {baseSample: 0, clockSource: pulse-service-noninterpolated, clockValid:
+false, discontinuity: true, epoch: 1, lastServiceLatencyUsec: 31973, maxWorkerLoopGapUsec: 4265,
+physicalPresentationVerified: false, presentedSample: 15085, reason: underrun, ringCapacityFrames:
+8192, ringFrames: 8192, ringHighWaterFrames: 8192, sampleCount: 432000, serverMaxBytes: 32768,
+serverPrebufferBytes: 8192, serverTargetBytes: 16576, serviceLatencyNegative: false,
+serviceLatencyValid: true, sink: studio_test, state: interrupted, submittedSamples: 17652,
+timingUpdates: 69, unconfirmedTailSamples: 2567, underruns: 1, snapshotHash:
+sha256:bd904c595a7c9bb582a29d9696ca97dcaeaaaf911398e4f08dd8a52bcd352fdf, playbackGeneration: 4}
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.asyncTap (file:///workspace/agent-foundation-20261125/apps/studio_demo/integration_test/timeline_video_test.dart:134:9)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/apps/studio_demo/integration_test/timeline_video_test.dart:230:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/agent-foundation-20261125/apps/studio_demo/integration_test/timeline_video_test.dart line 134
+The test description was:
+  REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:27 +0 -1: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline [E]
+  Test failed. See exception logs above.
+  The test description was: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline
+
+00:27 +0 -1: (tearDownAll)
+00:27 +0 -1: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/timeline_video_test.dart: REAL Pulse user UI extracts, auditions, pauses, seeks, rebinds and stops audio timeline

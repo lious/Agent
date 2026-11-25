@@ -1,3 +1,5 @@
+import 'frame_proxy.dart';
+export 'frame_proxy.dart' show TimelinePreviewFrame;
 import 'preview_cache.dart';
 export 'preview_cache.dart';
 
@@ -405,6 +407,213 @@ final class StudioWorkspace {
     return current;
   }
 
+  final _frameProxies = <String, FrameProxy>{};
+  NativeMedia? _proxyBuilder;
+  bool _proxyBusy = false;
+  int _proxyEpoch = 0;
+  int get previewProxyBytes =>
+      _frameProxies.values.fold(0, (n, p) => n + p.bytes);
+  int get previewProxyCount => _frameProxies.length;
+  String _proxyKey(Map<String, dynamic> asset) => contentHash({
+    'ns': _repository.namespace.toJson(),
+    'blob': asset['originalBlobHash'],
+    'version': asset['version'],
+    'pipeline': FrameProxy.pipeline,
+  });
+  void cancelPreviewProxyBuild() {
+    _proxyEpoch++;
+    _proxyBuilder?.cancel();
+  }
+
+  void clearPreviewProxies() {
+    stopTimelinePlayback();
+    cancelPreviewProxyBuild();
+    for (final proxy in _frameProxies.values) {
+      proxy.dispose();
+    }
+    _frameProxies.clear();
+    sourcePreviewCache.clear();
+  }
+
+  /// Explicit bounded derived preview resource; not an archive/original mutation.
+  Future<Map<String, dynamic>> buildTimelinePreviewProxies() async {
+    _requireMedia();
+    if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
+    final snapshot = current;
+    requireLocalEditingWritable(snapshot);
+    final builder = NativeMedia.open(_media!.libraryPath, snapshot.namespace);
+    _proxyBusy = true;
+    final epoch = ++_proxyEpoch;
+    _proxyBuilder = builder;
+    void check() {
+      if (_closed || epoch != _proxyEpoch || current.hash != snapshot.hash) {
+        throw const StudioException('CANCELED');
+      }
+    }
+
+    try {
+      return await _blobs!.withMaintenanceLease(() async {
+        for (final raw in snapshot.toJson()['assets']) {
+          final asset = Map<String, dynamic>.from(raw as Map),
+              key = _proxyKey(asset);
+          if (_frameProxies.containsKey(key)) continue;
+          check();
+          final source = await _blobs!.resolve(
+            asset['originalBlobHash'] as String,
+          );
+          check();
+          final directory = await Directory.systemTemp.createTemp(
+            'studio-frame-proxy-',
+          );
+          var adopted = false;
+          FrameProxy? proxy;
+          try {
+            final facts = await builder.buildPreviewProxyAsync(
+              source,
+              File('${directory.path}/frames.rgba'),
+            );
+            check();
+            proxy = await FrameProxy.admit(directory, facts);
+            check();
+            if (previewProxyBytes + proxy.bytes > 64 * 1024 * 1024) {
+              throw const StudioException('PROXY_CACHE_QUOTA');
+            }
+            _frameProxies[key] = proxy;
+            adopted = true;
+          } finally {
+            if (!adopted) {
+              if (proxy != null) {
+                proxy.dispose();
+              } else if (directory.existsSync()) {
+                directory.deleteSync(recursive: true);
+              }
+            }
+          }
+        }
+        check();
+        return {
+          'pipeline': FrameProxy.pipeline,
+          'proxies': previewProxyCount,
+          'bytes': previewProxyBytes,
+          'persistent': false,
+        };
+      });
+    } catch (_) {
+      if (_closed || epoch != _proxyEpoch) {
+        throw const StudioException('CANCELED');
+      }
+      rethrow;
+    } finally {
+      builder.close();
+      if (identical(_proxyBuilder, builder)) _proxyBuilder = null;
+      _proxyBusy = false;
+    }
+  }
+
+  /// The sole timeline progress source is the current AudioSink confirmed sample.
+  /// A timer may REQUEST rendering; it never manufactures media time.
+  bool _timelineFrameBusy = false;
+  Future<TimelinePreviewFrame?> renderTimelineFromAudioClock() async {
+    if (_closed) throw const StudioException('WORKSPACE_CLOSED');
+    if (_timelineFrameBusy) throw const StudioException('TIMELINE_RENDER_BUSY');
+    _timelineFrameBusy = true;
+    try {
+      return await _renderTimelineFromAudioClock();
+    } finally {
+      _timelineFrameBusy = false;
+    }
+  }
+
+  Future<TimelinePreviewFrame?> _renderTimelineFromAudioClock() async {
+    _requireMedia();
+    final hash = _playbackHash,
+        clock = timelinePlayback,
+        generation = _playbackGeneration;
+    if (clock['clockValid'] != true ||
+        !{'playing', 'paused', 'finished'}.contains(clock['state'])) {
+      return null;
+    }
+    if (hash == null ||
+        clock['snapshotHash'] != hash ||
+        !_repository.headMatches(_activeProjectId, hash)) {
+      throw const StudioException('PLAYBACK_REVISION_CHANGED');
+    }
+    final graph = _playbackGraph ??= TimelineVideoGraph(_playbackSnapshot!),
+        sample = clock['presentedSample'] as int,
+        epoch = clock['epoch'] as int;
+    var time = Q.of(sample, 48000);
+    if (time >= graph.duration && time - graph.duration <= Q.of(1, 48000)) {
+      time = time - Q.of(1, 48000);
+    }
+    final point = graph.sample(time);
+    SourcePreviewFrame pixels;
+    var index = -1;
+    if (point.isGap) {
+      final rgba = List<int>.filled(
+        graph.previewWidth * graph.previewHeight * 4,
+        0,
+      );
+      for (var i = 3; i < rgba.length; i += 4) {
+        rgba[i] = 255;
+      }
+      pixels = SourcePreviewFrame({
+        'width': graph.previewWidth,
+        'height': graph.previewHeight,
+        'rgba': rgba,
+        'pts': '0',
+        'startPts': '0',
+        'timeBase': Q.of(1).toJson(),
+        'packetsRead': 0,
+      });
+    } else {
+      final asset = _playbackAssets[point.assetId]!;
+      final proxy = _frameProxies[_proxyKey(asset)];
+      if (proxy == null) throw const StudioException('TIMELINE_PROXY_REQUIRED');
+      index = proxy.indexAt(point.sourceTime);
+      final key = contentHash({
+        'proxy': proxy.blobHash,
+        'mapping': _proxyKey(asset),
+        'frame': index,
+      });
+      final cached = sourcePreviewCache.get(key);
+      pixels = cached ?? await proxy.read(index);
+      if (cached == null) sourcePreviewCache.put(key, pixels);
+    }
+    final result = TimelinePreviewFrame(
+      pixels: pixels,
+      snapshotHash: hash,
+      playbackGeneration: generation,
+      clockEpoch: epoch,
+      clockSample: sample,
+      clipId: point.clipId,
+      assetId: point.assetId,
+      proxyIndex: index,
+      gap: point.isGap,
+    );
+    if (!isTimelineFrameCurrent(result)) {
+      throw const StudioException('TIMELINE_FRAME_STALE');
+    }
+    return result;
+  }
+
+  bool isTimelineFrameCurrent(TimelinePreviewFrame frame) {
+    if (_closed ||
+        frame.playbackGeneration != _playbackGeneration ||
+        !_repository.headMatches(_activeProjectId, frame.snapshotHash)) {
+      return false;
+    }
+    final clock = timelinePlayback;
+    if (clock['snapshotHash'] != frame.snapshotHash ||
+        clock['epoch'] != frame.clockEpoch ||
+        clock['clockValid'] != true ||
+        !{'playing', 'paused', 'finished'}.contains(clock['state'])) {
+      return false;
+    }
+    final delta = (clock['presentedSample'] as int) - frame.clockSample;
+    return delta >= 0 &&
+        delta <= 960; //20ms processing freshness, NOT physical AV proof.
+  }
+
   final sourcePreviewCache = SourcePreviewCache();
   NativeMedia? _previewMedia;
   int _previewEpoch = 0;
@@ -635,10 +844,17 @@ final class StudioWorkspace {
   Directory? _playbackDirectory;
   int _playbackGeneration = 0;
   String? _playbackHash;
+  ProjectDocument? _playbackSnapshot;
+  TimelineVideoGraph? _playbackGraph;
+  Map<String, Map<String, dynamic>> _playbackAssets = const {};
   Map<String, dynamic> get timelinePlayback {
     final result =
         _playbackMedia?.playback({'op': 'status'}) ?? {'state': 'stopped'};
-    return {...result, 'snapshotHash': _playbackHash};
+    return {
+      ...result,
+      'snapshotHash': _playbackHash,
+      'playbackGeneration': _playbackGeneration,
+    };
   }
 
   void stopTimelinePlayback() {
@@ -649,6 +865,9 @@ final class StudioWorkspace {
     final dir = _playbackDirectory;
     _playbackDirectory = null;
     _playbackHash = null;
+    _playbackSnapshot = null;
+    _playbackGraph = null;
+    _playbackAssets = const {};
     if (dir != null && dir.existsSync()) dir.deleteSync(recursive: true);
   }
 
@@ -704,6 +923,11 @@ final class StudioWorkspace {
     final media = NativeMedia.open(_media!.libraryPath, snapshot.namespace);
     _playbackMedia = media;
     _playbackHash = snapshot.hash;
+    _playbackSnapshot = snapshot;
+    _playbackAssets = {
+      for (final a in d['assets'])
+        a['id'] as String: Map<String, dynamic>.from(a as Map),
+    };
     Directory? owned;
     // The preparation owns its directory until all native/isolate calls finish.
     // Stop/close cancels the handle, but must never delete a file under an isolate.
@@ -816,6 +1040,9 @@ final class StudioWorkspace {
         if (identical(_playbackMedia, media)) {
           _playbackMedia = null;
           _playbackHash = null;
+          _playbackSnapshot = null;
+          _playbackGraph = null;
+          _playbackAssets = const {};
         }
         if (owned != null && owned.existsSync()) {
           owned.deleteSync(recursive: true);
@@ -887,6 +1114,7 @@ final class StudioWorkspace {
         contentHash(s['backgroundRGBA']) != contentHash([0, 0, 0, 1])) {
       throw const StudioException('CANVAS_RENDER_POLICY_NOT_IMPLEMENTED');
     }
+    final videoGraph = TimelineVideoGraph(snapshot);
     final count = fps
         .frameIndex(Q.fromJson(s['duration']), Rounding.tiesToEven)
         .toInt();
@@ -1012,23 +1240,14 @@ final class StudioWorkspace {
             ).toInt(),
           });
         }
-        segments.add({
-          'path': file.absolute.path,
-          'startFrame': fps
-              .frameIndex(
-                Q.fromJson(clip['timelineRange']['start']),
-                Rounding.tiesToEven,
-              )
-              .toInt(),
-          'frameCount': fps
-              .frameIndex(
-                Q.fromJson(clip['timelineRange']['duration']),
-                Rounding.tiesToEven,
-              )
-              .toInt(),
-          'sourceStart': clip['sourceRange']['start'],
-          'streamIndex': index,
-        });
+        segments.add(
+          videoGraph.encoderSegment(
+            clip['id'] as String,
+            originalPath: file.absolute.path,
+            streamIndex: index,
+            frameRate: fps,
+          ),
+        );
       }
     }
     final publisher = AtomicFilePublisher(),
@@ -1170,8 +1389,14 @@ final class StudioWorkspace {
       cancelExport();
       _closed = true;
       unawaited(_persistenceEvents.close());
+      cancelPreviewProxyBuild();
+      for (final proxy in _frameProxies.values) {
+        proxy.dispose();
+      }
+      _frameProxies.clear();
       cancelSourcePreview();
       _previewMedia?.close();
+      _previewMedia = null;
       sourcePreviewCache.clear();
       _media?.close();
       _repository.close();

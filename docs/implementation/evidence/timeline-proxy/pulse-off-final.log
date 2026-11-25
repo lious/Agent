@@ -1,0 +1,17 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/agent-media-native-no-pulse
+ninja: no work to do.
+Internal ctest changing into directory: /workspace/agent-media-native-no-pulse
+Test project /workspace/agent-media-native-no-pulse
+    Start 1: media_handles
+1/3 Test #1: media_handles ....................   Passed    0.03 sec
+    Start 2: media_errors
+2/3 Test #2: media_errors .....................   Passed    0.03 sec
+    Start 3: media_cancel
+3/3 Test #3: media_cancel .....................   Passed    0.26 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   0.32 sec
+{"status":"passed","capability":false,"unavailable":"AUDIO_SINK_ADAPTER_UNAVAILABLE","proxyFrames":90,"platform":"Linux OFF configuration, NOT a non-Linux build"}

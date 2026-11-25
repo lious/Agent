@@ -1,0 +1,113 @@
+{
+  "increment": "1.8",
+  "checkedAt": "2026-11-25T17:19:12.161014+08:00",
+  "timezone": "Asia/Shanghai",
+  "baselineCommit": "f240b7de9f06cf841868ae6369ea34f8bf6b6b78",
+  "branch": "feat/studio-foundation-20261125",
+  "scope": "Linux original-PTS ephemeral proxy + service-confirmed AudioSink sample driven immutable timeline graph/native UI; source-only constrained development slice",
+  "scopeStatus": "passedWithinStatedLimits",
+  "fullTaskComplete": false,
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "additionalXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "tests": {
+    "nativeDartFlutterDistinct": 169,
+    "chromeDistinct": 9,
+    "osKeyringUiDistinct": 1,
+    "totalDistinctDartFlutter": 179,
+    "skipped": 0,
+    "pythonToolCases": 6,
+    "nativeCTestDistinct": 3,
+    "nativeCTestConfigurations": [
+      "Pulse ON",
+      "explicit STUDIO_ENABLE_PULSE=OFF"
+    ],
+    "internalSigkillTrials": 50,
+    "internalAacActiveCancelTrials": 10,
+    "internalSilentCancelTrials": 10,
+    "repeatCountersAreNotExtraDistinctTests": true,
+    "cleanReleaseRerun": "running at checkpoint; not counted as final pass"
+  },
+  "userPath": [
+    "import admitted AV and extract persistent linked audio",
+    "explicit build ephemeral original-PTS proxies, enable timeline video",
+    "play via real local Pulse service confirmed48k sample, pause, sample-exact seek, rebuild/rebind fenced stream, resume/stop",
+    "edit invalidates preview/playback snapshot; save/archive/reopen persists edits/audio but preview proxies require explicit rebuild",
+    "actual export uses same admitted graph source ranges and verified ORIGINALS + default persistent-audio AAC, never screenshots/proxy encoding"
+  ],
+  "limits": {
+    "proxyMaxFramesPerSource": 2048,
+    "adoptedProxyBytes": 67108864,
+    "oneStagingProxyBytes": 67108864,
+    "retainedPixelLruBytes": 2097152,
+    "maxSourceDimensions": 2048,
+    "previewMaxDimensions": 128,
+    "audioRingFrames": 8192,
+    "audioServerMaxFrames": 4096,
+    "frameFreshnessAtAdoptionSamples": 960,
+    "frameFreshnessIsNotDisplayLatency": true,
+    "bestEffortHoldLastImage": true,
+    "physicalPresentationVerified": false,
+    "durableSchemaProxy": false,
+    "crashOrphanCleanup": false,
+    "globalCachePins": false
+  },
+  "plainResume": {
+    "pausedConfirmedSample": 5598,
+    "resumeBaseSample": 5598,
+    "oldEpoch": 1,
+    "newEpoch": 2,
+    "newStreamRebuilt": true,
+    "snapshotUnconfirmedFrames": 1618,
+    "physicalQueueExactness": false
+  },
+  "actualFaults": [
+    "producer SIGSTOP300ms -> underrun/frozen confirmed clock",
+    "real sink suspension -> device-lost",
+    "server SIGSTOP -> clock-stale",
+    "explicit paused rebind/recovery without auto resume",
+    "plain resume source base equals paused service sample; repeated active resume keeps epoch",
+    "remote server lists/FIFO/symlink/invalid PCM/nonfinite refused;20 repeated open/stop and FD check"
+  ],
+  "failuresRetained": [
+    "first-full-gate-failed.json",
+    "fullylive-gate-failed.json",
+    "native-unwinder-failure-excerpt.txt",
+    "contained-underrun-after-runtime-isolation.log",
+    "larger-target-still-failed.log",
+    "first-fault-harness-bus-failed.log",
+    "first-fault-harness-bus-stdout.log"
+  ],
+  "toolchain": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "sqlite": "3.54.1 strict; system3.46.1 refused",
+    "ffmpeg": "7.1.5",
+    "pulse": "17.0",
+    "swresample": "5.3.100",
+    "clang": "19.1.7",
+    "gdb": "16.3 official Debian package; own-child debugging only"
+  },
+  "nativeLibrarySha256": "51ec0188345cb456da7bef662635eedb67dc82a5feac8dbeb76e8042314c9808",
+  "verificationCurrentSourceHashesMatch": true,
+  "original104SnapshotUnmodified": true,
+  "notValidated": [
+    "physical DAC/human hearing/physical display AV sync or seamless resume",
+    "V004/P0/PipeWire/stress/thermal qualification",
+    "full GPU/CPU effects/patch goldens/100 GPU cancels/texture lifecycle",
+    "durable SchemaProxy/CAS map/pins/global crash-orphan closure/read-only rich app",
+    "macOS/Windows/iOS/Android media adapter",
+    "browser-native or physical-device network session; existing managed RTC policy blocker unchanged",
+    "model/paid/production redistribution/activation"
+  ],
+  "next": "I-002 durable proxy/CAS mapping + history/resource pins/ownership and readonly rich app; then CPU/GPU/effects/preencoder qualification. Do not silently insert ephemeral RGBA into original Schema."
+}

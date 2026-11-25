@@ -1,0 +1,27 @@
+{
+  "contained-underrun-after-runtime-isolation.log": {
+    "rawSource": "artifacts/local-video/timeline-native-ui-private-runtime.log",
+    "rawSha256": "c8ff2154b2f2a92a2db536782004eadb5f90aea86349e71ef5681ca9180342fa"
+  },
+  "larger-target-still-failed.log": {
+    "rawSource": "artifacts/local-video/timeline-native-ui-bounded-target.log",
+    "rawSha256": "a9db2681ef6ce453fb87da287ae6280b165bbae0434e2bdd3f4569d622c1ec18"
+  },
+  "plain-resume-rebuild-passed.log": {
+    "rawSource": "artifacts/local-video/timeline-native-ui-resume-rebuild.log",
+    "rawSha256": "917967418e2bc45781e0fbb8bfc7702a5e75403f85b0c3a9499d7d6aa5d849a9"
+  },
+  "pulse-off-final.log": {
+    "rawSource": "artifacts/local-video/timeline-off-explicit-final.log",
+    "rawSha256": "015abfd0cc6006584944a979ae78f551e566688ca16ac5c6e140e0d8d147d02e"
+  },
+  "first-fault-harness-bus-failed.log": {
+    "rawSource": "artifacts/local-video/timeline-pulse-own-bus-startup-failed.err",
+    "rawSha256": "f9d31595cbeba5232e5cb74b654dfe7b66ae5d0d4afcba3b691f1adb3179344a"
+  },
+  "native-unwinder-failure-excerpt.txt": {
+    "rawSource": "artifacts/local-video/timeline-direct-own-child-backtrace.log",
+    "rawSha256": "f81a200fc050db7e4698d1d1f995f07c3801a322603fb47879601c30b2a7247e",
+    "selection": "signal/unwind/rethrow frames only; memory addresses omitted"
+  }
+}

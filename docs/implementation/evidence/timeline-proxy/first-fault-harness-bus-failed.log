@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/acceptance/audio_sink/pulse_smoke.py", line 117, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/workspace/agent-foundation-20261125/tools/acceptance/audio_sink/pulse_smoke.py", line 33, in main
+    wait(lambda:(d/'native').exists(),bool)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/agent-foundation-20261125/tools/acceptance/audio_sink/pulse_smoke.py", line 25, in wait
+    raise AssertionError(last)
+AssertionError: False

@@ -1,23 +1,22 @@
 {
-  "asOf": "2026-11-25T16:00:30.983987+08:00",
+  "asOf": "2026-11-25T17:17:20.940422+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
   "fullTasksCompleted": 0,
   "counts": {
     "complete": 0,
-    "partial": 23,
-    "planned": 51,
+    "partial": 25,
+    "planned": 49,
     "blocked": 13
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-021 proxy generation/strict source-time map and full timeline RenderGraph: audio-only pre-rendered Pulse audition now exists, not presented AV playback",
+    "I-002 durable resource/history closure: SchemaProxy CAS pins/map ownership, read-only rich app path, versioned/fenced crash-orphan cleanup; preserve original root Schema",
+    "I-022/I-008 CPU effects/reference and preencoder patch sampling, consumption-safe frame ownership/100 cancellation qualification; no physical AV claim",
+    "I-021 production proxy/cache global lifecycle and full I-015/V-004/P0 qualification; current ephemeral RGBA128 exact original-PTS/UI path remains usable",
     "I-023 qualified PipeWire/P0/hardware AudioSink and60s presented AV sync, full DSP/routes; real software-service clock/fault/monitor slice does not close acceptance",
-    "I-002 remaining original full semantic/resource closure and supported read-only app path; typed rich Schema roundtrip does not complete all original business contracts",
     "I-006/I-009 linked ripple/roll/slide, fractional video/audio-grid policy, source/clip-local caption reproject, independent audio import and full routing/effect/duck contracts",
-    "I-021 proxy generation/strict source-time map and full timeline RenderGraph preview; current actual source-thumbnail indexed seek/LRU remains qualified",
-    "I-024 full upstream RenderGraph/effects/proxy and P0 device acceptance; preserved real default persistent-audio AAC export and frozen revision",
     "XD-003 managed zero-host-ICE policy remains recorded blocker; no unchanged positive qualification reruns or policy/relay bypass. Other executable original87/XD10 work continues",
     "Continue same checkout/feature branch without per-batch approvals; physical devices/non-Linux remain separately unverified"
   ],
@@ -68,18 +67,24 @@
     {
       "id": "V-003",
       "title": "PTS/色彩/CPU-GPU参考图一致性",
-      "status": "planned",
+      "status": "partial",
       "implementationStatus": "notApplicableValidationTask",
-      "verificationStatus": "notRun",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Linux software offline60s duration/frame-count/AAC synchronization qualification and exact20-point CFR/VFR/nonzero source/proxy PTS/RGBA comparisons. Real confirmed AudioSink-clock/native-UI moving video and paused seek pixels; NOT physical presentation sync or CPU/GPU/preencoder SDR patch<=2/255 qualification.",
+      "evidence": [
+        "evidence/timeline-proxy/verification.json",
+        "evidence/timeline-proxy/offline-60s.json",
+        "evidence/timeline-proxy/summary.json"
+      ],
       "remainingAcceptance": "60秒视频时长误差≤1交付帧；20点seek误差≤1帧；SDR测试patch最大差≤2/255；失败不能只肉眼放行。",
       "remainingScope": "含有理PTS和SDR参考；不含HDR承诺。",
       "hardDeps": [
         "V-002"
       ],
-      "blockers": []
+      "blockers": [
+        "CPU/GPU/reference/preencoder SDR patch comparison and physical/P0 render matrix remain unverified; current shared source/range graph is not a full compositor"
+      ]
     },
     {
       "id": "V-004",
@@ -752,7 +757,7 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Actual C++ libav* C ABI/Dart FFI, scoped handles, decode/encode/cancel; not full AVIO sandbox or fixed redistribution build",
+      "implementedScope": "Actual C++ libav* C ABI/Dart FFI, scoped handles, decode/encode/cancel; not full AVIO sandbox or fixed redistribution build; Linux C-only private GNU runtime/ELF symbol isolation, real loaded-Flutter sync+async missing-file errors; arbitrary host/platform ABI and redistribution not qualified.",
       "evidence": [
         "evidence/local-video/verification.json"
       ],
@@ -863,10 +868,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Actual container-index backward seek + decoder flush/forward PTS-floor source thumbnails, exact rational FIRST-source-PTS time, separate preview engine/generation and verified CAS, immutable retained-pixel bounded LRU and clicked Linux UI.20 CFR points independently assert exact timestamp and pixels vs sequential reference; actual VFR/nonzero PTS and wrong-color/multistream/EOF failures. No proxy mapping/full timeline/GPU/clock qualification.",
+      "implementedScope": "Actual container-index backward seek + decoder flush/forward PTS-floor source thumbnails, exact rational FIRST-source-PTS time, separate preview engine/generation and verified CAS, immutable retained-pixel bounded LRU and clicked Linux UI.20 CFR points independently assert exact timestamp and pixels vs sequential reference; actual VFR/nonzero PTS and wrong-color/multistream/EOF failures. No proxy mapping/full timeline/GPU/clock qualification. Increment1.8: real bounded preview-only RGBA128 proxy generation retaining original PTS/start/timeBase/duration;20 exact CFR/VFR/nonzero proxy points each vs sequential decoding, per-frame/blob hashes,64MiB adopted+64MiB staging/2MiB pixel LRU, actual native cancel/quota rollback. AudioSink-confirmed sample selects actual Linux UI video; epoch/revision/restart generation fences. Ephemeral only: no durable SchemaProxy/CAS pins/global crash-orphan cache closure.",
       "evidence": [
         "evidence/local-video/verification.json",
-        "evidence/web-rtc-seek/summary.json"
+        "evidence/web-rtc-seek/summary.json",
+        "evidence/timeline-proxy/summary.json"
       ],
       "remainingAcceptance": "20点seek±1帧；VFR/非零PTS不误映射；缓存<=预算；取消epoch前帧不回流预览。",
       "remainingScope": "含PTS索引/VFR/代理时间映射/LRU；不做每次seek全片解码。",
@@ -875,28 +881,27 @@
         "I-015"
       ],
       "blockers": [
-        "Proxy generation/mapping and full original upstream I-015/V-004 clock/load/P0 qualification are incomplete; source thumbnail slice cannot close whole I-021",
-        "Non-Linux platforms and hardware remain unverified"
+        "Durable SchemaProxy/CAS resource pins, crash-orphan/global cache lifecycle, full upstream I-015/V-004/P0 and non-Linux qualifications remain incomplete; ephemeral development preview is not the full original task"
       ],
       "criterionEvidence": [
         {
           "criterion": "20点seek±1帧",
-          "verifiedSlice": "20 deterministic shuffled CFR source positions assert EXACT requested rational frame timestamp and sequential-decoded PTS/RGBA; container indexed packet gain observed",
+          "verifiedSlice": "20 deterministic shuffled CFR source positions assert EXACT requested rational frame timestamp and sequential-decoded PTS/RGBA; container indexed packet gain observed; generated proxies now compare20 exact positions each CFR/VFR/nonzero to sequential PTS/RGBA",
           "fullScopeComplete": false
         },
         {
           "criterion": "VFR/非零PTS不误映射",
-          "verifiedSlice": "Real generated nonzero7s start and4 VFR positions including known47/30 PTS; low-level native source only, NOT VFR editor import or proxy mapping",
+          "verifiedSlice": "Real generated nonzero7s start and4 VFR positions including known47/30 PTS; low-level native source only, NOT VFR editor import or proxy mapping; ephemeral actual proxy preserves original7s origin and VFR table,20 points each; VFR editor/export still gated",
           "fullScopeComplete": false
         },
         {
           "criterion": "缓存<=预算",
-          "verifiedSlice": "Actual immutable RGBA retained-byte LRU budget, oversize refusal, eviction and256-entry cap;2MiB default, NOT total RSS/disk cap",
+          "verifiedSlice": "Actual immutable RGBA retained-byte LRU budget, oversize refusal, eviction and256-entry cap;2MiB default, NOT total RSS/disk cap; explicit64MiB adopted/64MiB staging caps with actual native limit rollback; not totalRSS/global crash-orphan accounting",
           "fullScopeComplete": false
         },
         {
           "criterion": "取消epoch前帧不回流预览",
-          "verifiedSlice": "Actual queued supersession/close/project-drift SDK rejection and real UI clears thumbnail after edit; mid-seek cancellation latency/complete RenderGraph not qualified",
+          "verifiedSlice": "Actual queued supersession/close/project-drift SDK rejection and real UI clears thumbnail after edit; mid-seek cancellation latency/complete RenderGraph not qualified; actual service seek/rebind/restart/edit isolation and real UI pixel changes; no full GPU100-cancel qualification",
           "fullScopeComplete": false
         }
       ]
@@ -904,12 +909,14 @@
     {
       "id": "I-022",
       "title": "统一RenderGraph与纹理所有权",
-      "status": "planned",
-      "implementationStatus": "notStarted",
-      "verificationStatus": "notRun",
+      "status": "partial",
+      "implementationStatus": "partial",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Immutable single-admitted-track exact rational TimelineVideoGraph shared by service-clock preview selection and actual original-file export recipe. Real Linux Flutter UI decodes/adopts/disposes derived RGBA frames with single-flight/backpressure, bounded image decode deadline/late disposal, hash/revision/native epoch/SDK playback-generation fences, gap handling and visible skipped/stale/late counters. NOT full effects/GPU compositor/texture leases or V003 pixel tolerance/100-cancel qualification.",
+      "evidence": [
+        "evidence/timeline-proxy/summary.json"
+      ],
       "remainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
       "remainingScope": "含CPU参考/本端GPU节点/preview-export共图；不截图预览导出。",
       "hardDeps": [
@@ -917,7 +924,10 @@
         "I-015",
         "I-021"
       ],
-      "blockers": []
+      "blockers": [
+        "I-008 effects and full upstream dependencies remain partial/planned; preview-vs-preencoder SDR patch/GPU comparison and100 GPU/encoder-consumption cancel/leak qualification not run",
+        "Physical AV/P0 and non-Linux platforms unverified"
+      ]
     },
     {
       "id": "I-023",
@@ -1630,5 +1640,5 @@
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
   },
-  "iterationBaseCommit": "b075763c404707bf5102c4315aca5613574a2719"
+  "iterationBaseCommit": "f240b7de9f06cf841868ae6369ea34f8bf6b6b78"
 }

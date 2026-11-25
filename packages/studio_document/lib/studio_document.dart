@@ -1,3 +1,5 @@
+export 'timeline_graph.dart';
+
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';

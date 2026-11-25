@@ -1,0 +1,6 @@
+Scoped GDB of OWN synthetic integration child. Only signal/unwinder frames retained; no VM service URLs.
+Thread 62 "studio_demo" received signal SIGABRT, Aborted.
+#6  [address omitted] in __gxx_personality_v0 () at /lib/x86_64-linux-gnu/libstdc++.so.6
+#8  [address omitted] in _Unwind_RaiseException () at /workspace/agent-foundation-20261125/apps/studio_demo/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+#9  [address omitted] in _Unwind_Resume_or_Rethrow () at /lib/x86_64-linux-gnu/libgcc_s.so.1
+#10 [address omitted] in __cxa_rethrow () at /lib/x86_64-linux-gnu/libstdc++.so.6

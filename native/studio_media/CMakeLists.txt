@@ -24,6 +24,15 @@ if(STUDIO_ENABLE_PULSE)
   target_compile_definitions(studio_media PRIVATE STUDIO_ENABLE_PULSE=1)
   target_link_libraries(studio_media PRIVATE PkgConfig::PULSE)
 endif()
+# Flutter's embedder exports an LLVM unwinder. Keep this C-only adapter's GNU
+# exception runtime private; otherwise libstdc++ can rethrow through the foreign
+# unwinder and terminate even inside our catch blocks (real native UI regression).
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_link_options(studio_media PRIVATE -static-libstdc++ -static-libgcc
+    "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/studio_media.map")
+  set_property(TARGET studio_media APPEND PROPERTY LINK_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/studio_media.map")
+endif()
 include(CTest)
 if(BUILD_TESTING)
   find_package(Threads REQUIRED)

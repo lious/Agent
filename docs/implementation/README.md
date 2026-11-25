@@ -6,10 +6,10 @@
 
 视频范围仍为 CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048；持久音频/AAC与真实本地服务试听见increment1.7。
 有音轨输入需明确 video-only 确认；未知色彩、VFR、旋转、alpha 等不伪装成可导出。
-原104文档不变；当前全部87项逐项保留原验收：23 partial、51 planned、13 blocked（验证资源）。
+原104文档不变；当前全部87项逐项保留原验收：25 partial、49 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **increment1.7**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
+当前操作入口见文末 **increment1.8**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -457,3 +457,65 @@ See [ADR0011](../adr/0011-local-pulse-audio-audition.md),
 `evidence/audio-sink/summary.json`, and REVIEW for exact runs/failures/limits.
 
 本版最终来源绑定回归：162 native Dart/Flutter +9 Chrome +1真实OS-keyring UI = **172项**，零跳过；另6工具/3个CTest（Pulse开/关各执行）、6次Linux clean/release启动和3次独立最小ABI probe。原87：**0 complete /23 partial /51 planned /13 blocked**；XD10：**0 /8 /1 /1**。先前一次并行门禁真实underrun和一次点击UI超时保留在failures，不冒充V-004热负载通过。原104及原验收/依赖逐项保留。
+
+
+## increment1.8 — 原始PTS代理与服务确认sample驱动的真实Linux影音预览
+
+本批恢复中断现场，保留原全部变更和失败日志后完成实际修正；不是将上轮中断算作通过。
+原87：**0 complete /25 partial /49 planned /13 blocked**；新增XD10仍单列为
+**0 complete /8 partial /1 planned /1 blocked**。I-021/I-022/V-003仅下述范围partial，
+GPU/P0/全资源生命周期与其他平台未验证，不能据测试数推导完整任务完成。
+
+### 实际用户操作
+
+1. 按上方固定Flutter/SQLite3.54.1与native库命令启动Linux `studio_demo` 或共享编辑器宿主。
+2. 导入admitted CFR/SDR AV，明确确认视频策略并提取持久linked AudioClip。
+3. 点击 **Build timeline video preview proxies**，完成后勾选timeline video。
+4. Play/Pause/48k sample精确seek/Rebind/Resume/Stop；可见RawImage图像及真实服务sample、
+   epoch、delivered/committed/stale/source-skipped/late诊断。16ms计时器仅请求，不生成媒体时钟。
+5. 编辑后旧snapshot/stream/image失效；既有undo、SQLite/checkpoint、ZIP保存、fork/重开保留。
+   代理仅本机临时资源，关闭清理，重开须显式重建，**不是已持久化SchemaProxy**。
+6. 实际H264/MP4+默认持久音频AAC导出仍使用验证原件；与预览共用单轨精确源时间graph，
+   不编码低清代理/截图。字幕渲染、非黑背景、尺寸/像素比例不匹配、retime/effects明确拒绝。
+
+这是**best-effort软件服务/真实UI预览**，可能跳帧、晚帧并保持上一张图像；20ms新帧采纳
+检查不是显示延迟上限。未测人耳/声卡DAC/物理AV同步/无缝resume/稳定帧率。普通Pause→Resume
+现在从确认paused sample重建有新epoch的stream，等待新时钟，公开snapshot的未确认队列量，
+不承诺物理队列精确取消或没有重复尾音。重绑/后台不自动恢复声音。
+
+### 资源/兼容性与证据
+
+* 每源≤2048帧，源≤2048²，RGBA最大128边；采用代理≤64MiB，同时单staging≤64MiB，
+  像素LRU2MiB。不是全局进程/磁盘上限；崩溃orphan回收、持久CAS map/pins/历史闭包尚未完成。
+* CFR/VFR/非零7秒原PTS各20点真实解码对照；VFR仅独立代理映射测试，不扩大编辑/导出profile。
+* 实际 **179个Dart/Flutter测试（169 native +9 Chrome +1真实OS-keyring UI），0跳过**；
+  另6个Python工具case、3个CTest各ON/OFF配置、真实60秒PCM→Dart AudioBus→AAC/mux资格。
+  SIGKILL50次、AAC/无声各10次取消是内部实验，不额外冒充独立case。
+* 实际Pulse服务monitor、SIGSTOP生产者饥饿、设备suspend、server stall、确认暂停/普通resume/
+  重复resume/seek/rebind、FD与非本地服务拒绝回归通过；不等于物理设备或V004/P0资格。
+* v4/v5/v6→v7实际SQLite迁移及旧runtime拒绝通过；原104 SHA256与87项原验收/依赖保持。
+* Linux C++异常在真实Flutter宿主触发的abort已定位并隔离GNU runtime，C ABI只导出sm_*；
+  真引擎加载时sync/async错误回归通过。仅Linux验证，不声称其他系统ABI或生产再分发资格。
+* 当前6次clean/release构建启动复验记录以summary最终状态为准，不借用旧构建结果。
+* 已知RTC受管网络策略阻塞保持；本批未无变化重跑正向资格、改策略、加中继或绕过限制。
+
+细节：[ADR0012](../adr/0012-clock-driven-derived-video-preview.md)、
+[三轮实际审查](REVIEW.md)、[实际汇总/源哈希/失败证据](evidence/timeline-proxy/summary.json)。
+
+可复跑入口（先设置上文PATH/LD_LIBRARY_PATH/STUDIO_MEDIA_LIBRARY）：
+
+```sh
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /自己的native-build --report /自己的结果/native.json
+python3 tools/acceptance/run_audio_qualification.py --native-library "$STUDIO_MEDIA_LIBRARY" --report /自己的结果/offline-60s.json
+# 该脚本自行建私有null-sink；必须新bus，不能同已有服务竞争D-Bus名称。
+dbus-run-session -- python3 tools/acceptance/audio_sink/pulse_smoke.py
+cmake -S native/studio_media -B /自己的off-build -DSTUDIO_ENABLE_PULSE=OFF
+cmake --build /自己的off-build && ctest --test-dir /自己的off-build --output-on-failure
+dart run packages/studio_media/tool/pulse_off_proxy.dart /自己的off-build/libstudio_media.so /自己的合成输入.mp4
+```
+
+工具：Flutter3.50.1 / Dart3.14.0 / SQLite3.54.1 / FFmpeg7.1.5 / libpulse17 /
+SWR5.3.100 / Clang19.1.7；诊断GDB16.3/strace来自官方Debian包，仅自有合成子进程。
+不读取Mac/用户素材/现有keyring，不付费/部署/下载权重、不启用远端workflow、不合并main。
+下一接续点：原I-002持久SchemaProxy/CAS资源与历史pins/ownership回收及rich Schema只读UI，
+再做完整CPU/GPU effects/编码前patch/texture lease资格；现有preview临时格式不得静默写入Schema。

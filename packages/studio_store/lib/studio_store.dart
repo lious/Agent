@@ -300,6 +300,16 @@ final class DocumentRepository {
     if (stored != json) throw const StudioException('HASH_COLLISION');
   }
 
+  /// Cache-coherency fence only: the caller must already hold a fully read and
+  /// validated immutable snapshot. Never substitutes for initial read/integrity.
+  bool headMatches(String projectId, String snapshotHash) {
+    requireId(projectId);
+    return _db.select(
+      'SELECT 1 FROM project_heads WHERE ns=? AND project_id=? AND snapshot_hash=?',
+      [_ns, projectId, snapshotHash],
+    ).isNotEmpty;
+  }
+
   ProjectDocument? read(String projectId) {
     requireId(projectId);
     final rows = _db.select(

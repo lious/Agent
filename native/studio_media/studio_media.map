@@ -1,0 +1,4 @@
+STUDIO_MEDIA_1 {
+  global: sm_*;
+  local: *;
+};

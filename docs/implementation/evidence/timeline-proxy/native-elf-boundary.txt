@@ -1,0 +1,300 @@
+0000000000000000 A STUDIO_MEDIA_1
+                 w _ITM_RU1
+                 w _ITM_RU8
+                 w _ITM_addUserCommitAction
+                 w _ITM_deregisterTMCloneTable
+                 w _ITM_memcpyRnWt
+                 w _ITM_memcpyRtWn
+                 w _ITM_registerTMCloneTable
+                 w _ZGTtdlPv
+                 w _ZGTtnam
+                 U __assert_fail@GLIBC_2.2.5
+                 U __ctype_get_mb_cur_max@GLIBC_2.2.5
+                 U __cxa_atexit@GLIBC_2.2.5
+                 w __cxa_finalize@GLIBC_2.2.5
+                 U __duplocale@GLIBC_2.2.5
+                 U __errno_location@GLIBC_2.2.5
+                 U __freelocale@GLIBC_2.2.5
+                 w __gmon_start__
+                 U __isoc23_strtoll@GLIBC_2.38
+                 U __isoc23_strtoul@GLIBC_2.38
+                 U __isoc23_strtoull@GLIBC_2.38
+                 U __iswctype_l@GLIBC_2.2.5
+                 U __libc_single_threaded@GLIBC_2.32
+                 U __newlocale@GLIBC_2.2.5
+                 U __nl_langinfo_l@GLIBC_2.2.5
+                 U __strcoll_l@GLIBC_2.2.5
+                 U __strftime_l@GLIBC_2.3
+                 U __strtod_l@GLIBC_2.2.5
+                 U __strtof_l@GLIBC_2.2.5
+                 U __strxfrm_l@GLIBC_2.2.5
+                 U __tls_get_addr@GLIBC_2.3
+                 U __towlower_l@GLIBC_2.2.5
+                 U __towupper_l@GLIBC_2.2.5
+                 U __uselocale@GLIBC_2.3
+                 U __wcscoll_l@GLIBC_2.2.5
+                 U __wcsftime_l@GLIBC_2.3
+                 U __wcsxfrm_l@GLIBC_2.2.5
+                 U __wctype_l@GLIBC_2.2.5
+                 U _dl_find_object@GLIBC_2.35
+                 U abort@GLIBC_2.2.5
+                 U arc4random@GLIBC_2.36
+                 U av_channel_layout_compare@LIBAVUTIL_59
+                 U av_channel_layout_copy@LIBAVUTIL_59
+                 U av_channel_layout_default@LIBAVUTIL_59
+                 U av_channel_layout_describe@LIBAVUTIL_59
+                 U av_color_primaries_name@LIBAVUTIL_59
+                 U av_color_space_name@LIBAVUTIL_59
+                 U av_color_transfer_name@LIBAVUTIL_59
+                 U av_dict_free@LIBAVUTIL_59
+                 U av_dict_set@LIBAVUTIL_59
+                 U av_find_best_stream@LIBAVFORMAT_61
+                 U av_frame_alloc@LIBAVUTIL_59
+                 U av_frame_free@LIBAVUTIL_59
+                 U av_frame_get_buffer@LIBAVUTIL_59
+                 U av_frame_make_writable@LIBAVUTIL_59
+                 U av_frame_unref@LIBAVUTIL_59
+                 U av_get_pix_fmt_name@LIBAVUTIL_59
+                 U av_guess_frame_rate@LIBAVFORMAT_61
+                 U av_interleaved_write_frame@LIBAVFORMAT_61
+                 U av_packet_alloc@LIBAVCODEC_61
+                 U av_packet_free@LIBAVCODEC_61
+                 U av_packet_rescale_ts@LIBAVCODEC_61
+                 U av_packet_side_data_get@LIBAVCODEC_61
+                 U av_packet_unref@LIBAVCODEC_61
+                 U av_pix_fmt_desc_get@LIBAVUTIL_59
+                 U av_read_frame@LIBAVFORMAT_61
+                 U av_rescale_q@LIBAVUTIL_59
+                 U av_rescale_q_rnd@LIBAVUTIL_59
+                 U av_strerror@LIBAVUTIL_59
+                 U av_version_info@LIBAVUTIL_59
+                 U av_write_trailer@LIBAVFORMAT_61
+                 U avcodec_alloc_context3@LIBAVCODEC_61
+                 U avcodec_configuration@LIBAVCODEC_61
+                 U avcodec_find_decoder@LIBAVCODEC_61
+                 U avcodec_find_encoder@LIBAVCODEC_61
+                 U avcodec_find_encoder_by_name@LIBAVCODEC_61
+                 U avcodec_flush_buffers@LIBAVCODEC_61
+                 U avcodec_free_context@LIBAVCODEC_61
+                 U avcodec_get_name@LIBAVCODEC_61
+                 U avcodec_license@LIBAVCODEC_61
+                 U avcodec_open2@LIBAVCODEC_61
+                 U avcodec_parameters_from_context@LIBAVCODEC_61
+                 U avcodec_parameters_to_context@LIBAVCODEC_61
+                 U avcodec_profile_name@LIBAVCODEC_61
+                 U avcodec_receive_frame@LIBAVCODEC_61
+                 U avcodec_receive_packet@LIBAVCODEC_61
+                 U avcodec_send_frame@LIBAVCODEC_61
+                 U avcodec_send_packet@LIBAVCODEC_61
+                 U avcodec_version@LIBAVCODEC_61
+                 U avformat_alloc_output_context2@LIBAVFORMAT_61
+                 U avformat_close_input@LIBAVFORMAT_61
+                 U avformat_find_stream_info@LIBAVFORMAT_61
+                 U avformat_free_context@LIBAVFORMAT_61
+                 U avformat_new_stream@LIBAVFORMAT_61
+                 U avformat_open_input@LIBAVFORMAT_61
+                 U avformat_seek_file@LIBAVFORMAT_61
+                 U avformat_version@LIBAVFORMAT_61
+                 U avformat_write_header@LIBAVFORMAT_61
+                 U avio_closep@LIBAVFORMAT_61
+                 U avio_open2@LIBAVFORMAT_61
+                 U bind_textdomain_codeset@GLIBC_2.2.5
+                 U bindtextdomain@GLIBC_2.2.5
+                 U btowc@GLIBC_2.2.5
+                 U chdir@GLIBC_2.2.5
+                 U clock_gettime@GLIBC_2.17
+                 U close@GLIBC_2.2.5
+                 U closedir@GLIBC_2.2.5
+                 U dgettext@GLIBC_2.2.5
+                 U dirfd@GLIBC_2.2.5
+                 U fchmod@GLIBC_2.2.5
+                 U fchmodat@GLIBC_2.4
+                 U fclose@GLIBC_2.2.5
+                 U fdopen@GLIBC_2.2.5
+                 U fdopendir@GLIBC_2.4
+                 U fflush@GLIBC_2.2.5
+                 U fileno@GLIBC_2.2.5
+                 U fopen@GLIBC_2.2.5
+                 U fputc@GLIBC_2.2.5
+                 U fputs@GLIBC_2.2.5
+                 U free@GLIBC_2.2.5
+                 U fseeko@GLIBC_2.2.5
+                 U fstat@GLIBC_2.33
+                 U fsync@GLIBC_2.2.5
+                 U fwrite@GLIBC_2.2.5
+                 U get_nprocs@GLIBC_2.2.5
+                 U getcwd@GLIBC_2.2.5
+                 U getentropy@GLIBC_2.25
+                 U getenv@GLIBC_2.2.5
+                 U gettext@GLIBC_2.2.5
+                 U iconv@GLIBC_2.2.5
+                 U iconv_close@GLIBC_2.2.5
+                 U iconv_open@GLIBC_2.2.5
+                 U ioctl@GLIBC_2.2.5
+                 U link@GLIBC_2.2.5
+                 U localeconv@GLIBC_2.2.5
+                 U lseek@GLIBC_2.2.5
+                 U lstat@GLIBC_2.33
+                 U malloc@GLIBC_2.2.5
+                 U mbrtowc@GLIBC_2.2.5
+                 U mbsnrtowcs@GLIBC_2.2.5
+                 U mbsrtowcs@GLIBC_2.2.5
+                 U memchr@GLIBC_2.2.5
+                 U memcmp@GLIBC_2.2.5
+                 U memcpy@GLIBC_2.14
+                 U memmove@GLIBC_2.2.5
+                 U memset@GLIBC_2.2.5
+                 U mkdir@GLIBC_2.2.5
+                 U nanosleep@GLIBC_2.2.5
+                 U open@GLIBC_2.2.5
+                 U openat@GLIBC_2.4
+                 U pa_context_connect@PULSE_0
+                 U pa_context_disconnect@PULSE_0
+                 U pa_context_get_state@PULSE_0
+                 U pa_context_new@PULSE_0
+                 U pa_context_unref@PULSE_0
+                 U pa_mainloop_free@PULSE_0
+                 U pa_mainloop_get_api@PULSE_0
+                 U pa_mainloop_iterate@PULSE_0
+                 U pa_mainloop_new@PULSE_0
+                 U pa_operation_unref@PULSE_0
+                 U pa_stream_connect_playback@PULSE_0
+                 U pa_stream_cork@PULSE_0
+                 U pa_stream_disconnect@PULSE_0
+                 U pa_stream_drain@PULSE_0
+                 U pa_stream_get_buffer_attr@PULSE_0
+                 U pa_stream_get_device_name@PULSE_0
+                 U pa_stream_get_latency@PULSE_0
+                 U pa_stream_get_state@PULSE_0
+                 U pa_stream_get_time@PULSE_0
+                 U pa_stream_get_timing_info@PULSE_0
+                 U pa_stream_is_corked@PULSE_0
+                 U pa_stream_is_suspended@PULSE_0
+                 U pa_stream_new@PULSE_0
+                 U pa_stream_set_moved_callback@PULSE_0
+                 U pa_stream_set_suspended_callback@PULSE_0
+                 U pa_stream_set_underflow_callback@PULSE_0
+                 U pa_stream_unref@PULSE_0
+                 U pa_stream_update_timing_info@PULSE_0
+                 U pa_stream_writable_size@PULSE_0
+                 U pa_stream_write@PULSE_0
+                 U poll@GLIBC_2.2.5
+                 U pread@GLIBC_2.2.5
+                 U pthread_cond_broadcast@GLIBC_2.3.2
+                 U pthread_cond_wait@GLIBC_2.3.2
+                 U pthread_create@GLIBC_2.34
+                 U pthread_detach@GLIBC_2.34
+                 U pthread_join@GLIBC_2.34
+                 U pthread_mutex_lock@GLIBC_2.2.5
+                 U pthread_mutex_trylock@GLIBC_2.34
+                 U pthread_mutex_unlock@GLIBC_2.2.5
+                 U pthread_once@GLIBC_2.34
+                 U read@GLIBC_2.2.5
+                 U readdir@GLIBC_2.2.5
+                 U readlink@GLIBC_2.2.5
+                 U realloc@GLIBC_2.2.5
+                 U realpath@GLIBC_2.3
+                 U remove@GLIBC_2.2.5
+                 U rename@GLIBC_2.2.5
+                 U secure_getenv@GLIBC_2.17
+                 U sendfile@GLIBC_2.2.5
+                 U setlocale@GLIBC_2.2.5
+                 U setvbuf@GLIBC_2.2.5
+000000000001de40 T sm_abi_version@@STUDIO_MEDIA_1
+0000000000022650 T sm_build_proxy@@STUDIO_MEDIA_1
+000000000001e650 T sm_cancel@@STUDIO_MEDIA_1
+000000000001e570 T sm_cancel_epoch@@STUDIO_MEDIA_1
+000000000001e8a0 T sm_capabilities@@STUDIO_MEDIA_1
+000000000001e170 T sm_close@@STUDIO_MEDIA_1
+000000000001de50 T sm_create@@STUDIO_MEDIA_1
+00000000000216d0 T sm_decode_audio@@STUDIO_MEDIA_1
+000000000001e7c0 T sm_encoded_audio_samples@@STUDIO_MEDIA_1
+0000000000024550 T sm_export@@STUDIO_MEDIA_1
+000000000001f7d0 T sm_playback@@STUDIO_MEDIA_1
+00000000000235d0 T sm_preview@@STUDIO_MEDIA_1
+0000000000020750 T sm_probe@@STUDIO_MEDIA_1
+00000000000254d0 T sm_string_free@@STUDIO_MEDIA_1
+                 U snprintf@GLIBC_2.2.5
+                 U sprintf@GLIBC_2.2.5
+                 U stat@GLIBC_2.33
+                 U statvfs@GLIBC_2.2.5
+                 U stderr@GLIBC_2.2.5
+                 U strchr@GLIBC_2.2.5
+                 U strcmp@GLIBC_2.2.5
+                 U strdup@GLIBC_2.2.5
+                 U strerror_r@GLIBC_2.2.5
+                 U strlen@GLIBC_2.2.5
+                 U strncmp@GLIBC_2.2.5
+                 U strtod@GLIBC_2.2.5
+                 U strtold_l@GLIBC_2.3
+                 U swr_alloc_set_opts2@LIBSWRESAMPLE_5
+                 U swr_convert@LIBSWRESAMPLE_5
+                 U swr_free@LIBSWRESAMPLE_5
+                 U swr_get_out_samples@LIBSWRESAMPLE_5
+                 U swr_init@LIBSWRESAMPLE_5
+                 U swresample_license@LIBSWRESAMPLE_5
+                 U swresample_version@LIBSWRESAMPLE_5
+                 U sws_freeContext@LIBSWSCALE_8
+                 U sws_getCachedContext@LIBSWSCALE_8
+                 U sws_getCoefficients@LIBSWSCALE_8
+                 U sws_getContext@LIBSWSCALE_8
+                 U sws_scale@LIBSWSCALE_8
+                 U sws_setColorspaceDetails@LIBSWSCALE_8
+                 U symlink@GLIBC_2.2.5
+                 U syscall@GLIBC_2.2.5
+                 U truncate@GLIBC_2.2.5
+                 U unlink@GLIBC_2.2.5
+                 U unlinkat@GLIBC_2.4
+                 U utimensat@GLIBC_2.6
+                 U vsnprintf@GLIBC_2.2.5
+                 U wcrtomb@GLIBC_2.2.5
+                 U wcscmp@GLIBC_2.2.5
+                 U wcslen@GLIBC_2.2.5
+                 U wcsnrtombs@GLIBC_2.2.5
+                 U wctob@GLIBC_2.2.5
+                 U wmemchr@GLIBC_2.2.5
+                 U wmemcmp@GLIBC_2.2.5
+                 U wmemcpy@GLIBC_2.2.5
+                 U wmemmove@GLIBC_2.2.5
+                 U wmemset@GLIBC_2.2.5
+                 U write@GLIBC_2.2.5
+                 U writev@GLIBC_2.2.5
+
+
+Dynamic section at offset 0x1d4758 contains 35 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libavformat.so.61]
+ 0x0000000000000001 (NEEDED)             Shared library: [libavcodec.so.61]
+ 0x0000000000000001 (NEEDED)             Shared library: [libavutil.so.59]
+ 0x0000000000000001 (NEEDED)             Shared library: [libswscale.so.8]
+ 0x0000000000000001 (NEEDED)             Shared library: [libswresample.so.5]
+ 0x0000000000000001 (NEEDED)             Shared library: [libpulse.so.0]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]
+ 0x000000000000000e (SONAME)             Library soname: [libstudio_media.so]
+ 0x000000000000000c (INIT)               0x17000
+ 0x000000000000000d (FINI)               0x15cc60
+ 0x0000000000000019 (INIT_ARRAY)         0x1cdf68
+ 0x000000000000001b (INIT_ARRAYSZ)       72 (bytes)
+ 0x000000000000001a (FINI_ARRAY)         0x1cdfb0
+ 0x000000000000001c (FINI_ARRAYSZ)       16 (bytes)
+ 0x000000006ffffef5 (GNU_HASH)           0x298
+ 0x0000000000000005 (STRTAB)             0x1b90
+ 0x0000000000000006 (SYMTAB)             0x300
+ 0x000000000000000a (STRSZ)              4038 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000003 (PLTGOT)             0x1d5fe8
+ 0x0000000000000002 (PLTRELSZ)           5712 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x15690
+ 0x0000000000000007 (RELA)               0x2f70
+ 0x0000000000000008 (RELASZ)             75552 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffc (VERDEF)             0x2d68
+ 0x000000006ffffffd (VERDEFNUM)          2
+ 0x000000006ffffffe (VERNEED)            0x2da0
+ 0x000000006fffffff (VERNEEDNUM)         8
+ 0x000000006ffffff0 (VERSYM)             0x2b56
+ 0x000000006ffffff9 (RELACOUNT)          3139
+ 0x0000000000000000 (NULL)               0x0

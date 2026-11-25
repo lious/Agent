@@ -61,15 +61,16 @@ def main():
     environment['STUDIO_MEDIA_LIBRARY'] = str(args.native_build / 'libstudio_media.so')
     environment['STUDIO_TEST_VIDEO'] = str(fixture)
     for command, options in [
-        ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib', 'apps/studio_web/lib', 'apps/studio_web/test'], {}),
+        ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib', 'apps/studio_web/lib', 'apps/studio_web/test', 'apps/studio_demo/integration_test'], {}),
         ([flutter, 'analyze'], {}),
         ([dart, 'test', 'packages/studio_contracts/test', 'packages/studio_document/test',
           'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', 'packages/studio_peer_io/test', '--exclude-tags=audio_service', '--reporter=json'], {}),
         ([flutter, 'test', 'test', '--exclude-tags=audio_service', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
         # Real-time external-service cases are mandatory but run after CPU-heavy
         # parallel semantic/SIGKILL cases. They are NOT the V-004 thermal/load profile.
-        ([dart, 'test', 'packages/studio_sdk/test/timeline_audio_test.dart', '--reporter=json'], {}),
+        ([dart, 'test', 'packages/studio_sdk/test/timeline_audio_test.dart', 'packages/studio_sdk/test/timeline_video_test.dart', '--concurrency=1', '--reporter=json'], {}),
         ([flutter, 'test', 'test/timeline_audio_ui_test.dart', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
+        (['xvfb-run', '-a', flutter, 'test', 'integration_test/timeline_video_test.dart', '-d', 'linux', '--reporter=json'], {'cwd': ROOT / 'apps/studio_demo'}),
         ([sys.executable, '-m', 'unittest', 'discover', '-s', 'tools/tests', '-v'], {}),
         (['sha256sum', '--quiet', '-c', 'SHA256SUMS'], {'cwd': ROOT / 'docs/studio'}),
         ([flutter, '--version', '--machine'], {}),
@@ -93,7 +94,7 @@ def main():
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
         'notValidated': ['all 87 full acceptance contracts', 'full P0 hardware/codec release matrix (separate60s Linux offline qualification)', 'device AudioSink presentation clock',
-                         'GPU or hardware adapters', 'full RenderGraph', 'full preview/PTS proxy mapping (only source thumbnail indexed seek/LRU qualified)' , 'non-Linux platforms',
+                         'GPU or hardware adapters', 'full RenderGraph', 'durable SchemaProxy/CAS mapping, full compositor/V003 GPU colour and physical AV presentation (ephemeral RGBA128 original-PTS cache/service-clock CPU/UI qualified)' , 'non-Linux platforms',
                          'physical power-loss/disk-full/non-Linux provider durability faults', 'model inference', 'paid/remote services'],
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)

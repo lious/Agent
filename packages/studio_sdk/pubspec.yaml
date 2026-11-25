@@ -25,7 +25,8 @@
     },
     "studio_peer_io": {
       "path": "../studio_peer_io"
-    }
+    },
+    "crypto": "^3.0.8"
   },
   "dev_dependencies": {
     "test": "^1.26.3",

@@ -65,6 +65,31 @@ void main() {
     repo.close();
     dir.deleteSync(recursive: true);
   });
+  test('validated snapshot head fence observes other connection commits and isolates namespaces/projects', () {
+    final oldHash = repo.read('p1')!.hash;
+    final observer = DocumentRepository.open(path, ns);
+    final other = DocumentRepository.open(
+      path,
+      Namespace('studio', 'local', 'other'),
+    );
+    try {
+      expect(observer.headMatches('p1', oldHash), isTrue);
+      expect(observer.headMatches('absent', oldHash), isFalse);
+      expect(other.headMatches('p1', oldHash), isFalse);
+      repo.rename(
+        writer: writer,
+        commandId: 'head-c',
+        receiptKey: 'head-r',
+        expectedRevision: BigInt.zero,
+        title: 'After',
+      );
+      expect(observer.headMatches('p1', oldHash), isFalse);
+      expect(observer.headMatches('p1', repo.read('p1')!.hash), isTrue);
+    } finally {
+      observer.close();
+      other.close();
+    }
+  });
   CommitReceipt rename({
     String id = 'c1',
     String key = 'r1',

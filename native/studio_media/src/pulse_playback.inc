@@ -10,7 +10,9 @@ struct PulsePlayback {
   J snapshot;
   int fd = -1;
   int64_t total = 0, base = 0, read_frames = 0, submitted = 0, presented = 0;
+  const int64_t resume_discarded_tail;
   uint64_t epoch, updates = 0, underflows = 0, latency_usec = 0;
+  uint64_t max_loop_gap_usec = 0;
   bool latency_valid = false, latency_negative = false;
   size_t head = 0, size = 0, high = 0;
   std::array<float, ring_frames * 2> ring{};
@@ -21,7 +23,8 @@ struct PulsePlayback {
   bool timing_valid = false, cork_pending = false, drain_pending = false,
        drained = false;
   std::string fault, actual_sink;
-  explicit PulsePlayback(const J &r, uint64_t gen) : recipe(r), epoch(gen) {
+  explicit PulsePlayback(const J &r, uint64_t gen, int64_t discarded_tail = -1)
+      : recipe(r), resume_discarded_tail(discarded_tail), epoch(gen) {
     if (!r.at("sampleCount").is_number_integer() ||
         (r.contains("startSample") && !r["startSample"].is_number_integer()))
       throw Error("PLAYBACK_RANGE");
@@ -86,7 +89,13 @@ struct PulsePlayback {
            {"ringFrames", size},
            {"ringCapacityFrames", ring_frames},
            {"ringHighWaterFrames", high},
+           {"resumeDiscardedUnconfirmedFrames",
+            std::max<int64_t>(0, resume_discarded_tail)},
+           {"resumeRebuilt", resume_discarded_tail >= 0},
            {"serverMaxBytes", attr ? attr->maxlength : 0},
+           {"serverTargetBytes", attr ? attr->tlength : 0},
+           {"serverPrebufferBytes", attr ? attr->prebuf : 0},
+           {"maxWorkerLoopGapUsec", max_loop_gap_usec},
            {"underruns", underflows},
            {"discontinuity", !fault.empty()},
            {"reason", fault},
@@ -177,7 +186,16 @@ struct PulsePlayback {
       auto deadline =
                std::chrono::steady_clock::now() + std::chrono::seconds(5),
            next_update = std::chrono::steady_clock::now();
+      auto previous_loop = std::chrono::steady_clock::now();
       while (!stopping.load()) {
+        const auto loop_now = std::chrono::steady_clock::now();
+        max_loop_gap_usec =
+            std::max(max_loop_gap_usec,
+                     static_cast<uint64_t>(
+                         std::chrono::duration_cast<std::chrono::microseconds>(
+                             loop_now - previous_loop)
+                             .count()));
+        previous_loop = loop_now;
         int rc = 0;
         if (pa_mainloop_iterate(loop, 0, &rc) < 0)
           throw Error("AUDIO_SERVICE_LOST");

@@ -38,15 +38,138 @@ class _FoundationAppState extends State<FoundationApp>
   bool _includeEmbeddedAudio = false;
   Timer? _playbackTimer;
   Map<String, dynamic> _playback = {'state': 'stopped'};
+  final _videoPulse = ValueNotifier<int>(0);
   final _playbackSeek = TextEditingController(text: '0'),
       _playbackSink = TextEditingController();
+  bool _timelineEnabled = false, _timelineRendering = false;
+  ui.Image? _timelineImage;
+  TimelinePreviewFrame? _timelineFrame;
+  int _timelineSkippedSourceFrames = 0, _timelineLateCommits = 0;
+  int _timelineGeneration = 0,
+      _timelineDelivered = 0,
+      _timelineDropped = 0,
+      _timelineCommitted = 0;
+  String? _timelineLastKey;
+  void _clearTimelineVideo() {
+    _timelineGeneration++;
+    _timelineLastKey = null;
+    _timelineImage?.dispose();
+    _timelineImage = null;
+    _timelineFrame = null;
+  }
+
+  Future<void> _requestTimelineVideo() async {
+    if (!mounted || !_timelineEnabled || _timelineRendering) return;
+    final clock = widget.workspace.timelinePlayback;
+    if (clock['clockValid'] != true ||
+        !{'playing', 'paused', 'finished'}.contains(clock['state'])) {
+      if (_timelineImage != null) {
+        _clearTimelineVideo();
+        _videoPulse.value++;
+      }
+      return;
+    }
+    final key =
+        '${clock['snapshotHash']}:${clock['playbackGeneration']}:${clock['epoch']}:${clock['presentedSample']}';
+    if (key == _timelineLastKey) return;
+    _timelineLastKey = key;
+    _timelineRendering = true;
+    final generation = _timelineGeneration;
+    ui.Image? owned;
+    var delivered = false, decodeAbandoned = false;
+    try {
+      final frame = await widget.workspace.renderTimelineFromAudioClock();
+      if (frame == null) return;
+      final done = Completer<ui.Image>();
+      ui.decodeImageFromPixels(
+        frame.pixels.rgba,
+        frame.pixels.width,
+        frame.pixels.height,
+        ui.PixelFormat.rgba8888,
+        (image) {
+          if (decodeAbandoned) {
+            image.dispose();
+          } else {
+            done.complete(image);
+          }
+        },
+      );
+      owned = await done.future.timeout(
+        const Duration(seconds: 2),
+        onTimeout: () =>
+            throw const StudioException('TIMELINE_IMAGE_DECODE_TIMEOUT'),
+      );
+      if (!mounted ||
+          generation != _timelineGeneration ||
+          !widget.workspace.isTimelineFrameCurrent(frame)) {
+        _timelineDropped++;
+        return;
+      }
+      final previous = _timelineFrame;
+      if (previous != null &&
+          previous.clockEpoch == frame.clockEpoch &&
+          previous.assetId == frame.assetId &&
+          previous.clipId == frame.clipId &&
+          frame.proxyIndex > previous.proxyIndex + 1) {
+        _timelineSkippedSourceFrames +=
+            frame.proxyIndex - previous.proxyIndex - 1;
+      }
+      final adopted = owned;
+      owned = null;
+      _timelineImage?.dispose();
+      _timelineImage = adopted;
+      _timelineFrame = frame;
+      _timelineDelivered++;
+      delivered = true;
+      _videoPulse.value++;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted &&
+            generation == _timelineGeneration &&
+            identical(_timelineFrame, frame)) {
+          if (widget.workspace.isTimelineFrameCurrent(frame)) {
+            _timelineCommitted++;
+          } else {
+            _timelineLateCommits++;
+          }
+          _videoPulse.value++;
+        }
+      });
+    } on StudioException catch (e) {
+      if (e.code == 'TIMELINE_FRAME_STALE' ||
+          generation != _timelineGeneration) {
+        _timelineDropped++;
+      } else if (mounted) {
+        widget.workspace.stopTimelinePlayback();
+        setState(() {
+          _clearTimelineVideo();
+          _error = e.code;
+        });
+      }
+    } catch (_) {
+      if (mounted && generation == _timelineGeneration) {
+        widget.workspace.stopTimelinePlayback();
+        setState(() {
+          _clearTimelineVideo();
+          _error = 'TIMELINE_PREVIEW_IO_FAILED';
+        });
+      }
+    } finally {
+      decodeAbandoned = true;
+      owned?.dispose();
+      if (!delivered) _timelineLastKey = null;
+      _timelineRendering = false;
+    }
+  }
+
   void _pollPlayback() {
     if (!mounted) return;
     try {
       final next = widget.workspace.timelinePlayback;
       if (next.toString() != _playback.toString()) {
-        setState(() => _playback = next);
+        _playback = next;
+        _videoPulse.value++;
       }
+      unawaited(_requestTimelineVideo());
     } on StudioException catch (e) {
       setState(() => _error = e.code);
     }
@@ -54,6 +177,9 @@ class _FoundationAppState extends State<FoundationApp>
 
   void _playbackControl(String op, {int? sample}) {
     try {
+      if (op == 'seek' || op == 'rebind') {
+        _clearTimelineVideo();
+      }
       widget.workspace.controlTimelinePlayback(
         op,
         sample: sample,
@@ -84,7 +210,7 @@ class _FoundationAppState extends State<FoundationApp>
     _masterGain.text = '${_project.toJson()['audioBuses'][0]['gainDb']}';
     WidgetsBinding.instance.addObserver(this);
     _playbackTimer = Timer.periodic(
-      const Duration(milliseconds: 50),
+      const Duration(milliseconds: 16),
       (_) => _pollPlayback(),
     );
     _persistenceSubscription = widget.workspace.persistenceEvents.listen((_) {
@@ -98,7 +224,10 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   void _refresh() {
-    if (_project.hash != widget.workspace.current.hash) _clearPreview();
+    if (_project.hash != widget.workspace.current.hash) {
+      _clearPreview();
+      _clearTimelineVideo();
+    }
     _project = widget.workspace.current;
     _title.text = _project.title;
     _masterGain.text = '${_project.toJson()['audioBuses'][0]['gainDb']}';
@@ -217,6 +346,8 @@ class _FoundationAppState extends State<FoundationApp>
   @override
   void dispose() {
     _playbackTimer?.cancel();
+    _videoPulse.dispose();
+    _clearTimelineVideo();
     widget.workspace.stopTimelinePlayback();
     _playbackSeek.dispose();
     _playbackSink.dispose();
@@ -259,7 +390,7 @@ class _FoundationAppState extends State<FoundationApp>
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR,1×, Rec.709 limited; H264 Main4 capacity gate. Source-frame thumbnails only, not timeline/device playback. No scaling/effects. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. No effects. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
@@ -520,8 +651,79 @@ class _FoundationAppState extends State<FoundationApp>
         ),
       ],
     ),
+    OutlinedButton(
+      key: const Key('build-timeline-proxies'),
+      onPressed: _busy
+          ? null
+          : () => _run(() async {
+              final facts = await widget.workspace
+                  .buildTimelinePreviewProxies();
+              _clearTimelineVideo();
+              _timelineEnabled = true;
+              return 'Built ${facts['proxies']} exact-PTS RGBA128 preview proxies (${facts['bytes']} bytes); ephemeral, never export sources.';
+            }),
+      child: const Text('Build timeline video preview proxies'),
+    ),
+    Wrap(
+      children: [
+        OutlinedButton(
+          key: const Key('cancel-timeline-proxies'),
+          onPressed: widget.workspace.cancelPreviewProxyBuild,
+          child: const Text('Cancel proxy build'),
+        ),
+        OutlinedButton(
+          key: const Key('clear-timeline-proxies'),
+          onPressed: () => setState(() {
+            _clearTimelineVideo();
+            widget.workspace.clearPreviewProxies();
+          }),
+          child: const Text('Clear derived preview proxies'),
+        ),
+      ],
+    ),
+    CheckboxListTile(
+      key: const Key('timeline-video-enabled'),
+      value: _timelineEnabled,
+      onChanged: (v) => setState(() {
+        _clearTimelineVideo();
+        _timelineEnabled = v ?? false;
+      }),
+      title: const Text(
+        'Audio-service-clock video preview (RGBA128, single admitted video track; not physical AV qualification)',
+      ),
+    ),
+    ValueListenableBuilder<int>(
+      valueListenable: _videoPulse,
+      builder: (_, _, _) => Column(
+        children: [
+          if (_timelineEnabled)
+            SizedBox(
+              width: 384,
+              height: 216,
+              child: _timelineImage != null
+                  ? RawImage(
+                      key: const Key('timeline-preview'),
+                      image: _timelineImage,
+                      fit: BoxFit.contain,
+                    )
+                  : const ColoredBox(
+                      color: Color(0xff000000),
+                      child: Center(
+                        child: Text(
+                          'Waiting for confirmed AudioSink clock / proxy frame',
+                        ),
+                      ),
+                    ),
+            ),
+          Text(
+            'Video delivered $_timelineDelivered · committed $_timelineCommitted · stale dropped $_timelineDropped · source skipped $_timelineSkippedSourceFrames · late commits $_timelineLateCommits · sample ${_timelineFrame?.clockSample ?? "none"} · epoch ${_timelineFrame?.clockEpoch ?? "none"} · clip ${_timelineFrame?.clipId ?? "none"}',
+            key: const Key('timeline-video-status'),
+          ),
+        ],
+      ),
+    ),
     const Text(
-      'Audio-only timeline audition · bounded pre-rendered PCM · local PulseAudio service; not video playback or physical hearing verification.',
+      'Bounded pre-rendered PCM · local PulseAudio service · optional derived video preview; not physical hearing or AV-sync qualification.',
     ),
     Wrap(
       spacing: 8,
@@ -588,9 +790,12 @@ class _FoundationAppState extends State<FoundationApp>
       onPressed: () => _playbackControl('rebind'),
       child: const Text('Rebind local audio device'),
     ),
-    Text(
-      'Audio ${_playback['state']} · confirmed sample ${_playback['presentedSample'] ?? 0}/48000 · clock ${_playback['clockValid'] ?? false} · epoch ${_playback['epoch'] ?? 0} · ${_playback['reason'] ?? ''}',
-      key: const Key('timeline-audio-clock'),
+    ValueListenableBuilder<int>(
+      valueListenable: _videoPulse,
+      builder: (_, _, _) => Text(
+        'Audio ${_playback['state']} · confirmed sample ${_playback['presentedSample'] ?? 0}/48000 · clock ${_playback['clockValid'] ?? false} · epoch ${_playback['epoch'] ?? 0} · ${_playback['reason'] ?? ''}',
+        key: const Key('timeline-audio-clock'),
+      ),
     ),
     _path(
       'archive-path',
@@ -733,7 +938,6 @@ class _FoundationAppState extends State<FoundationApp>
         ),
       ],
     ),
-    if (_busy) const LinearProgressIndicator(key: Key('media-busy')),
     Text(_status, key: const Key('operation-status')),
   ];
 
@@ -936,95 +1140,113 @@ class _FoundationAppState extends State<FoundationApp>
           constraints: const BoxConstraints(maxWidth: 800),
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: ListView(
+            child: Stack(
               children: [
-                PeerPanel(
-                  storageScope: widget.workspace.peerStorageScope,
-                  lockPath: widget.workspace.peerIdentityLockPath,
-                  createSession: widget.workspace.createMetadataComputeSession,
-                  listRecovery: widget.workspace.recoverableMetadataSessions,
-                  recoverSession: widget.workspace.recoverMetadataSession,
-                ),
-                const Text(
-                  'Project metadata · local SQLite',
-                  style: TextStyle(fontSize: 24),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Revision ${_project.revision}',
-                  key: const Key('revision'),
-                ),
-                TextField(
-                  key: const Key('title'),
-                  controller: _title,
-                  enabled: !_busy,
-                  decoration: const InputDecoration(labelText: 'Project title'),
-                ),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 12,
+                ListView(
                   children: [
-                    FilledButton(
-                      key: const Key('save'),
+                    PeerPanel(
+                      storageScope: widget.workspace.peerStorageScope,
+                      lockPath: widget.workspace.peerIdentityLockPath,
+                      createSession:
+                          widget.workspace.createMetadataComputeSession,
+                      listRecovery:
+                          widget.workspace.recoverableMetadataSessions,
+                      recoverSession: widget.workspace.recoverMetadataSession,
+                    ),
+                    const Text(
+                      'Project metadata · local SQLite',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Revision ${_project.revision}',
+                      key: const Key('revision'),
+                    ),
+                    TextField(
+                      key: const Key('title'),
+                      controller: _title,
+                      enabled: !_busy,
+                      decoration: const InputDecoration(
+                        labelText: 'Project title',
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 12,
+                      children: [
+                        FilledButton(
+                          key: const Key('save'),
+                          onPressed: _busy
+                              ? null
+                              : () => _act(
+                                  () => widget.workspace.rename(
+                                    _title.text,
+                                    expectedRevision: _project.revision,
+                                  ),
+                                ),
+                          child: const Text('Save title'),
+                        ),
+                        OutlinedButton(
+                          key: const Key('undo'),
+                          onPressed: !_busy && widget.workspace.canUndo
+                              ? () => _act(
+                                  () => widget.workspace.undo(
+                                    expectedRevision: _project.revision,
+                                  ),
+                                )
+                              : null,
+                          child: const Text('Undo latest'),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      _persistenceText,
+                      key: const Key('persistence-status'),
+                    ),
+                    if (widget.workspace.checkpointError != null)
+                      const Text(
+                        'CHECKPOINT_FAILED: durable edits remain in SQLite; retry checkpoint.',
+                        key: Key('checkpoint-error'),
+                      ),
+                    OutlinedButton(
+                      key: const Key('save-managed'),
                       onPressed: _busy
                           ? null
-                          : () => _act(
-                              () => widget.workspace.rename(
-                                _title.text,
-                                expectedRevision: _project.revision,
-                              ),
-                            ),
-                      child: const Text('Save title'),
+                          : () => _act(() {
+                              widget.workspace.saveManaged();
+                              return widget.workspace.current;
+                            }),
+                      child: const Text('Explicit save local checkpoint'),
                     ),
-                    OutlinedButton(
-                      key: const Key('undo'),
-                      onPressed: !_busy && widget.workspace.canUndo
-                          ? () => _act(
-                              () => widget.workspace.undo(
-                                expectedRevision: _project.revision,
-                              ),
-                            )
-                          : null,
-                      child: const Text('Undo latest'),
+                    if (_error != null)
+                      Text(
+                        _error!,
+                        key: const Key('error'),
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    if (widget.workspace.media != null)
+                      ..._mediaControls()
+                    else
+                      const Padding(
+                        padding: EdgeInsets.only(top: 24),
+                        child: Text(
+                          'Media adapter not installed. Set STUDIO_MEDIA_LIBRARY to the separately built native adapter. AI generation is not implemented. No media leaves this device.',
+                        ),
+                      ),
+                    ExpansionTile(
+                      key: const Key('caption-panel'),
+                      title: const Text('Caption editor'),
+                      children: _captionControls(),
                     ),
                   ],
                 ),
-                Text(_persistenceText, key: const Key('persistence-status')),
-                if (widget.workspace.checkpointError != null)
-                  const Text(
-                    'CHECKPOINT_FAILED: durable edits remain in SQLite; retry checkpoint.',
-                    key: Key('checkpoint-error'),
+                if (_busy)
+                  const Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: LinearProgressIndicator(key: Key('media-busy')),
                   ),
-                OutlinedButton(
-                  key: const Key('save-managed'),
-                  onPressed: _busy
-                      ? null
-                      : () => _act(() {
-                          widget.workspace.saveManaged();
-                          return widget.workspace.current;
-                        }),
-                  child: const Text('Explicit save local checkpoint'),
-                ),
-                if (_error != null)
-                  Text(
-                    _error!,
-                    key: const Key('error'),
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                if (widget.workspace.media != null)
-                  ..._mediaControls()
-                else
-                  const Padding(
-                    padding: EdgeInsets.only(top: 24),
-                    child: Text(
-                      'Media adapter not installed. Set STUDIO_MEDIA_LIBRARY to the separately built native adapter. AI generation is not implemented. No media leaves this device.',
-                    ),
-                  ),
-                ExpansionTile(
-                  key: const Key('caption-panel'),
-                  title: const Text('Caption editor'),
-                  children: _captionControls(),
-                ),
               ],
             ),
           ),

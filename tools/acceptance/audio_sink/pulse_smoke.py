@@ -41,6 +41,11 @@ def main():
     except RuntimeError as error:assert str(error)==code
    assert status()['epoch']==first['epoch']
    call(l,h,{'op':'pause'});wait(status,lambda s:s['state']=='paused' and s['clockValid']);time.sleep(.15);a=status();time.sleep(.2);b=status();assert b['presentedSample']==a['presentedSample'],(a,b)
+   # Plain resume (without a preceding seek) must not reuse a stale cork queue.
+   call(l,h,{'op':'resume'});plain=wait(status,lambda s:s['state']=='playing' and s.get('clockValid') and s['presentedSample']>b['presentedSample']+4800)
+   assert plain['epoch']>b['epoch'] and plain['resumeRebuilt'] and plain['resumeDiscardedUnconfirmedFrames']>=0,plain
+   call(l,h,{'op':'resume'});assert status()['epoch']==plain['epoch'],'duplicate resume rebuilt an active stream'
+   call(l,h,{'op':'pause'});wait(status,lambda s:s['state']=='paused' and s.get('clockValid'))
    try:call(l,h,{'op':'seek','sample':-1});raise AssertionError('invalid accepted')
    except RuntimeError as e:assert str(e)=='PLAYBACK_RANGE'
    call(l,h,{'op':'seek','sample':24000});seek=wait(status,lambda s:s['state']=='paused' and s['clockValid']);assert seek['presentedSample']==24000 and seek['epoch']>b['epoch'],seek
@@ -102,7 +107,7 @@ def main():
     finally:l.sm_close(h,b'test');os.environ['PULSE_SERVER']=env['PULSE_SERVER']
 
    capture.terminate();capture.wait(timeout=5);raw=array.array('f');raw.frombytes((d/'capture.f32').read_bytes());rms=math.sqrt(sum(v*v for v in raw)/max(1,len(raw)));assert rms>.005,rms
-   print(json.dumps({'status':'passed','first':first,'paused':b,'seek':seek,'rebound':rebound,'monitorRMS':rms,'captureSamples':len(raw)//2,'physicalDAC':False,'humanHearingClaim':False,'actualProducerStarvation':starved,'actualSuspendedDevice':lost,'actualServerStall':stale,'eof':eof,'repeatOpenStop':20,'fdBefore':fd_before,'fdAfter':fd_after,'nonFiniteRefused':invalid,'remoteServerListsRefused':3}))
+   print(json.dumps({'status':'passed','first':first,'paused':b,'plainResume':plain,'seek':seek,'rebound':rebound,'monitorRMS':rms,'captureSamples':len(raw)//2,'physicalDAC':False,'humanHearingClaim':False,'actualProducerStarvation':starved,'actualSuspendedDevice':lost,'actualServerStall':stale,'eof':eof,'repeatOpenStop':20,'fdBefore':fd_before,'fdAfter':fd_after,'nonFiniteRefused':invalid,'remoteServerListsRefused':3}))
   except BaseException:
    print('SERVER_LOG', (d/'pulse.log').read_text() if (d/'pulse.log').exists() else 'absent');print('SERVER_EXIT',server.poll());raise
   finally:

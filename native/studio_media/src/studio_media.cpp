@@ -142,7 +142,7 @@ struct Input {
       throw Error("VIDEO_STREAM_REQUIRED");
     auto *st = format->streams[video];
     if (st->codecpar->width < 2 || st->codecpar->height < 2 ||
-        st->codecpar->width > 8192 || st->codecpar->height > 8192)
+        st->codecpar->width > 2048 || st->codecpar->height > 2048)
       throw Error("FRAME_SIZE_LIMIT");
     const auto *codec = avcodec_find_decoder(st->codecpar->codec_id);
     if (!codec)
@@ -151,7 +151,7 @@ struct Input {
     if (!decoder)
       throw Error("OUT_OF_MEMORY");
     ok(avcodec_parameters_to_context(decoder, st->codecpar));
-    decoder->max_pixels = 8192LL * 8192;
+    decoder->max_pixels = 2048LL * 2048;
     decoder->thread_count = 2;
     ok(avcodec_open2(decoder, codec, nullptr));
     packet = av_packet_alloc();
@@ -539,6 +539,45 @@ int64_t target_ticks(const J &source, int64_t frame, AVRational output_tb,
     throw Error("TIME_OVERFLOW");
   return static_cast<int64_t>(ticks);
 }
+struct RgbaPreview {
+  int width, height;
+  std::vector<uint8_t> pixels;
+};
+RgbaPreview preview_pixels(AVFrame *frame) {
+  if (frame->width < 1 || frame->height < 1 || frame->width > 2048 ||
+      frame->height > 2048)
+    throw Error("FRAME_SIZE_LIMIT");
+  if (frame->format != AV_PIX_FMT_YUV420P)
+    throw Error("PREVIEW_PIXEL_FORMAT_UNSUPPORTED");
+  if (frame->color_primaries != AVCOL_PRI_BT709 ||
+      frame->color_trc != AVCOL_TRC_BT709 ||
+      frame->colorspace != AVCOL_SPC_BT709 ||
+      frame->color_range != AVCOL_RANGE_MPEG)
+    throw Error("COLOR_POLICY_REQUIRED");
+  const int longest = std::max(frame->width, frame->height);
+  const int width = longest <= 128 ? frame->width
+                                   : std::max(1, frame->width * 128 / longest),
+            height = longest <= 128
+                         ? frame->height
+                         : std::max(1, frame->height * 128 / longest);
+  std::unique_ptr<SwsContext, decltype(&sws_freeContext)> sws(
+      sws_getContext(frame->width, frame->height,
+                     static_cast<AVPixelFormat>(frame->format), width, height,
+                     AV_PIX_FMT_RGBA, SWS_BILINEAR, nullptr, nullptr, nullptr),
+      sws_freeContext);
+  if (!sws)
+    throw Error("SCALER_UNAVAILABLE");
+  const auto *coeff = sws_getCoefficients(SWS_CS_ITU709);
+  ok(sws_setColorspaceDetails(sws.get(), coeff, 0, coeff, 1, 0, 1 << 16,
+                              1 << 16));
+  std::vector<uint8_t> rgba(static_cast<size_t>(width) * height * 4);
+  uint8_t *dst[] = {rgba.data(), nullptr, nullptr, nullptr};
+  const int stride[] = {width * 4, 0, 0, 0};
+  if (sws_scale(sws.get(), frame->data, frame->linesize, 0, frame->height, dst,
+                stride) != height)
+    throw Error("SCALE_INCOMPLETE");
+  return {width, height, std::move(rgba)};
+}
 // Native source thumbnail only, NOT timeline/effect rendering. Real container
 // index seek + decoder flush + PTS floor; sequential mode is an independent
 // decoded reference path used by qualification, never a fake seek result.
@@ -578,41 +617,11 @@ J preview(Engine &engine, const J &recipe) {
     in.next = in.decode();
   }
   AVFrame *frame = in.at(target);
-  if (frame->width < 1 || frame->height < 1 || frame->width > 2048 ||
-      frame->height > 2048)
-    throw Error("FRAME_SIZE_LIMIT");
-  if (frame->format != AV_PIX_FMT_YUV420P)
-    throw Error("PREVIEW_PIXEL_FORMAT_UNSUPPORTED");
-  if (frame->color_primaries != AVCOL_PRI_BT709 ||
-      frame->color_trc != AVCOL_TRC_BT709 ||
-      frame->colorspace != AVCOL_SPC_BT709 ||
-      frame->color_range != AVCOL_RANGE_MPEG)
-    throw Error("COLOR_POLICY_REQUIRED");
-  const double factor = 128.0 / std::max(frame->width, frame->height);
-  const int width = std::max(
-                1, static_cast<int>(frame->width * std::min(1.0, factor))),
-            height = std::max(
-                1, static_cast<int>(frame->height * std::min(1.0, factor)));
-  std::unique_ptr<SwsContext, decltype(&sws_freeContext)> sws(
-      sws_getContext(frame->width, frame->height,
-                     static_cast<AVPixelFormat>(frame->format), width, height,
-                     AV_PIX_FMT_RGBA, SWS_BILINEAR, nullptr, nullptr, nullptr),
-      sws_freeContext);
-  if (!sws)
-    throw Error("SCALER_UNAVAILABLE");
-  const auto *coeff = sws_getCoefficients(SWS_CS_ITU709);
-  ok(sws_setColorspaceDetails(sws.get(), coeff, 0, coeff, 1, 0, 1 << 16,
-                              1 << 16));
-  std::vector<uint8_t> rgba(static_cast<size_t>(width) * height * 4);
-  uint8_t *dst[] = {rgba.data(), nullptr, nullptr, nullptr};
-  const int stride[] = {width * 4, 0, 0, 0};
-  if (sws_scale(sws.get(), frame->data, frame->linesize, 0, frame->height, dst,
-                stride) != height)
-    throw Error("SCALE_INCOMPLETE");
+  auto pixels = preview_pixels(frame);
   in.check();
-  return J{{"width", width},
-           {"height", height},
-           {"rgba", rgba},
+  return J{{"width", pixels.width},
+           {"height", pixels.height},
+           {"rgba", pixels.pixels},
            {"pts", std::to_string(in.pts(frame))},
            {"startPts", std::to_string(stream->start_time)},
            {"timeBase",
@@ -620,6 +629,117 @@ J preview(Engine &engine, const J &recipe) {
              {"d", stream->time_base.den}}},
            {"packetsRead", in.packets},
            {"indexed", recipe["indexed"]}};
+}
+// Derived preview-only image-sequence proxy. Exact original PTS retained;
+// no normalization, interpolation, hidden VFR->CFR conversion or export use.
+J build_proxy(Engine &engine, const J &recipe) {
+  keys(recipe, {"path", "outputPath"});
+  const auto output = recipe.at("outputPath").get<std::string>();
+  if (!std::filesystem::path(output).is_absolute())
+    throw Error("LOCAL_FILE_REQUIRED");
+  struct OwnedOutput {
+    std::string path;
+    int fd;
+    bool committed = false;
+    explicit OwnedOutput(const std::string &p)
+        : path(p),
+          fd(::open(p.c_str(),
+                    O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC,
+                    0600)) {
+      if (fd < 0)
+        throw Error("PROXY_OUTPUT_MUST_BE_NEW");
+    }
+    ~OwnedOutput() {
+      if (fd >= 0)
+        ::close(fd);
+      if (!committed)
+        ::unlink(path.c_str());
+    }
+  } file(output);
+  Input in;
+  const auto epoch = engine.epoch.load();
+  in.check = [&engine, epoch] {
+    if (engine.epoch.load() != epoch)
+      throw Error("CANCELED");
+  };
+  in.open(recipe.at("path").get<std::string>());
+  in.prepare();
+  if (in.decoder->width > 2048 || in.decoder->height > 2048)
+    throw Error("FRAME_SIZE_LIMIT");
+  int videos = 0;
+  for (unsigned i = 0; i < in.format->nb_streams; ++i)
+    if (in.format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
+      ++videos;
+  if (videos != 1)
+    throw Error("MULTI_VIDEO_STREAM_PREVIEW_UNSUPPORTED");
+  auto *stream = in.format->streams[in.video];
+  if (stream->start_time == AV_NOPTS_VALUE || stream->time_base.num <= 0 ||
+      stream->time_base.den <= 0)
+    throw Error("STREAM_TIMESTAMP_METADATA_UNAVAILABLE");
+  J frames = J::array();
+  int64_t previous = AV_NOPTS_VALUE, bytes = 0;
+  int width = 0, height = 0;
+  while (auto *raw = in.decode()) {
+    std::unique_ptr<AVFrame, void (*)(AVFrame *)> frame(
+        raw, [](AVFrame *p) { av_frame_free(&p); });
+    in.check();
+    const auto pts = in.pts(raw);
+    if (frames.empty() && pts != stream->start_time)
+      throw Error("START_PTS_POLICY_REQUIRED");
+    if (previous != AV_NOPTS_VALUE && pts <= previous)
+      throw Error("NON_MONOTONIC_PTS");
+    if (frames.size() >= 2048)
+      throw Error("PROXY_FRAME_LIMIT");
+    auto converted = preview_pixels(raw);
+    if (!width) {
+      width = converted.width;
+      height = converted.height;
+    }
+    if (width != converted.width || height != converted.height)
+      throw Error("PROXY_FORMAT_CHANGED");
+    bytes += converted.pixels.size();
+    if (bytes > 64 * 1024 * 1024)
+      throw Error("PROXY_BYTE_LIMIT");
+    size_t written = 0;
+    while (written < converted.pixels.size()) {
+      in.check();
+      const auto n = ::write(file.fd, converted.pixels.data() + written,
+                             converted.pixels.size() - written);
+      if (n < 0 && errno == EINTR)
+        continue;
+      if (n <= 0)
+        throw Error("PROXY_WRITE_FAILED");
+      written += n;
+    }
+    int64_t duration = raw->duration;
+    if (duration <= 0) {
+      auto rate = av_guess_frame_rate(in.format, stream, nullptr);
+      if (rate.num > 0 && rate.den > 0)
+        duration = av_rescale_q(1, av_inv_q(rate), stream->time_base);
+    }
+    if (duration <= 0 || pts > std::numeric_limits<int64_t>::max() - duration)
+      throw Error("PROXY_FRAME_DURATION_REQUIRED");
+    frames.push_back(
+        {{"pts", std::to_string(pts)}, {"duration", std::to_string(duration)}});
+    previous = pts;
+  }
+  if (frames.empty())
+    throw Error("EMPTY_VIDEO");
+  in.check();
+  if (::fsync(file.fd) != 0)
+    throw Error("PROXY_FSYNC_FAILED");
+  in.check();
+  file.committed = true;
+  return J{{"schema", 1},
+           {"pipeline", "rgba128-pts-v1"},
+           {"width", width},
+           {"height", height},
+           {"bytes", bytes},
+           {"startPts", std::to_string(stream->start_time)},
+           {"timeBase",
+            {{"n", std::to_string(stream->time_base.num)},
+             {"d", stream->time_base.den}}},
+           {"frames", frames}};
 }
 J render(Engine &engine, const J &recipe) {
   if (recipe.contains("audio"))
@@ -804,6 +924,7 @@ char *sm_capabilities(void) {
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
         {"sourcePreview128", true},
+        {"rgba128PtsProxyV1", true},
         {"audioExport", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr &&
                             avcodec_find_encoder_by_name("libx264") != nullptr},
         {"avcodecLicense", avcodec_license()},
@@ -864,10 +985,29 @@ char *sm_playback(uint64_t h, const char *ns, const char *text) {
     } else if (op == "pause" || op == "resume") {
       if (!e->playback)
         throw Error("PLAYBACK_NOT_OPEN");
-      auto state = e->playback->status().at("state").get<std::string>();
+      const auto status = e->playback->status();
+      auto state = status.at("state").get<std::string>();
       if (state == "interrupted" || state == "finished")
         throw Error("PLAYBACK_REBIND_OR_SEEK_REQUIRED");
-      e->playback->paused.store(op == "pause");
+      if (op == "resume" && state == "paused" &&
+          status.at("presentedSample").get<int64_t>() < e->playback->total) {
+        if (!status.at("clockValid").get<bool>())
+          throw Error("CLOCK_TIMING_UNAVAILABLE");
+        // Never reuse stale server queue/timing history after a cork interval.
+        // Rebuild from the acknowledged service sample, NOT elapsed wall time.
+        auto recipe = e->playback->recipe;
+        const auto sample = status.at("presentedSample").get<int64_t>();
+        const auto tail = std::max<int64_t>(
+            0, status.at("baseSample").get<int64_t>() +
+                   status.at("submittedSamples").get<int64_t>() - sample);
+        recipe["startSample"] = sample;
+        recipe["paused"] = false;
+        e->playback.reset();
+        e->playback =
+            std::make_unique<PulsePlayback>(recipe, ++e->playback_epoch, tail);
+      } else {
+        e->playback->paused.store(op == "pause");
+      }
     } else if (op != "status")
       throw Error("PLAYBACK_COMMAND_UNKNOWN");
     return e->playback ? e->playback->status()
@@ -908,6 +1048,17 @@ char *sm_decode_audio(uint64_t h, const char *ns, const char *text) {
     if (!text || std::strlen(text) > 4096)
       throw Error("RECIPE_LIMIT");
     return decode_audio(*e, parse_recipe(text));
+  });
+}
+char *sm_build_proxy(uint64_t h, const char *ns, const char *text) {
+  return boundary([&] {
+    auto e = engine(h, ns);
+    std::unique_lock lock(e->busy, std::try_to_lock);
+    if (!lock.owns_lock())
+      throw Error("ENGINE_BUSY");
+    if (!text || std::strlen(text) > 8192)
+      throw Error("RECIPE_LIMIT");
+    return build_proxy(*e, parse_recipe(text));
   });
 }
 char *sm_preview(uint64_t h, const char *ns, const char *recipe) {
