@@ -153,6 +153,87 @@ final class SetClipOpacity extends EditOperation {
   };
 }
 
+final class SetClipTransform extends EditOperation {
+  SetClipTransform(this.clipId, Map<String, double> parameters)
+    : parameters = Map.unmodifiable(parameters) {
+    validateTransform2d(this.parameters);
+  }
+  final String clipId;
+  final Map<String, double> parameters;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setClipTransform',
+    'clipId': clipId,
+    'parameters': parameters,
+  };
+}
+
+ProjectDocument _setTransform(
+  ProjectDocument before,
+  SetClipTransform op,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  final d = before.toJson(), s = d['sequences'][0];
+  for (final t in s['tracks']) {
+    for (final c in t['items']) {
+      if (c['id'] != op.clipId || c['source'] == null) continue;
+      if (t['kind'] != 'video') {
+        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+      }
+      if (t['locked'] == true ||
+          (c['lockedFields'] as List).any(
+            (v) =>
+                v == '*' ||
+                v == 'effects' ||
+                v == 'effectIds' ||
+                (v as String).startsWith('effects.') ||
+                v.startsWith('effectIds.'),
+          )) {
+        throw const StudioException('FIELD_LOCKED');
+      }
+      final existing = admittedClipEffects(
+        d,
+        c,
+      ).where((e) => e['type'] == 'transform2d');
+      final Map? old = existing.isEmpty ? null : existing.single;
+      if (old != null &&
+          old['enabled'] == true &&
+          contentHash(old['parameters']) == contentHash(op.parameters)) {
+        return before;
+      }
+      final eid = old?['id'] as String? ?? id();
+      final effect = {
+        'id': eid,
+        'version': version(eid),
+        'owner': {'kind': 'clip', 'id': c['id']},
+        'type': 'transform2d',
+        'pluginVersion': '1.0.0',
+        'enabled': true,
+        'parameters': op.parameters,
+        'keyframes': <dynamic>[],
+        'extensions': <String, dynamic>{},
+      };
+      d['effects'] = [
+        for (final e in d['effects'])
+          if (e['id'] != eid) e,
+        effect,
+      ];
+      c['effectIds'] = [
+        eid,
+        for (final i in c['effectIds'])
+          if (i != eid) i,
+      ];
+      c['version'] = version(c['id']);
+      s['version'] = version(s['id']);
+      final result = ProjectDocument.fromJson(d);
+      requireLocalEditingWritable(result);
+      return result;
+    }
+  }
+  throw const StudioException('CLIP_NOT_FOUND');
+}
+
 final class SetOpacityKeyframe extends EditOperation {
   const SetOpacityKeyframe(
     this.clipId,
@@ -243,7 +324,11 @@ ProjectDocument _opacityKeyframeEdit(
   if (adding && !['hold', 'linear'].contains(operation.interpolation)) {
     throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
   }
-  final ids = selected['effectIds'] as List;
+  final allIds = selected['effectIds'] as List;
+  final ids = admittedClipEffects(
+    d,
+    selected,
+  ).where((e) => e['type'] == 'opacity').map((e) => e['id']).toList();
   Map effect;
   if (ids.isEmpty) {
     if (!adding) throw const StudioException('KEYFRAME_NOT_FOUND');
@@ -260,7 +345,7 @@ ProjectDocument _opacityKeyframeEdit(
       'extensions': <String, dynamic>{},
     };
     (d['effects'] as List).add(effect);
-    selected['effectIds'] = [eid];
+    selected['effectIds'] = [...allIds, eid];
   } else {
     effect =
         (d['effects'] as List).singleWhere((e) => e['id'] == ids.single) as Map;
@@ -419,7 +504,11 @@ ProjectDocument _setOpacity(
           )) {
         throw const StudioException('FIELD_LOCKED');
       }
-      final ids = c['effectIds'] as List;
+      final allIds = c['effectIds'] as List;
+      final ids = admittedClipEffects(
+        d,
+        c,
+      ).where((e) => e['type'] == 'opacity').map((e) => e['id']).toList();
       if (ids.isNotEmpty &&
           ((d['effects'] as List).singleWhere(
                     (e) => e['id'] == ids.single,
@@ -457,7 +546,11 @@ ProjectDocument _setOpacity(
           if (old['id'] != eid) old,
         e,
       ];
-      c['effectIds'] = [eid];
+      c['effectIds'] = [
+        for (final i in allIds)
+          if (i != eid) i,
+        eid,
+      ];
       c['version'] = version(c['id']);
       s['version'] = version(s['id']);
       final result = ProjectDocument.fromJson(d);
@@ -645,6 +738,9 @@ ProjectDocument applyEdit(
   if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
     return _opacityKeyframeEdit(before, operation, nextVersion, newId);
   }
+  if (operation is SetClipTransform) {
+    return _setTransform(before, operation, nextVersion, newId);
+  }
   if (operation is SetClipOpacity) {
     return _setOpacity(before, operation, nextVersion, newId);
   }
@@ -826,6 +922,7 @@ ProjectDocument applyEdit(
     case UnlinkAudioVideo():
     case SetAudioTrackState():
       throw StateError('persistent audio dispatch');
+    case SetClipTransform():
     case SetClipOpacity():
     case SetOpacityKeyframe():
     case RemoveOpacityKeyframe():

@@ -1,0 +1,36 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":492954,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/transform_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/transform_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":3,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":719}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":722}
+{"test":{"id":3,"name":"registered transform preserves opacity curves, order, split ownership and slip/trim semantics","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":22,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":722}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1060}
+{"test":{"id":4,"name":"static transform identity bypass, value noop, readonly unsupported animation/order and lock protection","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":1061}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1076}
+{"test":{"id":5,"name":"finite static transform bounds, anchor, singular matrix and unknown field rejection","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":98,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":1076}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1078}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_sdk/test/transform_render_test.dart"},"type":"suite","time":1083}
+{"test":{"id":7,"name":"loading packages/studio_sdk/test/transform_render_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1083}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1354}
+{"group":{"id":8,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1354}
+{"test":{"id":9,"name":"REAL transform UI-consumer pipeline: known linear-light bilinear pixels, shared encoder, undo/archive/fork/reopen","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":9,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/transform_render_test.dart"},"type":"testStart","time":1354}
+{"testID":9,"error":"COLOR_POLICY_REQUIRED","stackTrace":"package:studio_media/studio_media.dart 61:9    NativeMedia._consume\npackage:studio_media/studio_media.dart 76:14   NativeMedia._call\npackage:studio_media/studio_media.dart 130:46  NativeMedia.previewAsync.<fn>\n","isFailure":false,"type":"error","time":1830}
+{"testID":9,"result":"error","skipped":false,"hidden":false,"type":"testDone","time":1831}
+{"test":{"id":10,"name":"REAL hostile native transform recipes fail before creating output","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":170,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/transform_render_test.dart"},"type":"testStart","time":1832}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1841}
+{"suite":{"id":11,"platform":"vm","path":"packages/studio_document/test/opacity_keyframe_test.dart"},"type":"suite","time":1842}
+{"test":{"id":12,"name":"loading packages/studio_document/test/opacity_keyframe_test.dart","suiteID":11,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1843}
+{"testID":12,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1987}
+{"group":{"id":13,"suiteID":11,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":1988}
+{"test":{"id":14,"name":"rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal","suiteID":11,"groupIDs":[13],"metadata":{"skip":false,"skipReason":null},"line":39,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":1988}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2115}
+{"test":{"id":15,"name":"split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys","suiteID":11,"groupIDs":[13],"metadata":{"skip":false,"skipReason":null},"line":81,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":2116}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2286}
+{"test":{"id":16,"name":"linked split clones only video curve and linked trim preserves exact boundary value","suiteID":11,"groupIDs":[13],"metadata":{"skip":false,"skipReason":null},"line":105,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":2286}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2316}
+{"test":{"id":17,"name":"off-grid, invalid range/type and locked implicit curve edits refuse whole operation","suiteID":11,"groupIDs":[13],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":2317}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2328}
+{"test":{"id":18,"name":"editing disabled animation preserves enable state; crop extension holds edges and unsupported values remain refused","suiteID":11,"groupIDs":[13],"metadata":{"skip":false,"skipReason":null},"line":137,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":2328}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2349}
+{"success":false,"type":"done","time":2352}

@@ -1,0 +1,5 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/studio_editor_ui.dart:612:19 • curly_braces_in_flow_control_structures
+
+1 issue found. (ran in 1.2s)

@@ -837,6 +837,7 @@ final class StudioWorkspace {
     _requireMedia();
     if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
     final snapshot = current;
+    _requireTransformAdapter(snapshot);
     if ((snapshot.toJson()['effects'] as List).any(
           (e) => (e['keyframes'] as List).isNotEmpty,
         ) &&
@@ -1040,6 +1041,7 @@ final class StudioWorkspace {
         !_repository.headMatches(_activeProjectId, hash)) {
       throw const StudioException('PLAYBACK_REVISION_CHANGED');
     }
+    _requireTransformAdapter(_playbackSnapshot!);
     final graph = _playbackGraph ??= TimelineVideoGraph(_playbackSnapshot!),
         sample = clock['presentedSample'] as int,
         epoch = clock['epoch'] as int;
@@ -1067,11 +1069,12 @@ final class StudioWorkspace {
         'timeBase': Q.of(1).toJson(),
         'packetsRead': 0,
       });
-    } else if (point.opacityQ16 != 65536) {
+    } else if (point.opacityQ16 != 65536 || point.transform2d != null) {
       pixels = await previewAssetSource(
         point.assetId!,
         point.sourceTime,
         opacityQ16: point.opacityQ16,
+        transform2d: point.transform2d,
       );
     } else {
       final asset = _playbackAssets[point.assetId]!;
@@ -1134,9 +1137,15 @@ final class StudioWorkspace {
     String assetId,
     Q time, {
     int? opacityQ16,
+    Map<String, double>? transform2d,
   }) async {
     _requireMedia();
     if (time < Q.of(0)) throw const StudioException('PREVIEW_TIME_INVALID');
+    if (transform2d != null) {
+      // Capture caller-owned mutable data before any await/cache-key creation.
+      transform2d = Map.unmodifiable(transform2d);
+      validateTransform2d(Map<String, dynamic>.from(transform2d));
+    }
     final project = current, epoch = ++_previewEpoch;
     _previewMedia?.cancel();
     final asset = (project.toJson()['assets'] as List).singleWhere(
@@ -1150,6 +1159,7 @@ final class StudioWorkspace {
       'time': time.toJson(),
       'preview': 'source-rgba128-1',
       'opacity-linear709-v1-q16': ?opacityQ16,
+      'static-transform2d-linear709-v1': ?transform2d,
     });
     final cached = sourcePreviewCache.get(key);
     if (cached != null) return cached;
@@ -1172,7 +1182,12 @@ final class StudioWorkspace {
         throw const StudioException('PREVIEW_PROJECT_CHANGED');
       }
       final frame = SourcePreviewFrame(
-        await _previewMedia!.previewAsync(file, time, opacityQ16: opacityQ16),
+        await _previewMedia!.previewAsync(
+          file,
+          time,
+          opacityQ16: opacityQ16,
+          transform2d: transform2d,
+        ),
       );
       if (epoch != _previewEpoch || _closed) {
         throw const StudioException('PREVIEW_SUPERSEDED');
@@ -1195,6 +1210,8 @@ final class StudioWorkspace {
   /// Explicit still timeline preview uses the SAME full-size native CPU node and
   /// YUV420 buffer conversion as final export, then downsamples for display.
   Future<SourcePreviewFrame> previewTimelineAt(Q time) async {
+    _requireMedia();
+    _requireTransformAdapter(current);
     final snapshot = current,
         graph = TimelineVideoGraph(current),
         point = graph.sampleFrame(time);
@@ -1220,11 +1237,36 @@ final class StudioWorkspace {
       point.assetId!,
       point.sourceTime,
       opacityQ16: point.opacityQ16 == 65536 ? null : point.opacityQ16,
+      transform2d: point.transform2d,
     );
     if (current.hash != snapshot.hash) {
       throw const StudioException('PREVIEW_PROJECT_CHANGED');
     }
     return result;
+  }
+
+  ProjectDocument setClipTransform(
+    String clipId,
+    Map<String, double> parameters, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media?.capabilities['staticTransform2dV1'] != true) {
+      throw const StudioException('TRANSFORM_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetClipTransform(clipId, parameters),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  void _requireTransformAdapter(ProjectDocument document) {
+    if ((document.toJson()['effects'] as List).any(
+          (e) => e['type'] == 'transform2d',
+        ) &&
+        _media?.capabilities['staticTransform2dV1'] != true) {
+      throw const StudioException('TRANSFORM_ADAPTER_UNAVAILABLE');
+    }
   }
 
   ProjectDocument setOpacityKeyframe(
@@ -1348,6 +1390,7 @@ final class StudioWorkspace {
     _requireMetadata();
     _protectOutput(target);
     final snapshot = current;
+    _requireTransformAdapter(snapshot);
     if ((snapshot.toJson()['effects'] as List).any(
           (e) => (e['keyframes'] as List).isNotEmpty,
         ) &&
@@ -1436,6 +1479,7 @@ final class StudioWorkspace {
     }
     final resources = session.writableCollection(expectedCollectionReviewHash);
     final source = session.project;
+    _requireTransformAdapter(source);
     final graph = TimelineVideoGraph(source);
     if ((source.toJson()['effects'] as List).any(
           (e) => (e['keyframes'] as List).isNotEmpty,
@@ -1917,6 +1961,7 @@ final class StudioWorkspace {
     _requireMedia();
     _protectOutput(destination);
     final snapshot = current;
+    _requireTransformAdapter(snapshot);
     if ((snapshot.toJson()['effects'] as List).any(
           (e) => (e['keyframes'] as List).isNotEmpty,
         ) &&

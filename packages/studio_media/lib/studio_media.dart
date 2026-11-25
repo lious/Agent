@@ -104,9 +104,13 @@ final class NativeMedia {
     Q time, {
     bool indexed = true,
     int? opacityQ16,
+    Map<String, double>? transform2d,
   }) {
     if (capabilities['sourcePreview128'] != true) {
       throw const StudioException('PREVIEW_ADAPTER_UNAVAILABLE');
+    }
+    if (transform2d != null && capabilities['staticTransform2dV1'] != true) {
+      throw const StudioException('TRANSFORM_ADAPTER_UNAVAILABLE');
     }
     if (opacityQ16 != null &&
         (capabilities['linearOpacityV1'] != true ||
@@ -120,6 +124,7 @@ final class NativeMedia {
       'time': time.toJson(),
       'indexed': indexed,
       'opacityQ16': ?opacityQ16,
+      'transform2d': ?transform2d,
     });
     return Isolate.run(
       () => NativeMedia._attach(path, ns, h)._call('sm_preview', recipe),

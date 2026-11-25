@@ -1,0 +1,13 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:182:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:192:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:201:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:219:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:223:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:248:5 • curly_braces_in_flow_control_structures
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • packages/studio_document/lib/timeline_graph.dart:123:7 • use_null_aware_elements
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1250:7 • curly_braces_in_flow_control_structures
+  error • The argument type 'String' can't be assigned to the parameter type 'BigInt'.  • packages/studio_sdk/lib/studio_sdk.dart:1253:25 • argument_type_not_assignable
+
+9 issues found. (ran in 2.3s)

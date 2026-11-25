@@ -1,0 +1,286 @@
+{
+  "baseCommit": "6a2b21c27062cdacdebe5e8360f3cf9c6816f4eb",
+  "freezeStarted": "2026-11-25T22:37:59.332087+08:00",
+  "sourceSha256": {
+    "native/studio_media/src/studio_media.cpp": "982b100dc6e26d03f37d3ee69cb9759e00fda0af6935e2b5569750947dcf6e64",
+    "native/studio_media/tests/abi_test.cpp": "fccc032d095443ae282800fac1cd6666f0cb6ab6136566a6f0d7620ee7426dbd",
+    "packages/studio_document/lib/edit_algebra.dart": "97ab11c9a44e632bb0dea7c34f06a49bc6438af44d9342aa60d64baa37e9e38b",
+    "packages/studio_document/lib/effect_registry.dart": "8789e21e6b44afa8f9fc4ab1a84acec21691c6f9ba2e3852fefbbd264299981e",
+    "packages/studio_document/lib/timeline_graph.dart": "79b4272d6048703c943fe0570ea9851459c511ce67d53243a1518984a207c487",
+    "packages/studio_document/test/transform_test.dart": "64d9b343fe29a672cec188aef3dfa05dd050f2a456178959264a2b70b047da9d",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "7fc4816c01cf4bfef00fe4f0085f73dc6684325fe2c51809b7429e7fd84df7dc",
+    "packages/studio_editor_ui/test/transform_ui_test.dart": "a4c5450bdb3d7cbeb7b9f4142506b3ff8a24031ccec45a7bba02d64bb5e29b2b",
+    "packages/studio_media/lib/studio_media.dart": "dc91cc02c2719550f524c9da63cc79a2faedf4ea424e5b14cbd9a9dc70d1acca",
+    "packages/studio_sdk/lib/studio_sdk.dart": "48ff191b892cfffb235e1cd2c9dfbc857ff7e23506f660cd1aa3dac39fcdbd1e",
+    "packages/studio_sdk/test/transform_clock_test.dart": "6c6663b7efae646a79febe7415f369532b4fd9d69de04c2cb6157630f8a5de72",
+    "packages/studio_sdk/test/transform_render_test.dart": "de51010ded843bb2ee8db28eddfbd835fdb7939bc88e61e6d3500f8f312ad232"
+  },
+  "nativeLibrarySha256": "caf274d93e270bd16e1c508407d4f9413464906f52b527b261005136dc65f2a0",
+  "sanitizerLibrarySha256": "1f41c8a9ca897a96ef05e779468765b2be4f518d617a7839ead9b0a5699fc718",
+  "asOf": "2026-11-25T22:40:49.497523+08:00",
+  "timezone": "Asia/Shanghai",
+  "freezeIdentity": "Containing commit production AND test bytes match sourceSha256. All selected final commands rerun after last source edit; only documentation/evidence edits afterward. Not full repository/87 tasks or reuse of old209.",
+  "commands": {
+    "log": "commands.json",
+    "sha256": "c17f2482d58a5b1683b9d23087801c727ffc640205aee8da1e721c5248a3e69e"
+  },
+  "results": {
+    "native": {
+      "passed": 195,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 53014
+      },
+      "log": "final-native.jsonl",
+      "sha256": "d475b6a6a297d7c883cddff36d669c0f7597a216b6b1171055dae64b2fce691b",
+      "exitCode": 0,
+      "elapsedSeconds": 53.951
+    },
+    "ui": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 35956
+      },
+      "log": "final-ui.jsonl",
+      "sha256": "3080b34e8d2fecf9fde09188428b05e9cbfeb0e57028ab4897b1872983dc99ca",
+      "exitCode": 0,
+      "elapsedSeconds": 37.126
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 7710
+      },
+      "log": "final-chrome.jsonl",
+      "sha256": "7110065a626a7dbfca5efaa99d24a4f8f12dd3bfb1c4c4d711393842b0fa221c",
+      "exitCode": 0,
+      "elapsedSeconds": 28.625
+    },
+    "pulse": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 17420
+      },
+      "log": "final-pulse.jsonl",
+      "sha256": "c8c00c43328d1c9fcab6c21cd35f65409d7924951b524a79ddf2e881754dce73",
+      "exitCode": 0,
+      "elapsedSeconds": 18.129
+    }
+  },
+  "totalPassed": 216,
+  "totalFailed": 0,
+  "additionalRuns": {
+    "analyzer": {
+      "log": "final-analyzer.log",
+      "sha256": "aef283d58895ebc386b33c241b14b39395948929aac13c519ee2351a656a069d",
+      "rawSha256": "c020a970494acc32955e305d1f9acb9ed0133dcfef487b29d74d2722857ee451",
+      "exitCode": 0,
+      "elapsedSeconds": 2.117
+    },
+    "native": {
+      "log": "final-native.jsonl",
+      "sha256": "d475b6a6a297d7c883cddff36d669c0f7597a216b6b1171055dae64b2fce691b",
+      "exitCode": 0,
+      "elapsedSeconds": 53.951
+    },
+    "actual-legacy-and-kill": {
+      "log": "final-actual-legacy-and-kill.log",
+      "sha256": "7495a9bf87ba4db5b85b6763be7d2f2323e46b4b35675f7b295121ca4dc26980",
+      "exitCode": 0,
+      "elapsedSeconds": 14.636
+    },
+    "ui": {
+      "log": "final-ui.jsonl",
+      "sha256": "3080b34e8d2fecf9fde09188428b05e9cbfeb0e57028ab4897b1872983dc99ca",
+      "exitCode": 0,
+      "elapsedSeconds": 37.126
+    },
+    "chrome": {
+      "log": "final-chrome.jsonl",
+      "sha256": "7110065a626a7dbfca5efaa99d24a4f8f12dd3bfb1c4c4d711393842b0fa221c",
+      "exitCode": 0,
+      "elapsedSeconds": 28.625
+    },
+    "pulse": {
+      "log": "final-pulse.jsonl",
+      "sha256": "c8c00c43328d1c9fcab6c21cd35f65409d7924951b524a79ddf2e881754dce73",
+      "exitCode": 0,
+      "elapsedSeconds": 18.129
+    },
+    "ctest": {
+      "log": "final-ctest.log",
+      "sha256": "62438b9ab02dc6e2393a2e12fea75757f67b43a5c75cb8757809692a0b1204b2",
+      "exitCode": 0,
+      "elapsedSeconds": 0.291
+    },
+    "100cancel": {
+      "log": "final-100cancel.log",
+      "sha256": "9e770b183c0c1a18691886a88ca9dc9cb2a078a7e72b73413040fb73ddc02c44",
+      "exitCode": 0,
+      "elapsedSeconds": 0.871
+    },
+    "asan-100cancel": {
+      "log": "final-asan-100cancel.log",
+      "sha256": "29011171bb27b8e14fc6bf73d901a808eff434761d6a3253f05c815d32519e4a",
+      "exitCode": 0,
+      "elapsedSeconds": 1.629
+    },
+    "transform-100cancel": {
+      "log": "final-transform-100cancel.log",
+      "sha256": "5081366cce7a52a1a54e734241c43cf1b204cf89b9efab2c2b15a072b7a98054",
+      "exitCode": 0,
+      "elapsedSeconds": 1.904
+    },
+    "asan-transform-100cancel": {
+      "log": "final-asan-transform-100cancel.log",
+      "sha256": "e93f12753bbbaea8b1dd9486055f5ae74eb43b5ac7e2457b9cbc7bfe63af183a",
+      "exitCode": 0,
+      "elapsedSeconds": 2.173
+    }
+  },
+  "auxiliaryEvidence": [
+    {
+      "log": "transform-final-actual-legacy.json",
+      "sha256": "7495a9bf87ba4db5b85b6763be7d2f2323e46b4b35675f7b295121ca4dc26980"
+    },
+    {
+      "log": "transform-spec-integrity.json",
+      "sha256": "5457f2e23a72831230104d7708367f7867f91cf55bbe00015e263756088f4268"
+    },
+    {
+      "log": "transform-first-freeze.json",
+      "sha256": "53277f7ebf4a4e3049800d01b65226a5cca1a084453163e2718b7261c590b707"
+    },
+    {
+      "log": "transform-first-runs.json",
+      "sha256": "f9c2f4839c3ad8974a5e0296b91e9000671928f441e2397c47232222307512df"
+    },
+    {
+      "log": "transform-reviewed-build.log",
+      "sha256": "b12c978e85748a6e2904065e028e751e672438a0358f939b7f7d1ef4fa779f60"
+    },
+    {
+      "log": "transform-reviewed-asan-build.log",
+      "sha256": "064691baf4ddaf923590c6237bb20cc0144abbf769672562800eaba9bed5aa74"
+    },
+    {
+      "log": "transform-last-build.log",
+      "sha256": "4a091b1e0703e20e0eb04fa76d1fe143b21f746217b4a361c63f3efa7e54d720"
+    },
+    {
+      "log": "transform-last-asan-build.log",
+      "sha256": "4a091b1e0703e20e0eb04fa76d1fe143b21f746217b4a361c63f3efa7e54d720"
+    },
+    {
+      "log": "transform-last-format.log",
+      "sha256": "f3541545008c6bc88722e34d6324cb9f9b30e3ffbc6c500fcc43acf8cf74d71a"
+    },
+    {
+      "log": "transform-final-style-fix.log",
+      "sha256": "a1641b62455222fb9faf60699b229461e21f053c3cf63ef1804731015fc54793"
+    }
+  ],
+  "failuresRetained": [
+    {
+      "finalSource": false,
+      "log": "transform-first-analyzer.log",
+      "sha256": "dc9a47272eff17ad931c3550245f8e4ab5d6090182a8ff2fc59340c23ac98646",
+      "rawSha256": "88b26b9f49efa624a9f2d3689ff0f9f90f93a806f1c8f81908a0a102d31d9546"
+    },
+    {
+      "finalSource": false,
+      "log": "transform-test-analyzer.log",
+      "sha256": "7234b737ab68f2f23ce6d05a80147ed1d150bef64c68615eac17b3442f13fc55",
+      "rawSha256": "3e6de817c501a3baf0af44ce381b253337459a8bd4b8b5b30659893f8b8a8ac3"
+    },
+    {
+      "finalSource": false,
+      "log": "transform-first-tests.log",
+      "sha256": "aee28c3883f8c4d912be560a41b8e3520df721d69dcd57ceca6f821d1d742ad9"
+    },
+    {
+      "finalSource": false,
+      "log": "transform-first-matrix-analyzer.log",
+      "sha256": "a6d96cdf33058bd0b58a5c0790a7ea39e7657cfaf17a7a922733120b836e271f",
+      "rawSha256": "b4e35fd158437bfc1e8522fac5e58e46bc77de58c3d93dd73b9e2ae4ee1d8a21"
+    },
+    {
+      "finalSource": false,
+      "log": "transform-first-transform-100cancel.log",
+      "sha256": "4c76dbdef8a2480b56fe24b4168b37243fdc4062b6e64ad5dc444bdbdce077df"
+    },
+    {
+      "finalSource": false,
+      "log": "transform-first-asan-transform-100cancel.log",
+      "sha256": "4c76dbdef8a2480b56fe24b4168b37243fdc4062b6e64ad5dc444bdbdce077df"
+    }
+  ],
+  "regularAbiBinarySha256": "4582c2f0cc2a9f7bcd5e021e29d4c65a9ef3a83947ccbe4d806582e662c841cc",
+  "sanitizerAbiBinarySha256": "28e5d79287a7b79410ef9c862aae8e274c38b401eff42f77168ada92823bdb5b",
+  "cancelQualification": {
+    "opacityScheduled": {
+      "regular": 100,
+      "asanUbsan": 100
+    },
+    "transformPlusOpacityScheduled": {
+      "regular": 100,
+      "asanUbsan": 100
+    },
+    "cancelAfter": "At least2 frames actually rendered/submitted to encoder; not preparation-only cancel",
+    "invariants": "Every iteration caller-owned AVFrame headers return to baseline; final FD delta0",
+    "scope": "Isolated CPU effect paths; ASan/UBSan detect_leaks=1:halt_on_error=1 without suppressions, shared FFmpeg/GPU not instrumented. Not full FrameLease qualification."
+  },
+  "pixelProof": {
+    "reference": "Actual128x72 white SDR source, independently derived half-pixel linear709 coverage <=2/255; integer translation, nonuniform scale,90deg rotation, anchor0 and identity exact bypass. Not arbitrary-image/full parameter-space GPU qualification.",
+    "consumer": "Actual full-source transform then shared clip-local opacity; same-source/time preview equals actual preencoder YUV420 display sample; saved DB/reopen, archive fork and split preserve sample. Public preview captures mutable caller parameter maps before await, tested by immediate external mutation.",
+    "clock": "Private real Pulse service confirmed paused sample48000 drives combined transform/curve pixels, matches timeline still; seek0/paused stability/edit invalidation. Not physical AV sync/stable moving fps.",
+    "ui": "Actual FFI widget edits translate/scale/rotate, previews, undo, explicit archive save/fork and MP4 export. No fresh release App/window qualification."
+  },
+  "threeReviews": "../../REVIEW.md increment1.16 / ADR0023: fixed opcode revision typing, caller-map capture, compiled parameter bounds, explicit color fixture and reachable cancellation mode; retained actual failures.",
+  "knownUnresolved": [
+    "Original real resume underrun unresolved despite isolated passes.",
+    "Schema9 cannot fence old executable co-writers.",
+    "Last-commit inverse only; no full multi-level user undo/redo/coalescing.",
+    "Current CPU reference RGB8 staging/FP32 linear transfer over opaque black is not FP16/GPU/full alpha compositor."
+  ],
+  "notRun": [
+    "Full repository/all87 release acceptance and full hard-dependency closure",
+    "Animated transform, crop/mask, transition handles/dissolve/luma/full registry",
+    "GPU textures/fences/FrameLease and third-party opaque internal frame accounting",
+    "Fresh App release build/window/human-heard audio/physical AV/stable playback fps",
+    "Independent new60s/VFR/HDR/GPU transform matrix; selected original audio-export regression DID run",
+    "Independent old-executable v4-v8 full matrix; selected store migration/fault/actual legacy SQL barrier/SIGKILL DID run",
+    "Unselected Harness/security/peer suites; no changes to those mechanisms",
+    "Non-Linux/mobile/physical multiple devices/RTC positive; unchanged network policy blocker, no retry/bypass"
+  ],
+  "statusCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 26,
+      "planned": 48,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "toolchain": "Same installed official Flutter3.50.1/Dart3.14.0, approved SQLite3.54.1 strict gate, Debian FFmpeg7.1.5/Pulse17, clang19/CMake3.31.6/Chrome156; toolchain-reused.json retains prior installed-version readback, unchanged; current native/ASan builds and runtime-qualified suites rerun. No installs/models/paid services this increment."
+}

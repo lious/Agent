@@ -1,0 +1,185 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 2.117
+    },
+    {
+      "name": "native",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/transform_render_test.dart",
+        "packages/studio_sdk/test/opacity_keyframe_render_test.dart",
+        "packages/studio_sdk/test/local_video_test.dart",
+        "packages/studio_sdk/test/source_preview_test.dart",
+        "packages/studio_sdk/test/opacity_render_test.dart",
+        "packages/studio_sdk/test/resource_admission_test.dart",
+        "packages/studio_sdk/test/resource_preservation_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/namespace_budget_test.dart",
+        "packages/studio_sdk/test/proxy_repair_test.dart",
+        "packages/studio_sdk/test/proxy_discard_test.dart",
+        "packages/studio_sdk/test/durable_proxy_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/audio_export_test.dart",
+        "packages/studio_store/test",
+        "packages/studio_document/test",
+        "--concurrency=2",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-native.log",
+      "exitCode": 0,
+      "elapsedSeconds": 53.951
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "command": [
+        "python3",
+        "tools/acceptance/verify_definition_history.py",
+        "--report",
+        "artifacts/local-video/transform-final-actual-legacy.json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-actual-legacy-and-kill.log",
+      "exitCode": 0,
+      "elapsedSeconds": 14.636
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/transform_ui_test.dart",
+        "test/opacity_keyframe_ui_test.dart",
+        "test/opacity_ui_test.dart",
+        "test/local_video_ui_test.dart",
+        "test/resource_preservation_ui_test.dart",
+        "test/checkpoint_retention_ui_test.dart",
+        "test/namespace_budget_ui_test.dart",
+        "test/proxy_repair_ui_test.dart",
+        "test/proxy_discard_ui_test.dart",
+        "test/foundation_app_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/local-video/transform-final-ui.log",
+      "exitCode": 0,
+      "elapsedSeconds": 37.126
+    },
+    {
+      "name": "chrome",
+      "command": [
+        "flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "test/resource_closure_test.dart",
+        "test/inspector_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "log": "artifacts/local-video/transform-final-chrome.log",
+      "exitCode": 0,
+      "elapsedSeconds": 28.625
+    },
+    {
+      "name": "pulse",
+      "command": [
+        "python3",
+        "tools/acceptance/audio_sink/run_private.py",
+        "dart",
+        "test",
+        "packages/studio_sdk/test/transform_clock_test.dart",
+        "packages/studio_sdk/test/opacity_keyframe_clock_test.dart",
+        "packages/studio_sdk/test/timeline_audio_test.dart",
+        "packages/studio_sdk/test/timeline_video_test.dart",
+        "packages/studio_sdk/test/opacity_clock_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-pulse.log",
+      "exitCode": 0,
+      "elapsedSeconds": 18.129
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/workspace/agent-media-native-peer",
+        "--output-on-failure"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-ctest.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.291
+    },
+    {
+      "name": "100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.871
+    },
+    {
+      "name": "asan-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "opacity_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-asan-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 1.629
+    },
+    {
+      "name": "transform-100cancel",
+      "command": [
+        "/workspace/agent-media-native-peer/studio_media_abi_test",
+        "transform_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-transform-100cancel.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.904
+    },
+    {
+      "name": "asan-transform-100cancel",
+      "command": [
+        "/workspace/agent-media-native-asan-opacity/studio_media_abi_test",
+        "transform_cancel"
+      ],
+      "cwd": ".",
+      "log": "artifacts/local-video/transform-final-asan-transform-100cancel.log",
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 2.173
+    }
+  ]
+}

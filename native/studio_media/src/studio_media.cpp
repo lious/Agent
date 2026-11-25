@@ -376,12 +376,31 @@ J probe(Input &in) {
   return J{{"streams", streams}, {"videoIndex", in.video}};
 }
 #include "audio_io.inc"
+// Exact Schema transform2d fields; bounded CPU profile, never arbitrary filters.
+struct Transform2d {
+  double tx=0,ty=0,sx=1,sy=1,deg=0,ax=.5,ay=.5;
+  bool identity() const {return tx==0 && ty==0 && sx==1 && sy==1 && std::fmod(deg,360.0)==0;}
+};
+Transform2d transform2d(const J &recipe) {
+  Transform2d t;
+  if(!recipe.contains("transform2d")) return t;
+  const auto &p=recipe["transform2d"];
+  keys(p,{"translateX","translateY","scaleX","scaleY","rotationDeg","anchorX","anchorY"});
+  if(p.size()!=7)throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");
+  auto number=[&](const char *k){if(!p[k].is_number())throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");double v=p[k].get<double>();if(!std::isfinite(v))throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");return v;};
+  t.tx=number("translateX");t.ty=number("translateY");t.sx=number("scaleX");t.sy=number("scaleY");t.deg=number("rotationDeg");t.ax=number("anchorX");t.ay=number("anchorY");
+  if(t.sx<=0 || t.sy<=0 || t.sx>100 || t.sy>100)throw Error("TRANSFORM_SCALE_RANGE");
+  if(t.ax<0 || t.ax>1 || t.ay<0 || t.ay>1)throw Error("TRANSFORM_ANCHOR_RANGE");
+  if(std::abs(t.tx)>1000000 || std::abs(t.ty)>1000000 || std::abs(t.deg)>1000000 || t.sx<.000001 || t.sy<.000001)throw Error("TRANSFORM_CPU_PROFILE_RANGE");
+  return t;
+}
 // CPU reference: opaque Rec.709 YUV420 -> explicit full-range RGB -> linear
 // Rec.709 premultiplied opacity over black -> SDR YUV420. Same node feeds
 // timeline preview and the actual encoder frame. FP32 reference, not GPU FP16.
 void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
                           SwsContext *&scaler,
-                          const std::function<void()> &check) {
+                          const std::function<void()> &check, const Transform2d &transform = {}) {
+  const bool transformed=!transform.identity();
   ok(av_frame_make_writable(dst));
   if (!source) {
     for (int p = 0; p < 3; ++p)
@@ -399,7 +418,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
     throw Error("COLOR_POLICY_REQUIRED");
   if (opacity < 0 || opacity > 65536) throw Error("OPACITY_RANGE");
   const int *cs = sws_getCoefficients(SWS_CS_ITU709);
-  if (opacity == 65536) {
+  if (opacity == 65536 && !transformed) {
     scaler = sws_getCachedContext(scaler, source->width, source->height,
       static_cast<AVPixelFormat>(source->format), dst->width, dst->height,
       AV_PIX_FMT_YUV420P, SWS_BILINEAR, nullptr, nullptr, nullptr);
@@ -426,19 +445,50 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
   const int rgb_stride[] = {source->width*4,0,0,0};
   if(sws_scale(to_rgb.get(),source->data,source->linesize,0,source->height,rgb_data,rgb_stride)!=source->height)
     throw Error("SCALING_FAILED");
+  std::array<float,256> linear_lut{};
   std::array<uint8_t,256> lut{};
+  auto encode=[](float linear){const float v=linear<.018f?4.5f*linear:1.099f*std::pow(linear,.45f)-.099f;return static_cast<uint8_t>(std::clamp(std::lround(v*255.f),0L,255L));};
   for(int i=0;i<256;++i) {
     const float encoded=i/255.0f;
-    float linear=encoded < 0.081f ? encoded/4.5f : std::pow((encoded+0.099f)/1.099f,1.0f/0.45f);
-    linear *= opacity/65536.0f;
-    const float out=linear < 0.018f ? 4.5f*linear : 1.099f*std::pow(linear,0.45f)-0.099f;
-    lut[i]=static_cast<uint8_t>(std::clamp(std::lround(out*255.0f),0L,255L));
+    linear_lut[i]=encoded < .081f ? encoded/4.5f : std::pow((encoded+.099f)/1.099f,1.f/.45f);
+    lut[i]=encode(linear_lut[i]*(opacity/65536.f));
   }
+  // Inverse M=T(position) T(anchorPx) R S T(-anchorPx), y points down.
+  // Pixel centers x+.5; out-of-source neighbours have transparent coverage0.
+  // Interpolate premultiplied LINEAR colour, then composite on the admitted black
+  // canvas. Opaque H264 output cannot expose a transferable alpha plane.
+  std::vector<uint8_t> input;
+  if(transformed) input=rgba;
+  const double angle=std::fmod(transform.deg,360.0)*3.14159265358979323846/180.0;
+  const double cosine=std::cos(angle),sine=std::sin(angle);
+  const double ax=transform.ax*source->width,ay=transform.ay*source->height;
   for(int y=0;y<source->height;++y) {
     if(check && y%32==0) check();
     for(int x=0;x<source->width;++x) {
       const size_t at=(static_cast<size_t>(y)*source->width+x)*4;
-      for(int c=0;c<3;++c) rgba[at+c]=lut[rgba[at+c]];
+      if(!transformed) {
+        for(int c=0;c<3;++c)rgba[at+c]=lut[rgba[at+c]];
+      } else {
+        const double dx=x+.5-transform.tx-ax,dy=y+.5-transform.ty-ay;
+        const double u=(cosine*dx+sine*dy)/transform.sx+ax-.5;
+        const double v=(-sine*dx+cosine*dy)/transform.sy+ay-.5;
+        // Reject huge outside coordinates before integer conversion; no clamping
+        // to edge texels (that would turn transparent borders into smear).
+        for(int c=0;c<3;++c)rgba[at+c]=0;
+        if(u>-1 && v>-1 && u<source->width && v<source->height) {
+          const int ix=static_cast<int>(std::floor(u)),iy=static_cast<int>(std::floor(v));
+          const double fx=u-ix,fy=v-iy;
+          for(int c=0;c<3;++c) {
+            double value=0;
+            for(int j=0;j<2;++j)for(int i=0;i<2;++i) {
+              const int px=ix+i,py=iy+j;
+              if(px>=0 && py>=0 && px<source->width && py<source->height)
+                value+=linear_lut[input[(static_cast<size_t>(py)*source->width+px)*4+c]]*(i?fx:1-fx)*(j?fy:1-fy);
+            }
+            rgba[at+c]=encode(static_cast<float>(value)*(opacity/65536.f));
+          }
+        }
+      }
       rgba[at+3]=255;
     }
   }
@@ -546,8 +596,8 @@ struct Output {
   }
   void render(AVFrame *source, int64_t index, int opacity,
               const std::function<void()> &check,
-              const std::function<void(AVFrame *)> &capture) {
-    render_opacity_frame(frame, source, opacity, scaler, check);
+              const std::function<void(AVFrame *)> &capture, const Transform2d &transform = {}) {
+    render_opacity_frame(frame, source, opacity, scaler, check, transform);
     if(check) check();
     frame->pts = index;
     if (capture) capture(frame); // exact buffer and PTS, BEFORE encoder submission
@@ -634,8 +684,9 @@ RgbaPreview preview_pixels(AVFrame *frame) {
 // index seek + decoder flush + PTS floor; sequential mode is an independent
 // decoded reference path used by qualification, never a fake seek result.
 J preview(Engine &engine, const J &recipe) {
-  if(recipe.contains("opacityQ16")) keys(recipe,{"path","time","indexed","opacityQ16"});
-  else keys(recipe, {"path", "time", "indexed"});
+  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");
+  keys(previewBase,{"path","time","indexed"});
+  const auto transform=transform2d(recipe);
   if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
     throw Error("RECIPE_TYPE");
   Input in;
@@ -671,14 +722,14 @@ J preview(Engine &engine, const J &recipe) {
   }
   AVFrame *frame = in.at(target);
   std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){owned_frame_free(&p);});
-  if(recipe.contains("opacityQ16")) {
-    const int opacity=integer(recipe,"opacityQ16",0,65536);
+  if(recipe.contains("opacityQ16") || !transform.identity()) {
+    const int opacity=recipe.contains("opacityQ16")?integer(recipe,"opacityQ16",0,65536):65536;
     effected.reset(owned_frame_alloc());
     if(!effected) throw Error("ALLOCATION_FAILED");
     effected->format=AV_PIX_FMT_YUV420P;effected->width=frame->width;effected->height=frame->height;
     ok(av_frame_copy_props(effected.get(),frame));ok(av_frame_get_buffer(effected.get(),32));
     SwsContext *scaler=nullptr;
-    try {render_opacity_frame(effected.get(),frame,opacity,scaler,in.check);}
+    try {render_opacity_frame(effected.get(),frame,opacity,scaler,in.check,transform);}
     catch(...) {sws_freeContext(scaler);throw;}
     sws_freeContext(scaler);
     frame=effected.get();
@@ -831,10 +882,12 @@ J render(Engine &engine, const J &recipe) {
   const auto &segments = recipe["segments"];
   if (!segments.is_array() || segments.size() > 10000)
     throw Error("SEGMENT_LIMIT");
+  std::vector<Transform2d> transforms;transforms.reserve(segments.size());
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
+    transforms.push_back(transform2d(segment));
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
     const auto begin = integer(segment, "startFrame", 0, count - 1),
                length = integer(segment, "frameCount", 1, count);
@@ -922,7 +975,7 @@ J render(Engine &engine, const J &recipe) {
           const auto px=preview_pixels(actual);
           captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
         }
-      });
+      }, source ? transforms[si] : Transform2d{});
     engine.rendered_video_frames=frame+1;
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
@@ -1020,6 +1073,7 @@ char *sm_capabilities(void) {
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
         {"sourcePreview128", true},
+        {"staticTransform2dV1", true},
         {"linearOpacityV1", true},
         {"linearOpacityKeyframesV1", true},
         {"rgba128PtsProxyV1", true},

@@ -847,3 +847,12 @@ Native编辑器导入→点选video→在opacity value和`Clip-local project fra
 曲线依clip-local project time，不随slip移动；split/trim边界插值/右侧重基准，move不改局部点、延伸hold裁切后边值。详细坐标、半开边界和CPU/资源限制见 [ADR0022](../adr/0022-clip-local-opacity-keyframes-and-cancel-ownership.md)。完整多级undo/redo栈、gesture coalescing、其他effect/keyframe参数/转场/GPU仍未完成。
 
 新的100轮active取消测试发现并修复了decode取消抛异常时current/next指针别名导致的double-free；自有AVFrame与FD回到baseline，另跑ASan/UBSan（leak检测开启）。本冻结源码定向209个Dart/Flutter测试（190 native/domain/store、10 UI、5 Chrome资源/Inspector、4真实私有Pulse）全部通过，另CTest3项、实际legacy/SQL barrier/SIGKILL重开实验、普通与ASan/UBSan各100轮scheduled-opacity取消均exit0；analyzer无问题。非全仓全测。具体通过/失败数和精确冻结源代码证据见 [本批summary](evidence/opacity-keyframes/summary.json)，不是旧200套复用；GPU/第三方内部未instrument资源不能假称全资格。原87仍0 complete /26 partial /48 planned /13 blocked，XD10仍0/8/1/1，原104/验收/依赖不改。
+
+
+## increment1.16 — 静态2D变换，共用真实预览/编码像素
+
+Native UI导入→选VIDEO→填写Transform X/Y（画布像素）、uniform scale、clockwise degrees→`Apply persisted transform`→沿原本地frame预览按钮预览→Undo/保存归档/fork/重开/导出MP4。UI按钮显式使用source-center anchor；同一SDK setClipTransform支持完整独立scaleX/Y与anchorX/Y。transform可与上一批clip-local hold/linear opacity曲线组合，原split/trim/slip语义保持。
+
+真正执行M逆矩阵、像素中心、linear-light双线性与透明越界coverage，先transform后opacity，原件全尺寸同一native节点同时供预览与encoder-input，不拿RGBA128代理冒充源或UI截图导出。identity真bypass。CPU、同尺寸opaque SDR/Rec709 limited YUV420/黑背景，FP32 transfer与RGB8 staging，不冒称GPU/FP16/alpha源、多轨或全平台。超出本CPU有界坐标/scale profile明确拒绝，未知/动画transform等继续保全只读、不清空降级。
+
+本冻结源码216项定向Dart/Flutter测试通过（195 native/domain/store、11实际FFI UI、5 Chrome资源/Inspector、5真实私有Pulse），另CTest3项、真实旧库/SQL barrier/SIGKILL重开通过。opacity及transform+opacity两种活动取消各普通/ASan100次，共400轮；每轮自有AVFrame回baseline、各运行FD delta0，非GPU/第三方内部全资格。analyzer无问题，不是全仓全测或旧209重用。本批精确冻结测试/真实取消/失败证据见[evidence/static-transform/summary.json](evidence/static-transform/summary.json)，参数/色彩/alpha/采样限制见[ADR0023](../adr/0023-static-transform2d-cpu-reference.md)。原87仍0 complete/26 partial/48 planned/13 blocked；XD10仍0/8/1/1。原104/原验收/硬依赖未改，多级undo、真实resume underrun、旧writer共写、GPU/物理/其他平台与RTC限制保留。

@@ -1,0 +1,5 @@
+Analyzing agent-foundation-20261125...
+
+warning • Unnecessary cast. Try removing the cast • packages/studio_sdk/test/transform_render_test.dart:64:13 • unnecessary_cast
+
+1 issue found. (ran in 1.6s)

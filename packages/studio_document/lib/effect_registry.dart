@@ -6,23 +6,10 @@ import 'time.dart';
 /// Rec.709 opaque source -> linear premultiplied opacity over black. q16 is the
 /// versioned CPU recipe quantization; unknown techniques remain unsupported.
 int clipOpacityQ16(Map<String, dynamic> project, Map clip, [Q? localTime]) {
-  final ids = clip['effectIds'] as List;
-  if (ids.isEmpty) return 65536;
-  if (ids.length != 1) {
-    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
-  }
-  final matches = (project['effects'] as List).where(
-    (e) => e['id'] == ids.single,
-  );
-  if (matches.length != 1) throw const StudioException('REF_NOT_FOUND');
+  final effects = admittedClipEffects(project, clip);
+  final matches = effects.where((e) => e['type'] == 'opacity');
+  if (matches.isEmpty) return 65536;
   final e = matches.single;
-  if (e['type'] != 'opacity' ||
-      e['pluginVersion'] != '1.0.0' ||
-      e['owner']['kind'] != 'clip' ||
-      e['owner']['id'] != clip['id'] ||
-      (e['extensions'] as Map).isNotEmpty) {
-    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
-  }
   final points = validatedOpacityPoints(e, clip);
   final rate = project['sequences'][0]['frameRate'];
   final fps = FrameRate(rate['n'], rate['d']);
@@ -162,9 +149,10 @@ List<int> opacityScheduleQ16(
   if (count < 1 || count > 120000) {
     throw const StudioException('OPACITY_SCHEDULE_RANGE');
   }
-  final effect = (project['effects'] as List).singleWhere(
-    (e) => e['id'] == (clip['effectIds'] as List).single,
-  ) as Map;
+  final effect = admittedClipEffects(
+    project,
+    clip,
+  ).singleWhere((e) => e['type'] == 'opacity');
   final points = validatedOpacityPoints(effect, clip);
   return [
     for (var i = 0; i < count; i++)
@@ -178,4 +166,88 @@ List<int> opacityScheduleQ16(
                     65536)
                 .round(),
   ];
+}
+
+/// Registered static transform2d@1 and scalar opacity@1 only, in graph order.
+/// Unknown nodes are never skipped, including disabled ones.
+List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
+  final result = <Map>[];
+  final types = <String>{};
+  for (final id in clip['effectIds']) {
+    final matches = (project['effects'] as List).where((e) => e['id'] == id);
+    if (matches.length != 1) throw const StudioException('REF_NOT_FOUND');
+    final e = matches.single as Map;
+    final type = e['type'];
+    if (!['transform2d', 'opacity'].contains(type) ||
+        !types.add(type as String) ||
+        e['pluginVersion'] != '1.0.0' ||
+        e['owner']['kind'] != 'clip' ||
+        e['owner']['id'] != clip['id'] ||
+        (e['extensions'] as Map).isNotEmpty ||
+        (type == 'transform2d' && types.contains('opacity'))) {
+      throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+    }
+    if (type == 'transform2d') {
+      if ((e['keyframes'] as List).isNotEmpty) {
+        throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
+      }
+      validateTransform2d(Map<String, dynamic>.from(e['parameters'] as Map));
+    }
+    result.add(e);
+  }
+  return result;
+}
+
+const identityTransform2d = <String, double>{
+  'translateX': 0,
+  'translateY': 0,
+  'scaleX': 1,
+  'scaleY': 1,
+  'rotationDeg': 0,
+  'anchorX': .5,
+  'anchorY': .5,
+};
+
+void validateTransform2d(Map<String, dynamic> p) {
+  if (p.length != identityTransform2d.length ||
+      !identityTransform2d.keys.every(p.containsKey) ||
+      p.values.any((v) => v is! num || !v.isFinite)) {
+    throw const StudioException('TRANSFORM_PARAMETERS_UNSUPPORTED');
+  }
+  for (final k in ['scaleX', 'scaleY']) {
+    if (p[k] <= 0 || p[k] > 100) {
+      throw const StudioException('TRANSFORM_SCALE_RANGE');
+    }
+  }
+  for (final k in ['anchorX', 'anchorY']) {
+    if (p[k] < 0 || p[k] > 1) {
+      throw const StudioException('TRANSFORM_ANCHOR_RANGE');
+    }
+  }
+  // Bounded CPU execution profile, not a change to the persistent Schema.
+  if ((p['translateX'] as num).abs() > 1000000 ||
+      (p['translateY'] as num).abs() > 1000000 ||
+      (p['rotationDeg'] as num).abs() > 1000000 ||
+      p['scaleX'] < .000001 ||
+      p['scaleY'] < .000001) {
+    throw const StudioException('TRANSFORM_CPU_PROFILE_RANGE');
+  }
+}
+
+Map<String, double>? clipTransform2d(Map<String, dynamic> project, Map clip) {
+  final effects = admittedClipEffects(
+    project,
+    clip,
+  ).where((e) => e['type'] == 'transform2d');
+  if (effects.isEmpty || effects.single['enabled'] == false) return null;
+  final p = Map<String, double>.from(
+    (effects.single['parameters'] as Map).map(
+      (k, v) => MapEntry(k as String, (v as num).toDouble()),
+    ),
+  );
+  // Identity is a true bypass; no unnecessary RGB8 round-trip.
+  if (identityTransform2d.keys.every((k) => p[k] == identityTransform2d[k])) {
+    return null;
+  }
+  return p;
 }

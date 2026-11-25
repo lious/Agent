@@ -12,11 +12,13 @@ final class TimelineVideoPoint {
     this.sourceVersion,
     this.sourceTime, [
     this.opacityQ16 = 65536,
+    this.transform2d,
   ]);
   final String clipId;
   final String? assetId, sourceVersion;
   final Q sourceTime;
   final int opacityQ16;
+  final Map<String, double>? transform2d;
   bool get isGap => assetId == null;
 }
 
@@ -118,6 +120,7 @@ final class TimelineVideoGraph {
           )
           .toInt(),
       'sourceStart': Q.fromJson(clip['sourceRange']['start']).toJson(),
+      'transform2d': ?clipTransform2d(_document, clip),
       'streamIndex': streamIndex,
       if ((clip['effectIds'] as List).isNotEmpty &&
           (_document['effects'] as List).any(
@@ -163,6 +166,7 @@ final class TimelineVideoGraph {
         Q.fromJson(c['sourceRange']['start']) +
             (time - start) * Q.fromJson(c['timeMap']['rate']),
         clipOpacityQ16(_document, c, time - start),
+        clipTransform2d(_document, c),
       );
     }
     return TimelineVideoPoint('gap', null, null, Q.of(0));

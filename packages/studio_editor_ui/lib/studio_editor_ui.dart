@@ -63,6 +63,10 @@ class _FoundationAppState extends State<FoundationApp>
 
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
+  final _tx = TextEditingController(text: '0');
+  final _ty = TextEditingController(text: '0');
+  final _scale = TextEditingController(text: '1');
+  final _rotation = TextEditingController(text: '0');
   final _opacity = TextEditingController(text: '0.5');
   final _opacityFrame = TextEditingController(text: '0');
   bool _opacityHold = false;
@@ -399,6 +403,10 @@ class _FoundationAppState extends State<FoundationApp>
     _previewImage?.dispose();
     _previewTime.dispose();
     _masterGain.dispose();
+    _tx.dispose();
+    _ty.dispose();
+    _scale.dispose();
+    _rotation.dispose();
     _opacity.dispose();
     _opacityFrame.dispose();
     _inspectionPath.dispose();
@@ -440,7 +448,7 @@ class _FoundationAppState extends State<FoundationApp>
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Clip-local hold/linear opacity over black (linear Rec.709 CPU); other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Clip-local hold/linear opacity over black (linear Rec.709 CPU); Static transform2d before opacity; bilinear linear-light CPU over black. Other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
@@ -585,6 +593,40 @@ class _FoundationAppState extends State<FoundationApp>
                 ),
           title: const Text('Persisted AUDIO track mute'),
         ),
+    _path('transform-x', 'Transform translate X (canvas pixels)', _tx),
+    _path('transform-y', 'Transform translate Y (canvas pixels)', _ty),
+    _path('transform-scale', 'Transform uniform scale (0,100]', _scale),
+    _path(
+      'transform-rotation',
+      'Transform clockwise degrees; source-center anchor',
+      _rotation,
+    ),
+    OutlinedButton(
+      key: const Key('apply-clip-transform'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              double read(TextEditingController c) {
+                final n = double.tryParse(c.text);
+                if (n == null || !n.isFinite) {
+                  throw const StudioException(
+                    'TRANSFORM_PARAMETERS_UNSUPPORTED',
+                  );
+                }
+                return n;
+              }
+
+              return widget.workspace.setClipTransform(_selected!, {
+                ...identityTransform2d,
+                'translateX': read(_tx),
+                'translateY': read(_ty),
+                'scaleX': read(_scale),
+                'scaleY': read(_scale),
+                'rotationDeg': read(_rotation),
+              }, expectedRevision: _project.revision);
+            }),
+      child: const Text('Apply persisted transform (static, bilinear CPU)'),
+    ),
     _path(
       'clip-opacity-value',
       'Selected VIDEO opacity [0,1], linear Rec.709 over black',
@@ -706,7 +748,7 @@ class _FoundationAppState extends State<FoundationApp>
               }
               _previewImage?.dispose();
               _previewImage = image;
-              return 'Same-revision CPU opacity preview; originals -> actual YUV420 encoder-input node -> display. Not GPU/physical sync qualification.';
+              return 'Same-revision CPU transform/opacity preview; originals -> actual YUV420 encoder-input node -> display. Not GPU/physical sync qualification.';
             }),
       child: const Text('Preview selected timeline clip effect'),
     ),
