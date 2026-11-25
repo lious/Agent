@@ -268,7 +268,7 @@ void main() {
     );
     expect(review, throwsA(isA<StudioException>()));
   });
-  test('REAL v7 to v8 migration atomic failure/reopen and integrity retain old snapshots/checkpoints', () {
+  test('REAL v7 through v8/v9 migration atomic failure/reopen and integrity retain old snapshots/checkpoints', () {
     repo.captureCheckpoint(writer);
     final before = repo.read('p')!.hash;
     repo.close();
@@ -276,10 +276,11 @@ void main() {
       'checkpoint_labels',
       'checkpoint_retention',
       'checkpoint_prune_audits',
+      'import_maps',
     ]) {
       db.execute('DROP TABLE $t');
     }
-    db.execute('DELETE FROM schema_migrations WHERE version=8');
+    db.execute('DELETE FROM schema_migrations WHERE version>=8');
     db.userVersion = 7;
     db.execute('CREATE TABLE checkpoint_labels(dummy TEXT)');
     expect(
@@ -299,7 +300,7 @@ void main() {
     );
     db.execute('DROP TABLE checkpoint_labels');
     repo = DocumentRepository.open('${dir.path}/db', ns);
-    expect(db.userVersion, 8);
+    expect(db.userVersion, 9);
     expect(repo.read('p')!.hash, before);
     expect(count('checkpoints'), 1);
     expect(db.select('PRAGMA foreign_key_check'), isEmpty);
@@ -333,7 +334,7 @@ void main() {
           .firstWhere((v) => v == 'PRUNED_UNCOMMITTED')
           .timeout(const Duration(seconds: 20));
       child.kill(ProcessSignal.sigkill);
-      await child.exitCode;
+      expect(await child.exitCode, -ProcessSignal.sigkill.signalNumber);
       await errors;
       repo = DocumentRepository.open('${dir.path}/db', ns);
       expect(count('checkpoints'), before);

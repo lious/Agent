@@ -1,0 +1,587 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":403293,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/resource_admission_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/resource_admission_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_sdk/test/resource_preservation_test.dart"},"type":"suite","time":7}
+{"test":{"id":3,"name":"loading packages/studio_sdk/test/resource_preservation_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"count":27,"time":10,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":551}
+{"group":{"id":4,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":553}
+{"test":{"id":5,"name":"REAL native qualification -> writable fork -> ImportMap -> edit/archive/reopen/original-file export","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":65,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":553}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":560}
+{"group":{"id":6,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":561}
+{"test":{"id":7,"name":"REAL source/font/mask/image collection → metadata/archive → separate-process reopen → registered fork preserves hashes/refs, not execution","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":36,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_preservation_test.dart"},"type":"testStart","time":561}
+[libx264 @ 0x7f6854080a40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f6854080a40] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f6854080a40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f6854080a40] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f6854080a40] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f6854080a40] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f6854080a40] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f6854080a40] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f6854080a40] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f6854080a40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f6854080a40] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f6854080a40] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f6854080a40] kb/s:424.06
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1215}
+{"test":{"id":8,"name":"REAL AAC source qualification decodes bounded PCM and adopted timeline exports its audio","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":120,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1216}
+[libx264 @ 0x7f6838002040] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f6838002040] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f6838002040] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f6838002040] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f6838002040] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f6838002040] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f6838002040] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f6838002040] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f6838002040] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f6838002040] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f6838002040] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f6838002040] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f6838002040] kb/s:424.06
+[aac @ 0x7f68381b6580] Qavg: 362.746
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1743}
+{"test":{"id":9,"name":"REAL opaque/font/mask/image content stays readonly, never stripped to pass renderer gate","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":164,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1745}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1797}
+{"test":{"id":10,"name":"REAL native source metadata forgery rejected without project publication","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":194,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1798}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1847}
+{"test":{"id":11,"name":"REAL explicit cancellation and intervening revision reject adoption without switching projects","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":214,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1847}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1899}
+{"test":{"id":12,"name":"REAL namespace budget rejects resource adoption without project, source or reservation leakage","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":243,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1900}
+{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1935}
+{"test":{"id":13,"name":"REAL retained full-Project snapshot/pin qualification and archive reopen; no retained renderer claim","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":261,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":1936}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2082}
+{"suite":{"id":14,"platform":"vm","path":"packages/studio_sdk/test/checkpoint_retention_test.dart"},"type":"suite","time":2088}
+{"test":{"id":15,"name":"loading packages/studio_sdk/test/checkpoint_retention_test.dart","suiteID":14,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2088}
+{"testID":15,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2219}
+{"group":{"id":16,"suiteID":14,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2219}
+{"test":{"id":17,"name":"REAL SDK video proxies, named checkpoint/undo/archive/reopen survive explicit index pruning; shared DB refuses","suiteID":14,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/checkpoint_retention_test.dart"},"type":"testStart","time":2219}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3810}
+{"test":{"id":18,"name":"REAL opaque LUT/library refs remain byte-preserved metadata; missing/role resources diagnosed without guessing opaque hashes or fork","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":159,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_preservation_test.dart"},"type":"testStart","time":3811}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3858}
+{"test":{"id":19,"name":"REAL corrupted/wrong-size/unrelated inputs do not enter collection; stale consent and cancel cannot publish","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":220,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_preservation_test.dart"},"type":"testStart","time":3858}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3946}
+{"test":{"id":20,"name":"REAL no-clobber outputs and symlink input/output refuse; existing source/target bytes remain","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":256,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_preservation_test.dart"},"type":"testStart","time":3946}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3991}
+{"test":{"id":21,"name":"REAL two-process prepared publishers race one new target; exactly one wins without clobber","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":295,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_preservation_test.dart"},"type":"testStart","time":3991}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4727}
+{"suite":{"id":22,"platform":"vm","path":"packages/studio_sdk/test/namespace_budget_test.dart"},"type":"suite","time":4729}
+{"test":{"id":23,"name":"loading packages/studio_sdk/test/namespace_budget_test.dart","suiteID":22,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4730}
+{"testID":23,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4881}
+{"group":{"id":24,"suiteID":22,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":4882}
+{"test":{"id":25,"name":"REAL namespace byte policy gates import/native staging, survives failure/cancel/archive/reopen and preserves originals/history","suiteID":22,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/namespace_budget_test.dart"},"type":"testStart","time":4882}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4951}
+{"suite":{"id":26,"platform":"vm","path":"packages/studio_sdk/test/proxy_repair_test.dart"},"type":"suite","time":4952}
+{"test":{"id":27,"name":"loading packages/studio_sdk/test/proxy_repair_test.dart","suiteID":26,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4953}
+{"testID":27,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5103}
+{"group":{"id":28,"suiteID":26,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":5103}
+{"test":{"id":29,"name":"REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history","suiteID":26,"groupIDs":[28],"metadata":{"skip":false,"skipReason":null},"line":13,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/proxy_repair_test.dart"},"type":"testStart","time":5103}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6787}
+{"test":{"id":30,"name":"REAL SIGKILL reservation credits reclaimed only under OS lease; staged bytes remain inventoried, concurrent writes cannot overbook","suiteID":22,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":132,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/namespace_budget_test.dart"},"type":"testStart","time":6788}
+{"testID":30,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7857}
+{"test":{"id":31,"name":"REAL policy invalid/future/unsafe inputs and unreserved native writes fail closed without deletion","suiteID":22,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":233,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/namespace_budget_test.dart"},"type":"testStart","time":7858}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7894}
+{"suite":{"id":32,"platform":"vm","path":"packages/studio_sdk/test/proxy_discard_test.dart"},"type":"suite","time":7895}
+{"test":{"id":33,"name":"loading packages/studio_sdk/test/proxy_discard_test.dart","suiteID":32,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7896}
+{"testID":33,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":8046}
+{"group":{"id":34,"suiteID":32,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":8047}
+{"test":{"id":35,"name":"REAL missing proxy explicit detach/rebuild; corrupt collision refuses, source export/history/GC survive","suiteID":32,"groupIDs":[34],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/proxy_discard_test.dart"},"type":"testStart","time":8047}
+[libx264 @ 0x7f68340a3300] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68340a3300] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68340a3300] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f68340a3300] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68340a3300] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68340a3300] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68340a3300] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68340a3300] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68340a3300] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68340a3300] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68340a3300] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68340a3300] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68340a3300] kb/s:424.06
+[libx264 @ 0x7f6834097d40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f6834097d40] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f6834097d40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f6834097d40] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f6834097d40] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f6834097d40] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f6834097d40] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f6834097d40] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f6834097d40] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f6834097d40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f6834097d40] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f6834097d40] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f6834097d40] kb/s:424.06
+{"testID":35,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10416}
+{"test":{"id":36,"name":"REAL shared derived hashes stay in current resource closure after selecting only one asset; unsupported metadata still refuses","suiteID":32,"groupIDs":[34],"metadata":{"skip":false,"skipReason":null},"line":188,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/proxy_discard_test.dart"},"type":"testStart","time":10416}
+[libx264 @ 0x7f68389c5a00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68389c5a00] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68389c5a00] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f68389c5a00] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68389c5a00] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68389c5a00] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68389c5a00] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68389c5a00] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68389c5a00] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68389c5a00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68389c5a00] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68389c5a00] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68389c5a00] kb/s:424.06
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12240}
+{"test":{"id":37,"name":"REAL SQLite retained original-role collision refuses before any CAS publication","suiteID":26,"groupIDs":[28],"metadata":{"skip":false,"skipReason":null},"line":189,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/proxy_repair_test.dart"},"type":"testStart","time":12241}
+{"testID":36,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12575}
+{"suite":{"id":38,"platform":"vm","path":"packages/studio_sdk/test/durable_proxy_test.dart"},"type":"suite","time":12576}
+{"test":{"id":39,"name":"loading packages/studio_sdk/test/durable_proxy_test.dart","suiteID":38,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":12576}
+{"testID":39,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":12725}
+{"group":{"id":40,"suiteID":38,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":12726}
+{"test":{"id":41,"name":"REAL durable SchemaProxy archive/fork/reopen reuse, exact map, historical pins and corrupt closure refuse","suiteID":38,"groupIDs":[40],"metadata":{"skip":false,"skipReason":null},"line":11,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/durable_proxy_test.dart"},"type":"testStart","time":12726}
+{"testID":37,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12999}
+{"test":{"id":42,"name":"REAL legacy namespace, cross-database usage and symlink targets cannot gain repair authority","suiteID":26,"groupIDs":[28],"metadata":{"skip":false,"skipReason":null},"line":255,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/proxy_repair_test.dart"},"type":"testStart","time":13000}
+{"testID":42,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15052}
+{"suite":{"id":43,"platform":"vm","path":"packages/studio_sdk/test/save_test.dart"},"type":"suite","time":15053}
+{"test":{"id":44,"name":"loading packages/studio_sdk/test/save_test.dart","suiteID":43,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":15053}
+{"testID":44,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":15221}
+{"group":{"id":45,"suiteID":43,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":11,"line":null,"column":null,"url":null},"type":"group","time":15222}
+{"test":{"id":46,"name":"virtual monotonic clock: idle, continuous maximum, 50 commits, lifecycle flush","suiteID":43,"groupIDs":[45],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15222}
+{"testID":46,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15236}
+{"test":{"id":47,"name":"scheduler surfaces failure, retains pending and explicit retry succeeds","suiteID":43,"groupIDs":[45],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15236}
+{"testID":47,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15238}
+{"test":{"id":48,"name":"actual workspace autosave derives checkpoint without claiming user/package save","suiteID":43,"groupIDs":[45],"metadata":{"skip":false,"skipReason":null},"line":67,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15238}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15395}
+{"group":{"id":49,"suiteID":43,"parentID":45,"name":"real save journal/filesystem","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":96,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"group","time":15396}
+{"test":{"id":50,"name":"real save journal/filesystem identical requests coalesce; edits during save never move head or saved receipt backwards","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":134,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15396}
+{"testID":50,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15542}
+{"test":{"id":51,"name":"real save journal/filesystem queued cancellation does not publish or manufacture a receipt; retry works","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":156,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15543}
+{"testID":51,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15605}
+{"test":{"id":52,"name":"real save journal/filesystem actual receipt INSERT failure leaves uncertain publication and explicit regrant reconciles after reopen","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":166,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15606}
+{"testID":52,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15680}
+{"test":{"id":53,"name":"real save journal/filesystem receipt replay is idempotent only for its committed artifact hash","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":209,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15680}
+{"testID":53,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15722}
+{"test":{"id":54,"name":"real save journal/filesystem corrupt only-copy target and corrupt backup never get overwritten; queue remains usable","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":228,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15723}
+{"testID":54,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15780}
+{"test":{"id":55,"name":"real save journal/filesystem staging failure preserves old copy and no successful receipt; explicit retry succeeds","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":250,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15780}
+{"testID":55,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15832}
+{"test":{"id":56,"name":"real save journal/filesystem external target change and stale writer refuse publication","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":271,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15833}
+{"testID":56,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15873}
+{"test":{"id":57,"name":"real save journal/filesystem two coordinators serialize a shared target and older snapshots cannot overwrite newer receipts","suiteID":43,"groupIDs":[45,49],"metadata":{"skip":false,"skipReason":null},"line":301,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":15874}
+{"testID":57,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15950}
+{"suite":{"id":58,"platform":"vm","path":"packages/studio_sdk/test/audio_export_test.dart"},"type":"suite","time":15951}
+{"test":{"id":59,"name":"loading packages/studio_sdk/test/audio_export_test.dart","suiteID":58,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":15951}
+{"testID":59,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":16086}
+{"group":{"id":60,"suiteID":58,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":16086}
+{"test":{"id":61,"name":"REAL44.1k AAC decode ->48k Dart AudioBus -> Main4/AAC mux -> reopen, gain/mute, atomic failure","suiteID":58,"groupIDs":[60],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/audio_export_test.dart"},"type":"testStart","time":16087}
+[libx264 @ 0x7f6850004480] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f6850004480] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f6850004480] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f6850004480] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f6850004480] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f6850004480] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f6850004480] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f6850004480] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f6850004480] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f6850004480] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f6850004480] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f6850004480] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f6850004480] kb/s:424.06
+[aac @ 0x7f68500cb980] Qavg: 912.152
+[libx264 @ 0x7f68500cb980] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68500cb980] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68500cb980] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f68500cb980] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68500cb980] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68500cb980] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68500cb980] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68500cb980] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68500cb980] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68500cb980] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68500cb980] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68500cb980] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68500cb980] kb/s:424.06
+[aac @ 0x7f68500adf80] Qavg: 65536.000
+[libx264 @ 0x7f686008a180] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f686008a180] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f686008a180] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f686008a180] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f686008a180] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f686008a180] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f686008a180] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f686008a180] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f686008a180] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f686008a180] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f686008a180] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f686008a180] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f686008a180] kb/s:424.06
+[aac @ 0x7f68600c7500] Qavg: 912.152
+[libx264 @ 0x7f68600c7500] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68600c7500] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68600c7500] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f68600c7500] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68600c7500] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68600c7500] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68600c7500] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68600c7500] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68600c7500] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68600c7500] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68600c7500] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68600c7500] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68600c7500] kb/s:424.06
+[aac @ 0x7f686008a180] Qavg: 65536.000
+[libx264 @ 0x7f6854088640] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f6854088640] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f6854088640] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f6854088640] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f6854088640] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f6854088640] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f6854088640] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f6854088640] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f6854088640] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f6854088640] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f6854088640] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f6854088640] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f6854088640] kb/s:424.06
+[libx264 @ 0x7f68600a33c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68600a33c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68600a33c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f68600a33c0] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68600a33c0] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68600a33c0] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68600a33c0] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68600a33c0] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68600a33c0] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68600a33c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68600a33c0] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68600a33c0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68600a33c0] kb/s:424.06
+[aac @ 0x7f6860093580] Qavg: 912.152
+[libx264 @ 0x7f68500adf80] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f68500adf80] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f68500adf80] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+{"testID":41,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18350}
+{"test":{"id":62,"name":"REAL concurrent revision invalidates pending native proxy adoption without losing originals","suiteID":38,"groupIDs":[40],"metadata":{"skip":false,"skipReason":null},"line":235,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/durable_proxy_test.dart"},"type":"testStart","time":18351}
+[libx264 @ 0x7f68500adf80] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f68500adf80] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f68500adf80] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f68500adf80] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f68500adf80] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f68500adf80] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f68500adf80] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f68500adf80] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f68500adf80] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f68500adf80] kb/s:424.06
+[aac @ 0x7f68500cb980] Qavg: 912.152
+{"testID":61,"messageType":"print","message":"{\"sourceSampleRate\":44100,\"outputSampleRate\":48000,\"contentSamples\":144000,\"gainRatio\":0.501650567355317,\"outputHash\":\"sha256:accbb4b79239f7e7d62f2560b44c56c959ba7522c7efa3e1769035abc03907e2\"}","type":"print","time":18568}
+{"testID":61,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18572}
+{"test":{"id":63,"name":"REAL PCM44.1k impulse resample drain/trim exact length; layout/gap/resource/overwrite failure cleans private output","suiteID":58,"groupIDs":[60],"metadata":{"skip":false,"skipReason":null},"line":278,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/audio_export_test.dart"},"type":"testStart","time":18572}
+{"testID":63,"messageType":"print","message":"{\"pcmImpulseSamples\":48000,\"resampledPeakSample\":24000,\"trimmedPeakSample\":23000,\"resampleDrainSamples\":48000,\"sourceRate\":44100}","type":"print","time":18884}
+{"testID":63,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18884}
+{"suite":{"id":64,"platform":"vm","path":"packages/studio_store/test/caption_transactions_test.dart"},"type":"suite","time":18885}
+{"test":{"id":65,"name":"loading packages/studio_store/test/caption_transactions_test.dart","suiteID":64,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":18886}
+{"testID":62,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18931}
+{"test":{"id":66,"name":"REAL killed stage owner releases lock; GC reclaims only owned orphan and rejects symlink","suiteID":38,"groupIDs":[40],"metadata":{"skip":false,"skipReason":null},"line":316,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/durable_proxy_test.dart"},"type":"testStart","time":18932}
+{"testID":65,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":19050}
+{"group":{"id":67,"suiteID":64,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":19050}
+{"test":{"id":68,"name":"actual SQLite caption command CAS/version/undo/reopen and automatic manual lock rollback","suiteID":64,"groupIDs":[67],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/caption_transactions_test.dart"},"type":"testStart","time":19051}
+{"testID":68,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":19299}
+{"suite":{"id":69,"platform":"vm","path":"packages/studio_store/test/harness_process_test.dart"},"type":"suite","time":19300}
+{"test":{"id":70,"name":"loading packages/studio_store/test/harness_process_test.dart","suiteID":69,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":19300}
+{"testID":70,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":19429}
+{"group":{"id":71,"suiteID":69,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":19430}
+{"test":{"id":72,"name":"two REAL Linux child workers execute free CPU tasks in one persisted session; NOT physical-device/network qualification","suiteID":69,"groupIDs":[71],"metadata":{"skip":false,"skipReason":null},"line":13,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_process_test.dart"},"type":"testStart","time":19430}
+{"testID":66,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":19852}
+{"suite":{"id":73,"platform":"vm","path":"packages/studio_store/test/harness_takeover_test.dart"},"type":"suite","time":19853}
+{"test":{"id":74,"name":"loading packages/studio_store/test/harness_takeover_test.dart","suiteID":73,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":19854}
+{"testID":74,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":19998}
+{"group":{"id":75,"suiteID":73,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":19999}
+{"test":{"id":76,"name":"actual reopen requires local CAS authority; takeover fences old process, preserves attempt/fence and quarantines old device","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":49,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":19999}
+{"testID":76,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20146}
+{"test":{"id":77,"name":"takeover receipt persists and is idempotent, conflicts reject, old boot identifiers cannot be reused","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":94,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":20146}
+{"testID":77,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20173}
+{"test":{"id":78,"name":"unknown downtime consumes wall budget rather than resetting it; measured charge bounds execution","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":142,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":20174}
+{"testID":78,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20194}
+{"test":{"id":79,"name":"known downtime and subsequent ticks cannot escape original wall budget","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":20194}
+{"testID":79,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20215}
+{"test":{"id":80,"name":"old-device quarantine survives another restart after its step was reassigned","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":183,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":20216}
+{"testID":80,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20253}
+{"test":{"id":81,"name":"persistent per-attempt timeout cannot be extended by repeated heartbeats","suiteID":73,"groupIDs":[75],"metadata":{"skip":false,"skipReason":null},"line":209,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_takeover_test.dart"},"type":"testStart","time":20254}
+{"testID":81,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20285}
+{"suite":{"id":82,"platform":"vm","path":"packages/studio_store/test/files_test.dart"},"type":"suite","time":20287}
+{"test":{"id":83,"name":"loading packages/studio_store/test/files_test.dart","suiteID":82,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":20287}
+{"testID":72,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20287}
+{"suite":{"id":84,"platform":"vm","path":"packages/studio_store/test/checkpoint_retention_test.dart"},"type":"suite","time":20289}
+{"test":{"id":85,"name":"loading packages/studio_store/test/checkpoint_retention_test.dart","suiteID":84,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":20289}
+{"testID":83,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":20443}
+{"group":{"id":86,"suiteID":82,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":20444}
+{"test":{"id":87,"name":"explicit CAS GC keeps pins/other namespaces, refuses symlinks and releases lock after failure","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":22,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20444}
+{"testID":85,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":20469}
+{"group":{"id":88,"suiteID":84,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":20470}
+{"test":{"id":89,"name":"REAL default preserveAll, named/save/latest pins; prune indexes only, repeat audited once and undo remains","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":20470}
+{"testID":87,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20509}
+{"test":{"id":90,"name":"actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20510}
+{"testID":90,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20526}
+{"test":{"id":91,"name":"oversize import and symlink selection publish no blob","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20527}
+{"testID":91,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20530}
+{"test":{"id":92,"name":"atomic sibling publication replaces complete file; failure never overwrites old good target","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":95,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20531}
+{"testID":92,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20540}
+{"test":{"id":93,"name":"archive valid roundtrip/fork and damaged checksum preserve original","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":113,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20541}
+{"testID":93,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20638}
+{"test":{"id":94,"name":"hostile ZIP paths rejected before extraction","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":169,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20638}
+{"testID":94,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20643}
+{"test":{"id":95,"name":"ZIP duplicate headers and advertised expanded-size bomb are rejected before decompression","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":187,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20644}
+{"testID":95,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20646}
+{"test":{"id":96,"name":"ZIP Unix symlink metadata is rejected before contents are trusted","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":220,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20647}
+{"testID":96,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20648}
+{"test":{"id":97,"name":"valid checksums cannot authorize unknown manifest fields; unlisted entries rejected","suiteID":82,"groupIDs":[86],"metadata":{"skip":false,"skipReason":null},"line":228,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":20648}
+{"testID":97,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20662}
+{"suite":{"id":98,"platform":"vm","path":"packages/studio_store/test/harness_transactions_test.dart"},"type":"suite","time":20663}
+{"test":{"id":99,"name":"loading packages/studio_store/test/harness_transactions_test.dart","suiteID":98,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":20663}
+{"testID":89,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20765}
+{"test":{"id":100,"name":"REAL stale policy/name/row/revision/fence reviews refuse; explicit confirmation and bounds","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":112,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":20766}
+{"testID":99,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":20797}
+{"group":{"id":101,"suiteID":98,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":20797}
+{"test":{"id":102,"name":"real SQLite same-session durable DAG dispatch/retry/heartbeat/receipt/cancel/reopen/outbox, project revision isolated","suiteID":98,"groupIDs":[101],"metadata":{"skip":false,"skipReason":null},"line":17,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_transactions_test.dart"},"type":"testStart","time":20797}
+{"testID":100,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20971}
+{"test":{"id":103,"name":"REAL audit SQL failure and lost ownership after deletion roll back ALL indexes and audit","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":175,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":20972}
+{"testID":102,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21031}
+{"test":{"id":104,"name":"real SQLite candidate outbox insertion failure rolls back terminal receipt; retry and repeated cancellation are idempotent","suiteID":98,"groupIDs":[101],"metadata":{"skip":false,"skipReason":null},"line":151,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/harness_transactions_test.dart"},"type":"testStart","time":21032}
+{"testID":104,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21063}
+{"suite":{"id":105,"platform":"vm","path":"packages/studio_store/test/persistent_audio_transaction_test.dart"},"type":"suite","time":21064}
+{"test":{"id":106,"name":"loading packages/studio_store/test/persistent_audio_transaction_test.dart","suiteID":105,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":21064}
+{"testID":103,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21082}
+{"test":{"id":107,"name":"REAL other projects/namespaces and ANY session plan retain their roots; corrupt root refuses review","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":209,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":21082}
+{"testID":107,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21176}
+{"test":{"id":108,"name":"REAL v7 through v8/v9 migration atomic failure/reopen and integrity retain old snapshots/checkpoints","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":271,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":21176}
+{"testID":106,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":21200}
+{"group":{"id":109,"suiteID":105,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":21200}
+{"test":{"id":110,"name":"REAL SQLite persistent AV extraction all-table rollback, retry/idempotency, stale CAS, undo and reopen","suiteID":105,"groupIDs":[109],"metadata":{"skip":false,"skipReason":null},"line":35,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/persistent_audio_transaction_test.dart"},"type":"testStart","time":21201}
+{"testID":108,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21201}
+{"test":{"id":111,"name":"REAL SIGKILL after index deletes and audit insert rolls back; next writer re-reviews and commits","suiteID":84,"groupIDs":[88],"metadata":{"skip":false,"skipReason":null},"line":312,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":21201}
+{"testID":110,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21481}
+{"test":{"id":112,"name":"rich Schema project remains read-only: unsupported image/story/plugin writes refuse without definitions, preserving opaque data","suiteID":105,"groupIDs":[109],"metadata":{"skip":false,"skipReason":null},"line":116,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/persistent_audio_transaction_test.dart"},"type":"testStart","time":21482}
+{"testID":112,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21501}
+{"test":{"id":113,"name":"REAL SQLite unlinked audio split undo/re-edit never reuses a retired immutable version","suiteID":105,"groupIDs":[109],"metadata":{"skip":false,"skipReason":null},"line":146,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/persistent_audio_transaction_test.dart"},"type":"testStart","time":21501}
+{"testID":113,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21617}
+{"test":{"id":114,"name":"archive fork remaps AV group, anchor, members and clip backlinks without mutating original","suiteID":105,"groupIDs":[109],"metadata":{"skip":false,"skipReason":null},"line":189,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/persistent_audio_transaction_test.dart"},"type":"testStart","time":21617}
+{"testID":114,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21626}
+{"suite":{"id":115,"platform":"vm","path":"packages/studio_store/test/resource_import_test.dart"},"type":"suite","time":21627}
+{"test":{"id":116,"name":"loading packages/studio_store/test/resource_import_test.dart","suiteID":115,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":21627}
+{"testID":116,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":21774}
+{"group":{"id":117,"suiteID":115,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":21774}
+{"test":{"id":118,"name":"REAL SQL late failure rolls back new project/definitions/pins/map/selection; retry and durable namespace-scoped provenance","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":47,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/resource_import_test.dart"},"type":"testStart","time":21774}
+{"testID":118,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21966}
+{"test":{"id":119,"name":"REAL takeover/stale head blocks fork before registration","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":72,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/resource_import_test.dart"},"type":"testStart","time":21966}
+{"testID":119,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21990}
+{"test":{"id":120,"name":"REAL v8-v9 failure preserves old selected snapshot; migration retry qualifies new table/checksum","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/resource_import_test.dart"},"type":"testStart","time":21990}
+{"testID":120,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":22019}
+{"test":{"id":121,"name":"REAL SIGKILL after ImportMap and selected-project change before COMMIT restores old project without half-import","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":101,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/resource_import_test.dart"},"type":"testStart","time":22019}
+{"testID":111,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24239}
+{"suite":{"id":122,"platform":"vm","path":"packages/studio_store/test/transactions_test.dart"},"type":"suite","time":24240}
+{"test":{"id":123,"name":"loading packages/studio_store/test/transactions_test.dart","suiteID":122,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":24241}
+{"testID":123,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":24409}
+{"group":{"id":124,"suiteID":122,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":18,"line":null,"column":null,"url":null},"type":"group","time":24409}
+{"test":{"id":125,"name":"validated snapshot head fence observes other connection commits and isolates namespaces/projects","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":68,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24410}
+{"testID":125,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24542}
+{"test":{"id":126,"name":"migration, commit, reopen, checksum and foreign key enforcement","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":106,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24543}
+{"testID":126,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24569}
+{"test":{"id":127,"name":"same key same input returns original receipt even after a new writer","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":122,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24570}
+{"testID":127,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24597}
+{"test":{"id":128,"name":"no-op records only receipt, retains revision, images and event tail","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":136,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24597}
+{"testID":128,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24616}
+{"test":{"id":129,"name":"undo restores content in a NEW revision, stale undo cannot overwrite","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":157,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24617}
+{"testID":129,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24647}
+{"test":{"id":130,"name":"fence transfer invalidates old writer and expected epoch CAS","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":183,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24648}
+{"testID":130,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24660}
+{"test":{"id":131,"name":"SQL failure after event append rolls back EVERY write","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":192,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24660}
+{"testID":131,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24691}
+{"test":{"id":132,"name":"invalid title, project namespace and duplicate create are rejected","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":222,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24692}
+{"testID":132,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24712}
+{"test":{"id":133,"name":"dual hosts, tenants and workspaces cannot read each other through APIs","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":235,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24712}
+{"testID":133,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24741}
+{"test":{"id":134,"name":"real 100 competing commands on 10 isolates: exactly one CAS succeeds","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":275,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":24742}
+{"testID":121,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24796}
+{"suite":{"id":135,"platform":"vm","path":"packages/studio_store/test/video_transactions_test.dart"},"type":"suite","time":24797}
+{"test":{"id":136,"name":"loading packages/studio_store/test/video_transactions_test.dart","suiteID":135,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":24798}
+{"testID":136,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":24931}
+{"group":{"id":137,"suiteID":135,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":24932}
+{"test":{"id":138,"name":"1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused","suiteID":135,"groupIDs":[137],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/video_transactions_test.dart"},"type":"testStart","time":24932}
+{"testID":134,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25226}
+{"test":{"id":139,"name":"unknown schema version refuses without modifying it","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":307,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25227}
+{"testID":139,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25239}
+{"test":{"id":140,"name":"migration checksum mismatch fails closed","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":320,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25239}
+{"testID":140,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25256}
+{"test":{"id":141,"name":"stored snapshot tampering is detected on read","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":332,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25256}
+{"testID":141,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25267}
+{"test":{"id":142,"name":"writer tokens cannot cross namespaces even with identical owner/epoch","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":344,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25267}
+{"testID":142,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25281}
+{"test":{"id":143,"name":"fixture blob corruption is detected","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":378,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25281}
+{"testID":143,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25293}
+{"test":{"id":144,"name":"missing referenced snapshot is corruption, never an absent project","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":391,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25293}
+{"testID":144,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25306}
+{"test":{"id":145,"name":"failed first migration preserves original database and version","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":404,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25306}
+{"testID":145,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25317}
+{"test":{"id":146,"name":"undo verifies historical before-image hash, not just current head","suiteID":122,"groupIDs":[124],"metadata":{"skip":false,"skipReason":null},"line":429,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart"},"type":"testStart","time":25318}
+{"testID":146,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25337}
+{"suite":{"id":147,"platform":"vm","path":"packages/studio_document/test/caption_test.dart"},"type":"suite","time":25338}
+{"test":{"id":148,"name":"loading packages/studio_document/test/caption_test.dart","suiteID":147,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":25338}
+{"testID":148,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":25454}
+{"group":{"id":149,"suiteID":147,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":25455}
+{"test":{"id":150,"name":"SRT/VTT actual Unicode, RTL, emoji, linebreak, escaped markup and millisecond non-frame times roundtrip","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25455}
+{"testID":150,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25479}
+{"test":{"id":151,"name":"manual text/timing protected from automatic update; split duplicates text and exact source retime retains flags","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":31,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25479}
+{"testID":151,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25485}
+{"test":{"id":152,"name":"overlap policy is deterministic reject; touching half-open cues allowed and IDs unique","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":59,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25485}
+{"testID":152,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25487}
+{"test":{"id":153,"name":"static ASS parses exact centiseconds, commas and newline, reports dropped styles and overrides without execution","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":72,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25487}
+{"testID":153,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25490}
+{"test":{"id":154,"name":"unsupported VTT style/settings warn; malicious/malformed/oversize/quantization input refused","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":87,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25490}
+{"testID":154,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25501}
+{"test":{"id":155,"name":"seeded rational millisecond vectors roundtrip without frame quantization or accumulating rounding","suiteID":147,"groupIDs":[149],"metadata":{"skip":false,"skipReason":null},"line":123,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/caption_test.dart"},"type":"testStart","time":25502}
+{"testID":155,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25548}
+{"suite":{"id":156,"platform":"vm","path":"packages/studio_document/test/document_test.dart"},"type":"suite","time":25549}
+{"test":{"id":157,"name":"loading packages/studio_document/test/document_test.dart","suiteID":156,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":25549}
+{"testID":157,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":25662}
+{"group":{"id":158,"suiteID":156,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":25663}
+{"test":{"id":159,"name":"complete 2.0 empty project roundtrip is immutable","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":13,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25663}
+{"testID":159,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25730}
+{"test":{"id":160,"name":"structural errors are distinct from semantic errors","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25731}
+{"testID":160,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25739}
+{"test":{"id":161,"name":"closed root, unknown version and invalid namespace rejected","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25739}
+{"testID":161,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25751}
+{"test":{"id":162,"name":"ID duplicates, time encoding and numeric overflow rejected","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25751}
+{"testID":162,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25759}
+{"test":{"id":163,"name":"bus references and cycles rejected","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":76,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25760}
+{"testID":163,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25765}
+{"test":{"id":164,"name":"half-open gap intervals and duration validate, overlap rejects","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":90,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25766}
+{"testID":164,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25776}
+{"test":{"id":165,"name":"JCS number vectors, UTF16 order and exact I64 string","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":129,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25777}
+{"testID":165,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25779}
+{"test":{"id":166,"name":"validator rejects cyclic/nonJSON input without recursing forever","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":137,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25780}
+{"testID":166,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25784}
+{"test":{"id":167,"name":"unknown extensions roundtrip unchanged and are not interpreted as time","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":145,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart"},"type":"testStart","time":25785}
+{"testID":167,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25789}
+{"suite":{"id":168,"platform":"vm","path":"packages/studio_document/test/time_test.dart"},"type":"suite","time":25790}
+{"test":{"id":169,"name":"loading packages/studio_document/test/time_test.dart","suiteID":168,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":25790}
+{"testID":169,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":25917}
+{"group":{"id":170,"suiteID":168,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":25917}
+{"test":{"id":171,"name":"10000 exact rational arithmetic and JSON roundtrips","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":25918}
+{"testID":171,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26138}
+{"test":{"id":172,"name":"300 frames at NTSC are 10.01 seconds and no cumulative sample drift","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":18,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":26138}
+{"testID":172,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26175}
+{"test":{"id":173,"name":"negative and positive ties to even, floor and ceil","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":47,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":26175}
+{"testID":173,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26177}
+{"test":{"id":174,"name":"canonical wire rejects noncanonical, overflow and divide by zero","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":58,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":26177}
+{"testID":174,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26179}
+{"test":{"id":175,"name":"half-open intervals and checked end","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":76,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":26180}
+{"testID":175,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26181}
+{"test":{"id":176,"name":"frame rate and sample rate bounds","suiteID":168,"groupIDs":[170],"metadata":{"skip":false,"skipReason":null},"line":87,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart"},"type":"testStart","time":26181}
+{"testID":176,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26182}
+{"suite":{"id":177,"platform":"vm","path":"packages/studio_document/test/semantic_closure_test.dart"},"type":"suite","time":26183}
+{"test":{"id":178,"name":"loading packages/studio_document/test/semantic_closure_test.dart","suiteID":177,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":26183}
+{"testID":178,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":26317}
+{"group":{"id":179,"suiteID":177,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":21,"line":null,"column":null,"url":null},"type":"group","time":26317}
+{"test":{"id":180,"name":"full closed-root rich image/story/provenance/font/unknown-plugin project validates and roundtrips opaque references","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":11,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26317}
+{"testID":180,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26394}
+{"test":{"id":181,"name":"semantic not structural: image parent missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26395}
+{"testID":181,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26403}
+{"test":{"id":182,"name":"semantic not structural: image parent cycle","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26403}
+{"testID":182,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26409}
+{"test":{"id":183,"name":"semantic not structural: image source version","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26409}
+{"testID":183,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26417}
+{"test":{"id":184,"name":"semantic not structural: image font missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26418}
+{"testID":184,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26425}
+{"test":{"id":185,"name":"semantic not structural: effect owner mismatch","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26426}
+{"testID":185,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26435}
+{"test":{"id":186,"name":"semantic not structural: effect backlink missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26435}
+{"testID":186,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26447}
+{"test":{"id":187,"name":"semantic not structural: character rights missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26447}
+{"testID":187,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26453}
+{"test":{"id":188,"name":"semantic not structural: character appearance missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26454}
+{"testID":188,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26458}
+{"test":{"id":189,"name":"semantic not structural: script brief missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26459}
+{"testID":189,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26464}
+{"test":{"id":190,"name":"semantic not structural: script scene mismatch","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26464}
+{"testID":190,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26469}
+{"test":{"id":191,"name":"semantic not structural: scene character missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26469}
+{"testID":191,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26474}
+{"test":{"id":192,"name":"semantic not structural: scene shot missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26474}
+{"testID":192,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26478}
+{"test":{"id":193,"name":"semantic not structural: shot subject version","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26479}
+{"testID":193,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26483}
+{"test":{"id":194,"name":"semantic not structural: shot continuity version","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26483}
+{"testID":194,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26487}
+{"test":{"id":195,"name":"semantic not structural: generation output version","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26487}
+{"testID":195,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26491}
+{"test":{"id":196,"name":"semantic not structural: candidate missing","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":47,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26492}
+{"testID":196,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26496}
+{"test":{"id":197,"name":"exact piecewise endpoints/monotonicity and semantic arithmetic overflow are reported, not thrown","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26496}
+{"testID":197,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26507}
+{"test":{"id":198,"name":"nested current sequence references depth8 accepted, depth9/cycle rejected without following retained-version graph as current","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":91,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26507}
+{"testID":198,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26526}
+{"test":{"id":199,"name":"opaque plugin/provider versions and rational lookalikes remain opaque, never project invariants","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":141,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26526}
+{"testID":199,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26555}
+{"test":{"id":200,"name":"3000-node valid reciprocal bus graph validates without recursive host-stack exhaustion; closing its cycle refuses","suiteID":177,"groupIDs":[179],"metadata":{"skip":false,"skipReason":null},"line":154,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/semantic_closure_test.dart"},"type":"testStart","time":26556}
+{"testID":200,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26636}
+{"suite":{"id":201,"platform":"vm","path":"packages/studio_document/test/persistent_audio_test.dart"},"type":"suite","time":26638}
+{"test":{"id":202,"name":"loading packages/studio_document/test/persistent_audio_test.dart","suiteID":201,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":26638}
+{"testID":202,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":26766}
+{"group":{"id":203,"suiteID":201,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":26767}
+{"test":{"id":204,"name":"persistent extraction pins stream, materializes separate clip and exact reciprocal AV link; unlink keeps both and relink works","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":53,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":26767}
+{"testID":204,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26856}
+{"test":{"id":205,"name":"linked split/trim/move/slip are atomic and maintain pinned sample/source ranges; locks refuse whole command","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":26857}
+{"testID":205,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26904}
+{"test":{"id":206,"name":"1000 linked legal trim/inverse commands conserve exact offsets/source windows; failures do not mutate","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":26905}
+{"testID":206,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28723}
+{"test":{"id":207,"name":"sample-aligned absolute stream origins, unavailable audio, duplicate extraction and id collision are explicit atomic refusals","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":129,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":28724}
+{"testID":207,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28736}
+{"test":{"id":208,"name":"editing from linked audio selection, unlink independent moves/slips/deletes, no-op and append import retain valid semantics","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":171,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":28736}
+{"testID":208,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28759}
+{"test":{"id":209,"name":"semantic FK/version/map/link/bus errors reject before commit; opaque extension IDs do not allocate entities","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":231,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/persistent_audio_test.dart"},"type":"testStart","time":28759}
+{"testID":209,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28773}
+{"suite":{"id":210,"platform":"vm","path":"packages/studio_document/test/timeline_graph_test.dart"},"type":"suite","time":28774}
+{"test":{"id":211,"name":"loading packages/studio_document/test/timeline_graph_test.dart","suiteID":210,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":28774}
+{"testID":211,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":28895}
+{"group":{"id":212,"suiteID":210,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":28896}
+{"test":{"id":213,"name":"timeline graph exact half-open source map, split/non-ripple trim and immutable snapshot","suiteID":210,"groupIDs":[212],"metadata":{"skip":false,"skipReason":null},"line":13,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_graph_test.dart"},"type":"testStart","time":28896}
+{"testID":213,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28994}
+{"test":{"id":214,"name":"disabled clip renders a gap; unsupported background refuses rather than black substitution","suiteID":210,"groupIDs":[212],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/timeline_graph_test.dart"},"type":"testStart","time":28995}
+{"testID":214,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29030}
+{"suite":{"id":215,"platform":"vm","path":"packages/studio_document/test/audio_bus_test.dart"},"type":"suite","time":29031}
+{"test":{"id":216,"name":"loading packages/studio_document/test/audio_bus_test.dart","suiteID":215,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":29031}
+{"testID":216,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":29153}
+{"group":{"id":217,"suiteID":215,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":null,"column":null,"url":null},"type":"group","time":29154}
+{"test":{"id":218,"name":"graph reciprocal refs, duplicate and disconnected cycles are refused deterministically","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":20,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29154}
+{"testID":218,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29169}
+{"test":{"id":219,"name":"gain, mono equal-power pan and stereo balance have explicit distinct policies","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":48,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29169}
+{"testID":219,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29172}
+{"test":{"id":220,"name":"exact absolute sample mapping, hold/linear interpolation and source anchors survive 2x retime","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":59,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29172}
+{"testID":220,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29180}
+{"test":{"id":221,"name":"duck proposal is a separate lower envelope, clips endpoints and protects manual regions and locks","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":102,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29181}
+{"testID":221,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29186}
+{"test":{"id":222,"name":"actual float PCM mute/solo/bus closure, stereo balance, no implicit limiter and source immutability","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":141,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29187}
+{"testID":222,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29193}
+{"test":{"id":223,"name":"bus automation at actual sample boundaries and finite PCM/length failures","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":169,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29193}
+{"testID":223,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29195}
+{"test":{"id":224,"name":"silent/disconnected routes, scratch bounds and non-finite overflow fail explicitly","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":202,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29196}
+{"testID":224,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29225}
+{"test":{"id":225,"name":"real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification","suiteID":215,"groupIDs":[217],"metadata":{"skip":false,"skipReason":null},"line":236,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/audio_bus_test.dart"},"type":"testStart","time":29226}
+{"testID":225,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29595}
+{"suite":{"id":226,"platform":"vm","path":"packages/studio_document/test/edit_algebra_test.dart"},"type":"suite","time":29596}
+{"test":{"id":227,"name":"loading packages/studio_document/test/edit_algebra_test.dart","suiteID":226,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":29596}
+{"testID":227,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":29709}
+{"group":{"id":228,"suiteID":226,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":29709}
+{"test":{"id":229,"name":"split preserves exact half-open source mapping and rejects endpoints/off-grid","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":29709}
+{"testID":229,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29806}
+{"test":{"id":230,"name":"normal lift and trim preserve trailing Gap; ripple changes duration","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":29807}
+{"testID":230,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29847}
+{"test":{"id":231,"name":"roll slip slide conserve expected source/sequence intervals","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":98,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":29848}
+{"testID":231,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29875}
+{"test":{"id":232,"name":"collision, negative, source exhaustion, duplicate IDs and locks reject atomically","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":113,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":29876}
+{"testID":232,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29911}
+{"test":{"id":233,"name":"1000 seeded legal slip/inverse cases conserve ranges without float rounding","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":149,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":29912}
+{"testID":233,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":33632}
+{"test":{"id":234,"name":"strict JSON rejects duplicate decoded keys, invalid UTF8, depth and nonfinite numbers","suiteID":226,"groupIDs":[228],"metadata":{"skip":false,"skipReason":null},"line":165,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/edit_algebra_test.dart"},"type":"testStart","time":33632}
+{"testID":234,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":33637}
+{"testID":138,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":41198}
+{"test":{"id":235,"name":"v1 frozen SQL migration preserves existing snapshot and permits later edits/reopen","suiteID":135,"groupIDs":[137],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/video_transactions_test.dart"},"type":"testStart","time":41199}
+{"testID":235,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":41226}
+{"test":{"id":236,"name":"failure after definitions/blob pins rolls back every table and head","suiteID":135,"groupIDs":[137],"metadata":{"skip":false,"skipReason":null},"line":109,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/video_transactions_test.dart"},"type":"testStart","time":41226}
+{"testID":236,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":41248}
+{"success":true,"type":"done","time":41251}

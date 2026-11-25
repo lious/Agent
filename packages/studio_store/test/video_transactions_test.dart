@@ -102,7 +102,7 @@ void main() {
     expect(repo.read(p.projectId)!.title, 'v2 saved');
     repo.close();
     final check = sqlite3.open(path);
-    expect(check.userVersion, 8);
+    expect(check.userVersion, 9);
     expect(check.select('PRAGMA integrity_check').single.values.single, 'ok');
     check.dispose();
   });

@@ -6,8 +6,15 @@ import 'package:studio_sdk/studio_sdk.dart';
 
 /// Separate from editable workspace; no project admission or renderer port.
 class ResourcePreservationPanel extends StatefulWidget {
-  const ResourcePreservationPanel({super.key, required this.targetNamespace});
+  const ResourcePreservationPanel({
+    super.key,
+    required this.targetNamespace,
+    this.workspace,
+    this.onAdopted,
+  });
   final Namespace targetNamespace;
+  final StudioWorkspace? workspace;
+  final VoidCallback? onAdopted;
   @override
   State<ResourcePreservationPanel> createState() =>
       _ResourcePreservationPanelState();
@@ -18,7 +25,7 @@ class _ResourcePreservationPanelState extends State<ResourcePreservationPanel> {
       _resource = TextEditingController(),
       _output = TextEditingController();
   ResourcePreservationSession? _session;
-  bool _busy = false;
+  bool _busy = false, _adopting = false;
   String? _consent, _error;
   String _status =
       'No resource snapshot loaded. Separate READ-ONLY file view; active workspace unchanged.';
@@ -26,6 +33,7 @@ class _ResourcePreservationPanelState extends State<ResourcePreservationPanel> {
   @override
   void dispose() {
     _session?.cancelPending();
+    if (_adopting) widget.workspace?.cancelResourceImport();
     _input.dispose();
     _resource.dispose();
     _output.dispose();
@@ -69,10 +77,12 @@ class _ResourcePreservationPanelState extends State<ResourcePreservationPanel> {
     final start = page * 4096, end = (start + 4096).clamp(0, text.length);
     return ExpansionTile(
       key: const Key('resource-preservation-panel'),
-      title: const Text('Preserve project resources (READ-ONLY, no render)'),
+      title: const Text(
+        'Inspect/preserve resources (read-only until explicit fork)',
+      ),
       children: [
         const Text(
-          'Explicit files only. Hash/size integrity is NOT font/LUT/image decoding, license verification or render support. Unknown LUT/library/plugins/extensions stay opaque; unregistered closure blocks complete packaging/fork. No models downloaded, no locator followed, no cloud/CAS/database write. New output paths only; existing files never overwritten. Volume free-space/ENOSPC qualification is not provided.',
+          'Explicit files only. Hash/size integrity is NOT font/LUT/image decoding, license verification or render support. Unknown LUT/library/plugins/extensions stay opaque; unregistered closure blocks complete packaging/fork. No models downloaded, no locator followed or cloud upload. Inspection/preservation do not write CAS/database; only the explicitly confirmed writable-fork action does. New output paths only; existing files never overwritten. Volume free-space/ENOSPC qualification is not provided.',
         ),
         TextField(
           key: const Key('resource-project-input'),
@@ -175,10 +185,45 @@ class _ResourcePreservationPanelState extends State<ResourcePreservationPanel> {
                 }),
           child: const Text('Fork registered resource profile (read-only)'),
         ),
+        if (widget.workspace != null)
+          OutlinedButton(
+            key: const Key('resource-adopt-writable'),
+            onPressed:
+                _busy ||
+                    session == null ||
+                    _consent != session.collectionReviewHash
+                ? null
+                : () => _run(() async {
+                    final review = _consent!;
+                    _consent = null;
+                    _adopting = true;
+                    try {
+                      final next = await widget.workspace!
+                          .adoptPreservedResources(
+                            session,
+                            expectedCollectionReviewHash: review,
+                            expectedActiveHash: widget.workspace!.current.hash,
+                            confirmed: true,
+                          );
+                      widget.onAdopted?.call();
+                      return 'Opened new writable project ${next.projectId}; original retained, native source facts/first-frame qualified and ImportMap persisted. Unsupported content is never dropped. Full-file decode/export still checked at execution.';
+                    } finally {
+                      _adopting = false;
+                    }
+                  }),
+            child: const Text(
+              'Qualify and open NEW writable fork (supported renderer only)',
+            ),
+          ),
         OutlinedButton(
           key: const Key('resource-cancel'),
-          onPressed: session?.cancelPending,
-          child: const Text('Cancel pending archive before publication'),
+          onPressed: session == null
+              ? null
+              : () {
+                  session.cancelPending();
+                  if (_adopting) widget.workspace?.cancelResourceImport();
+                },
+          child: const Text('Cancel pending archive/import before publication'),
         ),
         if (_busy) const LinearProgressIndicator(key: Key('resource-busy')),
         if (_error != null) Text(_error!, key: const Key('resource-error')),

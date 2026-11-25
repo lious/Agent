@@ -1,0 +1,151 @@
+{
+  "asOf": "2026-11-25T20:10:52.042536+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "fceda89716fd6e28ff6f7576e30f57e0a35cf4cd",
+  "freezeIdentity": "Modified/new Dart and Python sources below; final selected tests after last UI disclosure correction. Later changes documentation only; no earlier182/full-repo result borrowed.",
+  "sourceSha256": {
+    "packages/studio_sdk/test/resource_admission_test.dart": "51b8578ef47f0c1cb3f4f15747332f8b729f51fc9f73edc664ce139bd024f718",
+    "packages/studio_store/lib/resource_import.dart": "5724379f79d3e8aabb3c52a0a4e792175a6955f73b5a2c2ac753b3a047c46706",
+    "packages/studio_store/test/resource_import_test.dart": "6a54ad5509e85f236cec73b3324e16257166a6e51da5d20083444c7e444fbef2",
+    "packages/studio_store/tool/resource_import_worker.dart": "8e75b9aa333e2ed9dcddeb13f3218336ab393c82fa63be9caabe4cafc10c5bd5",
+    "packages/studio_document/lib/resource_closure.dart": "bbc6338dd48eecd6b69e8c8f0c3cea3dcfa9f4e7605b6fa7c8a59b6859f160ee",
+    "packages/studio_editor_ui/lib/resource_preservation_panel.dart": "bc6a3e1f7501975922ba62a608aaab7726fa3bdde2cd9bdf6364a68cea47771b",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "b348730141fd1ab72c8033aa6ce1e3bd735a1d5f28e96ba4523eab2a61ff0635",
+    "packages/studio_editor_ui/test/resource_preservation_ui_test.dart": "a728f9ee2f4f0b8852bafbab331527940ace1cd00472e98955543eded07d2b98",
+    "packages/studio_sdk/lib/resource_preservation.dart": "b1d70cb125242992cb03a62947b2950a00874a59b033e908da47ea224a9cb17f",
+    "packages/studio_sdk/lib/studio_sdk.dart": "5c6ed124af830307b0ca9b291ac6c5d6898b927368438d2e69a416e7e0ffd142",
+    "packages/studio_store/lib/project_archive.dart": "d7a8db24ff32835bafd7c9541c6d023f710a1c1693a8d99c7f1890ec531e226d",
+    "packages/studio_store/lib/studio_store.dart": "95f354ae8098f24a38562926ba6e7ad4c72ec22296a326730b70dc4b7af391da",
+    "packages/studio_store/test/checkpoint_retention_test.dart": "c7373d56b83c0e5146fcd5e31f358296b9161521b0c24ec0786c976779136692",
+    "packages/studio_store/test/transactions_test.dart": "6ec832cf623b9481c71fdff48f9baddf548fa22c3f129b14738e13c6845e09f4",
+    "packages/studio_store/test/video_transactions_test.dart": "cc340db1805db7d9f9d83334bfff059e91d0e10326f89ed51597f833b5584b18",
+    "packages/studio_store/tool/checkpoint_prune_worker.dart": "5587653446d05162e1ebf4ad97c698b2f198d96ec6af8cf88fb54d4162950309",
+    "tools/acceptance/verify_sqlite_upgrade.py": "06cadf4e767de76288c6ee33132770b4b4b6a0e7fac0227a9a47f8b68129b8a0"
+  },
+  "analyzer": "No issues found",
+  "results": {
+    "native": {
+      "passed": 155,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-native.jsonl",
+      "sha256": "99150ea8e20dcd237d2be5c3edc924ff27fe766056676bfa3eba918a19b45295"
+    },
+    "pulse": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-pulse.jsonl",
+      "sha256": "b056b93e7ccc8962ac785d044e479c8ec54730cac6d062f5b3f5464e6201ec46"
+    },
+    "ui": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-ui.jsonl",
+      "sha256": "b8260c7c3a6df1080d8cda8ab7c57af0572bdd3293f43ab3af8cd7e1ea0ebb06"
+    },
+    "chrome": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-chrome.jsonl",
+      "sha256": "39398c5784c8cc1f397004b4506727d6fb040995a68aafede4f2d915bf844085"
+    }
+  },
+  "totalPassed": 167,
+  "newCases": {
+    "sdk": 7,
+    "store": 4,
+    "nativeWidget": 1
+  },
+  "additionalExperiments": {
+    "historicalMigrations": [
+      {
+        "baselineSchema": 4,
+        "baselineCommit": "dff15f2c5ecd75ac5a1da9d089f3025545b727f3",
+        "report": "migration-v4.json",
+        "result": "passed"
+      },
+      {
+        "baselineSchema": 5,
+        "baselineCommit": "85b9b49d9d9cd4e2b5562e1d7b416c0d48ae52d0",
+        "report": "migration-v5.json",
+        "result": "passed"
+      },
+      {
+        "baselineSchema": 6,
+        "baselineCommit": "f843d6b066ba426755fb46bf5a4f0d1e9dbfe75a",
+        "report": "migration-v6.json",
+        "result": "passed"
+      },
+      {
+        "baselineSchema": 7,
+        "baselineCommit": "b075763c404707bf5102c4315aca5613574a2719",
+        "report": "migration-v7.json",
+        "result": "passed"
+      },
+      {
+        "baselineSchema": 8,
+        "baselineCommit": "fceda89716fd6e28ff6f7576e30f57e0a35cf4cd",
+        "report": "migration-v8.json",
+        "result": "passed"
+      }
+    ],
+    "countedAsDartCases": false
+  },
+  "commands": "commands.json",
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test (unchanged)",
+    "pulse": "Existing run_private.py isolates temporary0700 Unix socket/service, no desktop or network policy changes"
+  },
+  "tools": {
+    "Flutter": "3.50.1",
+    "Dart": "3.14.0",
+    "SQLite": "3.54.1 strict existing sourceId/THREADSAFE gate; additive schema9",
+    "Chrome": "156.0.8078.47",
+    "nativeMedia": "existing unchanged approved FFmpeg7.1.5 binary",
+    "nativeLibrarySha256": "51ec0188345cb456da7bef662635eedb67dc82a5feac8dbeb76e8042314c9808"
+  },
+  "userPath": "Native panel: explicit JSON/resource grants/consent -> existing renderer-profile gate -> actual metadata/video-first-frame/PCM1024/proxy qualification -> writer/hash fenced new writable fork with durable ImportMap -> edit/save/archive/reopen/export. Unsupported/opaque content never dropped.",
+  "qualifiedScope": [
+    "Original retained full-Project2 reference/pin/origin/version/hash qualification, bounded depth8/64; readonly archive/reopen only",
+    "Actual cross-origin-namespace source adoption with complete ID map and original-file export, source AAC44100 -> bounded PCM probe -> adopted48k AAC export",
+    "Actual widget consent/qualify/new writable project/map/edit; no release App binary rebuild claimed",
+    "Late SQL failure and exact SIGKILL after map+selection before COMMIT rollback; writer takeover; schema8->9 fault/retry",
+    "Budget refusal with exact unchanged inventory; cancellation/revision race; existing history/proxy/repair/discard/save/domain/storage regressions",
+    "Actual historical4/5/6/7/8 stores migrate through9; lease deadlines and integrity preserved; current default refuses old runtime"
+  ],
+  "limitations": [
+    "Still partial I002/I013/I014; no full resolved rendering-dependency definitionContentHash, nested renderer, generic extension registry, rich resource renderer, library/LUT/font/mask/imageDocument writable admission",
+    "Retained full snapshot REFERENCES are qualified; format/render remains notRun/false and sourceCompleteness unqualified; unsafe/missing/opaque definitions refuse packaging",
+    "First frame/1024 PCM samples do not certify every later source frame/sample; normal execution/export validation remains mandatory",
+    "Map is local initial import provenance, not imported history/session/job-resume, portable map chain or upgrade of every older restoreArchive path",
+    "Valid counted CAS objects can remain unadopted after later failure; reservations/staging reclaimed, no automatic shared/original deletion",
+    "No full repository gate,60s1080p qualification rerun, CTest/ABI/release, audio stress/P0/physical AV or nonLinux/physical cross-device validation",
+    "Isolated service SDK pass does not fix earlier intermittent underrun; original unconfigured AUDIO_DEVICE_LOST failure retained",
+    "No RTC retry, network/relay changes, source Schema/acceptance/dependency changes or main merge"
+  ],
+  "preservedFailures": [
+    "initial-native-fixture-failure.jsonl",
+    "unconfigured-audio-service-failure.jsonl"
+  ],
+  "taskCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 25,
+      "planned": 49,
+      "blocked": 13
+    },
+    "separateXD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  }
+}

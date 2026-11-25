@@ -732,3 +732,41 @@ Not a whole-repository/full182 rerun; release/native ABI/full migration/audio
 stress/non-Linux/physical-device checks were not rerun. Intermittent service
 AudioSink underrun remains unresolved. Original87:0 complete/25 partial/49
 planned/13 blocked; XD10:0 complete/8 partial/1 planned/1 blocked.
+
+## increment1.11 — resource-aware writable fork and actual retained definition closure
+
+Native resource panel: load source JSON/archive, explicitly collect declared files,
+review report and select collection consent, then **Qualify and open NEW writable
+fork (supported renderer only)**. This does not replace the old project. Only the
+existing implemented timeline profile passes, after actual source metadata/first-
+video-frame or1024-sample PCM qualification and final revision/writer fence. A
+successful fork is normally editable/saveable/reopenable/exportable and its local
+ImportMap is durable. Unsupported font/mask/image/LUT/library/retained rendering
+remains explicitly read-only; no opaque record is removed to pass this gate.
+
+Retained definitions now accept only actual <=1MiB full Project2 snapshots matching
+origin and exact kind/id/version, explicit dependency pins and bounded nested
+reference closure. Actual JSON/resource archive/reopen is supported, NOT retained
+execution or full render-definition equivalence qualification. Missing/hash/pin/
+role/origin/opaque errors remain distinct from format/business capability.
+
+SQLite additive v9 contains only the required ImportMap provenance. No budget,
+retention/GC or external protocol redesign. History/originals/shared objects remain
+protected; failed imports may leave valid counted unadopted CAS objects for existing
+conservative recovery/GC, never automatic deletion. See [ADR0018](../adr/0018-resource-aware-writable-fork.md).
+
+Final frozen source: **167 selected tests passed** =155 native SDK/store/domain
+(including actual AAC/export) +1 separately isolated real Pulse SDK +7 native
+widgets +4 actual offline Chrome;0 failed/skipped in this final selection, clean
+analyzer. Twelve cases are new. Five actual historical v4-v8 -> v9 experiments
+plus old-runtime refusal are separate, not inflated test counts. Exact sources,
+commands and retained initial fixture/Pulse failures: [evidence](evidence/resource-admission/summary.json).
+No full-repository/60s/CTest/ABI/release/nonLinux/physical-device claim; historical
+intermittent underrun unresolved. Original87 remains0 complete/25 partial/49
+planned/13 blocked; XD10 remains0 complete/8 partial/1 planned/1 blocked.
+
+Reproduce the actual v8 fixture migration (other original baseline commits/versions
+are listed in the evidence; v4 uses the isolated old system library):
+```sh
+python3 tools/acceptance/verify_sqlite_upgrade.py --baseline-commit fceda897 --baseline-schema 8 --baseline-library-dir /workspace/toolchains/sqlite-3.54.1 --library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/recheck-v8-v9.json
+```

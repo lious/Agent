@@ -726,3 +726,40 @@ Dart stdout.writeln + await stdout.flush and an explicitly checked one-byte asyn
 stdin barrier; included child stderr/exit codes in assertion diagnostics. Then
 reran the complete selected freeze, rather than borrowing the earlier141 pass.
 Production link(2) publication/error requirements were not relaxed.
+
+## Increment1.11 — three actual review/correction rounds
+
+1. **Original-contract/domain review.** Read exact s5a retained-definition contract:
+   it requires complete ProjectDocument snapshots, not isolated guessed definitions.
+   Implemented strict hash/size-limited parsing, origin and exact kind/id/version,
+   dependency role/pins, opaque diagnostics, depth8/count bounds and conflicting
+   literal definition checks. Tests include missing/hash/wrong origin/version,
+   nested pin/depth failures and actual archive/reopen. Explicitly NOT full resolved
+   render-definition equivalence. No LUT/library schema/registry invented.
+2. **Publication/authority review.** Writable adoption uses existing renderer
+   compiler and namespace reservation/maintenance lease; actual probe facts must
+   equal declarations, first-frame/PCM/proxy qualification then final CAS/hash and
+   writer/selected-head transaction. Found recursive fork `id` enumeration was not
+   an adequate ImportMap basis: changed to exact supported entity enumeration.
+   Added v9 map with creation/selection/writer/checkpoint in one transaction and
+   real map-trigger rollback/takeover/crash recovery. Actual SIGKILL asserted, not
+   merely any nonzero exit. Review found old prune test's pipe fsync barrier could
+   error before being killed; corrected TEST worker to a non-fsync pipe write and
+   asserted the exact SIGKILL exit, retaining the same prune/rollback requirements.
+3. **Actual user-path/native/failure review.** Initial positive schema-golden
+   fixture correctly failed native metadata equality (profile unknown/null).
+   Kept the strict gate and original golden; successful source now uses the actual
+   importer, including a separate origin namespace. Actual native AAC/PCM/export,
+   missing unsupported resources, budget refusal/no reservation leakage,
+   cancel/intervening revision, UI consent/new writable project/map and reopen are
+   tested. Corrected the old panel-wide no-DB-write disclaimer to distinguish
+   read-only inspection from the new explicitly confirmed writable-fork action.
+   An exploratory broad run lacked the required private Pulse endpoint and
+   failed AUDIO_DEVICE_LOST; retained the log, then used the existing isolated
+   software-service harness serially. No desktop audio settings, network policy,
+   RTC test, renderer capability or assertion was relaxed.
+
+Frozen source hashes/final commands/results and real historical migration evidence
+are in resource-admission/summary.json. No previous182 result is borrowed; an
+isolated software service pass cannot establish physical presentation or resolve
+the historical intermittent underrun. Full original tasks remain partial.

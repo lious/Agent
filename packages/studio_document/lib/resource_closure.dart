@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:studio_contracts/studio_contracts.dart';
 
 import 'studio_document.dart';
@@ -307,4 +309,116 @@ ProjectDocument forkResourceProject(
   d['namespace'] = target.toJson();
   d['revision'] = '0';
   return ProjectDocument.fromJson(d);
+}
+
+/// Qualifies only the existing RetainedSource full-Project2 snapshot contract.
+/// Does not install an extension registry or confer renderer/rights permission.
+Map<String, dynamic> qualifyResourceClosure(
+  ProjectDocument project,
+  Map<String, Uint8List> bytes,
+) {
+  final result = projectResourceClosure(project);
+  final issues = result['issues'] as List;
+  issues.removeWhere(
+    (x) => x['code'] == 'UNRESOLVED_RETAINED_DEFINITION_CLOSURE',
+  );
+  final outer = {for (final b in project.toJson()['blobs']) b['hash']: b};
+  final active = <String>{}, visited = <String>{};
+  final definitions = <String, String>{};
+  var count = 0;
+  void issue(String code, String path) =>
+      issues.add({'code': code, 'path': path});
+  void visit(ProjectDocument owner, int depth, String path) {
+    for (final r in owner.toJson()['retainedSources']) {
+      final here = '$path/${r['kind']}:${r['id']}@${r['version']}';
+      final key = '${r['kind']}:${r['id']}@${r['version']}';
+      if (depth >= 8 || ++count > 64) {
+        issue('RETAINED_CLOSURE_LIMIT', here);
+        continue;
+      }
+      if (!active.add(key)) {
+        issue('REF_CYCLE', here);
+        continue;
+      }
+      try {
+        final hash = r['definitionBlobHash'] as String, data = bytes[hash];
+        if (data == null) {
+          issue('RESOURCE_BYTES_MISSING', here);
+          continue;
+        }
+        if (rawBytesHash(data) != hash) {
+          issue('BLOB_HASH_MISMATCH', here);
+          continue;
+        }
+        if (data.length > 1024 * 1024) {
+          issue('RETAINED_CLOSURE_LIMIT', here);
+          continue;
+        }
+        final value = readStrictJson(data, maxBytes: 1024 * 1024);
+        if (value is! Map<String, dynamic>) {
+          issue('RETAINED_SNAPSHOT_INVALID', here);
+          continue;
+        }
+        final snapshot = ProjectDocument.fromJson(value);
+        if (snapshot.namespace != project.namespace ||
+            snapshot.projectId != project.projectId) {
+          issue('RETAINED_ORIGIN_MISMATCH', here);
+          continue;
+        }
+        final table = {
+          'asset': 'assets',
+          'sequence': 'sequences',
+          'imageDocument': 'imageDocuments',
+        }[r['kind']]!;
+        final entities = (snapshot.toJson()[table] as List).where(
+          (e) => e['id'] == r['id'] && e['version'] == r['version'],
+        );
+        if (entities.length != 1) {
+          issue('SOURCE_VERSION_MISSING', here);
+          continue;
+        }
+        final definitionHash = contentHash(entities.single);
+        if (definitions.containsKey(key) &&
+            definitions[key] != definitionHash) {
+          issue('IMMUTABLE_VERSION_CONFLICT', here);
+          continue;
+        }
+        definitions[key] = definitionHash;
+        final pins = (r['dependencyBlobHashes'] as List).toSet();
+        for (final b in snapshot.toJson()['blobs']) {
+          final decl = outer[b['hash']];
+          if (!pins.contains(b['hash'])) {
+            issue('RETAINED_DEPENDENCY_UNPINNED', '$here/${b['hash']}');
+          }
+          if (decl == null) {
+            issue('MISSING_RESOURCE_DECLARATION', '$here/${b['hash']}');
+          } else if (decl['role'] != b['role'] || decl['bytes'] != b['bytes']) {
+            issue('RETAINED_RESOURCE_CONFLICT', '$here/${b['hash']}');
+          }
+        }
+        final nested = projectResourceClosure(snapshot);
+        for (final i in nested['issues']) {
+          if (i['code'] != 'UNRESOLVED_RETAINED_DEFINITION_CLOSURE') {
+            issues.add({
+              ...Map<String, dynamic>.from(i),
+              'path': '$here${i['path']}',
+            });
+          }
+        }
+        // Validate each declaration before using it; caches are not trust roots.
+        if (visited.add(hash)) visit(snapshot, depth + 1, here);
+      } on StudioException catch (e) {
+        issue(e.code, here);
+      } on FormatException {
+        issue('RETAINED_SNAPSHOT_INVALID', here);
+      } finally {
+        active.remove(key);
+      }
+    }
+  }
+
+  visit(project, 0, '/retainedSources');
+  result['registeredClosure'] = issues.isEmpty;
+  result['retainedDefinitionQualification'] = 'fullProject2ReferencesOnly';
+  return result;
 }

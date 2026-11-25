@@ -69,6 +69,21 @@ final class ProjectArchive {
     return data;
   }, preservationOnly: true);
 
+  Future<Map<String, Uint8List>> _collectDeclared(
+    ProjectDocument project,
+    Future<Uint8List> Function(Map<String, dynamic>, int) load,
+  ) async {
+    final collected = <String, Uint8List>{};
+    var remaining = maxExpandedBytes;
+    for (final b in project.toJson()['blobs']) {
+      final data = await load(Map<String, dynamic>.from(b), remaining);
+      remaining -= data.length;
+      if (remaining < 0) throw const StudioException('ARCHIVE_LIMIT');
+      collected[b['hash']] = data;
+    }
+    return collected;
+  }
+
   Future<void> _prepare(
     ProjectDocument project,
     File stage,
@@ -78,7 +93,12 @@ final class ProjectArchive {
     if (!preservationOnly) {
       requireLocalEditingWritable(project);
     } else {
-      final issues = projectResourceClosure(project)['issues'] as List;
+      final issues =
+          qualifyResourceClosure(
+                project,
+                await _collectDeclared(project, load),
+              )['issues']
+              as List;
       if (issues.isNotEmpty) {
         throw StudioException(
           issues.first['code'] as String,
@@ -422,24 +442,41 @@ ProjectDocument forkLocalProject(
   ProjectDocument project,
   Namespace target, {
   required String Function() newId,
+  Map<String, String>? importIds,
 }) {
   requireLocalEditingWritable(project);
   final d = project.toJson();
   final ids = <String, String>{project.projectId: newId()};
-  void collect(dynamic x) {
-    if (x is Map) {
-      if (x['id'] is String) ids.putIfAbsent(x['id'] as String, newId);
-      for (final e in x.entries) {
-        if (e.key != 'namespace') collect(e.value);
-      }
-    } else if (x is List) {
-      for (final v in x) {
-        collect(v);
+  void define(Map x) {
+    ids[x['id'] as String] = newId();
+  }
+
+  for (final table in [
+    'assets',
+    'sequences',
+    'audioBuses',
+    'rightsRecords',
+    'captions',
+    'linkGroups',
+  ]) {
+    for (final x in d[table]) {
+      define(x as Map);
+    }
+  }
+  for (final a in d['assets']) {
+    for (final st in a['streams']) {
+      define(st as Map);
+    }
+  }
+  for (final seq in d['sequences']) {
+    for (final t in seq['tracks']) {
+      define(t as Map);
+      for (final c in t['items']) {
+        define(c as Map);
       }
     }
   }
-
-  collect(d);
+  importIds?.addAll(ids);
   const refs = {
     'id',
     'projectId',

@@ -1,0 +1,82 @@
+[
+  {
+    "name": "analyzer",
+    "command": [
+      "flutter",
+      "analyze"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "artifacts/local-video/resource-admission-freeze-analyzer.log"
+  },
+  {
+    "name": "native",
+    "command": [
+      "dart",
+      "test",
+      "packages/studio_sdk/test/resource_admission_test.dart",
+      "packages/studio_sdk/test/resource_preservation_test.dart",
+      "packages/studio_sdk/test/checkpoint_retention_test.dart",
+      "packages/studio_sdk/test/namespace_budget_test.dart",
+      "packages/studio_sdk/test/proxy_repair_test.dart",
+      "packages/studio_sdk/test/proxy_discard_test.dart",
+      "packages/studio_sdk/test/durable_proxy_test.dart",
+      "packages/studio_sdk/test/save_test.dart",
+      "packages/studio_sdk/test/audio_export_test.dart",
+      "packages/studio_store/test",
+      "packages/studio_document/test",
+      "--concurrency=2",
+      "--reporter=json"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "artifacts/local-video/resource-admission-freeze-native.log"
+  },
+  {
+    "name": "pulse",
+    "command": [
+      "python3",
+      "tools/acceptance/audio_sink/run_private.py",
+      "dart",
+      "test",
+      "packages/studio_sdk/test/timeline_audio_test.dart",
+      "--concurrency=1",
+      "--reporter=json"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "artifacts/local-video/resource-admission-freeze-pulse.log"
+  },
+  {
+    "name": "ui",
+    "command": [
+      "flutter",
+      "test",
+      "test/resource_preservation_ui_test.dart",
+      "test/checkpoint_retention_ui_test.dart",
+      "test/namespace_budget_ui_test.dart",
+      "test/proxy_repair_ui_test.dart",
+      "test/proxy_discard_ui_test.dart",
+      "test/foundation_app_test.dart",
+      "--reporter=json"
+    ],
+    "cwd": "packages/studio_editor_ui",
+    "exitCode": 0,
+    "log": "artifacts/local-video/resource-admission-freeze-ui.log"
+  },
+  {
+    "name": "chrome",
+    "command": [
+      "flutter",
+      "test",
+      "--platform",
+      "chrome",
+      "test/resource_closure_test.dart",
+      "test/inspector_test.dart",
+      "--reporter=json"
+    ],
+    "cwd": "apps/studio_web",
+    "exitCode": 0,
+    "log": "artifacts/local-video/resource-admission-freeze-chrome.log"
+  }
+]

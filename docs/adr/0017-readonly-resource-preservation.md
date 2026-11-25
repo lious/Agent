@@ -94,3 +94,8 @@ Only isolated fixtures are written/deleted. First SDK fork and UI fixture-path
 failures are retained. Three review/correction rounds and final source hashes are
 in implementation evidence. Audio underrun remains unresolved; no old182/full
 migration/release/audio-stress results are attributed to this source.
+
+Increment1.11 follow-up: ADR0018 adds existing retained full-Project reference
+qualification and an explicit strict-profile writable fork action. Earlier scope
+statements above describe the original frozen1.10 increment, not a promise that
+fonts/LUT/library/retained sources have become executable.

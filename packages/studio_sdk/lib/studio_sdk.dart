@@ -1,4 +1,5 @@
 export 'resource_preservation.dart';
+import 'resource_preservation.dart';
 
 import 'package:studio_store/proxy_resources.dart';
 
@@ -1299,6 +1300,151 @@ final class StudioWorkspace {
     close();
   }
 
+  NativeMedia? _resourceImportEngine;
+  int _resourceImportEpoch = 0;
+  void cancelResourceImport() {
+    _resourceImportEpoch++;
+    _resourceImportEngine?.cancel();
+  }
+
+  Map<String, dynamic>? get currentImportMap =>
+      _repository.importMap(current.projectId);
+
+  /// Explicitly creates a NEW writable fork only for the already implemented
+  /// timeline renderer profile. Never drops unsupported/opaque records.
+  Future<ProjectDocument> adoptPreservedResources(
+    ResourcePreservationSession session, {
+    required String expectedCollectionReviewHash,
+    required String expectedActiveHash,
+    required bool confirmed,
+  }) async {
+    _requireMedia();
+    if (!confirmed) {
+      throw const StudioException('RESOURCE_COLLECTION_CONFIRMATION_REQUIRED');
+    }
+    final writer = _writer;
+    if (writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    if (_resourceImportEngine != null) {
+      throw const StudioException('RESOURCE_IMPORT_BUSY');
+    }
+    if (current.hash != expectedActiveHash) {
+      throw const StudioException('REVISION_CONFLICT');
+    }
+    final resources = session.writableCollection(expectedCollectionReviewHash);
+    final source = session.project;
+    final graph = TimelineVideoGraph(source);
+    if (graph.duration > Q.of(120)) {
+      throw const StudioException('RESOURCE_IMPORT_DURATION_LIMIT');
+    }
+    final epoch = _resourceImportEpoch;
+    final engine = NativeMedia.open(_media!.libraryPath, _repository.namespace);
+    _resourceImportEngine = engine;
+    void check() {
+      if (_closed || epoch != _resourceImportEpoch) {
+        throw const StudioException('CANCELED');
+      }
+      if (!identical(_writer, writer) || current.hash != expectedActiveHash) {
+        throw const StudioException('REVISION_CONFLICT');
+      }
+    }
+
+    try {
+      return await _blobs!.withMaintenanceLease(() async {
+        check();
+        for (final entry in resources.entries) {
+          await _blobs!.putVerifiedBytes(entry.key, entry.value);
+          check();
+        }
+        for (final asset in source.toJson()['assets']) {
+          final file = await _blobs!.resolve(asset['originalBlobHash']);
+          final facts = await engine.probeAsync(file);
+          check();
+          final raw = facts['streams'] as List,
+              declared = asset['streams'] as List;
+          if (raw.length != declared.length) {
+            throw const StudioException('SOURCE_STREAM_CHANGED');
+          }
+          for (var i = 0; i < raw.length; i++) {
+            final observed = streamDocument(
+              Map<String, dynamic>.from(raw[i]),
+              assetId: asset['id'],
+            )..remove('id');
+            final expected = Map<String, dynamic>.from(declared[i])
+              ..remove('id');
+            if (contentHash(observed) != contentHash(expected)) {
+              throw const StudioException('SOURCE_STREAM_CHANGED');
+            }
+            if (raw[i]['type'] == 'video') {
+              if (observed['variableFrameRate'] != false) {
+                throw const StudioException('VFR_RENDER_NOT_VALIDATED');
+              }
+              await engine.previewAsync(file, Q.of(0));
+            } else {
+              final stage = _blobs!.newProxyStage();
+              try {
+                await _blobs!.withNamespaceDiskReservation(8192, () async {
+                  final st = raw[i];
+                  final origin =
+                      Q(BigInt.parse(st['startPTS']), BigInt.one) *
+                      Q.of(st['timeBase']['n'], st['timeBase']['d']);
+                  await engine.decodeAudioAsync({
+                    'path': file.absolute.path,
+                    'outputPath': stage.path,
+                    'streamIndex': st['index'],
+                    'startSample': sampleIndex(
+                      origin,
+                      48000,
+                      Rounding.tiesToEven,
+                    ).toInt(),
+                    'sampleCount': 1024,
+                  });
+                });
+              } finally {
+                if (stage.existsSync()) stage.deleteSync();
+              }
+            }
+            check();
+          }
+          for (final proxy in asset['proxyRefs']) {
+            final facts = validateProxyResourceBytes(
+              asset,
+              proxy,
+              resources[proxy['ptsMapBlobHash']]!,
+              resources[proxy['blobHash']]!,
+            );
+            await _qualifyPreview(asset, proxy, facts, file, ownsLease: true);
+            check();
+          }
+        }
+        for (final hash in resources.keys) {
+          await _blobs!.resolve(hash);
+          check();
+        }
+        check();
+        // No awaits between final authority check and the repository transaction.
+        flushCheckpoint();
+        final imported = _repository.createResourceFork(
+          source: source,
+          activeWriter: writer,
+          expectedActiveHash: expectedActiveHash,
+          newId: _uuid.v7,
+        );
+        _autosave?.dispose();
+        clearPreviewProxies();
+        _activeProjectId = imported.project.projectId;
+        _writer = imported.writer;
+        _autosave = AutosaveScheduler(
+          checkpoint: _captureCheckpoint,
+          onError: (_) => _notifyPersistence(),
+        );
+        return current;
+      });
+    } finally {
+      engine.close();
+      _resourceImportEngine = null;
+    }
+  }
+
   Future<ProjectDocument> restoreArchive(LocalFileGrant source) async {
     _requireMedia();
     return _blobs!.withMaintenanceLease(() => _restoreArchiveLocked(source));
@@ -1908,6 +2054,7 @@ final class StudioWorkspace {
   }
 
   void close() {
+    cancelResourceImport();
     stopTimelinePlayback();
     if (!_closed) {
       if (_saves?.pending == true) {

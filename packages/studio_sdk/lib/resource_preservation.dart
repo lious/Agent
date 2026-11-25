@@ -105,7 +105,7 @@ final class ResourcePreservationSession {
   }
 
   Map<String, dynamic> get report {
-    final result = projectResourceClosure(project);
+    final result = qualifyResourceClosure(project, _resources);
     for (final r in result['resources']) {
       final data = _resources[r['hash']];
       r['byteIntegrity'] = data == null ? 'missing' : 'hashAndSizeVerified';
@@ -117,6 +117,13 @@ final class ResourcePreservationSession {
     result['allDeclaredBytesPresent'] =
         (result['missingBytes'] as List).isEmpty;
     result['writesWorkspaceOrCas'] = false;
+    try {
+      TimelineVideoGraph(project);
+      result['writableProfile'] = 'eligibleForNativeQualification';
+    } on StudioException catch (e) {
+      result['writableProfile'] = 'readOnly';
+      result['writableProfileReason'] = e.code;
+    }
     return result;
   }
 
@@ -133,6 +140,24 @@ final class ResourcePreservationSession {
       fork._resources[entry.key] = Uint8List.fromList(entry.value);
     }
     return fork;
+  }
+
+  /// Explicit consent authorizes only a local fork of the implemented renderer
+  /// profile. Unsupported/opaque content is retained, never stripped to pass.
+  Map<String, Uint8List> writableCollection(String expectedReviewHash) {
+    if (expectedReviewHash != collectionReviewHash) {
+      throw const StudioException('RESOURCE_COLLECTION_REVIEW_STALE');
+    }
+    requireLocalEditingWritable(project);
+    TimelineVideoGraph(project);
+    final r = report;
+    if ((r['issues'] as List).isNotEmpty ||
+        !(r['allDeclaredBytesPresent'] as bool)) {
+      throw const StudioException('RESOURCE_CLOSURE_NOT_QUALIFIED');
+    }
+    return Map.unmodifiable(
+      _resources.map((k, v) => MapEntry(k, Uint8List.fromList(v))),
+    );
   }
 
   Future<void> saveMetadata(File target) async {

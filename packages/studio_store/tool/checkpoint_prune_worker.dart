@@ -47,9 +47,11 @@ Future<void> main(List<String> args) async {
             File('/dev/stdout').writeAsStringSync(
               'PRUNED_UNCOMMITTED\n',
               mode: FileMode.writeOnly,
-              flush: true,
+              flush: false,
             );
-            stdin.readByteSync();
+            if (stdin.readByteSync() < 0) {
+              throw StateError('barrier closed before SIGKILL');
+            }
           }
         },
       );

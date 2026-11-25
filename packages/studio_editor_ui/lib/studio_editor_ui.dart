@@ -1544,6 +1544,10 @@ class _FoundationAppState extends State<FoundationApp>
                       ),
                     ),
                     ResourcePreservationPanel(
+                      workspace: widget.workspace,
+                      onAdopted: () {
+                        if (mounted) setState(() {});
+                      },
                       targetNamespace: widget.workspace.current.namespace,
                     ),
                     ProjectInspectorPanel(

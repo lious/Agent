@@ -3,6 +3,8 @@ import 'package:uuid/uuid.dart' show Uuid;
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'project_archive.dart';
+
 import 'package:sqlite3/sqlite3.dart';
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
@@ -16,6 +18,7 @@ part 'peer_blobs.dart';
 part 'peer_recovery.dart';
 part 'derived_repair.dart';
 part 'checkpoint_retention.dart';
+part 'resource_import.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -114,6 +117,11 @@ CREATE TABLE checkpoint_labels(ns TEXT NOT NULL,project_id TEXT NOT NULL,name TE
 CREATE TABLE checkpoint_prune_audits(ns TEXT NOT NULL,id TEXT NOT NULL,project_id TEXT NOT NULL,review_hash TEXT NOT NULL,json TEXT NOT NULL,PRIMARY KEY(ns,id),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
 """;
 
+// Provenance for a local fork, not a credential/session-resume binding.
+const _ddl9 = """
+CREATE TABLE import_maps(ns TEXT NOT NULL,project_id TEXT NOT NULL,json TEXT NOT NULL,hash TEXT NOT NULL,PRIMARY KEY(ns,project_id),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+""";
+
 const approvedSqliteVersion = '3.54.1';
 const approvedSqliteSourceId =
     '2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76';
@@ -158,7 +166,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 8) {
+        if (version > 9) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -263,6 +271,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=8',
         );
         if (v8.length != 1 || v8.single['checksum'] != contentHash(_ddl8)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 9) {
+          _db.execute(_ddl9);
+          _db.execute('INSERT INTO schema_migrations VALUES(9,?)', [
+            contentHash(_ddl9),
+          ]);
+          _db.userVersion = 9;
+        }
+        final v9 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=9',
+        );
+        if (v9.length != 1 || v9.single['checksum'] != contentHash(_ddl9)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });
