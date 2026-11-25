@@ -565,3 +565,25 @@ Final frozen-source increment1.9 rerun:172 native +9 Chrome +1 actual OS-keyring
    inferred. Clean analyzer,10 non-audio native UI plus3 actual native proxy cases
    passed. Full182 and release results remain attributed to e11ce9a, not this UI
    checkpoint; physical/platform/audio-stress gaps unchanged.
+
+
+## Increment1.9.2 — three actual small-batch reviews/corrections
+
+1. Reviewed old/new-root admission, controlled SDK operation, revision/writer CAS
+   and version propagation. Kept old-root strict admission: unsupported proxy
+   recipes cannot silently enter editing. Explicit consent is required; no disk
+   mutation is in discard. Corrected test's existing export API name before run.
+2. Reviewed actual UI consent lifecycle: bind to snapshot hash AND selected clip,
+   reset after revision/selection, disable action while busy. Corrected obsolete
+   ephemeral/clear labels and exposed built vs reused counts. Actual UI tap,
+   revision advance, cleared consent and undo pass, not a mocked controller call.
+3. Reviewed closure/history risks and added actual two-asset shared-hash case:
+   only unused derived metadata is removed; other asset and shared blobs remain.
+   Added busy-build refusal/cancel, duplicate no-op, stale CAS, missing-file native
+   rebuild and corrupted bytes. Corrupt collision stays fail-closed; no unsafe
+   replacement or original deletion added to make the test pass. Original-source
+   export/archive/fork/reopen and history-pinned GC preservation actually pass.
+
+Final source hashes/evidence:78 targeted executions,0 skips, clean analyzer.
+No release/full-suite/browser/audio-stress rerun or physical-platform claim.
+Namespace quota/pruning and corrupt-CAS replacement remain explicit next work.

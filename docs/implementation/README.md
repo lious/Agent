@@ -585,3 +585,27 @@ release-start results belong to frozen proxy commit e11ce9a; the full gate and
 release builds were deliberately not rerun for this follow-on UI checkpoint.
 Failures/corrections and hashes: `evidence/schema-inspector/summary.json`.
 Original87 stays0 complete/25 partial/49 planned/13 blocked; XD10 stays0/8/1/1.
+
+
+## Increment1.9.2 — explicit proxy-reference discard (small checkpoint)
+
+Select an imported video/audio clip → check the explicit, revision-bound proxy
+consent → `Detach selected asset preview references (no file deletion)`.
+This removes only that asset's current proxy refs and now-unused derived Blob
+metadata, versions affected references through the normal transaction and stops
+preview. Originals, ALL CAS files and undo/history pins remain untouched. Shared
+proxy hashes still referenced by another asset stay in the current root.
+`Clear memory cache only` is separately labeled; build reports built/reused counts.
+
+Missing-file recovery: detach → Build restores the missing registered proxy from
+verified originals. For corrupt immutable CAS bytes, detach permits original-source
+export and original-only archive/fork/reopen, but a later rebuild with the same hash
+still FAILS CLOSED (`BLOB_HASH_MISMATCH`). No corrupt-file overwrite/quarantine is
+claimed. Unsupported recipe metadata is STILL refused by existing admission;
+this operation does not bypass it. No namespace quota/history pruning added.
+
+Current frozen source:76 domain/store/native SDK +2 native Flutter UI =78 targeted
+executions,0 skipped; analyzer clean. Evidence `evidence/proxy-discard/summary.json`.
+This is NOT the182 full suite or release rerun; e11ce9a's182 and39202f41's16 retain
+their own frozen-SHA scope. Intermittent audio stress failures remain unresolved.
+All87/XD10 statuses unchanged,0 complete. Other platforms/physical devices untested.

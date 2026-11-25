@@ -14,6 +14,68 @@ sealed class EditOperation {
   Map<String, Object?> toJson();
 }
 
+/// Detach only explicit current-head derived references; never deletes CAS bytes.
+final class DiscardPreviewProxies extends EditOperation {
+  const DiscardPreviewProxies(this.assetId);
+  final String assetId;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'discardPreviewProxies',
+    'assetId': assetId,
+  };
+}
+
+ProjectDocument _discardPreviewProxies(
+  ProjectDocument before,
+  DiscardPreviewProxies op,
+  VersionAllocator nextVersion,
+) {
+  final d = before.toJson();
+  final matches = (d['assets'] as List).where((a) => a['id'] == op.assetId);
+  if (matches.length != 1) throw const StudioException('REF_NOT_FOUND');
+  final asset = matches.single;
+  if ((asset['proxyRefs'] as List).isEmpty) return before;
+  final removed = <String>{
+    for (final p in asset['proxyRefs']) p['blobHash'] as String,
+    for (final p in asset['proxyRefs']) p['ptsMapBlobHash'] as String,
+  };
+  asset['proxyRefs'] = [];
+  final version = nextVersion(asset['id']);
+  asset['version'] = version;
+  final used = <String>{
+    for (final a in d['assets']) ...[
+      if (a['originalBlobHash'] != null) a['originalBlobHash'] as String,
+      for (final p in a['proxyRefs']) p['blobHash'] as String,
+      for (final p in a['proxyRefs']) p['ptsMapBlobHash'] as String,
+    ],
+  };
+  (d['blobs'] as List).removeWhere(
+    (b) =>
+        {'proxy', 'ptsMap'}.contains(b['role']) &&
+        removed.contains(b['hash']) &&
+        !used.contains(b['hash']),
+  );
+  for (final sequence in d['sequences']) {
+    var changed = false;
+    for (final track in sequence['tracks']) {
+      for (final clip in track['items']) {
+        final source = clip['source'];
+        if (source != null &&
+            source['kind'] == 'asset' &&
+            source['id'] == op.assetId) {
+          source['version'] = version;
+          clip['version'] = nextVersion(clip['id']);
+          changed = true;
+        }
+      }
+    }
+    if (changed) sequence['version'] = nextVersion(sequence['id']);
+  }
+  final result = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(result);
+  return result;
+}
+
 /// SDK-controlled, fully byte-validated CAS resources, committed with revision CAS.
 final class AttachPreviewProxies extends EditOperation {
   AttachPreviewProxies(List<Map<String, dynamic>> resources)
@@ -253,6 +315,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is DiscardPreviewProxies) {
+    return _discardPreviewProxies(before, operation, nextVersion);
+  }
   if (operation is AttachPreviewProxies) {
     return _attachPreviewProxies(before, operation, nextVersion);
   }
@@ -377,6 +442,7 @@ ProjectDocument applyEdit(
 
   if (zeroDelta) {
     switch (operation) {
+      case DiscardPreviewProxies():
       case AttachPreviewProxies():
         throw StateError("handled above");
       case MoveClip():
@@ -414,6 +480,7 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case DiscardPreviewProxies():
     case AttachPreviewProxies():
       throw StateError("handled above");
     case ExtractAudioClip():

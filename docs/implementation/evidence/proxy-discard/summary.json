@@ -1,0 +1,68 @@
+{
+  "baseCommit": "39202f41f7eee607d2a72cc47c2996a1f0285cce",
+  "checkedAt": "2026-11-25T18:27:08.271436+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "targetedChecksPassed",
+  "fullTaskComplete": false,
+  "counts": {
+    "nativeDomainStoreSdk": 76,
+    "nativeFlutterUi": 2,
+    "totalTargeted": 78,
+    "skipped": 0
+  },
+  "commands": [
+    "dart test packages/studio_sdk/test/proxy_discard_test.dart packages/studio_sdk/test/durable_proxy_test.dart packages/studio_document/test packages/studio_store/test/video_transactions_test.dart packages/studio_store/test/persistent_audio_transaction_test.dart --concurrency=2 --reporter=json",
+    "cd packages/studio_editor_ui && flutter test test/proxy_discard_ui_test.dart test/foundation_app_test.dart --reporter=json",
+    "flutter analyze"
+  ],
+  "sourceHashes": {
+    "packages/studio_document/lib/edit_algebra.dart": "cb1816118cb4b66a6df4f29699df1c07e4bcf898b93b04774c241aa0d822194d",
+    "packages/studio_sdk/lib/studio_sdk.dart": "38ee9e1e5106b1380215dfa8ca25519d3aae36eea727add979af9390090f51a0",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "ddcd3865f78e0e3532a94226d826b7bbb2d9419bb3c83ec496e1c8ba8766c322",
+    "packages/studio_sdk/test/proxy_discard_test.dart": "8625b05d343663b177f55ca40ca15fec55c493dc70343480d1e720bfb1bc945c",
+    "packages/studio_editor_ui/test/proxy_discard_ui_test.dart": "4deed6d5e32c2845ec04c900b86426b11c967722afb7a6d342a143133f217188"
+  },
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "XD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "implemented": [
+    "explicit selected-asset, revision-bound UI consent; controlled immutable operation versions asset and referring clips/sequences",
+    "detach current-head derived metadata only; unused selected proxy/map declarations leave current root; shared references survive",
+    "no CAS deletion, rewrite or history pruning; originals and historical pins retained",
+    "missing proxy can be detached and rebuilt with actual original-source native qualification",
+    "actual corrupt derived CAS: explicit detach enables original-source export/archive/fork/reopen, but rebuild hash collision still refuses",
+    "actual busy/cancel, unconfirmed/stale/unknown-asset/no-op/direct-SDK-edit boundary, shared hash closure, undo and GC regressions"
+  ],
+  "notImplemented": [
+    "repair/replace corrupt immutable CAS hash collisions",
+    "strip unsupported recipe metadata during archive admission; existing strict admission still refuses",
+    "namespace-wide disk quota and explicit history retention/pruning",
+    "new native/Web release builds or full suite for this increment",
+    "physical sync, non-Linux or physical multi-device qualification"
+  ],
+  "frozenCoverage": [
+    "e11ce9a: prior182 full-slice executions and six Linux release starts, not current full-suite coverage",
+    "39202f41: prior16 focused executions only",
+    "this source hash set:78 targeted executions; no claim of complete regression coverage"
+  ],
+  "retainedFailures": [
+    "prior intermittent Pulse underrun/load failures remain unresolved and were not rerun here",
+    "initial analyzer caught test export API name mistake and style/import lint; corrected before actual test execution"
+  ],
+  "toolchain": {
+    "dart": "3.14.0",
+    "flutter": "3.50.1",
+    "sqlite": "approved3.54.1 via LD_LIBRARY_PATH; strict runtime gates unchanged",
+    "nativeLibrary": "/workspace/agent-media-native-peer/libstudio_media.so"
+  },
+  "next": "controlled corrupt-derived-CAS repair needs all-history original-role/ownership proof and atomic safety; then explicit namespace quota/history retention policy, without deleting valid pins"
+}

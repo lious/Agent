@@ -226,6 +226,7 @@ class _FoundationAppState extends State<FoundationApp>
   String? _peerAdoptionId;
   BigInt? _peerAdoptionRevision;
   bool _gcConfirmed = false;
+  String? _proxyDiscardConsent;
   String? _captionSelected;
   String? _error, _selected;
   String _status =
@@ -692,7 +693,7 @@ class _FoundationAppState extends State<FoundationApp>
                   .buildTimelinePreviewProxies();
               _clearTimelineVideo();
               _timelineEnabled = true;
-              return 'Built ${facts['proxies']} exact-PTS RGBA128 preview proxies (${facts['bytes']} bytes); ephemeral, never export sources.';
+              return 'Preview proxies ${facts['proxies']} (${facts['bytes']} bytes): built ${facts['built']}, reused ${facts['reused']}; persisted in CAS; export uses originals.';
             }),
       child: const Text('Build timeline video preview proxies'),
     ),
@@ -709,9 +710,44 @@ class _FoundationAppState extends State<FoundationApp>
             _clearTimelineVideo();
             widget.workspace.clearPreviewProxies();
           }),
-          child: const Text('Clear derived preview proxies'),
+          child: const Text('Clear memory cache only (keep persisted proxies)'),
         ),
       ],
+    ),
+    CheckboxListTile(
+      key: const Key('confirm-discard-proxy'),
+      value:
+          _selected != null &&
+          _proxyDiscardConsent == '${_project.hash}:$_selected',
+      onChanged: _busy || _selected == null
+          ? null
+          : (v) => setState(
+              () => _proxyDiscardConsent = v == true
+                  ? '${_project.hash}:$_selected'
+                  : null,
+            ),
+      title: const Text(
+        'Detach selected asset preview references from current revision only. Keep originals, all CAS bytes and undo/history pins. Missing proxies can be rebuilt; corrupt hash collisions still fail closed.',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('discard-selected-proxy'),
+      onPressed:
+          _busy ||
+              _selected == null ||
+              _proxyDiscardConsent != '${_project.hash}:$_selected'
+          ? null
+          : () => _act(() {
+              final clip = _clips.singleWhere((c) => c['id'] == _selected);
+              return widget.workspace.discardTimelinePreviewProxies(
+                assetId: clip['source']['id'] as String,
+                expectedRevision: _project.revision,
+                confirmed: true,
+              );
+            }),
+      child: const Text(
+        'Detach selected asset preview references (no file deletion)',
+      ),
     ),
     CheckboxListTile(
       key: const Key('timeline-video-enabled'),

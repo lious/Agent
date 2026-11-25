@@ -227,7 +227,9 @@ final class StudioWorkspace {
     EditOperation operation, {
     required BigInt expectedRevision,
   }) {
-    if (operation is AppendVideoAsset || operation is AttachPreviewProxies) {
+    if (operation is AppendVideoAsset ||
+        operation is AttachPreviewProxies ||
+        operation is DiscardPreviewProxies) {
       throw const StudioException('CONTROLLED_IMPORT_REQUIRED');
     }
     return _commitImportedEdit(operation, expectedRevision: expectedRevision);
@@ -558,6 +560,25 @@ final class StudioWorkspace {
     }
     _frameProxies[key] = proxy;
     return proxy;
+  }
+
+  /// Explicit logical discard only. Historical pins and every file stay intact.
+  /// Corrupt immutable CAS collisions remain fail-closed on a later rebuild.
+  ProjectDocument discardTimelinePreviewProxies({
+    required String assetId,
+    required BigInt expectedRevision,
+    required bool confirmed,
+  }) {
+    if (!confirmed) {
+      throw const StudioException('PROXY_DISCARD_CONFIRMATION_REQUIRED');
+    }
+    if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
+    final result = _commitImportedEdit(
+      DiscardPreviewProxies(assetId),
+      expectedRevision: expectedRevision,
+    );
+    clearPreviewProxies();
+    return result;
   }
 
   /// Publish immutable CAS bytes under namespace maintenance ownership, then
