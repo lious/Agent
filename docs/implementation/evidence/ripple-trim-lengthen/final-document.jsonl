@@ -1,0 +1,141 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":801309,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/ripple_trim_lengthen_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_document/test/ripple_trim_test.dart"},"type":"suite","time":6}
+{"test":{"id":3,"name":"loading packages/studio_document/test/ripple_trim_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_document/test/ripple_close_test.dart"},"type":"suite","time":7}
+{"test":{"id":5,"name":"loading packages/studio_document/test/ripple_close_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_document/test/ripple_delete_test.dart"},"type":"suite","time":8}
+{"test":{"id":7,"name":"loading packages/studio_document/test/ripple_delete_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"count":8,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":509}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":511}
+{"test":{"id":9,"name":"leave-gap lengthen still collides; video-only ripple trim lengthen stays","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":511}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":520}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":520}
+{"test":{"id":11,"name":"leave-gap trim keeps duration; existing video-only ripple trim stays","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":520}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":542}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":543}
+{"test":{"id":13,"name":"insert move still leaves a source gap; close range packs it and shortens duration","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":543}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":569}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":570}
+{"test":{"id":15,"name":"lift still leaves a gap; gapped selections refuse; insert stays distinct","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":570}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":638}
+{"test":{"id":16,"name":"ripple trim in lengthen pins start, remaps earlier source, and shifts later clips","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":67,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":639}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":659}
+{"test":{"id":17,"name":"ripple trim in pins start, remaps source, and shifts later clips","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":660}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":689}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":689}
+{"test":{"id":18,"name":"ripple trim out lengthen remaps later opacity and does not move earlier clips","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":91,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":690}
+{"test":{"id":19,"name":"range and clip ids are mutually exclusive; invalid ranges refuse wholly","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":59,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":690}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":696}
+{"test":{"id":20,"name":"insert stays distinct; over-shorten and source exhaustion refuse wholly","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":75,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":696}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":710}
+{"test":{"id":21,"name":"insert paste stays distinct from closing a vacated interval","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":78,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":710}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":720}
+{"test":{"id":22,"name":"ripple trim lengthen splits an unselected sync-lock audio spanning the old end","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":104,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":721}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":726}
+{"test":{"id":23,"name":"ripple delete of a trailing clip closes the hole and shortens duration","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":726}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":738}
+{"test":{"id":24,"name":"ripple trim out remaps later opacity and does not move earlier clips","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":102,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":738}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":741}
+{"test":{"id":25,"name":"closing a mid-span range crops unselected items and remaps sources","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":88,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":742}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":750}
+{"test":{"id":26,"name":"ripple delete of a middle clip shifts later content and remaps nothing on the left","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":69,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":750}
+{"testID":22,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":757}
+{"test":{"id":27,"name":"ripple trim lengthen refuses locked tracks wholly and does not change the document","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":134,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":758}
+{"testID":24,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":774}
+{"test":{"id":28,"name":"ripple trim crops an unselected sync-lock audio spanning the vacated tail","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":118,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":774}
+{"testID":27,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":780}
+{"test":{"id":29,"name":"ripple trim out lengthen at a dissolve cut keeps and shifts the later dissolve","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":146,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":781}
+{"testID":26,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":783}
+{"test":{"id":30,"name":"ripple delete of a partial covering range keeps both remnants and remaps sources","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":82,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":785}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":789}
+{"test":{"id":31,"name":"range close refuses locked sync-lock tracks wholly","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":123,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":789}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":803}
+{"suite":{"id":32,"platform":"vm","path":"packages/studio_document/test/insert_test.dart"},"type":"suite","time":811}
+{"test":{"id":33,"name":"loading packages/studio_document/test/insert_test.dart","suiteID":32,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":811}
+{"testID":28,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":811}
+{"test":{"id":34,"name":"ripple trim refuses locked tracks wholly and does not change the document","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":152,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":812}
+{"testID":30,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":814}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":815}
+{"test":{"id":35,"name":"ripple delete preserves later opacity curves when a middle clip is removed","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":98,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":815}
+{"test":{"id":36,"name":"range close shifts later dissolves and drops cuts inside the hole","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":138,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_close_test.dart"},"type":"testStart","time":816}
+{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":830}
+{"test":{"id":37,"name":"ripple trim out at a dissolve cut keeps and shifts the later dissolve","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":167,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_trim_test.dart"},"type":"testStart","time":830}
+{"testID":36,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":836}
+{"suite":{"id":38,"platform":"vm","path":"packages/studio_document/test/overwrite_test.dart"},"type":"suite","time":838}
+{"test":{"id":39,"name":"loading packages/studio_document/test/overwrite_test.dart","suiteID":38,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":838}
+{"testID":35,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":846}
+{"test":{"id":40,"name":"ripple delete crops an unselected sync-lock audio spanning the range and keeps both remnants","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":110,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":846}
+{"testID":37,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":848}
+{"suite":{"id":41,"platform":"vm","path":"packages/studio_document/test/clipboard_test.dart"},"type":"suite","time":848}
+{"test":{"id":42,"name":"loading packages/studio_document/test/clipboard_test.dart","suiteID":41,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":848}
+{"testID":40,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":878}
+{"test":{"id":43,"name":"ripple delete refuses locked tracks wholly and does not change the document","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":141,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":878}
+{"testID":43,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":890}
+{"test":{"id":44,"name":"ripple delete of a dissolve pair removes the transition; later dissolves shift","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":890}
+{"testID":44,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":908}
+{"test":{"id":45,"name":"ripple delete at a dissolve cut with the right clip removes that transition","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":169,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/ripple_delete_test.dart"},"type":"testStart","time":908}
+{"testID":45,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":918}
+{"suite":{"id":46,"platform":"vm","path":"packages/studio_document/test/multi_move_test.dart"},"type":"suite","time":919}
+{"test":{"id":47,"name":"loading packages/studio_document/test/multi_move_test.dart","suiteID":46,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":919}
+{"testID":33,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":930}
+{"group":{"id":48,"suiteID":32,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":10,"line":null,"column":null,"url":null},"type":"group","time":931}
+{"test":{"id":49,"name":"reject and overwrite stay distinct; insert is a third legal mode","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":931}
+{"testID":39,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":946}
+{"group":{"id":50,"suiteID":38,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":null,"column":null,"url":null},"type":"group","time":946}
+{"test":{"id":51,"name":"reject still collides; rippleTrackIds are illegal on overwrite","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":947}
+{"testID":42,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":966}
+{"group":{"id":52,"suiteID":41,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":966}
+{"test":{"id":53,"name":"group/ungroup is selection-only, no-op when identical, refuses partial steal","suiteID":41,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/clipboard_test.dart"},"type":"testStart","time":966}
+{"testID":47,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1031}
+{"group":{"id":54,"suiteID":46,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":1032}
+{"test":{"id":55,"name":"adjacent selection moves together without self-collision; exact sources/curves retained","suiteID":46,"groupIDs":[54],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":1032}
+{"testID":49,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1045}
+{"test":{"id":56,"name":"insert paste at a cut shifts later clips by L and grows duration","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":62,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1046}
+{"testID":51,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1053}
+{"test":{"id":57,"name":"overwrite paste cuts intersecting items, remaps sources, keeps later clips and duration","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":60,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1053}
+{"testID":56,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1069}
+{"test":{"id":58,"name":"insert paste mid-clip splits, remaps sources, and does not overwrite the right remnant","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":84,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1070}
+{"testID":53,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1079}
+{"test":{"id":59,"name":"copy payload keeps relative gap and effects; paste reject/lift leave assets","suiteID":41,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":45,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/clipboard_test.dart"},"type":"testStart","time":1079}
+{"testID":58,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1091}
+{"testID":57,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1092}
+{"test":{"id":60,"name":"gapped insert paste opens the package span, not per-member holes only","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":122,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1092}
+{"test":{"id":61,"name":"gapped overwrite paste does not punch the interval between members","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":89,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1092}
+{"testID":60,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1110}
+{"test":{"id":62,"name":"insert paste crops opacity on the split and refuses locked tracks wholly","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":152,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1110}
+{"testID":61,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1120}
+{"test":{"id":63,"name":"overwrite paste crops opacity curves and refuses locked neighbors as a group","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1121}
+{"testID":59,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1143}
+{"test":{"id":64,"name":"grouped move expands members while leaving ungrouped neighbors","suiteID":41,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":97,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/clipboard_test.dart"},"type":"testStart","time":1143}
+{"testID":62,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1156}
+{"test":{"id":65,"name":"insert paste at a dissolve cut deletes the transition and shifts the later clip","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":186,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1157}
+{"testID":64,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1167}
+{"testID":63,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1167}
+{"test":{"id":66,"name":"overwrite paste deletes an affected dissolve and leaves an uninvolved later clip","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":154,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1168}
+{"testID":55,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1184}
+{"test":{"id":67,"name":"immutable canonical selection never filters duplicate/missing/gap IDs; bounded input","suiteID":46,"groupIDs":[54],"metadata":{"skip":false,"skipReason":null},"line":72,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":1185}
+{"testID":65,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1188}
+{"test":{"id":68,"name":"insert paste mid-clip remaps a later dissolve onto the right remnant","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":203,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1188}
+{"testID":66,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1204}
+{"test":{"id":69,"name":"overwrite move carves the destination, vacates the source, and does not shorten duration","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":177,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1205}
+{"testID":68,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1214}
+{"test":{"id":70,"name":"insert move opens dest, vacates source as a gap, and grows duration","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":233,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1215}
+{"testID":69,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1217}
+{"test":{"id":71,"name":"overwrite move of a dissolve pair keeps and shifts the cut","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":199,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1217}
+{"testID":70,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1224}
+{"test":{"id":72,"name":"insert move of a dissolve pair keeps and shifts the cut; source stays a gap","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":256,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1225}
+{"testID":71,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1229}
+{"test":{"id":73,"name":"overwrite paste past the last clip extends duration and does not ripple earlier items","suiteID":38,"groupIDs":[50],"metadata":{"skip":false,"skipReason":null},"line":221,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/overwrite_test.dart"},"type":"testStart","time":1230}
+{"testID":72,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1236}
+{"test":{"id":74,"name":"insert paste past the end grows duration and does not move earlier items","suiteID":32,"groupIDs":[48],"metadata":{"skip":false,"skipReason":null},"line":273,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/insert_test.dart"},"type":"testStart","time":1237}
+{"testID":73,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1238}
+{"testID":74,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1245}
+{"testID":67,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1297}
+{"test":{"id":75,"name":"all locks preflight atomically; only written field locks block","suiteID":46,"groupIDs":[54],"metadata":{"skip":false,"skipReason":null},"line":99,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":1297}
+{"testID":75,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1324}
+{"test":{"id":76,"name":"transition endpoints must move together; cut translates, exact handles and sources untouched","suiteID":46,"groupIDs":[54],"metadata":{"skip":false,"skipReason":null},"line":130,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/multi_move_test.dart"},"type":"testStart","time":1324}
+{"testID":76,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1343}
+{"success":true,"type":"done","time":1346}

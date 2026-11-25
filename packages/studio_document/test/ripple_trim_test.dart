@@ -72,29 +72,32 @@ void main() {
     expect(start(legacy, 'c'), Q.of(3, 2));
   });
 
-  test('insert stays distinct; lengthen and over-shorten refuse wholly', () {
-    final p = f.three();
-    final a = media(p).first['id'] as String;
-    final inserted = move.change(
-      p,
-      PasteClips(buildClipboard(p, [a]), at: Q.of(1), mode: 'insert'),
-    );
-    expect(seqDur(inserted), Q.of(4));
-    final frozen = p.hash;
-    expect(
-      () => move.change(p, RippleTrimClip('c', 'out', Q.of(1, 2))),
-      code('RIPPLE_TRIM_LENGTHEN_NOT_IMPLEMENTED'),
-    );
-    expect(
-      () => move.change(p, RippleTrimClip('c', 'in', Q.of(-1, 2))),
-      code('RIPPLE_TRIM_LENGTHEN_NOT_IMPLEMENTED'),
-    );
-    expect(
-      () => move.change(p, RippleTrimClip('c', 'out', Q.of(-2))),
-      code('CLIP_TOO_SHORT'),
-    );
-    expect(p.hash, frozen);
-  });
+  test(
+    'insert stays distinct; over-shorten and source exhaustion refuse wholly',
+    () {
+      final p = f.three();
+      final a = media(p).first['id'] as String;
+      final inserted = move.change(
+        p,
+        PasteClips(buildClipboard(p, [a]), at: Q.of(1), mode: 'insert'),
+      );
+      expect(seqDur(inserted), Q.of(4));
+      final frozen = p.hash;
+      expect(
+        () => move.change(p, RippleTrimClip('c', 'out', Q.of(1, 2))),
+        code('SOURCE_OUT_OF_RANGE'),
+      );
+      expect(
+        () => move.change(p, RippleTrimClip(a, 'in', Q.of(-1, 2))),
+        code('SOURCE_OUT_OF_RANGE'),
+      );
+      expect(
+        () => move.change(p, RippleTrimClip('c', 'out', Q.of(-2))),
+        code('CLIP_TOO_SHORT'),
+      );
+      expect(p.hash, frozen);
+    },
+  );
 
   test(
     'ripple trim out remaps later opacity and does not move earlier clips',

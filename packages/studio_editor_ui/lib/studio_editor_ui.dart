@@ -1116,6 +1116,22 @@ class _FoundationAppState extends State<FoundationApp>
               : () => _edit(() => RippleTrimClip(_selected!, 'in', _delta())),
           child: const Text('Ripple trim in'),
         ),
+        OutlinedButton(
+          key: const Key('ripple-trim-out-lengthen'),
+          onPressed: _busy || _selected == null
+              ? null
+              : () => _edit(() => RippleTrimClip(_selected!, 'out', _delta())),
+          child: const Text('Ripple trim out lengthen'),
+        ),
+        OutlinedButton(
+          key: const Key('ripple-trim-in-lengthen'),
+          onPressed: _busy || _selected == null
+              ? null
+              : () => _edit(
+                  () => RippleTrimClip(_selected!, 'in', Q.of(0) - _delta()),
+                ),
+          child: const Text('Ripple trim in lengthen'),
+        ),
         TextField(
           key: const Key('ripple-close-start'),
           controller: _rippleCloseStart,
