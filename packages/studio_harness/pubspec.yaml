@@ -9,6 +9,9 @@
   "dependencies": {
     "studio_contracts": {
       "path": "../studio_contracts"
+    },
+    "studio_document": {
+      "path": "../studio_document"
     }
   },
   "dev_dependencies": {

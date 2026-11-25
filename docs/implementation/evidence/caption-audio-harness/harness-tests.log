@@ -1,0 +1,8 @@
+00:00 +0: loading packages/studio_harness/test/device_scheduler_test.dart
+00:00 +0: packages/studio_harness/test/device_scheduler_test.dart: original PlanGraph compatible subset validates DAG/version/closed shape/namespace and rejects paid execution
+00:00 +1: packages/studio_store/test/harness_transactions_test.dart: real SQLite same-session durable DAG dispatch/retry/heartbeat/receipt/cancel/reopen/outbox, project revision isolated
+00:00 +2: packages/studio_store/test/harness_transactions_test.dart: real SQLite same-session durable DAG dispatch/retry/heartbeat/receipt/cancel/reopen/outbox, project revision isolated
+00:00 +3: packages/studio_store/test/harness_transactions_test.dart: real SQLite same-session durable DAG dispatch/retry/heartbeat/receipt/cancel/reopen/outbox, project revision isolated
+00:00 +4: packages/studio_store/test/harness_process_test.dart: two REAL Linux child workers execute free CPU tasks in one persisted session; NOT physical-device/network qualification
+00:00 +5: packages/studio_store/test/harness_process_test.dart: two REAL Linux child workers execute free CPU tasks in one persisted session; NOT physical-device/network qualification
+00:00 +6: All tests passed!

@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "asOf": "2026-11-25T11:38:34.350245+08:00",
+  "timezone": "Asia/Shanghai",
+  "sourceRequirements": [
+    "t83u",
+    "t84u"
+  ],
+  "separateFromOriginal87": true,
+  "fullTasksCompleted": 0,
+  "tasks": [
+    {
+      "id": "XD-001",
+      "title": "Pure runtime boundary and editable Web host",
+      "status": "partial",
+      "hardDeps": [
+        "V-001"
+      ],
+      "verifiedScopeOrRemaining": "Actual browser host + IndexedDB edit/CAS; full native workspace interface/media parity and SQLite WASM still missing",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-002",
+      "title": "Trusted device pairing, scoped grants and revocation",
+      "status": "planned",
+      "hardDeps": [
+        "XD-001"
+      ],
+      "verifiedScopeOrRemaining": "No pairing/authenticated remote endpoint enabled",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-003",
+      "title": "Encrypted direct transport and explicit unreachable state",
+      "status": "planned",
+      "hardDeps": [
+        "XD-002"
+      ],
+      "verifiedScopeOrRemaining": "No LAN/WebRTC/TLS transport qualification; no cloud/paid relay fallback",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-004",
+      "title": "Scoped resumable hashed media/result transfer",
+      "status": "planned",
+      "hardDeps": [
+        "XD-003",
+        "I-004"
+      ],
+      "verifiedScopeOrRemaining": "JSON export is not media transfer",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-005",
+      "title": "Same-session capability/model/resource-aware task placement",
+      "status": "partial",
+      "hardDeps": [
+        "I-003",
+        "XD-001"
+      ],
+      "verifiedScopeOrRemaining": "Original PlanGraph compatible safe subset + real native/Chrome logic; signed/live telemetry, dynamic reservations and UI pending; per-device resource reservations/one-heavy-task admission and real signed capability qualification remain unimplemented",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-006",
+      "title": "Durable distributed task leases, receipts and outbox",
+      "status": "partial",
+      "hardDeps": [
+        "XD-005",
+        "I-011"
+      ],
+      "verifiedScopeOrRemaining": "Actual SQLite expiry/fence/heartbeat/late-result/idempotency/outbox + two native child CPU workers; network auth/revocation and coordinator restart authority incomplete; durable coordinator clock rollback check and actual outbox-trigger rollback/retry tested; no remote API enabled",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-007",
+      "title": "Distributed consent, budget, cancel and unknown reconciliation",
+      "status": "partial",
+      "hardDeps": [
+        "XD-006",
+        "XD-002"
+      ],
+      "verifiedScopeOrRemaining": "Paid nodes rejected, cancellation fences work; full budget/privacy/device epoch reconciliation not implemented",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-008",
+      "title": "Joint editing proposal/revision conflict integration",
+      "status": "planned",
+      "hardDeps": [
+        "XD-006",
+        "I-005"
+      ],
+      "verifiedScopeOrRemaining": "Workers cannot directly edit project; no LWW/CRDT claim",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-009",
+      "title": "Per-platform runtime qualification matrix",
+      "status": "partial",
+      "hardDeps": [
+        "XD-001"
+      ],
+      "verifiedScopeOrRemaining": "Only actual Linux desktop/Chrome proof, other platforms unverified",
+      "fullTaskComplete": false
+    },
+    {
+      "id": "XD-010",
+      "title": "Physical-device end-to-end collaboration acceptance",
+      "status": "blocked",
+      "hardDeps": [
+        "XD-002",
+        "XD-003",
+        "XD-004",
+        "XD-006",
+        "XD-007",
+        "XD-008",
+        "XD-009"
+      ],
+      "verifiedScopeOrRemaining": "Need two real devices and secure transport; same-box children/Chrome are protocol tests only",
+      "fullTaskComplete": false
+    }
+  ],
+  "counts": {
+    "partial": 5,
+    "planned": 4,
+    "blocked": 1
+  }
+}

@@ -1,5 +1,7 @@
 import 'package:studio_contracts/studio_contracts.dart';
 
+export 'device_scheduler.dart';
+
 /// A scoped reference is a value, not permission to execute a tool or edit a project.
 final class SessionRef {
   SessionRef({required this.namespace, required this.id}) {

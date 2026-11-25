@@ -6,7 +6,7 @@
 
 当前可运行范围严格限制为 silent CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048。
 有音轨输入需明确 video-only 确认；未知色彩、VFR、旋转、alpha 等不伪装成可导出。
-原 104 文档不变；全部87项逐项保留原验收：18 partial、56 planned、13 blocked（验证资源）。
+原 104 文档不变；全部87项逐项保留原验收：21 partial、53 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
@@ -29,6 +29,23 @@ UI 的 durable/checkpoint/explicit/target 状态来自持久回执，重开不�
 本轮总计74个 Dart/Flutter 测试（0跳过，含新增11个保存/失败/虚拟时钟和5个崩溃测试，每阶段内部10次进程SIGKILL）、6个工具测试、3个CTest；双宿主各3次clean/release构建启动通过。完整退出草稿处理、
 损坏数据库隔离恢复/日志压缩、物理断电/磁盘满及非Linux provider资格仍未完成。
 新证据 `evidence/save-checkpoints/`；旧 local-video 证据是历史基线，不冒充本轮计数。
+
+## 新增字幕/音频/多端同会话增量
+
+原87项仍 **21 partial / 53 planned / 13 blocked / 0整项完成**。
+新增用户范围单列：[版本增量](../addenda/multidevice-v1.md)、[10项XD任务](multidevice-status.json)。
+
+* Native `Caption editor`：普通cue添加/手改/拆分/裁剪、SRT/VTT/静态ASS导入、SRT/VTT sidecar导出；SQLite版本/撤销/归档/fork真实保留。MP4文字渲染、丰富样式/字体和跨clip同步ripple未实现，显式拒绝而不静默丢失。
+* 真实Dart CPU PCM混音/总线路由/automation/duck proposal已落地，但未接FFmpeg音频解码、设备时钟或AAC，不宣称可听音频导出。
+* **可编辑Web宿主**：`cd apps/studio_web && flutter run -d chrome`。元数据/普通字幕用实际IndexedDB事务CAS持久化；不是只读展示，也不是完整Web媒体编辑器/SQLiteWASM资格。可下载项目JSON，不含素材传输。
+* **同一Session算力调度协议基础**：原PlanGraph安全子集、能力/负载/模型库存过滤、SQLite lease/fence/heartbeat/cancel/结果outbox，以及两个真实Linux子进程执行固定免费CPU任务。Chrome也实际执行同一核心；尚未连接浏览器与native网络会话，不是物理多设备验收。
+* 未启用任何远程endpoint；可信配对/可撤销授权/加密传输/断点素材互传、完整跨端运行时与真实物理设备验收仍待实现，不会默认云传素材或用付费中继。
+
+本批实际通过：97个native Dart/Flutter测试 + 3个真实Chrome测试 = **100个Dart/Flutter测试**，0跳过；另6个Python工具测试、3个native CTest；50次SIGKILL是5个测试的内部实验，不伪报成50个独立case。Web release JS构建通过；双Linux宿主各3次clean/release构建启动通过。
+
+工具链：Flutter3.50.1 / Dart3.14.0（官方固定SDK），预装Chrome156.0.8078.47；系统SQLite3.46.1仅为DEV证据，**不满足原3.51.3+/经核验backport的生产WAL门禁**。未启用生产发布。
+
+新证据以 `evidence/caption-audio-harness/` 为准；原结果保留为历史。
 
 ## 固定开发工具链
 
@@ -72,7 +89,7 @@ flutter run -d linux
 稳定目录需自行明确设置。两 App 各自 SQLite / namespace CAS，不访问旧 Mac 工程。
 
 在 UI 手动输入本地视频路径 → Import → 选择 clip → split/trim/delete/undo →
-输入归档路径保存 → Restore as fork → 输入 MP4 输出路径导出。无视频预览/音频混音/字幕编辑。
+输入归档路径保存 → Restore as fork → 输入 MP4 输出路径导出。无视频预览/原生音频混音；普通字幕可展开 Caption editor 编辑并导出SRT/VTT sidecar。
 归档和 MP4 输出会在成功校验后原子替换所选目标；不得将其指向原始素材或其他重要文件。
 已拒绝当前 CAS/数据库/本会话选过的原件，但尚无跨会话 host FileRegistry 误覆盖保护。
 
@@ -92,7 +109,7 @@ run_local_video 强制设置真实 native library 与合成媒体 fixture，跳�
 fullTaskComplete:false。原 I001-I003 foundation 入口仍保留；单独运行 SDK 测试未设置 native
 变量会 skip 媒体测试，不得以此冒充媒体验证。Widget 测试需从所属 package 执行以打包 shader。
 
-当前证据见 evidence/local-video/；当前共有 58 个 Dart/Flutter 测试（包含1000 seeded
+当前证据见 evidence/local-video/；389bd52历史基线共有 58 个 Dart/Flutter 测试（包含1000 seeded
 领域 cases 与1000次真实 SQLite edit/undo，不将内部循环伪报成独立测试数），6个工具测试，
 3个 native CTest cases（100个双namespace开关轮次、10次native cancel、fd增量0），另有
 ASan/UBSan/LSan 的相同3 cases。最终准确计数以 verification.json 为准。
@@ -112,13 +129,26 @@ GitHub OAuth 缺 workflow scope，未提权/绕过，没有启用 .github/workfl
 当前 FFmpeg 系统配置含 GPL libx264，未完成源码锁定/SBOM/再分发审查；许可 unknown 只警告，
 不伪造授权。真机/其他平台/模型/付费 API/生产发布未运行。
 
+## Chrome 与新增协议验收
+
+```sh
+# 实际安装的Chrome，不使用模拟transport；无自动浏览器/模型下载
+export CHROME_EXECUTABLE=/你的Chrome可执行文件
+python3 tools/acceptance/run_multidevice_dev.py --report artifacts/acceptance/multidevice-dev.json
+# 云端root测试包装脚本仅对合成fixture用 --no-sandbox，不作为生产启动设置。
+```
+
+此入口实际跑 Chrome IndexedDB/Flutter 与 release Web build，永远
+`physicalDeviceQualification:false`。各平台分别验收；macOS/Windows/iOS/Android 未测，
+不因Linux/Chrome通过而标支持完成。网络配对/转发/模型/素材上传/付费服务均未启用。
+
 ## 代码地图
 
 | 包/目录 | 已实现 |
 | --- | --- |
 | studio_contracts | AppProfile、namespace、稳定错误码、ID |
 | studio_document | BigInt 有理时间/帧/sample/区间；2.0 文档值、工厂、部分 validator、JCS hash |
-| studio_store | SQLite v1→v2→v3；revision/CAS/fence/receipt/outbox/历史定义与blob pins；最新快照撤销；CAS原件；受限ZIP归档/fork；Linux原子发布 |
+| studio_store | SQLite v1→v2→v3→v4；revision/CAS/fence/receipt/outbox/历史定义与blob pins；最新快照撤销；CAS原件；受限ZIP归档/fork；Linux原子发布 |
 | studio_harness | scoped SessionRef 与 ProposalPort 契约；没有可执行 Agent |
 | studio_media / native/studio_media | Dart FFI与实际C++20 libav probe/decode/软件H264/MP4、取消与能力事实 |
 | studio_sdk | 同一装配/事务入口，真实导入、编辑、保存、恢复、冻结快照导出 |

@@ -18,7 +18,10 @@
     "crypto": "^3.0.8",
     "ffi": "^2.2.0",
     "uuid": "^4.6.0",
-    "path": "^1.9.1"
+    "path": "^1.9.1",
+    "studio_harness": {
+      "path": "../studio_harness"
+    }
   },
   "dev_dependencies": {
     "test": "^1.26.3",

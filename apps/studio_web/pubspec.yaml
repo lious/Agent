@@ -1,0 +1,6 @@
+{
+  "name":"studio_web", "version":"0.1.0", "publish_to":"none", "resolution":"workspace",
+  "environment":{"sdk":"^3.14.0"},
+  "dependencies":{"flutter":{"sdk":"flutter"},"material_ui":"1.11.1","web":"1.1.2","studio_contracts":{"path":"../../packages/studio_contracts"},"studio_document":{"path":"../../packages/studio_document"},"studio_harness":{"path":"../../packages/studio_harness"}},
+  "dev_dependencies":{"flutter_test":{"sdk":"flutter"},"test":"^1.26.3","lints":"^6.0.0"}
+}

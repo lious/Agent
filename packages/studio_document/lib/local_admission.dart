@@ -9,7 +9,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
   for (final table in [
     'effects',
     'transitions',
-    'captions',
     'markers',
     'linkGroups',
     'selectionGroups',
@@ -93,15 +92,33 @@ void requireLocalEditingWritable(ProjectDocument project) {
     }
   }
   final tracks = s['tracks'] as List;
-  if (tracks.length > 1) throw const StudioException('FEATURE_NOT_IMPLEMENTED');
-  if (tracks.isEmpty) return;
-  final track = tracks.single;
-  if (track['kind'] != 'video' ||
-      track['busId'] != null ||
-      track['muted'] != false ||
-      track['solo'] != false) {
+  final video = tracks.where((t) => t['kind'] == 'video').toList(),
+      captionTracks = tracks.where((t) => t['kind'] == 'caption').toList();
+  if (video.length > 1 ||
+      captionTracks.length > 1 ||
+      video.length + captionTracks.length != tracks.length ||
+      (video.isNotEmpty && tracks[0]['kind'] != 'video')) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
+  for (final t in tracks) {
+    if (t['busId'] != null || t['muted'] != false || t['solo'] != false) {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+    }
+  }
+  final cues = <CaptionCue>[];
+  for (final c in d['captions'] as List) {
+    if (captionTracks.isEmpty || c['trackId'] != captionTracks.single['id']) {
+      throw const StudioException('CAPTION_TRACK_MISMATCH');
+    }
+    if ((c['manualFields'] as List).toSet().length !=
+        (c['manualFields'] as List).length) {
+      throw const StudioException('CAPTION_MANUAL_FIELDS_INVALID');
+    }
+    cues.add(CaptionCue.fromProjectJson(c as Map<String, dynamic>));
+  }
+  CaptionStore(cues);
+  if (video.isEmpty) return;
+  final track = video.single;
   for (final c in track['items']) {
     if (c['source'] == null) continue;
     if (c['source']['kind'] != 'asset' ||

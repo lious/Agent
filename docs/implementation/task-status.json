@@ -1,20 +1,20 @@
 {
-  "asOf": "2026-11-25T11:12:56.353437+08:00",
+  "asOf": "2026-11-25T11:45:24.062490+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
   "fullTasksCompleted": 0,
   "counts": {
-    "partial": 18,
-    "planned": 56,
+    "partial": 21,
+    "planned": 53,
     "blocked": 13
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-010 manual caption domain/UI and I-009 audio semantics",
-    "I-021 indexed seek/cache, I-023 real audio execution, I-024 H264/AAC qualification",
-    "I-011 corrupt-DB recovery/compaction and I-012 draft/desktop exit state machine",
-    "Continue remaining dependency-ready original tasks; no new batch approval required"
+    "XD-002/XD-003 trusted pairing, revocation and encrypted direct transport before any remote endpoint",
+    "XD-004 resumable scoped media/results and XD-006 authenticated same-session network dispatch, coordinator restart authority and budget/epoch guards",
+    "I-021 seek/cache and I-023/I-024 real audio/AAC; I-010 synchronized cue ripple/font/rendering",
+    "Continue all remaining original dependency-ready tasks; no per-batch approval stop"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -609,12 +609,15 @@
     {
       "id": "I-009",
       "title": "AudioBus/音量关键帧与基础混音语义",
-      "status": "planned",
-      "implementationStatus": "notStarted",
-      "verificationStatus": "notRun",
+      "status": "partial",
+      "implementationStatus": "partial",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Actual pure-Dart reciprocal AudioBus DAG, gain/pan/balance/mute/solo, exact sample/source gain automation, protected separate duck layers and bounded real Float32 PCM mixer; 60s sample-count/impulse proof. No native audio decode/device/AAC, project Effect integration or full link edits.",
+      "evidence": [
+        "evidence/caption-audio-harness/verification.json",
+        "evidence/caption-audio-harness/multidevice.json"
+      ],
       "remainingAcceptance": "总线路由环拒绝；相同cue变速后音频锚点正确；手调音量/锁轨修改=0；silent track不混入。",
       "remainingScope": "含mute/solo/link/gain与路由；不偷启limiter。",
       "hardDeps": [
@@ -625,12 +628,15 @@
     {
       "id": "I-010",
       "title": "字幕cue编辑/格式与手改锁",
-      "status": "planned",
-      "implementationStatus": "notStarted",
-      "verificationStatus": "notRun",
+      "status": "partial",
+      "implementationStatus": "partial",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Actual plain caption domain/split/trim/exact positive-rate map/manual ownership/overlap rejection, bounded SRT/VTT/static ASS import and SRT/VTT export with loss/refusal policy; atomic SQLite cue versions/undo/reopen/archive/fork plus native and Web editing. No full rich anchors, synchronized ripple, fonts/ASS export or MP4 text rendering.",
+      "evidence": [
+        "evidence/caption-audio-harness/verification.json",
+        "evidence/caption-audio-harness/multidevice.json"
+      ],
       "remainingAcceptance": "emoji/RTL/换行/非整帧时码往返；不支持样式告警；重新ASR不覆盖手改cue；重叠cue策略确定。",
       "remainingScope": "含SRT/VTT/ASS受支持子集、样式/字体fallback；不宣称任意ASS效果往返无损。",
       "hardDeps": [
@@ -1035,12 +1041,15 @@
     {
       "id": "I-032",
       "title": "动态PlanGraph与持久调度",
-      "status": "planned",
-      "implementationStatus": "notStarted",
-      "verificationStatus": "notRun",
+      "status": "partial",
+      "implementationStatus": "partial",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "Original PlanGraph 1.0 safe execution subset, verified-device value placement and SQLite v4 durable plan/task leases/progress/attempts/candidate outbox; real two same-host CPU child workers and expiry/fence/late result/replay/rollback tests. No complete dynamic replan/100-restart proof/model loops/secure physical-device transport.",
+      "evidence": [
+        "evidence/caption-audio-harness/verification.json",
+        "evidence/caption-audio-harness/multidevice.json"
+      ],
       "remainingAcceptance": "图环/越namespace拒绝；fanout/迭代不越上限；过期fence不提交；100重启无重复副作用；手动锁始终有效。",
       "remainingScope": "含扩图/replan/fanout/fanin/mapreduce/lease；不在手机内存托管云长job。",
       "hardDeps": [

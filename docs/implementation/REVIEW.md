@@ -105,3 +105,44 @@ a save queue Future captured in the constructor's fake-clock zone that stalled r
 IO callbacks. Initialize the queue lazily in the first request's zone; rerun the
 actual native Flutter path, now 2/2 passing. The first full gate failed (74 tests
 executed), was not reported as a pass; final evidence is a fresh rerun.
+
+## Caption/audio + new Web/same-session scope — three executed audit/fix rounds
+
+1. **Domain/history:** run real Unicode/RTL/millisecond/ASS-loss goldens and SQLite
+   caption CAS/manual-lock/undo/reopen. Preserve empty-caption historical sequence
+   hashes; register cue versions. Fixed a nullable conditional-map cascade caught by
+   analyzer. Source and timeline rationals remain exact. Refuse unsupported MP4 cue
+   rendering and video ripple rather than silently drop text. Audio audit copied PCM
+   into immutable buffers, rejected active unrouted inputs, bounded bus/scratch sizes,
+   and tested finite overflow, mute/solo, pan/balance and protected duck layers.
+2. **Actual hosts/platform boundary:** real native widget test caught single-line
+   TextField silently stripping cue newlines; use multiline caption input. Rich
+   unsupported captions render read-only instead of crashing/loss. Caption-before-video
+   integration exposed potential non-frame filler: append at video-track end and keep
+   sequence duration as max(caption/video). Browser compilation initially failed on
+   a cross-package test-relative fixture path and BigInt ++; use a package-resolvable
+   shared synthetic fixture and explicit BigInt.one. Actual Chrome verified >2^53
+   revisions, competing IndexedDB connections, persisted reopen and editable Flutter.
+   Added namespace/hash checks and transaction-complete ACK, not per-request success.
+3. **Scheduler/receipt failure audit:** consume original closed PlanGraph shape, reject
+   unsupported/paid side effects, encode exact versioned lease fences, and use actual
+   CPU child processes with real monotonic elapsed time (not a fake process duration).
+   Fixed repeated cancel incrementing its fence, terminal-replay field checks and
+   unsafe boot takeover/wall-budget reset. Add persisted monotonic high-water mark.
+   Actual SQL tests caught its missing eighth bind argument; fixed and reran. Inject
+   a real SQLite outbox trigger failure to prove terminal-state/outbox rollback, then
+   successful retry. No transport mock is presented as real encrypted networking;
+   all pairing/permission/device-epoch/cost/network/physical-device gaps remain explicit.
+
+Final source-matched native/browser gates and native clean release starts are stored
+in `evidence/caption-audio-harness/`. Earlier failed runs were repaired, not counted as
+passes. All original 87 tasks keep their original acceptance text; new XD tasks are
+separate and no full-task completion is claimed.
+
+The final high-water-mark edit initially also duplicated a positional heartbeat
+argument; current analyzer and the six real Harness tests caught it before commit.
+A targeted correction was followed by fresh full gates. Earlier failed broad/probe
+reports are not used as passing evidence. Device resource reservations/parallel
+heavy-work admission, trusted live device telemetry and permissions still require
+the future authenticated host registry; value-object placement tests do not certify
+physical hardware, signed enrollment, privacy epoch revocation or model availability.

@@ -7,6 +7,8 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'time.dart';
 import 'validator.dart';
 export 'time.dart';
+export 'caption.dart';
+export 'audio_bus.dart';
 export 'validator.dart';
 export 'strict_json.dart';
 export 'edit_algebra.dart';

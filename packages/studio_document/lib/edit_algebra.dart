@@ -19,6 +19,25 @@ final class RenameProject extends EditOperation {
   Map<String, Object?> toJson() => {'kind': 'renameProject', 'title': title};
 }
 
+/// One atomic caption-set command; rich unsupported fields are never discarded.
+final class SetCaptions extends EditOperation {
+  SetCaptions(CaptionStore value, {this.automatic = false})
+    : _json = jsonEncode([
+        for (final c in value.cues) c.toProjectJson('pending'),
+      ]);
+  final String _json;
+  final bool automatic;
+  List<CaptionCue> get cues => (jsonDecode(_json) as List)
+      .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
+      .toList();
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setCaptions',
+    'automatic': automatic,
+    'cues': jsonDecode(_json),
+  };
+}
+
 final class AppendVideoAsset extends EditOperation {
   AppendVideoAsset({
     required Map<String, dynamic> asset,
@@ -141,6 +160,13 @@ ProjectDocument applyEdit(
   if (operation is RenameProject) {
     return before.withTitle(operation.title, before.revision);
   }
+  if (operation is SetCaptions) {
+    return _setCaptions(before, operation, nextVersion, newId);
+  }
+  if ((before.toJson()['captions'] as List).isNotEmpty &&
+      operation is! AppendVideoAsset) {
+    throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
+  }
   final zeroDelta = switch (operation) {
     MoveClip(:final delta) => delta == Q.of(0),
     TrimClip(:final delta) => delta == Q.of(0),
@@ -160,6 +186,16 @@ ProjectDocument applyEdit(
   }
   final changed = <String>{};
   var retainedEnd = Q.fromJson(s['duration']);
+  if ((d['captions'] as List).isNotEmpty) {
+    retainedEnd = Q.of(0);
+    for (final track in tracks.where((t) => t['kind'] == 'video')) {
+      for (final item in track['items']) {
+        final r = item['timelineRange'];
+        final end = Q.fromJson(r['start']) + Q.fromJson(r['duration']);
+        if (end > retainedEnd) retainedEnd = end;
+      }
+    }
+  }
   Map<String, dynamic> clip(String id, List<String> paths) {
     final found = (s['tracks'][0]['items'] as List).where(
       (c) => c['id'] == id && c['source'] != null,
@@ -240,6 +276,8 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case SetCaptions():
+      throw StateError('Handled caption edit');
     case RenameProject():
       throw StateError('Handled before sequence edit');
     case AppendVideoAsset():
@@ -251,8 +289,11 @@ ProjectDocument applyEdit(
       final videos = (a['streams'] as List).where((v) => v['type'] == 'video');
       if (videos.isEmpty) throw const StudioException('VIDEO_STREAM_REQUIRED');
       final stream = videos.first;
-      if (tracks.isEmpty) {
-        tracks.add({
+      if (tracks.isEmpty || tracks[0]['kind'] != 'video') {
+        for (final t in tracks) {
+          t['order'] = (t['order'] as int) + 1;
+        }
+        tracks.insert(0, {
           'id': newId(),
           'sequenceId': s['id'],
           'name': 'Video 1',
@@ -303,7 +344,7 @@ ProjectDocument applyEdit(
           'streamId': stream['id'],
         },
         'timelineRange': {
-          'start': s['duration'],
+          'start': retainedEnd.toJson(),
           'duration': duration.toJson(),
         },
         'sourceRange': {
@@ -564,6 +605,111 @@ ProjectDocument applyEdit(
     end = retainedEnd;
   }
   tracks[0]['items'] = normalized;
+  for (final c in d['captions'] as List) {
+    final r = c['timelineRange'];
+    final captionEnd = Q.fromJson(r['start']) + Q.fromJson(r['duration']);
+    if (captionEnd > end) end = captionEnd;
+  }
+  s['duration'] = end.toJson();
+  s['version'] = nextVersion(s['id'] as String);
+  final after = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(after);
+  return after;
+}
+
+ProjectDocument _setCaptions(
+  ProjectDocument before,
+  SetCaptions operation,
+  VersionAllocator nextVersion,
+  IdAllocator newId,
+) {
+  final d = before.toJson();
+  // Work ONLY on the detached document that will be validated below.
+  final s = d['sequences'][0],
+      tracks = s['tracks'] as List,
+      old = d['captions'] as List;
+  final captions =
+      operation.cues; // constructor already enforces deterministic nonoverlap.
+  final existingTracks = tracks.where((t) => t['kind'] == 'caption');
+  if (existingTracks.any((t) => t['locked'] == true)) {
+    throw const StudioException('FIELD_LOCKED');
+  }
+  if (old.isEmpty && captions.isEmpty) return before;
+  final track = existingTracks.isEmpty ? null : existingTracks.single;
+  final trackId = track == null ? newId() : track['id'] as String;
+  final byId = {for (final c in old) c['id']: c};
+  final result = <Map<String, Object?>>[];
+  if (operation.automatic) {
+    final incoming = {for (final c in captions) c.id: c};
+    for (final c in old) {
+      final fields = Set<String>.from(c['manualFields'] as List),
+          next = incoming[c['id']];
+      if (next == null && fields.isNotEmpty) {
+        throw const StudioException('MANUAL_FIELD_LOCKED');
+      }
+      if (next != null &&
+          ((fields.contains('text') && next.text != c['text']) ||
+              (fields.contains('timing') &&
+                  contentHash(next.toProjectJson(trackId)['timelineRange']) !=
+                      contentHash(c['timelineRange'])))) {
+        throw const StudioException('MANUAL_FIELD_LOCKED');
+      }
+    }
+  }
+  for (final c in captions) {
+    final prev = byId[c.id];
+    var next = c.toProjectJson(trackId);
+    if (operation.automatic && prev != null) {
+      next = {
+        ...next,
+        'manualFields': ({
+          ...c.manualFields,
+          ...Set<String>.from(prev['manualFields'] as List),
+        }.toList()..sort()),
+      };
+    }
+    final left = prev == null ? null : Map<String, dynamic>.from(prev);
+    left?.remove('version');
+    final right = Map<String, Object?>.from(next)..remove('version');
+    next['version'] = left != null && contentHash(left) == contentHash(right)
+        ? prev['version']
+        : nextVersion(c.id);
+    result.add(next);
+  }
+  if (contentHash(old) == contentHash(result)) return before;
+  if (track == null) {
+    tracks.add({
+      'id': trackId,
+      'sequenceId': s['id'],
+      'name': 'Captions',
+      'kind': 'caption',
+      'order': tracks.length,
+      'locked': false,
+      'muted': false,
+      'solo': false,
+      'syncLock': true,
+      'targeted': true,
+      'busId': null,
+      'items': <Object>[],
+    });
+  }
+  d['captions'] = result;
+  var end = Q.of(0);
+  for (final t in tracks) {
+    for (final item in t['items']) {
+      final r = item['timelineRange'];
+      final e = Q.fromJson(r['start']) + Q.fromJson(r['duration']);
+      if (e > end) end = e;
+    }
+  }
+  for (final c in captions) {
+    if (c.range.end > end) end = c.range.end;
+  }
+  for (final c in d['captions'] as List) {
+    final r = c['timelineRange'];
+    final captionEnd = Q.fromJson(r['start']) + Q.fromJson(r['duration']);
+    if (captionEnd > end) end = captionEnd;
+  }
   s['duration'] = end.toJson();
   s['version'] = nextVersion(s['id'] as String);
   final after = ProjectDocument.fromJson(d);

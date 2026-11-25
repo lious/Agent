@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
-MEDIA_TASKS = {'I-004','I-005','I-006','I-011','I-012','I-013','I-014','I-015','I-021','I-024','I-025','V-002','V-005'}
+MEDIA_TASKS = {'I-009','I-010','I-032','I-004','I-005','I-006','I-011','I-012','I-013','I-014','I-015','I-021','I-024','I-025','V-002','V-005'}
 TESTS = {
     'I-001': ['packages/studio_contracts/test', 'packages/studio_sdk/test'],
     'I-002': ['packages/studio_document/test'],

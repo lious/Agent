@@ -13,7 +13,8 @@
     "apps/studio_demo",
     "apps/image_demo",
     "packages/studio_editor_ui",
-    "packages/studio_media"
+    "packages/studio_media",
+    "apps/studio_web"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

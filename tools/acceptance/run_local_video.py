@@ -58,10 +58,10 @@ def main():
     environment['STUDIO_MEDIA_LIBRARY'] = str(args.native_build / 'libstudio_media.so')
     environment['STUDIO_TEST_VIDEO'] = str(fixture)
     for command, options in [
-        ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib'], {}),
+        ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib', 'apps/studio_web/lib', 'apps/studio_web/test'], {}),
         ([flutter, 'analyze'], {}),
         ([dart, 'test', 'packages/studio_contracts/test', 'packages/studio_document/test',
-          'packages/studio_store/test', 'packages/studio_sdk/test', '--reporter=json'], {}),
+          'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', '--reporter=json'], {}),
         ([flutter, 'test', 'test', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
         ([sys.executable, '-m', 'unittest', 'discover', '-s', 'tools/tests', '-v'], {}),
         (['sha256sum', '--quiet', '-c', 'SHA256SUMS'], {'cwd': ROOT / 'docs/studio'}),
@@ -75,13 +75,13 @@ def main():
     ok = ok and skipped_tests == 0
     names = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
     source_hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(names)
-                     if (name.startswith(('packages/', 'native/', 'tools/')) or name in ['pubspec.yaml', 'pubspec.lock'])
+                     if (name.startswith(('packages/', 'native/', 'tools/', 'apps/')) or name in ['pubspec.yaml', 'pubspec.lock'])
                      and (ROOT / name).is_file()}
     report = {
         'profile': args.profile, 'timezone': 'Asia/Shanghai',
         'checkedAt': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
         'scopeStatus': 'passed' if ok else 'failed', 'fullTaskComplete': False,
-        'scope': 'Synthetic silent CFR Rec709 H264 plus durable checkpoints, serial archive receipts and 50 SIGKILL save recoveries; Linux dev only',
+        'scope': 'Linux dev: silent CFR H264, plain captions, PCM DSP, durable checkpoints/50 SIGKILL saves, same-session native process protocol; not physical devices',
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
         'notValidated': ['all 87 full acceptance contracts', '1080p Main L4/AAC qualification', 'audio export',

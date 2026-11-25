@@ -21,6 +21,11 @@ class _FoundationAppState extends State<FoundationApp>
       _archive = TextEditingController(),
       _output = TextEditingController(),
       _frames = TextEditingController(text: '30');
+  final _captionText = TextEditingController(),
+      _captionStart = TextEditingController(text: '0'),
+      _captionDuration = TextEditingController(text: '1000'),
+      _captionPath = TextEditingController();
+  String? _captionSelected;
   String? _error, _selected;
   String _status =
       'All edits commit to local SQLite; archive save is explicit.';
@@ -42,6 +47,11 @@ class _FoundationAppState extends State<FoundationApp>
     _project = widget.workspace.current;
     _title.text = _project.title;
     if (!_clips.any((c) => c['id'] == _selected)) _selected = null;
+    if (!(_project.toJson()['captions'] as List).any(
+      (c) => c['id'] == _captionSelected,
+    )) {
+      _captionSelected = null;
+    }
   }
 
   void _act(ProjectDocument Function() action) {
@@ -151,7 +161,17 @@ class _FoundationAppState extends State<FoundationApp>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
-    for (final c in [_title, _input, _archive, _output, _frames]) {
+    for (final c in [
+      _title,
+      _input,
+      _archive,
+      _output,
+      _frames,
+      _captionText,
+      _captionStart,
+      _captionDuration,
+      _captionPath,
+    ]) {
       c.dispose();
     }
     super.dispose();
@@ -160,6 +180,7 @@ class _FoundationAppState extends State<FoundationApp>
   Widget _path(String key, String label, TextEditingController controller) =>
       TextField(
         key: Key(key),
+        maxLines: key == 'caption-text' ? 3 : 1,
         controller: controller,
         enabled: !_busy,
         decoration: InputDecoration(labelText: label),
@@ -338,6 +359,192 @@ class _FoundationAppState extends State<FoundationApp>
     Text(_status, key: const Key('operation-status')),
   ];
 
+  List<CaptionCue> get _cues => (_project.toJson()['captions'] as List)
+      .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
+      .toList();
+  Q _captionMilliseconds(TextEditingController field) {
+    final n = int.tryParse(field.text);
+    if (n == null || n < 0) {
+      throw const StudioException('CAPTION_TIME_REQUIRED');
+    }
+    return Q.of(n, 1000);
+  }
+
+  void _setCues(List<CaptionCue> Function(List<CaptionCue>) change) =>
+      _edit(() => SetCaptions(CaptionStore(change(_cues))));
+  List<Widget> _captionControls() {
+    try {
+      return _plainCaptionControls();
+    } on StudioException catch (error) {
+      return [
+        Text('Captions read-only: ${error.code}'),
+        for (final raw in _project.toJson()['captions'] as List)
+          Text(raw['text'] as String),
+      ];
+    }
+  }
+
+  List<Widget> _plainCaptionControls() => [
+    const Divider(),
+    const Text(
+      'Plain captions · SRT/VTT sidecar · no MP4 text rendering',
+      style: TextStyle(fontSize: 20),
+    ),
+    _path('caption-text', 'Caption text', _captionText),
+    _path(
+      'caption-start',
+      'Start / split timestamp (milliseconds, not frames)',
+      _captionStart,
+    ),
+    _path(
+      'caption-duration',
+      'Duration / trim selection (milliseconds)',
+      _captionDuration,
+    ),
+    Wrap(
+      spacing: 8,
+      children: [
+        OutlinedButton(
+          key: const Key('caption-add'),
+          onPressed: _busy
+              ? null
+              : () => _setCues(
+                  (c) => [
+                    ...c,
+                    CaptionCue(
+                      'manual-${DateTime.now().microsecondsSinceEpoch}',
+                      TimeRange(
+                        _captionMilliseconds(_captionStart),
+                        _captionMilliseconds(_captionDuration),
+                      ),
+                      _captionText.text,
+                      manualFields: {'text', 'timing'},
+                    ),
+                  ],
+                ),
+          child: const Text('Add cue'),
+        ),
+        OutlinedButton(
+          key: const Key('caption-edit'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues(
+                  (c) => [
+                    for (final cue in c)
+                      if (cue.id == _captionSelected)
+                        cue.editText(_captionText.text)
+                      else
+                        cue,
+                  ],
+                ),
+          child: const Text('Edit selected text'),
+        ),
+        OutlinedButton(
+          key: const Key('caption-split'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues(
+                  (c) => [
+                    for (final cue in c)
+                      if (cue.id == _captionSelected)
+                        ...cue.split(
+                          _captionMilliseconds(_captionStart),
+                          'split-${DateTime.now().microsecondsSinceEpoch}',
+                        )
+                      else
+                        cue,
+                  ],
+                ),
+          child: const Text('Split cue (duplicate text)'),
+        ),
+        OutlinedButton(
+          key: const Key('caption-trim'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues(
+                  (c) => [
+                    for (final cue in c)
+                      if (cue.id == _captionSelected)
+                        cue.trim(
+                          TimeRange(
+                            _captionMilliseconds(_captionStart),
+                            _captionMilliseconds(_captionDuration),
+                          ),
+                        )
+                      else
+                        cue,
+                  ],
+                ),
+          child: const Text('Trim selected cue'),
+        ),
+        OutlinedButton(
+          key: const Key('caption-delete'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues(
+                  (c) => c.where((v) => v.id != _captionSelected).toList(),
+                ),
+          child: const Text('Delete selected cue'),
+        ),
+      ],
+    ),
+    for (final cue in _cues)
+      ListTile(
+        key: Key('cue-${cue.id}'),
+        selected: cue.id == _captionSelected,
+        title: Text(cue.text),
+        subtitle: Text('${cue.range.start} → ${cue.range.end}'),
+        onTap: _busy
+            ? null
+            : () => setState(() {
+                _captionSelected = cue.id;
+                _captionText.text = cue.text;
+              }),
+      ),
+    const Text(
+      'Deterministic single caption-track overlap rejection. Video timing edits while cues exist are refused until synchronized caption ripple is implemented. No silent text loss.',
+    ),
+    _path(
+      'caption-path',
+      'Selected subtitle path (import appends; export overwrites atomically)',
+      _captionPath,
+    ),
+    Wrap(
+      spacing: 8,
+      children: [
+        for (final format in CaptionFormat.values)
+          OutlinedButton(
+            key: Key('caption-import-${format.name}'),
+            onPressed: _busy
+                ? null
+                : () => _run(() async {
+                    final result = await widget.workspace.importCaptions(
+                      LocalFileGrant.fromUserSelection(File(_captionPath.text)),
+                      format,
+                      expectedRevision: _project.revision,
+                    );
+                    return 'Imported ${result.captions.cues.length} cues; warnings: ${result.warnings.join(", ")}';
+                  }),
+            child: Text('Import ${format.name.toUpperCase()}'),
+          ),
+        for (final format in [CaptionFormat.srt, CaptionFormat.vtt])
+          OutlinedButton(
+            key: Key('caption-export-${format.name}'),
+            onPressed: _busy
+                ? null
+                : () => _run(() async {
+                    final r = widget.workspace.exportCaptions(
+                      File(_captionPath.text),
+                      format,
+                    );
+                    return 'Subtitle sidecar exported from revision $r';
+                  }),
+            child: Text('Export ${format.name.toUpperCase()}'),
+          ),
+      ],
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'Studio Foundation',
@@ -428,6 +635,11 @@ class _FoundationAppState extends State<FoundationApp>
                       'Media adapter not installed. Set STUDIO_MEDIA_LIBRARY to the separately built native adapter. AI generation is not implemented. No media leaves this device.',
                     ),
                   ),
+                ExpansionTile(
+                  key: const Key('caption-panel'),
+                  title: const Text('Caption editor'),
+                  children: _captionControls(),
+                ),
               ],
             ),
           ),

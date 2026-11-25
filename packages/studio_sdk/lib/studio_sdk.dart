@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:async';
 
 import 'autosave_scheduler.dart';
@@ -251,14 +252,66 @@ final class StudioWorkspace {
       destination,
     ); // validate local parent/target
     final path = destination.absolute.uri.normalizePath().toFilePath();
-    final cas = _blobs!.directory.absolute.path;
+    final cas = _blobs?.directory.absolute.path;
     if (path == _databasePath ||
         path.startsWith('$_databasePath-') ||
-        path == cas ||
-        path.startsWith('$cas${Platform.pathSeparator}') ||
+        (cas != null &&
+            (path == cas ||
+                path.startsWith('$cas${Platform.pathSeparator}'))) ||
         _selectedInputs.contains(path)) {
       throw const StudioException('PROTECTED_SOURCE_OUTPUT');
     }
+  }
+
+  Future<CaptionImport> importCaptions(
+    LocalFileGrant source,
+    CaptionFormat format, {
+    required BigInt expectedRevision,
+  }) async {
+    _requireMetadata();
+    final selectedProject = _activeProjectId;
+    _selectedInputs.add(source.file.resolveSymbolicLinksSync());
+    if (await source.file.length() > 16 * 1024 * 1024) {
+      throw const StudioException('SUBTITLE_RESOURCE_LIMIT');
+    }
+    final imported = CaptionFormats.decode(
+      await source.file.readAsString(),
+      format,
+    );
+    if (_closed || selectedProject != _activeProjectId) {
+      throw const StudioException('PROJECT_CHANGED');
+    }
+    final old = (current.toJson()['captions'] as List).map(
+      (c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>),
+    );
+    final values = [
+      ...old,
+      for (final c in imported.captions.cues)
+        CaptionCue(
+          _uuid.v7(),
+          c.range,
+          c.text,
+          language: c.language,
+          manualFields: {'text', 'timing'},
+        ),
+    ];
+    edit(SetCaptions(CaptionStore(values)), expectedRevision: expectedRevision);
+    return imported;
+  }
+
+  BigInt exportCaptions(File target, CaptionFormat format) {
+    _requireMetadata();
+    _protectOutput(target);
+    final snapshot = current;
+    requireLocalEditingWritable(snapshot);
+    final cues = (snapshot.toJson()['captions'] as List)
+        .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
+        .toList();
+    AtomicFilePublisher().write(
+      target,
+      utf8.encode(CaptionFormats.encode(CaptionStore(cues), format)),
+    );
+    return snapshot.revision;
   }
 
   PersistenceView persistence({File? target}) => _repository.persistenceView(
@@ -340,6 +393,9 @@ final class StudioWorkspace {
     _protectOutput(destination);
     final snapshot = current;
     requireLocalEditingWritable(snapshot);
+    if ((snapshot.toJson()['captions'] as List).isNotEmpty) {
+      throw const StudioException('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED');
+    }
     final epoch = _exportCancelEpoch;
     final d = snapshot.toJson(), s = snapshot.toJson()['sequences'][0];
     final fps = FrameRate(

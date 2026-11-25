@@ -7,7 +7,9 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 export 'package:studio_contracts/studio_contracts.dart';
+import 'package:studio_harness/studio_harness.dart';
 part 'persistence.dart';
+part 'harness_persistence.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -68,6 +70,15 @@ CREATE TABLE save_receipts(seq INTEGER PRIMARY KEY AUTOINCREMENT,ns TEXT NOT NUL
  UNIQUE(ns,operation_id),FOREIGN KEY(ns,operation_id) REFERENCES save_operations(ns,id),FOREIGN KEY(ns,checkpoint_id) REFERENCES checkpoints(ns,id));
 """;
 
+const _ddl4 = """
+CREATE TABLE harness_plans(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,project_id TEXT NOT NULL,json TEXT NOT NULL,started_ms INTEGER NOT NULL,last_ms INTEGER NOT NULL,boot TEXT NOT NULL,
+ PRIMARY KEY(ns,session_id,plan_hash),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+CREATE TABLE harness_steps(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,node_id TEXT NOT NULL,attempt INTEGER NOT NULL,state_json TEXT NOT NULL,
+ PRIMARY KEY(ns,session_id,plan_hash,node_id),FOREIGN KEY(ns,session_id,plan_hash) REFERENCES harness_plans(ns,session_id,plan_hash));
+CREATE TABLE harness_outbox(ns TEXT NOT NULL,id TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,node_id TEXT NOT NULL,kind TEXT NOT NULL,payload_json TEXT NOT NULL,
+ PRIMARY KEY(ns,id),FOREIGN KEY(ns,session_id,plan_hash) REFERENCES harness_plans(ns,session_id,plan_hash));
+""";
+
 final class WriterToken {
   WriterToken(this.namespace, this.projectId, this.owner, this.epoch);
   final Namespace namespace;
@@ -93,7 +104,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 3) {
+        if (version > 4) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -133,6 +144,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=3',
         );
         if (v3.length != 1 || v3.single['checksum'] != contentHash(_ddl3)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 4) {
+          _db.execute(_ddl4);
+          _db.execute('INSERT INTO schema_migrations VALUES(4,?)', [
+            contentHash(_ddl4),
+          ]);
+          _db.userVersion = 4;
+        }
+        final v4 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=4',
+        );
+        if (v4.length != 1 || v4.single['checksum'] != contentHash(_ddl4)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });
@@ -327,6 +351,9 @@ final class DocumentRepository {
     for (final a in d['assets'] as List) {
       definitions.add(a as Map<String, dynamic>);
     }
+    for (final c in d['captions'] as List) {
+      definitions.add(c as Map<String, dynamic>);
+    }
     for (final seq in d['sequences'] as List) {
       final used = <String>{};
       for (final t in seq['tracks']) {
@@ -337,7 +364,7 @@ final class DocumentRepository {
           }
         }
       }
-      final seqHash = used.isEmpty
+      final baseHash = used.isEmpty
           ? contentHash(seq)
           : contentHash({
               'definition': seq,
@@ -350,6 +377,15 @@ final class DocumentRepository {
                           (a['id'] as String).compareTo(b['id'] as String),
                     ),
             });
+      final trackIds = (seq['tracks'] as List).map((t) => t['id']).toSet();
+      final cues =
+          (d['captions'] as List)
+              .where((c) => trackIds.contains(c['trackId']))
+              .toList()
+            ..sort((a, b) => (a['id'] as String).compareTo(b['id'] as String));
+      final seqHash = cues.isEmpty
+          ? baseHash
+          : contentHash({'base': baseHash, 'captions': cues});
       _registerVersion(
         project.projectId,
         seq['id'] as String,
