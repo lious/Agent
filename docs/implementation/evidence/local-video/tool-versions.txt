@@ -1,0 +1,17 @@
+Linux 6.12.113+ #1 SMP PREEMPT_DYNAMIC Thu Nov 19 19:32:43 UTC 2026 x86_64 GNU/Linux
+c++ (Debian 14.2.0-19) 14.2.0
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+cmake version 3.31.6
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+1.12.1
+Python 3.13.5
+libavcodec-dev 7:7.1.5-0+deb13u1
+libavformat-dev 7:7.1.5-0+deb13u1
+libavutil-dev 7:7.1.5-0+deb13u1
+libsqlite3-dev 3.46.1-7+deb13u2
+libswscale-dev 7:7.1.5-0+deb13u1
+nlohmann-json3-dev 3.11.3-2.1

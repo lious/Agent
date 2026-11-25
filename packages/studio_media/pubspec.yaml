@@ -1,0 +1,22 @@
+{
+  "name": "studio_media",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    },
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "ffi": "^2.2.0"
+  },
+  "dev_dependencies": {
+    "test": "^1.32.0",
+    "lints": "^6.1.0"
+  }
+}

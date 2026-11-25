@@ -1,0 +1,37 @@
+00:00 +0: loading packages/studio_store/test/files_test.dart
+00:00 +0: packages/studio_store/test/files_test.dart: actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption
+00:00 +1: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:00 +2: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:00 +3: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:00 +4: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:00 +4 -1: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:00 +4 -1: packages/studio_store/test/files_test.dart: hostile ZIP paths rejected before extraction [E]
+  Expected: throws <Instance of 'StudioException'> with `code`: 'ARCHIVE_UNSAFE_PATH'
+    Actual: <Closure: () => VerifiedArchive>
+     Which: threw StudioException:<ARCHIVE_MISSING_ENTRY>
+            stack package:studio_store/project_archive.dart 159:24   ProjectArchive.verifyBytes.jsonFile
+                  package:studio_store/project_archive.dart 167:22   ProjectArchive.verifyBytes
+                  packages/studio_store/test/files_test.dart 145:32  main.<fn>.<fn>
+                  package:matcher                                    expect
+                  packages/studio_store/test/files_test.dart 144:7   main.<fn>
+
+            which has `code` with value 'ARCHIVE_MISSING_ENTRY' which is different.
+                  Expected: ARCHIVE_UNSAFE_PAT ...
+                    Actual: ARCHIVE_MISSING_EN ...
+                                    ^
+                   Differ at offset 8
+  a\b
+
+  package:matcher                                   expect
+  packages/studio_store/test/files_test.dart 144:7  main.<fn>
+
+00:00 +5 -1: packages/studio_store/test/video_transactions_test.dart: 1000 edit/undo SQLite transactions preserve exact definition pins; re-edit versions never reused
+00:13 +6 -1: packages/studio_store/test/video_transactions_test.dart: v1 frozen SQL migration preserves existing snapshot and permits later edits/reopen
+00:13 +7 -1: packages/studio_store/test/video_transactions_test.dart: failure after definitions/blob pins rolls back every table and head
+00:13 +8 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_store/test/files_test.dart: hostile ZIP paths rejected before extraction
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.

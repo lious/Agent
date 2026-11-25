@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart' show Uuid;
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -46,6 +48,13 @@ CREATE TABLE entity_versions(ns TEXT NOT NULL,project_id TEXT NOT NULL,entity_id
 CREATE TABLE sessions(ns TEXT NOT NULL,id TEXT NOT NULL,title TEXT NOT NULL,PRIMARY KEY(ns,id));
 CREATE TABLE immutable_blobs(ns TEXT NOT NULL,hash TEXT NOT NULL,bytes BLOB NOT NULL,PRIMARY KEY(ns,hash));
 ''';
+const _ddl2 = '''
+CREATE TABLE project_preferences(ns TEXT PRIMARY KEY,project_id TEXT NOT NULL,
+ FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+CREATE TABLE blob_edges(ns TEXT NOT NULL,project_id TEXT NOT NULL,revision INTEGER NOT NULL,
+ blob_hash TEXT NOT NULL,PRIMARY KEY(ns,project_id,revision,blob_hash),
+ FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+''';
 
 final class WriterToken {
   WriterToken(this.namespace, this.projectId, this.owner, this.epoch);
@@ -72,7 +81,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 1) {
+        if (version > 2) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -86,6 +95,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=1',
         );
         if (rows.length != 1 || rows.single['checksum'] != contentHash(_ddl)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 2) {
+          _db.execute(_ddl2);
+          _db.execute('INSERT INTO schema_migrations VALUES(2,?)', [
+            contentHash(_ddl2),
+          ]);
+          _db.userVersion = 2;
+        }
+        final v2 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=2',
+        );
+        if (v2.length != 1 || v2.single['checksum'] != contentHash(_ddl2)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });
@@ -158,7 +180,7 @@ final class DocumentRepository {
     if (project.namespace != namespace) {
       throw const StudioException('NAMESPACE_MISMATCH');
     }
-    project.requireFoundationWritable();
+    requireLocalEditingWritable(project);
     if (project.revision != BigInt.zero) {
       throw const StudioException('INITIAL_REVISION_REQUIRED');
     }
@@ -175,16 +197,26 @@ final class DocumentRepository {
         _ns,
         project.projectId,
       ]);
-      for (final seq in project.toJson()['sequences'] as List) {
-        _db.execute('INSERT INTO entity_versions VALUES(?,?,?,?,?)', [
-          _ns,
-          project.projectId,
-          seq['id'],
-          int.parse(seq['version'] as String),
-          contentHash(seq),
-        ]);
-      }
+      _registerDefinitions(project);
+      _pinBlobs(project);
     });
+  }
+
+  String? get selectedProjectId {
+    final row = _db.select(
+      'SELECT project_id FROM project_preferences WHERE ns=?',
+      [_ns],
+    );
+    return row.isEmpty ? null : row.single['project_id'] as String;
+  }
+
+  void selectProject(String id) {
+    requireId(id);
+    if (read(id) == null) throw const StudioException('PROJECT_NOT_FOUND');
+    _db.execute(
+      'INSERT INTO project_preferences VALUES(?,?) ON CONFLICT(ns) DO UPDATE SET project_id=excluded.project_id',
+      [_ns, id],
+    );
   }
 
   int writerEpoch(String projectId) {
@@ -237,7 +269,7 @@ final class DocumentRepository {
   }) => _commit(writer, commandId, receiptKey, expectedRevision, {
     'kind': 'renameProject',
     'title': title,
-  });
+  }, operation: RenameProject(title));
   CommitReceipt undoLatest({
     required WriterToken writer,
     required String commandId,
@@ -249,13 +281,111 @@ final class DocumentRepository {
     'targetCommandId': targetCommandId,
   });
 
+  CommitReceipt edit({
+    required WriterToken writer,
+    required String commandId,
+    required String receiptKey,
+    required BigInt expectedRevision,
+    required EditOperation operation,
+  }) => _commit(
+    writer,
+    commandId,
+    receiptKey,
+    expectedRevision,
+    operation.toJson(),
+    operation: operation,
+  );
+
+  void _registerDefinitions(ProjectDocument project) {
+    final d = project.toJson();
+    final definitions = <Map<String, dynamic>>[];
+    for (final a in d['assets'] as List) {
+      definitions.add(a as Map<String, dynamic>);
+    }
+    for (final seq in d['sequences'] as List) {
+      final used = <String>{};
+      for (final t in seq['tracks']) {
+        for (final c in t['items']) {
+          if (c['source'] != null) {
+            used.add(c['source']['id'] as String);
+            definitions.add(c as Map<String, dynamic>);
+          }
+        }
+      }
+      final seqHash = used.isEmpty
+          ? contentHash(seq)
+          : contentHash({
+              'definition': seq,
+              'sources':
+                  (d['assets'] as List)
+                      .where((a) => used.contains(a['id']))
+                      .toList()
+                    ..sort(
+                      (a, b) =>
+                          (a['id'] as String).compareTo(b['id'] as String),
+                    ),
+            });
+      _registerVersion(
+        project.projectId,
+        seq['id'] as String,
+        seq['version'] as String,
+        seqHash,
+      );
+    }
+    for (final entity in definitions) {
+      _registerVersion(
+        project.projectId,
+        entity['id'] as String,
+        entity['version'] as String,
+        contentHash(entity),
+      );
+    }
+  }
+
+  void _registerVersion(
+    String projectId,
+    String id,
+    String version,
+    String hash,
+  ) {
+    final previous = _db.select(
+      'SELECT content_hash FROM entity_versions WHERE ns=? AND project_id=? AND entity_id=? AND version=?',
+      [_ns, projectId, id, int.parse(version)],
+    );
+    if (previous.isNotEmpty) {
+      if (previous.single['content_hash'] != hash) {
+        throw const StudioException('IMMUTABLE_VERSION_CONFLICT');
+      }
+      return;
+    }
+    _db.execute('INSERT INTO entity_versions VALUES(?,?,?,?,?)', [
+      _ns,
+      projectId,
+      id,
+      int.parse(version),
+      hash,
+    ]);
+  }
+
+  void _pinBlobs(ProjectDocument project) {
+    for (final b in project.toJson()['blobs'] as List) {
+      _db.execute('INSERT OR IGNORE INTO blob_edges VALUES(?,?,?,?)', [
+        _ns,
+        project.projectId,
+        project.revision.toInt(),
+        b['hash'],
+      ]);
+    }
+  }
+
   CommitReceipt _commit(
     WriterToken writer,
     String commandId,
     String receiptKey,
     BigInt expectedRevision,
-    Map<String, dynamic> payload,
-  ) {
+    Map<String, dynamic> payload, {
+    EditOperation? operation,
+  }) {
     if (writer.namespace != namespace) {
       throw const StudioException('NAMESPACE_MISMATCH');
     }
@@ -290,7 +420,7 @@ final class DocumentRepository {
       }
       final before = read(writer.projectId);
       if (before == null) throw const StudioException('PROJECT_NOT_FOUND');
-      before.requireFoundationWritable();
+      requireLocalEditingWritable(before);
       if (before.revision != expectedRevision) {
         throw const StudioException('REVISION_CONFLICT');
       }
@@ -301,9 +431,26 @@ final class DocumentRepository {
       if (head['owner'] != writer.owner || head['fence'] != writer.epoch) {
         throw const StudioException('WRITER_FENCED');
       }
-      String title;
-      if (payload['kind'] == 'renameProject') {
-        title = payload['title'] as String;
+      ProjectDocument candidate;
+      if (operation != null) {
+        final allocations = <String, String>{};
+        String nextVersion(String id) => allocations.putIfAbsent(id, () {
+          final max =
+              _db.select(
+                    'SELECT max(version) AS version FROM entity_versions WHERE ns=? AND project_id=? AND entity_id=?',
+                    [_ns, writer.projectId, id],
+                  ).single['version']
+                  as int?;
+          final next = BigInt.from(max ?? 0) + BigInt.one;
+          if (next > maxI64) throw const StudioException('VERSION_OVERFLOW');
+          return next.toString();
+        });
+        candidate = applyEdit(
+          before,
+          operation,
+          nextVersion: nextVersion,
+          newId: () => const Uuid().v7(),
+        );
       } else {
         requireId(payload['targetCommandId'] as String);
         final target = _db.select(
@@ -328,15 +475,15 @@ final class DocumentRepository {
             historical.revision != expectedRevision - BigInt.one) {
           throw const StudioException('STORE_INTEGRITY');
         }
-        historical.requireFoundationWritable();
-        title = historical.title;
+        requireLocalEditingWritable(historical);
+        candidate = historical.withTitle(historical.title, expectedRevision);
       }
-      final changed = title != before.title;
+      final changed = candidate.canonicalJson != before.canonicalJson;
       if (changed && expectedRevision == maxI64) {
         throw const StudioException('REVISION_OVERFLOW');
       }
-      final after = before.withTitle(
-        title,
+      final after = candidate.withTitle(
+        candidate.title,
         changed ? expectedRevision + BigInt.one : expectedRevision,
       );
       final previousSeq =
@@ -346,7 +493,7 @@ final class DocumentRepository {
               ).single['next_seq']
               as int) -
           1;
-      final inverse = {'kind': 'restoreProjectTitle', 'title': before.title};
+      final inverse = {'kind': 'restoreSnapshot', 'snapshotHash': before.hash};
       final inverseHash = contentHash(inverse);
       final result = {
         'disposition': changed ? 'applied' : 'noDocumentChange',
@@ -357,11 +504,45 @@ final class DocumentRepository {
         'beforeImageRef': before.hash,
         'afterImageRef': after.hash,
         'inversePatchRef': changed ? inverseHash : null,
-        'invalidatedRanges': [],
+        'invalidatedRanges':
+            changed &&
+                contentHash(before.toJson()['sequences']) !=
+                    contentHash(after.toJson()['sequences']) &&
+                (Q.fromJson(before.toJson()['sequences'][0]['duration']) >
+                        Q.of(0) ||
+                    Q.fromJson(after.toJson()['sequences'][0]['duration']) >
+                        Q.of(0))
+            ? [
+                {
+                  'sequenceId': after.toJson()['rootSequenceId'],
+                  'range': {
+                    'start': Q.of(0).toJson(),
+                    'duration':
+                        (Q.fromJson(
+                                      before
+                                          .toJson()['sequences'][0]['duration'],
+                                    ) >
+                                    Q.fromJson(
+                                      after
+                                          .toJson()['sequences'][0]['duration'],
+                                    )
+                                ? Q.fromJson(
+                                    before.toJson()['sequences'][0]['duration'],
+                                  )
+                                : Q.fromJson(
+                                    after.toJson()['sequences'][0]['duration'],
+                                  ))
+                            .toJson(),
+                  },
+                },
+              ]
+            : [],
         'warnings': [],
       };
       if (changed) {
         _put(after.hash, after.canonicalJson);
+        _registerDefinitions(after);
+        _pinBlobs(after);
         _put(inverseHash, jsonEncode(inverse));
         _db.execute(
           'UPDATE project_heads SET revision=?,snapshot_hash=? WHERE ns=? AND project_id=? AND revision=? AND owner=? AND fence=?',

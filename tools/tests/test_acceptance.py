@@ -35,6 +35,23 @@ class AcceptanceTests(unittest.TestCase):
         embedded = re.search(r"r'''\n(.*?)\n'''", dart, re.S).group(1)
         self.assertEqual(schemas[0], json.loads(embedded))
 
+    def test_frozen_v1_migration_sql_matches_actual_dart_bytes(self):
+        dart=(ROOT/'packages/studio_store/lib/studio_store.dart').read_text()
+        quote=chr(39)*3
+        sql=re.search('const _ddl = '+quote+r'\n(.*?)'+quote+';',dart,re.S).group(1)
+        self.assertEqual(sql,(ROOT/'fixtures/store/v1.sql').read_text())
+
+    def test_all_87_overlay_rows_retain_original_acceptance_and_dependencies(self):
+        original=json.loads((ROOT/'docs/studio/tasks/work-items.json').read_text())['tasks']
+        overlay=json.loads((ROOT/'docs/implementation/task-status.json').read_text())['tasks']
+        self.assertEqual(len(original),87)
+        self.assertEqual({t['id'] for t in overlay},{t['id'] for t in original})
+        self.assertEqual(len(overlay),87)
+        by_id={t['id']:t for t in original}
+        for task in overlay:
+            self.assertEqual(task['remainingAcceptance'],by_id[task['id']]['acceptance'])
+            self.assertEqual(task['hardDeps'],by_id[task['id']]['hardDeps'])
+
     def test_hidden_loader_and_skipped_tests_are_not_counted(self):
         output = '\n'.join(json.dumps(x) for x in [
             {'type': 'testDone', 'hidden': True, 'skipped': False},

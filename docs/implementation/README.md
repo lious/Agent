@@ -1,12 +1,17 @@
-# 可运行基础切片
+# 可运行本地视频开发切片
 
-**不是完整视频编辑器。** 目前可运行：两个共享 Flutter 宿主，创建空工程、编辑标题、
-SQLite 事务提交、撤销最新命令、退出重开。已有代码、真实 SQLite/Flutter 测试和 Linux
-构建/启动证据；V-001/I-001/I-002/I-003 整任务仍为部分完成。
+**不是完整视频编辑器，也未完成全部87项。** 已有真实双 Flutter 宿主与共享 Dart/C++：
+素材导入 → 单轨 split/trim/slip 等 → SQLite 事务 → 含原件工程 ZIP 保存 → 关闭重开 →
+安全 fork 恢复 → FFmpeg 软件 H264/MP4 导出。原件/数据库不上传，无模型或付费 API。
+
+当前可运行范围严格限制为 silent CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048。
+有音轨输入需明确 video-only 确认；未知色彩、VFR、旋转、alpha 等不伪装成可导出。
+原 104 文档不变；全部87项逐项保留原验收：18 partial、56 planned、13 blocked（验证资源）。
+**整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
-- [范围/偏差 ADR](../adr/0001-foundation-slice.md)
+- [基础 ADR](../adr/0001-foundation-slice.md) · [本地视频范围/偏差 ADR 0002](../adr/0002-local-video-vertical-slice.md)
 - [执行进度](task-status.json)
 - [三轮实际自审记录](REVIEW.md)
 - [开发机工具链](../../tools/spikes/toolchain/linux-dev.json)
@@ -31,45 +36,68 @@ flutter pub get --enforce-lockfile
 未声称其他 Flutter/Dart 版本验证通过。当前 sqlite3 2.x 适配器动态链接系统 SQLite，
 不是已打包验证的 iOS/Android/Windows 插件；这些平台需另接可信库和门禁。
 
-## 启动
+## 构建真实 native adapter / 启动
+
+在上述基础依赖外，当前开发机实际链接 FFmpeg 7.1.x（不是旧 FFmpegKit binary）：
 
 ```sh
+sudo apt-get install libavformat-dev libavcodec-dev libavutil-dev libswscale-dev nlohmann-json3-dev ffmpeg
+# 必须检查 pkg-config；Ubuntu24.04 默认 FFmpeg6.1 不等同这里已验证的 7.1 开发机。
+pkg-config --modversion libavformat libavcodec libavutil libswscale
+cmake -S native/studio_media -B /tmp/studio-media-native -G Ninja
+cmake --build /tmp/studio-media-native
+ctest --test-dir /tmp/studio-media-native --output-on-failure
+
+export STUDIO_MEDIA_LIBRARY=/tmp/studio-media-native/libstudio_media.so
+export STUDIO_DEMO_DATA_DIR=/自己的稳定开发目录
 cd apps/studio_demo  # 或 apps/image_demo
 flutter run -d linux
 ```
 
-默认 demo 数据在系统临时目录 `studio-foundation-demo/<appId>.sqlite`，
-**不是生产用户数据目录，也不保证被系统保留**。可用环境变量
-`STUDIO_DEMO_DATA_DIR=/自己的开发目录` 指定稳定目录。demo 只操作合成工程，
-不导入用户素材，不访问网络。新建 projectId 固定为 demo-project。
+不设置 STUDIO_MEDIA_LIBRARY 时只打开 metadata UI，明确显示 adapter 未安装；
+不自动下载 native binary。默认数据库在系统临时目录 studio-foundation-demo，可能被清理；
+稳定目录需自行明确设置。两 App 各自 SQLite / namespace CAS，不访问旧 Mac 工程。
 
-## 重跑验收（从仓库根）
+在 UI 手动输入本地视频路径 → Import → 选择 clip → split/trim/delete/undo →
+输入归档路径保存 → Restore as fork → 输入 MP4 输出路径导出。无视频预览/音频混音/字幕编辑。
+归档和 MP4 输出会在成功校验后原子替换所选目标；不得将其指向原始素材或其他重要文件。
+已拒绝当前 CAS/数据库/本会话选过的原件，但尚无跨会话 host FileRegistry 误覆盖保护。
+
+## 可复跑验收（从仓库根）
 
 ```sh
-python3 -m unittest discover -s tools/tests -v
-python3 tools/acceptance/run_task.py I-001 --profile linux-dev --report artifacts/acceptance/I-001.json
-python3 tools/acceptance/run_task.py I-002 --profile linux-dev --report artifacts/acceptance/I-002.json
-python3 tools/acceptance/run_task.py I-003 --profile linux-dev --report artifacts/acceptance/I-003.json
+# 一条命令：造合成片、编译/CTest、Dart事务/编辑、Flutter真实媒体控件、工具测试、文档校验
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /tmp/studio-media-native --report artifacts/local-video/verification.json
+# 同一受限 suite 可从实际受影响任务的入口运行；不是整项验收完成声明：
+python3 tools/acceptance/run_task.py I-024 --profile linux-dev --report artifacts/acceptance/I-024.json
+# 原工具链资格探针：每宿主3次 clean/release build/Xvfb首帧 + 3次独立C ABI probe
 python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/acceptance/V-001.json
 ```
 
-runner 的退出码 0 仅指本次已实现范围检查通过，报告始终明确
-`fullTaskComplete:false`；未知 task/profile 退出 2，命令失败退出 1。
-V-001 在每个 App 上执行 3 次 clean→release build→Xvfb 首帧启动，同时 3 次
-全新 C++20 shared-library build 与真实 Dart FFI 调用。探针不是 FFmpeg 媒体引擎。
+run_local_video 强制设置真实 native library 与合成媒体 fixture，跳过任何媒体/widget 测试则失败。
+报告记录命令、退出码、工具版本、源文件 SHA、非 hidden/非 skipped 测试数，始终
+fullTaskComplete:false。原 I001-I003 foundation 入口仍保留；单独运行 SDK 测试未设置 native
+变量会 skip 媒体测试，不得以此冒充媒体验证。Widget 测试需从所属 package 执行以打包 shader。
 
-也可分别运行：
+当前证据见 evidence/local-video/；当前共有 58 个 Dart/Flutter 测试（包含1000 seeded
+领域 cases 与1000次真实 SQLite edit/undo，不将内部循环伪报成独立测试数），6个工具测试，
+3个 native CTest cases（100个双namespace开关轮次、10次native cancel、fd增量0），另有
+ASan/UBSan/LSan 的相同3 cases。最终准确计数以 verification.json 为准。
+
+可保留实际演示成片（需要 suite 产生的3秒 fixture 和全新工作目录；会替换指定 output）：
 
 ```sh
-dart test packages/studio_contracts/test packages/studio_document/test packages/studio_store/test packages/studio_sdk/test
-(cd packages/studio_editor_ui && flutter test)
-flutter analyze
-dart format --output=none --set-exit-if-changed packages apps/studio_demo/lib apps/image_demo/lib packages/studio_document/tool/generate_empty_fixture.dart tools/spikes/toolchain/ffi_probe.dart
+dart run packages/studio_sdk/tool/local_video_demo.dart /tmp/studio-media-native/libstudio_media.so artifacts/local-video/input.mp4 artifacts/local-video/new-demo artifacts/local-video/demo.mp4
+ffprobe -v error -count_frames -show_entries stream=codec_name,nb_read_frames,duration,width,height -of json artifacts/local-video/demo.mp4
 ```
 
-Widget 测试必须在所属 Flutter package 运行，才能正确打包官方 Material UI shader。
-Flutter 3.50 已拆出官方 `material_ui`（本版本 1.11.1），不用弃用的 material.dart。
-CI 配方见 `docs/implementation/foundation-ci.yml`（只读权限、无部署）。当前 GitHub CLI 的 OAuth 授权缺少 workflow scope，GitHub 拒绝了工作流文件上传；本分支只提交不执行的 CI 配方，没有安装或声称远端 CI 已通过。若以后启用，需要用户另行授权 workflow 并把配方安装到 .github/workflows/。
+此演示生产 Dart/C++ 路径导出 320×180、45帧、1.5秒 H264，并保留真实工程包和数据库。
+没有把旧 Schema 模拟测试当成 App/媒体测试。CLI 只接受宿主明确选择的路径，不能暴露给模型工具。
+
+CI 配方 docs/implementation/foundation-ci.yml 仍为 **不执行的 foundation-only 配方**。
+GitHub OAuth 缺 workflow scope，未提权/绕过，没有启用 .github/workflows 或声称远端 CI 通过。
+当前 FFmpeg 系统配置含 GPL libx264，未完成源码锁定/SBOM/再分发审查；许可 unknown 只警告，
+不伪造授权。真机/其他平台/模型/付费 API/生产发布未运行。
 
 ## 代码地图
 
@@ -77,13 +105,17 @@ CI 配方见 `docs/implementation/foundation-ci.yml`（只读权限、无部署�
 | --- | --- |
 | studio_contracts | AppProfile、namespace、稳定错误码、ID |
 | studio_document | BigInt 有理时间/帧/sample/区间；2.0 文档值、工厂、部分 validator、JCS hash |
-| studio_store | SQLite 初始迁移；namespace 查询；fence/CAS/receipt/journal/outbox 原子写；最新命令撤销 |
+| studio_store | SQLite v1→v2；revision/CAS/fence/receipt/outbox/历史定义与blob pins；最新快照撤销；CAS原件；受限ZIP归档/fork；Linux原子发布 |
 | studio_harness | scoped SessionRef 与 ProposalPort 契约；没有可执行 Agent |
-| studio_sdk | 单一装配入口，显式 expectedRevision；未装配的媒体/归档抽象端口 |
-| studio_editor_ui | 两宿主复用的真实标题编辑 UI |
-| apps/* | 只有 AppProfile、开发数据路径与 Linux runner |
-| tools/spikes/toolchain | 独立 C++20 ABI、Int64 往返和 namespace handle 探针 |
+| studio_media / native/studio_media | Dart FFI与实际C++20 libav probe/decode/软件H264/MP4、取消与能力事实 |
+| studio_sdk | 同一装配/事务入口，真实导入、编辑、保存、恢复、冻结快照导出 |
+| studio_editor_ui | 两宿主共享的真实 metadata 与 local-video 操作 UI |
+| apps/* | AppProfile、明确安装的 native library、开发数据路径与 Linux runner |
+| tools/acceptance | 实际非跳过媒体suite与逐项受限入口；不会改写原规划验收 |
 
-生产功能未完成：导入、时间线剪辑、.studioproj 包保存/恢复、FFmpeg 渲染导出、
-音视频设备/硬件加速、Agent 执行、端侧模型、云生成、支付、发布。
-不得将工作 SQLite 关闭重开测试称为上述工程归档或媒体闭环已完成。
+## 尚未完成 / 下一批（持续授权，不需逐批审阅）
+
+优先 I-010 字幕、I-009 音频语义、I-012 autosave/save serialization、I-011 崩溃点与恢复扫描，
+再接 I-021 seek/cache、I-023真实音频执行、I-024 AAC/音画同步与60秒资格。
+并继续所有无外部条件阻塞的87项依赖就绪任务；详细每项仍欠缺的原验收在 task-status.json。
+没有自动 merge 功能分支、force/rebase 已推历史、访问 Mac、下载模型或部署。

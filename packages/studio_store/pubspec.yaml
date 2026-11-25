@@ -13,7 +13,12 @@
     "studio_contracts": {
       "path": "../studio_contracts"
     },
-    "sqlite3": "^2.9.4"
+    "sqlite3": "^2.9.4",
+    "archive": "4.7.1",
+    "crypto": "^3.0.8",
+    "ffi": "^2.2.0",
+    "uuid": "^4.6.0",
+    "path": "^1.9.1"
   },
   "dev_dependencies": {
     "test": "^1.26.3",

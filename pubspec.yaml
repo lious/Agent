@@ -12,7 +12,8 @@
     "packages/studio_sdk",
     "apps/studio_demo",
     "apps/image_demo",
-    "packages/studio_editor_ui"
+    "packages/studio_editor_ui",
+    "packages/studio_media"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

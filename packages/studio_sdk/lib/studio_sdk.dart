@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:studio_store/blob_store.dart';
+import 'package:studio_store/atomic_file.dart';
+import 'package:studio_store/project_archive.dart';
+import 'package:studio_media/studio_media.dart';
 import 'package:studio_store/studio_store.dart';
 import 'package:studio_document/studio_document.dart';
 import 'package:uuid/uuid.dart';
@@ -7,6 +13,9 @@ export 'package:studio_harness/studio_harness.dart';
 
 export 'ports.dart';
 
+export 'package:studio_store/blob_store.dart' show LocalFileGrant;
+export 'package:studio_media/studio_media.dart' show NativeMedia;
+
 /// Composition root for both hosts. No media, model, payment or upload port is
 /// implicitly installed. All mutating calls use the same repository coordinator.
 final class StudioWorkspace {
@@ -15,14 +24,41 @@ final class StudioWorkspace {
     required String databasePath,
     required String tenantId,
     required String workspaceId,
-  }) : _repository = DocumentRepository.open(
+    String? mediaLibraryPath,
+    String? mediaRootPath,
+  }) : _databasePath = File(databasePath).absolute.uri
+           .normalizePath()
+           .toFilePath(),
+       _repository = DocumentRepository.open(
          databasePath,
          profile.namespace(tenantId, workspaceId),
-       );
+       ) {
+    try {
+      if ((mediaLibraryPath == null) != (mediaRootPath == null)) {
+        throw const StudioException('MEDIA_CONFIGURATION_INCOMPLETE');
+      }
+      if (mediaLibraryPath != null && mediaRootPath != null) {
+        _blobs = BlobStore(Directory(mediaRootPath), _repository.namespace);
+        _media = NativeMedia.open(mediaLibraryPath, _repository.namespace);
+      }
+    } catch (_) {
+      _repository.close();
+      rethrow;
+    }
+  }
   final AppProfile profile;
+  final String _databasePath;
+  final Set<String> _selectedInputs = {};
   final DocumentRepository _repository;
   final _uuid = const Uuid();
   WriterToken? _writer;
+  BlobStore? _blobs;
+  NativeMedia? _media;
+  String _activeProjectId = 'demo-project';
+  int _exportCancelEpoch = 0;
+  bool _closed = false;
+  NativeMedia? get media => _media;
+  String get projectId => _activeProjectId;
   void _requireMetadata() {
     if (!profile.features.contains('project.metadata')) {
       throw const StudioException('CAPABILITY_UNAVAILABLE');
@@ -31,7 +67,8 @@ final class StudioWorkspace {
 
   ProjectDocument openDemo() {
     _requireMetadata();
-    var project = _repository.read('demo-project');
+    _activeProjectId = _repository.selectedProjectId ?? 'demo-project';
+    var project = _repository.read(_activeProjectId);
     if (project == null) {
       project = ProjectDocument.empty(
         namespace: _repository.namespace,
@@ -40,6 +77,7 @@ final class StudioWorkspace {
       );
       _repository.create(project);
     }
+    _repository.selectProject(project.projectId);
     _writer = _repository.acquireWriter(
       project.projectId,
       _uuid.v7(),
@@ -48,8 +86,8 @@ final class StudioWorkspace {
     return project;
   }
 
-  ProjectDocument get current => _repository.read('demo-project')!;
-  bool get canUndo => _repository.latestCommandId('demo-project') != null;
+  ProjectDocument get current => _repository.read(_activeProjectId)!;
+  bool get canUndo => _repository.latestCommandId(_activeProjectId) != null;
   ProjectDocument rename(String title, {required BigInt expectedRevision}) {
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
@@ -67,7 +105,7 @@ final class StudioWorkspace {
   ProjectDocument undo({required BigInt expectedRevision}) {
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
-    final target = _repository.latestCommandId('demo-project');
+    final target = _repository.latestCommandId(_activeProjectId);
     if (target == null) throw const StudioException('NOTHING_TO_UNDO');
     final id = _uuid.v7();
     _repository.undoLatest(
@@ -80,5 +118,282 @@ final class StudioWorkspace {
     return current;
   }
 
-  void close() => _repository.close();
+  void _requireMedia() {
+    _requireMetadata();
+    if (_media == null || _blobs == null) {
+      throw const StudioException('MEDIA_ADAPTER_NOT_INSTALLED');
+    }
+    if (!profile.features.contains('media.local')) {
+      throw const StudioException('CAPABILITY_UNAVAILABLE');
+    }
+  }
+
+  ProjectDocument edit(
+    EditOperation operation, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMetadata();
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    final id = _uuid.v7();
+    _repository.edit(
+      writer: _writer!,
+      commandId: id,
+      receiptKey: id,
+      expectedRevision: expectedRevision,
+      operation: operation,
+    );
+    return current;
+  }
+
+  Future<ProjectDocument> importVideo(
+    LocalFileGrant grant, {
+    required BigInt expectedRevision,
+    bool acknowledgeVideoOnly = false,
+    bool matchEmptySequence = true,
+  }) async {
+    _requireMedia();
+    final projectId = _activeProjectId;
+    _selectedInputs.add(grant.file.resolveSymbolicLinksSync());
+    final blob = await _blobs!.importFile(grant);
+    final probe = await _media!.probeAsync(blob.file);
+    if (_activeProjectId != projectId || _closed) {
+      throw const StudioException('PROJECT_CHANGED');
+    }
+    final rawStreams = probe['streams'] as List;
+    if (rawStreams.any((v) => v['type'] == 'audio') && !acknowledgeVideoOnly) {
+      throw const StudioException('AUDIO_IMPORT_REQUIRES_VIDEO_ONLY_ACK');
+    }
+    final assetId = _uuid.v7(), rightsId = _uuid.v7();
+    final streams = rawStreams
+        .map((v) => streamDocument(v as Map<String, dynamic>, assetId: assetId))
+        .toList();
+    final name = grant.file.uri.pathSegments.last;
+    final asset = {
+      'id': assetId,
+      'version': '1',
+      'name': name,
+      'kind': 'video',
+      'originalBlobHash': blob.hash,
+      'externalLocator': null,
+      'streams': streams,
+      'proxyRefs': [],
+      'rightsId': rightsId,
+      'contentFingerprint': blob.hash,
+      'status': 'ready',
+    };
+    final rights = {
+      'id': rightsId,
+      'kind': 'license',
+      'assetIds': [assetId],
+      'holder': 'unknown',
+      'statement': 'No license evidence supplied; allow_with_warning. No rights verification claimed.',
+      'evidenceBlobHash': null,
+      'providerTermsRef': null,
+      'allowedUses': [],
+      'territories': [],
+      'expiresAt': null,
+      'consentId': null,
+      'verified': false,
+    };
+    return edit(
+      AppendVideoAsset(
+        asset: asset,
+        blob: blob.toJson(),
+        rights: rights,
+        clipId: _uuid.v7(),
+        matchEmptySequence: matchEmptySequence,
+      ),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  void _protectOutput(File destination) {
+    AtomicFilePublisher().stagingFor(
+      destination,
+    ); // validate local parent/target
+    final path = destination.absolute.uri.normalizePath().toFilePath();
+    final cas = _blobs!.directory.absolute.path;
+    if (path == _databasePath ||
+        path.startsWith('$_databasePath-') ||
+        path == cas ||
+        path.startsWith('$cas${Platform.pathSeparator}') ||
+        _selectedInputs.contains(path)) {
+      throw const StudioException('PROTECTED_SOURCE_OUTPUT');
+    }
+  }
+
+  Future<BigInt> saveArchive(File destination) async {
+    _requireMedia();
+    _protectOutput(destination);
+    final snapshot = current;
+    await ProjectArchive().save(snapshot, _blobs!, destination);
+    return snapshot.revision;
+  }
+
+  Future<ProjectDocument> restoreArchive(LocalFileGrant source) async {
+    _requireMedia();
+    final verified = ProjectArchive().open(source.file);
+    final fork = forkLocalProject(
+      verified.project,
+      _repository.namespace,
+      newId: _uuid.v7,
+    );
+    for (final e in verified.originals.entries) {
+      await _blobs!.putVerifiedBytes(e.key, e.value);
+    }
+    if (_closed) throw const StudioException('WORKSPACE_CLOSED');
+    _repository.create(fork);
+    _repository.selectProject(fork.projectId);
+    _activeProjectId = fork.projectId;
+    _writer = _repository.acquireWriter(
+      fork.projectId,
+      _uuid.v7(),
+      expectedEpoch: 0,
+    );
+    return current;
+  }
+
+  void cancelExport() {
+    _exportCancelEpoch++;
+    _media?.cancel();
+  }
+
+  Future<Map<String, dynamic>> exportVideo(File destination) async {
+    _requireMedia();
+    _protectOutput(destination);
+    final snapshot = current;
+    requireLocalEditingWritable(snapshot);
+    final epoch = _exportCancelEpoch;
+    final d = snapshot.toJson(), s = snapshot.toJson()['sequences'][0];
+    final fps = FrameRate(
+      s['frameRate']['n'] as int,
+      s['frameRate']['d'] as int,
+    );
+    if (Q.fromJson(s['canvas']['pixelAspect']) != Q.of(1) ||
+        s['workingColor'] != 'linear-rec709' ||
+        s['outputColor'] != 'rec709' ||
+        contentHash(s['backgroundRGBA']) != contentHash([0, 0, 0, 1])) {
+      throw const StudioException('CANVAS_RENDER_POLICY_NOT_IMPLEMENTED');
+    }
+    final count = fps
+        .frameIndex(Q.fromJson(s['duration']), Rounding.tiesToEven)
+        .toInt();
+    if (count <= 0) throw const StudioException('EMPTY_SEQUENCE');
+    final assets = {for (final a in d['assets'] as List) a['id']: a};
+    final segments = <Map<String, dynamic>>[];
+    final probed = <String, Map<String, dynamic>>{};
+    for (final track in s['tracks']) {
+      if (track['muted'] == true) continue;
+      for (final clip in track['items']) {
+        if (clip['source'] == null || clip['enabled'] == false) continue;
+        if (Q.fromJson(clip['timeMap']['rate']) != Q.of(1)) {
+          throw const StudioException('RETIME_RENDER_NOT_IMPLEMENTED');
+        }
+        final a = assets[clip['source']['id']];
+        final stream = (a['streams'] as List).singleWhere(
+          (v) => v['id'] == clip['source']['streamId'],
+        );
+        if (stream['variableFrameRate'] != false) {
+          throw const StudioException('VFR_RENDER_NOT_VALIDATED');
+        }
+        final color = stream['color'];
+        if (color == null ||
+            color['primaries'] != 'bt709' ||
+            color['transfer'] != 'bt709' ||
+            color['matrix'] != 'bt709' ||
+            color['range'] != 'limited' ||
+            color['bitDepth'] != 8 ||
+            color['alpha'] != 'none') {
+          throw const StudioException('COLOR_POLICY_REQUIRED');
+        }
+        final file = await _blobs!.resolve(a['originalBlobHash'] as String);
+        final fact = probed[a['originalBlobHash']] ??= await _media!.probeAsync(
+          file,
+        );
+        final position = (a['streams'] as List).indexWhere(
+          (v) => v['id'] == stream['id'],
+        );
+        final raw = (fact['streams'] as List)[position] as Map<String, dynamic>;
+        final actual = streamDocument(raw, assetId: 'verification')
+          ..remove('id');
+        final expected = Map<String, dynamic>.from(stream as Map)..remove('id');
+        if (contentHash(actual) != contentHash(expected)) {
+          throw const StudioException('SOURCE_STREAM_CHANGED');
+        }
+        final index = raw['index'] as int;
+        segments.add({
+          'path': file.absolute.path,
+          'startFrame': fps
+              .frameIndex(
+                Q.fromJson(clip['timelineRange']['start']),
+                Rounding.tiesToEven,
+              )
+              .toInt(),
+          'frameCount': fps
+              .frameIndex(
+                Q.fromJson(clip['timelineRange']['duration']),
+                Rounding.tiesToEven,
+              )
+              .toInt(),
+          'sourceStart': clip['sourceRange']['start'],
+          'streamIndex': index,
+        });
+      }
+    }
+    final publisher = AtomicFilePublisher(),
+        stage = AtomicFilePublisher().stagingFor(destination);
+    try {
+      final result = await _media!.renderAsync({
+        'outputPath': stage.absolute.path,
+        'width': s['canvas']['width'],
+        'height': s['canvas']['height'],
+        'fps': s['frameRate'],
+        'frameCount': count,
+        'segments': segments,
+      });
+      if (epoch != _exportCancelEpoch || _closed) {
+        throw const StudioException('CANCELED');
+      }
+      final verified = await _media!.probeAsync(stage);
+      final video = (verified['streams'] as List).singleWhere(
+        (v) => v['type'] == 'video',
+      );
+      final sd = streamDocument(
+        video as Map<String, dynamic>,
+        assetId: 'export',
+      );
+      if (sd['codec'] != 'h264' ||
+          Q.fromJson(sd['duration']) != Q.fromJson(s['duration'])) {
+        throw const StudioException('EXPORT_VERIFICATION_FAILED');
+      }
+      final hash = await hashLocalFile(stage);
+      if (epoch != _exportCancelEpoch || _closed) {
+        throw const StudioException('CANCELED');
+      }
+      publisher.publish(stage, destination);
+      return {
+        ...result,
+        'snapshotHash': snapshot.hash,
+        'revision': snapshot.revision.toString(),
+        'outputHash': hash,
+        'audio': 'video-only',
+        'warnings': [
+          (d['rightsRecords'] as List).any((r) => r['verified'] != true)
+              ? 'LICENSE_EVIDENCE_MISSING'
+              : null,
+        ].whereType<String>().toList(),
+      };
+    } finally {
+      if (stage.existsSync()) stage.deleteSync();
+    }
+  }
+
+  void close() {
+    if (!_closed) {
+      cancelExport();
+      _closed = true;
+      _media?.close();
+      _repository.close();
+    }
+  }
 }

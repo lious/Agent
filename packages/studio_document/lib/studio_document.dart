@@ -8,6 +8,9 @@ import 'time.dart';
 import 'validator.dart';
 export 'time.dart';
 export 'validator.dart';
+export 'strict_json.dart';
+export 'edit_algebra.dart';
+export 'local_admission.dart';
 
 String contentHash(Object? value) =>
     'sha256:${sha256.convert(canonicalizeUtf8(value))}';

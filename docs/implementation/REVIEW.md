@@ -39,3 +39,26 @@
 - 加入完整空工程 golden，测试保存 JSON 与 Dart roundtrip 一致。
 - 最终复跑结果以 evidence JSON 为准；源码格式、静态分析、secret/二进制和 diff
   检查在提交前执行。所有整任务保留 partial，不用文件存在或合成设计测试标 done。
+
+## 本地视频后续批次：三轮实际审查 / 修正（2026-11-25，Asia/Shanghai）
+
+1. **真实链路审查**：首次 native 导出失败 `COLOR_POLICY_REQUIRED`。ffprobe 确认
+   synthetic testsrc 的 frame 元数据覆盖 CLI encoder 色彩选项，primaries/transfer 未指定。
+   用 setparams 明确设置合成 fixture；没有放宽未知色彩准入。随后真实导入→编辑→归档→
+   重开→FFmpeg 导出→跨 namespace fork 再导出通过，两个 45 帧结果逐字节一致。
+2. **领域与事务审查**：发现 lift/normal 尾 trim 会静默缩短 sequence。修为保留显式尾 Gap，
+   ripple 才改总长；零 delta 仍检查目标/锁/edge。历史 undo 后从最大曾用版本分配，而不是
+   恢复 pin +1。1000 seeded slip/inverse 范围用例、1000 次真实 SQLite edit/undo、
+   100 个竞争命令、post-definition/blob-pin 触发器失败回滚、v1→v2 重开均执行。
+   v1 fixture 最初多了 Dart 三引号会忽略的首个换行，真实迁移测试发现并修正；新增防回归。
+3. **边界/失败审查**：ZIP 中央目录原始重复/路径/尺寸预检、解码名称集合等值、完整 checksums
+   和 manifest closed fields；错误 hash relink、symlink、损坏 CAS、超限导入拒绝。
+   首次 hostile ZIP 测试的 encoder 自动规范化反斜杠，修为直接构造原始头部再验证，未降低断言。
+   Native 补充逐 packet 取消、EOF 覆盖边界、重复 JSON key/depth 限制和真实 profile/alpha。
+   SDK 拒绝覆盖 managed 原件/数据库；验证取消保好成片、导出中续编不改变冻结 revision。
+   CTest 100 双 namespace 开关轮次与 10 次真实 native cancel 均零 fd 增量；ASan/UBSan/LSan
+   重跑。共享 Flutter widget 实际点击 import/split/trim/undo/save/fork/export，不以文件存在
+   或旧 schema 模拟当 App 验收。
+
+最终命令、版本、退出码、非跳过测试计数见 evidence/local-video/verification.json；
+全平台/全模型未运行范围和 TOCTOU/流式/完整撤销栈等已知缺口见 ADR 0002，不声称全部87项完成。

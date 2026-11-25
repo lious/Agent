@@ -19,7 +19,10 @@
     "studio_harness": {
       "path": "../studio_harness"
     },
-    "uuid": "^4.5.1"
+    "uuid": "^4.5.1",
+    "studio_media": {
+      "path": "../studio_media"
+    }
   },
   "dev_dependencies": {
     "test": "^1.26.3",

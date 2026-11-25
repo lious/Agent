@@ -14,8 +14,12 @@ void main(List<String> args) {
     profile: AppProfile(
       appId: 'image_demo',
       region: 'local',
-      features: {'project.metadata'},
+      features: {'project.metadata', 'media.local'},
     ),
+    mediaLibraryPath: Platform.environment['STUDIO_MEDIA_LIBRARY'],
+    mediaRootPath: Platform.environment.containsKey('STUDIO_MEDIA_LIBRARY')
+        ? '$root/media'
+        : null,
     databasePath: '$root/image_demo.sqlite',
     tenantId: 'local',
     workspaceId: 'default',
