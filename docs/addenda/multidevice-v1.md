@@ -1,8 +1,22 @@
-# 多端 + 同一会话分布式计算增量 v1.2.0
+# 多端 + 同一会话分布式计算增量 v1.3.0
 
 有效需求：t83u「web、桌面、iOS、安卓…多设备直通互联协同工作」；t84u进一步明确
 「同一个会话…多端调度算力分配任务协同」。本增量是用户新增范围，不改写原104份导出，
 不把原87项改成“已完成”，也不只交付文件同步/工程fork。
+
+## v1.3.0 实现增量
+
+Linux同一kernel boot内显式owner恢复：持久metadata输入/原PlanGraph、kernel
+CLOCK_BOOTTIME/boot_id、原预算/attempt/fence；原子撤销旧grant/offer，不自动监听或续权。
+不同/未知OS boot保守耗尽剩余wall预算；实际测试是进程/DB重开，不是假装真机重启。
+新增收到inbox视频的显式生产CAS采纳与持久幂等、原edit/undo/save/reopen/真实H264导出，
+以及与全部受支持SDK发布路径串行的历史pin安全GC、过期/撤销inbox SQL事务清理。
+SQLite v7仅加表，不改旧迁移。真实回归修正跨boot quarantine绕过与排队导入writer ABA。
+详见 [ADR0007](../adr/0007-explicit-session-recovery-and-controlled-cas-adoption.md)。
+
+这闭合了上述**受限路径**，没有缩减原87/XD10整体验收。WebRTC持久证书/指纹机制已
+核实是可行后续；真实Web transport/native bridge/grant集成仍待实现（不是外部不可行），
+没有用匿名socket、native mTLS冒充Web或默认云中继。seek/cache/音频AAC/完整Schema继续待做。
 
 ## v1.2.0 实现增量
 

@@ -27,6 +27,10 @@ class _FoundationAppState extends State<FoundationApp>
       _captionStart = TextEditingController(text: '0'),
       _captionDuration = TextEditingController(text: '1000'),
       _captionPath = TextEditingController();
+  final _peerHash = TextEditingController();
+  String? _peerAdoptionId;
+  BigInt? _peerAdoptionRevision;
+  bool _gcConfirmed = false;
   String? _captionSelected;
   String? _error, _selected;
   String _status =
@@ -173,6 +177,7 @@ class _FoundationAppState extends State<FoundationApp>
       _captionStart,
       _captionDuration,
       _captionPath,
+      _peerHash,
     ]) {
       c.dispose();
     }
@@ -216,6 +221,69 @@ class _FoundationAppState extends State<FoundationApp>
               return 'Video imported; rights evidence not verified.';
             }),
       child: const Text('Import video'),
+    ),
+    TextField(
+      key: const Key('peer-adopt-hash'),
+      controller: _peerHash,
+      enabled: !_busy,
+      onChanged: (_) {
+        _peerAdoptionId = null;
+        _peerAdoptionRevision = null;
+      },
+      decoration: const InputDecoration(
+        labelText: 'Received peer inbox raw SHA256 to explicitly adopt as video (no path)',
+      ),
+    ),
+    FilledButton(
+      key: const Key('peer-adopt-video'),
+      onPressed: _busy
+          ? null
+          : () => _run(() async {
+              _peerAdoptionId ??=
+                  'adopt-ui-${DateTime.now().microsecondsSinceEpoch}';
+              _peerAdoptionRevision ??= _project.revision;
+              await widget.workspace.adoptPeerVideo(
+                _peerHash.text.trim(),
+                commandId: _peerAdoptionId!,
+                expectedRevision: _peerAdoptionRevision!,
+                acknowledgeVideoOnly: _videoOnly,
+              );
+              return 'Peer inbox video adopted into production CAS/project; retry of this intent is idempotent. Rights remain unverified.';
+            }),
+      child: const Text('Explicitly adopt received video into project'),
+    ),
+    OutlinedButton(
+      onPressed: _busy
+          ? null
+          : () => setState(() {
+              _peerAdoptionId = null;
+              _peerAdoptionRevision = null;
+            }),
+      child: const Text('Start NEW adoption intent at displayed revision'),
+    ),
+    CheckboxListTile(
+      key: const Key('gc-consent'),
+      value: _gcConfirmed,
+      onChanged: _busy
+          ? null
+          : (v) => setState(() => _gcConfirmed = v ?? false),
+      title: const Text(
+        'Explicitly delete only unreferenced managed CAS files and revoked/expired inbox transfers; keep ALL historical project pins',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('collect-local-garbage'),
+      onPressed: _busy
+          ? null
+          : () => _run(() async {
+              if (!_gcConfirmed) {
+                throw const StudioException('GC_EXPLICIT_CONSENT_REQUIRED');
+              }
+              final receipt = await widget.workspace.collectLocalGarbage();
+              _gcConfirmed = false;
+              return 'Controlled local GC: $receipt. SQLite pages may be reused; no physical disk shrink promised.';
+            }),
+      child: const Text('Collect unreferenced local material (explicit only)'),
     ),
     for (final c in _clips)
       ListTile(
@@ -566,6 +634,8 @@ class _FoundationAppState extends State<FoundationApp>
                   storageScope: widget.workspace.peerStorageScope,
                   lockPath: widget.workspace.peerIdentityLockPath,
                   createSession: widget.workspace.createMetadataComputeSession,
+                  listRecovery: widget.workspace.recoverableMetadataSessions,
+                  recoverSession: widget.workspace.recoverMetadataSession,
                 ),
                 const Text(
                   'Project metadata · local SQLite',

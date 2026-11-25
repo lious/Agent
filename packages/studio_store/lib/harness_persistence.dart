@@ -4,6 +4,28 @@ part of 'studio_store.dart';
 /// API. Dispatch is currently free pure/localCandidate work, NEVER paid submission
 /// or direct project writes. Results are candidates bound to a frozen plan.
 extension HarnessPersistence on DocumentRepository {
+  /// Trusted-local synchronous administration only. No peer RPC or async action.
+  /// Keep boot authorization and mutations in one writer transaction.
+  T withHarnessCoordinator<T>(
+    SessionRef session,
+    String planHash,
+    String boot,
+    T Function() action,
+  ) => _transaction(() {
+    requireHarnessCoordinator(session, planHash, boot);
+    return action();
+  });
+
+  void requireHarnessCoordinator(
+    SessionRef session,
+    String planHash,
+    String boot,
+  ) {
+    if (_planRow(session, planHash)['boot'] != boot) {
+      throw const StudioException('COORDINATOR_FENCED');
+    }
+  }
+
   void registerHarnessPlan(
     SessionRef session,
     String projectId,
@@ -24,13 +46,16 @@ extension HarnessPersistence on DocumentRepository {
       throw const StudioException('REVISION_CONFLICT');
     }
     final existing = _db.select(
-      'SELECT json,project_id FROM harness_plans WHERE ns=? AND session_id=? AND plan_hash=?',
+      'SELECT json,project_id,boot FROM harness_plans WHERE ns=? AND session_id=? AND plan_hash=?',
       [_ns, session.id, plan.hash],
     );
     if (existing.isNotEmpty) {
       if (existing.single['json'] != jsonEncode(p) ||
           existing.single['project_id'] != projectId) {
         throw const StudioException('IDEMPOTENCY_CONFLICT');
+      }
+      if (existing.single['boot'] != coordinatorBoot) {
+        throw const StudioException('COORDINATOR_FENCED');
       }
       return;
     }
@@ -137,6 +162,12 @@ extension HarnessPersistence on DocumentRepository {
         }
       }
     }
+    // Reservations have been conservatively carried into newBoot. Retaining
+    // orphaned old-boot rows would make global quarantine impossible to release.
+    _db.execute('DELETE FROM harness_quarantine WHERE ns=? AND boot=?', [
+      _ns,
+      expectedBoot,
+    ]);
     _db.execute(
       'UPDATE harness_plans SET boot=?,started_ms=?,last_ms=0 WHERE ns=? AND session_id=? AND plan_hash=?',
       [newBoot, -consumed, _ns, session.id, planHash],
@@ -292,13 +323,24 @@ extension HarnessPersistence on DocumentRepository {
         throw const StudioException('LEASE_BUSY');
       }
     }
-    final quarantine = _db.select(
-      'SELECT until_ms FROM harness_quarantine WHERE ns=? AND device_id=? AND boot=?',
-      [_ns, device.id, coordinatorBoot],
+    final quarantines = _db.select(
+      'SELECT q.*,max(p.last_ms) AS observed_ms FROM harness_quarantine q LEFT JOIN harness_plans p ON p.ns=q.ns AND p.boot=q.boot WHERE q.ns=? AND q.device_id=? GROUP BY q.ns,q.device_id,q.boot',
+      [_ns, device.id],
     );
-    if (quarantine.isNotEmpty &&
-        nowMs < (quarantine.single['until_ms'] as int)) {
-      throw const StudioException('DEVICE_RESOURCE_QUARANTINED');
+    for (final q in quarantines) {
+      // A different coordinator cannot interpret this boot's clock or simply
+      // ignore its reservation. Only its persisted owner-clock observation can
+      // prove expiry. Peer wall time is never used to free a resource slot.
+      final observed = q['boot'] == coordinatorBoot
+          ? nowMs
+          : q['observed_ms'] as int?;
+      if (observed == null || observed < (q['until_ms'] as int)) {
+        throw const StudioException('DEVICE_RESOURCE_QUARANTINED');
+      }
+      _db.execute(
+        'DELETE FROM harness_quarantine WHERE ns=? AND device_id=? AND boot=?',
+        [_ns, device.id, q['boot']],
+      );
     }
     // One heavy task/device, across all projects/plans in this namespace. A
     // fenced old-boot lease cannot reserve a current coordinator slot.

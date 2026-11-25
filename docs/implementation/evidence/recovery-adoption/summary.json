@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "increment": "1.3.0",
+  "checkedAt": "2026-11-25T13:28:54.821920+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "baselineCommit": "f843d6b066ba426755fb46bf5a4f0d1e9dbfe75a",
+  "scope": "Actual Linux owner-authorized same-session coordinator restart, mature native mTLS received video -> controlled production CAS -> persistent edit/adoption receipt -> archive/reopen/native silent MP4 export, explicit historical-pin-safe CAS and stale inbox GC. Existing actual Chrome editor/shared core only; NOT Web peer transport or physical devices.",
+  "counts": {
+    "nativeRegressionTests": 123,
+    "realChromeTests": 3,
+    "realOsKeyringNativeUiTests": 1,
+    "dartFlutterTotal": 127,
+    "skipped": 0,
+    "pythonToolTests": 6,
+    "nativeCTestCases": 3,
+    "internalSigkillExperiments": 50,
+    "cleanReleaseBuilds": 6,
+    "releaseFirstFrameStarts": 6,
+    "cleanAbiProbes": 3,
+    "focusedRecoveryTakeoverAdoptionSubsetRerun": 13
+  },
+  "counting": "Focused reruns, nine filesystem tests and 50 internal crash experiments are NOT additional Dart/Flutter cases; exact final aggregate is127. No old failed or pre-final-source run is counted as passing evidence.",
+  "boundedPathsClosed": [
+    {
+      "path": "Explicit same-session recovery after native UI + database reopen",
+      "evidence": "native-ui.json + focused-final.json + verification.json",
+      "preserves": "same session/plan/frozen inputs/results, attempts/fences/wall budget; no restored peer/listener/metadata/blob consent",
+      "wholeOriginalOrXdTaskComplete": false
+    },
+    {
+      "path": "Real TLS received-video -> CAS adoption -> save/archive -> reopen ->90-frame 3sec H264 export",
+      "evidence": "verification.json packages/studio_sdk/test/peer_adoption_test.dart",
+      "faults": "edit/receipt trigger rollback/retry, changed-input conflict, exact dedup, concurrent GC, undo/history pin",
+      "wholeOriginalOrXdTaskComplete": false
+    },
+    {
+      "path": "Explicit safe stale-inbox cleanup and unreferenced CAS collection",
+      "evidence": "verification.json + gc-files.json",
+      "faults": "SQL DELETE abort rolls back inbox/chunks/object; real symlink refusal, other-namespace isolation and lease failure cleanup",
+      "wholeOriginalOrXdTaskComplete": false
+    }
+  ],
+  "actualSecurityCorrections": [
+    "Fresh sessions cannot bypass recovered-device quarantine by using another boot; expire foreign reservations only on their persisted owner-clock observation",
+    "New coordinator UUID is independent of session ID; boot-mismatched existing-plan registration is fenced, not silent recovery",
+    "Boot-checked writer transaction covers grant issue/confirmation and revoke; stale invitation/listen/recovery registration deny, old close cannot revoke NEW owner grant",
+    "Queued CAS import/adoption retains both project ID and writer identity across waits/probe; same-project writer ABA rejects before publication",
+    "All supported SDK publishers and GC share one stable advisory filesystem lock plus owner-isolate FIFO through SQLite pins; raw parallel publisher isolates remain unsupported"
+  ],
+  "clock": "Actual Linux64 kernel boot_id + CLOCK_BOOTTIME, includes suspend. Only matching saved/current coordinator+kernel boot can account downtime. Unknown/reboot/unsupported clock consumes remaining budget. OS reboot/suspend NOT physically qualified.",
+  "sqlite": {
+    "version": "3.54.1",
+    "sourceId": "2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76",
+    "threadsafe": 1,
+    "schemaVersion": 7,
+    "genuineMigrations": [
+      "v4/system3.46.1 -> v7/fixed3.54.1",
+      "v5/fixed3.54.1 -> v7/fixed3.54.1",
+      "v6/fixed3.54.1 -> v7/fixed3.54.1"
+    ],
+    "oldSystemRuntimeDefaultRejected": true,
+    "fullProductionWalQualification": false
+  },
+  "limits": [
+    "one native peer/session, two fixed free bounded metadata nodes, no arbitrary model/video distributed execution",
+    "16MiB/blob,64KiB chunks,64MiB logical inbox stage reservation; NOT physical disk ceiling",
+    "explicit CAS GC max1000 canonical files deleted/run; synchronous enumeration not huge-store performance qualified",
+    "all historical blob_edges retained, no history pruning, physical DB shrink or globally rollbackable FS delete guarantee",
+    "single SDK owner isolate per process for CAS publication/GC; advisory process locks are NOT cross-isolate mutexes"
+  ],
+  "webTransport": {
+    "implemented": false,
+    "objectiveExternalBlocker": false,
+    "investigatedRoute": "WebRTC persisted RTCCertificate handle/expiry + independent full SHA256 confirmation and DTLS; manual SDP/no ICE servers avoids implicit cloud signaling/relay but cannot promise arbitrary NAT",
+    "remaining": "actual browser transport/native interoperability + persisted browser identity/scoped grant/revoke and original scheduler RPC/receipts integration",
+    "noInsecureFallback": true
+  },
+  "notValidated": [
+    "physical multi-device/LAN/NAT",
+    "actual OS suspend/reboot",
+    "browser-native peer transport",
+    "macOS/Windows/iOS/Android or other browsers",
+    "large-file streaming/full project handoff/rotation",
+    "independent publisher isolates/global host resource arbitration",
+    "real native audio/AAC/audio clock/seek/cache/proxy/full Schema/full RenderGraph",
+    "model weights/inference/paid APIs/production deployment",
+    "physical power loss/disk full/provider durability",
+    "adoption/GC widgets click-through end-to-end (SDK path passed; widgets compile)"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 21,
+    "planned": 53,
+    "blocked": 13
+  },
+  "newXd10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "original104SnapshotUnmodified": true,
+  "originalAcceptanceAndDependenciesUnchanged": true,
+  "activeCiInstalled": false,
+  "sourceHashEvidence": "verification.json/sourceHashes covers exact final134 source/config files including integration UI and runners; browser.json adds five Web files. All code was frozen before final UI/clean build runs. V-001 report itself does not contain sourceHashes.",
+  "evidenceFiles": [
+    "V-001.json",
+    "browser.json",
+    "duplicate-create-failure.json",
+    "focused-final.json",
+    "foreign-slot-failure.json",
+    "gc-files.json",
+    "native-ui.json",
+    "stale-admin-failure.json",
+    "upgrade-v4.json",
+    "upgrade-v5.json",
+    "upgrade-v6.json",
+    "verification.json"
+  ]
+}

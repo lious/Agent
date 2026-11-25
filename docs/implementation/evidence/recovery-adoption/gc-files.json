@@ -1,0 +1,7 @@
+{
+  "scope": "Linux development diagnostic; not a separate full acceptance or physical-device qualification",
+  "sourceLog": "gc-files.log",
+  "rawReporterOutput": "00:00 +0: loading packages/studio_store/test/files_test.dart\n00:00 +0: explicit CAS GC keeps pins/other namespaces, refuses symlinks and releases lock after failure\n00:00 +1: actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption\n00:00 +2: oversize import and symlink selection publish no blob\n00:00 +3: atomic sibling publication replaces complete file; failure never overwrites old good target\n00:00 +4: archive valid roundtrip/fork and damaged checksum preserve original\n00:00 +5: hostile ZIP paths rejected before extraction\n00:00 +6: ZIP duplicate headers and advertised expanded-size bomb are rejected before decompression\n00:00 +7: ZIP Unix symlink metadata is rejected before contents are trusted\n00:00 +8: valid checksums cannot authorize unknown manifest fields; unlisted entries rejected\n00:00 +9: All tests passed!\n",
+  "expectedPreFixReproduction": false,
+  "fullTaskComplete": false
+}

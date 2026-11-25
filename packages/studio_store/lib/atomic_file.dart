@@ -65,6 +65,17 @@ final class AtomicFilePublisher {
     _syncParent(destination);
   }
 
+  void syncDirectory(Directory directory) {
+    if (!Platform.isLinux ||
+        p.normalize(directory.resolveSymbolicLinksSync()) !=
+            p.normalize(directory.absolute.path)) {
+      throw const StudioException('UNSAFE_OUTPUT_DIRECTORY');
+    }
+    _syncParent(
+      File(p.join(directory.absolute.path, '.gc-durability-boundary')),
+    );
+  }
+
   void _syncParent(File destination) {
     final lib = DynamicLibrary.process();
     final open = lib

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'atomic_file.dart';
@@ -46,6 +47,65 @@ final class BlobStore {
     directory.createSync(recursive: true);
     _checkDirectory();
   }
+  static final Map<String, Future<void>> _maintenance = {};
+
+  /// All SDK publishers hold this through SQLite pin commit; GC uses the SAME
+  /// stable lock. Do not unlink the lock file or nest this lease.
+  Future<T> withMaintenanceLease<T>(Future<T> Function() action) async {
+    final key = p.join(directory.parent.path, '.cas-maintenance.lock');
+    final prior = _maintenance[key] ?? Future<void>.value(),
+        done = Completer<void>();
+    _maintenance[key] = done.future;
+    await prior;
+    RandomAccessFile? lock;
+    var locked = false;
+    try {
+      _checkDirectory();
+      lock = await File(key).open(mode: FileMode.append);
+      await lock.lock(FileLock.blockingExclusive);
+      locked = true;
+      return await action();
+    } finally {
+      try {
+        if (lock != null) {
+          try {
+            if (locked) await lock.unlock();
+          } finally {
+            await lock.close();
+          }
+        }
+      } finally {
+        done.complete();
+        if (identical(_maintenance[key], done.future)) _maintenance.remove(key);
+      }
+    }
+  }
+
+  /// Caller holds maintenance lease AND a SQLite writer/pin-snapshot transaction.
+  /// Only canonical unreferenced managed files are deleted; history pins remain.
+  Map<String, int> collectUnreferenced(Set<String> retained) {
+    _checkDirectory();
+    var files = 0, bytes = 0;
+    for (final entity in directory.listSync(followLinks: false)) {
+      final name = p.basename(entity.path);
+      if (!RegExp(r'^[a-f0-9]{64}$').hasMatch(name) ||
+          retained.contains('sha256:$name')) {
+        continue;
+      }
+      if (files >= 1000) break;
+      if (FileSystemEntity.typeSync(entity.path, followLinks: false) !=
+          FileSystemEntityType.file) {
+        throw const StudioException('CAS_GC_UNSAFE_ENTRY');
+      }
+      final file = File(entity.path);
+      bytes += file.lengthSync();
+      file.deleteSync();
+      files++;
+    }
+    if (files > 0) AtomicFilePublisher().syncDirectory(directory);
+    return {'files': files, 'bytes': bytes};
+  }
+
   final Directory directory;
   final int maxImportBytes;
   void _checkDirectory() {

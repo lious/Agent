@@ -19,6 +19,40 @@ void main() {
   setUp(() => dir = Directory.systemTemp.createTempSync('studio-file-test-'));
   tearDown(() => dir.deleteSync(recursive: true));
   final ns = Namespace('test', 'local', 'ws');
+  test('explicit CAS GC keeps pins/other namespaces, refuses symlinks and releases lock after failure', () async {
+    final store = BlobStore(Directory('${dir.path}/managed'), ns);
+    final other = BlobStore(
+      Directory('${dir.path}/managed'),
+      Namespace('other', 'local', 'ws'),
+    );
+    final pinned = Uint8List.fromList([1, 2, 3]),
+        orphan = Uint8List.fromList([4, 5, 6]);
+    await store.putVerifiedBytes(rawBytesHash(pinned), pinned);
+    await other.putVerifiedBytes(rawBytesHash(orphan), orphan);
+    final outside = File('${dir.path}/outside')
+      ..writeAsStringSync('never delete');
+    final link = Link('${store.directory.path}/${'f' * 64}')
+      ..createSync(outside.path);
+    await expectLater(
+      store.withMaintenanceLease(
+        () async => store.collectUnreferenced({rawBytesHash(pinned)}),
+      ),
+      error('CAS_GC_UNSAFE_ENTRY'),
+    );
+    expect(outside.readAsStringSync(), 'never delete');
+    await store.resolve(rawBytesHash(pinned));
+    link.deleteSync();
+    await store.putVerifiedBytes(rawBytesHash(orphan), orphan);
+    final active = File('${store.directory.path}/.import-active')
+      ..writeAsStringSync('stage');
+    final result = await store.withMaintenanceLease(
+      () async => store.collectUnreferenced({rawBytesHash(pinned)}),
+    );
+    expect(result, {'files': 1, 'bytes': 3});
+    expect(active.existsSync(), isTrue);
+    await store.resolve(rawBytesHash(pinned));
+    await other.resolve(rawBytesHash(orphan));
+  });
   test('actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption', () async {
     final source = File('${dir.path}/selected')..writeAsBytesSync([1, 2, 3]);
     final store = BlobStore(Directory('${dir.path}/cas'), ns);

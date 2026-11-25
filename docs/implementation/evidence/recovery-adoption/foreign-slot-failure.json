@@ -1,0 +1,7 @@
+{
+  "scope": "Linux development diagnostic; not a separate full acceptance or physical-device qualification",
+  "sourceLog": "foreign-slot-failure.log",
+  "rawReporterOutput": "00:00 +0: loading packages/studio_sdk/test/peer_recovery_test.dart\n00:00 +0: explicit same-session recovery preserves pins/results and fences old coordinator, no permission restore\n00:00 +1: recovery rejects project revision drift rather than applying old work\n00:00 +2: SQL failure rolls back takeover and unknown OS boot exhausts rather than resets wall budget\n00:00 +3: fresh session cannot bypass a recovered-device quarantine with another boot\n00:00 +3 -1: fresh session cannot bypass a recovered-device quarantine with another boot [E]\n  Expected: throws <Instance of 'StudioException'> with `code`: 'DEVICE_RESOURCE_QUARANTINED'\n    Actual: <Instance of 'Future<String>'>\n     Which: emitted '3c2341ad16524b9e3d7e7e1f191a8961e3a2e219ff907c766091381ecaff6e0c'\n  \n  packages/studio_sdk/test/peer_recovery_test.dart 150:5  main.<fn>\n  \n00:00 +3 -1: Some tests failed.\n\nFailing tests:\n  packages/studio_sdk/test/peer_recovery_test.dart: fresh session cannot bypass a recovered-device quarantine with another boot\n\nConsider enabling the flag chain-stack-traces to receive more detailed exceptions.\nFor example, 'dart test --chain-stack-traces'.\n",
+  "expectedPreFixReproduction": true,
+  "fullTaskComplete": false
+}

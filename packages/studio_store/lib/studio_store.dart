@@ -13,6 +13,7 @@ part 'persistence.dart';
 part 'harness_persistence.dart';
 part 'peer_authority.dart';
 part 'peer_blobs.dart';
+part 'peer_recovery.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -100,6 +101,11 @@ CREATE TABLE peer_blob_chunks(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session
 CREATE TABLE peer_blob_objects(ns TEXT NOT NULL,hash TEXT NOT NULL,bytes BLOB NOT NULL,PRIMARY KEY(ns,hash));
 """;
 
+const _ddl7 = """
+CREATE TABLE peer_session_recovery(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,owner_fingerprint TEXT NOT NULL,manifest TEXT NOT NULL,hash TEXT NOT NULL,PRIMARY KEY(ns,session_id,plan_hash));
+CREATE TABLE peer_adoptions(ns TEXT NOT NULL,project_id TEXT NOT NULL,id TEXT NOT NULL,input_hash TEXT NOT NULL,PRIMARY KEY(ns,project_id,id));
+""";
+
 const approvedSqliteVersion = '3.54.1';
 const approvedSqliteSourceId =
     '2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76';
@@ -144,7 +150,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 6) {
+        if (version > 7) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -223,6 +229,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=6',
         );
         if (v6.length != 1 || v6.single['checksum'] != contentHash(_ddl6)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 7) {
+          _db.execute(_ddl7);
+          _db.execute('INSERT INTO schema_migrations VALUES(7,?)', [
+            contentHash(_ddl7),
+          ]);
+          _db.userVersion = 7;
+        }
+        final v7 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=7',
+        );
+        if (v7.length != 1 || v7.single['checksum'] != contentHash(_ddl7)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });

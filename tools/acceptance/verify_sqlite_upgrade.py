@@ -17,7 +17,7 @@ BASE = 'dff15f2c5ecd75ac5a1da9d089f3025545b727f3'
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--baseline-commit', default=BASE)
-    parser.add_argument('--baseline-schema', type=int, choices=[4,5], default=4)
+    parser.add_argument('--baseline-schema', type=int, choices=[4,5,6], default=4)
     parser.add_argument('--baseline-library-dir', type=Path)
     parser.add_argument('--library-dir', type=Path, required=True)
     parser.add_argument('--legacy-library', type=Path, default=Path('/lib/x86_64-linux-gnu/libsqlite3.so.0'))
@@ -71,7 +71,7 @@ void main(List<String> args) {
             if result.returncode != 0:
                 raise RuntimeError(f'{stage} fixture failed: {result.stderr}')
             value = json.loads(result.stdout)
-            assert value['schema'] == (args.baseline_schema if stage == 'old' else 6)
+            assert value['schema'] == (args.baseline_schema if stage == 'old' else 7)
             assert value['integrity'] == 'ok'
             checks.append({'stage': stage, 'command': command, 'actual': value})
         # The current code must NOT quietly accept the old system runtime.
@@ -79,7 +79,7 @@ void main(List<String> args) {
         result = subprocess.run(['dart', f'--packages={config_path}', str(scratch / 'fixture.dart'), str(database), 'new'], env=env, text=True, capture_output=True, cwd=ROOT)
         assert result.returncode != 0 and 'SQLITE_RUNTIME_NOT_APPROVED' in result.stderr
         checks.append({'stage': 'old-runtime-rejected-by-default', 'exitCode': result.returncode, 'expectedError': 'SQLITE_RUNTIME_NOT_APPROVED'})
-    report = {'scopeStatus': 'passed', 'scope': f'Linux actual historical v{args.baseline_schema} store -> current v6 on approved SQLite; library-level only',
+    report = {'scopeStatus': 'passed', 'scope': f'Linux actual historical v{args.baseline_schema} store -> current v7 on approved SQLite; library-level only',
               'baselineCommit': args.baseline_commit, 'checkedAt': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
               'checks': checks, 'librarySha256': hashlib.sha256((args.library_dir / 'libsqlite3.so.0').read_bytes()).hexdigest(),
               'fullTaskComplete': False, 'platformQualification': False}

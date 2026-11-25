@@ -9,7 +9,7 @@
 原 104 文档不变；全部87项逐项保留原验收：21 partial、53 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **v1.2 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
+当前操作入口见文末 **v1.3 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -248,3 +248,57 @@ python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifac
 `foundation-ci.yml`仅更新为当前SQLite/keyring/peer子范围的**未安装配方**，未上传为active workflow、未远端执行；完整native媒体仍以真实本地gate为准。
 
 本增量最终实际结果：**119个Dart/Flutter测试（115 native回归 + 3真实Chrome + 1真实OS keyring/native UI），零跳过**；另6工具测试、3 CTest、内部50次SIGKILL；双Linux宿主各3次clean/release构建启动。真实v4/v5→v6迁移均通过、旧SQLite默认拒绝。最终sourceHashes与交付代码一致。原87仍0 complete /21 partial /53 planned /13 blocked；新增XD10为0 complete /8 partial /1 planned /1 blocked，未缩减原验收。
+
+
+## v1.3 当前可操作增量：显式同会话恢复 / 收到视频采纳 / 历史pin安全GC
+
+[ADR0007](../adr/0007-explicit-session-recovery-and-controlled-cas-adoption.md) ·
+[本轮证据](evidence/recovery-adoption/summary.json)。上述v1.2“无恢复UI/无采纳GC”是历史边界。
+
+* **App重开恢复**：在同一个稳定`STUDIO_DEMO_DATA_DIR`重开Linux宿主，加载同一OS身份；
+  展开peer面板，点 **List saved SAME-session recovery choices**，核对所选session JSON，单独勾选恢复同意再
+  点 **Recover chosen SAME session (no peer renewal)**。原session/plan/input/result保留，
+  原peer/metadata/blob权限、监听不恢复，旧endpoint即使尚未退出也不可用旧授权；重新联网需再次配对同意。
+  同Linux OS boot用真实内核时钟计入离线/暂停时间，换OS boot/未知时钟不免费重置预算；
+  真实OS重启/暂停及非Linux时钟未资格验证。当前仍仅两小型metadata digest，不是通用模型/视频分布式执行。
+* **收到素材加入工程**：peer独立授权传输后，在原native媒体页填 **Received peer inbox raw SHA256 to explicitly adopt as video (no path)**
+  （原始64位hex），点显式采纳按钮。它实际校验inbox/CAS、native FFmpeg probe、原编辑事务，
+  与本地导入同样限制silent CFR/色彩/尺寸，音轨须video-only明确同意。重复点击同一intent不会重复
+  添加；如要再次添加同素材需显式新intent。随后可split/trim/undo、保存工程包、关闭重开并导出真实MP4。
+  SDK真实TLS->CAS->归档/重开->90帧无声导出已测；采纳/GC控件尚无独立点击式UI全程资格测试。
+* **显式清理**：单独勾选清理同意、运行本机清理；只清无任何历史blob_edges引用的规范CAS文件
+  （每次最多1000）和撤销/过期/旧epoch inbox；不删原件、不裁历史、不删活动grant的数据。
+  支持的导入/采纳/restore与GC共用稳定进程间advisory锁+owner-isolate队列，SQLite writer事务保住pin快照。
+  当前App只有一个发布/GC owner isolate，不能把POSIX进程锁误当跨isolate互斥；多独立发布isolate未资格验证/不支持。
+  SQL触发器故障回滚与采纳/GC重叠有真实回归；文件删除不是全局可回滚事务，且不承诺SQLite文件缩小，
+  64MiB仍是逻辑预约而非物理磁盘上限。不要手动删除`.cas-maintenance.lock`。
+
+本轮复跑（根目录，前置工具/OS keyring同v1.2）：
+
+```sh
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /workspace/agent-media-native-peer --report artifacts/local-video/recovery-verification.json
+CHROME_EXECUTABLE=/workspace/toolchains/browser/chrome-test python3 tools/acceptance/run_multidevice_dev.py --report artifacts/local-video/recovery-browser.json
+python3 tools/acceptance/run_peer_ui.py --report artifacts/local-video/recovery-ui-final.json
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/recovery-upgrade-v4.json
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --baseline-commit 85b9b49d9d9cd4e2b5562e1d7b416c0d48ae52d0 --baseline-schema 5 --baseline-library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/recovery-upgrade-v5.json
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --baseline-commit f843d6b066ba426755fb46bf5a4f0d1e9dbfe75a --baseline-schema 6 --baseline-library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/recovery-upgrade-v6.json
+# 不得和上面native UI build同时flutter clean：
+python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/local-video/recovery-V-001.json
+```
+
+Web现有编辑/IndexedDB照常；**Web安全transport仍待实现，不宣称Web不可行/外部blocked**。
+已核实WebRTC可持久RTCCertificate/独立确认SHA256+DTLS；仍需实际transport、native互通和
+持久scope/revocation/原scheduler receipts接通。未弱化配对、没有默认STUN/TURN/云端或付费中继。
+物理设备/LAN/NAT、iOS/Android/macOS/Windows、浏览器peer、模型/原生音频AAC/seek/cache/full Schema
+均不能用本轮Linux/Chrome协议集成代替。原87与新增XD10统计仍分别保留，完整验收没有一项冒充完成。
+
+
+v1.3最终实际结果：**127个Dart/Flutter测试（123 native回归 +3真实Chrome +1真实OS keyring/native UI），零跳过**；
+另6工具测试、3 CTest、5个测试内部50次SIGKILL；双Linux宿主各3次clean/release构建与首帧启动、
+3次独立ABI clean probe。实际v4/v5/v6→v7迁移、严格3.54.1 SOURCE_ID/THREADSAFE与旧runtime拒绝通过。
+保留三个真实失败后修正的安全回归（foreign-boot quarantine、session/boot复用、stale admin权限），
+13项focused重跑是native suite子集，不额外加计数。工具链Flutter3.50.1/Dart3.14.0、Chrome156.0.8078.47。
+原87仍0 complete /21 partial /53 planned /13 blocked；新增XD10仍0 complete /8 partial /1 planned /1 blocked。
+本轮闭合上面明确的受限操作路径，而不是任何完整原任务；后续不因本批提交等待逐批确认。

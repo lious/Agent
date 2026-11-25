@@ -14,7 +14,7 @@ void main() {
     'real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only',
     (tester) async {
       final root = Directory.systemTemp.createTempSync('peer-ui-native-');
-      final workspace = StudioWorkspace.open(
+      var workspace = StudioWorkspace.open(
         profile: AppProfile(
           appId: 'peer_ui_test',
           region: 'local',
@@ -51,6 +51,8 @@ void main() {
             storageScope: '$scope-$who',
             lockPath: '${root.path}/$who.lock',
             createSession: workspace.createMetadataComputeSession,
+            listRecovery: workspace.recoverableMetadataSessions,
+            recoverSession: workspace.recoverMetadataSession,
           ),
         ),
       );
@@ -213,6 +215,73 @@ void main() {
       }
       final replacement = jsonDecode(text('host')) as Map<String, dynamic>;
       expect(replacement['sessionId'], isNot(invitation['sessionId']));
+      await click('host', 'peer-revoke');
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+      workspace.close();
+      workspace = StudioWorkspace.open(
+        profile: AppProfile(
+          appId: 'peer_ui_test',
+          region: 'local',
+          features: {'project.metadata'},
+        ),
+        databasePath: '${root.path}/db',
+        tenantId: 'synthetic',
+        workspaceId: 'isolated',
+      );
+      workspace.openDemo();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(body: Row(children: [panel('host')])),
+        ),
+      );
+      await tester.tap(find.text('Trusted peer session · Linux preview'));
+      await tester.pumpAndSettle();
+      await click('host', 'peer-identity');
+      await waitReady('host');
+      expect(
+        (jsonDecode(text('host')) as Map)['fingerprint'],
+        host['fingerprint'],
+      );
+      await click('host', 'peer-list-recovery');
+      final chosen = jsonDecode(
+        tester
+            .widget<TextField>(field('host', 'peer-recovery-choice'))
+            .controller!
+            .text,
+      ) as Map;
+      expect(chosen['sessionId'], replacement['sessionId']);
+      await click('host', 'peer-recover');
+      expect(
+        tester.widget<Text>(field('host', 'peer-status')).data,
+        'RECOVERY_EXPLICIT_CONSENT_REQUIRED',
+      );
+      await click('host', 'peer-recovery-consent');
+      await click('host', 'peer-recover');
+      expect(
+        tester.widget<Text>(field('host', 'peer-status')).data,
+        contains('Recovered SAME session ${replacement['sessionId']}'),
+      );
+      expect(
+        tester.widget<Text>(field('host', 'peer-status')).data,
+        contains('No listener'),
+      );
+      await click('host', 'peer-local');
+      for (
+        var i = 0;
+        i < 100 &&
+            !tester
+                .widget<Text>(field('host', 'peer-status'))
+                .data!
+                .contains('digest-1: committed');
+        i++
+      ) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      expect(
+        tester.widget<Text>(field('host', 'peer-status')).data,
+        contains('digest-1: committed'),
+      );
       await click('host', 'peer-revoke');
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();

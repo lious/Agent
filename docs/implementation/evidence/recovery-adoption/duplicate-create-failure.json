@@ -1,0 +1,7 @@
+{
+  "scope": "Linux development diagnostic; not a separate full acceptance or physical-device qualification",
+  "sourceLog": "duplicate-create-failure.log",
+  "rawReporterOutput": "00:00 +0: loading packages/studio_sdk/test/peer_recovery_test.dart\n00:00 +0: explicit same-session recovery preserves pins/results and fences old coordinator, no permission restore\n00:00 +0 -1: explicit same-session recovery preserves pins/results and fences old coordinator, no permission restore [E]\n  Expected: throws <Instance of 'StudioException'> with `code`: 'COORDINATOR_FENCED'\n    Actual: <Closure: () => ComputeSessionCoordinator>\n     Which: returned <Instance of 'ComputeSessionCoordinator'>\n  \n  package:matcher                                        expect\n  packages/studio_sdk/test/peer_recovery_test.dart 29:5  main.<fn>\n  \n00:00 +0 -1: Some tests failed.\n\nFailing tests:\n  packages/studio_sdk/test/peer_recovery_test.dart: explicit same-session recovery preserves pins/results and fences old coordinator, no permission restore\n\nConsider enabling the flag chain-stack-traces to receive more detailed exceptions.\nFor example, 'dart test --chain-stack-traces'.\n",
+  "expectedPreFixReproduction": true,
+  "fullTaskComplete": false
+}

@@ -206,3 +206,61 @@ These are executed code self-audits/fixes, not an external security review.
 Remaining full acceptance is unchanged: browser authenticated transport, physical devices,
 other platform OS identity stores/builds, full Schema/media CAS, real audio/AAC/model/paid work,
 full rights/privacy/resource attestation. This is not a claim that all87 or allXD10 are complete.
+
+
+## v1.3 Recovery / CAS adoption / GC — three actual code-review rounds
+
+Executed self-audits and corrections, not an independent security audit.
+
+1. **Recovery/time/permission transaction:** inspect existing takeover contract and
+   actual Linux kernel clock. Persist exact metadata/plan/owner inputs, use kernel
+   CLOCK_BOOTTIME (includes suspend), reject anchor/coordinator mismatch, preserve
+   attempts and budget. Unknown/reboot clocks exhaust remaining budget. Inject a real
+   SQL UPDATE trigger abort: takeover/manifest/grant transaction rolls back, old
+   coordinator still works, retry succeeds. Owner mismatch/revision drift fail.
+   Exact recovery receipt replay leaves a new grant intact; old endpoint replay
+   after recovery is denied over actual TLS. Initial test used a nonexistent
+   undoLatest SDK method; analyzer rejected it, fixed to the real undo method.
+2. **Publication/GC interleaving and idempotency:** keep filesystem maintenance lease
+   from publication through SQL pins for every supported SDK publisher; reject public
+   uncontrolled AppendVideoAsset bypass. Adoption edit and receipt share one SQL
+   transaction: real INSERT-trigger abort preserves head/asset set, then retry and
+   exact dedup succeed, changed-input repeat rejects. Run actual adoption overlapping
+   GC and export after save/reopen; protect historical undo media. DELETE-trigger
+   abort proves inbox/chunk/object rollback. Real filesystem test checks symlink
+   refusal, other-namespace isolation, active staging/pins and lock cleanup on failure.
+   GC never promises global FS rollback or SQLite physical disk shrink.
+3. **Resource/UI/fence regression:** a REAL concurrent regression reproduced a
+   fresh-session quarantine bypass after coordinator recovery: expected
+   DEVICE_RESOURCE_QUARANTINED but got a successful candidate hash (retained failure
+   evidence). Check all device quarantine boots; only their persisted owner clock
+   can prove expiry. Carry old reservations on takeover and retire old rows. Repeat
+   original takeover regression plus real owner-clock wait/release/fresh-session
+   execution. Also inspect queued CAS import/adoption: before waiting for the lease
+   they must capture project AND writer. Fix same-project writer ABA, and prove with
+   a real held filesystem lease, same-project reopen/new fence, then queued release:
+   both import and adoption reject PROJECT_CHANGED without assets/CAS publication.
+   Actual isolated OS-keyring/native widget integration now closes/reopens DB/widget,
+   reloads the same identity, rejects missing recovery consent, recovers SAME session,
+   finishes pending local work and does not restore listener or peer permissions.
+   Extended final audit reproduced another real failure: new constructor used
+   session ID as boot and registration silently returned an existing plan. A repeated
+   session ID could create a new-clock coordinator without explicit recovery. Keep
+   that failing log; generate a fresh coordinator UUID independently of session ID,
+   reject boot-mismatched registration and rerun all takeover/recovery/media cases
+   plus the full frozen-source gates. Unchanged low-level same-boot idempotent
+   registration remains trusted-coordinator API, not a remote authorization route.
+   One final ownership-path audit then reproduced stale SDK grant/invitation success
+   after takeover. All peer RPCs were already boot-fenced, but local administration
+   must be fenced too: new synchronous boot-checked writer transaction wraps grant
+   offer/confirmation and revoke, and stale invitation/listen/recovery registration
+   fail. Old close catches only COORDINATOR_FENCED while always closing its socket;
+   a real regression asserts it does not revoke a NEW current-owner grant. Retain
+   both observed failing assertions, then rerun thirteen focused takeover/recovery/
+   adoption tests and the full native/Chrome/OS-UI/release/migration gates.
+
+Early successful diagnostics predate the final writer-ABA correction and are not
+final-source evidence. Final native/Chrome/UI/clean release gates and genuine
+v4/v5/v6->v7 migrations are rerun after freezing the apps/packages/tools tree.
+System SQLite3.46.1 is still refused, not relabeled approved. No non-Linux or
+physical-device result, Web transport, real audio/AAC/seek or full Schema claim.

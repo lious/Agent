@@ -9,6 +9,9 @@ import 'package:studio_harness/builtin_compute.dart';
 import 'package:studio_store/studio_store.dart';
 
 import 'studio_peer_io.dart';
+import 'boot_clock.dart';
+
+import 'package:uuid/uuid.dart';
 
 String get nativeMetadataRuntimePin => harnessHash({
   'executor': 'native-builtin-v1',
@@ -22,7 +25,8 @@ final class ComputeSessionCoordinator {
     this._repository,
     this.projectId, {
     required this.id,
-  }) {
+  }) : _boot = 'boot-${const Uuid().v4()}',
+       _anchor = LinuxBootClock.anchor() {
     final project = _repository.read(projectId);
     if (project == null) throw const StudioException('PROJECT_NOT_FOUND');
     final document = project.toJson();
@@ -30,9 +34,6 @@ final class ComputeSessionCoordinator {
       {'payload': document},
       {'payload': document['captions']},
     ];
-    if (utf8.encode(jsonEncode(values)).length > 65536) {
-      throw const StudioException('SESSION_METADATA_LIMIT');
-    }
     session = SessionRef(namespace: _repository.namespace, id: id);
     final ns = harnessNamespace(session.namespace), zero = '0' * 64;
     final nodes = <Map<String, Object?>>[];
@@ -62,6 +63,9 @@ final class ComputeSessionCoordinator {
         'readSetHash': zero,
         'writeScopeHash': zero,
       });
+    }
+    if (utf8.encode(jsonEncode(_inputs)).length > 65536) {
+      throw const StudioException('SESSION_METADATA_LIMIT');
     }
     plan = HarnessPlan({
       'recordType': 'PlanGraph',
@@ -94,10 +98,98 @@ final class ComputeSessionCoordinator {
       session,
       projectId,
       plan,
-      coordinatorBoot: id,
+      coordinatorBoot: _boot,
       nowMs: 0,
     );
   }
+  ComputeSessionCoordinator._restored(
+    this._repository,
+    this.projectId, {
+    required this.id,
+    required this._boot,
+    required this._anchor,
+    required HarnessPlan restoredPlan,
+    required Map<String, Object?> inputs,
+  }) {
+    session = SessionRef(namespace: _repository.namespace, id: id);
+    plan = restoredPlan;
+    _inputs.addAll(inputs);
+    _clock.start();
+  }
+
+  final String _boot;
+  final Map<String, Object>? _anchor;
+  int get _elapsedMs => _anchor == null
+      ? _clock.elapsedMilliseconds
+      : LinuxBootClock.ticksMs() - (_anchor['tickMs'] as int);
+  bool get isListening => _server != null;
+
+  void enableRecovery(String ownerFingerprint) =>
+      _repository.withHarnessCoordinator(
+        session,
+        plan.hash,
+        _boot,
+        () => _repository.rememberMetadataSession(
+          session,
+          plan.hash,
+          ownerFingerprint: ownerFingerprint,
+          inputs: _inputs,
+          anchor: _anchor,
+        ),
+      );
+
+  static ComputeSessionCoordinator recover(
+    DocumentRepository repository,
+    String projectId, {
+    required String sessionId,
+    required String planHash,
+    required String ownerFingerprint,
+  }) {
+    final session = SessionRef(namespace: repository.namespace, id: sessionId);
+    final record = repository.metadataRecoveryRecord(
+      session,
+      planHash,
+      ownerFingerprint,
+    );
+    if (record['projectId'] != projectId) {
+      throw const StudioException('NAMESPACE_MISMATCH');
+    }
+    final now = LinuxBootClock.anchor(), old = record['anchor'] as Map?;
+    int? downtime;
+    if (record['boot'] == record['currentBoot'] &&
+        now != null &&
+        old != null &&
+        old['schemaVersion'] == 'linux-boottime-1' &&
+        old['bootId'] == now['bootId'] &&
+        old['tickMs'] is int) {
+      final elapsed =
+          (now['tickMs'] as int) -
+          (old['tickMs'] as int) -
+          (record['lastMs'] as int);
+      if (elapsed >= 0 && elapsed <= 604800000) downtime = elapsed;
+    }
+    final boot = 'boot-${const Uuid().v4()}';
+    repository.authorizeMetadataRecovery(
+      session,
+      planHash,
+      ownerFingerprint: ownerFingerprint,
+      expectedBoot: record['currentBoot'] as String,
+      newBoot: boot,
+      operationId: 'recover-${const Uuid().v4()}',
+      newAnchor: now,
+      unobservedElapsedUpperBoundMs: downtime,
+    );
+    return ComputeSessionCoordinator._restored(
+      repository,
+      projectId,
+      id: sessionId,
+      boot: boot,
+      anchor: now,
+      restoredPlan: HarnessPlan(record['plan'] as Map<String, dynamic>),
+      inputs: Map<String, Object?>.from(record['inputs'] as Map),
+    );
+  }
+
   final DocumentRepository _repository;
   final String projectId, id;
   late final SessionRef session;
@@ -119,38 +211,42 @@ final class ComputeSessionCoordinator {
     required Set<String> nodes,
     Map<String, int> allowedBlobs = const {},
   }) {
-    if (_peerFingerprint != null || _closed) {
-      throw const StudioException('SESSION_PAIRING_ALREADY_FIXED');
-    }
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final offer = _repository.createPeerOffer(
+    final epoch = _repository.withHarnessCoordinator(
       session,
       plan.hash,
-      certificateFingerprint: fingerprint,
-      device: VerifiedDevice(
-        id: deviceId,
-        platform: 'linux',
-        runtimeHash: runtimePin,
-        capabilities: {'compute.digest'},
-        modelHashes: {},
-        sessionIds: {session.id},
-        freeMemoryBytes: 1024 * 1024,
-        load: 0,
-        permissionEpoch: 1,
-      ),
-      nodeIds: nodes,
-      nowMs: now,
-      offerExpiresMs: now + 120000,
-      grantExpiresMs: now + 600000,
-      allowedBlobs: allowedBlobs,
+      _boot,
+      () {
+        if (_peerFingerprint != null || _closed) {
+          throw const StudioException('SESSION_PAIRING_ALREADY_FIXED');
+        }
+        final now = DateTime.now().millisecondsSinceEpoch;
+        final offer = _repository.createPeerOffer(
+          session,
+          plan.hash,
+          certificateFingerprint: fingerprint,
+          device: VerifiedDevice(
+            id: deviceId,
+            platform: 'linux',
+            runtimeHash: runtimePin,
+            capabilities: {'compute.digest'},
+            modelHashes: {},
+            sessionIds: {session.id},
+            freeMemoryBytes: 1024 * 1024,
+            load: 0,
+            permissionEpoch: 1,
+          ),
+          nodeIds: nodes,
+          nowMs: now,
+          offerExpiresMs: now + 120000,
+          grantExpiresMs: now + 600000,
+          allowedBlobs: allowedBlobs,
+        );
+        return _repository.confirmPeerOffer(offer, fingerprint, nowMs: now);
+      },
     );
     _peerFingerprint = fingerprint;
     _blobGrants = Map.from(allowedBlobs);
-    return _epoch = _repository.confirmPeerOffer(
-      offer,
-      fingerprint,
-      nowMs: now,
-    );
+    return _epoch = epoch;
   }
 
   Future<int> listen(
@@ -158,22 +254,27 @@ final class ComputeSessionCoordinator {
     InternetAddress address, {
     bool allowLan = false,
   }) async {
+    if (_closed) throw const StudioException('SESSION_CLOSED');
+    _repository.requireHarnessCoordinator(session, plan.hash, _boot);
     if (_server != null) {
       throw const StudioException('SESSION_ALREADY_LISTENING');
     }
     final server = await PeerTlsServer.bind(
       repository: _repository,
       context: context,
-      coordinatorBoot: id,
-      monotonicMs: () => _clock.elapsedMilliseconds,
+      coordinatorBoot: _boot,
+      monotonicMs: () => _elapsedMs,
       wallMs: () => DateTime.now().millisecondsSinceEpoch,
       inputsByHash: _inputs,
       address: address,
       allowLan: allowLan,
     );
-    if (_closed) {
+    try {
+      if (_closed) throw const StudioException('SESSION_CLOSED');
+      _repository.requireHarnessCoordinator(session, plan.hash, _boot);
+    } catch (_) {
       await server.close();
-      throw const StudioException('SESSION_CLOSED');
+      rethrow;
     }
     _server = server;
     return server.port;
@@ -184,6 +285,7 @@ final class ComputeSessionCoordinator {
     required String certificatePem,
     required Set<String> nodes,
   }) {
+    _repository.requireHarnessCoordinator(session, plan.hash, _boot);
     if (_epoch == null) throw const StudioException('PEER_NOT_AUTHORIZED');
     return {
       'schemaVersion': '1.0.0',
@@ -205,11 +307,16 @@ final class ComputeSessionCoordinator {
   };
   void revoke() {
     if (_peerFingerprint != null) {
-      _repository.revokePeer(
-        _peerFingerprint!,
+      _repository.withHarnessCoordinator(
         session,
         plan.hash,
-        nowMs: DateTime.now().millisecondsSinceEpoch,
+        _boot,
+        () => _repository.revokePeer(
+          _peerFingerprint!,
+          session,
+          plan.hash,
+          nowMs: DateTime.now().millisecondsSinceEpoch,
+        ),
       );
     }
   }
@@ -238,8 +345,8 @@ final class ComputeSessionCoordinator {
         permissionEpoch: 1,
       ),
       PlacementRequirement(),
-      coordinatorBoot: id,
-      nowMs: _clock.elapsedMilliseconds,
+      coordinatorBoot: _boot,
+      nowMs: _elapsedMs,
       leaseMs: 1000,
     );
     final input = _inputs[plan.node(node)['inputRef']['hash']],
@@ -254,8 +361,8 @@ final class ComputeSessionCoordinator {
       session,
       token,
       result,
-      coordinatorBoot: id,
-      nowMs: _clock.elapsedMilliseconds,
+      coordinatorBoot: _boot,
+      nowMs: _elapsedMs,
     );
   }
 
@@ -264,6 +371,9 @@ final class ComputeSessionCoordinator {
     _closed = true;
     try {
       revoke();
+    } on StudioException catch (e) {
+      // Stale cleanup must NOT revoke a newly approved current-owner grant.
+      if (e.code != 'COORDINATOR_FENCED') rethrow;
     } finally {
       await _server?.close();
       _server = null;

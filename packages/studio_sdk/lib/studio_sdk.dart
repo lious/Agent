@@ -108,6 +108,28 @@ final class StudioWorkspace {
     );
   }
 
+  List<Map<String, dynamic>> recoverableMetadataSessions(
+    String ownerFingerprint,
+  ) {
+    _requireMetadata();
+    return _repository.metadataSessions(_activeProjectId, ownerFingerprint);
+  }
+
+  ComputeSessionCoordinator recoverMetadataSession(
+    String sessionId,
+    String planHash,
+    String ownerFingerprint,
+  ) {
+    _requireMetadata();
+    return ComputeSessionCoordinator.recover(
+      _repository,
+      _activeProjectId,
+      sessionId: sessionId,
+      planHash: planHash,
+      ownerFingerprint: ownerFingerprint,
+    );
+  }
+
   String get projectId => _activeProjectId;
   void _requireMetadata() {
     if (!profile.features.contains('project.metadata')) {
@@ -192,6 +214,16 @@ final class StudioWorkspace {
     EditOperation operation, {
     required BigInt expectedRevision,
   }) {
+    if (operation is AppendVideoAsset) {
+      throw const StudioException('CONTROLLED_IMPORT_REQUIRED');
+    }
+    return _commitImportedEdit(operation, expectedRevision: expectedRevision);
+  }
+
+  ProjectDocument _commitImportedEdit(
+    EditOperation operation, {
+    required BigInt expectedRevision,
+  }) {
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
     final id = _uuid.v7();
@@ -214,11 +246,96 @@ final class StudioWorkspace {
     bool matchEmptySequence = true,
   }) async {
     _requireMedia();
-    final projectId = _activeProjectId;
-    _selectedInputs.add(grant.file.resolveSymbolicLinksSync());
-    final blob = await _blobs!.importFile(grant);
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    final projectId = _activeProjectId, writer = _writer;
+    return _blobs!.withMaintenanceLease(() async {
+      if (_closed ||
+          _activeProjectId != projectId ||
+          !identical(_writer, writer)) {
+        throw const StudioException('PROJECT_CHANGED');
+      }
+      _selectedInputs.add(grant.file.resolveSymbolicLinksSync());
+      final blob = await _blobs!.importFile(grant);
+      if (_closed ||
+          _activeProjectId != projectId ||
+          !identical(_writer, writer)) {
+        throw const StudioException('PROJECT_CHANGED');
+      }
+      return _appendImportedVideo(
+        blob,
+        name: grant.file.uri.pathSegments.last,
+        expectedRevision: expectedRevision,
+        acknowledgeVideoOnly: acknowledgeVideoOnly,
+        matchEmptySequence: matchEmptySequence,
+      );
+    });
+  }
+
+  Future<ProjectDocument> adoptPeerVideo(
+    String rawHash, {
+    required String commandId,
+    required BigInt expectedRevision,
+    bool acknowledgeVideoOnly = false,
+    bool matchEmptySequence = true,
+  }) async {
+    _requireMedia();
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    final projectId = _activeProjectId, writer = _writer;
+    final inputHash = contentHash({
+      'rawHash': rawHash,
+      'expectedRevision': expectedRevision.toString(),
+      'acknowledgeVideoOnly': acknowledgeVideoOnly,
+      'matchEmptySequence': matchEmptySequence,
+    });
+    return _blobs!.withMaintenanceLease(() async {
+      if (_closed ||
+          _activeProjectId != projectId ||
+          !identical(_writer, writer)) {
+        throw const StudioException('PROJECT_CHANGED');
+      }
+      if (_repository.peerAdoptionAlreadyApplied(
+        _writer!,
+        commandId,
+        inputHash,
+      )) {
+        return current;
+      }
+      final bytes = _repository.receivedPeerBlob(rawHash);
+      if (bytes == null) throw const StudioException('PEER_BLOB_NOT_RECEIVED');
+      final hash = 'sha256:$rawHash';
+      await _blobs!.putVerifiedBytes(hash, bytes);
+      final file = await _blobs!.resolve(hash);
+      if (_activeProjectId != projectId ||
+          _closed ||
+          !identical(_writer, writer)) {
+        throw const StudioException('PROJECT_CHANGED');
+      }
+      return _appendImportedVideo(
+        ImportedBlob(hash, bytes.length, file),
+        name: 'Peer-${rawHash.substring(0, 12)}.mp4',
+        expectedRevision: expectedRevision,
+        acknowledgeVideoOnly: acknowledgeVideoOnly,
+        matchEmptySequence: matchEmptySequence,
+        adoptionId: commandId,
+        adoptionInputHash: inputHash,
+      );
+    });
+  }
+
+  Future<ProjectDocument> _appendImportedVideo(
+    ImportedBlob blob, {
+    required String name,
+    required BigInt expectedRevision,
+    required bool acknowledgeVideoOnly,
+    required bool matchEmptySequence,
+    String? adoptionId,
+    String? adoptionInputHash,
+  }) async {
+    final projectId = _activeProjectId, writer = _writer;
     final probe = await _media!.probeAsync(blob.file);
-    if (_activeProjectId != projectId || _closed) {
+    if (_activeProjectId != projectId ||
+        _closed ||
+        !identical(_writer, writer)) {
       throw const StudioException('PROJECT_CHANGED');
     }
     final rawStreams = probe['streams'] as List;
@@ -229,7 +346,6 @@ final class StudioWorkspace {
     final streams = rawStreams
         .map((v) => streamDocument(v as Map<String, dynamic>, assetId: assetId))
         .toList();
-    final name = grant.file.uri.pathSegments.last;
     final asset = {
       'id': assetId,
       'version': '1',
@@ -257,16 +373,39 @@ final class StudioWorkspace {
       'consentId': null,
       'verified': false,
     };
-    return edit(
-      AppendVideoAsset(
-        asset: asset,
-        blob: blob.toJson(),
-        rights: rights,
-        clipId: _uuid.v7(),
-        matchEmptySequence: matchEmptySequence,
-      ),
-      expectedRevision: expectedRevision,
+    final operation = AppendVideoAsset(
+      asset: asset,
+      blob: blob.toJson(),
+      rights: rights,
+      clipId: _uuid.v7(),
+      matchEmptySequence: matchEmptySequence,
     );
+    if (adoptionId == null) {
+      return _commitImportedEdit(operation, expectedRevision: expectedRevision);
+    }
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    final changed = _repository.commitPeerAdoption(
+      writer: _writer!,
+      id: adoptionId,
+      inputHash: adoptionInputHash!,
+      expectedRevision: expectedRevision,
+      operation: operation,
+    );
+    if (changed) _durableCommit();
+    return current;
+  }
+
+  Future<Map<String, int>> collectLocalGarbage() async {
+    _requireMedia();
+    return _blobs!.withMaintenanceLease(() async {
+      final cas = _repository.withRetainedBlobPins(
+        (pins) => _blobs!.collectUnreferenced(pins),
+      );
+      final inbox = _repository.collectPeerInbox(
+        nowMs: DateTime.now().millisecondsSinceEpoch,
+      );
+      return {'casFiles': cas['files']!, 'casBytes': cas['bytes']!, ...inbox};
+    });
   }
 
   void _protectOutput(File destination) {
@@ -376,6 +515,11 @@ final class StudioWorkspace {
   }
 
   Future<ProjectDocument> restoreArchive(LocalFileGrant source) async {
+    _requireMedia();
+    return _blobs!.withMaintenanceLease(() => _restoreArchiveLocked(source));
+  }
+
+  Future<ProjectDocument> _restoreArchiveLocked(LocalFileGrant source) async {
     _requireMedia();
     final verified = ProjectArchive().open(source.file);
     final fork = forkLocalProject(

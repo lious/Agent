@@ -21,9 +21,19 @@ class PeerPanel extends StatefulWidget {
     required this.storageScope,
     required this.lockPath,
     required this.createSession,
+    required this.listRecovery,
+    required this.recoverSession,
   });
   final String storageScope, lockPath;
   final ComputeSessionCoordinator Function(String id) createSession;
+  final List<Map<String, dynamic>> Function(String ownerFingerprint)
+  listRecovery;
+  final ComputeSessionCoordinator Function(
+    String sessionId,
+    String planHash,
+    String ownerFingerprint,
+  )
+  recoverSession;
   @override
   State<PeerPanel> createState() => _PeerPanelState();
 }
@@ -34,7 +44,9 @@ class _PeerPanelState extends State<PeerPanel> {
       _confirm = TextEditingController(),
       _public = TextEditingController(),
       _node = TextEditingController(text: 'digest-0');
-  final _sourceFile = TextEditingController();
+  final _sourceFile = TextEditingController(),
+      _recovery = TextEditingController();
+  bool _recoveryConsent = false;
   List<int>? _frozenBlob;
   String? _preparedPath;
   bool _blobConsent = false;
@@ -100,7 +112,7 @@ class _PeerPanelState extends State<PeerPanel> {
     if (!_consent || _identity == null) {
       throw const StudioException('PEER_EXPLICIT_CONSENT_REQUIRED');
     }
-    if (_session != null) {
+    if (_session?.isListening ?? false) {
       throw const StudioException('SESSION_ALREADY_LISTENING');
     }
     final peer = _parse(),
@@ -111,7 +123,9 @@ class _PeerPanelState extends State<PeerPanel> {
     if (!address.isLoopback && !_lan) {
       throw const StudioException('PEER_LAN_NOT_ENABLED');
     }
-    final session = widget.createSession('session-${const Uuid().v4()}');
+    final session =
+        _session ?? widget.createSession('session-${const Uuid().v4()}');
+    session.enableRecovery(_identity!.fingerprint);
     _session = session;
     try {
       // User explicitly grants the selected fixed node, not all project files.
@@ -268,7 +282,15 @@ class _PeerPanelState extends State<PeerPanel> {
     unawaited(
       _session?.close().catchError((Object _) {}) ?? Future<void>.value(),
     );
-    for (final c in [_address, _paste, _confirm, _public, _node, _sourceFile]) {
+    for (final c in [
+      _address,
+      _paste,
+      _confirm,
+      _public,
+      _node,
+      _sourceFile,
+      _recovery,
+    ]) {
       c.dispose();
     }
     super.dispose();
@@ -411,6 +433,83 @@ class _PeerPanelState extends State<PeerPanel> {
           () => _status = 'Persisted receipts: ${_session?.statuses}',
         ),
         child: const Text('Refresh session receipts'),
+      ),
+      OutlinedButton(
+        key: const Key('peer-list-recovery'),
+        onPressed: _busy
+            ? null
+            : () => unawaited(
+                _run(() async {
+                  if (_identity == null) {
+                    throw const StudioException('IDENTITY_REQUIRED');
+                  }
+                  final entries = widget.listRecovery(_identity!.fingerprint);
+                  setState(() {
+                    _recovery.text = entries.isEmpty
+                        ? ''
+                        : jsonEncode(entries.first);
+                    _status =
+                        'Owner-bound persisted sessions (choose explicitly): ${jsonEncode(entries)}';
+                  });
+                }),
+              ),
+        child: const Text('List saved SAME-session recovery choices'),
+      ),
+      TextField(
+        key: const Key('peer-recovery-choice'),
+        controller: _recovery,
+        decoration: const InputDecoration(
+          labelText: 'Chosen sessionId/planHash JSON (no automatic restore)',
+        ),
+      ),
+      CheckboxListTile(
+        key: const Key('peer-recovery-consent'),
+        value: _recoveryConsent,
+        onChanged: (v) => setState(() => _recoveryConsent = v ?? false),
+        title: const Text(
+          'Explicitly recover this session and REVOKE every previous peer grant; no automatic permission renewal',
+        ),
+      ),
+      OutlinedButton(
+        key: const Key('peer-recover'),
+        onPressed: _busy
+            ? null
+            : () => unawaited(
+                _run(() async {
+                  if (!_recoveryConsent || _identity == null) {
+                    throw const StudioException(
+                      'RECOVERY_EXPLICIT_CONSENT_REQUIRED',
+                    );
+                  }
+                  if (_session != null) {
+                    throw const StudioException(
+                      'SESSION_CLOSE_BEFORE_RECOVERY',
+                    );
+                  }
+                  if (_recovery.text.length > 4096) {
+                    throw const StudioException('PEER_INPUT_LIMIT');
+                  }
+                  final choice =
+                      jsonDecode(_recovery.text) as Map<String, dynamic>;
+                  if (choice.length != 2) {
+                    throw const StudioException('RECOVERY_CHOICE_INVALID');
+                  }
+                  final recovered = widget.recoverSession(
+                    choice['sessionId'] as String,
+                    choice['planHash'] as String,
+                    _identity!.fingerprint,
+                  );
+                  setState(() {
+                    _session = recovered;
+                    _recoveryConsent = false;
+                    _consent = false;
+                    _blobConsent = false;
+                    _status =
+                        'Recovered SAME session ${recovered.id}, old grants revoked. No listener or peer authorization restored. ${recovered.statuses}';
+                  });
+                }),
+              ),
+        child: const Text('Recover chosen SAME session (no peer renewal)'),
       ),
       OutlinedButton(
         key: const Key('peer-revoke'),
