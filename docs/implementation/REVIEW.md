@@ -587,3 +587,29 @@ Final frozen-source increment1.9 rerun:172 native +9 Chrome +1 actual OS-keyring
 Final source hashes/evidence:78 targeted executions,0 skips, clean analyzer.
 No release/full-suite/browser/audio-stress rerun or physical-platform claim.
 Namespace quota/pruning and corrupt-CAS replacement remain explicit next work.
+
+
+## Increment1.9.3 — three actual review/correction rounds
+
+1. Audited source provenance, hash/recipe admission and all-history role authority.
+   Real tests exposed that snapshots also holds intents/entities, not just roots.
+   Corrected scan to hash-check every object and validate project candidates;
+   original/unknown roles and other-project pins still fail before publication.
+   No Admission switch-off or reclassification of unsafe bytes was introduced.
+2. Real writer-fence test exposed checkpoint WRITER_FENCED on close leaking
+   resources. Close now skips ONLY that stale write and closes; other failures
+   propagate. Real fault fixture initially exited255 because append on pipe stdout
+   attempted seek; retained diagnostic, corrected writeOnly, then actual SIGKILL
+   after first durable publication proved partial state/prepared audit and repair
+   on reopen. Pair atomicity is explicitly NOT claimed.
+3. Adversarial ownership review found that another SQLite DB could share the CAS
+   namespace outside the scanned DB. Added known-empty creation owner binding and
+   permanent per-DB usage markers; legacy nonempty/multiple-user CAS cannot gain
+   repair authority. Actual legacy, second DB, symlink, original-role and shared
+   fork refusals pass. Actual clickable UI restores corrupt CAS with unchanged
+   project hash/revision. Default no history/file pruning; valid bytes are untouched.
+
+Final frozen sources:63 store/SDK +3 native UI =66 targeted executions,0 skips;
+three focused cases were rerun but are already in63. Analyzer clean. No full182,
+release/browser/P0/physical multi-device or underrun-fix claim. SQLite3.54.1 strict
+runtime and original87/XD10 status/acceptance remain unchanged.

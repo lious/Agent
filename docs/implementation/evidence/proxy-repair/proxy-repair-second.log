@@ -1,0 +1,22 @@
+00:00 +0: loading packages/studio_sdk/test/proxy_repair_test.dart
+00:00 +0: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+00:01 +0 -1: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history [E]
+  WRITER_FENCED
+  package:studio_store/persistence.dart 29:7             PersistenceRepository.validateWriter
+  package:studio_store/persistence.dart 35:9             PersistenceRepository.captureCheckpoint.<fn>
+  package:studio_store/studio_store.dart 267:30          DocumentRepository._transaction
+  package:studio_store/persistence.dart 34:7             PersistenceRepository.captureCheckpoint
+  package:studio_sdk/studio_sdk.dart 92:17               StudioWorkspace._captureCheckpoint
+  package:studio_sdk/autosave_scheduler.dart 52:17       AutosaveScheduler.flush
+  package:studio_sdk/studio_sdk.dart 1147:40             StudioWorkspace.flushCheckpoint
+  package:studio_sdk/studio_sdk.dart 1796:7              StudioWorkspace.close
+  packages/studio_sdk/test/proxy_repair_test.dart 178:9  main.<fn>
+  
+00:01 +0 -1: REAL SQLite retained original-role collision refuses before any CAS publication
+00:02 +1 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_sdk/test/proxy_repair_test.dart: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.

@@ -1,0 +1,49 @@
+00:00 +0: loading packages/studio_sdk/test/proxy_repair_test.dart
+00:00 +0: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+00:01 +0 -1: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history [E]
+  SCHEMA_REQUIRED at /schemaVersion
+  package:studio_document/studio_document.dart 53:7      new ProjectDocument.fromJson
+  package:studio_store/derived_repair.dart 41:35         DerivedRepairAuthority.withExclusivePreviewRepair.<fn>
+  package:studio_store/studio_store.dart 267:30          DocumentRepository._transaction
+  package:studio_store/derived_repair.dart 13:9          DerivedRepairAuthority.withExclusivePreviewRepair
+  package:studio_sdk/studio_sdk.dart 684:38              StudioWorkspace.repairTimelinePreviewProxies.<fn>
+  ===== asynchronous gap ===========================
+  package:studio_store/blob_store.dart 69:14             BlobStore.withMaintenanceLease
+  ===== asynchronous gap ===========================
+  package:studio_sdk/studio_sdk.dart 628:14              StudioWorkspace.repairTimelinePreviewProxies
+  ===== asynchronous gap ===========================
+  packages/studio_sdk/test/proxy_repair_test.dart 63:10  main.<fn>
+  
+00:01 +0 -1: REAL SQLite retained original-role collision refuses before any CAS publication
+00:01 +0 -2: REAL SQLite retained original-role collision refuses before any CAS publication [E]
+  Expected: throws <Instance of 'StudioException'> with `code`: 'PROXY_REPAIR_PROTECTED_ROLE'
+    Actual: <Instance of 'Future<Map<String, dynamic>>'>
+     Which: threw StudioException:<SCHEMA_REQUIRED at /schemaVersion>
+            stack package:studio_document/studio_document.dart 53:7      new ProjectDocument.fromJson
+                  package:studio_store/derived_repair.dart 41:35         DerivedRepairAuthority.withExclusivePreviewRepair.<fn>
+                  package:studio_store/studio_store.dart 267:30          DocumentRepository._transaction
+                  package:studio_store/derived_repair.dart 13:9          DerivedRepairAuthority.withExclusivePreviewRepair
+                  package:studio_sdk/studio_sdk.dart 684:38              StudioWorkspace.repairTimelinePreviewProxies.<fn>
+                  ===== asynchronous gap ===========================
+                  package:studio_store/blob_store.dart 69:14             BlobStore.withMaintenanceLease
+                  ===== asynchronous gap ===========================
+                  package:studio_sdk/studio_sdk.dart 628:14              StudioWorkspace.repairTimelinePreviewProxies
+                  ===== asynchronous gap ===========================
+                  packages/studio_sdk/test/proxy_repair_test.dart 231:7  main.<fn>
+                  
+            which has `code` with value 'SCHEMA_REQUIRED' which is different.
+                  Expected: PROXY_REPA ...
+                    Actual: SCHEMA_REQ ...
+                            ^
+                   Differ at offset 0
+  
+  packages/studio_sdk/test/proxy_repair_test.dart 231:7  main.<fn>
+  
+00:02 +0 -2: Some tests failed.
+
+Failing tests:
+  packages/studio_sdk/test/proxy_repair_test.dart: REAL SQLite retained original-role collision refuses before any CAS publication
+  packages/studio_sdk/test/proxy_repair_test.dart: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.

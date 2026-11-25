@@ -57,6 +57,7 @@ final class StudioWorkspace {
       }
       if (mediaLibraryPath != null && mediaRootPath != null) {
         _blobs = BlobStore(Directory(mediaRootPath), _repository.namespace);
+        _blobs!.noteDatabaseUsage(_databasePath);
         _media = NativeMedia.open(mediaLibraryPath, _repository.namespace);
         _saves = SaveCoordinator(_repository, _blobs!);
       }
@@ -579,6 +580,146 @@ final class StudioWorkspace {
     );
     clearPreviewProxies();
     return result;
+  }
+
+  /// Regenerate from verified originals, then repair only exact existing hashes.
+  /// No recipe conversion, metadata revision, original write or cross-project heal.
+  Future<Map<String, dynamic>> repairTimelinePreviewProxies({
+    required String assetId,
+    required BigInt expectedRevision,
+    required bool confirmed,
+  }) async {
+    _requireMedia();
+    if (!confirmed) {
+      throw const StudioException('PROXY_REPAIR_CONFIRMATION_REQUIRED');
+    }
+    if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
+    final snapshot = current, writer = _writer;
+    if (writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    if (snapshot.revision != expectedRevision) {
+      throw const StudioException('REVISION_CONFLICT');
+    }
+    requireLocalEditingWritable(snapshot);
+    final matches = (snapshot.toJson()['assets'] as List).where(
+      (a) => a['id'] == assetId,
+    );
+    if (matches.length != 1 ||
+        (matches.single['proxyRefs'] as List).length != 1) {
+      throw const StudioException('TIMELINE_PROXY_REQUIRED');
+    }
+    final asset = Map<String, dynamic>.from(matches.single),
+        ref = asset['proxyRefs'][0];
+    final blobs = {for (final b in snapshot.toJson()['blobs']) b['hash']: b};
+    validatePreviewProxyMetadata(asset, ref, blobs);
+    clearPreviewProxies();
+    final epoch = ++_proxyEpoch;
+    final builder = NativeMedia.open(_media!.libraryPath, snapshot.namespace);
+    _proxyBusy = true;
+    _proxyBuilder = builder;
+    void check() {
+      if (_closed ||
+          epoch != _proxyEpoch ||
+          current.hash != snapshot.hash ||
+          !identical(_writer, writer)) {
+        throw const StudioException('CANCELED');
+      }
+    }
+
+    try {
+      return await _blobs!.withMaintenanceLease(() async {
+        check();
+        _blobs!.requireExclusiveRepairDatabase(_databasePath);
+        final source = await _blobs!.resolve(asset['originalBlobHash']);
+        final actual = await _media!.probeAsync(source);
+        final expected = Map<String, dynamic>.from(
+          (asset['streams'] as List).singleWhere((v) => v['type'] == 'video'),
+        )..remove('id');
+        final observed = streamDocument(
+          Map<String, dynamic>.from(
+            (actual['streams'] as List).singleWhere(
+              (v) => v['type'] == 'video',
+            ),
+          ),
+          assetId: assetId,
+        )..remove('id');
+        if (contentHash(expected) != contentHash(observed)) {
+          throw const StudioException('PROXY_SOURCE_FACTS_MISMATCH');
+        }
+        check();
+        final raw = _blobs!.newProxyStage(),
+            map = File('${_blobs!.directory.path}/.restore-${_uuid.v7()}');
+        FrameProxy? proxy;
+        try {
+          final facts = await builder.buildPreviewProxyAsync(source, raw);
+          check();
+          proxy = await FrameProxy.admit(raw.parent, facts, dataFile: raw);
+          final bytes = utf8.encode(
+            jsonEncode({
+              'protocol': 'studio.preview-pts',
+              'version': 1,
+              'sourceHash': asset['originalBlobHash'],
+              'pipelineHash': previewProxyPipelineHash,
+              'rgbaHash': proxy.blobHash,
+              'facts': facts,
+              'frameHashes': proxy.frameHashes,
+            }),
+          );
+          if (proxy.blobHash != ref['blobHash'] ||
+              rawBytesHash(bytes) != ref['ptsMapBlobHash']) {
+            throw const StudioException('PROXY_REPAIR_DERIVATION_MISMATCH');
+          }
+          if (raw.lengthSync() != int.parse(blobs[ref['blobHash']]['bytes']) ||
+              bytes.length !=
+                  int.parse(blobs[ref['ptsMapBlobHash']]['bytes'])) {
+            throw const StudioException('BLOB_SIZE_MISMATCH');
+          }
+          validateProxyResourceBytes(
+            asset,
+            ref,
+            bytes,
+            await raw.readAsBytes(),
+          );
+          map.createSync(exclusive: true);
+          map.writeAsBytesSync(bytes, flush: true);
+          await _blobs!.resolve(asset['originalBlobHash']);
+          check();
+          final result = _repository.withExclusivePreviewRepair(
+            writer: writer,
+            expectedRevision: expectedRevision,
+            expectedSnapshot: snapshot.hash,
+            sourceHash: asset['originalBlobHash'],
+            roles: {ref['blobHash']: 'proxy', ref['ptsMapBlobHash']: 'ptsMap'},
+            publish: () => _blobs!.repairPreviewStagesSync(
+              {ref['blobHash']: raw, ref['ptsMapBlobHash']: map},
+              {
+                'projectId': snapshot.projectId,
+                'revision': expectedRevision.toString(),
+                'snapshotHash': snapshot.hash,
+                'sourceHash': asset['originalBlobHash'],
+                'pipelineHash': previewProxyPipelineHash,
+                'writerFence': writer.epoch,
+              },
+              databasePath: _databasePath,
+            ),
+          );
+          _blobs!.markPreviewProof(_previewProof(asset, ref));
+          return result;
+        } finally {
+          proxy?.dispose();
+          if (raw.existsSync()) raw.deleteSync();
+          if (map.existsSync()) map.deleteSync();
+        }
+      });
+    } catch (_) {
+      if (_closed || epoch != _proxyEpoch) {
+        throw const StudioException('CANCELED');
+      }
+      rethrow;
+    } finally {
+      builder.close();
+      if (identical(_proxyBuilder, builder)) _proxyBuilder = null;
+      _proxyBusy = false;
+    }
   }
 
   /// Publish immutable CAS bytes under namespace maintenance ownership, then
@@ -1655,7 +1796,13 @@ final class StudioWorkspace {
       if (_saves?.pending == true) {
         throw const StudioException('SAVE_IN_PROGRESS');
       }
-      flushCheckpoint();
+      try {
+        flushCheckpoint();
+      } on StudioException catch (error) {
+        // Already-durable edits stay in SQLite. A superseded writer must not
+        // overwrite the new owner's checkpoint, nor leak resources on shutdown.
+        if (error.code != 'WRITER_FENCED') rethrow;
+      }
       _autosave?.dispose();
       cancelExport();
       _closed = true;

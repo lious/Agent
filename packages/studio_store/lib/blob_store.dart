@@ -49,6 +49,80 @@ final class BlobStore {
     directory.createSync(recursive: true);
     _checkDirectory();
   }
+  String _databaseIdentity(String databasePath) =>
+      contentHash({'database': File(databasePath).resolveSymbolicLinksSync()});
+
+  /// Repair requires a namespace known exclusive since its EMPTY creation.
+  /// Legacy nonempty namespaces remain usable but cannot silently gain ownership.
+  /// Every SDK database user leaves a permanent marker; multiple users block heal.
+  void noteDatabaseUsage(String databasePath) {
+    _checkDirectory();
+    final identity = _databaseIdentity(databasePath);
+    final owner = File(p.join(directory.path, '.repair-storage-owner-v1.json'));
+    if (FileSystemEntity.typeSync(owner.path, followLinks: false) ==
+            FileSystemEntityType.notFound &&
+        directory.listSync(followLinks: false).isEmpty) {
+      try {
+        owner.createSync(exclusive: true);
+        owner.writeAsBytesSync(
+          utf8.encode(jsonEncode({'version': 1, 'database': identity})),
+          flush: true,
+        );
+        AtomicFilePublisher().syncDirectory(directory);
+      } on FileSystemException {
+        // Another opener or interrupted creation is NOT proof of ownership.
+      }
+    }
+    final usage = File(
+      p.join(directory.path, '.database-user-v1-${identity.substring(7)}.json'),
+    );
+    if (FileSystemEntity.typeSync(usage.path, followLinks: false) ==
+        FileSystemEntityType.notFound) {
+      try {
+        usage.createSync(exclusive: true);
+        usage.writeAsBytesSync(
+          utf8.encode(jsonEncode({'version': 1, 'database': identity})),
+          flush: true,
+        );
+        AtomicFilePublisher().syncDirectory(directory);
+      } on FileSystemException {
+        // Do not alter another opener's marker; repair validates it fail-closed.
+      }
+    }
+  }
+
+  void requireExclusiveRepairDatabase(String databasePath) {
+    _checkDirectory();
+    final identity = _databaseIdentity(databasePath),
+        owner = File(p.join(directory.path, '.repair-storage-owner-v1.json'));
+    Map<String, dynamic> read(File file) {
+      if (FileSystemEntity.typeSync(file.path, followLinks: false) !=
+              FileSystemEntityType.file ||
+          file.lengthSync() > 4096) {
+        throw const StudioException('PROXY_REPAIR_STORAGE_OWNER_UNVERIFIED');
+      }
+      final value = readStrictJson(file.readAsBytesSync(), maxBytes: 4096);
+      if (value is! Map<String, dynamic> ||
+          contentHash(value) !=
+              contentHash({'version': 1, 'database': identity})) {
+        throw const StudioException('PROXY_REPAIR_STORAGE_OWNER_UNVERIFIED');
+      }
+      return value;
+    }
+
+    read(owner);
+    final users = directory
+        .listSync(followLinks: false)
+        .where((e) => p.basename(e.path).startsWith('.database-user-v1-'))
+        .toList();
+    if (users.length != 1 ||
+        p.basename(users.single.path) !=
+            '.database-user-v1-${identity.substring(7)}.json') {
+      throw const StudioException('PROXY_REPAIR_STORAGE_SHARED');
+    }
+    read(File(users.single.path));
+  }
+
   static final Map<String, Future<void>> _maintenance = {};
 
   /// All SDK publishers hold this through SQLite pin commit; GC uses the SAME
@@ -312,6 +386,93 @@ final class BlobStore {
     } finally {
       if (stage.existsSync()) stage.deleteSync();
     }
+  }
+
+  /// SDK supplies native-qualified stages; caller holds stable maintenance
+  /// lease + repository exclusive ownership/writer transaction through this call.
+  /// Only corrupt/missing canonical entries change. No valid bytes are replaced.
+  /// Durable attempt journal remains prepared after interruption and is never GC'd.
+  Map<String, dynamic> repairPreviewStagesSync(
+    Map<String, File> stages,
+    Map<String, dynamic> context, {
+    required String databasePath,
+    void Function(String)? onPhase,
+  }) {
+    requireExclusiveRepairDatabase(databasePath);
+    if (stages.length != 2) {
+      throw const StudioException('PROXY_REPAIR_STAGE_INVALID');
+    }
+    final records = <Map<String, dynamic>>[];
+    for (final entry in stages.entries) {
+      final stage = entry.value, target = _path(entry.key);
+      if (stage.absolute.parent.path != directory.absolute.path ||
+          !RegExp(r'^\.(proxy-v1-[0-9a-f-]{36}\.rgba|restore-[0-9a-f-]{36})$')
+              .hasMatch(p.basename(stage.path)) ||
+          FileSystemEntity.typeSync(stage.path, followLinks: false) !=
+              FileSystemEntityType.file ||
+          stage.lengthSync() > 64 * 1024 * 1024 ||
+          rawBytesHash(stage.readAsBytesSync()) != entry.key) {
+        throw const StudioException('PROXY_REPAIR_STAGE_INVALID');
+      }
+      final type = FileSystemEntity.typeSync(target.path, followLinks: false);
+      if (type != FileSystemEntityType.file &&
+          type != FileSystemEntityType.notFound) {
+        throw const StudioException('PROXY_REPAIR_UNSAFE_TARGET');
+      }
+      if (type == FileSystemEntityType.file &&
+          target.lengthSync() > 64 * 1024 * 1024) {
+        throw const StudioException('PROXY_REPAIR_TARGET_LIMIT');
+      }
+      final observed = type == FileSystemEntityType.file
+          ? rawBytesHash(target.readAsBytesSync())
+          : null;
+      records.add({
+        'hash': entry.key,
+        'observedHash': observed,
+        'replace': observed != entry.key,
+      });
+    }
+    if (directory
+            .listSync(followLinks: false)
+            .where((f) => p.basename(f.path).startsWith('.repair-v1-'))
+            .take(257)
+            .length >=
+        256) {
+      throw const StudioException('PROXY_REPAIR_AUDIT_LIMIT');
+    }
+    final audit = File(
+      p.join(directory.path, '.repair-v1-${const Uuid().v7()}.json'),
+    );
+    final value = <String, dynamic>{
+      'protocol': 'studio.preview-repair',
+      'version': 1,
+      'state': 'prepared',
+      'context': context,
+      'objects': records,
+      'at': DateTime.now().toUtc().toIso8601String(),
+    };
+    AtomicFilePublisher().write(audit, utf8.encode(jsonEncode(value)));
+    onPhase?.call('prepared');
+    var replaced = 0;
+    for (final record in records) {
+      if (record['replace'] == true) {
+        AtomicFilePublisher().publish(
+          stages[record['hash']]!,
+          _path(record['hash']),
+        );
+        replaced++;
+        onPhase?.call('published:$replaced');
+      }
+    }
+    for (final hash in stages.keys) {
+      if (rawBytesHash(_path(hash).readAsBytesSync()) != hash) {
+        throw const StudioException('PROXY_REPAIR_POSTCHECK_FAILED');
+      }
+    }
+    value['state'] = 'verified';
+    AtomicFilePublisher().write(audit, utf8.encode(jsonEncode(value)));
+    onPhase?.call('verified');
+    return {'replaced': replaced, 'audit': audit.uri.pathSegments.last};
   }
 
   Future<ImportedBlob> relink(String expectedHash, LocalFileGrant grant) =>

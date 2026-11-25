@@ -1,0 +1,87 @@
+{
+  "increment": "1.9.3",
+  "checkedAt": "2026-11-25T18:40:38.654612+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "9e5ca2e7caaef44542503651590ebe6e1fb2100f",
+  "scopeStatus": "targetedChecksPassed",
+  "fullTaskComplete": false,
+  "tests": {
+    "domainStoreSdk": 63,
+    "nativeFlutterUi": 3,
+    "distinctTargetedExecutions": 66,
+    "additionalFocusedRerun": 3,
+    "focusedCasesAlreadyIncludedIn63": true,
+    "skipped": 0,
+    "actualSigkillAfterFirstObjectPublication": true
+  },
+  "sourceHashes": {
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "aeffd9db4642320e57a912c5020931ebcaccf157f87a4a2329d5434e44528bed",
+    "packages/studio_sdk/lib/studio_sdk.dart": "bbc56c541347d29c7d923768fcea2faa779ea7ef5fd50de687539d2ef67849be",
+    "packages/studio_store/lib/blob_store.dart": "ae203220f47011d8effaabbebce4cbccd865d54c3c15c9307ccdd2fafbd004cc",
+    "packages/studio_store/lib/studio_store.dart": "94172dfd6faee6738b85dd70a7c026b6a5f95f1b0c614c485f1b92afe5cb89d1",
+    "packages/studio_store/lib/derived_repair.dart": "2b21a279782c2032bfaafe5dee4a561f2f0b2f5d958af079e21a9caecb0eb684",
+    "packages/studio_sdk/test/proxy_repair_test.dart": "26f00dde3fee0b472b46cd9495075b63180fcb68a501f7ef540cad2e6f95ee67",
+    "packages/studio_sdk/tool/repair_interrupt_worker.dart": "cff478a744978896ae89ec11eba07e674946258bcae88b448642d9358536dfef",
+    "packages/studio_editor_ui/test/proxy_repair_ui_test.dart": "55812e626fc24a36d72113dae049da141b12bf6cdd8cbccd988938a957ecd377"
+  },
+  "commands": [
+    "dart test packages/studio_sdk/test/proxy_repair_test.dart packages/studio_sdk/test/proxy_discard_test.dart packages/studio_sdk/test/durable_proxy_test.dart packages/studio_sdk/test/save_test.dart packages/studio_store/test --concurrency=2 --reporter=json",
+    "cd packages/studio_editor_ui && flutter test test/proxy_repair_ui_test.dart test/proxy_discard_ui_test.dart test/foundation_app_test.dart --reporter=json",
+    "flutter analyze"
+  ],
+  "toolchain": {
+    "dart": "3.14.0",
+    "flutter": "3.50.1",
+    "sqlite": "approved3.54.1 strict gates unchanged",
+    "native": "/workspace/agent-media-native-peer/libstudio_media.so"
+  },
+  "currentUserPath": [
+    "fresh empty namespace gets single-database ownership marker before resource use",
+    "select clip, explicitly confirm source-qualified repair, Repair selected preview CAS",
+    "actual native regenerate+exact same hash admission -> all-history/exclusive-DB/writer CAS proof -> audited atomic individual replacement -> postcheck",
+    "existing project hash/revision and history stay unchanged; build reuses repaired proxies, archive/fork/reopen/export tested"
+  ],
+  "refusals": [
+    "legacy nonempty namespace cannot gain repair ownership retroactively",
+    "second database/CAS user or any other-project historical pin",
+    "original/unknown resource role, unowned or incompatible recipe/source metadata",
+    "unsafe symlink/oversized target or unsafe/invalid stage",
+    "changed snapshot/cancel/stale revision or superseded writer",
+    "source-derived bytes differ from existing expected hashes"
+  ],
+  "crashSemantics": "pair NOT atomic; SIGKILL after first object durably published leaves it correct and second still bad; prepared audit survives; reopen+fresh native regeneration repairs only remaining object",
+  "audit": "prepared and verified local records; no old corrupt payload retention; maximum256 attempts, no automatic pruning",
+  "storageBoundary": "trusted local FS/cooperative SDK; not protection from OS owner/direct arbitrary filesystem mutation; repair markers not importable through archives or peers",
+  "retainedFailures": [
+    "initial all-snapshots-as-project assumption failed on immutable command/entity object; now all hashes checked and actual root candidates validated",
+    "actual fenced writer close failed checkpoint and leaked resources; now only stale WRITER_FENCED checkpoint skipped before cleanup, never overwritten",
+    "initial interruption fixture attempted append to nonseekable stdout and exited255; corrected fixture to writeOnly, then actual SIGKILL assertion passed"
+  ],
+  "notRerun": [
+    "full182 suite",
+    "new clean release builds or Web/Chrome suite",
+    "physical A/V, non-Linux, physical multiple devices",
+    "V004 thermal/load or prior intermittent audio-underrun reproduction",
+    "unchanged full historical v4-v7 migration matrix (store selected regression ran; separate original frozen migration evidence retained)"
+  ],
+  "notImplemented": [
+    "legacy ownership migration/retroactive global ownership proof",
+    "recipe conversion/incompatible archive repair",
+    "namespace-wide byte quota and configurable history pruning",
+    "automatic repair or prepared-audit replay",
+    "global physical storage/RSS bounds or unlimited audit retention"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "XD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "next": "namespace inventory/byte admission and explicitly configurable preserve-all-by-default retention; no deletion until dependency-safe retained-role/pin plan is verified"
+}

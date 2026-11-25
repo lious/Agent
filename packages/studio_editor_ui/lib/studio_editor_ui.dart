@@ -226,7 +226,7 @@ class _FoundationAppState extends State<FoundationApp>
   String? _peerAdoptionId;
   BigInt? _peerAdoptionRevision;
   bool _gcConfirmed = false;
-  String? _proxyDiscardConsent;
+  String? _proxyDiscardConsent, _proxyRepairConsent;
   String? _captionSelected;
   String? _error, _selected;
   String _status =
@@ -713,6 +713,42 @@ class _FoundationAppState extends State<FoundationApp>
           child: const Text('Clear memory cache only (keep persisted proxies)'),
         ),
       ],
+    ),
+    CheckboxListTile(
+      key: const Key('confirm-repair-proxy'),
+      value:
+          _selected != null &&
+          _proxyRepairConsent == '${_project.hash}:$_selected',
+      onChanged: _busy || _selected == null
+          ? null
+          : (v) => setState(
+              () => _proxyRepairConsent = v == true
+                  ? '${_project.hash}:$_selected'
+                  : null,
+            ),
+      title: const Text(
+        'Repair corrupt/missing selected preview CAS from verified originals. Only identical expected hashes and exclusive project ownership; never originals or shared objects. Keep history; durable repair audit remains.',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('repair-selected-proxy'),
+      onPressed:
+          _busy ||
+              _selected == null ||
+              _proxyRepairConsent != '${_project.hash}:$_selected'
+          ? null
+          : () => _run(() async {
+              final clip = _clips.singleWhere((c) => c['id'] == _selected);
+              final result = await widget.workspace
+                  .repairTimelinePreviewProxies(
+                    assetId: clip['source']['id'] as String,
+                    expectedRevision: _project.revision,
+                    confirmed: true,
+                  );
+              _proxyRepairConsent = null;
+              return 'Verified repair: ${result['replaced']} corrupt/missing objects restored; audit ${result['audit']}. History retained.';
+            }),
+      child: const Text('Repair selected preview CAS (source-qualified)'),
     ),
     CheckboxListTile(
       key: const Key('confirm-discard-proxy'),

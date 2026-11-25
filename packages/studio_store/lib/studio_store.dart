@@ -14,6 +14,7 @@ part 'harness_persistence.dart';
 part 'peer_authority.dart';
 part 'peer_blobs.dart';
 part 'peer_recovery.dart';
+part 'derived_repair.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);

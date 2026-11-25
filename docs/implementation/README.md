@@ -609,3 +609,35 @@ executions,0 skipped; analyzer clean. Evidence `evidence/proxy-discard/summary.j
 This is NOT the182 full suite or release rerun; e11ce9a's182 and39202f41's16 retain
 their own frozen-SHA scope. Intermittent audio stress failures remain unresolved.
 All87/XD10 statuses unchanged,0 complete. Other platforms/physical devices untested.
+
+
+## Increment1.9.3 — source-qualified, exclusively owned CAS repair
+
+In a namespace bound at EMPTY creation to one database, select the clip → check
+`Repair corrupt/missing selected preview CAS...` → `Repair selected preview CAS`.
+Originals are really re-probed/hashed and native proxies regenerated; only the
+exact expected registered hashes can publish. A SQLite writer/revision fence and
+all-history role/project scan refuse originals, unknown ownership or another
+project's pins. Valid CAS bytes are never overwritten. Project revision/hash,
+undo/history and original bytes remain unchanged. A real process SIGKILL between
+individual object renames is recoverable by the next explicit repair; prepared
+and verified audit files stay local. The pair is NOT atomically published together.
+
+Important: legacy nonempty/unbound namespaces and another database using the same
+CAS refuse repair. No retrospective ownership assumption, silent Admission bypass,
+recipe conversion or original repair. Existing discard/original-export paths stay
+available. Audit cap256 and ownership/history scan cap10000 immutable objects are
+fail-closed limits, not a namespace disk quota. No history retention/pruning or
+automatic repair was added. See ADR0014 for trust/crash/legacy boundaries.
+
+This source checkpoint: **63 store/SDK +3 real native UI =66 targeted executions,
+0 skips**. Additional focused3 rerun is already included, not double-counted.
+Actual SIGKILL, writer/revision/cancel fences, protected original-role fixture,
+other-project pins, second-database usage, legacy and symlink refusals are tested.
+Fenced-writer shutdown now closes resources without overwriting a new owner's
+checkpoint; unrelated checkpoint failures still propagate. Evidence:
+`evidence/proxy-repair/summary.json`; earlier failures are retained.
+
+No full182/release/Chrome/physical-platform rerun; older frozen SHAs keep their
+own coverage. Prior intermittent audio underruns remain unresolved. Original87
+stays0/25/49/13 and XD10 stays0/8/1/1 (complete/partial/planned/blocked).

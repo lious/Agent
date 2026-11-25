@@ -1,0 +1,31 @@
+00:00 +0: loading packages/studio_sdk/test/proxy_repair_test.dart
+00:00 +0: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+00:03 +0 -1: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history [E]
+  Bad state: interrupt fixture exited 255: Unhandled exception:
+  FileSystemException: Cannot open file, path = '/dev/stdout' (OS Error: Illegal seek, errno = 29)
+  #0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+  #1      _File.openSync (dart:io/file_impl.dart:572:5)
+  #2      _File.writeAsBytesSync (dart:io/file_impl.dart:744:31)
+  #3      _File.writeAsStringSync (dart:io/file_impl.dart:772:5)
+  #4      main.<anonymous closure>.<anonymous closure>.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_sdk/tool/repair_interrupt_worker.dart:39:35)
+  #5      BlobStore.repairPreviewStagesSync (package:studio_store/blob_store.dart:389:18)
+  #6      main.<anonymous closure>.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_sdk/tool/repair_interrupt_worker.dart:31:30)
+  #7      DerivedRepairAuthority.withExclusivePreviewRepair.<anonymous closure> (package:studio_store/derived_repair.dart:95:19)
+  #8      DocumentRepository._transaction (package:studio_store/studio_store.dart:267:30)
+  #9      DerivedRepairAuthority.withExclusivePreviewRepair (package:studio_store/derived_repair.dart:13:9)
+  #10     main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_sdk/tool/repair_interrupt_worker.dart:25:12)
+  #11     BlobStore.withMaintenanceLease (package:studio_store/blob_store.dart:69:26)
+  <asynchronous suspension>
+  #12     main (file:///workspace/agent-foundation-20261125/packages/studio_sdk/tool/repair_interrupt_worker.dart:24:5)
+  <asynchronous suspension>
+  ; Bad state: No element
+  packages/studio_sdk/test/proxy_repair_test.dart 131:9  main.<fn>
+  
+00:03 +0 -1: REAL SQLite retained original-role collision refuses before any CAS publication
+00:04 +1 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_sdk/test/proxy_repair_test.dart: REAL source-qualified repair, busy/cancel/writer fences, SIGKILL partial publication and deterministic recovery preserve root/history
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
