@@ -1,0 +1,95 @@
+{
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test (unchanged)"
+  },
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/definition-qualified-analyzer.log"
+    },
+    {
+      "name": "native",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/resource_admission_test.dart",
+        "packages/studio_sdk/test/resource_preservation_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/namespace_budget_test.dart",
+        "packages/studio_sdk/test/proxy_repair_test.dart",
+        "packages/studio_sdk/test/proxy_discard_test.dart",
+        "packages/studio_sdk/test/durable_proxy_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/audio_export_test.dart",
+        "packages/studio_store/test",
+        "packages/studio_document/test",
+        "--concurrency=2",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/definition-qualified-native.log"
+    },
+    {
+      "name": "pulse",
+      "command": [
+        "python3",
+        "tools/acceptance/audio_sink/run_private.py",
+        "dart",
+        "test",
+        "packages/studio_sdk/test/timeline_audio_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "log": "artifacts/local-video/definition-qualified-pulse.log"
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/resource_preservation_ui_test.dart",
+        "test/checkpoint_retention_ui_test.dart",
+        "test/namespace_budget_ui_test.dart",
+        "test/proxy_repair_ui_test.dart",
+        "test/proxy_discard_ui_test.dart",
+        "test/foundation_app_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "exitCode": 0,
+      "log": "artifacts/local-video/definition-qualified-ui.log"
+    },
+    {
+      "name": "chrome",
+      "command": [
+        "flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "test/resource_closure_test.dart",
+        "test/inspector_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "exitCode": 0,
+      "log": "artifacts/local-video/definition-qualified-chrome.log"
+    }
+  ],
+  "actualTools": "tools.json",
+  "nativeLibrarySha256": "51ec0188345cb456da7bef662635eedb67dc82a5feac8dbeb76e8042314c9808",
+  "inputFixtureSha256": "41a2b57a9fe813d8988e93c998aafa7deaf80f18e07a59dfd957a2fcb6664a28",
+  "installs": "No tool/library/weight installation this increment; reuse approved official Flutter/Chrome/SQLite and existing FFmpeg7.1.5 native build. Existing toolchain/source provenance stays in earlier evidence. No RTC retry."
+}

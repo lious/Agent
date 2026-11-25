@@ -379,6 +379,8 @@ void main() {
           next = chain.toJson();
       chainBytes[h] = value;
       next['assets'][0]['version'] = '$i';
+      next['sequences'][0]['version'] = '$i';
+      next['sequences'][0]['tracks'][0]['items'][0]['version'] = '$i';
       next['sequences'][0]['tracks'][0]['items'][0]['source']['version'] = '$i';
       next['retainedSources'] = [
         {

@@ -762,6 +762,7 @@ final class DocumentRepository {
         'warnings': [],
       };
       if (changed) {
+        verifyDefinitionTransition(before, after);
         _put(after.hash, after.canonicalJson);
         _registerDefinitions(after);
         _pinBlobs(after);

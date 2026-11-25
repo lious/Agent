@@ -356,6 +356,11 @@ ProjectDocument applyEdit(
     b['muted'] = operation.muted;
     b['solo'] = operation.solo;
     d['audioBuses'] = [b];
+    // AudioBus is unversioned, but its rendered sequence definition is not.
+    // Local writable admission currently permits exactly one sequence/bus.
+    for (final sequence in d['sequences']) {
+      sequence['version'] = nextVersion(sequence['id'] as String);
+    }
     return ProjectDocument.fromJson(d);
   }
   if (operation is RenameProject) {

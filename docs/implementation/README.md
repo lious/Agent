@@ -770,3 +770,34 @@ are listed in the evidence; v4 uses the isolated old system library):
 ```sh
 python3 tools/acceptance/verify_sqlite_upgrade.py --baseline-commit fceda897 --baseline-schema 8 --baseline-library-dir /workspace/toolchains/sqlite-3.54.1 --library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/recheck-v8-v9.json
 ```
+
+## increment1.12 — resolved frozen definition identity and live version guard
+
+Existing native resource report now shows a core root definition identity (or an
+explicit unqualified error). It resolves pinned frozen definitions and actual
+known dependency data, rather than hashing only the literal Sequence object.
+Same-version frozen definitions with changed resolved dependencies refuse resource
+qualification/packaging. Inspection remains opaque/read-only when semantics are
+unknown. Digest equality is NOT render-equivalence or execution qualification.
+
+Normal writable timeline gain/pan/edit/save paths continue using the existing
+renderer; an in-transaction current-head guard rejects unchanged sequence versions
+when their rendering dependencies change. No new effects/font/mask/image/library/
+LUT/retained execution admission. Legacy persisted hash rows/history are not
+silently migrated to this new profile. See [ADR0019](../adr/0019-resolved-definition-identity.md).
+
+This regression also corrected a real audio-edit version propagation bug: changing
+master gain/pan/mute/solo now advances the owning sequence version; an identical
+operation is still a no-op. Track/sequence-owned effect ordering and transitions
+are explicitly unqualified rather than omitted from the identity. Physical sound/
+sync and the existing intermittent service resume-underrun are NOT qualified.
+
+Frozen increment1.12: analyzer/format clean; **178 selected cases** passed on the
+final exact Dart source (165 native/domain/SQL/SDK +1 isolated actual Pulse service
++7 Flutter widget flows with native FFI +5 actual Chrome). New cases:10 domain and
+1 Chrome. See [exact source/commands/results](evidence/definition-identity/summary.json).
+An intermediate service run reproduced the existing resume underrun; its full
+failure remains retained. Final isolated success does not mean it is fixed. This
+is not a full-repo/release/physical platform or 60s stress requalification. Existing
+historical migration/fault unit paths reran; the previous five separate old-binary
+v4-v8 experiments did not. No fresh native/window build or native code change.

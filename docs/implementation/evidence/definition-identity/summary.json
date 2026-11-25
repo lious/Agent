@@ -1,0 +1,127 @@
+{
+  "asOf": "2026-11-25T20:36:50.351656+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "06a254506c7eae2e585e363978eede4cd40cf851",
+  "freezeStarted": "2026-11-25T20:32:43.605031+08:00",
+  "freezeIdentity": "Exact modified/new Dart hashes below; final178 cases rerun after last source correction. Subsequent changes documentation/evidence only. Verify against commit containing this manifest; no previous167/182/full-repository result borrowed.",
+  "sourceSha256": {
+    "apps/studio_web/test/resource_closure_test.dart": "a3d1f8ba8338310ebc12291eb4b7a06a034b849ca3934c93c0ee6d7371eae7ed",
+    "packages/studio_document/lib/definition_fingerprint.dart": "5c6981a4393702538f88772cde7fc3ef924726b6bb2cbac7893d250d112a2639",
+    "packages/studio_document/lib/edit_algebra.dart": "4684894d6939c64200954d22870c0b25cb4a09504bccb6f9fc92d020343df5e3",
+    "packages/studio_document/lib/resource_closure.dart": "a830c4f6135da7ef7302868f52a54d2f94f967137cb44f0fb696cee91a5271dc",
+    "packages/studio_document/lib/studio_document.dart": "0c08dd071ce8468f2fdc116f549b770db9d939050b53296ed5e83e017104cf10",
+    "packages/studio_document/test/definition_fingerprint_test.dart": "1aa76289f879e4868f9336dce87a3bd7c0df8aa584aa9b7937037e39cb7d86b9",
+    "packages/studio_sdk/lib/resource_preservation.dart": "1f4e6704b1203c31c5202942403caac199f70e4f22800d11f5af2853d2b39994",
+    "packages/studio_sdk/test/resource_admission_test.dart": "0a47a5b0fff8c036b4b7c9cbe7d836789fa0089c2aa5ae4c20bc4a66a5787657",
+    "packages/studio_store/lib/studio_store.dart": "9503daeaa7f3c7949b83402394e73df99e8ffee0ade774b052de7eb4cc9eaee3"
+  },
+  "analyzer": "No issues found",
+  "results": {
+    "native": {
+      "passed": 165,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-native.jsonl",
+      "sha256": "b2a3b3d4fed75a6a5241230895afad14bc1b7248145c675e3358784090d2daf9"
+    },
+    "pulse": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-pulse.jsonl",
+      "sha256": "3a55bb8923fc64c280d9197a87fe8e11d332615c579c7260174348da1c1d23fc"
+    },
+    "ui": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-ui.jsonl",
+      "sha256": "e35972756ce60d586c2ca37ba5f01adf521d35a5110ce55d30d5ba2e4895bcec"
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-chrome.jsonl",
+      "sha256": "6e1dba7cef28bcfdbe9cfc91e6bcb7a6abc4e331d7b75ded967080b1993e171c"
+    }
+  },
+  "totalPassed": 178,
+  "newCases": {
+    "dartDefinitionDomain": 10,
+    "actualChromeDefinition": 1
+  },
+  "threeExecutedReviewRounds": "../../REVIEW.md increment1.12; original failure evidence retained",
+  "commands": "commands.json",
+  "failuresRetained": [
+    {
+      "log": "initial-native-audio-version-failure.jsonl",
+      "sha256": "d25731782ea02fd5effd2a13c4403d578abf2aa8bce6bbd5e9d10c06b26bd001",
+      "sourceMatchesFinalFreeze": false,
+      "meaning": "Pre-correction uncommitted attempt, not counted as final-SHA success"
+    },
+    {
+      "log": "initial-service-audio-version-failure.jsonl",
+      "sha256": "91c1a8514d323ebdf441566cc172be2bcddc22bc770cba8eb6b916bb9189ef0a",
+      "sourceMatchesFinalFreeze": false,
+      "meaning": "Pre-correction uncommitted attempt, not counted as final-SHA success"
+    },
+    {
+      "log": "initial-chrome-wrong-version-failure.jsonl",
+      "sha256": "b6c4373a33d6ab028fee5da47220b2d38d9b502f73dc1551d7adcb08c67b6925",
+      "sourceMatchesFinalFreeze": false,
+      "meaning": "Pre-correction uncommitted attempt, not counted as final-SHA success"
+    },
+    {
+      "log": "intermediate-service-underrun-failure.jsonl",
+      "sha256": "a9787cfa4ec69260f77207f76944b41c334c9612137ea3c6cc41357a1dafa9eb",
+      "sourceMatchesFinalFreeze": false,
+      "meaning": "Pre-correction uncommitted attempt, not counted as final-SHA success"
+    },
+    {
+      "log": "initial-analyzer-style-failure.log",
+      "sha256": "ab015fdb60028fdcdc9d85efe58484b5a1f9204a57a7b1e9e66835713cedebb3",
+      "sourceMatchesFinalFreeze": false,
+      "meaning": "Initial analyzer refused11 missing-brace style diagnostics; corrected before final source freeze. Initial compile/depth failure also preserved separately."
+    }
+  ],
+  "knownUnresolvedFailure": {
+    "log": "intermediate-service-underrun-failure.jsonl",
+    "reason": "Actual isolated Pulse service after corrected master-audio version edit reproduced resume interruption/underrun and invalid confirmed clock. Final one-case service pass does NOT establish this intermittent issue fixed. Native audio code, timings and assertions unchanged.",
+    "finalServicePassDoesNotCloseIssue": true
+  },
+  "scope": {
+    "definitionIdentityNotPixelAudioEquivalence": true,
+    "currentHeadVersionGuard": true,
+    "masterBusSequenceVersionPropagationFixed": true,
+    "historicalLegacyHashesMigrated": false,
+    "newWritableRendererCapabilities": false,
+    "supportedOrRefused": "Exact frozen typed known dependency profile; extensions/requiredFeatures/vendor or unqualified transitions and track/sequence effect ordering fail closed. Unsupported font/mask/image/library/LUT/retained execution stays read-only/refused."
+  },
+  "notRun": [
+    "Full repository/all87 or release qualification",
+    "Fresh OS app build/window/manual listening/physical presentation sync",
+    "ABI/CTest/rebuild of unchanged native library",
+    "Independent60s audio synchronization/10+10 cancel stress qualification this increment",
+    "Five old binary v4-v8 migration experiments from prior06a2545 (existing store migration/fault tests DID rerun)",
+    "Non-Linux/mobile/physical multiple devices/positive WebRTC (unchanged policy blocker)",
+    "Historical legacy hash-profile migration/noncurrent historical version reuse and complete I-022 GPU/texture/100cancel/pixel equivalence"
+  ],
+  "status": {
+    "original87": {
+      "complete": 0,
+      "partial": 25,
+      "planned": 49,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "original104Modified": false,
+  "schemaMigration": "none; existing schema9 and strict approved SQLite3.54.1 runtime gate unchanged",
+  "logNormalization": "Analyzer display logs only: removed trailing whitespace for git diff --check. Original raw analyzer outputs remain in artifacts/local-video; JSONL test evidence unchanged."
+}

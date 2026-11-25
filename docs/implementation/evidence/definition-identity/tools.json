@@ -1,0 +1,19 @@
+{
+  "flutter": {
+    "exitCode": 0,
+    "output": "{\n  \"frameworkVersion\": \"3.50.1\",\n  \"channel\": \"stable\",\n  \"repositoryUrl\": \"https://github.com/flutter/flutter.git\",\n  \"frameworkRevision\": \"ae9b586f34a8443573f82ef57c3bf914a908cbf7\",\n  \"frameworkCommitDate\": \"2026-11-18 17:01:07 -0800\",\n  \"engineRevision\": \"4d35714800b9266b6693a58e1225ecd7e9e45ed7\",\n  \"engineCommitDate\": \"2026-11-18 01:50:07.000Z\",\n  \"engineContentHash\": \"51379e6df48ea8ee7205623b90fe66491cad8df3\",\n  \"engineBuildDate\": \"2026-11-17 23:29:07.499\",\n  \"dartSdkVersion\": \"3.14.0\",\n  \"devToolsVersion\": \"2.61.0\",\n  \"flutterVersion\": \"3.50.1\",\n  \"flutterRoot\": \"/workspace/toolchains/flutter\"\n}"
+  },
+  "dart": {
+    "exitCode": 0,
+    "output": "Dart SDK version: 3.14.0 (stable) (Wed Nov 4 16:28:39 2026 -0800) on \"linux_x64\""
+  },
+  "chrome": {
+    "exitCode": 0,
+    "output": "Google Chrome 156.0.8078.47"
+  },
+  "sqlite": {
+    "version": "3.54.1",
+    "sourceId": "2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76",
+    "threadsafe": 1
+  }
+}

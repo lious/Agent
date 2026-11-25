@@ -324,7 +324,7 @@ Map<String, dynamic> qualifyResourceClosure(
   );
   final outer = {for (final b in project.toJson()['blobs']) b['hash']: b};
   final active = <String>{}, visited = <String>{};
-  final definitions = <String, String>{};
+  final definitions = DefinitionFingerprinter(project, bytes);
   var count = 0;
   void issue(String code, String path) =>
       issues.add({'code': code, 'path': path});
@@ -377,13 +377,7 @@ Map<String, dynamic> qualifyResourceClosure(
           issue('SOURCE_VERSION_MISSING', here);
           continue;
         }
-        final definitionHash = contentHash(entities.single);
-        if (definitions.containsKey(key) &&
-            definitions[key] != definitionHash) {
-          issue('IMMUTABLE_VERSION_CONFLICT', here);
-          continue;
-        }
-        definitions[key] = definitionHash;
+        definitions.registerSnapshot(snapshot);
         final pins = (r['dependencyBlobHashes'] as List).toSet();
         for (final b in snapshot.toJson()['blobs']) {
           final decl = outer[b['hash']];
@@ -418,6 +412,14 @@ Map<String, dynamic> qualifyResourceClosure(
   }
 
   visit(project, 0, '/retainedSources');
+  if (issues.isEmpty &&
+      (project.toJson()['retainedSources'] as List).isNotEmpty) {
+    try {
+      definitions.registerSnapshot(project);
+    } on StudioException catch (e) {
+      issue(e.code, '/retainedSources');
+    }
+  }
   result['registeredClosure'] = issues.isEmpty;
   result['retainedDefinitionQualification'] = 'fullProject2ReferencesOnly';
   return result;

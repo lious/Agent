@@ -763,3 +763,37 @@ Frozen source hashes/final commands/results and real historical migration eviden
 are in resource-admission/summary.json. No previous182 result is borrowed; an
 isolated software service pass cannot establish physical presentation or resolve
 the historical intermittent underrun. Full original tasks remain partial.
+
+## Increment1.12 — three actual review/correction rounds
+
+1. **s5a dependency semantics.** Replaced literal retained-target hashing with a
+   typed canonical definition/dependency graph. Checked exact retained source
+   origin/version, no-latest resolution, parent reverse-edge exclusions and image
+   forward hierarchy, font/mask/core effect and actual audio-bus dependencies.
+   Unknown semantics remain unqualified; no renderer/admission capability added.
+2. **Ownership/version/persistence review.** Found nested references must resolve
+   in their OWN snapshot context, not the outer current root. Registered all media
+   definitions in each snapshot to catch transitive same-version conflicts. Added
+   the current before/after guard before existing SQL publication; explicitly did
+   not rewrite historical v9 hashes or claim historical version-reuse completion.
+   New test imports were fixed; a depth fixture actually changed source data with
+   unchanged clip/sequence versions, so raised those versions rather than relaxing
+   the conflict/depth checks. Original failing log retained.
+3. **Consumer/performance/platform review.** Actual mix48k gain/pan PCM consumption
+   changes with the definition dependency identity; root project title does not.
+   Avoided quadratic image-child scans and repeated full JSON/hash parsing per
+   node via immutable-context caches/typed indexes. Added actual Chrome identity/
+   version-guard case and reran existing actual native AAC/resource adoption/edit/
+   archive/reopen, SQL fault/SIGKILL, pins/budget/fence and isolated service tests.
+   Final actual AAC/private-service runs exposed a real pre-existing SetMasterAudio
+   propagation omission: bus state changed without advancing its owning sequence.
+   Fixed the production allocator path and added explicit version/no-op regression.
+   Corrected Chrome fixture to request actual empty sequence version0, not1.
+   A further manual schema review found track/sequence-owned effect order is not
+   qualified by this profile; refuse it explicitly rather than silently omit its
+   dependency. Added two retained-data-preserving negative cases plus a clip-owned
+   core-effect parameter identity test. No execution permission is inferred.
+   After that correction, native AAC passed; the private service reproduced its
+   known resume underrun (full log retained, no timing/assertion relaxation).
+   Digest reporting always says no render-equivalence proof. No old full-suite,
+   GPU/physical/nonLinux/RTC result is borrowed; underrun remains unresolved.

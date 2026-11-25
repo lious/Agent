@@ -118,6 +118,27 @@ final class ResourcePreservationSession {
         (result['missingBytes'] as List).isEmpty;
     result['writesWorkspaceOrCas'] = false;
     try {
+      final document = project.toJson();
+      final sequence = (document['sequences'] as List).singleWhere(
+        (s) => s['id'] == document['rootSequenceId'],
+      );
+      result['definitionIdentity'] = {
+        'profile': DefinitionFingerprinter.profile,
+        'rootSequenceHash': DefinitionFingerprinter(
+          project,
+          _resources,
+        ).source('sequence', sequence['id'], sequence['version']),
+        'provesRenderEquivalence': false,
+        'persistentStoreHashProfileUpgraded': false,
+      };
+    } on StudioException catch (e) {
+      result['definitionIdentity'] = {
+        'profile': DefinitionFingerprinter.profile,
+        'unqualified': e.code,
+        'provesRenderEquivalence': false,
+      };
+    }
+    try {
       TimelineVideoGraph(project);
       result['writableProfile'] = 'eligibleForNativeQualification';
     } on StudioException catch (e) {

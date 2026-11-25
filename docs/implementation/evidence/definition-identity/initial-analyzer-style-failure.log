@@ -1,0 +1,15 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:53:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:74:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:76:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:80:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:83:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:103:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:130:11 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:155:11 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:226:15 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:232:15 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/definition_fingerprint.dart:241:15 • curly_braces_in_flow_control_structures
+
+11 issues found. (ran in 2.7s)
