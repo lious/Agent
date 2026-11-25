@@ -1,0 +1,19 @@
+---
+pid: 583577
+cwd: "/workspace/agent-foundation-20261125"
+command: "python3 - <<'PY'\nfrom pathlib import Path\np=Path('packages/studio_store/lib/command_history.dart');s=p.read_text().replace(\"      final payload = jsonDecode(row['payload_json'] as String);\", \"      dynamic payload;\\n      try {\\n        payload = jsonDecode(row['payload_json'] as String);\\n      } on FormatException {\\n        throw const StudioException('HISTORY_FORMAT_UNSUPPORTED');\\n      }\")\np.write_text(s)\np=Path('packages/studio_store/test/command_history_test.dart');s=p.read_text();start=s.index(\"        db.execute(\\n          'UPDATE commands SET payload_json=? WHERE ns=? AND id=?',\")\nend=s.index(\"        expect(r.commandHistory('p').redoDepth, 1);\",start)\ns=s[:start]+'''        final futurePayload={'kind':'undo','historyVersion':99,'targetCommandId':target};\n        final futureHash=contentHash({'projectId':'p','commandId':c,'expectedRevision':revision.toString(),'payload':futurePayload});\n        final originalHash=contentHash({'projectId':'p','commandId':c,'expectedRevision':revision.toString(),'payload':jsonDecode(journal)});\n        db.execute('UPDATE commands SET payload_json=?,input_hash=? WHERE ns=? AND id=?',[jsonEncode(futurePayload),futureHash,ns.key,c]);\n        expect(()=>r.commandHistory('p'),throwsA(isA<StudioException>().having((e)=>e.code,'code','HISTORY_FORMAT_UNSUPPORTED')));\n        db.execute('UPDATE commands SET payload_json=? WHERE ns=? AND id=?',['{bad',ns.key,c]);\n        expect(()=>r.commandHistory('p'),throwsA(isA<StudioException>().having((e)=>e.code,'code','HISTORY_FORMAT_UNSUPPORTED')));\n        db.execute('UPDATE commands SET payload_json=?,input_hash=? WHERE ns=? AND id=?',[journal,originalHash,ns.key,c]);\n'''+s[end:];p.write_text(s)\nPY\nPATH=/workspace/toolchains/flutter/bin:$PATH dart format packages/studio_store/lib/command_history.dart packages/studio_store/test/command_history_test.dart && PATH=/workspace/toolchains/flutter/bin:$PATH LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1 dart test packages/studio_store/test/command_history_test.dart --name 'late SQL' --reporter=json > artifacts/undo-redo/second-store-boundary.jsonl 2>&1"
+title: "Strengthen unknown-version fixture to pass input integrity before semantic refusal, and normalize malformed-journal errors without swallowing history"
+status: succeeded
+started_at: 2026-11-25T16:04:30.671Z
+running_for_ms: 1713
+---
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+ValueError: substring not found
+Formatted 2 files (0 changed) in 0.02 seconds.
+
+---
+exit_code: 0
+elapsed_ms: 1712
+ended_at: 2026-11-25T16:04:32.383Z
+---

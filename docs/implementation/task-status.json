@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T23:55:16.461480+08:00",
+  "asOf": "2026-11-26T00:10:51.997387+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,7 +12,7 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-023 only with new causal evidence/controlled cases: readiness polling removes unconditional sleep but does NOT prove old intermittent startup/resume underrun closed. Do not repeat green tests as a fix. Original I-005 multi-level undo/redo/proposal inverse remains executable next, without storage/fingerprint expansion.",
+    "Continue original I-005 remaining basic operations/multiselect/snapping/clipboard/grouping and gesture coalescing; new persistent tip/full-content undo/redo is only a tested slice, not field-aware collaboration or full task closure. No storage/fingerprint expansion.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
     "Remote publication blocked: read-only applicable rules=[] / repo rulesets=[] / protected=false does not explain commit_refs_rules rejection. No confirmed user-side corrective action. No further push until cause and compliant resolution evidence reported; continue ordinary local commits for authorized work.",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
@@ -542,7 +542,7 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope. Added real persistent AV transaction tests: all-table event-failure rollback after pins/definitions, retry/idempotency, stale CAS, undo/reopen and retired unlinked-audio-ID version reuse. Rich unsupported projects still refuse before definition writes. AV archive-fork group/member/anchor backlinks remap correctly. Original upstream Schema and broader contracts remain incomplete. Increment1.9.5: additive SQLitev8 policy/named-checkpoint labels/atomic prune audit, explicit native UI configure/dry-run/confirm; only unprotected old checkpoint INDEX rows removed. All snapshots/undo/revisions/roles/blob pins/resources retained; current/latest/save/named/session/other-project roots and shared DB authority protected. Real SIGKILL/SQL-audit fault/final-authority rollback, stale review/fence, actual media/archive/reopen tests. Default preserveAll, explicit keep-count only; full age-window/backups/resource compaction and original remaining acceptance remain unfinished.",
+      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope. Added real persistent AV transaction tests: all-table event-failure rollback after pins/definitions, retry/idempotency, stale CAS, undo/reopen and retired unlinked-audio-ID version reuse. Rich unsupported projects still refuse before definition writes. AV archive-fork group/member/anchor backlinks remap correctly. Original upstream Schema and broader contracts remain incomplete. Increment1.9.5: additive SQLitev8 policy/named-checkpoint labels/atomic prune audit, explicit native UI configure/dry-run/confirm; only unprotected old checkpoint INDEX rows removed. All snapshots/undo/revisions/roles/blob pins/resources retained; current/latest/save/named/session/other-project roots and shared DB authority protected. Real SIGKILL/SQL-audit fault/final-authority rollback, stale review/fence, actual media/archive/reopen tests. Default preserveAll, explicit keep-count only; full age-window/backups/resource compaction and original remaining acceptance remain unfinished. Increment1.20 reuses original command/snapshot/revision/pins transaction for persistent undo/redo and journal-derived cursor, with current schema unchanged. Legacy versions/raw hashes preserved; explicit final source evidence includes real pre/post-COMMIT SIGKILL, SQL failure, idempotency and concurrent undo. Not full provider/field-set schema or old-writer fencing closure.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/peer-tls-sqlite/sqlite-upgrade.json",
@@ -550,7 +550,8 @@
         "evidence/peer-ui-blob/summary.json",
         "evidence/recovery-adoption/summary.json",
         "evidence/persistent-audio/summary.json",
-        "evidence/checkpoint-retention/summary.json"
+        "evidence/checkpoint-retention/summary.json",
+        "evidence/command-history/summary.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
       "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
@@ -585,16 +586,19 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite",
+      "implementedScope": "Pure single-track append/split/move/lift/ripple delete with exact gaps/locks and transactional inverse; no multi-select/group/snap/paste/overwrite Increment1.20: actual SDK/UI persistent multi-level undo/redo derived from existing immutable commands/revisions journal, no new tables; monotonic commit revisions/exact saved entity definitions, no-op/branch-redo invalidation/idempotency, same-snapshot cursor reads and existing writer-fence transaction atomicity. Legacy undoLatest transitions retained byte-exact as real historical restore commands. Real AV/effects/audio/caption/proxy/save/reopen/archive-fork/preview/preencoder/MP4,1000 seeded title-root history undo/redo, real concurrent connections and SQL/kill/actual-old-library tests recorded. Conservative tip/full-root inverse, not field-aware collaboration or coalescing/full NLE matrix.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/command-history/summary.json"
       ],
       "remainingAcceptance": "第3节每操作正反例通过；1千随机序列undo后文档hash相等；锁定成员与负区间整组拒。",
       "remainingScope": "含Gap/多选/吸附/复制粘贴/编组；不含高级trim。",
       "hardDeps": [
         "I-003"
       ],
-      "blockers": []
+      "blockers": [
+        "Full Gap/multiselection/snapping/clipboard/grouping/basic-operation positive-negative matrix, gesture coalescing and field-aware concurrent inverse policy remain incomplete;1000 title-history transitions are not full randomized NLE acceptance. Current cursor reconstruction is O(n), not large-history UI performance qualification."
+      ]
     },
     {
       "id": "I-006",
@@ -1682,5 +1686,5 @@
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
   },
-  "iterationBaseCommit": "e23a559c7178c5ee9a127780d199d098e60927c5"
+  "iterationBaseCommit": "c8c12d88d751b87ad55556cb1f03defc011d83fb"
 }

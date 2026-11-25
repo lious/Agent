@@ -1,0 +1,7 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/tool/definition_history_probe.dart:109:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/tool/definition_history_probe.dart:120:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/tool/definition_history_probe.dart:143:7 • curly_braces_in_flow_control_structures
+
+3 issues found. (ran in 1.3s)

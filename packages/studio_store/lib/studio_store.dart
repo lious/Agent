@@ -20,6 +20,7 @@ part 'derived_repair.dart';
 part 'checkpoint_retention.dart';
 part 'resource_import.dart';
 part 'definition_history.dart';
+part 'command_history.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -724,6 +725,8 @@ final class DocumentRepository {
           nextVersion: nextVersion,
           newId: () => const Uuid().v7(),
         );
+      } else if (payload['kind'] == 'undo' || payload['kind'] == 'redo') {
+        candidate = _restoreCommandHistory(before, payload);
       } else {
         requireId(payload['targetCommandId'] as String);
         final target = _db.select(

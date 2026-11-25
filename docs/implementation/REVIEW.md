@@ -878,3 +878,12 @@ the historical intermittent underrun. Full original tasks remain partial.
 3. **真实故障/回归审查**：加强已有真实probe验证event策略/协商minreq与prebuf保持8192bytes，实际SIGSTOP producer仍须underrun/clockValid=false、sample冻结且记录真实underflow index。原sink suspend、server stop/stale、显式恢复/重复resume、FD/坏输入拒绝仍保留。冻结包含既有crop/color12文件及本批2文件，实际串行执行233定向、monitor/fault、历史SQL/kill、CTest和取消，避免CPU并行污染Pulse；结果及失败按本冻结单列，未重跑范围与未闭合间歇问题如实保留。
 
 最终冻结14源码/测试文件所选233全部通过，另真实monitor/fault probe及800视频取消/CTest3/真实历史kill成功。真实SIGSTOP producer依然触发underrun且clockValid=false并冻结；server-stale/device-lost与显式恢复仍有效。新旧两个间歇case的本次通过不能证明根因闭合，诊断前两case也曾通过的反证和两份历史失败继续单列；不作再次刷绿。本批不push，远端原因未知及无已证实用户纠正动作结论不变。
+
+
+## increment1.20 — 持久多级Undo/Redo（三轮实审/修正）
+
+1. **原合同/真相与Legacy审查**：逐条读取原s3撤销重做和s5a内容hash、不可变version、导入空栈合同，发现原“undo最新物理command”会切换上一次inverse。选复用同一commands/revisions journal而不是加并列栈表或仅内存实现；旧undoLatest保留实际恢复步骤，不能改写旧raw记录/假造现代redo。确认新content比较仅去Project.revision，恢复实体版本但commit revision单调，未知控制版本拒绝且不吞历史；仅tip/full-root保守冲突，不冒称字段rebase或coalescing。初版analyzer1条style信息保留并修复。
+2. **并发/事务/故障审查**：cursor查询改为一条head+left-join journal的SQLite读快照，避免两次读取混合并发head；写路径复用原事务/revision/fence/receipt/definitions/pins/events/outbox，只有原子commit后才改变派生cursor。no-op不清redo，新编辑只逻辑截断redo不删事件。补late SQL events trigger rollback与同receipt幂等、真实两个Isolate/SQLite连接门闩并发undo一胜一冲突、旧writer被fence；发现测试worker先发完成可能让fixture删除早于close，改SQLite close后再发完成。坏JSON统一类型错误；未知版本fixture最初只改payload会先撞inputHash，改成合法inputHash再断言精确HISTORY_FORMAT_UNSUPPORTED，不拿弱反例充数。一次辅助编辑脚本substring未匹配已保留，实际修正后定向重测。
+3. **真实用户/历史/媒体审查**：新SDK/真实UI按钮多步撤销重做；实际AV导入/抽取音频/link、crop/color、字幕、持久proxy逐态hash恢复及关闭重开；字幕不能静默丢给MP4，显式undo字幕后原件preview/编码前像素/MP4，再redo并归档fork检查空本地栈。真实旧store+document含seq.version0歧义记录执行四undo四redo/re-edit，旧row/snapshot bytes保持、新版本>历史max；不只是新fixture假兼容。复用源码mirror故障策略做两次COMMIT前/一次未改代码COMMIT后SIGKILL，所有重开都用未改当前库。1000次seeded标题历史完整undo/redo不冒称全部NLE随机序列；UI百万历史/字段级协作/coalescing/其他平台仍缺。新增旧库probe的3条style失败修正后再冻结，选定矩阵重新运行，不借旧233或定向通过。
+
+本轮最终20份源码冻结后，fresh所选239/239、CTest3/3、真实monitor/故障probe、实际旧库与COMMIT前后SIGKILL全部通过；视频四模式普通/ASan各100共800轮，未混算旧结果。`evidence/command-history/summary.json`及逐命令日志记录版本、hash、边界和未跑项。没有新失败不表示原间歇underrun闭合；本批未重试远端、未push，原两未发布提交原样保留。格式/analyzer最终通过，早期style和辅助编辑失败另保留，不删失败证据。

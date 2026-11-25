@@ -1,0 +1,5 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_store/lib/command_history.dart:57:9 • curly_braces_in_flow_control_structures
+
+1 issue found. (ran in 2.6s)

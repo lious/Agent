@@ -1789,7 +1789,18 @@ class _FoundationAppState extends State<FoundationApp>
                                   ),
                                 )
                               : null,
-                          child: const Text('Undo latest'),
+                          child: const Text('Undo'),
+                        ),
+                        OutlinedButton(
+                          key: const Key('redo'),
+                          onPressed: !_busy && widget.workspace.canRedo
+                              ? () => _act(
+                                  () => widget.workspace.redo(
+                                    expectedRevision: _project.revision,
+                                  ),
+                                )
+                              : null,
+                          child: const Text('Redo'),
                         ),
                       ],
                     ),

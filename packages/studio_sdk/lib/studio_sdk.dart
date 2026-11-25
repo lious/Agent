@@ -180,7 +180,10 @@ final class StudioWorkspace {
   }
 
   ProjectDocument get current => _repository.read(_activeProjectId)!;
-  bool get canUndo => _repository.latestCommandId(_activeProjectId) != null;
+  bool get canUndo =>
+      _repository.commandHistory(_activeProjectId).undoCommandId != null;
+  bool get canRedo =>
+      _repository.commandHistory(_activeProjectId).redoUndoCommandId != null;
   ProjectDocument rename(String title, {required BigInt expectedRevision}) {
     stopTimelinePlayback();
     _requireMetadata();
@@ -202,15 +205,36 @@ final class StudioWorkspace {
     stopTimelinePlayback();
     _requireMetadata();
     if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
-    final target = _repository.latestCommandId(_activeProjectId);
+    final target = _repository.commandHistory(_activeProjectId).undoCommandId;
     if (target == null) throw const StudioException('NOTHING_TO_UNDO');
     final id = _uuid.v7();
-    _repository.undoLatest(
+    _repository.undoCommand(
       writer: _writer!,
       commandId: id,
       receiptKey: id,
       expectedRevision: expectedRevision,
       targetCommandId: target,
+    );
+    final result = current;
+    if (result.revision != expectedRevision) _durableCommit();
+    return result;
+  }
+
+  ProjectDocument redo({required BigInt expectedRevision}) {
+    stopTimelinePlayback();
+    _requireMetadata();
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    final target = _repository
+        .commandHistory(_activeProjectId)
+        .redoUndoCommandId;
+    if (target == null) throw const StudioException('NOTHING_TO_REDO');
+    final id = _uuid.v7();
+    _repository.redoCommand(
+      writer: _writer!,
+      commandId: id,
+      receiptKey: id,
+      expectedRevision: expectedRevision,
+      undoCommandId: target,
     );
     final result = current;
     if (result.revision != expectedRevision) _durableCommit();

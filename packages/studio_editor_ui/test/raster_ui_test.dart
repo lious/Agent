@@ -9,7 +9,7 @@ import '../../studio_sdk/test/dissolve_fixture.dart';
 
 void main() {
   testWidgets(
-    'REAL crop/color UI combined transform-opacity-dissolve edit/preview/undo/save/fork/export',
+    'REAL crop/color UI multilevel undo/redo with dissolve preview/save/fork/export',
     (tester) async {
       final dir = Directory.systemTemp.createTempSync('raster-ui-');
       final w = StudioWorkspace.open(
@@ -111,6 +111,13 @@ void main() {
             w.current.toJson()['effects'].any((e) => e['type'] == 'colorBasic'),
       );
       await tap('undo');
+      await tap('undo');
+      expect(w.current.toJson()['effects'], isEmpty);
+      await tap('redo');
+      expect(w.current.toJson()['effects'].single['type'], 'crop');
+      await tap('redo');
+      expect(w.current.toJson()['effects'].length, 2);
+      await tap('undo');
       expect(
         w.current.toJson()['effects'].any((e) => e['type'] == 'colorBasic'),
         isFalse,
@@ -162,6 +169,8 @@ void main() {
       );
       final old = w.projectId;
       await asyncTap('restore-archive', () => w.projectId != old);
+      expect(w.canUndo, isFalse);
+      expect(w.canRedo, isFalse);
       final output = File('${dir.path}/ui.mp4');
       await enter('export-path', output.path);
       await asyncTap('export-video', output.existsSync);

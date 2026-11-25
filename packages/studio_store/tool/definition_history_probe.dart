@@ -93,6 +93,57 @@ void main(List<String> args) {
       operation: const SetMasterAudio(gainDb: -9),
     );
     refuses(-3);
+    // New persistent cursor traverses actual old ambiguous sequence-version0
+    // definitions, including the legacy undoLatest transition, without rewrite.
+    for (var i = 0; i < 4; i++) {
+      repo.undoCommand(
+        writer: writer,
+        commandId: 'modern-u-$i',
+        receiptKey: 'modern-u-$i',
+        expectedRevision: repo.read('p')!.revision,
+        targetCommandId: repo.commandHistory('p').undoCommandId!,
+      );
+    }
+    if (repo.read('p')!.toJson()['audioBuses'][0]['gainDb'] != 0 ||
+        repo.commandHistory('p').undoDepth != 0) {
+      throw StateError('modern legacy traversal');
+    }
+    for (var i = 0; i < 4; i++) {
+      repo.redoCommand(
+        writer: writer,
+        commandId: 'modern-r-$i',
+        receiptKey: 'modern-r-$i',
+        expectedRevision: repo.read('p')!.revision,
+        undoCommandId: repo.commandHistory('p').redoUndoCommandId!,
+      );
+    }
+    if (repo.read('p')!.toJson()['audioBuses'][0]['gainDb'] != -9) {
+      throw StateError('modern legacy redo');
+    }
+    final priorMax = int.parse(
+      repo.read('p')!.toJson()['sequences'][0]['version'] as String,
+    );
+    repo.undoCommand(
+      writer: writer,
+      commandId: 'before-reedit',
+      receiptKey: 'before-reedit',
+      expectedRevision: repo.read('p')!.revision,
+      targetCommandId: repo.commandHistory('p').undoCommandId!,
+    );
+    repo.edit(
+      writer: writer,
+      commandId: 'after-modern-reedit',
+      receiptKey: 'after-modern-reedit',
+      expectedRevision: repo.read('p')!.revision,
+      operation: const SetMasterAudio(gainDb: -12),
+    );
+    if (int.parse(
+              repo.read('p')!.toJson()['sequences'][0]['version'] as String,
+            ) <=
+            priorMax ||
+        repo.commandHistory('p').redoDepth != 0) {
+      throw StateError('historical version reused/redo retained');
+    }
     for (final row in oldRows) {
       final now = db.select(
         'SELECT * FROM entity_versions WHERE entity_id=? AND version=?',
@@ -119,6 +170,8 @@ void main(List<String> args) {
         'schema': db.userVersion,
         'headRevision': repo.read('p')!.revision.toString(),
         'exactLegacyUndo': true,
+        'modernLegacyFourUndoFourRedo': true,
+        'modernReeditVersionGreaterThanHistoricalMax': true,
         'unknownReuseRefused': true,
         'ambiguousOldStateNotNewWritePermission': true,
         'legacyRowsByteExact': true,

@@ -893,3 +893,16 @@ Native编辑器导入受支持SDR/CFR视频→点选VIDEO→填写 `crop-left/to
 发布边界：本轮只读查询的适用branch rules=[]、repo rulesets=[]、branch protected=false且仍00c2e5d；公开Git Operations显示operational，但不足以解释 `fatal error in commit_refs_rules`。**原因未知，未证实任何用户必须修改规则/授权/身份的动作**。保留原push错误，无push重试、无绕过或扩权；e23a559及本批普通本地commit均未发布。原104/87验收依赖、SQLite3.54.1严格门禁、87与XD10独立状态保持。旧writer共写/单次inverse、Linux CPU/GPU/物理/其他平台/RTC限制不变。
 
 本冻结实际**233项所选全部通过、0失败/0跳过**（208领域/SQLite/nativeSDK、13真实FFI UI、5Chrome资源/Inspector、7真实私有Pulse服务）；新增raster_clock与旧opacity_clock本次均通过，但不是间歇问题已修复。另真实monitor/fault完整probe、CTest3项、旧库/SQL-barrier/SIGKILL恢复成功；四种活动视频取消普通/ASan各100，共800轮，自有AVFrame/FD回基线。Pulse真实worker未跑ASan/TSan，不将视频ASan说成音频内存资格。不是全仓/全87/长时间负载/物理同步或其他平台验收。原87保持0 complete/26 partial/48 planned/13 blocked；XD10保持0/8/1/1。
+
+
+## increment1.20 — 可持久多级Undo / Redo（仅本地）
+
+Native编辑器可连续编辑crop/color/标题等→多次`Undo`→多次`Redo`；按钮按真实持久journal可用性禁用。关闭重开后仍可继续Redo；Undo后新编辑清可用Redo路径但不删除历史/事件/原件。SDK的undo/redo仍先停止播放/失效旧帧，事务内比revision/writer-fence和完整内容，只接受目标command ID，不接收任意快照JSON、不重跑模型/转码。普通保存不清栈，归档导入fork按原规格从revision0空本地栈开始；源工程栈留在原SQLite。
+
+不是内存stack：复用现有commands/revisions/snapshots/receipts/pins，无新表或迁移，cursor由单一SQLite读取快照重建，失败不会先pop。旧undoLatest/API/raw hash保持，旧恢复动作作为实际历史步骤可遍历；新SDK连续Undo不再来回撤销上一次inverse。原始entity版本精确恢复，后续新写仍用历史max+1。**仅tip/full-content保守逆操作**，不自动字段级协作rebase、无gesture coalescing；当前O(n) journal折叠，不宣称巨量历史实时性能。完整Gap/多选/吸附/复制粘贴/编组等原I-005未完成，不能据新栈标整项complete。详见[ADR0027](../adr/0027-persistent-command-journal-undo-redo.md)。
+
+真实路径覆盖UI多步撤销重做/保存/归档fork/预览MP4；SDK实际A/V+AudioClip/link、crop/color、caption及proxy逐态contentHash恢复/重开，显式Undo字幕后预览/编码前像素/MP4（不能偷偷丢字幕），再Redo保留字幕/代理。另1000个seeded标题历史逐态undo/redo，两独立连接同时Undo、late SQL回滚/幂等、原实际旧库歧义版本四undo四redo/re-edit、三次COMMIT前后SIGKILL。**准确冻结结果与未跑项以[本批证据](evidence/command-history/summary.json)为准**，不借旧233，不把1000标题历史说成全部NLE随机操作验收。
+
+原104/87验收依赖、SQLite3.54.1严格门禁、87与XD10分列保持。startup/resume underrun仍未证解；旧writer共写、Linux CPU/GPU/物理同步/其他平台及RTC限制不变。本批不push、不换分支/身份/协议、不重新无证据诊断远端；e23a559、c8c12d8和本批均只在云端checkout本地普通提交中保存。
+
+本冻结20份生产/测试源码实际所选**239项全过，0失败/0跳过**：214领域/SQLite/nativeSDK、13真实FFI UI、5 Chrome资源/Inspector、7私有Pulse。另CTest3项、真实旧库/SQL-barrier/SIGKILL及新增Undo/Redo三次SIGKILL、真实音频monitor/故障probe全过；四种active视频取消普通/ASan各100共800轮，自有AVFrame/FD回基线。是本批重新运行，不借旧233/182；早期风格检查与辅助脚本编辑失败单列保留。当前7项Pulse通过**不证明旧startup/resume underrun已修复**。本批没跑全仓、全87验收、fresh release窗口构建、物理/其他平台或大型历史性能；完整未跑清单见证据。原87仍0 complete/26 partial/48 planned/13 blocked，XD10仍0/8/1/1。
