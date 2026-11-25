@@ -15,6 +15,7 @@ import 'package:studio_sdk/studio_sdk.dart';
 part 'edit_gesture_controls.dart';
 part 'multi_move_controls.dart';
 part 'snap_controls.dart';
+part 'pointer_timeline.dart';
 
 /// Shared local-video workbench. Unsupported media/operations fail explicitly;
 /// this is not the complete timeline, preview, audio mixer, or AI product UI.
@@ -92,6 +93,7 @@ class _FoundationAppState extends State<FoundationApp>
   SnappedMovePlan? _snapPlan;
   bool _multiInputInvalid = false;
   bool _snapExpanded = false;
+  bool _pointerActive = false;
   final _multiSelection = <String>{};
   EditGesture? _multiGesture;
   String? _multiError;
@@ -250,6 +252,10 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   void _playbackControl(String op, {int? sample}) {
+    if (_pointerActive) {
+      setState(() => _error = 'GESTURE_IN_PROGRESS');
+      return;
+    }
     try {
       if (op == 'seek' || op == 'rebind') {
         _clearTimelineVideo();
@@ -327,7 +333,7 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   void _act(ProjectDocument Function() action) {
-    if (_gesture != null || _multiGesture != null) {
+    if (_gesture != null || _multiGesture != null || _pointerActive) {
       setState(() => _error = 'GESTURE_IN_PROGRESS');
       return;
     }
@@ -343,7 +349,7 @@ class _FoundationAppState extends State<FoundationApp>
   }
 
   Future<void> _run(Future<String> Function() action) async {
-    if (_gesture != null || _multiGesture != null) {
+    if (_gesture != null || _multiGesture != null || _pointerActive) {
       setState(() => _error = 'GESTURE_IN_PROGRESS');
       return;
     }
@@ -925,6 +931,30 @@ class _FoundationAppState extends State<FoundationApp>
               return 'Same-revision CPU transform/opacity preview; originals -> actual YUV420 encoder-input node -> display. Not GPU/physical sync qualification.';
             }),
       child: const Text('Preview selected timeline clip effect'),
+    ),
+    _PointerTimeline(
+      workspace: widget.workspace,
+      document: _project,
+      selection: _multiSelection,
+      blocked: _busy || _gesture != null || _multiGesture != null,
+      onSelection: (ids) => setState(() {
+        _multiSelection.clear();
+        _multiSelection.addAll(ids);
+      }),
+      onActive: (active) {
+        if (mounted) {
+          setState(() {
+            _pointerActive = active;
+            if (!active && _project.hash != widget.workspace.current.hash) {
+              _refresh();
+            }
+          });
+        }
+      },
+      onCommitted: () => setState(() {
+        _refresh();
+        _error = null;
+      }),
     ),
     _buildMultiMoveControls(),
     for (final c in _clips)

@@ -1,0 +1,92 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart
+00:00 +0: REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC MP4
+Shell: [libx264 @ 0x7f741800c880] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f741800c880] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f741800c880] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f741800c880] frame I:4     Avg QP:10.37  size:  3937
+Shell: [libx264 @ 0x7f741800c880] frame P:115   Avg QP:16.07  size:  1255
+Shell: [libx264 @ 0x7f741800c880] mb I  I16..4: 73.8%  0.0% 26.2%
+Shell: [libx264 @ 0x7f741800c880] mb P  I16..4:  7.2%  0.0%  1.5%  P16..4:  9.8%  6.5%  4.0%  0.0%  0.0%    skip:71.0%
+Shell: [libx264 @ 0x7f741800c880] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.3% 16.5% 12.9%
+Shell: [libx264 @ 0x7f741800c880] i16 v,h,dc,p: 87%  9%  3%  0%
+Shell: [libx264 @ 0x7f741800c880] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f741800c880] i8c dc,h,v,p: 54% 18% 27%  1%
+Shell: [libx264 @ 0x7f741800c880] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f741800c880] kb/s:322.82
+Shell: [aac @ 0x7f741812ac80] Qavg: 57650.707
+00:07 +1: REAL Shift selection, snap feedback, zoom/scroll mapping, zero/focus/ancestor preemption, linked locks and collision
+Pending timers:
+Timer (duration: 0:00:04.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:15)
+#6      _PointerTimelineState._render (package:studio_editor_ui/pointer_timeline.dart:363:16)
+#7      _PointerTimelineState._update (package:studio_editor_ui/pointer_timeline.dart:272:34)
+#8      _PointerTimelineState._start (package:studio_editor_ui/pointer_timeline.dart:236:7)
+#9      DragGestureRecognizer._checkStart.<anonymous closure> (package:flutter/src/gestures/monodrag.dart:850:53)
+#10     GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:362:24)
+#11     DragGestureRecognizer._checkStart (package:flutter/src/gestures/monodrag.dart:850:7)
+#12     DragGestureRecognizer._checkDrag (package:flutter/src/gestures/monodrag.dart:815:5)
+#13     DragGestureRecognizer.acceptGesture (package:flutter/src/gestures/monodrag.dart:743:7)
+#14     GestureArenaManager._resolveInFavorOf (package:flutter/src/gestures/arena.dart:291:12)
+#15     GestureArenaManager._resolve (package:flutter/src/gestures/arena.dart:239:11)
+#16     GestureArenaEntry.resolve (package:flutter/src/gestures/arena.dart:55:12)
+#17     OneSequenceGestureRecognizer.resolve (package:flutter/src/gestures/recognizer.dart:468:13)
+#18     DragGestureRecognizer.handleEvent (package:flutter/src/gestures/monodrag.dart:709:15)
+#19     PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:97:12)
+#20     PointerRouter._dispatchEventToRoutes.<anonymous closure> (package:flutter/src/gestures/pointer_router.dart:140:9)
+#21     _LinkedHashMapMixin.forEach (dart:_compact_hash:729:13)
+#22     PointerRouter._dispatchEventToRoutes (package:flutter/src/gestures/pointer_router.dart:138:18)
+#23     PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:128:7)
+#24     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:538:19)
+#25     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:508:22)
+#26     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+#27     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:447:7)
+#28     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:404:5)
+#29     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:1579:42)
+#30     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:1589:11)
+#31     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:1579:5)
+#32     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:870:15)
+#34     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#35     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:869:27)
+#36     TestGesture.moveTo.<anonymous closure> (package:flutter_test/src/test_pointer.dart:569:27)
+#38     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#39     TestGesture.moveTo (package:flutter_test/src/test_pointer.dart:567:27)
+#40     main.<anonymous closure>.begin (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart:312:17)
+<asynchronous suspension>
+#41     main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart:437:11)
+<asynchronous suspension>
+#42     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#43     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 6 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running invariant verifications after a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 2657 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:2657:12)
+#3      TestWidgetsFlutterBinding.postTest (package:flutter_test/src/binding.dart:2207:9)
+#4      AutomatedTestWidgetsFlutterBinding.postTest (package:flutter_test/src/binding.dart:2662:11)
+#6      Invoker.runTearDowns.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/invoker.dart:296:18)
+#7      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:17)
+#10     Invoker._waitForOutstandingCallbacks (package:test_api/src/backend/invoker.dart:314:5)
+#11     Invoker.runTearDowns.<anonymous closure> (package:test_api/src/backend/invoker.dart:295:9)
+<asynchronous suspension>
+#12     Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:318:9)
+<asynchronous suspension>
+(elided 5 frames from class _AssertionError and dart:async)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +1 -1: REAL Shift selection, snap feedback, zoom/scroll mapping, zero/focus/ancestor preemption, linked locks and collision [E]
+  Test failed. See exception logs above.
+  The test description was: REAL Shift selection, snap feedback, zoom/scroll mapping, zero/focus/ancestor preemption, linked locks and collision
+
+00:11 +1 -1: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart: REAL Shift selection, snap feedback, zoom/scroll mapping, zero/focus/ancestor preemption, linked locks and collision

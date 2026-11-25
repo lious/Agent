@@ -16,7 +16,9 @@ extension _MultiMoveControls on _FoundationAppState {
   }
 
   Future<void> _previewMultiMove(int direction, {SnappedMovePlan? snap}) async {
-    if (_multiPreviewBusy || _busy || _gesture != null) return;
+    if (_multiPreviewBusy || _busy || _gesture != null || _pointerActive) {
+      return;
+    }
     _multiImage?.dispose();
     _multiImage = null;
     _multiInputInvalid = true;
@@ -134,7 +136,8 @@ extension _MultiMoveControls on _FoundationAppState {
 
   Widget _buildMultiMoveControls() {
     final g = _multiGesture;
-    final blocked = _busy || _multiPreviewBusy || _gesture != null;
+    final blocked =
+        _busy || _multiPreviewBusy || _gesture != null || _pointerActive;
     List<String> closure = [];
     if (g != null) {
       closure = expandedMoveClipIds(

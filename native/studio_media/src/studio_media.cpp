@@ -648,7 +648,18 @@ struct Output {
     }
     ok(avio_open2(&format->pb, ("file:" + path).c_str(), AVIO_FLAG_WRITE,
                   nullptr, nullptr));
-    ok(avformat_write_header(format, nullptr));
+    // MP4's default1000Hz movie/edit-list clock truncates legal endpoints:
+    //119/30s became190368 rather than190400 samples. Preserve frame AND PCM
+    // boundaries; never weaken AAC verification or round requested content.
+    const int64_t movie_scale = (static_cast<int64_t>(fps.num) /
+                                 av_gcd(fps.num, 48000)) * 48000;
+    if (movie_scale <= 0 || movie_scale > std::numeric_limits<int32_t>::max())
+      throw Error("MUX_TIMEBASE_UNREPRESENTABLE");
+    AVDictionary *mux_options = nullptr;
+    av_dict_set_int(&mux_options, "movie_timescale", movie_scale, 0);
+    const int mux_result = avformat_write_header(format, &mux_options);
+    av_dict_free(&mux_options);
+    ok(mux_result);
     frame = owned_frame_alloc();
     packet = av_packet_alloc();
     if (!frame || !packet)

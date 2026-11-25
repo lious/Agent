@@ -171,6 +171,7 @@ extension _GestureControls on _FoundationAppState {
     final enabled =
         !_busy &&
         _multiGesture == null &&
+        !_pointerActive &&
         video &&
         (effect == null || (effect['keyframes'] as List).isEmpty);
     final value = _gesture == null

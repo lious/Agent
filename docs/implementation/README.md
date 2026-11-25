@@ -978,3 +978,9 @@ dart test packages/studio_document/test/timeline_snap_test.dart packages/studio_
 新增真实AAC文件PCM检查仅确认移动后0–0.8s静音和1.1–1.2s存在音频，不声称AAC切点
 sample-exact或DAC/物理延迟。原underrun仍未证解，既有失败保留；不重试受限RTC。
 详见ADR0030、REVIEW和evidence/snap-move/summary.json。本批不push、不重诊断远端。
+
+## Increment1.24 — real pointer timeline, atomic release
+
+In the native workbench, click/Shift-click clips (or use existing selection), then drag horizontally on the visible clip tracks. The ruler, zoom slider and horizontal scroll correspond to actual measured logical coordinates. Snap line/feedback and latest native ghost follow the same linked atomic move planner. Only final physical release after latest native-frame validation writes one history command; Escape, scroll/focus/track exit, invalid candidates and zero change do not write. Undo/redo, archive fork and MP4 export remain actual existing paths. Numeric snap controls are no longer the only move interaction. See ADR0031 and evidence/pointer-drag for exact tests, retained early failures and qualifications.
+
+The pointer-selected29/30s displacement exposed and fixed exact MP4 edit-list AAC duration truncation; sample counts and preencoder pixels are checked without weakening verification. This is NOT an AudioSink underrun fix. Same-track native CPU SDR subset only; no marker editor, mobile long-press/pinch, full operation matrix/GPU/physical-device qualification. Original87/XD10 acceptance/status remain separate and unchanged in completion count. Ordinary local commit only; six unpublished ancestors preserved, no push or remote diagnosis.

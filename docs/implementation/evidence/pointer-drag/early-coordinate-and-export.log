@@ -1,0 +1,45 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart
+00:00 +0: REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC MP4
+Shell: [libx264 @ 0x7fb70400c8c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7fb70400c8c0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7fb70400c8c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7fb70400c8c0] frame I:4     Avg QP:10.37  size:  3937
+Shell: [libx264 @ 0x7fb70400c8c0] frame P:115   Avg QP:16.07  size:  1255
+Shell: [libx264 @ 0x7fb70400c8c0] mb I  I16..4: 73.8%  0.0% 26.2%
+Shell: [libx264 @ 0x7fb70400c8c0] mb P  I16..4:  7.2%  0.0%  1.5%  P16..4:  9.8%  6.5%  4.0%  0.0%  0.0%    skip:71.0%
+Shell: [libx264 @ 0x7fb70400c8c0] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.3% 16.5% 12.9%
+Shell: [libx264 @ 0x7fb70400c8c0] i16 v,h,dc,p: 87%  9%  3%  0%
+Shell: [libx264 @ 0x7fb70400c8c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7fb70400c8c0] i8c dc,h,v,p: 54% 18% 27%  1%
+Shell: [libx264 @ 0x7fb70400c8c0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7fb70400c8c0] kb/s:322.82
+Shell: [aac @ 0x7fb70412ad00] Qavg: 57650.707
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following PathNotFoundException was thrown running a test:
+Cannot retrieve length of file, path = '/tmp/pointer-ui-YQOCEY/pointer.mp4' (OS Error: No such file
+or directory, errno = 2)
+
+When the exception was thrown, this was the stack:
+#0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+#1      _File.lengthSync (dart:io/file_impl.dart:457:5)
+#2      main.<anonymous closure> (file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart:236:21)
+<asynchronous suspension>
+#3      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#4      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1968:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC
+  MP4
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +0 -1: REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC MP4 [E]
+  Test failed. See exception logs above.
+  The test description was: REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC MP4
+
+00:09 +0 -1: Some tests failed.
+
+Failing tests:
+  /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/pointer_timeline_ui_test.dart: REAL pointer linked drag: native ghost, cancel/error isolation, one SQL history, reopen/fork/AAC MP4
