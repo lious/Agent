@@ -1,0 +1,72 @@
+{
+  "mode": "raw",
+  "sourceReadback": "/cursor/stores/user/grok-bot/agents/d7867d4f-5ec0-4c1f-91e7-58bb883b2a01/assets/01M86Z5JWC9TWF991H309ATZ5S.txt",
+  "results": [
+    {
+      "suite": "core-schema",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "core-commands",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "ffmpeg",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "multimodal-context",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "music-character-craft",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "library-contract",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "lifecycle-faults",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "lifecycle-published-compat",
+      "passed": false,
+      "exit": 1
+    },
+    {
+      "suite": "vertical-oracles",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "vertical-published",
+      "passed": false,
+      "exit": 1
+    },
+    {
+      "suite": "ondevice-oracles",
+      "passed": true,
+      "exit": 0
+    },
+    {
+      "suite": "ondevice-published",
+      "passed": false,
+      "exit": 1
+    },
+    {
+      "suite": "reconciliation",
+      "passed": false,
+      "exit": 1
+    }
+  ],
+  "allPassed": false
+}

@@ -1,0 +1,613 @@
+{
+  "reason": "Representation-only normalization: exported gate objects rendered to canonical Page taskId=capability strings. No semantic task changes.",
+  "changes": [
+    [
+      "V-023",
+      "gates",
+      [
+        {
+          "taskId": "V-008",
+          "capability": "llm-pair"
+        },
+        {
+          "taskId": "V-009",
+          "capability": "asr-pair"
+        },
+        {
+          "taskId": "V-011",
+          "capability": "mask-pair"
+        }
+      ],
+      [
+        "V-008=llm-pair",
+        "V-009=asr-pair",
+        "V-011=mask-pair"
+      ]
+    ],
+    [
+      "V-025",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "video-decode"
+        },
+        {
+          "taskId": "V-009",
+          "capability": "video-asr"
+        }
+      ],
+      [
+        "V-002=video-decode",
+        "V-009=video-asr"
+      ]
+    ],
+    [
+      "I-008",
+      "gates",
+      [
+        {
+          "taskId": "V-003",
+          "capability": "render"
+        }
+      ],
+      [
+        "V-003=render"
+      ]
+    ],
+    [
+      "I-011",
+      "gates",
+      [
+        {
+          "taskId": "V-005",
+          "capability": "durable-storage"
+        }
+      ],
+      [
+        "V-005=durable-storage"
+      ]
+    ],
+    [
+      "I-012",
+      "gates",
+      [
+        {
+          "taskId": "V-005",
+          "capability": "durable-storage"
+        }
+      ],
+      [
+        "V-005=durable-storage"
+      ]
+    ],
+    [
+      "I-013",
+      "gates",
+      [
+        {
+          "taskId": "V-005",
+          "capability": "archive-storage"
+        }
+      ],
+      [
+        "V-005=archive-storage"
+      ]
+    ],
+    [
+      "I-015",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "codec"
+        }
+      ],
+      [
+        "V-002=codec"
+      ]
+    ],
+    [
+      "I-016",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "apple-codec"
+        },
+        {
+          "taskId": "V-003",
+          "capability": "apple-render"
+        },
+        {
+          "taskId": "V-004",
+          "capability": "apple-clock"
+        }
+      ],
+      [
+        "V-002=apple-codec",
+        "V-003=apple-render",
+        "V-004=apple-clock"
+      ]
+    ],
+    [
+      "I-017",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "android-codec"
+        },
+        {
+          "taskId": "V-003",
+          "capability": "android-render"
+        },
+        {
+          "taskId": "V-004",
+          "capability": "android-clock"
+        }
+      ],
+      [
+        "V-002=android-codec",
+        "V-003=android-render",
+        "V-004=android-clock"
+      ]
+    ],
+    [
+      "I-018",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "windows-codec"
+        },
+        {
+          "taskId": "V-003",
+          "capability": "windows-render"
+        },
+        {
+          "taskId": "V-004",
+          "capability": "windows-clock"
+        }
+      ],
+      [
+        "V-002=windows-codec",
+        "V-003=windows-render",
+        "V-004=windows-clock"
+      ]
+    ],
+    [
+      "I-019",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "linux-codec"
+        },
+        {
+          "taskId": "V-003",
+          "capability": "linux-render"
+        },
+        {
+          "taskId": "V-004",
+          "capability": "linux-clock"
+        }
+      ],
+      [
+        "V-002=linux-codec",
+        "V-003=linux-render",
+        "V-004=linux-clock"
+      ]
+    ],
+    [
+      "I-020",
+      "gates",
+      [
+        {
+          "taskId": "V-007",
+          "capability": "web-media"
+        }
+      ],
+      [
+        "V-007=web-media"
+      ]
+    ],
+    [
+      "I-021",
+      "gates",
+      [
+        {
+          "taskId": "V-004",
+          "capability": "seek-load"
+        }
+      ],
+      [
+        "V-004=seek-load"
+      ]
+    ],
+    [
+      "I-022",
+      "gates",
+      [
+        {
+          "taskId": "V-003",
+          "capability": "render"
+        }
+      ],
+      [
+        "V-003=render"
+      ]
+    ],
+    [
+      "I-023",
+      "gates",
+      [
+        {
+          "taskId": "V-004",
+          "capability": "audio-clock"
+        }
+      ],
+      [
+        "V-004=audio-clock"
+      ]
+    ],
+    [
+      "I-024",
+      "gates",
+      [
+        {
+          "taskId": "V-002",
+          "capability": "export-codec"
+        },
+        {
+          "taskId": "V-003",
+          "capability": "export-render"
+        },
+        {
+          "taskId": "V-004",
+          "capability": "export-clock"
+        }
+      ],
+      [
+        "V-002=export-codec",
+        "V-003=export-render",
+        "V-004=export-clock"
+      ]
+    ],
+    [
+      "I-026",
+      "gates",
+      [
+        {
+          "taskId": "V-003",
+          "capability": "image-render"
+        }
+      ],
+      [
+        "V-003=image-render"
+      ]
+    ],
+    [
+      "I-028",
+      "gates",
+      [
+        {
+          "taskId": "V-025",
+          "capability": "multimodal-analysis"
+        }
+      ],
+      [
+        "V-025=multimodal-analysis"
+      ]
+    ],
+    [
+      "I-030",
+      "gates",
+      [
+        {
+          "taskId": "V-008",
+          "capability": "local-llm"
+        }
+      ],
+      [
+        "V-008=local-llm"
+      ]
+    ],
+    [
+      "I-034",
+      "gates",
+      [
+        {
+          "taskId": "V-008",
+          "capability": "agent-model-profile"
+        }
+      ],
+      [
+        "V-008=agent-model-profile"
+      ]
+    ],
+    [
+      "I-035",
+      "gates",
+      [
+        {
+          "taskId": "V-020",
+          "capability": "qa"
+        }
+      ],
+      [
+        "V-020=qa"
+      ]
+    ],
+    [
+      "I-039",
+      "gates",
+      [
+        {
+          "taskId": "V-020",
+          "capability": "narrative-qa"
+        }
+      ],
+      [
+        "V-020=narrative-qa"
+      ]
+    ],
+    [
+      "I-040",
+      "gates",
+      [
+        {
+          "taskId": "V-019",
+          "capability": "video-mode"
+        }
+      ],
+      [
+        "V-019=video-mode"
+      ]
+    ],
+    [
+      "I-041",
+      "gates",
+      [
+        {
+          "taskId": "V-016",
+          "capability": "ACE"
+        },
+        {
+          "taskId": "V-017",
+          "capability": "SAO"
+        },
+        {
+          "taskId": "V-018",
+          "capability": "YuE2"
+        }
+      ],
+      [
+        "V-016=ACE",
+        "V-017=SAO",
+        "V-018=YuE2"
+      ]
+    ],
+    [
+      "I-042",
+      "gates",
+      [
+        {
+          "taskId": "V-023",
+          "capability": "heavy-model-pool"
+        }
+      ],
+      [
+        "V-023=heavy-model-pool"
+      ]
+    ],
+    [
+      "I-043",
+      "gates",
+      [
+        {
+          "taskId": "V-011",
+          "capability": "image-erase"
+        }
+      ],
+      [
+        "V-011=image-erase"
+      ]
+    ],
+    [
+      "I-044",
+      "gates",
+      [
+        {
+          "taskId": "V-012",
+          "capability": "tracking"
+        }
+      ],
+      [
+        "V-012=tracking"
+      ]
+    ],
+    [
+      "I-045",
+      "gates",
+      [
+        {
+          "taskId": "V-012",
+          "capability": "temporal-inpaint"
+        }
+      ],
+      [
+        "V-012=temporal-inpaint"
+      ]
+    ],
+    [
+      "I-046",
+      "gates",
+      [
+        {
+          "taskId": "V-009",
+          "capability": "asr"
+        }
+      ],
+      [
+        "V-009=asr"
+      ]
+    ],
+    [
+      "I-047",
+      "gates",
+      [
+        {
+          "taskId": "V-010",
+          "capability": "audio-restore"
+        }
+      ],
+      [
+        "V-010=audio-restore"
+      ]
+    ],
+    [
+      "I-048",
+      "gates",
+      [
+        {
+          "taskId": "V-013",
+          "capability": "upscale-denoise"
+        }
+      ],
+      [
+        "V-013=upscale-denoise"
+      ]
+    ],
+    [
+      "I-049",
+      "gates",
+      [
+        {
+          "taskId": "V-014",
+          "capability": "tts"
+        }
+      ],
+      [
+        "V-014=tts"
+      ]
+    ],
+    [
+      "I-050",
+      "gates",
+      [
+        {
+          "taskId": "V-015",
+          "capability": "voice-clone"
+        }
+      ],
+      [
+        "V-015=voice-clone"
+      ]
+    ],
+    [
+      "I-051",
+      "gates",
+      [
+        {
+          "taskId": "V-021",
+          "capability": "serverless"
+        }
+      ],
+      [
+        "V-021=serverless"
+      ]
+    ],
+    [
+      "I-052",
+      "gates",
+      [
+        {
+          "taskId": "V-021",
+          "capability": "serverless"
+        }
+      ],
+      [
+        "V-021=serverless"
+      ]
+    ],
+    [
+      "I-053",
+      "gates",
+      [
+        {
+          "taskId": "V-022",
+          "capability": "store-billing"
+        }
+      ],
+      [
+        "V-022=store-billing"
+      ]
+    ],
+    [
+      "I-057",
+      "gates",
+      [
+        {
+          "taskId": "V-020",
+          "capability": "eval-baseline"
+        }
+      ],
+      [
+        "V-020=eval-baseline"
+      ]
+    ],
+    [
+      "I-058",
+      "gates",
+      [
+        {
+          "taskId": "V-022",
+          "capability": "public-release"
+        }
+      ],
+      [
+        "V-022=public-release"
+      ]
+    ],
+    [
+      "I-059",
+      "gates",
+      [
+        {
+          "taskId": "V-006",
+          "capability": "advanced-color"
+        }
+      ],
+      [
+        "V-006=advanced-color"
+      ]
+    ],
+    [
+      "I-060",
+      "gates",
+      [
+        {
+          "taskId": "V-024",
+          "capability": "advanced-dsp"
+        }
+      ],
+      [
+        "V-024=advanced-dsp"
+      ]
+    ],
+    [
+      "I-061",
+      "gates",
+      [
+        {
+          "taskId": "V-026",
+          "capability": "gltf-preview"
+        }
+      ],
+      [
+        "V-026=gltf-preview"
+      ]
+    ]
+  ]
+}

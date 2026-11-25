@@ -1,0 +1,6954 @@
+{
+  "saveRequest": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/SaveRequest-1.0.0.json",
+    "$ref": "#/$defs/SaveRequest",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "checkpoint": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/Checkpoint-1.0.0.json",
+    "$ref": "#/$defs/Checkpoint",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "saveReceipt": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/SaveReceipt-1.0.0.json",
+    "$ref": "#/$defs/SaveReceipt",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "archiveDescriptor": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/ArchiveDescriptor-1.0.0.json",
+    "$ref": "#/$defs/ArchiveDescriptor",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "resourceInventory": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/ResourceInventory-1.0.0.json",
+    "$ref": "#/$defs/ResourceInventory",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "restoreVersion": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/RestoreVersion-1.0.0.json",
+    "$ref": "#/$defs/RestoreVersion",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "autosavePolicy": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/AutosavePolicy-1.0.0.json",
+    "$ref": "#/$defs/AutosavePolicy",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "backupIndex": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://studio.invalid/schemas/document-lifecycle/BackupIndex-1.0.0.json",
+    "$ref": "#/$defs/BackupIndex",
+    "$defs": {
+      "Id": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@-]{0,127}$"
+      },
+      "U64": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,18})$"
+      },
+      "Hash": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "Z$"
+      },
+      "Namespace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId",
+          "tenantId",
+          "workspaceId"
+        ],
+        "properties": {
+          "appId": {
+            "$ref": "#/$defs/Id"
+          },
+          "tenantId": {
+            "$ref": "#/$defs/Id"
+          },
+          "workspaceId": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "RelativePath": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^[A-Za-z0-9_./-]+$"
+      },
+      "Epochs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "privacy",
+          "rights"
+        ],
+        "properties": {
+          "privacy": {
+            "$ref": "#/$defs/U64"
+          },
+          "rights": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "ResourceKind": {
+        "enum": [
+          "original",
+          "generated",
+          "proxy",
+          "font",
+          "model",
+          "lora",
+          "character",
+          "skill",
+          "session",
+          "project",
+          "history",
+          "license",
+          "evidence",
+          "thumbnail",
+          "render"
+        ]
+      },
+      "PendingOperation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "logicalId",
+          "kind",
+          "shotId",
+          "stateAtFreeze",
+          "remoteResumeIncluded"
+        ],
+        "properties": {
+          "logicalId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "music",
+              "sfx",
+              "analysis"
+            ]
+          },
+          "shotId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stateAtFreeze": {
+            "enum": [
+              "queued",
+              "running",
+              "unknown"
+            ]
+          },
+          "remoteResumeIncluded": {
+            "const": false
+          }
+        }
+      },
+      "Omission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resourceRef",
+          "kind",
+          "reason",
+          "impact"
+        ],
+        "properties": {
+          "resourceRef": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "reason": {
+            "enum": [
+              "external",
+              "notRedistributable",
+              "purged",
+              "missing",
+              "notSelected",
+              "unresolvedExtension"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "blocksFinalRender",
+              "previewOnly",
+              "reproGeneration",
+              "rebuildable",
+              "historicalOnly"
+            ]
+          }
+        }
+      },
+      "InventoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "refId",
+          "kind",
+          "blobHash",
+          "bytes",
+          "embeddedPath",
+          "externalRef",
+          "requiredFor",
+          "redistribution",
+          "rightsRecordRef"
+        ],
+        "properties": {
+          "refId": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "$ref": "#/$defs/ResourceKind"
+          },
+          "blobHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embeddedPath": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RelativePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "externalRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requiredFor": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "preview",
+                "finalRender",
+                "reproGeneration",
+                "audit"
+              ]
+            },
+            "maxItems": 4,
+            "uniqueItems": true
+          },
+          "redistribution": {
+            "enum": [
+              "allowed",
+              "forbidden",
+              "unknown"
+            ]
+          },
+          "rightsRecordRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SaveRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "namespace",
+          "projectId",
+          "idempotencyKey",
+          "kind",
+          "revision",
+          "targetBindingId",
+          "expectedTargetVersion",
+          "planHash",
+          "name",
+          "overwriteConsentRef",
+          "uploadConsentRef",
+          "expectedEpochs",
+          "cancelEpoch"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "requestId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "idempotencyKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "kind": {
+            "enum": [
+              "checkpoint",
+              "saveManaged",
+              "saveBoundPackage",
+              "namedVersion",
+              "backup",
+              "portableArchive"
+            ]
+          },
+          "revision": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/U64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedTargetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "planHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overwriteConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "uploadConsentRef": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "cancelEpoch": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "Checkpoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "epochs",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "SaveReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "targetBindingId",
+          "artifactHash",
+          "targetVersion",
+          "publication",
+          "createdAt"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "operationId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "targetBindingId": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "artifactHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targetVersion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication": {
+            "enum": [
+              "localDurable",
+              "providerAcceptedVerified",
+              "providerAcceptedUnverified"
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ArchiveDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "archiveId",
+          "namespace",
+          "projectId",
+          "revision",
+          "snapshotHash",
+          "mode",
+          "sourceCompleteness",
+          "creativeCompletion",
+          "inventoryPath",
+          "epochs",
+          "pendingOperations",
+          "omissions",
+          "historyPolicy",
+          "sessionPolicy",
+          "redactionReportHash",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-document-lifecycle"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "mode": {
+            "enum": [
+              "originals",
+              "proxies",
+              "linked"
+            ]
+          },
+          "sourceCompleteness": {
+            "enum": [
+              "selfContained",
+              "proxyOnly",
+              "externalRefs",
+              "incomplete"
+            ]
+          },
+          "creativeCompletion": {
+            "enum": [
+              "complete",
+              "pendingJobs"
+            ]
+          },
+          "inventoryPath": {
+            "const": "extensions/document-lifecycle/inventory.json"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "pendingOperations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/PendingOperation"
+            },
+            "maxItems": 10000
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Omission"
+            },
+            "maxItems": 100000
+          },
+          "historyPolicy": {
+            "enum": [
+              "currentOnly",
+              "selectedRevisions"
+            ]
+          },
+          "sessionPolicy": {
+            "enum": [
+              "excluded",
+              "headersOnly",
+              "selectedContent"
+            ]
+          },
+          "redactionReportHash": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Hash"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "ResourceInventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "archiveId",
+          "entries"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "archiveId": {
+            "$ref": "#/$defs/Id"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/InventoryEntry"
+            },
+            "maxItems": 100000
+          }
+        }
+      },
+      "RestoreVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "type",
+          "id",
+          "namespace",
+          "projectId",
+          "expectedRevision",
+          "actorId",
+          "receiptKey",
+          "operation",
+          "expectedEpochs"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "type": {
+            "const": "documentLifecycle"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "expectedRevision": {
+            "$ref": "#/$defs/U64"
+          },
+          "actorId": {
+            "$ref": "#/$defs/Id"
+          },
+          "receiptKey": {
+            "$ref": "#/$defs/Id"
+          },
+          "operation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "sourceCheckpointId",
+              "sourceSnapshotHash",
+              "restorePlanHash",
+              "protectedFieldsConsentRef"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restoreVersion"
+              },
+              "sourceCheckpointId": {
+                "$ref": "#/$defs/Id"
+              },
+              "sourceSnapshotHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "restorePlanHash": {
+                "$ref": "#/$defs/Hash"
+              },
+              "protectedFieldsConsentRef": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "expectedEpochs": {
+            "$ref": "#/$defs/Epochs"
+          }
+        }
+      },
+      "BackupChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          }
+        }
+      },
+      "BackupObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hash",
+          "bytes",
+          "storage",
+          "chunks"
+        ],
+        "properties": {
+          "hash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "bytes": {
+            "$ref": "#/$defs/U64"
+          },
+          "storage": {
+            "enum": [
+              "whole",
+              "chunked4MiB"
+            ]
+          },
+          "chunks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupChunk"
+            },
+            "maxItems": 131072
+          }
+        }
+      },
+      "BackupIndex": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "schemaVersion",
+          "id",
+          "namespace",
+          "projectId",
+          "revision",
+          "checkpointId",
+          "snapshotHash",
+          "inventoryHash",
+          "epochs",
+          "objects",
+          "createdAt"
+        ],
+        "properties": {
+          "format": {
+            "const": "studio-private-backup"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "id": {
+            "$ref": "#/$defs/Id"
+          },
+          "namespace": {
+            "$ref": "#/$defs/Namespace"
+          },
+          "projectId": {
+            "$ref": "#/$defs/Id"
+          },
+          "revision": {
+            "$ref": "#/$defs/U64"
+          },
+          "checkpointId": {
+            "$ref": "#/$defs/Id"
+          },
+          "snapshotHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "inventoryHash": {
+            "$ref": "#/$defs/Hash"
+          },
+          "epochs": {
+            "$ref": "#/$defs/Epochs"
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/BackupObject"
+            },
+            "maxItems": 100000
+          },
+          "createdAt": {
+            "$ref": "#/$defs/Timestamp"
+          }
+        }
+      },
+      "AutosavePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "debounceMs",
+          "maxIntervalMs",
+          "maxCommands",
+          "externalPackageAuto"
+        ],
+        "properties": {
+          "debounceMs": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 10000,
+            "default": 2000
+          },
+          "maxIntervalMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "default": 30000
+          },
+          "maxCommands": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 50
+          },
+          "externalPackageAuto": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  }
+}

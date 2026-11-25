@@ -1,0 +1,94 @@
+{
+  "page": "https://cursor.com/canvas/store-fa1f1df3-2eb9-4e13-93c0-0c955b705747/8ed17845-a86d-410a-a1fe-093e1a4a7dbb",
+  "sourceReadback": "/cursor/stores/user/grok-bot/agents/d7867d4f-5ec0-4c1f-91e7-58bb883b2a01/assets/01M86Z5JWC9TWF991H309ATZ5S.txt",
+  "asOf": "2026-11-24 Asia/Shanghai",
+  "taskCounts": {
+    "V": 26,
+    "I": 61
+  },
+  "allTaskStatesPlannedOrUnvalidated": true,
+  "sourcePreservation": "exact latest pre-t76 module equality after removing only explicitly marked t76 data/UI/TOC/import additions",
+  "baselineSHA256": "6d37bf4e15a58d82fb545be9e908e2d28c3dd3dac7cbb66757878a4a123b064e",
+  "counts": {
+    "taskCount": 87,
+    "V": 26,
+    "I": 61,
+    "hardEdges": 146,
+    "capabilityEdges": 56,
+    "conditionalEdges": 31,
+    "mappedSections": 72,
+    "historicalOnly": 2,
+    "topologicalOrderComplete": true
+  },
+  "testLogs": {
+    "task-audit-final": {
+      "tests": 24,
+      "passed": true
+    },
+    "execution-contracts-final": {
+      "tests": 24,
+      "passed": true
+    },
+    "harness-published": {
+      "tests": 26,
+      "passed": true
+    },
+    "harness-oracles": {
+      "tests": 26,
+      "passed": true
+    },
+    "harness-review-c": {
+      "tests": 19,
+      "passed": true
+    },
+    "license-policy": {
+      "tests": 25,
+      "passed": true
+    },
+    "license-schema": {
+      "tests": 12,
+      "passed": true
+    },
+    "t73-oracles": {
+      "tests": 18,
+      "passed": true
+    }
+  },
+  "compatibleHistoricalSuites": 13,
+  "rawHistoricalFailures": [
+    "lifecycle-published-compat",
+    "vertical-published",
+    "ondevice-published",
+    "reconciliation"
+  ],
+  "priorT73PublishedTests": {
+    "passed": 21,
+    "failedExpectedAdditionComparator": 1,
+    "failure": "test_full_prior_source_preserved",
+    "reason": "Authorized t76 WBS/UI/import additions; retained raw output; no schema change"
+  },
+  "newHistoricalMigrationRules": false,
+  "actualAppModelDeviceOrBackendExecution": false,
+  "exports": [
+    "[box-local audit path]",
+    "[box-local audit path]",
+    "[box-local audit path]",
+    "[box-local audit path]",
+    "[box-local audit path]",
+    "[box-local audit path]"
+  ],
+  "firstTasks": [
+    "I-001",
+    "I-002",
+    "I-003",
+    "I-004",
+    "V-001",
+    "V-002",
+    "V-005"
+  ],
+  "knownLimits": [
+    "All proposed implementation/acceptance paths unverified and not implemented",
+    "Device/model version and real quality/performance require future per-profile V work",
+    "Supplier selection, accounts, fees, uploads, deployments and purchases not authorized by this plan"
+  ]
+}

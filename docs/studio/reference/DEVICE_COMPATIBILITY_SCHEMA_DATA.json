@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:studio:compatibility-profile:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "revision",
+    "platform",
+    "arch",
+    "osMin",
+    "apiMin",
+    "phase",
+    "buildFingerprint",
+    "modelPackHashes",
+    "runtimeFingerprint",
+    "backend",
+    "workload",
+    "incrementalBudget",
+    "evidenceUrls",
+    "qualifiedFixtureHash"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._-]{1,95}$"
+    },
+    "revision": {
+      "$ref": "#/$defs/U64"
+    },
+    "platform": {
+      "enum": [
+        "ios",
+        "ipados",
+        "android",
+        "macos",
+        "windows",
+        "linux",
+        "web"
+      ]
+    },
+    "arch": {
+      "enum": [
+        "arm64",
+        "x64",
+        "wasm32"
+      ]
+    },
+    "osMin": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "apiMin": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 999
+    },
+    "phase": {
+      "enum": [
+        "planned",
+        "adapting",
+        "labValidated",
+        "released",
+        "disabled"
+      ]
+    },
+    "buildFingerprint": {
+      "$ref": "#/$defs/HashOrNull"
+    },
+    "modelPackHashes": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/Hash"
+      }
+    },
+    "runtimeFingerprint": {
+      "$ref": "#/$defs/HashOrNull"
+    },
+    "backend": {
+      "enum": [
+        "cpu",
+        "xnnpack",
+        "metal",
+        "coreml",
+        "nnapi",
+        "vulkan",
+        "cuda",
+        "nativeCodec",
+        "webcodecs",
+        "litert"
+      ]
+    },
+    "workload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "width",
+        "height",
+        "fpsNum",
+        "fpsDen",
+        "contextCapacity",
+        "maxOutputTokens",
+        "parallelModels"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "edit",
+            "llm",
+            "asr",
+            "image",
+            "track",
+            "audioGenerate",
+            "videoGenerate",
+            "tts",
+            "clone"
+          ]
+        },
+        "width": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 131072
+        },
+        "height": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 131072
+        },
+        "fpsNum": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "fpsDen": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "contextCapacity": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "maxOutputTokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "parallelModels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        }
+      }
+    },
+    "incrementalBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memoryKind",
+        "hostExclusiveBytes",
+        "deviceExclusiveBytes",
+        "sharedBytes",
+        "diskBytes",
+        "measurement"
+      ],
+      "properties": {
+        "memoryKind": {
+          "enum": [
+            "unified",
+            "discrete"
+          ]
+        },
+        "hostExclusiveBytes": {
+          "$ref": "#/$defs/U64"
+        },
+        "deviceExclusiveBytes": {
+          "$ref": "#/$defs/U64"
+        },
+        "sharedBytes": {
+          "$ref": "#/$defs/U64"
+        },
+        "diskBytes": {
+          "$ref": "#/$defs/U64"
+        },
+        "measurement": {
+          "enum": [
+            "estimated",
+            "measured"
+          ]
+        }
+      }
+    },
+    "evidenceUrls": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^https://",
+        "maxLength": 2048
+      }
+    },
+    "qualifiedFixtureHash": {
+      "$ref": "#/$defs/HashOrNull"
+    }
+  },
+  "$defs": {
+    "U64": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,19})$"
+    },
+    "Hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "HashOrNull": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Hash"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

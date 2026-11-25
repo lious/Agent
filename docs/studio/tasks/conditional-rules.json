@@ -1,0 +1,31 @@
+{
+  "nativePortByPlatform": {
+    "ios": "I-016",
+    "ipados": "I-016",
+    "macos": "I-016",
+    "android": "I-017",
+    "windows": "I-018",
+    "linux": "I-019"
+  },
+  "nativePortConsumers": [
+    "I-021",
+    "I-022",
+    "I-023",
+    "I-024",
+    "I-025"
+  ],
+  "webImplementation": "I-020",
+  "paidRelease": {
+    "taskId": "I-058",
+    "requires": [
+      "I-053"
+    ]
+  },
+  "serverlessEnabled": {
+    "requires": [
+      "I-051",
+      "I-052"
+    ],
+    "verification": "V-021"
+  }
+}
