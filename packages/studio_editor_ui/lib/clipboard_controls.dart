@@ -6,7 +6,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Collision mode for paste and same-track moves. Reject leaves existing clips and refuses overlap. Overwrite cuts intersecting destination intervals and does not move later content. Insert splits ripple tracks at the destination, shifts later content by the package span, fills gaps on non-target ripple tracks, and grows duration by that span; a move vacates its source as a gap and does not ripple-close it. Ripple delete of a single continuous range is a separate button and closes that hole; ripple trim and closing a move source remain closed. New tracks and cross-project paste remain closed. Caption cue follow is not opened (mid-timeline insert with cues is refused). Locks, sync-locked locked tracks and incomplete handles refuse the whole group. Linked partners are included.',
+          'Collision mode for paste and same-track moves. Reject leaves existing clips and refuses overlap. Overwrite cuts intersecting destination intervals and does not move later content. Insert splits ripple tracks at the destination, shifts later content by the package span, fills gaps on non-target ripple tracks, and grows duration by that span; a move vacates its source as a gap and does not ripple-close it. Ripple delete of a single continuous range is a separate button and closes that hole. Ripple trim out/in of one clip (plus links) is a separate button and shortens, then closes the vacated tail; lengthening and closing a move source remain closed. New tracks and cross-project paste remain closed. Caption cue follow is not opened (mid-timeline insert with cues is refused). Locks, sync-locked locked tracks and incomplete handles refuse the whole group. Linked partners are included.',
         ),
         Text(
           'Collision mode: $_collisionMode',
@@ -85,7 +85,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject, overwrite or insert. Ripple delete of a single continuous range is a separate button. Ripple trim, closing a move source, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
+          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject, overwrite or insert. Ripple delete of a single continuous range and ripple trim out/in of one clip are separate buttons. Ripple lengthening, closing a move source, new tracks and cross-project paste are not in this slice. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
         ),
         Text(
           payload == null

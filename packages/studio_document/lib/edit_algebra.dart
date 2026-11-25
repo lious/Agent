@@ -10,6 +10,7 @@ part 'clipboard.dart';
 part 'overwrite.dart';
 part 'insert.dart';
 part 'ripple.dart';
+part 'ripple_trim.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -906,6 +907,9 @@ ProjectDocument applyEdit(
   if (operation is RippleDeleteClips) {
     return _rippleDeleteClips(before, operation, nextVersion, newId);
   }
+  if (operation is RippleTrimClip) {
+    return _rippleTrimClip(before, operation, nextVersion, newId);
+  }
   if (operation is GroupClips ||
       operation is UngroupClips ||
       operation is LiftClips ||
@@ -1099,6 +1103,7 @@ ProjectDocument applyEdit(
       case LiftClips():
       case PasteClips():
       case RippleDeleteClips():
+      case RippleTrimClip():
       case DiscardPreviewProxies():
       case AttachPreviewProxies():
         throw StateError("handled above");
@@ -1143,6 +1148,7 @@ ProjectDocument applyEdit(
     case LiftClips():
     case PasteClips():
     case RippleDeleteClips():
+    case RippleTrimClip():
     case DiscardPreviewProxies():
     case AttachPreviewProxies():
       throw StateError("handled above");

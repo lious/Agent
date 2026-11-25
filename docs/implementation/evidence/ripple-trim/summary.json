@@ -1,0 +1,502 @@
+{
+  "baseCommit": "182e2aa6557218bc8b92f31e86ea2a68cddef405",
+  "sourceSha256": {
+    "packages/studio_document/lib/ripple_trim.dart": "e611662623587247cb53d1c8b3286822f5ef1de333c86886f469271904308527",
+    "packages/studio_document/lib/ripple.dart": "9cd68adc053409e3f17957c92716033718ecdc5f06ba4ec46c4e03204901a50f",
+    "packages/studio_document/lib/insert.dart": "8e41e87d46ea4c7fd1bdc7afb664392ebdb2e49a34071ab6b89d8a32155939f7",
+    "packages/studio_document/lib/overwrite.dart": "b79875339d1fcc62834a8ad6c0ff75bbed57f8f66b7ea930ad7d88a34e93b956",
+    "packages/studio_document/lib/edit_algebra.dart": "ae82338767dbe50dcb4cf87d00b977d79aa80d83c135e20e4be53d9590bf6028",
+    "packages/studio_document/lib/multi_move.dart": "ad289b4805db07f1bf81a93a7b47bed3c880585075ab1eb6491ea33e404af628",
+    "packages/studio_document/lib/clipboard.dart": "059fdd7692a65dfaa72d7b01f519de52923476bef4f4d6f8f5b519b27f45150a",
+    "packages/studio_document/lib/timeline_snap.dart": "859b41f907e657aa6f9c6fa540ddb1e1bc37ae89e02b317c995cad86ab5a9b81",
+    "packages/studio_document/test/ripple_trim_test.dart": "edad40e5611158b30ff2850ed24b11f0eca764b73d2630c5923d95e9de6960bc",
+    "packages/studio_document/test/ripple_delete_test.dart": "7dcefb436ece535bebe36f9f792b055c6029f1b454e5606376ad84c627632790",
+    "packages/studio_document/test/insert_test.dart": "b21f2b88d9de6d47eeaf385584e04b8fed2c4505c457946f4adf6f137a2f3964",
+    "packages/studio_document/test/overwrite_test.dart": "d4512be9897b3f41beaffce26307df569612e5d465943212176866350a995977",
+    "packages/studio_document/test/clipboard_test.dart": "7a634a273764950141114a6d7e67966b4c9d13b48f6abf6258b80e3e3efba58b",
+    "packages/studio_document/test/multi_move_test.dart": "dbbacf692632acee1e71b5ce1515a84db1e3a5f53c0f3d1f4ed279edb35d9b31",
+    "packages/studio_sdk/lib/clipboard_workspace.dart": "3a24ff26ace545cddada6da32f86e92577930417c854fe3bde46a286f144af1a",
+    "packages/studio_sdk/test/ripple_trim_test.dart": "e7f967dca7845ebdc3a3f25495ae70356cda43f917b4f9228017c74901187f86",
+    "packages/studio_sdk/test/ripple_delete_test.dart": "c5c2dd5bc73cd5b11bd037f6f2561cb5f4ed470184a84a9a9ac7ae20137e935f",
+    "packages/studio_sdk/test/insert_test.dart": "e129096e8c5937158cc47aa79a877904e8cec0c71db926b1261e734d724ec7fd",
+    "packages/studio_sdk/test/overwrite_test.dart": "27827a9b8ee1f077f77b87bce8476e01adc6f7c5bce70ce5cfa9a6596d3d0d89",
+    "packages/studio_sdk/test/clipboard_test.dart": "1239e5281800ab2b05388bcefd4ffa02c1dcccba250bde5c1868966ed5ab78f9",
+    "packages/studio_sdk/test/multi_move_test.dart": "3af40433395bfbce03831b71a53ff2f66326898e07c4f1c554ab13132bb09e9f",
+    "packages/studio_sdk/test/multi_move_fixture.dart": "99587e8978b18460ce157141f71b14ec7a13115af3f33c039004fe37edeed514",
+    "packages/studio_sdk/test/snap_move_test.dart": "0c54b0c4f69de94e3aaace1757a77b781e7e72bc8742726c1ffcf7e372b4a37c",
+    "packages/studio_editor_ui/lib/clipboard_controls.dart": "6fe27803338e6e71d40d8b5c26da216e1fdd226ad7366305e07dc6f9c4ed2219",
+    "packages/studio_editor_ui/lib/multi_move_controls.dart": "cae7878a5d072a7f5ead2c22d23a6967ecdae0b95532bc313c173db40f04c8fb",
+    "packages/studio_editor_ui/lib/pointer_timeline.dart": "3e8172159cd7eec9c249d235f40d13a512434822319e357e484cf1e258c862b5",
+    "packages/studio_editor_ui/lib/snap_controls.dart": "aa3d1cc8fef6657755e6a80dd8e331ce85720f122f2367b4bd46b7c17f5edcd5",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "9361ea50df4dad553a3c3e7dae6b468746521385196a2d5a0ec7a0ba6cc67d6a",
+    "packages/studio_editor_ui/test/ripple_trim_ui_test.dart": "d8f405d53bebdbf4c70ba9ad1079cc619b0f2424bd218f7cdaabda2edef95047",
+    "packages/studio_editor_ui/test/ripple_delete_ui_test.dart": "d28c56f6e9bf27a267fa361c32565e3a5c0fd15f2dd4457a7ee2e9427e66b46c",
+    "packages/studio_editor_ui/test/insert_ui_test.dart": "157a14fb837e0cbd55b1de81f5e9345c453bb7405a889af40190ed720bf3d0dd",
+    "packages/studio_editor_ui/test/overwrite_ui_test.dart": "a14720f3949a3e5e07e02f80c3b6e432c012d0570d686a1ce6e3c2639d6b87b3",
+    "packages/studio_editor_ui/test/clipboard_ui_test.dart": "34576986a76596220771cbde625fca7116631f2bedc02f3ff10f2e47b98ca07c",
+    "packages/studio_editor_ui/test/multi_move_ui_test.dart": "5dfd7e491d4fb6b0e2dcd2432f6b02cd079ecabf1d518376563313e5e6f081e1",
+    "packages/studio_editor_ui/test/snap_move_ui_test.dart": "6cbef446e23cf713c3abce76788e9634d20456cadab4a3a1e16951020157270f"
+  },
+  "aggregateSha256": "4c931a950b6283ae2f09f1227c964ed69a64793eb80fe75dbd243f39d02a2f1d",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T03:35:07.974818+08:00",
+  "timezone": "Asia/Shanghai",
+  "selectedTests": {
+    "document": {
+      "passed": 41,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 1246
+      },
+      "cases": [
+        {
+          "name": "leave-gap trim keeps duration; existing video-only ripple trim stays",
+          "result": "success"
+        },
+        {
+          "name": "lift still leaves a gap; gapped selections refuse; insert stays distinct",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim in pins start, remaps source, and shifts later clips",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete of a trailing clip closes the hole and shortens duration",
+          "result": "success"
+        },
+        {
+          "name": "reject and overwrite stay distinct; insert is a third legal mode",
+          "result": "success"
+        },
+        {
+          "name": "reject still collides; rippleTrackIds are illegal on overwrite",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete of a middle clip shifts later content and remaps nothing on the left",
+          "result": "success"
+        },
+        {
+          "name": "insert stays distinct; lengthen and over-shorten refuse wholly",
+          "result": "success"
+        },
+        {
+          "name": "insert paste at a cut shifts later clips by L and grows duration",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete of a partial covering range keeps both remnants and remaps sources",
+          "result": "success"
+        },
+        {
+          "name": "overwrite paste cuts intersecting items, remaps sources, keeps later clips and duration",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim out remaps later opacity and does not move earlier clips",
+          "result": "success"
+        },
+        {
+          "name": "insert paste mid-clip splits, remaps sources, and does not overwrite the right remnant",
+          "result": "success"
+        },
+        {
+          "name": "gapped overwrite paste does not punch the interval between members",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete preserves later opacity curves when a middle clip is removed",
+          "result": "success"
+        },
+        {
+          "name": "gapped insert paste opens the package span, not per-member holes only",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim crops an unselected sync-lock audio spanning the vacated tail",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim refuses locked tracks wholly and does not change the document",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete crops an unselected sync-lock audio spanning the range and keeps both remnants",
+          "result": "success"
+        },
+        {
+          "name": "overwrite paste crops opacity curves and refuses locked neighbors as a group",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim out at a dissolve cut keeps and shifts the later dissolve",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete refuses locked tracks wholly and does not change the document",
+          "result": "success"
+        },
+        {
+          "name": "insert paste crops opacity on the split and refuses locked tracks wholly",
+          "result": "success"
+        },
+        {
+          "name": "overwrite paste deletes an affected dissolve and leaves an uninvolved later clip",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete of a dissolve pair removes the transition; later dissolves shift",
+          "result": "success"
+        },
+        {
+          "name": "insert paste at a dissolve cut deletes the transition and shifts the later clip",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete at a dissolve cut with the right clip removes that transition",
+          "result": "success"
+        },
+        {
+          "name": "overwrite move carves the destination, vacates the source, and does not shorten duration",
+          "result": "success"
+        },
+        {
+          "name": "overwrite move of a dissolve pair keeps and shifts the cut",
+          "result": "success"
+        },
+        {
+          "name": "insert paste mid-clip remaps a later dissolve onto the right remnant",
+          "result": "success"
+        },
+        {
+          "name": "insert move opens dest, vacates source as a gap, and grows duration",
+          "result": "success"
+        },
+        {
+          "name": "overwrite paste past the last clip extends duration and does not ripple earlier items",
+          "result": "success"
+        },
+        {
+          "name": "insert move of a dissolve pair keeps and shifts the cut; source stays a gap",
+          "result": "success"
+        },
+        {
+          "name": "insert paste past the end grows duration and does not move earlier items",
+          "result": "success"
+        },
+        {
+          "name": "group/ungroup is selection-only, no-op when identical, refuses partial steal",
+          "result": "success"
+        },
+        {
+          "name": "adjacent selection moves together without self-collision; exact sources/curves retained",
+          "result": "success"
+        },
+        {
+          "name": "copy payload keeps relative gap and effects; paste reject/lift leave assets",
+          "result": "success"
+        },
+        {
+          "name": "grouped move expands members while leaving ungrouped neighbors",
+          "result": "success"
+        },
+        {
+          "name": "immutable canonical selection never filters duplicate/missing/gap IDs; bounded input",
+          "result": "success"
+        },
+        {
+          "name": "all locks preflight atomically; only written field locks block",
+          "result": "success"
+        },
+        {
+          "name": "transition endpoints must move together; cut translates, exact handles and sources untouched",
+          "result": "success"
+        }
+      ],
+      "log": "final-document.jsonl",
+      "sha256": "2ba02735dde5d7b8c3dfc37ca5389fcc4d58e2aa709af544ebc7c8dc0c43f99a",
+      "exitCode": 0,
+      "elapsedSeconds": 1.768
+    },
+    "sdk": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 33125
+      },
+      "cases": [
+        {
+          "name": "ripple trim shortens linked AV, one command, undo/reopen/fork/AAC",
+          "result": "success"
+        },
+        {
+          "name": "leave-gap trim still leaves duration; locks/SQL/fence refuse wholly",
+          "result": "success"
+        },
+        {
+          "name": "ripple trim refuses when absolute captions would have to shift",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete closes linked AV, one command, undo/reopen/fork/AAC",
+          "result": "success"
+        },
+        {
+          "name": "lift still leaves a gap; ripple delete locks/SQL/fence refuse wholly",
+          "result": "success"
+        },
+        {
+          "name": "ripple delete refuses when absolute captions would have to shift",
+          "result": "success"
+        },
+        {
+          "name": "insert paste splits linked destinations, grows duration, one command, undo/reopen/fork/AAC",
+          "result": "success"
+        },
+        {
+          "name": "insert move is one command; locks/SQL/fence refuse wholly; reject and captions stay bounded",
+          "result": "success"
+        },
+        {
+          "name": "insert refuses when absolute captions would have to shift",
+          "result": "success"
+        },
+        {
+          "name": "overwrite paste carves linked destinations, one command, undo/reopen/fork/AAC",
+          "result": "success"
+        },
+        {
+          "name": "overwrite move is one command; locks/SQL/fence refuse wholly; reject is unchanged",
+          "result": "success"
+        },
+        {
+          "name": "copy is not a document write; cut/paste/group are one command each with undo/reopen/fork/AAC",
+          "result": "success"
+        },
+        {
+          "name": "cut is one lift command; group expands later moves; locks/collisions/transitions refuse wholly",
+          "result": "success"
+        },
+        {
+          "name": "clipboard stays internal and session-scoped; stale/SQL/fence failures do not commit partial members",
+          "result": "success"
+        },
+        {
+          "name": "REAL linked4 atomic gesture -> exact native preview/preencoder/AAC MP4 -> undo redo save reopen fork",
+          "result": "success"
+        },
+        {
+          "name": "linked closure lock/field/grid failures reject whole DB mutation, never skip audio",
+          "result": "success"
+        },
+        {
+          "name": "absolute captions preserved; clip-local anchors refuse; no implicit caption loss on preview/export",
+          "result": "success"
+        },
+        {
+          "name": "mixed exact grids reject fractional audio samples; nonzero link offsets remain exact",
+          "result": "success"
+        },
+        {
+          "name": "real dissolve endpoints move together, exact cut/handles/effect order shared with encoder and archive",
+          "result": "success"
+        },
+        {
+          "name": "late SQL rollback/retry/receipt idempotency, revision and stale writer fencing",
+          "result": "success"
+        },
+        {
+          "name": "actual two independent SQLite contenders publish one entire four-member move",
+          "result": "success"
+        },
+        {
+          "name": "100 seeded selection moves each undo/redo retain exact full roots, source and canceled candidate",
+          "result": "success"
+        },
+        {
+          "name": "real snapped linked4 -> ghost/one history -> exact pixels/AAC leading silence -> reopen/fork",
+          "result": "success"
+        },
+        {
+          "name": "late SQL failure fully rolls back snapped command; retry same candidate, stale plan/candidate and writer refuse",
+          "result": "success"
+        },
+        {
+          "name": "stationary cut snap cannot hide collision; linked locks/negative boundary reject whole DB change",
+          "result": "success"
+        },
+        {
+          "name": "real dissolve snapped pair retains handles/shared preview and encoder; lone endpoint refuses",
+          "result": "success"
+        },
+        {
+          "name": "real AV-derived metadata: exact mixed frame/sample gate and standalone audio sample snapping",
+          "result": "success"
+        }
+      ],
+      "log": "final-sdk.jsonl",
+      "sha256": "3953c25d06c28b1026dd04830b06112e31c5fdacfa5314e851dbe706459ad4ee",
+      "exitCode": 0,
+      "elapsedSeconds": 33.66
+    },
+    "ui": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "runnerDone": {
+        "success": true,
+        "type": "done",
+        "time": 21077
+      },
+      "cases": [
+        {
+          "name": "REAL ripple delete: one history, lift still leaves a gap, SQL/reopen/fork/AAC MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL ripple trim: one history, leave-gap still leaves duration, SQL/reopen/fork/AAC MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL insert paste and move: one history each, reject still collides, SQL/reopen/fork/AAC MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL overwrite paste and move: one history each, reject still collides, SQL/reopen/fork/AAC MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL four-member checkbox move -> native ghost -> one undo/redo -> Escape/SQL/collision refusal -> archive fork MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL internal copy/cut/paste/group: one history, refuse collision/SQL, reopen/fork/AAC MP4",
+          "result": "success"
+        },
+        {
+          "name": "REAL zoom/pan8px snap -> linked native ghost -> one history -> invalid input/SQL/collision refusal -> archive AAC MP4",
+          "result": "success"
+        }
+      ],
+      "log": "final-ui.jsonl",
+      "sha256": "5ea0314cb1fa09372ccb21e5008df9ef93412c6c9c639f3d98cb6dbd689785b1",
+      "exitCode": 0,
+      "elapsedSeconds": 22.126
+    }
+  },
+  "totalPassed": 75,
+  "totalFailed": 0,
+  "totalSkipped": 0,
+  "additionalRuns": {
+    "analyzer": {
+      "log": "final-analyzer.log",
+      "sha256": "97e01c9b64057ee50d8e877a89781d1473266532754b5adbd7137afaf29e500f",
+      "exitCode": 0,
+      "elapsedSeconds": 1.872
+    },
+    "document": {
+      "log": "final-document.jsonl",
+      "sha256": "2ba02735dde5d7b8c3dfc37ca5389fcc4d58e2aa709af544ebc7c8dc0c43f99a",
+      "exitCode": 0,
+      "elapsedSeconds": 1.768
+    },
+    "sdk": {
+      "log": "final-sdk.jsonl",
+      "sha256": "3953c25d06c28b1026dd04830b06112e31c5fdacfa5314e851dbe706459ad4ee",
+      "exitCode": 0,
+      "elapsedSeconds": 33.66
+    },
+    "ui": {
+      "log": "final-ui.jsonl",
+      "sha256": "5ea0314cb1fa09372ccb21e5008df9ef93412c6c9c639f3d98cb6dbd689785b1",
+      "exitCode": 0,
+      "elapsedSeconds": 22.126
+    },
+    "actual-legacy-and-kill": {
+      "log": "final-actual-legacy-and-kill.log",
+      "sha256": "ee1956bef504e9f5e9bb96e7ba25bad7fa2b4a810184c9ad456fb2a98bfd46e6",
+      "exitCode": 0,
+      "elapsedSeconds": 13.74
+    },
+    "undo-redo-kill": {
+      "log": "final-undo-redo-kill.log",
+      "sha256": "10475903a35d73c3bfdab01cc51b170cae80d3de04cc411adfec170929d91844",
+      "exitCode": 0,
+      "elapsedSeconds": 21.153
+    },
+    "100cancel": {
+      "log": "final-100cancel.log",
+      "sha256": "47ceed3ad29634a7b442c9ada7b3db2743a84b34374e7d4ae0c0dedbeb1cda26",
+      "exitCode": 0,
+      "elapsedSeconds": 0.828
+    }
+  },
+  "earlyEvidence": [
+    {
+      "log": "final-actual-legacy.json",
+      "sha256": "ee1956bef504e9f5e9bb96e7ba25bad7fa2b4a810184c9ad456fb2a98bfd46e6"
+    },
+    {
+      "log": "final-undo-redo-kill.json",
+      "sha256": "10475903a35d73c3bfdab01cc51b170cae80d3de04cc411adfec170929d91844"
+    },
+    {
+      "log": "toolchain-current.json",
+      "sha256": "43d4b8b9662c0d74b7ed12c480c04bc47d1b0ba225bfca271143cea74098a65b"
+    }
+  ],
+  "scope": {
+    "contract": "Original immutable I-005 and s3 ripple-trim row. This slice opens only RippleTrimClip shortening (in or out) of one clip plus link closure, then closes the vacated tail on participating tracks. Lengthening is refused as RIPPLE_TRIM_LENGTHEN_NOT_IMPLEMENTED. Closing a move source hole is not implemented. Leave-gap TrimClip, video-only TrimClip(ripple:true), RippleDeleteClips, and reject/overwrite/insert stay distinct. DeleteClip/TrimClip ripple:true still raise LINKED_RIPPLE_NOT_IMPLEMENTED on persistent-audio/linked AV. New-track creation, cross-project bake and the OS clipboard are not implemented. I-006 roll/slip/slide and the full trim planner remain unopened.",
+    "temporalSemantics": "Shorten the closure by timeline \u03b4 (out: delta<0; in: delta>0 and timeline start stays, source advances). One vacated tail R=[oldEnd-\u03b4, oldEnd) of the selected clip is then closed on all participating tracks (default: targets union syncLock media; an explicit rippleTrackIds list cannot drop targets or include a caption track). Split the later bound first, then a. Unselected items that span R keep remapped remnants; later items shift by -\u03b4. Sequence duration shrinks by \u03b4, but not below later ends on unmoved non-ripple tracks. Assets are kept. Remnants are not auto-joined.",
+    "preserved": "Link closure is complete (includeLinks=true). Source time, cropped opacity curves, static effects, proxy/asset version refs and audio offsets are preserved. Locks on a written field raise FIELD_LOCKED. A locked syncLock non-target that would have to crop or shift raises SYNC_LOCKED. Whole-group atomic refusal, never a silent subset. Transitions with a cut strictly inside R or whose endpoints vanish or lose adjacency are dropped; cuts at or after oldEnd remap and subtract \u03b4. Absolute captions that would have to crop or shift (cue end > R.start) refuse CAPTION_SYNC_EDIT_NOT_IMPLEMENTED; caption cue-follow/anchor policy is not opened. Over-shorten raises CLIP_TOO_SHORT.",
+    "history": "Each ripple trim is one existing persistent command with snapshot undo/redo, save/reopen, archive fork and AAC MP4 export. No new persistence schema or fingerprint side branch.",
+    "ui": "Workbench adds Ripple trim out (key ripple-trim) and Ripple trim in (key ripple-trim-in) using the existing positive-frames field. Existing Key(trim) is unchanged and still leave-gap when persistent audio is present. UI tests jump foundation-scroll and do not drag through the pointer timeline."
+  },
+  "reviews": "../../REVIEW.md Increment1.29 and ADR0036: new command vs TrimClip(ripple:true) and lengthen bound; mid-span audio remnant duration; unused start cleanup.",
+  "cancelQualification": {
+    "iterationsFinalOnlyVerified": 100,
+    "scope": "Existing opacity_cancel ABI 100 iterations on the already-built peer library. This batch did not rebuild native/ASan or rerun the four-mode cancel matrix. Not GPU/Pulse internals/physical audio."
+  },
+  "statusCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 26,
+      "planned": 48,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "priorUnresolved": [
+    "raster_clock first-play underrun and previous opacity_clock/resume failures remain open; this batch did not rerun Pulse service cases",
+    "O(n) history, field-aware inverse, balanced interval index and original 1000 randomized NLE qualification unfinished",
+    "schema9 cannot fence an independently unupgraded old writer",
+    "Managed RTC positive path blocked by existing network policy, no retry/bypass/relay",
+    "Physical AV/GPU/mobile/other-desktop/multi-device execution not certified",
+    "Ripple trim lengthening, ripple-close of a move source, new-track, cross-project paste/import/bake, OS clipboard, mobile long-press/pinch, Alt-ignore-group, caption cue-follow, I-006 roll/slip/slide, and marker business execution remain unfinished"
+  ],
+  "notRun": [
+    "Full repository/original 87 task acceptance/hard-dependency closure",
+    "Ripple trim lengthening, source-hole close, new-track, cross-project paste/import/bake, OS clipboard, full mobile gesture, I-006 trim planner, and marker execution matrix",
+    "The previous ripple-delete 64, insert 51, overwrite 37, clipboard-only 7, and pointer-drag 281 are not reused or mixed into this batch count",
+    "Fresh release App/window/manual human interaction/physical DAC/stableFPS/GPU/all-platform qualification",
+    "New 60s/VFR/HDR/full original P0 and all history fixture versions; selected current migration/actual legacy and SIGKILL only",
+    "Pulse/underrun service matrix; unselected Harness/peer/security suites unchanged, not newly certified",
+    "Remote reads/diagnosis/push/rules/identity/branch/protocol/permission changes"
+  ],
+  "publication": "LOCAL ordinary commit only; eleven unpublished ancestors e23a559/c8c12d8/c948c56/a52002f/6b30f77/49aa782/30a12ec/3f1068e/5602bb2/3e73ab5/182e2aa preserved. No remote contact/push/diagnosis. commit_refs_rules cause unresolved; no bypass or invented GitHub availability.",
+  "toolchain": "Flutter 3.50.1/Dart 3.14, strict SQLite 3.54.1 via LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1, FFmpeg 7.1.5, existing peer libstudio_media.so (not rebuilt this batch). No model/paid API/OAuth change."
+}
