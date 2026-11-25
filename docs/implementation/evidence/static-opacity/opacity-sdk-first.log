@@ -1,0 +1,13 @@
+00:00 +0: loading packages/studio_sdk/test/opacity_render_test.dart
+00:00 +0 -1: loading packages/studio_sdk/test/opacity_render_test.dart [E]
+  Failed to load "packages/studio_sdk/test/opacity_render_test.dart":
+  packages/studio_sdk/test/opacity_render_test.dart:133:37: Error: Too few positional arguments: 2 required, 1 given.
+        final media = NativeMedia.open(lib!);
+                                      ^
+  packages/studio_media/lib/studio_media.dart:24:3: Context: Found this candidate, but the arguments don't match.
+    NativeMedia.open(this.libraryPath, this.namespace)
+    ^^^^^^^^^^^^^^^^
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_sdk/test/opacity_render_test.dart: loading packages/studio_sdk/test/opacity_render_test.dart

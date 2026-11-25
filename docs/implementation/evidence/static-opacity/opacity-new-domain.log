@@ -1,0 +1,14 @@
+00:00 +0: loading packages/studio_document/test/opacity_test.dart
+00:00 +0 -1: loading packages/studio_document/test/opacity_test.dart [E]
+  Failed to load "packages/studio_document/test/opacity_test.dart":
+  packages/studio_document/test/opacity_test.dart:82:45: Error: Too many positional arguments: 1 allowed, but 2 found.
+  Try removing the extra positional arguments.
+      final removed = edit(trimmed, DeleteClip('opacity-right', false));
+                                              ^
+  packages/studio_document/lib/edit_algebra.dart:353:9: Context: Found this candidate, but the arguments don't match.
+    const DeleteClip(this.clipId, {this.ripple = false});
+          ^^^^^^^^^^
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_document/test/opacity_test.dart: loading packages/studio_document/test/opacity_test.dart

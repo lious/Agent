@@ -370,6 +370,76 @@ J probe(Input &in) {
   return J{{"streams", streams}, {"videoIndex", in.video}};
 }
 #include "audio_io.inc"
+// CPU reference: opaque Rec.709 YUV420 -> explicit full-range RGB -> linear
+// Rec.709 premultiplied opacity over black -> SDR YUV420. Same node feeds
+// timeline preview and the actual encoder frame. FP32 reference, not GPU FP16.
+void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
+                          SwsContext *&scaler,
+                          const std::function<void()> &check) {
+  ok(av_frame_make_writable(dst));
+  if (!source) {
+    for (int p = 0; p < 3; ++p)
+      for (int y = 0; y < (p ? dst->height / 2 : dst->height); ++y)
+        std::memset(dst->data[p] + y * dst->linesize[p], p ? 128 : 16,
+                    p ? dst->width / 2 : dst->width);
+    return;
+  }
+  if (source->width != dst->width || source->height != dst->height)
+    throw Error("SCALING_POLICY_REQUIRED");
+  if (source->colorspace != AVCOL_SPC_BT709 ||
+      source->color_trc != AVCOL_TRC_BT709 ||
+      source->color_primaries != AVCOL_PRI_BT709 ||
+      source->color_range != AVCOL_RANGE_MPEG)
+    throw Error("COLOR_POLICY_REQUIRED");
+  if (opacity < 0 || opacity > 65536) throw Error("OPACITY_RANGE");
+  const int *cs = sws_getCoefficients(SWS_CS_ITU709);
+  if (opacity == 65536) {
+    scaler = sws_getCachedContext(scaler, source->width, source->height,
+      static_cast<AVPixelFormat>(source->format), dst->width, dst->height,
+      AV_PIX_FMT_YUV420P, SWS_BILINEAR, nullptr, nullptr, nullptr);
+    if (!scaler) throw Error("SCALER_UNAVAILABLE");
+    ok(sws_setColorspaceDetails(scaler,cs,0,cs,0,0,1<<16,1<<16));
+    if(sws_scale(scaler,source->data,source->linesize,0,source->height,dst->data,dst->linesize)!=dst->height)
+      throw Error("SCALING_FAILED");
+    return;
+  }
+  if (source->format != AV_PIX_FMT_YUV420P || source->width > 2048 || source->height > 2048)
+    throw Error("OPACITY_FORMAT_UNSUPPORTED");
+  std::vector<uint8_t> rgba(static_cast<size_t>(source->width)*source->height*4);
+  auto deleter = [](SwsContext *c) { sws_freeContext(c); };
+  std::unique_ptr<SwsContext, decltype(deleter)> to_rgb(sws_getContext(
+    source->width,source->height,AV_PIX_FMT_YUV420P,source->width,source->height,
+    AV_PIX_FMT_RGBA,SWS_BILINEAR,nullptr,nullptr,nullptr),deleter);
+  std::unique_ptr<SwsContext, decltype(deleter)> to_yuv(sws_getContext(
+    source->width,source->height,AV_PIX_FMT_RGBA,dst->width,dst->height,
+    AV_PIX_FMT_YUV420P,SWS_BILINEAR,nullptr,nullptr,nullptr),deleter);
+  if(!to_rgb || !to_yuv) throw Error("SCALER_UNAVAILABLE");
+  ok(sws_setColorspaceDetails(to_rgb.get(),cs,0,cs,1,0,1<<16,1<<16));
+  ok(sws_setColorspaceDetails(to_yuv.get(),cs,1,cs,0,0,1<<16,1<<16));
+  uint8_t *rgb_data[] = {rgba.data(),nullptr,nullptr,nullptr};
+  const int rgb_stride[] = {source->width*4,0,0,0};
+  if(sws_scale(to_rgb.get(),source->data,source->linesize,0,source->height,rgb_data,rgb_stride)!=source->height)
+    throw Error("SCALING_FAILED");
+  std::array<uint8_t,256> lut{};
+  for(int i=0;i<256;++i) {
+    const float encoded=i/255.0f;
+    float linear=encoded < 0.081f ? encoded/4.5f : std::pow((encoded+0.099f)/1.099f,1.0f/0.45f);
+    linear *= opacity/65536.0f;
+    const float out=linear < 0.018f ? 4.5f*linear : 1.099f*std::pow(linear,0.45f)-0.099f;
+    lut[i]=static_cast<uint8_t>(std::clamp(std::lround(out*255.0f),0L,255L));
+  }
+  for(int y=0;y<source->height;++y) {
+    if(check && y%32==0) check();
+    for(int x=0;x<source->width;++x) {
+      const size_t at=(static_cast<size_t>(y)*source->width+x)*4;
+      for(int c=0;c<3;++c) rgba[at+c]=lut[rgba[at+c]];
+      rgba[at+3]=255;
+    }
+  }
+  const uint8_t *rgb_source[] = {rgba.data(),nullptr,nullptr,nullptr};
+  if(sws_scale(to_yuv.get(),rgb_source,rgb_stride,0,source->height,dst->data,dst->linesize)!=dst->height)
+    throw Error("SCALING_FAILED");
+}
 struct Output {
   AVFormatContext *format = nullptr;
   AVCodecContext *encoder = nullptr;
@@ -468,37 +538,13 @@ struct Output {
       ok(written);
     }
   }
-  void render(AVFrame *source, int64_t index) {
-    ok(av_frame_make_writable(frame));
-    if (!source) {
-      for (int y = 0; y < frame->height; y++)
-        std::memset(frame->data[0] + y * frame->linesize[0], 16, frame->width);
-      for (int p = 1; p < 3; p++)
-        for (int y = 0; y < frame->height / 2; y++)
-          std::memset(frame->data[p] + y * frame->linesize[p], 128,
-                      frame->width / 2);
-    } else {
-      if (source->width != frame->width || source->height != frame->height)
-        throw Error("SCALING_POLICY_REQUIRED");
-      if (source->colorspace != AVCOL_SPC_BT709 ||
-          source->color_trc != AVCOL_TRC_BT709 ||
-          source->color_primaries != AVCOL_PRI_BT709 ||
-          source->color_range != AVCOL_RANGE_MPEG)
-        throw Error("COLOR_POLICY_REQUIRED");
-      scaler =
-          sws_getCachedContext(scaler, source->width, source->height,
-                               static_cast<AVPixelFormat>(source->format),
-                               frame->width, frame->height, AV_PIX_FMT_YUV420P,
-                               SWS_BILINEAR, nullptr, nullptr, nullptr);
-      if (!scaler)
-        throw Error("SCALER_UNAVAILABLE");
-      const int *cs = sws_getCoefficients(SWS_CS_ITU709);
-      ok(sws_setColorspaceDetails(scaler, cs, 0, cs, 0, 0, 1 << 16, 1 << 16));
-      if (sws_scale(scaler, source->data, source->linesize, 0, source->height,
-                    frame->data, frame->linesize) != frame->height)
-        throw Error("SCALING_FAILED");
-    }
+  void render(AVFrame *source, int64_t index, int opacity,
+              const std::function<void()> &check,
+              const std::function<void(AVFrame *)> &capture) {
+    render_opacity_frame(frame, source, opacity, scaler, check);
+    if(check) check();
     frame->pts = index;
+    if (capture) capture(frame); // exact buffer and PTS, BEFORE encoder submission
     ok(avcodec_send_frame(encoder, frame));
     drain();
   }
@@ -578,11 +624,12 @@ RgbaPreview preview_pixels(AVFrame *frame) {
     throw Error("SCALE_INCOMPLETE");
   return {width, height, std::move(rgba)};
 }
-// Native source thumbnail only, NOT timeline/effect rendering. Real container
+// Source thumbnail, optionally consuming the shared static opacity node. Real container
 // index seek + decoder flush + PTS floor; sequential mode is an independent
 // decoded reference path used by qualification, never a fake seek result.
 J preview(Engine &engine, const J &recipe) {
-  keys(recipe, {"path", "time", "indexed"});
+  if(recipe.contains("opacityQ16")) keys(recipe,{"path","time","indexed","opacityQ16"});
+  else keys(recipe, {"path", "time", "indexed"});
   if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
     throw Error("RECIPE_TYPE");
   Input in;
@@ -617,6 +664,19 @@ J preview(Engine &engine, const J &recipe) {
     in.next = in.decode();
   }
   AVFrame *frame = in.at(target);
+  std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){av_frame_free(&p);});
+  if(recipe.contains("opacityQ16")) {
+    const int opacity=integer(recipe,"opacityQ16",0,65536);
+    effected.reset(av_frame_alloc());
+    if(!effected) throw Error("ALLOCATION_FAILED");
+    effected->format=AV_PIX_FMT_YUV420P;effected->width=frame->width;effected->height=frame->height;
+    ok(av_frame_copy_props(effected.get(),frame));ok(av_frame_get_buffer(effected.get(),32));
+    SwsContext *scaler=nullptr;
+    try {render_opacity_frame(effected.get(),frame,opacity,scaler,in.check);}
+    catch(...) {sws_freeContext(scaler);throw;}
+    sws_freeContext(scaler);
+    frame=effected.get();
+  }
   auto pixels = preview_pixels(frame);
   in.check();
   return J{{"width", pixels.width},
@@ -742,11 +802,12 @@ J build_proxy(Engine &engine, const J &recipe) {
            {"frames", frames}};
 }
 J render(Engine &engine, const J &recipe) {
+  auto contract=recipe;contract.erase("captureFrames");
   if (recipe.contains("audio"))
-    keys(recipe, {"outputPath", "width", "height", "fps", "frameCount",
+    keys(contract, {"outputPath", "width", "height", "fps", "frameCount",
                   "segments", "audio"});
   else
-    keys(recipe,
+    keys(contract,
          {"outputPath", "width", "height", "fps", "frameCount", "segments"});
   const auto w = integer(recipe, "width", 2, 2048),
              h = integer(recipe, "height", 2, 2048);
@@ -766,8 +827,9 @@ J render(Engine &engine, const J &recipe) {
     throw Error("SEGMENT_LIMIT");
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    keys(segment,
-         {"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
+    auto base=segment;base.erase("opacityQ16");
+    keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
+    if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
     const auto begin = integer(segment, "startFrame", 0, count - 1),
                length = integer(segment, "frameCount", 1, count);
     integer(segment, "streamIndex", 0, 63);
@@ -784,6 +846,16 @@ J render(Engine &engine, const J &recipe) {
       ++expected;
     if (integer(recipe["audio"], "sampleCount", 1, 48000 * 120) != expected)
       throw Error("AUDIO_LENGTH_MISMATCH");
+  }
+  std::set<int64_t> capture_frames;
+  J captures=J::array();
+  if(recipe.contains("captureFrames")) {
+    const auto &v=recipe["captureFrames"];
+    if(!v.is_array() || v.size()>4) throw Error("CAPTURE_LIMIT");
+    for(const auto &n:v) {
+      if(!n.is_number_integer() || n.get<int64_t>()<0 || n.get<int64_t>()>=count || !capture_frames.insert(n.get<int64_t>()).second)
+        throw Error("CAPTURE_RANGE");
+    }
   }
   const auto epoch = engine.epoch.load();
   engine.encoded_audio_samples = 0;
@@ -830,7 +902,14 @@ J render(Engine &engine, const J &recipe) {
           av_inv_q(fps), input->format->streams[input->video]);
       source = input->at(target);
     }
-    out.render(source, frame);
+    const int opacity = source ? segments[si].value("opacityQ16",65536) : 65536;
+    out.render(source,frame,opacity,[&]{if(engine.epoch.load()!=epoch) throw Error("CANCELED");},
+      [&](AVFrame *actual){
+        if(capture_frames.count(frame)) {
+          const auto px=preview_pixels(actual);
+          captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
+        }
+      });
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
           frame + 1, av_inv_q(fps), AVRational{1, 48000}, AV_ROUND_NEAR_INF);
@@ -845,6 +924,7 @@ J render(Engine &engine, const J &recipe) {
             out.audio ? J(out.audio->encoder->frame_size) : J(nullptr)},
            {"audioInitialPadding",
             out.audio ? J(out.audio->encoder->initial_padding) : J(nullptr)},
+           {"preEncoderSamples", captures},
            {"encoder", "libx264"},
            {"container", "mp4"}};
 }
@@ -924,6 +1004,7 @@ char *sm_capabilities(void) {
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
         {"sourcePreview128", true},
+        {"linearOpacityV1", true},
         {"rgba128PtsProxyV1", true},
         {"audioExport", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr &&
                             avcodec_find_encoder_by_name("libx264") != nullptr},

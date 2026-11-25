@@ -1061,6 +1061,12 @@ final class StudioWorkspace {
         'timeBase': Q.of(1).toJson(),
         'packetsRead': 0,
       });
+    } else if (point.opacityQ16 != 65536) {
+      pixels = await previewAssetSource(
+        point.assetId!,
+        point.sourceTime,
+        opacityQ16: point.opacityQ16,
+      );
     } else {
       final asset = _playbackAssets[point.assetId]!;
       final proxy = await _loadStoredProxy(asset, _playbackBlobs);
@@ -1118,7 +1124,11 @@ final class StudioWorkspace {
     _previewMedia?.cancel();
   }
 
-  Future<SourcePreviewFrame> previewAssetSource(String assetId, Q time) async {
+  Future<SourcePreviewFrame> previewAssetSource(
+    String assetId,
+    Q time, {
+    int? opacityQ16,
+  }) async {
     _requireMedia();
     if (time < Q.of(0)) throw const StudioException('PREVIEW_TIME_INVALID');
     final project = current, epoch = ++_previewEpoch;
@@ -1133,6 +1143,7 @@ final class StudioWorkspace {
       'blob': hash,
       'time': time.toJson(),
       'preview': 'source-rgba128-1',
+      'opacity-linear709-v1-q16': ?opacityQ16,
     });
     final cached = sourcePreviewCache.get(key);
     if (cached != null) return cached;
@@ -1155,7 +1166,7 @@ final class StudioWorkspace {
         throw const StudioException('PREVIEW_PROJECT_CHANGED');
       }
       final frame = SourcePreviewFrame(
-        await _previewMedia!.previewAsync(file, time),
+        await _previewMedia!.previewAsync(file, time, opacityQ16: opacityQ16),
       );
       if (epoch != _previewEpoch || _closed) {
         throw const StudioException('PREVIEW_SUPERSEDED');
@@ -1173,6 +1184,56 @@ final class StudioWorkspace {
     } finally {
       done.complete();
     }
+  }
+
+  /// Explicit still timeline preview uses the SAME full-size native CPU node and
+  /// YUV420 buffer conversion as final export, then downsamples for display.
+  Future<SourcePreviewFrame> previewTimelineAt(Q time) async {
+    final snapshot = current,
+        graph = TimelineVideoGraph(current),
+        point = graph.sample(time);
+    if (point.isGap) {
+      final rgba = List<int>.filled(
+        graph.previewWidth * graph.previewHeight * 4,
+        0,
+      );
+      for (var i = 3; i < rgba.length; i += 4) {
+        rgba[i] = 255;
+      }
+      return SourcePreviewFrame({
+        'width': graph.previewWidth,
+        'height': graph.previewHeight,
+        'rgba': rgba,
+        'pts': '0',
+        'startPts': '0',
+        'timeBase': Q.of(1).toJson(),
+        'packetsRead': 0,
+      });
+    }
+    final result = await previewAssetSource(
+      point.assetId!,
+      point.sourceTime,
+      opacityQ16: point.opacityQ16 == 65536 ? null : point.opacityQ16,
+    );
+    if (current.hash != snapshot.hash) {
+      throw const StudioException('PREVIEW_PROJECT_CHANGED');
+    }
+    return result;
+  }
+
+  ProjectDocument setClipOpacity(
+    String clipId,
+    double value, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['linearOpacityV1'] != true) {
+      throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetClipOpacity(clipId, value),
+      expectedRevision: expectedRevision,
+    );
   }
 
   Future<Map<String, int>> collectLocalGarbage() async {
@@ -1333,6 +1394,10 @@ final class StudioWorkspace {
     final resources = session.writableCollection(expectedCollectionReviewHash);
     final source = session.project;
     final graph = TimelineVideoGraph(source);
+    if ((source.toJson()['effects'] as List).isNotEmpty &&
+        _media!.capabilities['linearOpacityV1'] != true) {
+      throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
+    }
     if (graph.duration > Q.of(120)) {
       throw const StudioException('RESOURCE_IMPORT_DURATION_LIMIT');
     }
@@ -1413,6 +1478,38 @@ final class StudioWorkspace {
               resources[proxy['blobHash']]!,
             );
             await _qualifyPreview(asset, proxy, facts, file, ownsLease: true);
+            check();
+          }
+        }
+        // Admission tests the actual enabled node against qualified originals;
+        // a matching schema/capability flag alone is not render qualification.
+        final definition = source.toJson();
+        final qualifiedNodes = <String>{};
+        for (final track in definition['sequences'][0]['tracks']) {
+          if (track['kind'] != 'video') continue;
+          for (final clip in track['items']) {
+            if (clip['source'] == null || clip['enabled'] == false) continue;
+            final opacity = clipOpacityQ16(
+              definition,
+              Map<String, dynamic>.from(clip as Map),
+            );
+            if (opacity == 65536) continue;
+            final asset = (definition['assets'] as List).singleWhere(
+              (a) => a['id'] == clip['source']['id'],
+            );
+            if (!qualifiedNodes.add('${asset['id']}:$opacity')) continue;
+            if (qualifiedNodes.length > 64) {
+              throw const StudioException(
+                'RESOURCE_EFFECT_QUALIFICATION_LIMIT',
+              );
+            }
+            final original = await _blobs!.resolve(asset['originalBlobHash']);
+            check();
+            await engine.previewAsync(
+              original,
+              Q.fromJson(clip['sourceRange']['start']),
+              opacityQ16: opacity,
+            );
             check();
           }
         }
@@ -1740,8 +1837,10 @@ final class StudioWorkspace {
   Future<Map<String, dynamic>> exportVideo(
     File destination, {
     bool includeEmbeddedAudio = false,
+    List<int> captureFrames = const [],
   }) async {
     _requireMedia();
+    if (captureFrames.length > 4) throw const StudioException('CAPTURE_LIMIT');
     final generation = _exportCancelEpoch;
     if (_exportBusy) throw const StudioException('EXPORT_BUSY');
     _exportBusy = true;
@@ -1749,6 +1848,7 @@ final class StudioWorkspace {
       return await _exportVideo(
         destination,
         includeEmbeddedAudio: includeEmbeddedAudio,
+        captureFrames: List<int>.of(captureFrames),
       );
     } catch (_) {
       if (_closed || generation != _exportCancelEpoch) {
@@ -1763,6 +1863,7 @@ final class StudioWorkspace {
   Future<Map<String, dynamic>> _exportVideo(
     File destination, {
     required bool includeEmbeddedAudio,
+    required List<int> captureFrames,
   }) async {
     _requireMedia();
     _protectOutput(destination);
@@ -1789,11 +1890,22 @@ final class StudioWorkspace {
         contentHash(s['backgroundRGBA']) != contentHash([0, 0, 0, 1])) {
       throw const StudioException('CANVAS_RENDER_POLICY_NOT_IMPLEMENTED');
     }
+    if (captureFrames.length > 4 ||
+        captureFrames.toSet().length != captureFrames.length) {
+      throw const StudioException('CAPTURE_LIMIT');
+    }
     final videoGraph = TimelineVideoGraph(snapshot);
+    if (((d['effects'] as List).isNotEmpty || captureFrames.isNotEmpty) &&
+        _media!.capabilities['linearOpacityV1'] != true) {
+      throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
+    }
     final count = fps
         .frameIndex(Q.fromJson(s['duration']), Rounding.tiesToEven)
         .toInt();
     if (count <= 0) throw const StudioException('EMPTY_SEQUENCE');
+    if (captureFrames.any((n) => n < 0 || n >= count)) {
+      throw const StudioException('CAPTURE_RANGE');
+    }
     final persistentAudio = (s['tracks'] as List).any(
       (t) =>
           t['kind'] == 'audio' &&
@@ -1957,6 +2069,7 @@ final class StudioWorkspace {
       }
       final result = await _media!.renderAsync({
         'outputPath': stage.absolute.path,
+        if (captureFrames.isNotEmpty) 'captureFrames': captureFrames,
         'width': s['canvas']['width'],
         'height': s['canvas']['height'],
         'fps': s['frameRate'],

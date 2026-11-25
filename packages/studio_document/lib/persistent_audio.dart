@@ -201,6 +201,7 @@ ProjectDocument _persistentAudioEdit(
       'duration': (aEnd - aStart).toJson(),
     };
     copy['lockedFields'] = <String>[];
+    copy['effectIds'] = <String>[]; // Visual opacity is never copied to audio.
     (at['items'] as List).add(copy);
     link(video, copy);
   } else if (operation is LinkAudioVideo) {
@@ -417,6 +418,7 @@ ProjectDocument _persistentAudioEdit(
   }
   s['duration'] = maximum.toJson();
   s['version'] = version(s['id'] as String);
+  _normalizeOpacityOwners(d, version, id);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

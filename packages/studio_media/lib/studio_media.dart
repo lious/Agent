@@ -103,15 +103,23 @@ final class NativeMedia {
     File file,
     Q time, {
     bool indexed = true,
+    int? opacityQ16,
   }) {
     if (capabilities['sourcePreview128'] != true) {
       throw const StudioException('PREVIEW_ADAPTER_UNAVAILABLE');
+    }
+    if (opacityQ16 != null &&
+        (capabilities['linearOpacityV1'] != true ||
+            opacityQ16 < 0 ||
+            opacityQ16 > 65536)) {
+      throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
     }
     final path = libraryPath, ns = namespace, h = handle;
     final recipe = jsonEncode({
       'path': file.absolute.path,
       'time': time.toJson(),
       'indexed': indexed,
+      'opacityQ16': ?opacityQ16,
     });
     return Isolate.run(
       () => NativeMedia._attach(path, ns, h)._call('sm_preview', recipe),

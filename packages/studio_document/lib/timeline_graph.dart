@@ -2,18 +2,21 @@ import 'package:studio_contracts/studio_contracts.dart';
 
 import 'studio_document.dart';
 
-/// Admitted preview graph, not an effects/compositing/export implementation.
+/// Admitted single-video-track graph with static opacity over black.
+/// Not the complete multi-track/keyframed/GPU RenderGraph.
 /// Selection and source mapping use exact project rationals and half-open ranges.
 final class TimelineVideoPoint {
   const TimelineVideoPoint(
     this.clipId,
     this.assetId,
     this.sourceVersion,
-    this.sourceTime,
-  );
+    this.sourceTime, [
+    this.opacityQ16 = 65536,
+  ]);
   final String clipId;
   final String? assetId, sourceVersion;
   final Q sourceTime;
+  final int opacityQ16;
   bool get isGap => assetId == null;
 }
 
@@ -45,6 +48,7 @@ final class TimelineVideoGraph {
     previewHeight = longest <= 128
         ? height
         : (height * 128 ~/ longest).clamp(1, 128);
+    _document = d;
     final assets = {for (final a in d['assets']) a['id']: a};
     final tracks = (s['tracks'] as List)
         .where((t) => t['kind'] == 'video')
@@ -75,6 +79,7 @@ final class TimelineVideoGraph {
   }
   final String snapshotHash;
   late final Q duration;
+  late final Map<String, dynamic> _document;
   late final int previewWidth, previewHeight;
   late final List<Map<String, dynamic>> _items;
 
@@ -106,6 +111,8 @@ final class TimelineVideoGraph {
           .toInt(),
       'sourceStart': Q.fromJson(clip['sourceRange']['start']).toJson(),
       'streamIndex': streamIndex,
+      if (clipOpacityQ16(_document, clip) != 65536)
+        'opacityQ16': clipOpacityQ16(_document, clip),
     };
   }
 
@@ -129,6 +136,7 @@ final class TimelineVideoGraph {
         source['version'] as String,
         Q.fromJson(c['sourceRange']['start']) +
             (time - start) * Q.fromJson(c['timeMap']['rate']),
+        clipOpacityQ16(_document, c),
       );
     }
     return TimelineVideoPoint('gap', null, null, Q.of(0));

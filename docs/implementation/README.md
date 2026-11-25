@@ -6,10 +6,10 @@
 
 视频范围仍为 CFR Rec709 limited 8bit、1×、相同偶数尺寸 ≤2048；持久音频/AAC与真实本地服务试听见increment1.7。
 有音轨输入需明确 video-only 确认；未知色彩、VFR、旋转、alpha 等不伪装成可导出。
-原104文档不变；当前全部87项逐项保留原验收：25 partial、49 planned、13 blocked（验证资源）。
+原104文档不变；当前全部87项逐项保留原验收：26 partial、48 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **increment1.9**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
+当前操作入口见文末 **increment1.14**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -825,3 +825,16 @@ instrumented-temp SIGKILL/reopen experiment is not counted as Dart/App tests.
 [Exact source, commands and failures](evidence/definition-history/summary.json).
 The existing intermittent resume underrun is not fixed by this isolated pass.
 Full repository/release/platform/60s and new RenderGraph consumers not qualified.
+
+
+## increment1.14 — 可操作的静态透明度效果
+
+Linux Native 编辑器：导入本机 SDR/CFR 视频→点选 VIDEO clip→`Selected VIDEO opacity [0,1]` 输入0.5→`Apply persisted clip opacity`→`Preview selected timeline clip effect`。同一节点接入 AudioSink 服务确认 sample 时钟选择的 timeline 预览和原件 MP4 导出；不是 proxy 乘像素、不是截图导出。支持版本、undo、保存、关闭重开、归档 fork 和经真实 native 资格验证的资源采纳。0是黑色、1保持原图；黑色项目背景、静态单节点，其余不可执行资源继续只读保全/拒绝。
+
+真实像素证据：原件全尺寸共享 C++ linear-light BT709 opacity，编码提交前捕获实际 YUV420 取样（最多4帧）。128×72独立灰块数学参考容差≤2/255；320×180彩色视频比较128×72显示样本，不能泛称全分辨率/GPU/全片等价。FP32 transfer + RGB8 staging 不是原 FP16 GPU 合成资格，详见 [ADR0021](../adr/0021-static-linear-opacity-consumer.md)。
+
+[冻结源代码/真实命令/结果/早期失败](evidence/static-opacity/summary.json)。I-008由 planned 改 partial，I-022/V-003仍 partial；原87为0 complete /26 partial /48 planned /13 blocked；XD10仍0/8/1/1。原104与原任务验收未改。新媒体消费者需要重新构建本机 native library（原 CMake 构建目录及批准 FFmpeg/Pulse 工具链），SQLite严格使用3.54.1；示例运行环境沿用此前说明，不把系统 DEV SQLite 当合格。
+
+限制：完整 registry、变换/关键帧/转场/GPU/100次取消 frame-leak 资格未完成；非Linux、物理多设备、物理声画同步没有新验证。已有 resume underrun 未解，不因本次隔离测试通过消除；RTC 策略阻塞不重复尝试或绕过。下一接续是原 I-008/I-022 有用变换/关键帧或同一消费者的逐项像素/生命周期验收，而非继续扩存储。
+
+本冻结代码实际通过 **200项所选 Dart/Flutter/Chrome 测试**（183领域/SQLite/原生SDK，9真实native UI，5 Chrome保全/检查器，3真实私有Pulse服务）及 **3项CTest**，analyzer无问题；另跑真实旧库/SQL-barrier SIGKILL恢复实验，不计入200。不是全仓库/全部87验收全过，也未重跑早期60秒资格矩阵。完整日志、精确源码及native library哈希见同目录证据。

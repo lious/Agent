@@ -7,7 +7,6 @@ import 'studio_document.dart';
 void requireLocalEditingWritable(ProjectDocument project) {
   final d = project.toJson();
   for (final table in [
-    'effects',
     'transitions',
     'markers',
     'selectionGroups',
@@ -45,6 +44,15 @@ void requireLocalEditingWritable(ProjectDocument project) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
   AudioBus.fromJson(Map<String, dynamic>.from(b as Map));
+  final consumed = <String>{
+    for (final t in s['tracks'])
+      for (final c in t['items'])
+        if (c['source'] != null)
+          for (final id in c['effectIds']) id as String,
+  };
+  if ((d['effects'] as List).any((e) => !consumed.contains(e['id']))) {
+    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+  }
   final assets = {for (final a in d['assets'] as List) a['id']: a};
   final blobs = {for (final v in d['blobs'] as List) v['hash']: v};
   if (blobs.length != (d['blobs'] as List).length) {
@@ -173,13 +181,16 @@ void requireLocalEditingWritable(ProjectDocument project) {
       if (c['source'] == null) continue;
       if (c['source']['kind'] != 'asset' ||
           c['timeMap']['kind'] != 'linear' ||
-          (c['effectIds'] as List).isNotEmpty ||
           c['selectionGroupId'] != null ||
           c['shotId'] != null ||
           c['candidateId'] != null ||
           c['provenanceId'] != null) {
         throw const StudioException('FEATURE_NOT_IMPLEMENTED');
       }
+      if (track['kind'] != 'video' && (c['effectIds'] as List).isNotEmpty) {
+        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+      }
+      clipOpacityQ16(d, c as Map);
       final source = c['source'];
       final a = assets[source['id']];
       if (a == null) throw const StudioException('REF_NOT_FOUND');

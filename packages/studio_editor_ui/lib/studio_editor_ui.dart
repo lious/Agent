@@ -63,6 +63,7 @@ class _FoundationAppState extends State<FoundationApp>
 
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
+  final _opacity = TextEditingController(text: '0.5');
   bool get _hasPersistentAudio =>
       (widget.workspace.current.toJson()['sequences'][0]['tracks'] as List).any(
         (t) => t['kind'] == 'audio',
@@ -396,6 +397,7 @@ class _FoundationAppState extends State<FoundationApp>
     _previewImage?.dispose();
     _previewTime.dispose();
     _masterGain.dispose();
+    _opacity.dispose();
     _inspectionPath.dispose();
     _diskLimit.dispose();
     _historyKeep.dispose();
@@ -435,7 +437,7 @@ class _FoundationAppState extends State<FoundationApp>
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. No effects. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Static clip opacity over black (linear Rec.709 CPU); other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
@@ -580,6 +582,70 @@ class _FoundationAppState extends State<FoundationApp>
                 ),
           title: const Text('Persisted AUDIO track mute'),
         ),
+    _path(
+      'clip-opacity-value',
+      'Selected VIDEO opacity [0,1], linear Rec.709 over black',
+      _opacity,
+    ),
+    OutlinedButton(
+      key: const Key('apply-clip-opacity'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final value = double.tryParse(_opacity.text);
+              if (value == null) throw const StudioException('OPACITY_RANGE');
+              return widget.workspace.setClipOpacity(
+                _selected!,
+                value,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Apply persisted clip opacity'),
+    ),
+    OutlinedButton(
+      key: const Key('preview-clip-opacity'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _run(() async {
+              final snapshot = _project.hash, selected = _selected;
+              final clip = _clips.singleWhere((c) => c['id'] == selected);
+              final frame = await widget.workspace.previewTimelineAt(
+                Q.fromJson(clip['timelineRange']['start']),
+              );
+              final decoded = Completer<ui.Image>();
+              var abandoned = false;
+              ui.decodeImageFromPixels(
+                frame.rgba,
+                frame.width,
+                frame.height,
+                ui.PixelFormat.rgba8888,
+                (image) {
+                  if (abandoned) {
+                    image.dispose();
+                  } else {
+                    decoded.complete(image);
+                  }
+                },
+              );
+              final image = await decoded.future.timeout(
+                const Duration(seconds: 2),
+                onTimeout: () {
+                  abandoned = true;
+                  throw const StudioException('TIMELINE_IMAGE_DECODE_TIMEOUT');
+                },
+              );
+              if (!mounted ||
+                  widget.workspace.current.hash != snapshot ||
+                  selected != _selected) {
+                image.dispose();
+                throw const StudioException('TIMELINE_FRAME_STALE');
+              }
+              _previewImage?.dispose();
+              _previewImage = image;
+              return 'Same-revision CPU opacity preview; originals -> actual YUV420 encoder-input node -> display. Not GPU/physical sync qualification.';
+            }),
+      child: const Text('Preview selected timeline clip effect'),
+    ),
     for (final c in _clips)
       ListTile(
         key: Key('clip-${c['id']}'),

@@ -1,0 +1,38 @@
+00:00 +0: loading packages/studio_document/test/opacity_test.dart
+00:00 +0: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:00 +1: packages/studio_document/test/opacity_test.dart: split clones owner, trim preserves node, deleting removes current orphan only
+00:00 +2: packages/studio_document/test/opacity_test.dart: linked audio extraction does not inherit visual node, linked split owns independent video effects
+00:00 +3: packages/studio_document/test/opacity_test.dart: locks, unknown effect versions and extensions never become writable by replacing semantics
+00:00 +4: loading packages/studio_sdk/test/opacity_render_test.dart
+00:00 +4 -1: loading packages/studio_sdk/test/opacity_render_test.dart [E]
+  Failed to load "packages/studio_sdk/test/opacity_render_test.dart":
+  packages/studio_sdk/test/opacity_render_test.dart:135:18: Error: Too few positional arguments: 3 required, 2 given.
+          Namespace('local', 'opacity-golden'),
+                   ^
+  packages/studio_contracts/lib/studio_contracts.dart:19:3: Context: Found this candidate, but the arguments don't match.
+    Namespace(this.appId, this.tenantId, this.workspaceId) {
+    ^^^^^^^^^
+  packages/studio_sdk/test/opacity_render_test.dart:163:43: Error: Too many positional arguments: 2 allowed, but 3 found.
+  Try removing the extra positional arguments.
+          final a = await media.previewAsync(file.path, 0, Q.of(0));
+                                            ^
+  packages/studio_sdk/test/opacity_render_test.dart:164:43: Error: Too many positional arguments: 2 allowed, but 3 found.
+  Try removing the extra positional arguments.
+          final b = await media.previewAsync(
+                                            ^
+  packages/studio_sdk/test/opacity_render_test.dart:170:43: Error: Too many positional arguments: 2 allowed, but 3 found.
+  Try removing the extra positional arguments.
+          final z = await media.previewAsync(
+                                            ^
+  packages/studio_sdk/test/opacity_render_test.dart:176:50: Error: Too many positional arguments: 2 allowed, but 3 found.
+  Try removing the extra positional arguments.
+          final identity = await media.previewAsync(
+                                                   ^
+  packages/studio_sdk/test/opacity_render_test.dart:205:29: Error: Too many positional arguments: 2 allowed, but 3 found.
+  Try removing the extra positional arguments.
+            media.previewAsync(file.path, 0, Q.of(0), opacityQ16: -1),
+                              ^
+00:00 +4 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_sdk/test/opacity_render_test.dart: loading packages/studio_sdk/test/opacity_render_test.dart

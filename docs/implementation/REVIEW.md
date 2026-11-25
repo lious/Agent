@@ -822,3 +822,12 @@ the historical intermittent underrun. Full original tasks remain partial.
    long1000 edit/undo tests reran. No production native audio/timing change and no
    renderer admission widened; historical underrun still unresolved. Instrumented
    crash mirror is explicitly separate from unmodified frozen test execution.
+
+
+## increment1.14 — 实际静态 opacity 消费（三轮实审）
+
+1. **领域/事务/语义审查**：核对原 I-008/I-022/s4，不把单节点说成完整 registry。发现 split 继承 effect owner 和抽取音频复制视觉 effect 风险，增加新 clip 独立 effect ID/owner、删除当前孤立节点、音频 effectIds 清空；历史不可变。验证 bounds/identity/noop/锁路径、旧 pluginVersion/extension 拒绝、linked split。测试初稿 DeleteClip/NativeMedia/Namespace/preview API 参数编译失败保留，按真实签名修复。
+2. **像素/颜色/生命周期审查**：不能给 proxy 缩图直接乘非线性像素，改为原件全尺寸共享 native 节点和实际 YUV420 encoder-input 取样。保留 identity 旧路径；FP32 transfer+RGB8 staging 与 FP16 GPU 规范偏差写 ADR0021。检查 writable/COW/RAII/每32行取消，补最终转换后取消及取样前正确 PTS；严格4样本/64资格上限、range/duplicate拒绝。灰块 fixture 缺 primaries/transfer 导致 COLOR_POLICY_REQUIRED，修 fixture setparams 不放宽门禁；独立数学参考及真实编码前像素检验。
+3. **用户路径/准入/失效审查**：初稿误用不存在的 UI 解码 API，换真实 callback+Completer、2秒deadline、迟到 dispose、mounted/hash/selection fence。资源采纳不能只查 capability，必须实际执行 bounded native effect 后才原子 fork；真实采纳/ZIP fork/重开/undo/预览/MP4/UI点击测试。无效 NativeMedia 参数是同步 throw，修测试捕获方式；最终 analyzer 一条括号风格失败保留并修复，冻结后重新跑选定套件。数量不等于原任务完成，未重跑项和未解 underrun 单列证据。
+
+补充真实失败：冻结后旧 local_video_ui_test 的 restore-archive 点击落在未绘制的视口边缘并超时（保留 hit-test 日志），不是把超时放宽或关 warning。新旧测试均改为居中 ensureVisible→pumpAndSettle→hitTestable 断言后真实点击，完整9项 UI 重新通过。新增 AudioSink-clock opacity 测试起初给纯视频直接播放，正确触发 PERSISTENT_AUDIO_REQUIRED；改为实际生成 AAC 输入并持久抽取 AudioClip，不放松门禁，再进行隔离服务资格。最终测试以新冻结哈希列出。

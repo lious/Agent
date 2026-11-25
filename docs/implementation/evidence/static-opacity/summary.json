@@ -1,0 +1,188 @@
+{
+  "baseCommit": "b194a9d6663a21d07ace5fa773e7196e45453c4c",
+  "freezeStarted": "2026-11-25T21:44:45.338282+08:00",
+  "sourceSha256": {
+    "native/studio_media/src/studio_media.cpp": "9d1f922585ddfd3e31ff834557bb73bce61a42720353dd39892912f463b7efd9",
+    "packages/studio_document/lib/edit_algebra.dart": "1010b90b72ec981a74f2911f657bad45edb841b7ab71394c6745f2b87662df26",
+    "packages/studio_document/lib/effect_registry.dart": "7a63214004d5e9d1bf6ff25a49f58338fdd2a7929d3494a1011dc2008ba396c5",
+    "packages/studio_document/lib/local_admission.dart": "4e17b5f525ee621ca9577ecb9a950f81b0444371284a90b26ae7bba4e0868edd",
+    "packages/studio_document/lib/persistent_audio.dart": "66a7b5f457af88b0cc46fcd95826b6fa03f04a8525aa5ca14762df88430a7c5b",
+    "packages/studio_document/lib/studio_document.dart": "f10637c3697c82ad81af890ce20d8f5f092aeca02191e070432fca4256c8e525",
+    "packages/studio_document/lib/timeline_graph.dart": "45204e660614c188a77e112457c3cd111c2c5933cfbb6b3781cddeee8928cf56",
+    "packages/studio_document/test/opacity_test.dart": "b82d54d1ca21f51bdac1665791e890f431447c64a22cd05ada3eaf7dcd17e93f",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "5c67115da64cd3138629557a34d05842a878468bedc412d6780259dd517b9f3f",
+    "packages/studio_editor_ui/test/local_video_ui_test.dart": "ecbc114a7f68a7e5b2c69c76dab1bf2ea4e7bd4e53e28a8e03048d2886b2e689",
+    "packages/studio_editor_ui/test/opacity_ui_test.dart": "486b159e3176601c217ea8f09796f7f9fcb494c5beecc54f19b35981e7071481",
+    "packages/studio_media/lib/studio_media.dart": "f79577eff2e6c322b2ef4554f6c965acce4848634a75c63461b47b96995018ab",
+    "packages/studio_sdk/lib/studio_sdk.dart": "37eb36e5094798786d629b79653cf293931b168a0d7566f3a9e7af37d9027591",
+    "packages/studio_sdk/test/opacity_clock_test.dart": "2b30e2b426077fbf791659f10ac18da4479a20177d737d4a8343c2015da40bfd",
+    "packages/studio_sdk/test/opacity_render_test.dart": "d36adff2e68a4b27abef4bdff823e9607aaa214d7e32ce1bcbd83126d5a0d8a0"
+  },
+  "nativeLibrarySha256": "319bd86d650e769452d287b9583d1b5869a25bbe3f43d37443a473e27b296314",
+  "asOf": "2026-11-25T21:49:31.436500+08:00",
+  "timezone": "Asia/Shanghai",
+  "freezeIdentity": "All selected commands rerun after final production AND test changes. Exact hashes apply to commit containing this manifest; subsequent edits docs/evidence only. No old182/187 result borrowed.",
+  "results": {
+    "native": {
+      "passed": 183,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-native.jsonl",
+      "sha256": "6ee1d04f8f278c44a727caa2f412c42ade0023ba68a634825a67cec2a979a031"
+    },
+    "ui": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-ui.jsonl",
+      "sha256": "a0e96cb46293b5f50ac1d36750d7f83110787afba3480af5c5b8f32d0b420144"
+    },
+    "chrome": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-chrome.jsonl",
+      "sha256": "bfe7c8eb6ec6490e4102d7fdfd7ee8fe167a149657447ac1256e36bedd5b0050"
+    },
+    "pulse": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-pulse.jsonl",
+      "sha256": "8146036acf97a4f63a8ff001b63b3b26072759271ea567cf11609d5d14f2effb"
+    }
+  },
+  "totalPassed": 200,
+  "ctestPassed": 3,
+  "analyzer": "No issues found",
+  "additionalExperiments": {
+    "actualOldStoreANDDocumentCommit": "06a254506c7eae2e585e363978eede4cd40cf851",
+    "report": "actual-old-library-and-kill.json",
+    "passed": true,
+    "countedAsDartCases": false,
+    "qualification": "Actual old DB + temp current-store SQL barrier/SIGKILL/reopen regression; not App/physical crash qualification"
+  },
+  "pixelProof": {
+    "coloredVideo": "Two actual320x180 source-video frames compared at128x72 preview display size vs actual preencoder YUV420 display samples; ordered equality => max byte difference0. Not full-resolution full-clip/GPU proof.",
+    "grayscale": "Full128x72 native preview and actual encoder-input RGBA equality; independent BT709 transfer reference with explicit<=2/255 component tolerance; zero and identity tested.",
+    "clock": "Real private Pulse service confirmed sample48000 paused seek uses actual full-source opacity consumer; pixel equality with exact timeline still; source PTS changes on seek; edit stops/invalidate. Not stable moving effect fps or physical sync."
+  },
+  "threeReviewRounds": "../../REVIEW.md increment1.14 and ADR0021; real UI viewport/audio-fixture failures corrected without changing production gates",
+  "failuresRetained": [
+    {
+      "log": "opacity-initial-analyzer.log",
+      "finalSource": false,
+      "sha256": "f56f63e7a428a3d5a5375039449e1de44241955380a8b4c52898ce5bc5043ca7",
+      "rawSha256": "a8c235d74b413fc48635c5ccf8edfe453711c53d70f1b49e6b643c70ade46366"
+    },
+    {
+      "log": "opacity-second-analyzer.log",
+      "finalSource": false,
+      "sha256": "6a2f4ba404023ded749a3e418e7796a7512f356b43453440d30cd558e3bb72be",
+      "rawSha256": "e6c9d78588e87f35b805f402370ad8d310a066f6307616fd710b36de3c510820"
+    },
+    {
+      "log": "opacity-new-domain.log",
+      "finalSource": false,
+      "sha256": "9b97f004b07aa0553d1f3f5193e2e1d6d9bdb6dc8af11ece03a7f42ece99346e"
+    },
+    {
+      "log": "opacity-sdk-first.log",
+      "finalSource": false,
+      "sha256": "8e5da4a014661662c166b6882c823679ed1e7164ecc55d7334b167cef77693da"
+    },
+    {
+      "log": "opacity-review1-tests.log",
+      "finalSource": false,
+      "sha256": "1d13894d397326ffa58835d7685d9d37c1d377696fc4ae3778136319da6775f4"
+    },
+    {
+      "log": "opacity-review2-tests.log",
+      "finalSource": false,
+      "sha256": "17fa2058066700595224000d22f50f6e31c4dbaadfc235a8952abeb3bc92c021",
+      "rawSha256": "56f41d1c02bcc3bf3fd8c58c978ccf7282e2be0ae812cde8a4fd867e83629004"
+    },
+    {
+      "log": "opacity-review3-tests.log",
+      "finalSource": false,
+      "sha256": "8d12912b97f1bd8dfcad44b073297ca309096329c61e84cca8779b60e643fd01",
+      "rawSha256": "22d55f4ea9541b53fbefc26da434a1373c767a6f74cf68d4a819391d8feac1bf"
+    },
+    {
+      "log": "opacity-final-first-style-failure.log",
+      "finalSource": false,
+      "sha256": "bd3cfc702029e38e16fe8f3e952031da39efe2cbe87d94759bd10ee2443b80c7",
+      "rawSha256": "a067ebadcb972cc46e613e77f6420edaf9b11ab616441b9946b76c5489464e61"
+    },
+    {
+      "log": "opacity-viewport-tap-failure.jsonl",
+      "finalSource": false,
+      "sha256": "6ccb92370f1137e57079d7cd502a94362508921b847579acef6c2587358a2fe3"
+    },
+    {
+      "log": "opacity-clock-audio-fixture-failure.jsonl",
+      "finalSource": false,
+      "sha256": "94a910387fbc2296f9f5e6e3c82755effb9a0117f4bfe2cd8f78bbd1efcd1338"
+    }
+  ],
+  "knownUnresolved": [
+    "Existing resume underrun remains unresolved; these isolated passes do not fix it. Prior definition-identity/intermediate-service-underrun-failure.jsonl retained.",
+    "Schema9 does not fence old executable co-writers: all writers must use updated guarded runtime.",
+    "CPU profile uses FP32 transfer arithmetic with RGB8 staging; not FP16 GPU compositing or whole V003 tolerance qualification."
+  ],
+  "notRun": [
+    "Full repository/all87/release acceptance",
+    "Full registry/transforms/keyframes/transitions/handles or all I005 dependencies",
+    "GPU/texture fence and100 active-effect cancel/frame-leak qualification",
+    "Fresh desktop App release build/window/manual/heard audio or physical AV clock/fps",
+    "Fresh independent60s AV stress/cancel matrix; existing selected audio-export regression DID run",
+    "Earlier separate v4-v8 old-executable migration matrix (store migration/fault tests DID run)",
+    "Non-Linux/mobile/physical multiple devices/positive RTC (unchanged policy blocker)",
+    "Unknown font/mask/imageDocument/library/LUT/retained execution equivalence"
+  ],
+  "storage": "No new table/schema/hash rewrite/history deletion/GC execution; approved SQLite3.54.1 strict gate and store migration/transaction/history/pin/fence/budget regressions rerun.",
+  "statuses": {
+    "original87": {
+      "complete": 0,
+      "partial": 26,
+      "planned": 48,
+      "blocked": 13
+    },
+    "XD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  },
+  "original104Unmodified": true,
+  "logNormalization": {
+    "rule": "Plain-text .log lines right-trimmed for git whitespace policy; all original raw artifact files retained, JSONL unchanged. No result/message content changed.",
+    "changed": {
+      "opacity-second-analyzer.log": {
+        "rawSha256": "e6c9d78588e87f35b805f402370ad8d310a066f6307616fd710b36de3c510820",
+        "normalizedSha256": "6a2f4ba404023ded749a3e418e7796a7512f356b43453440d30cd558e3bb72be"
+      },
+      "opacity-review2-tests.log": {
+        "rawSha256": "56f41d1c02bcc3bf3fd8c58c978ccf7282e2be0ae812cde8a4fd867e83629004",
+        "normalizedSha256": "17fa2058066700595224000d22f50f6e31c4dbaadfc235a8952abeb3bc92c021"
+      },
+      "opacity-initial-analyzer.log": {
+        "rawSha256": "a8c235d74b413fc48635c5ccf8edfe453711c53d70f1b49e6b643c70ade46366",
+        "normalizedSha256": "f56f63e7a428a3d5a5375039449e1de44241955380a8b4c52898ce5bc5043ca7"
+      },
+      "final-analyzer.log": {
+        "rawSha256": "c020a970494acc32955e305d1f9acb9ed0133dcfef487b29d74d2722857ee451",
+        "normalizedSha256": "aef283d58895ebc386b33c241b14b39395948929aac13c519ee2351a656a069d"
+      },
+      "opacity-final-first-style-failure.log": {
+        "rawSha256": "a067ebadcb972cc46e613e77f6420edaf9b11ab616441b9946b76c5489464e61",
+        "normalizedSha256": "bd3cfc702029e38e16fe8f3e952031da39efe2cbe87d94759bd10ee2443b80c7"
+      },
+      "opacity-review3-tests.log": {
+        "rawSha256": "22d55f4ea9541b53fbefc26da434a1373c767a6f74cf68d4a819391d8feac1bf",
+        "normalizedSha256": "8d12912b97f1bd8dfcad44b073297ca309096329c61e84cca8779b60e643fd01"
+      }
+    }
+  }
+}

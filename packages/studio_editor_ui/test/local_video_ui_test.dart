@@ -43,7 +43,12 @@ void main() {
             maxScrolls: 50,
           );
         }
-        await tester.ensureVisible(find.byKey(Key(key)));
+        await Scrollable.ensureVisible(
+          tester.element(find.byKey(Key(key))),
+          alignment: 0.5,
+        );
+        await tester.pumpAndSettle();
+        expect(find.byKey(Key(key)).hitTestable(), findsOneWidget);
       }
 
       Future<void> tap(String key) async {

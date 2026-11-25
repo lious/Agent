@@ -1,0 +1,18 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in a for should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:164:5 • curly_braces_in_flow_control_structures
+   info • Statements in a for should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:165:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:194:5 • curly_braces_in_flow_control_structures
+   info • Statements in a for should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:197:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:200:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:221:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:424:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:10:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:26:5 • curly_braces_in_flow_control_structures
+  error • The function 'decodeImageFromPixelsAsync' isn't defined. Try importing the library that defines 'decodeImageFromPixelsAsync', correcting the name to the name of an existing function, or defining a function named 'decodeImageFromPixelsAsync' • packages/studio_editor_ui/lib/studio_editor_ui.dart:615:38 • undefined_function
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • packages/studio_media/lib/studio_media.dart:122:7 • use_null_aware_elements
+   info • Use the null-aware marker '?' rather than a null check via an 'if'. Try using '?' • packages/studio_sdk/lib/studio_sdk.dart:1146:7 • use_null_aware_elements
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1219:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1230:7 • curly_braces_in_flow_control_structures
+
+14 issues found. (ran in 2.1s)

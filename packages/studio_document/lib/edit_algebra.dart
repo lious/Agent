@@ -141,6 +141,117 @@ ProjectDocument _attachPreviewProxies(
   return result;
 }
 
+final class SetClipOpacity extends EditOperation {
+  const SetClipOpacity(this.clipId, this.value);
+  final String clipId;
+  final double value;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setClipOpacity',
+    'clipId': clipId,
+    'value': value,
+  };
+}
+
+void _normalizeOpacityOwners(
+  Map<String, dynamic> d,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  final effects = {for (final e in d['effects']) e['id']: e};
+  final kept = <String, Map>{};
+  for (final s in d['sequences']) {
+    for (final t in s['tracks']) {
+      for (final c in t['items']) {
+        if (c['source'] == null) continue;
+        final ids = <String>[];
+        for (final eid in c['effectIds']) {
+          var e = effects[eid] as Map;
+          if (e['owner']['id'] != c['id']) {
+            final fresh = id();
+            e = {
+              ...e,
+              'id': fresh,
+              'version': version(fresh),
+              'owner': {'kind': 'clip', 'id': c['id']},
+            };
+          }
+          ids.add(e['id'] as String);
+          kept[e['id'] as String] = e;
+        }
+        c['effectIds'] = ids;
+      }
+    }
+  }
+  d['effects'] = kept.values.toList();
+}
+
+ProjectDocument _setOpacity(
+  ProjectDocument before,
+  SetClipOpacity op,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  if (!op.value.isFinite || op.value < 0 || op.value > 1) {
+    throw const StudioException('OPACITY_RANGE');
+  }
+  final d = before.toJson(), s = d['sequences'][0];
+  for (final t in s['tracks']) {
+    for (final c in t['items']) {
+      if (c['id'] != op.clipId || c['source'] == null) continue;
+      if (t['kind'] != 'video') {
+        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+      }
+      if (t['locked'] == true ||
+          (c['lockedFields'] as List).any(
+            (v) =>
+                v == 'effectIds' ||
+                v == 'effects' ||
+                v == '*' ||
+                (v as String).startsWith('effectIds.') ||
+                v.startsWith('effects.'),
+          )) {
+        throw const StudioException('FIELD_LOCKED');
+      }
+      final ids = c['effectIds'] as List;
+      if (ids.isEmpty && op.value == 1) return before;
+      Map? existing = ids.isEmpty
+          ? null
+          : (d['effects'] as List).singleWhere((e) => e['id'] == ids.single)
+                as Map;
+      if (existing != null &&
+          existing['parameters']['value'] == op.value &&
+          existing['enabled'] == true) {
+        return before;
+      }
+      final eid = existing?['id'] as String? ?? id();
+      final e = {
+        'id': eid,
+        'version': version(eid),
+        'owner': {'kind': 'clip', 'id': c['id']},
+        'type': 'opacity',
+        'pluginVersion': '1.0.0',
+        'enabled': true,
+        'parameters': {'value': op.value},
+        'keyframes': <dynamic>[],
+        'extensions': <String, dynamic>{},
+      };
+      d['effects'] = [
+        for (final old in d['effects'])
+          if (old['id'] != eid) old,
+        e,
+      ];
+      c['effectIds'] = [eid];
+      c['version'] = version(c['id']);
+      s['version'] = version(s['id']);
+      final result = ProjectDocument.fromJson(d);
+      requireLocalEditingWritable(result);
+      return result;
+    }
+  }
+  throw const StudioException('CLIP_NOT_FOUND');
+}
+
 final class SetMasterAudio extends EditOperation {
   const SetMasterAudio({
     this.gainDb = 0,
@@ -315,6 +426,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is SetClipOpacity) {
+    return _setOpacity(before, operation, nextVersion, newId);
+  }
   if (operation is DiscardPreviewProxies) {
     return _discardPreviewProxies(before, operation, nextVersion);
   }
@@ -493,6 +607,7 @@ ProjectDocument applyEdit(
     case UnlinkAudioVideo():
     case SetAudioTrackState():
       throw StateError('persistent audio dispatch');
+    case SetClipOpacity():
     case SetMasterAudio():
       throw StateError('Handled master audio edit');
     case SetCaptions():
@@ -831,6 +946,7 @@ ProjectDocument applyEdit(
   }
   s['duration'] = end.toJson();
   s['version'] = nextVersion(s['id'] as String);
+  _normalizeOpacityOwners(d, nextVersion, newId);
   final after = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(after);
   return after;
