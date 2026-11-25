@@ -379,11 +379,14 @@ J probe(Input &in) {
 // Exact Schema transform2d fields; bounded CPU profile, never arbitrary filters.
 struct Transform2d {
   double tx=0,ty=0,sx=1,sy=1,deg=0,ax=.5,ay=.5;
-  bool identity() const {return tx==0 && ty==0 && sx==1 && sy==1 && std::fmod(deg,360.0)==0;}
+  double left=0,top=0,right=1,bottom=1,exposure=0,contrast=1,saturation=1;
+  bool matrix_identity() const {return tx==0 && ty==0 && sx==1 && sy==1 && std::fmod(deg,360.0)==0;}
+  bool raster_identity() const {return left==0 && top==0 && right==1 && bottom==1 && exposure==0 && contrast==1 && saturation==1;}
+  bool identity() const {return matrix_identity() && raster_identity();}
 };
 Transform2d transform2d(const J &recipe) {
   Transform2d t;
-  if(!recipe.contains("transform2d")) return t;
+  if(recipe.contains("transform2d")){
   const auto &p=recipe["transform2d"];
   keys(p,{"translateX","translateY","scaleX","scaleY","rotationDeg","anchorX","anchorY"});
   if(p.size()!=7)throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");
@@ -392,6 +395,15 @@ Transform2d transform2d(const J &recipe) {
   if(t.sx<=0 || t.sy<=0 || t.sx>100 || t.sy>100)throw Error("TRANSFORM_SCALE_RANGE");
   if(t.ax<0 || t.ax>1 || t.ay<0 || t.ay>1)throw Error("TRANSFORM_ANCHOR_RANGE");
   if(std::abs(t.tx)>1000000 || std::abs(t.ty)>1000000 || std::abs(t.deg)>1000000 || t.sx<.000001 || t.sy<.000001)throw Error("TRANSFORM_CPU_PROFILE_RANGE");
+  }
+  if(recipe.contains("rasterEffects")){
+    const auto &r=recipe["rasterEffects"];
+    if(!r.is_object() || r.empty() || r.size()>2)throw Error("RASTER_PARAMETERS_UNSUPPORTED");
+    for(auto it=r.begin();it!=r.end();++it)if(it.key()!="crop" && it.key()!="colorBasic")throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+    auto number=[](const J &p,const char *k){if(!p[k].is_number())throw Error("RASTER_PARAMETERS_UNSUPPORTED");const double v=p[k].get<double>();if(!std::isfinite(v))throw Error("RASTER_PARAMETERS_UNSUPPORTED");return v;};
+    if(r.contains("crop")){const auto &p=r["crop"];keys(p,{"left","top","right","bottom"});t.left=number(p,"left");t.top=number(p,"top");t.right=number(p,"right");t.bottom=number(p,"bottom");if(t.left<0||t.top<0||t.right>1||t.bottom>1||t.left>=t.right||t.top>=t.bottom)throw Error("CROP_RANGE");}
+    if(r.contains("colorBasic")){const auto &p=r["colorBasic"];keys(p,{"exposureStops","contrast","saturation"});t.exposure=number(p,"exposureStops");t.contrast=number(p,"contrast");t.saturation=number(p,"saturation");if(t.exposure < -8 || t.exposure>8 || t.contrast<0 || t.contrast>2 || t.saturation<0 || t.saturation>2)throw Error("COLOR_BASIC_RANGE");}
+  }
   return t;
 }
 // CPU reference: opaque Rec.709 YUV420 -> explicit full-range RGB -> linear
@@ -400,7 +412,7 @@ Transform2d transform2d(const J &recipe) {
 void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
                           SwsContext *&scaler,
                           const std::function<void()> &check, const Transform2d &transform = {}, std::vector<float> *linear_capture=nullptr) {
-  const bool transformed=!transform.identity();
+  const bool transformed=!transform.matrix_identity();
   ok(av_frame_make_writable(dst));
   if (!source) {
     for (int p = 0; p < 3; ++p)
@@ -418,7 +430,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
     throw Error("COLOR_POLICY_REQUIRED");
   if (opacity < 0 || opacity > 65536) throw Error("OPACITY_RANGE");
   const int *cs = sws_getCoefficients(SWS_CS_ITU709);
-  if (opacity == 65536 && !transformed && !linear_capture) {
+  if (opacity == 65536 && transform.identity() && !linear_capture) {
     scaler = sws_getCachedContext(scaler, source->width, source->height,
       static_cast<AVPixelFormat>(source->format), dst->width, dst->height,
       AV_PIX_FMT_YUV420P, SWS_BILINEAR, nullptr, nullptr, nullptr);
@@ -459,10 +471,46 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
   // Interpolate premultiplied LINEAR colour, then composite on the admitted black
   // canvas. Opaque H264 output cannot expose a transferable alpha plane.
   std::vector<uint8_t> input;
-  if(transformed) input=rgba;
+  if(transformed || !transform.raster_identity()) input=rgba;
   const double angle=std::fmod(transform.deg,360.0)*3.14159265358979323846/180.0;
   const double cosine=std::cos(angle),sine=std::sin(angle);
   const double ax=transform.ax*source->width,ay=transform.ay*source->height;
+  if(!transform.raster_identity()) {
+    const double exposure=std::exp2(transform.exposure);
+    auto coverage=[&](int px,int py){
+      if(px<0||py<0||px>=source->width||py>=source->height)return 0.0;
+      const double cx=std::max(0.0,std::min(px+1.0,transform.right*source->width)-std::max(double(px),transform.left*source->width));
+      const double cy=std::max(0.0,std::min(py+1.0,transform.bottom*source->height)-std::max(double(py),transform.top*source->height));
+      return cx*cy;
+    };
+    for(int y=0;y<source->height;y++){
+      if(check && y%32==0)check();
+      for(int x=0;x<source->width;x++){
+        const double dx=x+.5-transform.tx-ax,dy=y+.5-transform.ty-ay;
+        const double u=transformed?(cosine*dx+sine*dy)/transform.sx+ax-.5:x;
+        const double v=transformed?(-sine*dx+cosine*dy)/transform.sy+ay-.5:y;
+        double rgb[3]={0,0,0},alpha=0;
+        if(u>-1&&v>-1&&u<source->width&&v<source->height){
+          const int ix=static_cast<int>(std::floor(u)),iy=static_cast<int>(std::floor(v));const double fx=u-ix,fy=v-iy;
+          for(int j=0;j<2;j++)for(int i=0;i<2;i++){
+            const int px=ix+i,py=iy+j;const double w=coverage(px,py)*(i?fx:1-fx)*(j?fy:1-fy);
+            if(w==0)continue;alpha+=w;
+            for(int c=0;c<3;c++)rgb[c]+=linear_lut[input[(static_cast<size_t>(py)*source->width+px)*4+c]]*w;
+          }
+        }
+        if(alpha>0){
+          // Colour is straight LINEAR within covered content. Contrast must not
+          // create colour outside transparent crop/transform coverage.
+          for(auto &c:rgb)c=((c/alpha)*exposure-.18)*transform.contrast+.18;
+          const double luma=.2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
+          for(auto &c:rgb)c=(luma+transform.saturation*(c-luma))*alpha*(opacity/65536.0);
+        }
+        const size_t at=(static_cast<size_t>(y)*source->width+x)*4;
+        for(int c=0;c<3;c++){if(linear_capture)(*linear_capture)[at/4*3+c]=static_cast<float>(rgb[c]);else rgba[at+c]=encode(static_cast<float>(rgb[c]));}
+        rgba[at+3]=255;
+      }
+    }
+  } else {
   for(int y=0;y<source->height;++y) {
     if(check && y%32==0) check();
     for(int x=0;x<source->width;++x) {
@@ -494,6 +542,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
       }
       rgba[at+3]=255;
     }
+  }
   }
   if(linear_capture)return; // keep scene-linear values, NOT intermediate YUV
   const uint8_t *rgb_source[] = {rgba.data(),nullptr,nullptr,nullptr};
@@ -747,7 +796,7 @@ AVFrame *prepare_preview_frame(Input &in,const J &recipe) {
   return in.at(target);
 }
 J preview(Engine &engine, const J &recipe) {
-  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");previewBase.erase("secondary");previewBase.erase("mixQ16");
+  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");previewBase.erase("rasterEffects");previewBase.erase("secondary");previewBase.erase("mixQ16");
   keys(previewBase,{"path","time","indexed"});
   const auto transform=transform2d(recipe);
   if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
@@ -765,7 +814,7 @@ J preview(Engine &engine, const J &recipe) {
   Transform2d second_transform;
   int second_opacity=65536,mix=0;
   if(recipe.contains("secondary")){
-    auto base=recipe["secondary"];base.erase("opacityQ16");base.erase("transform2d");keys(base,{"path","time","indexed"});
+    auto base=recipe["secondary"];base.erase("opacityQ16");base.erase("transform2d");base.erase("rasterEffects");keys(base,{"path","time","indexed"});
     second_transform=transform2d(recipe["secondary"]);
     second_opacity=recipe["secondary"].contains("opacityQ16")?integer(recipe["secondary"],"opacityQ16",0,65536):65536;
     mix=integer(recipe,"mixQ16",0,65536);
@@ -936,7 +985,7 @@ J render(Engine &engine, const J &recipe) {
   std::vector<Transform2d> transforms;transforms.reserve(segments.size());
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("secondary");base.erase("mixFramesQ16");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("rasterEffects");base.erase("secondary");base.erase("mixFramesQ16");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
     transforms.push_back(transform2d(segment));
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
@@ -949,7 +998,7 @@ J render(Engine &engine, const J &recipe) {
     }
     Transform2d rt;
     if(segment.contains("secondary")){
-      const auto &right=segment["secondary"];auto rb=right;rb.erase("transform2d");rb.erase("opacityQ16");rb.erase("opacityFramesQ16");keys(rb,{"path","sourceStart","streamIndex"});
+      const auto &right=segment["secondary"];auto rb=right;rb.erase("transform2d");rb.erase("rasterEffects");rb.erase("opacityQ16");rb.erase("opacityFramesQ16");keys(rb,{"path","sourceStart","streamIndex"});
       rt=transform2d(right);integer(right,"streamIndex",0,63);local_file(right.at("path").get<std::string>());
       if(right.contains("opacityQ16"))integer(right,"opacityQ16",0,65536);
       if(right.contains("opacityFramesQ16")){
@@ -1148,6 +1197,7 @@ char *sm_capabilities(void) {
         {"networkAllowed", false},
         {"sourcePreview128", true},
         {"linearDissolveV1", true},
+        {"staticRasterV1", true},
         {"staticTransform2dV1", true},
         {"linearOpacityV1", true},
         {"linearOpacityKeyframesV1", true},

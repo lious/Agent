@@ -1071,12 +1071,14 @@ final class StudioWorkspace {
       });
     } else if (point.opacityQ16 != 65536 ||
         point.transform2d != null ||
+        point.rasterEffects != null ||
         point.secondary != null) {
       pixels = await previewAssetSource(
         point.assetId!,
         point.sourceTime,
         opacityQ16: point.opacityQ16,
         transform2d: point.transform2d,
+        rasterEffects: point.rasterEffects,
         secondary: point.secondary,
         mixQ16: point.mixQ16,
       );
@@ -1142,6 +1144,7 @@ final class StudioWorkspace {
     Q time, {
     int? opacityQ16,
     Map<String, double>? transform2d,
+    Map<String, Map<String, double>>? rasterEffects,
     TimelineVideoPoint? secondary,
     int mixQ16 = 0,
   }) async {
@@ -1152,6 +1155,9 @@ final class StudioWorkspace {
       transform2d = Map.unmodifiable(transform2d);
       validateTransform2d(Map<String, dynamic>.from(transform2d));
     }
+    if (rasterEffects != null) {
+      rasterEffects = captureRasterEffects(rasterEffects);
+    }
     final project = current, epoch = ++_previewEpoch;
     _previewMedia?.cancel();
     final asset = (project.toJson()['assets'] as List).singleWhere(
@@ -1161,7 +1167,11 @@ final class StudioWorkspace {
     final hash = asset['originalBlobHash'] as String;
     Map<String, dynamic>? otherAsset;
     Map<String, double>? otherTransform;
+    Map<String, Map<String, double>>? otherRaster;
     if (secondary != null) {
+      if (secondary.rasterEffects != null) {
+        otherRaster = captureRasterEffects(secondary.rasterEffects!);
+      }
       if (mixQ16 < 0 ||
           mixQ16 > 65536 ||
           secondary.isGap ||
@@ -1190,12 +1200,14 @@ final class StudioWorkspace {
       'preview': 'source-rgba128-1',
       'opacity-linear709-v1-q16': ?opacityQ16,
       'static-transform2d-linear709-v1': ?transform2d,
+      'static-raster-linear709-v1': ?rasterEffects,
       if (secondary != null)
         'dissolve-v1': {
           'blob': otherAsset!['originalBlobHash'],
           'time': secondary.sourceTime.toJson(),
           'opacityQ16': secondary.opacityQ16,
           'transform2d': otherTransform,
+          'rasterEffects': otherRaster,
           'mixQ16': mixQ16,
         },
     });
@@ -1233,6 +1245,7 @@ final class StudioWorkspace {
           'indexed': true,
           'opacityQ16': secondary.opacityQ16,
           'transform2d': ?otherTransform,
+          'rasterEffects': ?otherRaster,
         };
       }
       final frame = SourcePreviewFrame(
@@ -1241,6 +1254,7 @@ final class StudioWorkspace {
           time,
           opacityQ16: opacityQ16,
           transform2d: transform2d,
+          rasterEffects: rasterEffects,
           secondary: rightRecipe,
           mixQ16: mixQ16,
         ),
@@ -1294,6 +1308,7 @@ final class StudioWorkspace {
       point.sourceTime,
       opacityQ16: point.opacityQ16 == 65536 ? null : point.opacityQ16,
       transform2d: point.transform2d,
+      rasterEffects: point.rasterEffects,
       secondary: point.secondary,
       mixQ16: point.mixQ16,
     );
@@ -1340,7 +1355,43 @@ final class StudioWorkspace {
     );
   }
 
+  ProjectDocument setClipCrop(
+    String clipId,
+    Map<String, double> parameters, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['staticRasterV1'] != true) {
+      throw const StudioException('RASTER_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetClipCrop(clipId, parameters),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  ProjectDocument setClipColorBasic(
+    String clipId,
+    Map<String, double> parameters, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['staticRasterV1'] != true) {
+      throw const StudioException('RASTER_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetClipColorBasic(clipId, parameters),
+      expectedRevision: expectedRevision,
+    );
+  }
+
   void _requireTransformAdapter(ProjectDocument document) {
+    if ((document.toJson()['effects'] as List).any(
+          (e) => e['type'] == 'crop' || e['type'] == 'colorBasic',
+        ) &&
+        _media?.capabilities['staticRasterV1'] != true) {
+      throw const StudioException('RASTER_ADAPTER_UNAVAILABLE');
+    }
     if ((document.toJson()['transitions'] as List).isNotEmpty &&
         _media?.capabilities['linearDissolveV1'] != true) {
       throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
@@ -1672,7 +1723,10 @@ final class StudioWorkspace {
               Map<String, dynamic>.from(clip as Map),
             );
             final transform = clipTransform2d(definition, clip);
-            if (opacity == 65536 && transform == null) continue;
+            final raster = clipRasterEffects(definition, clip);
+            if (opacity == 65536 && transform == null && raster == null) {
+              continue;
+            }
             final asset = (definition['assets'] as List).singleWhere(
               (a) => a['id'] == clip['source']['id'],
             );
@@ -1681,6 +1735,7 @@ final class StudioWorkspace {
                 'asset': asset['id'],
                 'opacity': opacity,
                 'transform': transform,
+                'raster': raster,
               }),
             )) {
               continue;
@@ -1697,6 +1752,7 @@ final class StudioWorkspace {
               Q.fromJson(clip['sourceRange']['start']),
               opacityQ16: opacity,
               transform2d: transform,
+              rasterEffects: raster,
             );
             check();
           }
@@ -1730,12 +1786,15 @@ final class StudioWorkspace {
             point.sourceTime,
             opacityQ16: point.opacityQ16,
             transform2d: point.transform2d,
+            rasterEffects: point.rasterEffects,
             secondary: {
               'path': other.absolute.path,
               'time': right.sourceTime.toJson(),
               'indexed': true,
               'opacityQ16': right.opacityQ16,
               if (right.transform2d != null) 'transform2d': right.transform2d,
+              if (right.rasterEffects != null)
+                'rasterEffects': right.rasterEffects,
             },
             mixQ16: point.mixQ16,
           );

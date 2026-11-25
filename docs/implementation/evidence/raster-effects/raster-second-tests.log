@@ -1,0 +1,49 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":548886,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/raster_effect_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/raster_effect_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":2,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":512}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":514}
+{"test":{"id":3,"name":"strict crop/colour bounds, finite values and captured parameter ownership","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":515}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":532}
+{"test":{"id":4,"name":"static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":533}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":690}
+{"test":{"id":5,"name":"split clone ownership and slip preserve source-space crop/colour; two-leg encoder recipes carry both","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":138,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":691}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":729}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_sdk/test/raster_render_test.dart"},"type":"suite","time":734}
+{"test":{"id":7,"name":"loading packages/studio_sdk/test/raster_render_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":734}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":922}
+{"group":{"id":8,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":923}
+{"test":{"id":9,"name":"REAL source crop coverage, colour order/late clamp, single inverse/SQL rollback, two-leg effects→MP4/archive/fork/admission/reopen","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":23,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/raster_render_test.dart"},"type":"testStart","time":923}
+[libx264 @ 0x7fb78001a340] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7fb78001a340] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7fb78001a340] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7fb78001a340] frame I:3     Avg QP:12.14  size:   417
+[libx264 @ 0x7fb78001a340] frame P:57    Avg QP:21.81  size:    79
+[libx264 @ 0x7fb78001a340] mb I  I16..4: 66.7%  0.0% 33.3%
+[libx264 @ 0x7fb78001a340] mb P  I16..4: 12.1%  0.0%  1.6%  P16..4: 15.1%  1.2%  0.2%  0.0%  0.0%    skip:69.7%
+[libx264 @ 0x7fb78001a340] coded y,uvDC,uvAC intra: 11.3% 0.0% 0.0% inter: 10.9% 0.0% 0.0%
+[libx264 @ 0x7fb78001a340] i16 v,h,dc,p: 76% 20%  4%  0%
+[libx264 @ 0x7fb78001a340] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 45% 23% 24%  1%  0%  0%  4%  2%  0%
+[libx264 @ 0x7fb78001a340] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7fb78001a340] Weighted P-Frames: Y:43.9% UV:0.0%
+[libx264 @ 0x7fb78001a340] kb/s:23.07
+[libx264 @ 0x7fb780079400] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7fb780079400] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7fb780079400] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7fb780079400] frame I:3     Avg QP:12.14  size:   417
+[libx264 @ 0x7fb780079400] frame P:57    Avg QP:21.81  size:    79
+[libx264 @ 0x7fb780079400] mb I  I16..4: 66.7%  0.0% 33.3%
+[libx264 @ 0x7fb780079400] mb P  I16..4: 12.1%  0.0%  1.6%  P16..4: 15.1%  1.2%  0.2%  0.0%  0.0%    skip:69.7%
+[libx264 @ 0x7fb780079400] coded y,uvDC,uvAC intra: 11.3% 0.0% 0.0% inter: 10.9% 0.0% 0.0%
+[libx264 @ 0x7fb780079400] i16 v,h,dc,p: 76% 20%  4%  0%
+[libx264 @ 0x7fb780079400] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 45% 23% 24%  1%  0%  0%  4%  2%  0%
+[libx264 @ 0x7fb780079400] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7fb780079400] Weighted P-Frames: Y:43.9% UV:0.0%
+[libx264 @ 0x7fb780079400] kb/s:23.07
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3534}
+{"test":{"id":10,"name":"REAL coloured-source luma/saturation golden keeps negative and >1 intermediates until final transfer","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":225,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/raster_render_test.dart"},"type":"testStart","time":3536}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3687}
+{"test":{"id":11,"name":"REAL malformed raster primary/secondary reject before creating encoder output","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":282,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/raster_render_test.dart"},"type":"testStart","time":3689}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3703}
+{"success":true,"type":"done","time":3708}

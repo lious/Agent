@@ -15,6 +15,7 @@ final class TimelineVideoPoint {
     this.transform2d,
     this.secondary,
     this.mixQ16 = 0,
+    this.rasterEffects,
   ]);
   final String clipId;
   final String? assetId, sourceVersion;
@@ -23,6 +24,7 @@ final class TimelineVideoPoint {
   final TimelineVideoPoint? secondary;
   final int mixQ16;
   final Map<String, double>? transform2d;
+  final Map<String, Map<String, double>>? rasterEffects;
   bool get isGap => assetId == null;
 }
 
@@ -125,6 +127,7 @@ final class TimelineVideoGraph {
           .toInt(),
       'sourceStart': Q.fromJson(clip['sourceRange']['start']).toJson(),
       'transform2d': ?clipTransform2d(_document, clip),
+      'rasterEffects': ?clipRasterEffects(_document, clip),
       'streamIndex': streamIndex,
       if ((clip['effectIds'] as List).isNotEmpty &&
           (_document['effects'] as List).any(
@@ -164,6 +167,9 @@ final class TimelineVideoGraph {
       time - Q.fromJson(c['timelineRange']['start']),
     ),
     clipTransform2d(_document, c),
+    null,
+    0,
+    clipRasterEffects(_document, c),
   );
 
   /// Split only at delivery-grid boundaries; composite intervals have at most2
@@ -204,6 +210,7 @@ final class TimelineVideoGraph {
         'streamIndex': base['streamIndex'],
         'sourceStart': p.sourceTime.toJson(),
         if (p.transform2d != null) 'transform2d': p.transform2d,
+        if (p.rasterEffects != null) 'rasterEffects': p.rasterEffects,
         if (values.every((v) => v == values.first))
           'opacityQ16': values.first
         else
@@ -271,6 +278,7 @@ final class TimelineVideoGraph {
           a.transform2d,
           b,
           dissolveMixQ16(time - begin, length),
+          a.rasterEffects,
         );
       }
     }
@@ -292,6 +300,9 @@ final class TimelineVideoGraph {
             (time - start) * Q.fromJson(c['timeMap']['rate']),
         clipOpacityQ16(_document, c, time - start),
         clipTransform2d(_document, c),
+        null,
+        0,
+        clipRasterEffects(_document, c),
       );
     }
     return TimelineVideoPoint('gap', null, null, Q.of(0));

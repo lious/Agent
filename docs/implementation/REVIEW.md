@@ -860,3 +860,12 @@ the historical intermittent underrun. Full original tasks remain partial.
 第二负例初稿也被原TIMELINE_SCALING_UNSUPPORTED在helper预先采纳时拦截，日志保留。这说明既有早期门禁有效；不为达到后门禁而绕开它。改为只读收集完整真实资源，分别调用实际native source previews和joint preview证明“缩图均可显示但全源组合拒绝”，正式采纳继续断言更早的原graph拒绝、当前root/ImportMap和保全归档不变。
 
 最终负例的native preview返回Map而不是SDK frame类，初稿`.width`被analyzer拒绝；改真实`['width']`断言，保留失败，不增加不存在API/不改生产门禁。后续定向native admission与既有resource-admission测试实际通过，再冻结并重新运行所选矩阵。
+
+
+## increment1.18 — Crop / ColorBasic 真实消费者（三轮实审修正）
+
+1. **原合同/准入/事务审查**：逐条核对原 s4 CropParams/ColorBasic、canonical 操作次序、静态参数范围、未知/disabled/animated 语义与 split 所有权。复用现有 SetClipTransform 的不可变命令和 SQLite 版本/fence 路径，抽成 static visual helper，仅对已准入已知列表插入排序，不重排导入数据。crop 的 source-normalized 边界与 half-open texel-area coverage 在 ADR0025 明确，不能把 CPU 栅格选择称 GPU 已匹配。首轮 analyzer 的16条风格信息保留，按实际 Dart fix/format 修正而非关闭规则。
+2. **真实像素/生命周期审查**：检查共享全源 native 节点每腿 crop→transform→color→opacity、最后 dissolve。保留 coverage 内 straight-linear 调色/重新premultiply，完全透明区域不能被 contrast 点亮；signed/over1中间值不能在每腿/曝光阶段 clip。补半像素面积、contrast0/EV+2 后降contrast、超1白腿叠黑不应先clip、实际红源 saturation/luma 的独立参考及真实 preencoder 样本。保留旧 identity 路径、两decoder/内存/每32行取消、std::exchange 修复与旧三种取消mode，新增独立两腿不同crop/color的实际 active raster_cancel，普通/ASan分别验。
+3. **UI/缓存/资格/失败原子性审查**：真实7个输入控制器→原命令→preview/单次undo/save/fork/MP4；SDK验证SQL后段trigger失败不发布、stale revision拒绝、归档fork/重开及真实native资源采纳。发现 qualifiedNodes去重键若漏 raster 会复用错误资格，补入完整 raster；公开异步preview首个await前深捕获，实际调用后马上修改外部map仍不改变像素。测试初稿的动画fixture缺 `easing:null`，可能只证明Schema拒绝；改成先真实构造合法ProjectDocument，再断言精确 RASTER_ANIMATION_NOT_IMPLEMENTED 和不剥离keyframes。native12个主/副腿恶意recipe实际创建输出前拒绝，不能只靠领域validator声称安全。最终冻结后重跑所选矩阵，早期仅定向成功不混算，结果/未跑项另列；未更改Pulse队列、timeout或旧失败断言。
+
+最终冻结资格的真实失败：serial矩阵新增raster_clock首次play等待服务确认sample>4800时已interrupted/underrun1（presented2877、submitted5168、ring8192/8192、maxWorkerLoopGap2425us、serviceLatency25894us），抛于line116，尚未执行该测试line127的timeline-render/seek像素断言。早期同案例单独定向通过不是本冻结端到端成功；保留完整非零log，不改队列/timeout/阈值、不刷绿。本轮旧opacity_clock通过也不消除00c2e5d已记录失败。根因未定位，不能据该日志猜测是crop像素负载或声卡性能。最终233所选中232过1失败；其他实际像素/UI/归档/取消资格与失败分列。

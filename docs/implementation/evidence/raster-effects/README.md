@@ -1,0 +1,12 @@
+# increment1.18 frozen-source crop/color evidence
+
+`summary.json` records exact12 production/test SHA256s and native library/binary hashes. The containing git commit is the freeze identity; base00c2e5d is **not** claimed to contain these changes. No source changes after the selected run began; subsequent changes are documentation/evidence only.
+
+- Current233 cases:232 pass/1 fail/0 skipped, not full repository/all87 acceptance.
+-208 domain/store/nativeSDK,13 native Flutter widget/FFI flows,5 actual Chrome resource/inspector pass. Browser tests are not native raster or RTC qualification.
+-7 private Pulse cases:6 pass, **new raster_clock startup underrun fails**, before first explicit renderTimelineFromAudioClock. Early isolated pass is separate pre-freeze evidence, not substituted. Prior00c2e5d224/1 is retained at../dissolve/summary.json; current opacity_clock pass is not a fix.
+-CTest3, actual old-library SQL barrier/SIGKILL/reopen, and800 active cancels (4 modes×regular/sanitized×100) separately successful. Not800 Dart/App tests or GPU/internal codec leak proof.
+
+`commands.json` records actual argv/cwd/environment/exit/elapsed for every final command; final logs and independent legacy report are retained. `run_selected.py` is the exact orchestrator used (all groups run serially, including Pulse), and `write_evidence.py` generates hashes/counts without permitting incomplete/source-mismatched input. Paths/toolchains are this approved Linux checkout. To replay, rebuild both existing CMake trees first, prepare STUDIO_TEST_VIDEO as documented in prior local-video acceptance, set the recorded environment, then copy summary.json to artifacts/local-video/raster-source-freeze.json and commands.json to artifacts/local-video/raster-final-runs.json. Clear each copied run exitCode/elapsedSeconds before running run_selected.py; outputs are fresh artifacts, not the committed evidence. Overall selected runner correctly exits nonzero on any failed group. Do not retry a failure simply to obtain green.
+
+Pre-freeze logs are explicitly labeled in summary; first analyzer16 style diagnostics are preserved. Corrected valid unknown-animation fixture tests execution refusal, not merely invalid Schema. See ADR0025 and REVIEW.md increment1.18 for three actual reviews. Original104/87 acceptance/deps unchanged; original87 and XD10 counts remain separate. No deletes outside temporary isolated fixtures, no external uploads, models, paid services or production deployment.

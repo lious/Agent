@@ -285,16 +285,48 @@ final class SetClipTransform extends EditOperation {
   };
 }
 
-ProjectDocument _setTransform(
+final class SetClipCrop extends EditOperation {
+  SetClipCrop(this.clipId, Map<String, double> value)
+    : parameters = Map.unmodifiable(value) {
+    validateStaticRaster('crop', parameters);
+  }
+  final String clipId;
+  final Map<String, double> parameters;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setClipCrop',
+    'clipId': clipId,
+    'parameters': parameters,
+  };
+}
+
+final class SetClipColorBasic extends EditOperation {
+  SetClipColorBasic(this.clipId, Map<String, double> value)
+    : parameters = Map.unmodifiable(value) {
+    validateStaticRaster('colorBasic', parameters);
+  }
+  final String clipId;
+  final Map<String, double> parameters;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setClipColorBasic',
+    'clipId': clipId,
+    'parameters': parameters,
+  };
+}
+
+ProjectDocument _setStaticVisual(
   ProjectDocument before,
-  SetClipTransform op,
+  String clipId,
+  String type,
+  Map<String, double> parameters,
   VersionAllocator version,
   IdAllocator id,
 ) {
   final d = before.toJson(), s = d['sequences'][0];
   for (final t in s['tracks']) {
     for (final c in t['items']) {
-      if (c['id'] != op.clipId || c['source'] == null) continue;
+      if (c['id'] != clipId || c['source'] == null) continue;
       if (t['kind'] != 'video') {
         throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
       }
@@ -312,11 +344,11 @@ ProjectDocument _setTransform(
       final existing = admittedClipEffects(
         d,
         c,
-      ).where((e) => e['type'] == 'transform2d');
+      ).where((e) => e['type'] == type);
       final Map? old = existing.isEmpty ? null : existing.single;
       if (old != null &&
           old['enabled'] == true &&
-          contentHash(old['parameters']) == contentHash(op.parameters)) {
+          contentHash(old['parameters']) == contentHash(parameters)) {
         return before;
       }
       final eid = old?['id'] as String? ?? id();
@@ -324,10 +356,10 @@ ProjectDocument _setTransform(
         'id': eid,
         'version': version(eid),
         'owner': {'kind': 'clip', 'id': c['id']},
-        'type': 'transform2d',
+        'type': type,
         'pluginVersion': '1.0.0',
         'enabled': true,
-        'parameters': op.parameters,
+        'parameters': parameters,
         'keyframes': <dynamic>[],
         'extensions': <String, dynamic>{},
       };
@@ -341,6 +373,17 @@ ProjectDocument _setTransform(
         for (final i in c['effectIds'])
           if (i != eid) i,
       ];
+      (c['effectIds'] as List).sort(
+        (a, b) => visualEffectOrder
+            .indexOf(
+              (d['effects'] as List).singleWhere((e) => e['id'] == a)['type'],
+            )
+            .compareTo(
+              visualEffectOrder.indexOf(
+                (d['effects'] as List).singleWhere((e) => e['id'] == b)['type'],
+              ),
+            ),
+      );
       c['version'] = version(c['id']);
       s['version'] = version(s['id']);
       final result = ProjectDocument.fromJson(d);
@@ -869,7 +912,34 @@ ProjectDocument applyEdit(
     throw const StudioException('TRANSITION_RANGE_EDIT_REQUIRES_REMOVAL');
   }
   if (operation is SetClipTransform) {
-    return _setTransform(before, operation, nextVersion, newId);
+    return _setStaticVisual(
+      before,
+      operation.clipId,
+      'transform2d',
+      operation.parameters,
+      nextVersion,
+      newId,
+    );
+  }
+  if (operation is SetClipCrop) {
+    return _setStaticVisual(
+      before,
+      operation.clipId,
+      'crop',
+      operation.parameters,
+      nextVersion,
+      newId,
+    );
+  }
+  if (operation is SetClipColorBasic) {
+    return _setStaticVisual(
+      before,
+      operation.clipId,
+      'colorBasic',
+      operation.parameters,
+      nextVersion,
+      newId,
+    );
   }
   if (operation is SetClipOpacity) {
     return _setOpacity(before, operation, nextVersion, newId);
@@ -1054,6 +1124,8 @@ ProjectDocument applyEdit(
       throw StateError('persistent audio dispatch');
     case SetDissolve():
     case RemoveDissolve():
+    case SetClipCrop():
+    case SetClipColorBasic():
     case SetClipTransform():
     case SetClipOpacity():
     case SetOpacityKeyframe():

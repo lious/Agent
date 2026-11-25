@@ -186,7 +186,8 @@ List<int> opacityScheduleRangeQ16(
   ];
 }
 
-/// Registered static transform2d@1 and scalar opacity@1 only, in graph order.
+/// Registered crop → transform2d → colorBasic → opacity, in graph order.
+/// Raster and transform nodes are static-only; opacity may have a curve.
 /// Unknown nodes are never skipped, including disabled ones.
 List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
   final result = <Map>[];
@@ -196,13 +197,15 @@ List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
     if (matches.length != 1) throw const StudioException('REF_NOT_FOUND');
     final e = matches.single as Map;
     final type = e['type'];
-    if (!['transform2d', 'opacity'].contains(type) ||
+    if (!visualEffectOrder.contains(type) ||
         !types.add(type as String) ||
         e['pluginVersion'] != '1.0.0' ||
         e['owner']['kind'] != 'clip' ||
         e['owner']['id'] != clip['id'] ||
         (e['extensions'] as Map).isNotEmpty ||
-        (type == 'transform2d' && types.contains('opacity'))) {
+        (result.isNotEmpty &&
+            visualEffectOrder.indexOf(type) <
+                visualEffectOrder.indexOf(result.last['type']))) {
       throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
     }
     if (type == 'transform2d') {
@@ -210,6 +213,15 @@ List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
         throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
       }
       validateTransform2d(Map<String, dynamic>.from(e['parameters'] as Map));
+    }
+    if (type == 'crop' || type == 'colorBasic') {
+      if ((e['keyframes'] as List).isNotEmpty) {
+        throw const StudioException('RASTER_ANIMATION_NOT_IMPLEMENTED');
+      }
+      validateStaticRaster(
+        type,
+        Map<String, dynamic>.from(e['parameters'] as Map),
+      );
     }
     result.add(e);
   }
@@ -268,4 +280,78 @@ Map<String, double>? clipTransform2d(Map<String, dynamic> project, Map clip) {
     return null;
   }
   return p;
+}
+
+const visualEffectOrder = ['crop', 'transform2d', 'colorBasic', 'opacity'];
+const identityCrop = <String, double>{
+  'left': 0,
+  'top': 0,
+  'right': 1,
+  'bottom': 1,
+};
+const identityColorBasic = <String, double>{
+  'exposureStops': 0,
+  'contrast': 1,
+  'saturation': 1,
+};
+void validateStaticRaster(String type, Map<String, dynamic> p) {
+  final expected = switch (type) {
+    'crop' => identityCrop,
+    'colorBasic' => identityColorBasic,
+    _ => throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE'),
+  };
+  if (p.length != expected.length ||
+      !expected.keys.every(p.containsKey) ||
+      p.values.any((v) => v is! num || !v.isFinite)) {
+    throw const StudioException('RASTER_PARAMETERS_UNSUPPORTED');
+  }
+  if (type == 'crop') {
+    if (p.values.any((v) => v < 0 || v > 1) ||
+        p['left'] >= p['right'] ||
+        p['top'] >= p['bottom']) {
+      throw const StudioException('CROP_RANGE');
+    }
+  } else if (p['exposureStops'] < -8 ||
+      p['exposureStops'] > 8 ||
+      p['contrast'] < 0 ||
+      p['contrast'] > 2 ||
+      p['saturation'] < 0 ||
+      p['saturation'] > 2) {
+    throw const StudioException('COLOR_BASIC_RANGE');
+  }
+}
+
+Map<String, Map<String, double>> captureRasterEffects(
+  Map<String, Map<String, double>> value,
+) {
+  if (value.isEmpty ||
+      value.keys.any((k) => k != 'crop' && k != 'colorBasic')) {
+    throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+  }
+  return Map.unmodifiable(
+    value.map((k, v) {
+      validateStaticRaster(k, v);
+      return MapEntry(k, Map<String, double>.unmodifiable(v));
+    }),
+  );
+}
+
+Map<String, Map<String, double>>? clipRasterEffects(
+  Map<String, dynamic> project,
+  Map clip,
+) {
+  final result = <String, Map<String, double>>{};
+  for (final e in admittedClipEffects(project, clip)) {
+    if (!['crop', 'colorBasic'].contains(e['type']) || e['enabled'] == false) {
+      continue;
+    }
+    final p = (e['parameters'] as Map).map(
+      (k, v) => MapEntry(k as String, (v as num).toDouble()),
+    );
+    final defaults = e['type'] == 'crop' ? identityCrop : identityColorBasic;
+    if (defaults.keys.any((k) => p[k] != defaults[k])) {
+      result[e['type'] as String] = p;
+    }
+  }
+  return result.isEmpty ? null : captureRasterEffects(result);
 }

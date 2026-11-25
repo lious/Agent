@@ -136,7 +136,7 @@ int main(int argc, char **argv) {
                 "INVALID_HANDLE");
       }
       std::filesystem::remove_all(root);
-    } else if(test=="opacity_cancel" || test=="transform_cancel" || test=="dissolve_cancel") {
+    } else if(test=="opacity_cancel" || test=="transform_cancel" || test=="dissolve_cancel" || test=="raster_cancel") {
       const auto *source=std::getenv("STUDIO_TEST_VIDEO");require(source && std::filesystem::is_regular_file(source));
       const auto root=std::filesystem::temp_directory_path()/("opacity-cancel-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));std::filesystem::create_directory(root);
       const auto initial=sm_live_owned_frames();
@@ -145,8 +145,12 @@ int main(int argc, char **argv) {
         J recipe={{"outputPath",(root/(std::to_string(i)+".mp4")).string()},{"width",320},{"height",180},{"fps",{{"n",30},{"d",1}}},{"frameCount",120000},{"segments",J::array({{{"path",source},{"startFrame",0},{"frameCount",90},{"sourceStart",{{"n","0"},{"d",1}}},{"streamIndex",0},{"opacityQ16",32768}}})}};
         auto &seg=recipe["segments"][0];seg.erase("opacityQ16");seg["opacityFramesQ16"]=J::array();for(int f=0;f<90;f++)seg["opacityFramesQ16"].push_back(f*65536/89);
         if(test=="transform_cancel")seg["transform2d"]={{"translateX",16},{"translateY",0},{"scaleX",.75},{"scaleY",.75},{"rotationDeg",15},{"anchorX",.5},{"anchorY",.5}};
-        if(test=="dissolve_cancel"){
+        if(test=="dissolve_cancel" || test=="raster_cancel"){
           auto right=seg;right.erase("startFrame");right.erase("frameCount");right["transform2d"]={{"translateX",16},{"translateY",0},{"scaleX",.75},{"scaleY",.75},{"rotationDeg",15},{"anchorX",.5},{"anchorY",.5}};
+          if(test=="raster_cancel"){
+            seg["rasterEffects"]={{"crop",{{"left",.25},{"top",.1},{"right",.9},{"bottom",1}}},{"colorBasic",{{"exposureStops",2},{"contrast",.6},{"saturation",1.5}}}};
+            right["rasterEffects"]={{"crop",{{"left",.1},{"top",0},{"right",.75},{"bottom",.9}}},{"colorBasic",{{"exposureStops",-1},{"contrast",1.2},{"saturation",.5}}}};
+          }
           seg["secondary"]=right;seg["mixFramesQ16"]=J::array();for(int f=0;f<90;f++)seg["mixFramesQ16"].push_back(f*65536/89);
         }
         std::thread work([&]{result=response(sm_export(h,"opacity-cancel",recipe.dump().c_str()));done=true;});

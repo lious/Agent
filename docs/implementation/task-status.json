@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T23:23:25.239198+08:00",
+  "asOf": "2026-11-25T23:43:11.567557+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,9 +12,9 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-008/I-022 useful registered crop/colorBasic or remaining keyframe/luma consumers with true UI/persistent/preview/preencoder/export evidence; I-005 full multi-level undo/coalescing and V-003 GPU gate remain unfinished. No storage/fingerprint detour.",
+    "Original I-005 multi-level undo/redo and atomic proposal inverse/coalescing dependencies; then remaining I-008 registered luma/full registry and I-022 consumers. Crop/color now have real CPU/UI/preencoder/export/archive evidence; not full-task qualification. No storage/fingerprint detour.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
-    "I-023 diagnose retained service clock timeout/underrun and UI AV failures without relaxing bounded queues/fault gates; physical/P0 qualifications remain independent",
+    "I-023 investigate retained startup/resume service clock underrun without changing bounded-queue/fault criteria: current frozen raster_clock interrupted at presented2877/submitted5168 before first explicit renderTimelineFromAudioClock; earlier opacity_clock failure remains unresolved. Physical/P0 qualification independent.",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
     "XD-003 existing managed zero-ICE policy blocker unchanged; no positive RTC retries or relay/policy workaround",
     "Continue same checkout/feature; no per-batch approval waits, no automatic main merge"
@@ -70,7 +70,7 @@
       "implementationStatus": "notApplicableValidationTask",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Linux software offline60s duration/frame-count/AAC synchronization qualification and exact20-point CFR/VFR/nonzero source/proxy PTS/RGBA comparisons. Real confirmed AudioSink-clock/native-UI moving video and paused seek pixels; NOT physical presentation sync or CPU/GPU/preencoder SDR patch<=2/255 qualification. Increment1.14: actual static opacity CPU preview vs encoder-input samples are equal at two colored-video display points;128x72 full-size grayscale matches independent transfer reference<=2/255. No GPU or whole-P0 qualification. Increment1.15: real dynamic opacity and split/reopen encoder-input display samples agree with shared full-source previews, including frame-phase separation from exact source-time query API. This is a bounded Linux CPU reference slice, not the complete60s/VFR/GPU/P0 matrix. Increment1.16 bounded CPU transform white-patch half-pixel linear-coverage/scale/rotation/anchor references and actual same-source encoder-input equality; not full P0/GPU matrix. Increment1.17: actual128x72 white/black two-source linear-light half-blend independently matches transfer reference<=2/255; preview and real preencoder samples agree at window start/cut/last active frame/end, and transform/curve combination and archive/fork/reopen. Not independent60s/VFR/nonzero-PTS/GPU/physical dissolve qualification.",
+      "implementedScope": "Linux software offline60s duration/frame-count/AAC synchronization qualification and exact20-point CFR/VFR/nonzero source/proxy PTS/RGBA comparisons. Real confirmed AudioSink-clock/native-UI moving video and paused seek pixels; NOT physical presentation sync or CPU/GPU/preencoder SDR patch<=2/255 qualification. Increment1.14: actual static opacity CPU preview vs encoder-input samples are equal at two colored-video display points;128x72 full-size grayscale matches independent transfer reference<=2/255. No GPU or whole-P0 qualification. Increment1.15: real dynamic opacity and split/reopen encoder-input display samples agree with shared full-source previews, including frame-phase separation from exact source-time query API. This is a bounded Linux CPU reference slice, not the complete60s/VFR/GPU/P0 matrix. Increment1.16 bounded CPU transform white-patch half-pixel linear-coverage/scale/rotation/anchor references and actual same-source encoder-input equality; not full P0/GPU matrix. Increment1.17: actual128x72 white/black two-source linear-light half-blend independently matches transfer reference<=2/255; preview and real preencoder samples agree at window start/cut/last active frame/end, and transform/curve combination and archive/fork/reopen. Not independent60s/VFR/nonzero-PTS/GPU/physical dissolve qualification. Increment1.18: real128x72 fractional64.5px crop coverage and weighted-luma colored-source exposure/contrast/saturation independent references<=2/255; over1 leg retained through dissolve,4 actual encoder-input samples equal preview after archive/fork/reopen. Not GPU/full60s/VFR/HDR/profile qualification; current raster-clock startup failed and is not counted as presentation pixel proof.",
       "evidence": [
         "evidence/timeline-proxy/verification.json",
         "evidence/timeline-proxy/offline-60s.json",
@@ -78,7 +78,8 @@
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
         "evidence/static-transform/summary.json",
-        "evidence/dissolve/summary.json"
+        "evidence/dissolve/summary.json",
+        "evidence/raster-effects/summary.json"
       ],
       "remainingAcceptance": "60秒视频时长误差≤1交付帧；20点seek误差≤1帧；SDR测试patch最大差≤2/255；失败不能只肉眼放行。",
       "remainingScope": "含有理PTS和SDR参考；不含HDR承诺。",
@@ -637,12 +638,13 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "One registered static clip opacity1.0.0 over black: immutable versions/undo, split owner cloning/audio exclusion, bounded Q16 recipe, actual native linear Rec709 FP32-transfer/RGB8 CPU consumer, real Flutter edit/still preview/save/archive/fork/reopen/export and resource-aware writable admission. Not a complete registry/keyframe/transition/transform implementation. Increment1.15 adds actual clip-local rational hold/linear opacity keys, same project-frame/source mapping, atomic point replace/remove and inverse, split/trim rebase/edge holds/slip semantics, UI/native/export/archive/fork/reopen and actual CPU pixel evidence. Max256 keys; unsupported types remain refused. Not other parameters/transforms/transitions or multi-level undo/coalescing. Increment1.16: static transform2d@1.0.0 seven parameters, exact matrix/pixel-center inverse bilinear linear-light CPU consumer before existing opacity curves; atomic edits, UI uniform/source-center controls, split ownership, source preview/encoder pixels/archive/fork/reopen. Not animated transform/transitions/handles or full registry. Increment1.17: actual VIDEO cross-dissolve for adjacent enabled1x asset clips, exact rational half-open window/source handles(default reject), same-time2-leg graph and linear-light native composition after independent transform/clip-local opacity. Real UI p/q edit/remove, immutable transition/sequence versions, no-op/locks/atomic SQL abort/stale-revision refusal, single inverse(payload+versions except monotonic revision), save/archive typed ImportMap/fork/reopen/native MP4 pixels. Topology edits explicitly remove first; slip revalidates handles. Not equal-power audio/freeze/luma/animated transform/full registry or full original dependency/render qualification.",
+      "implementedScope": "One registered static clip opacity1.0.0 over black: immutable versions/undo, split owner cloning/audio exclusion, bounded Q16 recipe, actual native linear Rec709 FP32-transfer/RGB8 CPU consumer, real Flutter edit/still preview/save/archive/fork/reopen/export and resource-aware writable admission. Not a complete registry/keyframe/transition/transform implementation. Increment1.15 adds actual clip-local rational hold/linear opacity keys, same project-frame/source mapping, atomic point replace/remove and inverse, split/trim rebase/edge holds/slip semantics, UI/native/export/archive/fork/reopen and actual CPU pixel evidence. Max256 keys; unsupported types remain refused. Not other parameters/transforms/transitions or multi-level undo/coalescing. Increment1.16: static transform2d@1.0.0 seven parameters, exact matrix/pixel-center inverse bilinear linear-light CPU consumer before existing opacity curves; atomic edits, UI uniform/source-center controls, split ownership, source preview/encoder pixels/archive/fork/reopen. Not animated transform/transitions/handles or full registry. Increment1.17: actual VIDEO cross-dissolve for adjacent enabled1x asset clips, exact rational half-open window/source handles(default reject), same-time2-leg graph and linear-light native composition after independent transform/clip-local opacity. Real UI p/q edit/remove, immutable transition/sequence versions, no-op/locks/atomic SQL abort/stale-revision refusal, single inverse(payload+versions except monotonic revision), save/archive typed ImportMap/fork/reopen/native MP4 pixels. Topology edits explicitly remove first; slip revalidates handles. Not equal-power audio/freeze/luma/animated transform/full registry or full original dependency/render qualification. Increment1.18: actual static source-normalized crop and linear709 colorBasic(exposure→contrast→saturation), canonical crop/transform/color/opacity/dissolve ordering, immutable owned versions/noop/locks/split/source-time semantics, UI editing and single inverse, real full-source preview/preencoder/MP4 and archive/fork/reopen/native-qualified adoption. Animated/unknown/reversed nodes refuse without stripping. New service-clock integration is wired but final raster_clock startup underrun failed before its pixel checks; not certified. Not luma/full registry or I-005/render hard-dependency closure.",
       "evidence": [
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
         "evidence/static-transform/summary.json",
-        "evidence/dissolve/summary.json"
+        "evidence/dissolve/summary.json",
+        "evidence/raster-effects/summary.json"
       ],
       "remainingAcceptance": "缺handles拒；未知技术UNSUPPORTED_EDIT_TECHNIQUE；关键帧边界连续；一次提案原子undo恢复hash。",
       "remainingScope": "含基础变换/透明度/叠化/注册luma；不默认未注册插件或高级调色。",
@@ -945,13 +947,14 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Immutable single-admitted-track exact rational TimelineVideoGraph shared by service-clock preview selection and actual original-file export recipe. Real Linux Flutter UI decodes/adopts/disposes derived RGBA frames with single-flight/backpressure, bounded image decode deadline/late disposal, hash/revision/native epoch/SDK playback-generation fences, gap handling and visible skipped/stale/late counters. Initial graph subset alone did NOT qualify full effects/GPU/texture leases, V003 pixels or cancellation; subsequent bounded CPU qualifications follow below. Increment1.14 adds a real shared full-source static opacity CPU consumer and bounded actual pre-avcodec_send_frame YUV420 display samples; same-revision preview vs encoder input, real UI/export/archive/admission tested. Encoder-frame make_writable/COW and RAII retained, not GPU FrameLease qualification. Increment1.15 actual per-frame Q16 schedule from the shared Dart evaluator; actual paused-service-clock curve pixels, split/reopen encoder samples;100 active scheduled-opacity cancellations with application-owned AVFrame/FD accounting and separate ASan/UBSan. Fixed real decoder cancellation double-free by ownership exchange before throwing decode. Not full GPU/third-party internal lease qualification. Increment1.16 shared full-source transform CPU node, finite inverse bounds, transparent-border coverage over black, strict pre-output native validation/capability/cache key and active transform+curve cancellation qualification recorded separately. Not GPU/FP16/full frame leases. Increment1.17: shared full-source2-input dissolve node, rational/Q16 common preview/encoder recipe, independently effected legs, bounded allocations/strict mix schedules and actual private AudioSink-confirmed-sample clock. Actual128x72 independent linear-light reference and four preview/preencoder samples, effect-combination/archive/fork/reopen proof; two-source+transform/curve active-cancel mode separately retained alongside original two modes. CPU FP32/RGB8 over black only, not GPU/FP16/full leases.",
+      "implementedScope": "Immutable single-admitted-track exact rational TimelineVideoGraph shared by service-clock preview selection and actual original-file export recipe. Real Linux Flutter UI decodes/adopts/disposes derived RGBA frames with single-flight/backpressure, bounded image decode deadline/late disposal, hash/revision/native epoch/SDK playback-generation fences, gap handling and visible skipped/stale/late counters. Initial graph subset alone did NOT qualify full effects/GPU/texture leases, V003 pixels or cancellation; subsequent bounded CPU qualifications follow below. Increment1.14 adds a real shared full-source static opacity CPU consumer and bounded actual pre-avcodec_send_frame YUV420 display samples; same-revision preview vs encoder input, real UI/export/archive/admission tested. Encoder-frame make_writable/COW and RAII retained, not GPU FrameLease qualification. Increment1.15 actual per-frame Q16 schedule from the shared Dart evaluator; actual paused-service-clock curve pixels, split/reopen encoder samples;100 active scheduled-opacity cancellations with application-owned AVFrame/FD accounting and separate ASan/UBSan. Fixed real decoder cancellation double-free by ownership exchange before throwing decode. Not full GPU/third-party internal lease qualification. Increment1.16 shared full-source transform CPU node, finite inverse bounds, transparent-border coverage over black, strict pre-output native validation/capability/cache key and active transform+curve cancellation qualification recorded separately. Not GPU/FP16/full frame leases. Increment1.17: shared full-source2-input dissolve node, rational/Q16 common preview/encoder recipe, independently effected legs, bounded allocations/strict mix schedules and actual private AudioSink-confirmed-sample clock. Actual128x72 independent linear-light reference and four preview/preencoder samples, effect-combination/archive/fork/reopen proof; two-source+transform/curve active-cancel mode separately retained alongside original two modes. CPU FP32/RGB8 over black only, not GPU/FP16/full leases. Increment1.18: shared native full-source fractional-area crop/transform/premultiplied-linear color/opacity/dissolve consumer with no intermediate clipping before final SDR transfer. Actual encoder-input equality at4 samples, independent CPU white/red references<=2/255, immutable async captures/cache/admission keys,12 native hostile main/secondary recipes refused before output. Fourth actual active raster_cancel mode regular+ASan100 each, total4 modes/800 iterations in current freeze; not GPU/full texture leases. Current new raster-clock startup qualification FAILED; UI/still/offline export passes are separate.",
       "evidence": [
         "evidence/timeline-proxy/summary.json",
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
         "evidence/static-transform/summary.json",
-        "evidence/dissolve/summary.json"
+        "evidence/dissolve/summary.json",
+        "evidence/raster-effects/summary.json"
       ],
       "remainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
       "remainingScope": "含CPU参考/本端GPU节点/preview-export共图；不截图预览导出。",
@@ -977,7 +980,8 @@
         "evidence/audio-aac/summary.json",
         "evidence/persistent-audio/summary.json",
         "evidence/audio-sink/summary.json",
-        "evidence/dissolve/summary.json"
+        "evidence/dissolve/summary.json",
+        "evidence/raster-effects/summary.json"
       ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",
@@ -986,7 +990,7 @@
         "I-015"
       ],
       "blockers": [],
-      "remainingImplementation": "Actual software-service audio-only audition now exists, but full upstream AudioClip/link/route/DSP semantics, timeline video RenderGraph and60s PRESENTED AV sync, PipeWire/P0/physical device clocks and non-Linux adapters remain unqualified. Earlier offline60s file sync is not presentation latency."
+      "remainingImplementation": "Actual software-service audio-only audition now exists, but full upstream AudioClip/link/route/DSP semantics, timeline video RenderGraph and60s PRESENTED AV sync, PipeWire/P0/physical device clocks and non-Linux adapters remain unqualified. Earlier offline60s file sync is not presentation latency. Increment1.18 frozen raster_clock first-play service underrun at presented2877, before its explicit timeline render; current old opacity_clock pass does not resolve previous failure. Final Pulse group6pass/1fail, no retry/timeout/queue relaxation."
     },
     {
       "id": "I-024",
@@ -1677,5 +1681,5 @@
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
   },
-  "iterationBaseCommit": "6a2b21c27062cdacdebe5e8360f3cf9c6816f4eb"
+  "iterationBaseCommit": "00c2e5d4b6e93d71ff3b19d8ddf5d30f95fdd77d"
 }

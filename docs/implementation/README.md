@@ -869,3 +869,16 @@ Native编辑器可实际操作：导入≥3秒的SDR/CFR素材→选VIDEO、`Pos
 [精确源码/二进制hash、命令、逐case结果、非零失败和前一冻结](evidence/dissolve/summary.json)。前一冻结224项与最新225项分开，旧216/209不混算。显式ResourcePreservation采纳先真实执行已启用transform和joint窗口样本，再原子发布fork；不只是capability flag。实际SQL后段abort/stale revision/双leg不可变闭包、typed effect/transition ImportMap、归档fork/reopen、坏尺寸门禁均有证据；原件/pins/历史/旧hash不重写，无真实资料清理。
 
 原87保持**0 complete/26 partial/48 planned/13 blocked**；XD10保持**0/8/1/1**。I-008/I-022仍缺registered luma/全registry、I-005多级undo和完整V-003/GPU硬门禁，不以本子集改写原验收。原104不改；旧writer共写、单级inverse、非Linux/物理多端/物理声画同步与RTC既有策略阻塞仍保留。后续回原I-008/I-022有用的registered crop/colorBasic消费者及原I-005/I-023缺口，不扩存储指纹旁支。
+
+
+## increment1.18 — 可持久的 Crop / ColorBasic，真实原件像素链
+
+Native编辑器导入受支持SDR/CFR视频→点选VIDEO→填写 `crop-left/top/right/bottom`（源归一化，默认0/0/1/1）→`Apply persisted crop (static CPU)`。例如left=.25裁掉源左四分之一但不改变画布尺寸；填写 `color-exposureStops`、`color-contrast`、`color-saturation`→`Apply persisted colorBasic (static CPU)`。随后沿原timeline-effect预览、单次Undo、保存、关闭重开、归档fork和MP4导出。可与已有静态transform、clip-local opacity曲线及带真实handles的VIDEO dissolve组合；两个leg有各自参数。UI真实点击测试覆盖crop/color+dissolve路径，非identity transform/opacity组合的像素/归档/导出由实际SDK测试另验，不用测试名称代替操作证据。
+
+共享原件全尺寸C++节点次序 **crop→transform→colorBasic→opacity→dissolve**；源像素边界half-open面积coverage、premultiplied线性采样、线性709曝光→.18对比→加权亮度饱和度，只在最终SDR输出clamp。preview和真实encoder-input同图；identity保持旧bypass，不滤RGBA128代理。原数学范围/顺序/边界及未指定亚像素coverage的明确CPU选择见[ADR0025](../adr/0025-static-crop-colorbasic-cpu-consumers.md)。crop/color动画、逆序/未知/资源型未实现节点仍只读保全、拒绝执行，不剥离语义。需重编译现有native库；旧库没有staticRasterV1会明确拒绝，不假装支持。
+
+本冻结生产/测试源码实际所选**233项：232通过、1失败、0跳过**：208领域/SQLite/nativeSDK、13实际FFI UI、5实际Chrome资源/Inspector全过；7真实私有Pulse服务中6过1失败。失败为新增 `raster_clock_test` 在首次play等待>4800服务确认samples时underrun（presented2877、submitted5168、ring8192/8192、maxWorkerLoopGap2425us），尚未到该测试的renderTimelineFromAudioClock/暂停seek像素断言；**不能称本冻结新增clock端到端通过**。其早期单独定向通过另存，不借用；原00c2e5d的224过1 opacity_clock失败也保留。本轮opacity_clock虽过，不是修复，未改队列/timeout/断言、未重试刷绿。
+
+另CTest3项、真实旧库/SQL barrier/SIGKILL重开成功；opacity、transform+curve、dissolve+transform/curve、新独立双腿crop/color四种active取消各普通/ASan100轮，共**800轮**，每轮自有AVFrame回baseline、各运行FD delta0，ASan/UBSan leak检测开启，无suppression。不表示codec/GPU内部全生命周期资格。真实12个主/副腿恶意recipe在创建输出前拒绝，SQL后段abort/stale revision、独立半像素/颜色参考≤2/255、四个实际编码前样本、归档fork/重开/资源采纳等通过；三轮实审和早期风格失败保留。[精确冻结hash/命令/所有结果与限制](evidence/raster-effects/summary.json)。非全仓/全87验收，非旧225/216/209混算。
+
+原87仍**0 complete/26 partial/48 planned/13 blocked**，XD10仍**0/8/1/1**。原104、验收和硬依赖未改。I-008仍缺注册luma/完整registry及I-005硬前置；I-022/V-003仍缺全GPU/FP16/纹理lease与完整profile。黑底opaque SDR CPU/FP32+RGB8、同尺寸单轨1x限制继续；物理同步/稳定帧率/其他平台/物理跨设备未验，RTC策略不重试绕过，Schema9旧writer共写与单级inverse限制保留。下一批回原I-005多级undo/redo与有界原子提案逆操作，或I-023已保留的startup/resume服务故障，不继续扩存储指纹旁支。

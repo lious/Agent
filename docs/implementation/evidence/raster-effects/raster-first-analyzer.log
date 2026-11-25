@@ -1,0 +1,20 @@
+Analyzing agent-foundation-20261125...
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:925:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/edit_algebra.dart:934:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:218:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:304:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:309:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:324:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:340:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_document/lib/effect_registry.dart:346:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_editor_ui/lib/studio_editor_ui.dart:729:21 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_media/lib/studio_media.dart:119:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1159:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1172:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1363:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1377:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1389:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • packages/studio_sdk/lib/studio_sdk.dart:1723:15 • curly_braces_in_flow_control_structures
+
+16 issues found. (ran in 2.9s)

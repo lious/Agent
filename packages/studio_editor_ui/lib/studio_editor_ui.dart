@@ -69,6 +69,12 @@ class _FoundationAppState extends State<FoundationApp>
   final _ty = TextEditingController(text: '0');
   final _scale = TextEditingController(text: '1');
   final _rotation = TextEditingController(text: '0');
+  final _rasterInputs = <String, TextEditingController>{
+    for (final e in identityCrop.entries)
+      'crop-${e.key}': TextEditingController(text: '${e.value}'),
+    for (final e in identityColorBasic.entries)
+      'color-${e.key}': TextEditingController(text: '${e.value}'),
+  };
   final _opacity = TextEditingController(text: '0.5');
   final _opacityFrame = TextEditingController(text: '0');
   bool _opacityHold = false;
@@ -411,6 +417,9 @@ class _FoundationAppState extends State<FoundationApp>
     _ty.dispose();
     _scale.dispose();
     _rotation.dispose();
+    for (final c in _rasterInputs.values) {
+      c.dispose();
+    }
     _opacity.dispose();
     _opacityFrame.dispose();
     _inspectionPath.dispose();
@@ -452,7 +461,7 @@ class _FoundationAppState extends State<FoundationApp>
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Clip-local hold/linear opacity over black (linear Rec.709 CPU); Static transform2d before opacity; bilinear linear-light CPU over black. Other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 gate. Explicit RGBA128 timeline preview uses confirmed audio-service clock, not physical AV qualification. Clip-local hold/linear opacity over black (linear Rec.709 CPU); Source crop → static transform2d → colorBasic → opacity; bilinear linear-light CPU over black. Other effects unsupported. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
@@ -697,6 +706,46 @@ class _FoundationAppState extends State<FoundationApp>
             }),
       child: const Text('Apply persisted transform (static, bilinear CPU)'),
     ),
+    const Text(
+      'Crop: original-source normalized edges, half-open pixel-area coverage; no canvas resize. Colour: linear709 exposure → contrast → saturation before opacity/dissolve.',
+    ),
+    for (final e in _rasterInputs.entries) _path(e.key, e.key, e.value),
+    for (final type in ['crop', 'colorBasic'])
+      OutlinedButton(
+        key: Key('apply-$type'),
+        onPressed: _busy || _selected == null
+            ? null
+            : () => _act(() {
+                final defaults = type == 'crop'
+                    ? identityCrop
+                    : identityColorBasic;
+                final params = <String, double>{};
+                for (final k in defaults.keys) {
+                  final value = double.tryParse(
+                    _rasterInputs['${type == 'crop' ? 'crop' : 'color'}-$k']!
+                        .text,
+                  );
+                  if (value == null || !value.isFinite) {
+                    throw const StudioException(
+                      'RASTER_PARAMETERS_UNSUPPORTED',
+                    );
+                  }
+                  params[k] = value;
+                }
+                return type == 'crop'
+                    ? widget.workspace.setClipCrop(
+                        _selected!,
+                        params,
+                        expectedRevision: _project.revision,
+                      )
+                    : widget.workspace.setClipColorBasic(
+                        _selected!,
+                        params,
+                        expectedRevision: _project.revision,
+                      );
+              }),
+        child: Text('Apply persisted $type (static CPU)'),
+      ),
     _path(
       'clip-opacity-value',
       'Selected VIDEO opacity [0,1], linear Rec.709 over black',

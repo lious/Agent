@@ -105,6 +105,7 @@ final class NativeMedia {
     bool indexed = true,
     int? opacityQ16,
     Map<String, double>? transform2d,
+    Map<String, Map<String, double>>? rasterEffects,
     Map<String, dynamic>? secondary,
     int mixQ16 = 0,
   }) {
@@ -113,6 +114,9 @@ final class NativeMedia {
     }
     if (secondary != null && capabilities['linearDissolveV1'] != true) {
       throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
+    }
+    if (rasterEffects != null && capabilities['staticRasterV1'] != true) {
+      throw const StudioException('RASTER_ADAPTER_UNAVAILABLE');
     }
     if (transform2d != null && capabilities['staticTransform2dV1'] != true) {
       throw const StudioException('TRANSFORM_ADAPTER_UNAVAILABLE');
@@ -130,6 +134,7 @@ final class NativeMedia {
       'indexed': indexed,
       'opacityQ16': ?opacityQ16,
       'transform2d': ?transform2d,
+      'rasterEffects': ?rasterEffects,
       'secondary': ?secondary,
       if (secondary != null) 'mixQ16': mixQ16,
     });
