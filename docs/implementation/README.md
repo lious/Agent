@@ -696,3 +696,39 @@ SQLite增量至v8，旧1–7校验和与3.54.1严格runtime门禁不变。未重
 本冻结源码实际73个store/SDK＋5个native UI＝**78个定向测试通过，0跳过**；
 analyzer、10个修改Dart文件格式检查通过。新增6 store＋1 SDK＋1 UI case，内部SIGKILL等
 实验不重复计数。旧182/70不是此SHA全量证据；完整迁移矩阵/release/Chrome/音频压力未重跑。
+
+
+## Increment1.10 — 非代理资源只读保全实际文件路径
+
+Native App展开 **Preserve project resources (READ-ONLY, no render)**：
+显式选择Project JSON → 查看缺失字节/角色/未知闭包诊断 → 逐个显式选择声明资源文件
+（实际SHA256匹配，不按文件名猜测）→ 确认本机收集 → 新路径保存JSON或资源ZIP →
+重新打开ZIP → 注册的媒体/图层/字体子集fork → 再显式保存。
+
+这是**独立只读文件视图，不是可写工程导入，不切换当前工程，也不写SQLite/CAS**。
+原件、历史/命名pins、namespace ownership/预算和会话fence保持不变。
+JSON1MiB、单资源64MiB、收集总量128MiB；归档沿用既有容器/路径/hash校验。
+输出使用Linux同目录no-clobber原子发布，现有文件绝不覆盖；空间unknown/ENOSPC
+和跨平台未验证。实际两进程同时准备并发布同一新目标仅一个成功。
+
+目前可枚举/诊断并保全字体、效果/图层mask、imageDocument源与声明Blob；
+**字节hash/size一致不等于格式/字体可用、许可证真实或render可执行**，报告始终明确
+格式未验证和执行不支持，不把ZIP写完称selfContained。
+未知LUT/library/plugin扩展保留opaque，阻止假完整归档/猜测ID重映射；可保存元数据JSON。
+模型只保留引用不下载。字体embedAllowed/licenseRef事实显示为风险，不伪造授权。
+
+只读fork已按注册字段重映射媒体/stream/sequence/track/clip/rights/font/layer/effect引用；
+未知扩展、历史定义、story等不支持的fork profile拒绝。完整ImportMap/SQLite采纳、
+字体/图像/LUT格式资格及渲染、library walkers仍未完成，原整任务不因此标complete。
+详见[ADR0017](../adr/0017-readonly-resource-preservation.md)和
+[evidence](evidence/resource-preservation/summary.json)。Web仅验证纯图闭包/只读Inspector，
+不是Web文件保全功能，更不是跨物理设备资格；RTC网络阻塞未重测或绕过。
+
+Freeze evidence: **152 selected cases passed** (142 native SDK/store/domain +6
+actual native widgets +4 actual offline Chrome graph/inspector),0 failed/skipped,
+plus clean analyzer. Seven are new cases, not152 new features. Exact commands,
+source SHA256, versions and retained failure logs: [resource evidence](evidence/resource-preservation/summary.json).
+Not a whole-repository/full182 rerun; release/native ABI/full migration/audio
+stress/non-Linux/physical-device checks were not rerun. Intermittent service
+AudioSink underrun remains unresolved. Original87:0 complete/25 partial/49
+planned/13 blocked; XD10:0 complete/8 partial/1 planned/1 blocked.

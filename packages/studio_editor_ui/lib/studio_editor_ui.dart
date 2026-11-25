@@ -1,3 +1,4 @@
+import 'resource_preservation_panel.dart';
 import 'project_inspector.dart';
 
 import 'package:studio_peer_ui/studio_peer_ui.dart';
@@ -1541,6 +1542,9 @@ class _FoundationAppState extends State<FoundationApp>
                       decoration: const InputDecoration(
                         labelText: 'Explicit local project JSON path (inspection only)',
                       ),
+                    ),
+                    ResourcePreservationPanel(
+                      targetNamespace: widget.workspace.current.namespace,
                     ),
                     ProjectInspectorPanel(
                       loadSelectedBytes: _readInspectionFile,

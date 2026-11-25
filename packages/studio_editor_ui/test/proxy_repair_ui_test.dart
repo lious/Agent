@@ -108,6 +108,7 @@ void main() {
       expect(find.byKey(const Key('error')), findsNothing);
       expect(rawBytesHash(raw.readAsBytesSync()), ref['blobHash']);
       expect(w.current.hash, before.hash);
+      await locate('confirm-repair-proxy');
       expect(
         tester
             .widget<CheckboxListTile>(

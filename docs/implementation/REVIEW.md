@@ -683,3 +683,46 @@ Initial UI/analyzer failures retained; interpolation/lint development issues fix
 before final run. No old182 reuse, whole-repo/release/Chrome/audio stress or full
 historic migration matrix qualification. Runtime gate unchanged; intermittent
 underrun unresolved. Full age-window/resource-history pruning remains unfinished.
+
+
+## Increment1.10 — three actual review/correction rounds
+
+1. Read exact s5/s5a/s5d and generated Font/Blob/Effect/Layer/RetainedSource fields.
+   Core has no LUT/library first-class schema: did NOT guess vendor hash strings
+   or claim closure from an opaque object. Registered core references report
+   missing-declaration vs missing-byte vs role/opaque issues. Format/notRun and
+   render=false remain distinct. Kept strict default editor/archive admission;
+   preservation is a separate read-only file view, with NO new DB/CAS subsystem.
+2. Actual first SDK tests found missing typed track.sequenceId/clip.trackId fork
+   backlinks and an invalid test extension key. Fixed typed parents; source hash,
+   external license/model IDs and literal text are not generically replaced.
+   Reviewed archive refactor and corrected default CAS reads to bound streaming
+   to remaining expanded budget before accumulation. Existing size-error contract
+   retained; font/generated manifest groups reflected. Added mature link(2)
+   no-clobber publication and actual prepared TWO-PROCESS winner/loser experiment,
+   cancel/stale-consent/symlink/existing-output checks; only own stages removed.
+3. Actual UI tests initially could not find fixture from package cwd; fixed test
+   fixture root from explicit synthetic video env. Old repair regression later
+   searched a lazily evicted checkbox after scrolling; retained actual failure,
+   explicitly locate checkbox again and still assert its false value/raw CAS
+   restoration/unchanged revision. No assertion/qualification gate weakened.
+   New UI actual load/collect/consent/archive/reopen/fork proves active head/CAS
+   inventory unchanged. Reviewed disposal cancellation, private byte copies, source
+   change limits and confirmation invalidation. Native/source/font/PNG, separate
+   process reopen, domain/history/quota/repair regressions and offline actual
+   Chrome pure-core boundary are final evidence; no RTC positive test rerun.
+
+Final frozen-source command counts/source hashes are in resource-preservation/
+summary.json. Initial SDK/UI failures retained. No old182 result or audio-stress/
+release/full migration matrix/physical multi-device completion is borrowed.
+Intermittent audio underrun remains unresolved; rich writable import/render and
+full registered library/retained-definition closure remain explicit next scope.
+
+Final process-barrier review: the initial two-process test exposed a TEST harness
+error, not a publication success: opening `/dev/stdout` with File flush requested
+fsync on a pipe (EINVAL), and a multi-byte parent signal could hit broken-pipe
+after child exit. Retained both failed broad-run logs. Corrected the worker to
+Dart stdout.writeln + await stdout.flush and an explicitly checked one-byte async
+stdin barrier; included child stderr/exit codes in assertion diagnostics. Then
+reran the complete selected freeze, rather than borrowing the earlier141 pass.
+Production link(2) publication/error requirements were not relaxed.

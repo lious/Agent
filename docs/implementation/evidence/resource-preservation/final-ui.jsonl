@@ -1,0 +1,39 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":387800,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart"},"type":"suite","time":6}
+{"test":{"id":3,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"suite":{"id":4,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart"},"type":"suite","time":7}
+{"test":{"id":5,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":6,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart"},"type":"suite","time":7}
+{"test":{"id":7,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":6,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4706}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":4708}
+{"test":{"id":9,"name":"REAL UI resource JSON load/collect/confirm/archive/reopen/fork leaves editable workspace and CAS unchanged","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart"},"type":"testStart","time":4708}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4710}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":4710}
+{"test":{"id":11,"name":"REAL UI explicit retention configuration/dry-run/confirmation removes only reviewed recovery indexes","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart"},"type":"testStart","time":4711}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4712}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":4713}
+{"test":{"id":13,"name":"REAL UI explicit storage policy applies byte cap and rejects over-budget import without deleting data","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart"},"type":"testStart","time":4713}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4948}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":4948}
+{"test":{"id":15,"name":"REAL UI selected source-qualified repair restores corrupt CAS without changing project revision","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart"},"type":"testStart","time":4949}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7123}
+{"suite":{"id":16,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart"},"type":"suite","time":7179}
+{"test":{"id":17,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart","suiteID":16,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7179}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7403}
+{"suite":{"id":18,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart"},"type":"suite","time":7425}
+{"test":{"id":19,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart","suiteID":18,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7425}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7963}
+{"testID":17,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":7996}
+{"group":{"id":20,"suiteID":16,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":7996}
+{"test":{"id":21,"name":"REAL UI explicit selected proxy consent detaches references, resets consent and undo restores metadata","suiteID":16,"groupIDs":[20],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart"},"type":"testStart","time":7997}
+{"testID":19,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":8196}
+{"group":{"id":22,"suiteID":18,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":8196}
+{"test":{"id":23,"name":"real SQLite title save, validation, undo and reopen in Flutter widget","suiteID":18,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart"},"type":"testStart","time":8196}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":8628}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":9543}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10565}
+{"success":true,"type":"done","time":10601}

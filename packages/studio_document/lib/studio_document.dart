@@ -1,3 +1,4 @@
+export 'resource_closure.dart';
 export 'preview_proxy.dart';
 export 'timeline_graph.dart';
 

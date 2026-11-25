@@ -13,7 +13,12 @@ import 'atomic_file.dart';
 import 'blob_store.dart';
 
 final class VerifiedArchive {
-  VerifiedArchive(this.project, this.originals);
+  VerifiedArchive(
+    this.project,
+    this.originals, {
+    this.preservationOnly = false,
+  });
+  final bool preservationOnly;
   final ProjectDocument project;
   final Map<String, Uint8List> originals;
 }
@@ -41,25 +46,66 @@ final class ProjectArchive {
     }
   }
 
-  Future<void> prepare(
+  Future<void> prepare(ProjectDocument project, BlobStore blobs, File stage) =>
+      _prepare(project, stage, (blob, remaining) async {
+        final file = await blobs.resolve(blob['hash'] as String);
+        final builder = BytesBuilder(copy: false);
+        var size = 0;
+        await for (final chunk in file.openRead()) {
+          size += chunk.length;
+          if (size > remaining) throw const StudioException('ARCHIVE_LIMIT');
+          builder.add(chunk);
+        }
+        return builder.takeBytes();
+      }, preservationOnly: false);
+
+  Future<void> preparePreservation(
     ProjectDocument project,
-    BlobStore blobs,
+    Map<String, Uint8List> resources,
     File stage,
-  ) async {
-    requireLocalEditingWritable(project);
+  ) => _prepare(project, stage, (blob, remaining) async {
+    final data = resources[blob['hash']];
+    if (data == null) throw const StudioException('RESOURCE_BYTES_MISSING');
+    return data;
+  }, preservationOnly: true);
+
+  Future<void> _prepare(
+    ProjectDocument project,
+    File stage,
+    Future<Uint8List> Function(Map<String, dynamic>, int) load, {
+    required bool preservationOnly,
+  }) async {
+    if (!preservationOnly) {
+      requireLocalEditingWritable(project);
+    } else {
+      final issues = projectResourceClosure(project)['issues'] as List;
+      if (issues.isNotEmpty) {
+        throw StudioException(
+          issues.first['code'] as String,
+          issues.first['path'] as String,
+        );
+      }
+    }
     final files = <String, Uint8List>{};
     final snapshot = utf8.encode(project.canonicalJson),
         snapshotPath = 'snapshots/${project.hash.substring(7)}.json';
     files[snapshotPath] = Uint8List.fromList(snapshot);
     var size = snapshot.length;
     for (final blob in project.toJson()['blobs'] as List) {
-      final file = await blobs.resolve(blob['hash'] as String);
-      if (file.lengthSync() != int.parse(blob['bytes'] as String)) {
+      final data = await load(
+        Map<String, dynamic>.from(blob),
+        maxExpandedBytes - size,
+      );
+      if (data.length.toString() != blob['bytes']) {
         throw const StudioException('BLOB_SIZE_MISMATCH');
       }
-      size += file.lengthSync();
+      if (rawBytesHash(data) != blob['hash']) {
+        throw const StudioException('BLOB_HASH_MISMATCH');
+      }
+
+      size += data.length;
       if (size > maxExpandedBytes) throw const StudioException('ARCHIVE_LIMIT');
-      files[blob['packagePath'] as String] = await file.readAsBytes();
+      files[blob['packagePath'] as String] = data;
     }
     final manifest = {
       'format': 'studio-project',
@@ -74,6 +120,14 @@ final class ProjectArchive {
       'packMode': 'embedded',
       'includedGroups': [
         'originals',
+        if (preservationOnly &&
+            (project.toJson()['blobs'] as List).any(
+              (b) => b['role'] == 'generated',
+            ))
+          'generated',
+        if (preservationOnly &&
+            (project.toJson()['blobs'] as List).any((b) => b['role'] == 'font'))
+          'fonts',
         if ((project.toJson()['blobs'] as List).any(
           (b) => b['role'] == 'proxy',
         ))
@@ -113,12 +167,13 @@ final class ProjectArchive {
     }
     verifyBytes(
       bytes,
+      preservationOnly: preservationOnly,
     ); // Validate the complete archive, not just the pre-ZIP maps.
     stage.createSync(exclusive: true);
     stage.writeAsBytesSync(bytes, flush: true);
   }
 
-  VerifiedArchive open(File file) {
+  VerifiedArchive open(File file, {bool preservationOnly = false}) {
     if (FileSystemEntity.typeSync(file.path, followLinks: false) !=
         FileSystemEntityType.file) {
       throw const StudioException('LOCAL_FILE_REQUIRED');
@@ -126,10 +181,16 @@ final class ProjectArchive {
     if (file.lengthSync() > maxArchiveBytes) {
       throw const StudioException('ARCHIVE_LIMIT');
     }
-    return verifyBytes(file.readAsBytesSync());
+    return verifyBytes(
+      file.readAsBytesSync(),
+      preservationOnly: preservationOnly,
+    );
   }
 
-  VerifiedArchive verifyBytes(List<int> bytes) {
+  VerifiedArchive verifyBytes(
+    List<int> bytes, {
+    bool preservationOnly = false,
+  }) {
     if (bytes.length > maxArchiveBytes) {
       throw const StudioException('ARCHIVE_LIMIT');
     }
@@ -267,7 +328,9 @@ final class ProjectArchive {
         throw const StudioException('MANIFEST_SCHEMA');
       }
       final project = ProjectDocument.fromJson(jsonFile(path));
-      requireLocalEditingWritable(project);
+      if (!preservationOnly) {
+        requireLocalEditingWritable(project);
+      }
       if (project.hash != manifest['snapshotHash'] ||
           path != 'snapshots/${project.hash.substring(7)}.json' ||
           project.projectId != manifest['projectId'] ||
@@ -279,6 +342,16 @@ final class ProjectArchive {
       if (contentHash(manifest['includedGroups']) !=
           contentHash([
             'originals',
+            if (preservationOnly &&
+                (project.toJson()['blobs'] as List).any(
+                  (b) => b['role'] == 'generated',
+                ))
+              'generated',
+            if (preservationOnly &&
+                (project.toJson()['blobs'] as List).any(
+                  (b) => b['role'] == 'font',
+                ))
+              'fonts',
             if ((project.toJson()['blobs'] as List).any(
               (b) => b['role'] == 'proxy',
             ))
@@ -304,17 +377,23 @@ final class ProjectArchive {
           !files.keys.every(expected.contains)) {
         throw const StudioException('ARCHIVE_UNDECLARED_ENTRY');
       }
-      for (final a in project.toJson()['assets']) {
-        for (final p in a['proxyRefs']) {
-          validateProxyResourceBytes(
-            a,
-            p,
-            originals[p['ptsMapBlobHash']]!,
-            originals[p['blobHash']]!,
-          );
+      if (!preservationOnly) {
+        for (final a in project.toJson()['assets']) {
+          for (final p in a['proxyRefs']) {
+            validateProxyResourceBytes(
+              a,
+              p,
+              originals[p['ptsMapBlobHash']]!,
+              originals[p['blobHash']]!,
+            );
+          }
         }
       }
-      return VerifiedArchive(project, Map.unmodifiable(originals));
+      return VerifiedArchive(
+        project,
+        Map.unmodifiable(originals),
+        preservationOnly: preservationOnly,
+      );
     } on StudioException {
       rethrow;
     } on ArchiveException {

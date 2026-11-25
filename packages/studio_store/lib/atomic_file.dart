@@ -54,6 +54,44 @@ final class AtomicFilePublisher {
     _syncParent(destination);
   }
 
+  /// Linux same-directory no-clobber publication. link(2) atomically refuses an
+  /// existing target, unlike rename(2); only our staging name is then removed.
+  void publishNew(File stage, File destination) {
+    stagingFor(destination);
+    if (stage.absolute.parent.path != destination.absolute.parent.path ||
+        FileSystemEntity.typeSync(stage.path, followLinks: false) !=
+            FileSystemEntityType.file) {
+      throw const StudioException('INVALID_STAGING_FILE');
+    }
+    if (FileSystemEntity.typeSync(destination.path, followLinks: false) !=
+        FileSystemEntityType.notFound) {
+      throw const StudioException('OUTPUT_ALREADY_EXISTS');
+    }
+    final handle = stage.openSync(mode: FileMode.append);
+    try {
+      handle.flushSync();
+    } finally {
+      handle.closeSync();
+    }
+    final link = DynamicLibrary.process()
+        .lookupFunction<
+          Int32 Function(Pointer<Utf8>, Pointer<Utf8>),
+          int Function(Pointer<Utf8>, Pointer<Utf8>)
+        >('link');
+    final from = stage.absolute.path.toNativeUtf8(),
+        to = destination.absolute.path.toNativeUtf8();
+    try {
+      if (link(from, to) != 0) {
+        throw const StudioException('OUTPUT_NOT_PUBLISHED');
+      }
+    } finally {
+      malloc.free(from);
+      malloc.free(to);
+    }
+    stage.deleteSync();
+    _syncParent(destination);
+  }
+
   void syncPublished(File destination) {
     stagingFor(destination);
     final handle = destination.openSync(mode: FileMode.append);

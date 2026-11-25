@@ -1,0 +1,111 @@
+{
+  "asOf": "2026-11-25T19:46:12.249976+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "26689036f8bde42ac393a473d138faff75013137",
+  "freezeIdentity": "Exact modified/new Dart source SHA256 below; tests ran before commit; documentation-only updates follow. No prior182/full-repo result borrowed.",
+  "sourceSha256": {
+    "apps/studio_web/test/resource_closure_test.dart": "7e3d6ca4878e6b529538bf99f71a3b3d0537d76a797620220e1485140508371a",
+    "packages/studio_document/lib/resource_closure.dart": "6a16e1131b5a1f618238afb26a86e8d21bac3bf3432ee9c650534c5c239d511f",
+    "packages/studio_editor_ui/lib/resource_preservation_panel.dart": "a982047fa5f7383170f08c8daf8bafdeecfb02a9e05a0f1f292c6e8509b823a4",
+    "packages/studio_editor_ui/test/resource_preservation_ui_test.dart": "e053f535aee3cfb91f073880622e2d259bae112e6abf02d050d3339fb0a196be",
+    "packages/studio_sdk/lib/resource_preservation.dart": "29cebe88804e50d5f3771feef19ad052ea6735ba28ac749b781633758eff6bea",
+    "packages/studio_sdk/test/resource_fixture.dart": "c51248b7df5db22de84cd817f6774577dce4c83fafda533f951af7afaadbbc5d",
+    "packages/studio_sdk/test/resource_preservation_test.dart": "fa2ef85f7a9f2cbf14d62fbf53c50db32618b25753af51f4b00cde6433a3cadc",
+    "packages/studio_sdk/tool/resource_preservation_probe.dart": "ee5918c13b36d0c630a2ba8c5523352456c414530e3b2bbee713a113658fab5b",
+    "packages/studio_sdk/tool/resource_publish_worker.dart": "f99464eebd6361106e3e504456b8fe1adc7c19d2edffdf5204da8ed30f2865e8",
+    "packages/studio_document/lib/studio_document.dart": "afdda70d270e6ba64e138d0c9cee0592a932bd9dbfc587e68a3c7a02a92f1290",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "5749965e701b330448223913efd4fb1d287c032e4817400ef1d1046a8942aa50",
+    "packages/studio_editor_ui/test/proxy_repair_ui_test.dart": "ac65dddd7beb6c7bd139511939b3f13690a9f8a1fa8b0698283bb1b6aad0de66",
+    "packages/studio_sdk/lib/studio_sdk.dart": "d038b92c90dfa069e914df3c7d1a180887bd8fd23a4cf7bb5337abd06c2704d2",
+    "packages/studio_store/lib/atomic_file.dart": "4c8e01c7416b6ed6fbca4cb3bb2ea5cf0adbb4c76fb14a4f7bd2a78f5ac94025",
+    "packages/studio_store/lib/project_archive.dart": "639e4fbdc0f4c8ae20d6d2ecb76348d898ae8a5f0ce70f9d7eb4c6578cbebebb"
+  },
+  "analyzer": "No issues found",
+  "results": {
+    "regression": {
+      "passed": 142,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-regression.jsonl",
+      "rawLogSha256": "6bc946003435925402a8ce12a3520e59596380ec38eae673850d63597e927981"
+    },
+    "ui": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-ui.jsonl",
+      "rawLogSha256": "2b95d569f1669b497cdfffe0eb9614e34abf64cecf2bf0767bd8ee84dbc5494e"
+    },
+    "chrome": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-chrome.jsonl",
+      "rawLogSha256": "e851521379f18ca8a44ddf201daa2a9c95ff9621fef5d3748db858c93ef7bc53"
+    }
+  },
+  "totalPassed": 152,
+  "newCases": {
+    "sdk": 5,
+    "nativeWidget": 1,
+    "offlineChromeGraph": 1
+  },
+  "tools": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "sqliteSharedRuntime": "3.54.1",
+    "chrome": "156.0.8078.47",
+    "nativeMedia": "existing approved FFmpeg7.1.5 library, unchanged"
+  },
+  "environment": {
+    "PATH": "/workspace/toolchains/flutter/bin:$PATH",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4",
+    "CHROME_EXECUTABLE": "/workspace/toolchains/browser/chrome-test (existing unchanged)"
+  },
+  "commands": {
+    "analyzer": "flutter analyze",
+    "regression": "dart test packages/studio_sdk/test/resource_preservation_test.dart packages/studio_sdk/test/checkpoint_retention_test.dart packages/studio_sdk/test/namespace_budget_test.dart packages/studio_sdk/test/proxy_repair_test.dart packages/studio_sdk/test/proxy_discard_test.dart packages/studio_sdk/test/durable_proxy_test.dart packages/studio_sdk/test/save_test.dart packages/studio_store/test packages/studio_document/test --concurrency=2 --reporter=json",
+    "ui": "cd packages/studio_editor_ui && flutter test test/resource_preservation_ui_test.dart test/checkpoint_retention_ui_test.dart test/namespace_budget_ui_test.dart test/proxy_repair_ui_test.dart test/proxy_discard_ui_test.dart test/foundation_app_test.dart --reporter=json",
+    "chrome": "cd apps/studio_web && flutter test --platform chrome test/resource_closure_test.dart test/inspector_test.dart --reporter=json"
+  },
+  "userPath": "Native separate READ-ONLY file view: JSON -> classify declared resources -> explicit source/font/mask grants -> consent-bound collect/archive -> separate-process reopen -> registered-ID readonly fork -> new output. Active SQLite/CAS inventory unchanged.",
+  "scope": [
+    "Pure-Dart explicit core resource-reference graph; missing declarations/bytes/role/opaque diagnostics; unknown library/LUT preserved as opaque",
+    "Actual hash+size collection of official SDK Roboto font, synthetic PNG and existing synthetic MP4; no format/render certification",
+    "Default writable/editor archive admission unchanged; no migration/storage-system expansion; all output publication no-clobber",
+    "Actual two-process ready-barrier link(2) publication race, one winner and one expected refusal; separate-process archive reopen; cancellation/stale consent/existing/symlink/size/unrelated data refusal",
+    "All selected store/domain plus existing namespace/history/repair/discard/durable-proxy/save regressions passed"
+  ],
+  "limitations": [
+    "Not writable SQLite import, full resource closure, persistent ImportMap, format qualification or font/mask/LUT rendering",
+    "Unknown extension/LUT/library or unqualified retained-definition closure blocks complete packaging/fork; metadata preserved readonly",
+    "No Web native-file preservation, physical multi-device or nonLinux validation; no RTC retry or policy/relay changes",
+    "No whole-repository/full182, release/CTest/ABI, full historical migration matrix/old-runtime probe or audio-stress/P0 rerun; selected store migration tests did run",
+    "Intermittent real AudioSink underrun unresolved; best-effort software video is not physical AV synchronization",
+    "No full volume reservation/ENOSPC/crash-mid-publication qualification; per-file/collection/expanded caps and atomic no-clobber only; own crash staging residues may need explicit manual review",
+    "SQLite CLI absent at guessed root; actual approved shared library version was directly verified and strict Dart gate/store tests ran"
+  ],
+  "preservedFailures": [
+    "initial-sdk-failure.jsonl",
+    "initial-ui-fixture-failure.jsonl",
+    "initial-ui-regression-failure.jsonl",
+    "initial-publish-barrier-failure.jsonl",
+    "initial-publish-one-byte-failure.jsonl"
+  ],
+  "taskCounts": {
+    "original87": {
+      "complete": 0,
+      "partial": 25,
+      "planned": 49,
+      "blocked": 13
+    },
+    "separateXD10": {
+      "complete": 0,
+      "partial": 8,
+      "planned": 1,
+      "blocked": 1
+    }
+  }
+}

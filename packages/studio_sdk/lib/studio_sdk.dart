@@ -1,3 +1,5 @@
+export 'resource_preservation.dart';
+
 import 'package:studio_store/proxy_resources.dart';
 
 import 'frame_proxy.dart';
