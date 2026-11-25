@@ -1,0 +1,6 @@
+Analyzing agent-foundation-20261125...
+
+  error • The getter 'width' isn't defined for the type 'Map<String, dynamic>'. Try importing the library that defines 'width', correcting the name to the name of an existing getter, or defining a getter or field named 'width' • packages/studio_sdk/test/dissolve_render_test.dart:321:62 • undefined_getter
+  error • The getter 'width' isn't defined for the type 'Map<String, dynamic>'. Try importing the library that defines 'width', correcting the name to the name of an existing getter, or defining a getter or field named 'width' • packages/studio_sdk/test/dissolve_render_test.dart:322:62 • undefined_getter
+
+2 issues found. (ran in 1.6s)

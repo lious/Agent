@@ -845,3 +845,18 @@ the historical intermittent underrun. Full original tasks remain partial.
 1. **原s4/s7a语义与版本审查**：检查M乘法次序、画布像素/源归一anchor、Y向下正旋转、像素中心/越界transparent和linear双线性。实现完整七个静态参数；明确UI uniform/source-center子集；拒未实现动画/未知节点/重复和逆序节点。改原opacity-only的single-effect假设为有序transform→opacity，set/remove关键帧和静态opacity不会覆盖transform；split owner复制、trim/slip关键帧域裁切继续原合同。domain逐90帧对比和锁/noop/坏输入覆盖，未增存储协议。
 2. **native/资源/安全审查**：共享全源像素节点先transform后opacity，输出前严格recipe校验，capability显式门禁、缓存含完整transform、identity真bypass。逆矩阵有限范围/越界先判再转int；两个有界RGBA8 buffers、每32行epoch检查、原总帧门禁保留。review后把transform解析移到segment编译阶段，identity只判断一次；保留std::exchange反双释放修复及原opacity100取消，再新增transform+curve100活动取消；普通及ASan/UBSan分别测，不误称codec/GPU内部资格。
 3. **实际用户路径与反例审查**：真实FFI UI编辑/预览/undo/save/fork/export；独立白图半像素coverage线性reference、非等比缩放/90°旋转/anchor/平移/identity、真实编码前像素、SQL重开/归档fork/split和服务确认clock。初稿SDK expectedRevision错用String被analyzer拒绝、测试无效cast被发现并修正；white fixture只有容器色标而无实际transfer/primaries，生产门禁正确拒绝，补与既有golden相同setparams后通过，不放宽颜色或像素门槛。再次审查发现公开preview可持有调用者可变map，cache key与await后recipe可能分离，补首个await前不可变捕获/参数验证，并加调用后立即改map的真实像素回归；增加非等比缩放golden。首次最终矩阵记录一条UI大括号style失败，另新增取消mode分派未匹配导致unknown test（不是取消通过或资源故障），两类失败均保留；修正分派并实际运行后重新冻结。最终所有选择测试按新冻结源单独记录；原underrun/旧writer/平台限制不消除。
+
+
+## increment1.17 — VIDEO dissolve / source handles（三轮实审及修正）
+
+1. **原时域/编辑/历史审查**：核对s4窗口[b-p,b+q)、源handles、linear-light混合和s5 Transition；仅开1x/linear/reject，原语义校验保留。共同图按project/source同一时间求两条腿，opacity在handle范围hold端值；split/trim/move/roll/slide保守要求显式移除，slip重新验handles，不静默丢transition。真实set命令最初被DEFINITION_PROFILE_UNQUALIFIED拒绝，补同一已执行子集的Sequence依赖闭包，保留无转场旧指纹。下一实测DEFINITION_HISTORY_UNQUALIFIED揭露legacy kind已有`transitions`，改用原kind而非新建singular store键/迁移；两次失败保留。
+2. **真实像素/生命周期审查**：逐腿先transform/opacity，再捕获FP32 linear RGB混合，最后一次RGB8→YUV420，不混display缩图/YUV。只两个解码Input、维度/颜色/整数mix schedule/帧数严格验、每32行取消；保留std::exchange所有权修复。初稿range helper绕过旧schedule大小检查，补公开range及独立graph编译前120000上限并加坏count测试。保留旧两种100取消，新增实际双源/transform/curve模式；不能用mock计数或准备阶段cancel充数，也不说GPU/codec内部已instrument。
+3. **UI/归档/失败原子性审查**：真实FFI UI设置p/q→预览→单次undo→保存/fork/MP4；实际软件AudioSink sample48000选择两个effected leg并比timeline同帧，不拿wall clock推视频。真实archive fork报REF_NOT_FOUND，修既有typed ImportMap的transition/effect owned IDs及两clip端点/effectIds，不清空effects。加fork ID不复用/关闭重开像素相等、真实SQLite late events trigger abort（仅fixture）、版本行数/当前根回滚、stale revision、双leg sequence指纹闭包与无效复用拒绝；单次undo除单调revision外payload hash精确恢复。修UI旧“No AudioSink yet”误导文本，明确video不加audio fade。测试初稿用了不存在guard名称被analyzer拒绝，按现有verifyDefinitionTransition修复，失败保留。最终源码冻结后再独立跑所选矩阵，不混用旧216/209；不消除既有underrun/旧writer/物理与GPU缺口。
+
+补充收口审查：第一轮冻结矩阵实际复现旧opacity_clock的service underrun，保留完整非零日志，不改队列/timeout/断言，不以新dissolve-clock通过宣称已修复。随后检查资源感知可写采纳，发现既有资格循环只探opacity、遗漏transform以及两源联合作用；补真实transform参数和真实window中点双源native probe（仍共用既有图/64节点界限），在事务发布前检查epoch/当前root。新增实际160×90右源：单源解码成功而joint CPU consumer拒绝DISSOLVE_SOURCE_MISMATCH，验证不选中新fork、不改当前ImportMap/原归档；正向受支持双源+效果完整采纳后关闭重开再编码。纯capability或两个独立缩图均不是双源消费者资格。本次补充后重新冻结，前一冻结结果保留为前一版本，不混计为最新全通过。
+
+负例初稿YUV444在既有单源preview格式门禁已被拒绝，尚未达到joint probe；保留PREVIEW_PIXEL_FORMAT_UNSUPPORTED日志，不修改门禁。改实际128×72/160×90两个SDR源，各自可真实生成相同128×72显示缩图，但原件尺寸不兼容；实际全源joint消费者拒绝；正式采纳则保持原graph更早拒绝，不绕门禁，避免“两个缩图可显示就可组合”的假资格。
+
+第二负例初稿也被原TIMELINE_SCALING_UNSUPPORTED在helper预先采纳时拦截，日志保留。这说明既有早期门禁有效；不为达到后门禁而绕开它。改为只读收集完整真实资源，分别调用实际native source previews和joint preview证明“缩图均可显示但全源组合拒绝”，正式采纳继续断言更早的原graph拒绝、当前root/ImportMap和保全归档不变。
+
+最终负例的native preview返回Map而不是SDK frame类，初稿`.width`被analyzer拒绝；改真实`['width']`断言，保留失败，不增加不存在API/不改生产门禁。后续定向native admission与既有resource-admission测试实际通过，再冻结并重新运行所选矩阵。

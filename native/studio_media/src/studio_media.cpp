@@ -399,7 +399,7 @@ Transform2d transform2d(const J &recipe) {
 // timeline preview and the actual encoder frame. FP32 reference, not GPU FP16.
 void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
                           SwsContext *&scaler,
-                          const std::function<void()> &check, const Transform2d &transform = {}) {
+                          const std::function<void()> &check, const Transform2d &transform = {}, std::vector<float> *linear_capture=nullptr) {
   const bool transformed=!transform.identity();
   ok(av_frame_make_writable(dst));
   if (!source) {
@@ -418,7 +418,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
     throw Error("COLOR_POLICY_REQUIRED");
   if (opacity < 0 || opacity > 65536) throw Error("OPACITY_RANGE");
   const int *cs = sws_getCoefficients(SWS_CS_ITU709);
-  if (opacity == 65536 && !transformed) {
+  if (opacity == 65536 && !transformed && !linear_capture) {
     scaler = sws_getCachedContext(scaler, source->width, source->height,
       static_cast<AVPixelFormat>(source->format), dst->width, dst->height,
       AV_PIX_FMT_YUV420P, SWS_BILINEAR, nullptr, nullptr, nullptr);
@@ -445,6 +445,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
   const int rgb_stride[] = {source->width*4,0,0,0};
   if(sws_scale(to_rgb.get(),source->data,source->linesize,0,source->height,rgb_data,rgb_stride)!=source->height)
     throw Error("SCALING_FAILED");
+  if(linear_capture)linear_capture->assign(static_cast<size_t>(source->width)*source->height*3,0.f);
   std::array<float,256> linear_lut{};
   std::array<uint8_t,256> lut{};
   auto encode=[](float linear){const float v=linear<.018f?4.5f*linear:1.099f*std::pow(linear,.45f)-.099f;return static_cast<uint8_t>(std::clamp(std::lround(v*255.f),0L,255L));};
@@ -467,7 +468,7 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
     for(int x=0;x<source->width;++x) {
       const size_t at=(static_cast<size_t>(y)*source->width+x)*4;
       if(!transformed) {
-        for(int c=0;c<3;++c)rgba[at+c]=lut[rgba[at+c]];
+        for(int c=0;c<3;++c){if(linear_capture)(*linear_capture)[at/4*3+c]=linear_lut[rgba[at+c]]*(opacity/65536.f);rgba[at+c]=lut[rgba[at+c]];}
       } else {
         const double dx=x+.5-transform.tx-ax,dy=y+.5-transform.ty-ay;
         const double u=(cosine*dx+sine*dy)/transform.sx+ax-.5;
@@ -485,16 +486,48 @@ void render_opacity_frame(AVFrame *dst, AVFrame *source, int opacity,
               if(px>=0 && py>=0 && px<source->width && py<source->height)
                 value+=linear_lut[input[(static_cast<size_t>(py)*source->width+px)*4+c]]*(i?fx:1-fx)*(j?fy:1-fy);
             }
-            rgba[at+c]=encode(static_cast<float>(value)*(opacity/65536.f));
+            const float linear=static_cast<float>(value)*(opacity/65536.f);
+            if(linear_capture)(*linear_capture)[at/4*3+c]=linear;
+            rgba[at+c]=encode(linear);
           }
         }
       }
       rgba[at+3]=255;
     }
   }
+  if(linear_capture)return; // keep scene-linear values, NOT intermediate YUV
   const uint8_t *rgb_source[] = {rgba.data(),nullptr,nullptr,nullptr};
   if(sws_scale(to_yuv.get(),rgb_source,rgb_stride,0,source->height,dst->data,dst->linesize)!=dst->height)
     throw Error("SCALING_FAILED");
+}
+// Scene-linear cross dissolve AFTER each leg's transform/opacity. Exactly2
+// live decode legs and2 bounded float-RGB buffers; never blend display RGBA128.
+void render_dissolve_frame(AVFrame *dst,AVFrame *a,AVFrame *b,int opacity_a,int opacity_b,const Transform2d &ta,const Transform2d &tb,int mix,SwsContext *&scaler,const std::function<void()> &check) {
+  if(!a||!b || a->width!=b->width || a->height!=b->height)throw Error("DISSOLVE_SOURCE_MISMATCH");
+  if(mix<0||mix>65536)throw Error("DISSOLVE_MIX_RANGE");
+  std::vector<float> left,right;
+  render_opacity_frame(dst,a,opacity_a,scaler,check,ta,&left);
+  render_opacity_frame(dst,b,opacity_b,scaler,check,tb,&right);
+  std::vector<uint8_t> rgba(static_cast<size_t>(dst->width)*dst->height*4);
+  const float x=mix/65536.f;
+  for(int y=0;y<dst->height;y++) {
+    if(check && y%32==0)check();
+    for(int px=0;px<dst->width;px++){
+      const size_t at=static_cast<size_t>(y)*dst->width+px;
+      for(int c=0;c<3;c++){
+        const float linear=(1-x)*left[at*3+c]+x*right[at*3+c];
+        const float encoded=linear<.018f?linear*4.5f:1.099f*std::pow(linear,.45f)-.099f;
+        rgba[at*4+c]=static_cast<uint8_t>(std::clamp(std::lround(encoded*255.f),0L,255L));
+      }
+      rgba[at*4+3]=255;
+    }
+  }
+  auto free=[](SwsContext *p){sws_freeContext(p);};
+  std::unique_ptr<SwsContext,decltype(free)> output(sws_getContext(dst->width,dst->height,AV_PIX_FMT_RGBA,dst->width,dst->height,AV_PIX_FMT_YUV420P,SWS_BILINEAR,nullptr,nullptr,nullptr),free);
+  if(!output)throw Error("SCALER_UNAVAILABLE");
+  const int *cs=sws_getCoefficients(SWS_CS_ITU709);ok(sws_setColorspaceDetails(output.get(),cs,1,cs,0,0,1<<16,1<<16));
+  const uint8_t *data[]={rgba.data(),nullptr,nullptr,nullptr};const int stride[]={dst->width*4,0,0,0};
+  if(sws_scale(output.get(),data,stride,0,dst->height,dst->data,dst->linesize)!=dst->height)throw Error("SCALING_FAILED");
 }
 struct Output {
   AVFormatContext *format = nullptr;
@@ -596,8 +629,9 @@ struct Output {
   }
   void render(AVFrame *source, int64_t index, int opacity,
               const std::function<void()> &check,
-              const std::function<void(AVFrame *)> &capture, const Transform2d &transform = {}) {
-    render_opacity_frame(frame, source, opacity, scaler, check, transform);
+              const std::function<void(AVFrame *)> &capture, const Transform2d &transform = {}, AVFrame *secondary=nullptr,int opacity_b=65536,const Transform2d &tb={},int mix=0) {
+    if(secondary)render_dissolve_frame(frame,source,secondary,opacity,opacity_b,transform,tb,mix,scaler,check);
+    else render_opacity_frame(frame, source, opacity, scaler, check, transform);
     if(check) check();
     frame->pts = index;
     if (capture) capture(frame); // exact buffer and PTS, BEFORE encoder submission
@@ -683,18 +717,8 @@ RgbaPreview preview_pixels(AVFrame *frame) {
 // Source thumbnail, optionally consuming the shared static opacity node. Real container
 // index seek + decoder flush + PTS floor; sequential mode is an independent
 // decoded reference path used by qualification, never a fake seek result.
-J preview(Engine &engine, const J &recipe) {
-  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");
-  keys(previewBase,{"path","time","indexed"});
-  const auto transform=transform2d(recipe);
-  if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
-    throw Error("RECIPE_TYPE");
-  Input in;
-  const auto epoch = engine.epoch.load();
-  in.check = [&engine, epoch] {
-    if (engine.epoch.load() != epoch)
-      throw Error("CANCELED");
-  };
+AVFrame *prepare_preview_frame(Input &in,const J &recipe) {
+  if(!recipe["path"].is_string()||!recipe["indexed"].is_boolean())throw Error("RECIPE_TYPE");
   in.open(recipe["path"].get<std::string>());
   in.prepare();
   auto *stream = in.format->streams[in.video];
@@ -720,16 +744,42 @@ J preview(Engine &engine, const J &recipe) {
       throw Error("SOURCE_AFTER_LAST_FRAME");
     in.next = in.decode();
   }
-  AVFrame *frame = in.at(target);
+  return in.at(target);
+}
+J preview(Engine &engine, const J &recipe) {
+  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");previewBase.erase("secondary");previewBase.erase("mixQ16");
+  keys(previewBase,{"path","time","indexed"});
+  const auto transform=transform2d(recipe);
+  if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
+    throw Error("RECIPE_TYPE");
+  Input in;
+  const auto epoch = engine.epoch.load();
+  in.check = [&engine, epoch] {
+    if (engine.epoch.load() != epoch)
+      throw Error("CANCELED");
+  };
+  AVFrame *frame=prepare_preview_frame(in,recipe);
+  auto *stream=in.format->streams[in.video];
+  Input other;other.check=in.check;
+  AVFrame *second=nullptr;
+  Transform2d second_transform;
+  int second_opacity=65536,mix=0;
+  if(recipe.contains("secondary")){
+    auto base=recipe["secondary"];base.erase("opacityQ16");base.erase("transform2d");keys(base,{"path","time","indexed"});
+    second_transform=transform2d(recipe["secondary"]);
+    second_opacity=recipe["secondary"].contains("opacityQ16")?integer(recipe["secondary"],"opacityQ16",0,65536):65536;
+    mix=integer(recipe,"mixQ16",0,65536);
+    second=prepare_preview_frame(other,recipe["secondary"]);
+  } else if(recipe.contains("mixQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
   std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){owned_frame_free(&p);});
-  if(recipe.contains("opacityQ16") || !transform.identity()) {
+  if(recipe.contains("opacityQ16") || !transform.identity() || second) {
     const int opacity=recipe.contains("opacityQ16")?integer(recipe,"opacityQ16",0,65536):65536;
     effected.reset(owned_frame_alloc());
     if(!effected) throw Error("ALLOCATION_FAILED");
     effected->format=AV_PIX_FMT_YUV420P;effected->width=frame->width;effected->height=frame->height;
     ok(av_frame_copy_props(effected.get(),frame));ok(av_frame_get_buffer(effected.get(),32));
     SwsContext *scaler=nullptr;
-    try {render_opacity_frame(effected.get(),frame,opacity,scaler,in.check,transform);}
+    try {if(second)render_dissolve_frame(effected.get(),frame,second,opacity,second_opacity,transform,second_transform,mix,scaler,in.check);else render_opacity_frame(effected.get(),frame,opacity,scaler,in.check,transform);}
     catch(...) {sws_freeContext(scaler);throw;}
     sws_freeContext(scaler);
     frame=effected.get();
@@ -882,10 +932,11 @@ J render(Engine &engine, const J &recipe) {
   const auto &segments = recipe["segments"];
   if (!segments.is_array() || segments.size() > 10000)
     throw Error("SEGMENT_LIMIT");
+  std::vector<Transform2d> right_transforms;
   std::vector<Transform2d> transforms;transforms.reserve(segments.size());
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("secondary");base.erase("mixFramesQ16");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
     transforms.push_back(transform2d(segment));
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
@@ -896,6 +947,20 @@ J render(Engine &engine, const J &recipe) {
       if(segment.contains("opacityQ16") || !values.is_array() || values.size()!=static_cast<size_t>(length))throw Error("OPACITY_SCHEDULE_RANGE");
       for(const auto &v:values)if(!v.is_number_integer() || v<0 || v>65536)throw Error("OPACITY_RANGE");
     }
+    Transform2d rt;
+    if(segment.contains("secondary")){
+      const auto &right=segment["secondary"];auto rb=right;rb.erase("transform2d");rb.erase("opacityQ16");rb.erase("opacityFramesQ16");keys(rb,{"path","sourceStart","streamIndex"});
+      rt=transform2d(right);integer(right,"streamIndex",0,63);local_file(right.at("path").get<std::string>());
+      if(right.contains("opacityQ16"))integer(right,"opacityQ16",0,65536);
+      if(right.contains("opacityFramesQ16")){
+        const auto &v=right["opacityFramesQ16"];if(right.contains("opacityQ16")||!v.is_array()||v.size()!=static_cast<size_t>(length))throw Error("OPACITY_SCHEDULE_RANGE");
+        for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("OPACITY_RANGE");
+      }
+      if(!segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
+      const auto &v=segment["mixFramesQ16"];if(!v.is_array()||v.size()!=static_cast<size_t>(length))throw Error("DISSOLVE_SCHEDULE_RANGE");
+      for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("DISSOLVE_MIX_RANGE");
+    } else if(segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
+    right_transforms.push_back(rt);
     integer(segment, "streamIndex", 0, 63);
     if (begin < last_end || length > count - begin)
       throw Error("SEGMENT_OVERLAP_OR_RANGE");
@@ -932,7 +997,7 @@ J render(Engine &engine, const J &recipe) {
       if (engine.epoch.load() != epoch)
         throw Error("CANCELED");
     };
-  std::unique_ptr<Input> input;
+  std::unique_ptr<Input> input,right_input;
   size_t si = 0;
   int current_segment = -1;
   for (int64_t frame = 0; frame < count; frame++) {
@@ -942,7 +1007,7 @@ J render(Engine &engine, const J &recipe) {
            frame >= segments[si]["startFrame"].get<int64_t>() +
                         segments[si]["frameCount"].get<int64_t>())
       si++;
-    AVFrame *source = nullptr;
+    AVFrame *source = nullptr,*second=nullptr;
     if (si < segments.size() &&
         frame >= segments[si]["startFrame"].get<int64_t>()) {
       const auto &seg = segments[si];
@@ -960,22 +1025,31 @@ J render(Engine &engine, const J &recipe) {
                 AVMEDIA_TYPE_VIDEO)
           throw Error("VIDEO_STREAM_REQUIRED");
         input->prepare();
+        right_input.reset();
+        if(seg.contains("secondary")) {
+          const auto &r=seg["secondary"];right_input=std::make_unique<Input>();right_input->check=input->check;right_input->open(r["path"].get<std::string>());right_input->video=r["streamIndex"].get<int>();
+          if(right_input->video<0 || static_cast<unsigned>(right_input->video)>=right_input->format->nb_streams || right_input->format->streams[right_input->video]->codecpar->codec_type!=AVMEDIA_TYPE_VIDEO)throw Error("VIDEO_STREAM_REQUIRED");
+          right_input->prepare();
+        }
         current_segment = si;
       }
       const auto target = target_ticks(
           seg.at("sourceStart"), frame - seg.at("startFrame").get<int64_t>(),
           av_inv_q(fps), input->format->streams[input->video]);
       source = input->at(target);
+      if(right_input){const auto &r=seg["secondary"];second=right_input->at(target_ticks(r["sourceStart"],frame-seg["startFrame"].get<int64_t>(),av_inv_q(fps),right_input->format->streams[right_input->video]));}
     }
     int opacity = source ? segments[si].value("opacityQ16",65536) : 65536;
     if(source && segments[si].contains("opacityFramesQ16"))opacity=segments[si]["opacityFramesQ16"][frame-segments[si]["startFrame"].get<int64_t>()].get<int>();
+    int opacity_b=65536,mix=0;
+    if(second){const auto &r=segments[si]["secondary"];const auto at=frame-segments[si]["startFrame"].get<int64_t>();opacity_b=r.contains("opacityFramesQ16")?r["opacityFramesQ16"][at].get<int>():r.value("opacityQ16",65536);mix=segments[si]["mixFramesQ16"][at].get<int>();}
     out.render(source,frame,opacity,[&]{if(engine.epoch.load()!=epoch) throw Error("CANCELED");},
       [&](AVFrame *actual){
         if(capture_frames.count(frame)) {
           const auto px=preview_pixels(actual);
           captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
         }
-      }, source ? transforms[si] : Transform2d{});
+      }, source ? transforms[si] : Transform2d{},second,opacity_b,second?right_transforms[si]:Transform2d{},mix);
     engine.rendered_video_frames=frame+1;
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
@@ -1073,6 +1147,7 @@ char *sm_capabilities(void) {
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
         {"sourcePreview128", true},
+        {"linearDissolveV1", true},
         {"staticTransform2dV1", true},
         {"linearOpacityV1", true},
         {"linearOpacityKeyframesV1", true},

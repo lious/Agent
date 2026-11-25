@@ -13,11 +13,15 @@ final class TimelineVideoPoint {
     this.sourceTime, [
     this.opacityQ16 = 65536,
     this.transform2d,
+    this.secondary,
+    this.mixQ16 = 0,
   ]);
   final String clipId;
   final String? assetId, sourceVersion;
   final Q sourceTime;
   final int opacityQ16;
+  final TimelineVideoPoint? secondary;
+  final int mixQ16;
   final Map<String, double>? transform2d;
   bool get isGap => assetId == null;
 }
@@ -147,8 +151,129 @@ final class TimelineVideoGraph {
     }
   }
 
+  TimelineVideoPoint _clipPoint(Map c, Q time) => TimelineVideoPoint(
+    c['id'] as String,
+    c['source']['id'] as String,
+    c['source']['version'] as String,
+    Q.fromJson(c['sourceRange']['start']) +
+        (time - Q.fromJson(c['timelineRange']['start'])) *
+            Q.fromJson(c['timeMap']['rate']),
+    clipOpacityQ16(
+      _document,
+      c,
+      time - Q.fromJson(c['timelineRange']['start']),
+    ),
+    clipTransform2d(_document, c),
+  );
+
+  /// Split only at delivery-grid boundaries; composite intervals have at most2
+  /// decoded sources. source metadata/path verification stays in the SDK.
+  List<Map<String, dynamic>> compileDissolves(
+    Map<String, Map<String, dynamic>> byClip,
+  ) {
+    final total = _frameRate.frameIndex(duration, Rounding.tiesToEven);
+    if (total < BigInt.one || total > BigInt.from(120000)) {
+      throw const StudioException('RENDER_FRAME_LIMIT');
+    }
+    final boundaries = <Q>{Q.of(0), duration};
+    for (final c in _items) {
+      final start = Q.fromJson(c['timelineRange']['start']);
+      boundaries.add(start);
+      boundaries.add(start + Q.fromJson(c['timelineRange']['duration']));
+    }
+    for (final t in _document['transitions']) {
+      if (t['enabled'] == true) {
+        boundaries.add(Q.fromJson(t['cut']) - Q.fromJson(t['before']));
+        boundaries.add(Q.fromJson(t['cut']) + Q.fromJson(t['after']));
+      }
+    }
+    final times = boundaries.toList()..sort();
+    Map<String, dynamic> node(TimelineVideoPoint p, Q time, int count) {
+      final clip = _items.singleWhere((c) => c['id'] == p.clipId),
+          base = byClip[p.clipId];
+      if (base == null) throw const StudioException('GRAPH_SOURCE_REQUIRED');
+      final values = opacityScheduleRangeQ16(
+        _document,
+        clip,
+        _frameRate,
+        time - Q.fromJson(clip['timelineRange']['start']),
+        count,
+      );
+      return {
+        'path': base['path'],
+        'streamIndex': base['streamIndex'],
+        'sourceStart': p.sourceTime.toJson(),
+        if (p.transform2d != null) 'transform2d': p.transform2d,
+        if (values.every((v) => v == values.first))
+          'opacityQ16': values.first
+        else
+          'opacityFramesQ16': values,
+      };
+    }
+
+    final result = <Map<String, dynamic>>[];
+    for (var i = 0; i < times.length - 1; i++) {
+      final time = times[i], end = times[i + 1];
+      if (time >= duration || end <= time) continue;
+      final point = sample(time);
+      if (point.isGap) continue;
+      final count = _frameRate
+          .frameIndex(end - time, Rounding.tiesToEven)
+          .toInt();
+      final recipe = {
+        'startFrame': _frameRate.frameIndex(time, Rounding.tiesToEven).toInt(),
+        'frameCount': count,
+        ...node(point, time, count),
+      };
+      if (point.secondary != null) {
+        recipe['secondary'] = node(point.secondary!, time, count);
+        final transition = (_document['transitions'] as List).singleWhere(
+          (t) =>
+              t['enabled'] == true &&
+              t['leftClipId'] == point.clipId &&
+              t['rightClipId'] == point.secondary!.clipId,
+        );
+        final start =
+                Q.fromJson(transition['cut']) -
+                Q.fromJson(transition['before']),
+            length =
+                Q.fromJson(transition['before']) +
+                Q.fromJson(transition['after']);
+        recipe['mixFramesQ16'] = [
+          for (var f = 0; f < count; f++)
+            dissolveMixQ16(
+              time + _frameRate.frameTime(BigInt.from(f)) - start,
+              length,
+            ),
+        ];
+      }
+      result.add(recipe);
+    }
+    return result;
+  }
+
   TimelineVideoPoint sample(Q time) {
     _requireTime(time);
+    for (final t in _document['transitions']) {
+      if (t['enabled'] != true) continue;
+      final begin = Q.fromJson(t['cut']) - Q.fromJson(t['before']),
+          length = Q.fromJson(t['before']) + Q.fromJson(t['after']);
+      if (time >= begin && time < begin + length) {
+        final left = _items.singleWhere((c) => c['id'] == t['leftClipId']),
+            right = _items.singleWhere((c) => c['id'] == t['rightClipId']);
+        final a = _clipPoint(left, time), b = _clipPoint(right, time);
+        return TimelineVideoPoint(
+          a.clipId,
+          a.assetId,
+          a.sourceVersion,
+          a.sourceTime,
+          a.opacityQ16,
+          a.transform2d,
+          b,
+          dissolveMixQ16(time - begin, length),
+        );
+      }
+    }
     for (final c in _items) {
       final range = c['timelineRange'],
           start = Q.fromJson(range['start']),
@@ -171,4 +296,9 @@ final class TimelineVideoGraph {
     }
     return TimelineVideoPoint('gap', null, null, Q.of(0));
   }
+}
+
+int dissolveMixQ16(Q elapsed, Q duration) {
+  final x = elapsed / duration;
+  return ((x.n * BigInt.from(65536)) ~/ x.d).toInt();
 }

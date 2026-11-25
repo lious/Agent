@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/studio_media_abi_test.dir/tests/abi_test.cpp.o
+[2/4] Building CXX object CMakeFiles/studio_media.dir/src/studio_media.cpp.o
+[3/4] Linking CXX shared library libstudio_media.so
+[4/4] Linking CXX executable studio_media_abi_test

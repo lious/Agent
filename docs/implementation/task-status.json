@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T22:40:49.497523+08:00",
+  "asOf": "2026-11-25T23:23:25.239198+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,7 +12,7 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-008 transition handles/dissolve/luma or animated transform with original shared time and true pixel consumers; I-005 full multi-level undo/coalescing remains unimplemented. No storage/fingerprint detour.",
+    "Continue original I-008/I-022 useful registered crop/colorBasic or remaining keyframe/luma consumers with true UI/persistent/preview/preencoder/export evidence; I-005 full multi-level undo/coalescing and V-003 GPU gate remain unfinished. No storage/fingerprint detour.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
     "I-023 diagnose retained service clock timeout/underrun and UI AV failures without relaxing bounded queues/fault gates; physical/P0 qualifications remain independent",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
@@ -70,14 +70,15 @@
       "implementationStatus": "notApplicableValidationTask",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Linux software offline60s duration/frame-count/AAC synchronization qualification and exact20-point CFR/VFR/nonzero source/proxy PTS/RGBA comparisons. Real confirmed AudioSink-clock/native-UI moving video and paused seek pixels; NOT physical presentation sync or CPU/GPU/preencoder SDR patch<=2/255 qualification. Increment1.14: actual static opacity CPU preview vs encoder-input samples are equal at two colored-video display points;128x72 full-size grayscale matches independent transfer reference<=2/255. No GPU or whole-P0 qualification. Increment1.15: real dynamic opacity and split/reopen encoder-input display samples agree with shared full-source previews, including frame-phase separation from exact source-time query API. This is a bounded Linux CPU reference slice, not the complete60s/VFR/GPU/P0 matrix. Increment1.16 bounded CPU transform white-patch half-pixel linear-coverage/scale/rotation/anchor references and actual same-source encoder-input equality; not full P0/GPU matrix.",
+      "implementedScope": "Linux software offline60s duration/frame-count/AAC synchronization qualification and exact20-point CFR/VFR/nonzero source/proxy PTS/RGBA comparisons. Real confirmed AudioSink-clock/native-UI moving video and paused seek pixels; NOT physical presentation sync or CPU/GPU/preencoder SDR patch<=2/255 qualification. Increment1.14: actual static opacity CPU preview vs encoder-input samples are equal at two colored-video display points;128x72 full-size grayscale matches independent transfer reference<=2/255. No GPU or whole-P0 qualification. Increment1.15: real dynamic opacity and split/reopen encoder-input display samples agree with shared full-source previews, including frame-phase separation from exact source-time query API. This is a bounded Linux CPU reference slice, not the complete60s/VFR/GPU/P0 matrix. Increment1.16 bounded CPU transform white-patch half-pixel linear-coverage/scale/rotation/anchor references and actual same-source encoder-input equality; not full P0/GPU matrix. Increment1.17: actual128x72 white/black two-source linear-light half-blend independently matches transfer reference<=2/255; preview and real preencoder samples agree at window start/cut/last active frame/end, and transform/curve combination and archive/fork/reopen. Not independent60s/VFR/nonzero-PTS/GPU/physical dissolve qualification.",
       "evidence": [
         "evidence/timeline-proxy/verification.json",
         "evidence/timeline-proxy/offline-60s.json",
         "evidence/timeline-proxy/summary.json",
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
-        "evidence/static-transform/summary.json"
+        "evidence/static-transform/summary.json",
+        "evidence/dissolve/summary.json"
       ],
       "remainingAcceptance": "60秒视频时长误差≤1交付帧；20点seek误差≤1帧；SDR测试patch最大差≤2/255；失败不能只肉眼放行。",
       "remainingScope": "含有理PTS和SDR参考；不含HDR承诺。",
@@ -85,7 +86,7 @@
         "V-002"
       ],
       "blockers": [
-        "CPU/GPU/reference/preencoder SDR patch comparison and physical/P0 render matrix remain unverified; current shared source/range graph is not a full compositor"
+        "Full CPU/GPU/P0/preencoder SDR reference matrix and physical qualification remain unverified; bounded CPU transform/opacity/dissolve evidence does not certify the complete compositor."
       ]
     },
     {
@@ -636,11 +637,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "One registered static clip opacity1.0.0 over black: immutable versions/undo, split owner cloning/audio exclusion, bounded Q16 recipe, actual native linear Rec709 FP32-transfer/RGB8 CPU consumer, real Flutter edit/still preview/save/archive/fork/reopen/export and resource-aware writable admission. Not a complete registry/keyframe/transition/transform implementation. Increment1.15 adds actual clip-local rational hold/linear opacity keys, same project-frame/source mapping, atomic point replace/remove and inverse, split/trim rebase/edge holds/slip semantics, UI/native/export/archive/fork/reopen and actual CPU pixel evidence. Max256 keys; unsupported types remain refused. Not other parameters/transforms/transitions or multi-level undo/coalescing. Increment1.16: static transform2d@1.0.0 seven parameters, exact matrix/pixel-center inverse bilinear linear-light CPU consumer before existing opacity curves; atomic edits, UI uniform/source-center controls, split ownership, source preview/encoder pixels/archive/fork/reopen. Not animated transform/transitions/handles or full registry.",
+      "implementedScope": "One registered static clip opacity1.0.0 over black: immutable versions/undo, split owner cloning/audio exclusion, bounded Q16 recipe, actual native linear Rec709 FP32-transfer/RGB8 CPU consumer, real Flutter edit/still preview/save/archive/fork/reopen/export and resource-aware writable admission. Not a complete registry/keyframe/transition/transform implementation. Increment1.15 adds actual clip-local rational hold/linear opacity keys, same project-frame/source mapping, atomic point replace/remove and inverse, split/trim rebase/edge holds/slip semantics, UI/native/export/archive/fork/reopen and actual CPU pixel evidence. Max256 keys; unsupported types remain refused. Not other parameters/transforms/transitions or multi-level undo/coalescing. Increment1.16: static transform2d@1.0.0 seven parameters, exact matrix/pixel-center inverse bilinear linear-light CPU consumer before existing opacity curves; atomic edits, UI uniform/source-center controls, split ownership, source preview/encoder pixels/archive/fork/reopen. Not animated transform/transitions/handles or full registry. Increment1.17: actual VIDEO cross-dissolve for adjacent enabled1x asset clips, exact rational half-open window/source handles(default reject), same-time2-leg graph and linear-light native composition after independent transform/clip-local opacity. Real UI p/q edit/remove, immutable transition/sequence versions, no-op/locks/atomic SQL abort/stale-revision refusal, single inverse(payload+versions except monotonic revision), save/archive typed ImportMap/fork/reopen/native MP4 pixels. Topology edits explicitly remove first; slip revalidates handles. Not equal-power audio/freeze/luma/animated transform/full registry or full original dependency/render qualification.",
       "evidence": [
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
-        "evidence/static-transform/summary.json"
+        "evidence/static-transform/summary.json",
+        "evidence/dissolve/summary.json"
       ],
       "remainingAcceptance": "缺handles拒；未知技术UNSUPPORTED_EDIT_TECHNIQUE；关键帧边界连续；一次提案原子undo恢复hash。",
       "remainingScope": "含基础变换/透明度/叠化/注册luma；不默认未注册插件或高级调色。",
@@ -648,7 +650,7 @@
         "I-005"
       ],
       "blockers": [
-        "I-005/full registry/transforms/other-parameter interpolation/transition handles and full V-003 GPU/reference render gate remain unfinished; current scalar hold/linear opacity CPU consumer is only a tested subset."
+        "Full I-005 undo/coalescing, registered luma/full registry/other-parameter interpolation/animated transform and full V-003 render gate remain unfinished. Tested CPU subset now includes static transform, opacity curves and1x VIDEO reject-handles dissolve; no audioEqualPower/freeze qualification."
       ]
     },
     {
@@ -943,12 +945,13 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Immutable single-admitted-track exact rational TimelineVideoGraph shared by service-clock preview selection and actual original-file export recipe. Real Linux Flutter UI decodes/adopts/disposes derived RGBA frames with single-flight/backpressure, bounded image decode deadline/late disposal, hash/revision/native epoch/SDK playback-generation fences, gap handling and visible skipped/stale/late counters. Initial graph subset alone did NOT qualify full effects/GPU/texture leases, V003 pixels or cancellation; subsequent bounded CPU qualifications follow below. Increment1.14 adds a real shared full-source static opacity CPU consumer and bounded actual pre-avcodec_send_frame YUV420 display samples; same-revision preview vs encoder input, real UI/export/archive/admission tested. Encoder-frame make_writable/COW and RAII retained, not GPU FrameLease qualification. Increment1.15 actual per-frame Q16 schedule from the shared Dart evaluator; actual paused-service-clock curve pixels, split/reopen encoder samples;100 active scheduled-opacity cancellations with application-owned AVFrame/FD accounting and separate ASan/UBSan. Fixed real decoder cancellation double-free by ownership exchange before throwing decode. Not full GPU/third-party internal lease qualification. Increment1.16 shared full-source transform CPU node, finite inverse bounds, transparent-border coverage over black, strict pre-output native validation/capability/cache key and active transform+curve cancellation qualification recorded separately. Not GPU/FP16/full frame leases.",
+      "implementedScope": "Immutable single-admitted-track exact rational TimelineVideoGraph shared by service-clock preview selection and actual original-file export recipe. Real Linux Flutter UI decodes/adopts/disposes derived RGBA frames with single-flight/backpressure, bounded image decode deadline/late disposal, hash/revision/native epoch/SDK playback-generation fences, gap handling and visible skipped/stale/late counters. Initial graph subset alone did NOT qualify full effects/GPU/texture leases, V003 pixels or cancellation; subsequent bounded CPU qualifications follow below. Increment1.14 adds a real shared full-source static opacity CPU consumer and bounded actual pre-avcodec_send_frame YUV420 display samples; same-revision preview vs encoder input, real UI/export/archive/admission tested. Encoder-frame make_writable/COW and RAII retained, not GPU FrameLease qualification. Increment1.15 actual per-frame Q16 schedule from the shared Dart evaluator; actual paused-service-clock curve pixels, split/reopen encoder samples;100 active scheduled-opacity cancellations with application-owned AVFrame/FD accounting and separate ASan/UBSan. Fixed real decoder cancellation double-free by ownership exchange before throwing decode. Not full GPU/third-party internal lease qualification. Increment1.16 shared full-source transform CPU node, finite inverse bounds, transparent-border coverage over black, strict pre-output native validation/capability/cache key and active transform+curve cancellation qualification recorded separately. Not GPU/FP16/full frame leases. Increment1.17: shared full-source2-input dissolve node, rational/Q16 common preview/encoder recipe, independently effected legs, bounded allocations/strict mix schedules and actual private AudioSink-confirmed-sample clock. Actual128x72 independent linear-light reference and four preview/preencoder samples, effect-combination/archive/fork/reopen proof; two-source+transform/curve active-cancel mode separately retained alongside original two modes. CPU FP32/RGB8 over black only, not GPU/FP16/full leases.",
       "evidence": [
         "evidence/timeline-proxy/summary.json",
         "evidence/static-opacity/summary.json",
         "evidence/opacity-keyframes/summary.json",
-        "evidence/static-transform/summary.json"
+        "evidence/static-transform/summary.json",
+        "evidence/dissolve/summary.json"
       ],
       "remainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
       "remainingScope": "含CPU参考/本端GPU节点/preview-export共图；不截图预览导出。",
@@ -969,11 +972,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Increment1.7 adds actual optional libpulse17 asynchronous AudioSink with8192-frame ring/4096-frame server maximum; service-confirmed noninterpolated48k position, actual cork/drain, paused exact seek/rebind epochs, underflow/device-loss/stale timing freeze, cancellation and cleanup. SDK freezes persistent audio snapshot and uses existing actual PCM/SWR/Dart AudioBus; both native UIs expose audition controls and background pause/cancel. Physical presented clock remains unverified.",
+      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Increment1.7 adds actual optional libpulse17 asynchronous AudioSink with8192-frame ring/4096-frame server maximum; service-confirmed noninterpolated48k position, actual cork/drain, paused exact seek/rebind epochs, underflow/device-loss/stale timing freeze, cancellation and cleanup. SDK freezes persistent audio snapshot and uses existing actual PCM/SWR/Dart AudioBus; both native UIs expose audition controls and background pause/cancel. Physical presented clock remains unverified. Increment1.17 final current225-case selected matrix retains real static-opacity Pulse service timeout/underrun(1 of6 service cases failed); new dissolve-clock passed, which does NOT resolve the existing fault. Exact nonzero logs and first frozen reproduction retained separately; no queue/timeout relaxation or wall-clock substitution.",
       "evidence": [
         "evidence/audio-aac/summary.json",
         "evidence/persistent-audio/summary.json",
-        "evidence/audio-sink/summary.json"
+        "evidence/audio-sink/summary.json",
+        "evidence/dissolve/summary.json"
       ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",

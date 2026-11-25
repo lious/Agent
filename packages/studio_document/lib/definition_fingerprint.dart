@@ -50,11 +50,10 @@ final class DefinitionFingerprinter {
     }
     // Track/sequence effect ordering has no qualified core consumer here.
     // Do not silently omit their owner-only forward dependencies or invent order.
-    if ((d['transitions'] as List).isNotEmpty ||
-        (d['effects'] as List).any(
-          (e) =>
-              e['owner']['kind'] == 'track' || e['owner']['kind'] == 'sequence',
-        )) {
+    if ((d['transitions'] as List).isNotEmpty) requireDissolveProfile(d);
+    if ((d['effects'] as List).any(
+      (e) => e['owner']['kind'] == 'track' || e['owner']['kind'] == 'sequence',
+    )) {
       throw const StudioException('DEFINITION_PROFILE_UNQUALIFIED');
     }
     _qualifiedContexts.add(p);
@@ -248,6 +247,12 @@ final class DefinitionFingerprinter {
           body.remove('owner'); // reverse owner reference, never a render edge
           if (body['type'] == 'mask') blob(body['parameters']['blobHash']);
           if (body['type'] == 'textStyle') font(body['parameters']['fontRef']);
+        case 'transitions':
+          // Window/leg topology belongs to this node; the containing sequence
+          // already closes BOTH clip definitions, including source/effects.
+          // Reverse owner IDs are not independently executable sources.
+          body.remove('sequenceId');
+          body.remove('trackId');
         case 'caption':
           body.remove('trackId');
           if (body['styleEffectId'] != null) {
@@ -282,6 +287,11 @@ final class DefinitionFingerprinter {
             }
           }
           body['tracks'] = tracks;
+          for (final t in d['transitions']) {
+            if (t['sequenceId'] == body['id']) {
+              child('transitions', Map<String, dynamic>.from(t));
+            }
+          }
           child('bus', find('audioBuses', body['masterBusId']));
           // mix48k's actual recipe/solo set includes every declared bus.
           for (final bus in d['audioBuses']) {

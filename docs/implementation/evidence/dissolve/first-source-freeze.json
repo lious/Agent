@@ -1,0 +1,23 @@
+{
+  "baseCommit": "6de45cf6a85cfac445e2b9b203590dced169941c",
+  "sourceSha256": {
+    "native/studio_media/src/studio_media.cpp": "5b9bd8d238ecd0bec54f9c9d7840ad44de5c31fd491b48b1906b8c2a7af464ac",
+    "native/studio_media/tests/abi_test.cpp": "b70a54a32b5e89180c828dc952d7bd61e7e102f31a954a729a967de04edf0e98",
+    "packages/studio_document/lib/definition_fingerprint.dart": "fa59370c4630bd029c1b3f068a55a2d40cd8cdd9680ebd4d974b7fa5eec1be52",
+    "packages/studio_document/lib/edit_algebra.dart": "1157e05627e4d2877338484406c78682a53da4ef412f5f16cc6b9d86f4ccb703",
+    "packages/studio_document/lib/effect_registry.dart": "a48a2a6aa628575ad28d5f96411525933a0988f6e1065429ec261697b67a0b2f",
+    "packages/studio_document/lib/local_admission.dart": "413984ab89d3f2964fe1345d713b6624352ca9f5dc37498fc4430a7903ed101b",
+    "packages/studio_document/lib/timeline_graph.dart": "86db55f680d0114379d5b4948f848edcca3af4571cae106cf3fa7f424406d576",
+    "packages/studio_document/test/dissolve_test.dart": "62effb910cae44d5b6eda275bfa9ede10e9e5fbd5b9dac00950b1160bb6d2cb8",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "e636e74709b18c89fd93f0f4d61ba01b2bde7a71e7864ed7551339fe85e66055",
+    "packages/studio_editor_ui/test/dissolve_ui_test.dart": "4c385cbf4afc171842265013155cae127fc3f8a1363083b14a8958ef8c379d84",
+    "packages/studio_media/lib/studio_media.dart": "99ecf562a17bd5b422ce1a9ff82467a77bc9f7b61614ba0c103eb8666ed1cc14",
+    "packages/studio_sdk/lib/studio_sdk.dart": "f57119a1b8393dd6cbde5f9f0c1ed751dcebbc482a4256ec082229342a21dfce",
+    "packages/studio_sdk/test/dissolve_clock_test.dart": "c3d118091d36a6c58dc23410fec2afeadd3f70ed618566d41c55df23ec9bba61",
+    "packages/studio_sdk/test/dissolve_fixture.dart": "0ae54a04be630edfb05a5836f52aad0a47a317f1616875ffaca2e08e23a3dba4",
+    "packages/studio_sdk/test/dissolve_render_test.dart": "959bd27567aa2d9170419e50f5a7bcbdeec20b93327047f60ec76c41b26e4504",
+    "packages/studio_store/lib/project_archive.dart": "447448bf2d81eef1a17b6598f6d16c4c7d09e65d9f22b379ea61ea1424838cb1"
+  },
+  "nativeLibrarySha256": "3bed55fe4c058ee2c5dd8fd158a2a83df8132d229e71d1b97fa96ea98f30e319",
+  "sanitizerLibrarySha256": "d8e7b18fae04ceb0eb42e86b4e5d3be62cedbc5b3ff36d585b01981a56e86b90"
+}

@@ -1,0 +1,11 @@
+{
+  "original104Unmodified": true,
+  "original87AcceptanceAndHardDependenciesExact": true,
+  "original87ScopeTextRetained": true,
+  "existingI003TrackerScopeEvidenceAnnotationNotChanged": true,
+  "counts": {
+    "partial": 26,
+    "planned": 48,
+    "blocked": 13
+  }
+}

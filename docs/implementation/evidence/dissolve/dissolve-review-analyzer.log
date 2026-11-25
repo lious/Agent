@@ -1,0 +1,5 @@
+Analyzing agent-foundation-20261125...
+
+  error • The function 'validateImmutableDefinitionChange' isn't defined. Try importing the library that defines 'validateImmutableDefinitionChange', correcting the name to the name of an existing function, or defining a function named 'validateImmutableDefinitionChange' • packages/studio_document/test/dissolve_test.dart:221:13 • undefined_function
+
+1 issue found. (ran in 1.3s)

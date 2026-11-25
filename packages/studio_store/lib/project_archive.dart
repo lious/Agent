@@ -457,6 +457,8 @@ ProjectDocument forkLocalProject(
     'audioBuses',
     'rightsRecords',
     'captions',
+    'effects',
+    'transitions',
     'linkGroups',
   ]) {
     for (final x in d[table]) {
@@ -490,6 +492,9 @@ ProjectDocument forkLocalProject(
     'streamId',
     'clipId',
     'anchorClipId',
+    'leftClipId',
+    'rightClipId',
+    'effectId',
     'linkGroupId',
   };
   void replace(dynamic x) {
@@ -499,7 +504,9 @@ ProjectDocument forkLocalProject(
             e.value is String &&
             ids.containsKey(e.value)) {
           x[e.key] = ids[e.value];
-        } else if (e.key == 'assetIds' || e.key == 'inputBusIds') {
+        } else if (e.key == 'assetIds' ||
+            e.key == 'inputBusIds' ||
+            e.key == 'effectIds') {
           x[e.key] = (e.value as List).map((v) => ids[v] ?? v).toList();
         } else if (e.key != 'namespace') {
           replace(e.value);

@@ -149,6 +149,24 @@ List<int> opacityScheduleQ16(
   if (count < 1 || count > 120000) {
     throw const StudioException('OPACITY_SCHEDULE_RANGE');
   }
+  return opacityScheduleRangeQ16(project, clip, fps, Q.of(0), count);
+}
+
+List<int> opacityScheduleRangeQ16(
+  Map<String, dynamic> project,
+  Map clip,
+  FrameRate fps,
+  Q start,
+  int count,
+) {
+  if (count < 1 || count > 120000) {
+    throw const StudioException('OPACITY_SCHEDULE_RANGE');
+  }
+  final effects = admittedClipEffects(
+    project,
+    clip,
+  ).where((e) => e['type'] == 'opacity');
+  if (effects.isEmpty) return List.filled(count, 65536);
   final effect = admittedClipEffects(
     project,
     clip,
@@ -160,7 +178,7 @@ List<int> opacityScheduleQ16(
           ? 65536
           : (opacityValueAt(
                       effect,
-                      fps.frameTime(BigInt.from(i)),
+                      start + fps.frameTime(BigInt.from(i)),
                       points: points,
                     ) *
                     65536)

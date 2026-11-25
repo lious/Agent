@@ -856,3 +856,16 @@ Native UI导入→选VIDEO→填写Transform X/Y（画布像素）、uniform sca
 真正执行M逆矩阵、像素中心、linear-light双线性与透明越界coverage，先transform后opacity，原件全尺寸同一native节点同时供预览与encoder-input，不拿RGBA128代理冒充源或UI截图导出。identity真bypass。CPU、同尺寸opaque SDR/Rec709 limited YUV420/黑背景，FP32 transfer与RGB8 staging，不冒称GPU/FP16/alpha源、多轨或全平台。超出本CPU有界坐标/scale profile明确拒绝，未知/动画transform等继续保全只读、不清空降级。
 
 本冻结源码216项定向Dart/Flutter测试通过（195 native/domain/store、11实际FFI UI、5 Chrome资源/Inspector、5真实私有Pulse），另CTest3项、真实旧库/SQL barrier/SIGKILL重开通过。opacity及transform+opacity两种活动取消各普通/ASan100次，共400轮；每轮自有AVFrame回baseline、各运行FD delta0，非GPU/第三方内部全资格。analyzer无问题，不是全仓全测或旧209重用。本批精确冻结测试/真实取消/失败证据见[evidence/static-transform/summary.json](evidence/static-transform/summary.json)，参数/色彩/alpha/采样限制见[ADR0023](../adr/0023-static-transform2d-cpu-reference.md)。原87仍0 complete/26 partial/48 planned/13 blocked；XD10仍0/8/1/1。原104/原验收/硬依赖未改，多级undo、真实resume underrun、旧writer共写、GPU/物理/其他平台与RTC限制保留。
+
+
+## increment1.17 — 有真实源handles的VIDEO叠化，双源共用预览/编码
+
+Native编辑器可实际操作：导入≥3秒的SDR/CFR素材→选VIDEO、`Positive frames`填30后Split（以30fps为例）→给右clip设置不同transform/opacity→选左clip、`VIDEO dissolve before/after cut`各填6→`Dissolve selected LEFT → next`。选右clip本地frame0点击timeline-effect预览即可看cut的混合帧；可一次Undo、移除转场、保存、归档fork/关闭重开和导出MP4。没有足够A尾/B头handles明确拒绝，不自动冻结。两个不同原件也适用同尺寸/色彩等已实现profile，不只同一素材切开。修改split/trim/move/roll/slide需先显式移除转场，slip必须重新通过handles校验。
+
+时间窗严格[b-p,b+q)，每腿先独立transform/clip-local opacity，再linear-light叠化；共享Dart精确source-time/Q16混合schedule及C++全源像素节点供still、服务确认sample时钟预览和真正encoder-input。不拿代理缩图或UI截图导出。VIDEO-only，不自动给AudioBus添加等功率fade；如需试听沿既有持久AudioClip/AudioSink路径，真实服务underrun仍未解。当前1x/linear/reject、同尺寸709 limited YUV420、黑底CPU FP32/RGB8，非GPU/FP16/全alpha/全registry/任意平台。详见[ADR0024](../adr/0024-video-dissolve-handles-cpu-consumer.md)。
+
+最新冻结源码所选**225项：224通过、1失败、0跳过**（202领域/SQLite/native SDK全过，12实际FFI UI全过，5实际Chrome资源/Inspector全过；6私有真实Pulse服务中5过1失败）。失败是既有`opacity_clock_test`服务timeout/underrun，同一症状首轮冻结也复现；保留非零资格，不重试刷绿。新增双源dissolve-clock实际通过，不表示旧underrun已修好。另CTest3项、真实旧库/SQL barrier/SIGKILL重开通过；原opacity、transform+curve、新双源dissolve+transform/curve三种活动取消各普通/ASan100轮，共**600轮**，自有AVFrame回baseline、每运行FD delta0。不是GPU/第三方内部全生命周期资格或全仓全测。
+
+[精确源码/二进制hash、命令、逐case结果、非零失败和前一冻结](evidence/dissolve/summary.json)。前一冻结224项与最新225项分开，旧216/209不混算。显式ResourcePreservation采纳先真实执行已启用transform和joint窗口样本，再原子发布fork；不只是capability flag。实际SQL后段abort/stale revision/双leg不可变闭包、typed effect/transition ImportMap、归档fork/reopen、坏尺寸门禁均有证据；原件/pins/历史/旧hash不重写，无真实资料清理。
+
+原87保持**0 complete/26 partial/48 planned/13 blocked**；XD10保持**0/8/1/1**。I-008/I-022仍缺registered luma/全registry、I-005多级undo和完整V-003/GPU硬门禁，不以本子集改写原验收。原104不改；旧writer共写、单级inverse、非Linux/物理多端/物理声画同步与RTC既有策略阻塞仍保留。后续回原I-008/I-022有用的registered crop/colorBasic消费者及原I-005/I-023缺口，不扩存储指纹旁支。

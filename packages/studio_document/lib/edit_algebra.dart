@@ -153,6 +153,123 @@ final class SetClipOpacity extends EditOperation {
   };
 }
 
+final class SetDissolve extends EditOperation {
+  const SetDissolve(this.leftClipId, this.rightClipId, this.before, this.after);
+  final String leftClipId, rightClipId;
+  final Q before, after;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setDissolve',
+    'leftClipId': leftClipId,
+    'rightClipId': rightClipId,
+    'before': before.toJson(),
+    'after': after.toJson(),
+  };
+}
+
+final class RemoveDissolve extends EditOperation {
+  const RemoveDissolve(this.transitionId);
+  final String transitionId;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'removeDissolve',
+    'transitionId': transitionId,
+  };
+}
+
+ProjectDocument _dissolveEdit(
+  ProjectDocument before,
+  EditOperation op,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  final d = before.toJson(), seq = d['sequences'][0];
+  final list = d['transitions'] as List;
+  final tracks = seq['tracks'] as List;
+  if (op is RemoveDissolve) {
+    final found = list.where((t) => t['id'] == op.transitionId).toList();
+    if (found.isEmpty) throw const StudioException('NOT_FOUND');
+    final track = tracks.singleWhere((t) => t['id'] == found.single['trackId']);
+    if (track['locked'] == true) throw const StudioException('FIELD_LOCKED');
+    for (final c in track['items']) {
+      if ([
+            found.single['leftClipId'],
+            found.single['rightClipId'],
+          ].contains(c['id']) &&
+          (c['lockedFields'] as List).any(
+            (f) =>
+                f == '*' ||
+                f == 'transitions' ||
+                (f as String).startsWith('transitions.'),
+          )) {
+        throw const StudioException('FIELD_LOCKED');
+      }
+    }
+    list.removeWhere((t) => t['id'] == op.transitionId);
+  } else {
+    final x = op as SetDissolve;
+    final matches = tracks
+        .where((t) => (t['items'] as List).any((c) => c['id'] == x.leftClipId))
+        .toList();
+    if (matches.length != 1) throw const StudioException('CLIP_NOT_FOUND');
+    final track = matches.single;
+    if (track['locked'] == true) throw const StudioException('FIELD_LOCKED');
+    final left = (track['items'] as List).singleWhere(
+      (c) => c['id'] == x.leftClipId,
+    );
+    for (final c in (track['items'] as List).where(
+      (c) => [x.leftClipId, x.rightClipId].contains(c['id']),
+    )) {
+      if (c['source'] != null &&
+          (c['lockedFields'] as List).any(
+            (f) =>
+                f == '*' ||
+                f == 'transitions' ||
+                (f as String).startsWith('transitions.'),
+          )) {
+        throw const StudioException('FIELD_LOCKED');
+      }
+    }
+    final old = list
+        .where(
+          (t) =>
+              t['leftClipId'] == x.leftClipId &&
+              t['rightClipId'] == x.rightClipId,
+        )
+        .toList();
+    if (old.isNotEmpty &&
+        Q.fromJson(old.single['before']) == x.before &&
+        Q.fromJson(old.single['after']) == x.after &&
+        old.single['enabled'] == true) {
+      return before;
+    }
+    final tid = old.isEmpty ? id() : old.single['id'] as String;
+    list.removeWhere((t) => t['id'] == tid);
+    list.add({
+      'id': tid,
+      'version': version(tid),
+      'sequenceId': seq['id'],
+      'trackId': track['id'],
+      'leftClipId': x.leftClipId,
+      'rightClipId': x.rightClipId,
+      'cut':
+          (Q.fromJson(left['timelineRange']['start']) +
+                  Q.fromJson(left['timelineRange']['duration']))
+              .toJson(),
+      'before': x.before.toJson(),
+      'after': x.after.toJson(),
+      'kind': 'dissolve',
+      'curve': 'linear',
+      'missingHandlePolicy': 'reject',
+      'enabled': true,
+    });
+  }
+  seq['version'] = version(seq['id']);
+  final result = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(result);
+  return result;
+}
+
 final class SetClipTransform extends EditOperation {
   SetClipTransform(this.clipId, Map<String, double> parameters)
     : parameters = Map.unmodifiable(parameters) {
@@ -738,6 +855,19 @@ ProjectDocument applyEdit(
   if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
     return _opacityKeyframeEdit(before, operation, nextVersion, newId);
   }
+  if (operation is SetDissolve || operation is RemoveDissolve) {
+    return _dissolveEdit(before, operation, nextVersion, newId);
+  }
+  // Do not silently move/drop a transition when editing its topology.
+  // Explicit removal is reversible; slip remains allowed if handles revalidate.
+  if ((before.toJson()['transitions'] as List).isNotEmpty &&
+      (operation is SplitClip ||
+          operation is TrimClip ||
+          operation is MoveClip ||
+          operation is RollCut ||
+          operation is SlideClip)) {
+    throw const StudioException('TRANSITION_RANGE_EDIT_REQUIRES_REMOVAL');
+  }
   if (operation is SetClipTransform) {
     return _setTransform(before, operation, nextVersion, newId);
   }
@@ -922,6 +1052,8 @@ ProjectDocument applyEdit(
     case UnlinkAudioVideo():
     case SetAudioTrackState():
       throw StateError('persistent audio dispatch');
+    case SetDissolve():
+    case RemoveDissolve():
     case SetClipTransform():
     case SetClipOpacity():
     case SetOpacityKeyframe():

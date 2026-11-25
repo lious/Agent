@@ -105,9 +105,14 @@ final class NativeMedia {
     bool indexed = true,
     int? opacityQ16,
     Map<String, double>? transform2d,
+    Map<String, dynamic>? secondary,
+    int mixQ16 = 0,
   }) {
     if (capabilities['sourcePreview128'] != true) {
       throw const StudioException('PREVIEW_ADAPTER_UNAVAILABLE');
+    }
+    if (secondary != null && capabilities['linearDissolveV1'] != true) {
+      throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
     }
     if (transform2d != null && capabilities['staticTransform2dV1'] != true) {
       throw const StudioException('TRANSFORM_ADAPTER_UNAVAILABLE');
@@ -125,6 +130,8 @@ final class NativeMedia {
       'indexed': indexed,
       'opacityQ16': ?opacityQ16,
       'transform2d': ?transform2d,
+      'secondary': ?secondary,
+      if (secondary != null) 'mixQ16': mixQ16,
     });
     return Isolate.run(
       () => NativeMedia._attach(path, ns, h)._call('sm_preview', recipe),

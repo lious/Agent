@@ -63,6 +63,8 @@ class _FoundationAppState extends State<FoundationApp>
 
   final _previewTime = TextEditingController(text: '0');
   final _masterGain = TextEditingController(text: '0');
+  final _dissolveBefore = TextEditingController(text: '6');
+  final _dissolveAfter = TextEditingController(text: '6');
   final _tx = TextEditingController(text: '0');
   final _ty = TextEditingController(text: '0');
   final _scale = TextEditingController(text: '1');
@@ -403,6 +405,8 @@ class _FoundationAppState extends State<FoundationApp>
     _previewImage?.dispose();
     _previewTime.dispose();
     _masterGain.dispose();
+    _dissolveBefore.dispose();
+    _dissolveAfter.dispose();
     _tx.dispose();
     _ty.dispose();
     _scale.dispose();
@@ -537,7 +541,7 @@ class _FoundationAppState extends State<FoundationApp>
       child: const Text('Collect unreferenced local material (explicit only)'),
     ),
     const Text(
-      'Persisted audio clips are exported automatically; linked edits affect BOTH clips. No AudioSink/timeline playback yet.',
+      'Persisted audio clips export automatically; linked edits affect BOTH clips. VIDEO dissolve does not add an audio fade.',
     ),
     OutlinedButton(
       key: const Key('extract-persistent-audio'),
@@ -593,6 +597,72 @@ class _FoundationAppState extends State<FoundationApp>
                 ),
           title: const Text('Persisted AUDIO track mute'),
         ),
+    _path(
+      'dissolve-before',
+      'VIDEO dissolve before cut (project frames)',
+      _dissolveBefore,
+    ),
+    _path(
+      'dissolve-after',
+      'VIDEO dissolve after cut (project frames)',
+      _dissolveAfter,
+    ),
+    OutlinedButton(
+      key: const Key('set-dissolve'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final seq = _project.toJson()['sequences'][0],
+                  fps = FrameRate(seq['frameRate']['n'], seq['frameRate']['d']);
+              final left = _clips.singleWhere((c) => c['id'] == _selected);
+              final cut =
+                  Q.fromJson(left['timelineRange']['start']) +
+                  Q.fromJson(left['timelineRange']['duration']);
+              final right = _clips
+                  .where(
+                    (c) =>
+                        c['source'] != null &&
+                        Q.fromJson(c['timelineRange']['start']) == cut,
+                  )
+                  .toList();
+              if (right.length != 1) {
+                throw const StudioException('TRANSITION_NOT_ADJACENT');
+              }
+              final p = int.tryParse(_dissolveBefore.text),
+                  q = int.tryParse(_dissolveAfter.text);
+              if (p == null || q == null) {
+                throw const StudioException('TRANSITION_RANGE');
+              }
+              return widget.workspace.setDissolve(
+                _selected!,
+                right.single['id'] as String,
+                fps.frameTime(BigInt.from(p)),
+                fps.frameTime(BigInt.from(q)),
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text(
+        'Dissolve selected LEFT → next; reject missing handles (VIDEO only)',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('remove-dissolve'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final found = (_project.toJson()['transitions'] as List)
+                  .where((t) => t['leftClipId'] == _selected)
+                  .toList();
+              if (found.length != 1) throw const StudioException('NOT_FOUND');
+              return widget.workspace.removeDissolve(
+                found.single['id'] as String,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text(
+        'Remove selected LEFT transition (undoable; edit ranges afterwards)',
+      ),
+    ),
     _path('transform-x', 'Transform translate X (canvas pixels)', _tx),
     _path('transform-y', 'Transform translate Y (canvas pixels)', _ty),
     _path('transform-scale', 'Transform uniform scale (0,100]', _scale),

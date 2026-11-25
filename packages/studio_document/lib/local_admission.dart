@@ -6,8 +6,8 @@ import 'studio_document.dart';
 /// local slice. Other valid project features remain preserved/readable, not writable.
 void requireLocalEditingWritable(ProjectDocument project) {
   final d = project.toJson();
+  requireDissolveProfile(d);
   for (final table in [
-    'transitions',
     'markers',
     'selectionGroups',
     'imageDocuments',
@@ -213,6 +213,49 @@ void requireLocalEditingWritable(ProjectDocument project) {
       }
       if (start + duration > Q.fromJson(streams.single['duration'])) {
         throw const StudioException('SOURCE_OUT_OF_RANGE');
+      }
+    }
+  }
+}
+
+/// Narrow executable transition profile. Schema/semantic validation still owns
+/// adjacency, handle sufficiency and nonoverlapping windows (including imports).
+void requireDissolveProfile(Map<String, dynamic> d) {
+  final seq = d['sequences'][0];
+  final fps = FrameRate(seq['frameRate']['n'], seq['frameRate']['d']);
+  final tracks = {for (final t in seq['tracks']) t['id']: t};
+  final clips = {
+    for (final t in seq['tracks'])
+      for (final c in t['items']) c['id']: c,
+  };
+  final pairs = <String>{};
+  for (final t in d['transitions']) {
+    if (!pairs.add('${t['leftClipId']}:${t['rightClipId']}')) {
+      throw const StudioException('TRANSITION_PROFILE_UNSUPPORTED');
+    }
+    if (t['kind'] != 'dissolve' ||
+        t['curve'] != 'linear' ||
+        t['missingHandlePolicy'] != 'reject') {
+      throw const StudioException('TRANSITION_PROFILE_UNSUPPORTED');
+    }
+    final track = tracks[t['trackId']];
+    if (track == null || track['kind'] != 'video' || track['muted'] == true) {
+      throw const StudioException('TRANSITION_PROFILE_UNSUPPORTED');
+    }
+    for (final c in [clips[t['leftClipId']], clips[t['rightClipId']]]) {
+      if (c == null ||
+          c['source'] == null ||
+          c['source']['kind'] != 'asset' ||
+          c['enabled'] != true ||
+          c['timeMap']['kind'] != 'linear' ||
+          Q.fromJson(c['timeMap']['rate']) != Q.of(1)) {
+        throw const StudioException('TRANSITION_PROFILE_UNSUPPORTED');
+      }
+    }
+    for (final k in ['cut', 'before', 'after']) {
+      final q = Q.fromJson(t[k]);
+      if (fps.quantize(q, Rounding.tiesToEven) != q) {
+        throw const StudioException('TRANSITION_NOT_ON_FRAME');
       }
     }
   }

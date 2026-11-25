@@ -1069,12 +1069,16 @@ final class StudioWorkspace {
         'timeBase': Q.of(1).toJson(),
         'packetsRead': 0,
       });
-    } else if (point.opacityQ16 != 65536 || point.transform2d != null) {
+    } else if (point.opacityQ16 != 65536 ||
+        point.transform2d != null ||
+        point.secondary != null) {
       pixels = await previewAssetSource(
         point.assetId!,
         point.sourceTime,
         opacityQ16: point.opacityQ16,
         transform2d: point.transform2d,
+        secondary: point.secondary,
+        mixQ16: point.mixQ16,
       );
     } else {
       final asset = _playbackAssets[point.assetId]!;
@@ -1138,6 +1142,8 @@ final class StudioWorkspace {
     Q time, {
     int? opacityQ16,
     Map<String, double>? transform2d,
+    TimelineVideoPoint? secondary,
+    int mixQ16 = 0,
   }) async {
     _requireMedia();
     if (time < Q.of(0)) throw const StudioException('PREVIEW_TIME_INVALID');
@@ -1153,6 +1159,30 @@ final class StudioWorkspace {
       orElse: () => throw const StudioException('ASSET_NOT_FOUND'),
     );
     final hash = asset['originalBlobHash'] as String;
+    Map<String, dynamic>? otherAsset;
+    Map<String, double>? otherTransform;
+    if (secondary != null) {
+      if (mixQ16 < 0 ||
+          mixQ16 > 65536 ||
+          secondary.isGap ||
+          secondary.sourceTime < Q.of(0)) {
+        throw const StudioException('DISSOLVE_POINT_INVALID');
+      }
+      otherAsset = Map<String, dynamic>.from(
+        (project.toJson()['assets'] as List).singleWhere(
+          (a) => a['id'] == secondary.assetId,
+          orElse: () => throw const StudioException('ASSET_NOT_FOUND'),
+        ) as Map,
+      );
+      if (otherAsset['version'] != secondary.sourceVersion) {
+        throw const StudioException('SOURCE_VERSION_MISSING');
+      }
+      if (secondary.transform2d != null) {
+        otherTransform = Map.unmodifiable(secondary.transform2d!);
+        validateTransform2d(Map<String, dynamic>.from(otherTransform));
+      }
+    }
+
     final key = contentHash({
       'ns': project.namespace.toJson(),
       'blob': hash,
@@ -1160,6 +1190,14 @@ final class StudioWorkspace {
       'preview': 'source-rgba128-1',
       'opacity-linear709-v1-q16': ?opacityQ16,
       'static-transform2d-linear709-v1': ?transform2d,
+      if (secondary != null)
+        'dissolve-v1': {
+          'blob': otherAsset!['originalBlobHash'],
+          'time': secondary.sourceTime.toJson(),
+          'opacityQ16': secondary.opacityQ16,
+          'transform2d': otherTransform,
+          'mixQ16': mixQ16,
+        },
     });
     final cached = sourcePreviewCache.get(key);
     if (cached != null) return cached;
@@ -1181,12 +1219,30 @@ final class StudioWorkspace {
       if (current.hash != project.hash) {
         throw const StudioException('PREVIEW_PROJECT_CHANGED');
       }
+      Map<String, dynamic>? rightRecipe;
+      if (secondary != null) {
+        final otherFile = await _blobs!.resolve(
+          otherAsset!['originalBlobHash'] as String,
+        );
+        if (epoch != _previewEpoch || _closed || current.hash != project.hash) {
+          throw const StudioException('PREVIEW_SUPERSEDED');
+        }
+        rightRecipe = {
+          'path': otherFile.absolute.path,
+          'time': secondary.sourceTime.toJson(),
+          'indexed': true,
+          'opacityQ16': secondary.opacityQ16,
+          'transform2d': ?otherTransform,
+        };
+      }
       final frame = SourcePreviewFrame(
         await _previewMedia!.previewAsync(
           file,
           time,
           opacityQ16: opacityQ16,
           transform2d: transform2d,
+          secondary: rightRecipe,
+          mixQ16: mixQ16,
         ),
       );
       if (epoch != _previewEpoch || _closed) {
@@ -1238,12 +1294,36 @@ final class StudioWorkspace {
       point.sourceTime,
       opacityQ16: point.opacityQ16 == 65536 ? null : point.opacityQ16,
       transform2d: point.transform2d,
+      secondary: point.secondary,
+      mixQ16: point.mixQ16,
     );
     if (current.hash != snapshot.hash) {
       throw const StudioException('PREVIEW_PROJECT_CHANGED');
     }
     return result;
   }
+
+  ProjectDocument setDissolve(
+    String leftClipId,
+    String rightClipId,
+    Q before,
+    Q after, {
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['linearDissolveV1'] != true) {
+      throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
+    }
+    return edit(
+      SetDissolve(leftClipId, rightClipId, before, after),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  ProjectDocument removeDissolve(
+    String transitionId, {
+    required BigInt expectedRevision,
+  }) => edit(RemoveDissolve(transitionId), expectedRevision: expectedRevision);
 
   ProjectDocument setClipTransform(
     String clipId,
@@ -1261,6 +1341,11 @@ final class StudioWorkspace {
   }
 
   void _requireTransformAdapter(ProjectDocument document) {
+    if ((document.toJson()['transitions'] as List).isNotEmpty &&
+        _media?.capabilities['linearDissolveV1'] != true) {
+      throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
+    }
+
     if ((document.toJson()['effects'] as List).any(
           (e) => e['type'] == 'transform2d',
         ) &&
@@ -1586,11 +1671,20 @@ final class StudioWorkspace {
               definition,
               Map<String, dynamic>.from(clip as Map),
             );
-            if (opacity == 65536) continue;
+            final transform = clipTransform2d(definition, clip);
+            if (opacity == 65536 && transform == null) continue;
             final asset = (definition['assets'] as List).singleWhere(
               (a) => a['id'] == clip['source']['id'],
             );
-            if (!qualifiedNodes.add('${asset['id']}:$opacity')) continue;
+            if (!qualifiedNodes.add(
+              contentHash({
+                'asset': asset['id'],
+                'opacity': opacity,
+                'transform': transform,
+              }),
+            )) {
+              continue;
+            }
             if (qualifiedNodes.length > 64) {
               throw const StudioException(
                 'RESOURCE_EFFECT_QUALIFICATION_LIMIT',
@@ -1602,9 +1696,50 @@ final class StudioWorkspace {
               original,
               Q.fromJson(clip['sourceRange']['start']),
               opacityQ16: opacity,
+              transform2d: transform,
             );
             check();
           }
+        }
+        // A capability bit or two individually decoded sources cannot qualify
+        // their joint colour/format/dimension consumer. Probe an actual window.
+        for (final t in definition['transitions']) {
+          if (t['enabled'] != true) continue;
+          if (qualifiedNodes.length >= 64) {
+            throw const StudioException('RESOURCE_EFFECT_QUALIFICATION_LIMIT');
+          }
+          qualifiedNodes.add('dissolve:${t['id']}');
+          final midpoint =
+              Q.fromJson(t['cut']) +
+              (Q.fromJson(t['after']) - Q.fromJson(t['before'])) / Q.of(2);
+          final point = graph.sampleFrame(midpoint), right = point.secondary!;
+          final primaryAsset = (definition['assets'] as List).singleWhere(
+                (v) => v['id'] == point.assetId,
+              ),
+              otherAsset = (definition['assets'] as List).singleWhere(
+                (v) => v['id'] == right.assetId,
+              );
+          final primary = await _blobs!.resolve(
+            primaryAsset['originalBlobHash'],
+          );
+          check();
+          final other = await _blobs!.resolve(otherAsset['originalBlobHash']);
+          check();
+          await engine.previewAsync(
+            primary,
+            point.sourceTime,
+            opacityQ16: point.opacityQ16,
+            transform2d: point.transform2d,
+            secondary: {
+              'path': other.absolute.path,
+              'time': right.sourceTime.toJson(),
+              'indexed': true,
+              'opacityQ16': right.opacityQ16,
+              if (right.transform2d != null) 'transform2d': right.transform2d,
+            },
+            mixQ16: point.mixQ16,
+          );
+          check();
         }
         for (final hash in resources.keys) {
           await _blobs!.resolve(hash);
@@ -2020,6 +2155,7 @@ final class StudioWorkspace {
     final renderAudio = persistentAudio || includeEmbeddedAudio;
     final assets = {for (final a in d['assets'] as List) a['id']: a};
     final segments = <Map<String, dynamic>>[];
+    final segmentsByClip = <String, Map<String, dynamic>>{};
     final audioSegments = <Map<String, dynamic>>[];
     final probed = <String, Map<String, dynamic>>{};
     for (final track in s['tracks']) {
@@ -2130,14 +2266,14 @@ final class StudioWorkspace {
             ).toInt(),
           });
         }
-        segments.add(
-          videoGraph.encoderSegment(
-            clip['id'] as String,
-            originalPath: file.absolute.path,
-            streamIndex: index,
-            frameRate: fps,
-          ),
+        final segment = videoGraph.encoderSegment(
+          clip['id'] as String,
+          originalPath: file.absolute.path,
+          streamIndex: index,
+          frameRate: fps,
         );
+        segments.add(segment);
+        segmentsByClip[clip['id'] as String] = segment;
       }
     }
     final publisher = AtomicFilePublisher(),
@@ -2177,7 +2313,9 @@ final class StudioWorkspace {
         'height': s['canvas']['height'],
         'fps': s['frameRate'],
         'frameCount': count,
-        'segments': segments,
+        'segments': (d['transitions'] as List).isEmpty
+            ? segments
+            : videoGraph.compileDissolves(segmentsByClip),
         if (audioPcm != null)
           'audio': {
             'path': audioPcm['path'],

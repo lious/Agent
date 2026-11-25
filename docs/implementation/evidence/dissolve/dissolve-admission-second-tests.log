@@ -1,0 +1,98 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":530690,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/dissolve_render_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/dissolve_render_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":2,"time":10,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":672}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":675}
+{"test":{"id":3,"name":"REAL2-source linear dissolve: independent color reference, encoder samples, transform/curve, undo, archive/fork/reopen","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/dissolve_render_test.dart"},"type":"testStart","time":675}
+[libx264 @ 0x7f0fe40356c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0fe40356c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0fe40356c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0fe40356c0] frame I:13    Avg QP: 8.46  size:    49
+[libx264 @ 0x7f0fe40356c0] frame P:47    Avg QP: 7.13  size:    14
+[libx264 @ 0x7f0fe40356c0] mb I  I16..4: 97.5%  0.0%  2.5%
+[libx264 @ 0x7f0fe40356c0] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+[libx264 @ 0x7f0fe40356c0] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f0fe40356c0] i16 v,h,dc,p: 82%  0% 18%  0%
+[libx264 @ 0x7f0fe40356c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f0fe40356c0] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f0fe40356c0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f0fe40356c0] kb/s:5.16
+[libx264 @ 0x7f0fe400f340] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0fe400f340] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0fe400f340] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0fe400f340] frame I:6     Avg QP: 4.83  size:    56
+[libx264 @ 0x7f0fe400f340] frame P:54    Avg QP: 7.06  size:    18
+[libx264 @ 0x7f0fe400f340] mb I  I16..4: 95.4%  0.0%  4.6%
+[libx264 @ 0x7f0fe400f340] mb P  I16..4:  6.5%  0.0%  0.2%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:93.3%
+[libx264 @ 0x7f0fe400f340] coded y,uvDC,uvAC intra: 1.0% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f0fe400f340] i16 v,h,dc,p: 83%  0% 17%  0%
+[libx264 @ 0x7f0fe400f340] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 45%  0% 55%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f0fe400f340] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f0fe400f340] Weighted P-Frames: Y:51.9% UV:0.0%
+[libx264 @ 0x7f0fe400f340] kb/s:5.34
+[libx264 @ 0x7f0fe4084500] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0fe4084500] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0fe4084500] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0fe4084500] frame I:6     Avg QP: 4.83  size:    56
+[libx264 @ 0x7f0fe4084500] frame P:54    Avg QP: 7.06  size:    18
+[libx264 @ 0x7f0fe4084500] mb I  I16..4: 95.4%  0.0%  4.6%
+[libx264 @ 0x7f0fe4084500] mb P  I16..4:  6.5%  0.0%  0.2%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:93.3%
+[libx264 @ 0x7f0fe4084500] coded y,uvDC,uvAC intra: 1.0% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f0fe4084500] i16 v,h,dc,p: 83%  0% 17%  0%
+[libx264 @ 0x7f0fe4084500] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 45%  0% 55%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f0fe4084500] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f0fe4084500] Weighted P-Frames: Y:51.9% UV:0.0%
+[libx264 @ 0x7f0fe4084500] kb/s:5.34
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3167}
+{"test":{"id":4,"name":"REAL malformed secondary schedules refuse before output creation","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":224,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/dissolve_render_test.dart"},"type":"testStart","time":3169}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3177}
+{"test":{"id":5,"name":"REAL individually decodable different-size source cannot obtain writable dissolve admission; failed joint qualification leaves selected root unchanged","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":275,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/dissolve_render_test.dart"},"type":"testStart","time":3178}
+{"testID":5,"error":"TIMELINE_SCALING_UNSUPPORTED","stackTrace":"package:studio_document/timeline_graph.dart 84:11         new TimelineVideoGraph\npackage:studio_sdk/resource_preservation.dart 173:5       ResourcePreservationSession.writableCollection\npackage:studio_sdk/studio_sdk.dart 1565:31                StudioWorkspace.adoptPreservedResources\npackages/studio_sdk/test/dissolve_fixture.dart 105:11     installDissolveFixture\n===== asynchronous gap ===========================\npackages/studio_sdk/test/dissolve_render_test.dart 292:9  main.<fn>\n","isFailure":false,"type":"error","time":3517}
+{"testID":5,"result":"error","skipped":false,"hidden":false,"type":"testDone","time":3518}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_sdk/test/resource_admission_test.dart"},"type":"suite","time":3524}
+{"test":{"id":7,"name":"loading packages/studio_sdk/test/resource_admission_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3525}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3721}
+{"group":{"id":8,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":3722}
+{"test":{"id":9,"name":"REAL native qualification -> writable fork -> ImportMap -> edit/archive/reopen/original-file export","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":65,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":3722}
+[libx264 @ 0x7f0ff80bb200] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0ff80bb200] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0ff80bb200] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0ff80bb200] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f0ff80bb200] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f0ff80bb200] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f0ff80bb200] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f0ff80bb200] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f0ff80bb200] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f0ff80bb200] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f0ff80bb200] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f0ff80bb200] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f0ff80bb200] kb/s:424.06
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4508}
+{"test":{"id":10,"name":"REAL AAC source qualification decodes bounded PCM and adopted timeline exports its audio","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":120,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":4509}
+[libx264 @ 0x7f0fec1c6f00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f0fec1c6f00] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f0fec1c6f00] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f0fec1c6f00] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f0fec1c6f00] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f0fec1c6f00] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f0fec1c6f00] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f0fec1c6f00] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f0fec1c6f00] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f0fec1c6f00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f0fec1c6f00] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f0fec1c6f00] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f0fec1c6f00] kb/s:424.06
+[aac @ 0x7f0fec1fe140] Qavg: 362.746
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5187}
+{"test":{"id":11,"name":"REAL opaque/font/mask/image content stays readonly, never stripped to pass renderer gate","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":164,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":5189}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5253}
+{"test":{"id":12,"name":"REAL native source metadata forgery rejected without project publication","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":194,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":5254}
+{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5314}
+{"test":{"id":13,"name":"REAL explicit cancellation and intervening revision reject adoption without switching projects","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":214,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":5315}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5371}
+{"test":{"id":14,"name":"REAL namespace budget rejects resource adoption without project, source or reservation leakage","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":243,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":5372}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5420}
+{"test":{"id":15,"name":"REAL retained full-Project snapshot/pin qualification and archive reopen; no retained renderer claim","suiteID":6,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":261,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/resource_admission_test.dart"},"type":"testStart","time":5421}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5613}
+{"success":false,"type":"done","time":5618}
