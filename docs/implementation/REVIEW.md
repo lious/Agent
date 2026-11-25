@@ -869,3 +869,12 @@ the historical intermittent underrun. Full original tasks remain partial.
 3. **UI/缓存/资格/失败原子性审查**：真实7个输入控制器→原命令→preview/单次undo/save/fork/MP4；SDK验证SQL后段trigger失败不发布、stale revision拒绝、归档fork/重开及真实native资源采纳。发现 qualifiedNodes去重键若漏 raster 会复用错误资格，补入完整 raster；公开异步preview首个await前深捕获，实际调用后马上修改外部map仍不改变像素。测试初稿的动画fixture缺 `easing:null`，可能只证明Schema拒绝；改成先真实构造合法ProjectDocument，再断言精确 RASTER_ANIMATION_NOT_IMPLEMENTED 和不剥离keyframes。native12个主/副腿恶意recipe实际创建输出前拒绝，不能只靠领域validator声称安全。最终冻结后重跑所选矩阵，早期仅定向成功不混算，结果/未跑项另列；未更改Pulse队列、timeout或旧失败断言。
 
 最终冻结资格的真实失败：serial矩阵新增raster_clock首次play等待服务确认sample>4800时已interrupted/underrun1（presented2877、submitted5168、ring8192/8192、maxWorkerLoopGap2425us、serviceLatency25894us），抛于line116，尚未执行该测试line127的timeline-render/seek像素断言。早期同案例单独定向通过不是本冻结端到端成功；保留完整非零log，不改队列/timeout/阈值、不刷绿。本轮旧opacity_clock通过也不消除00c2e5d已记录失败。根因未定位，不能据该日志猜测是crop像素负载或声卡性能。最终233所选中232过1失败；其他实际像素/UI/归档/取消资格与失败分列。
+
+
+## increment1.19 — 真实Pulse调度/诊断（三轮实审修正）
+
+1. **证据与因果审查**：保全e23a559/未发布handoff、旧raster presented2877首次启动失败及00c opacity失败。先仅加诊断跑一次两case和一次旧monitor/fault probe，均通过，不能说根因复现/解决。读官方Pulse mainloop/buffer文档；只确认原nonblocking iterate后无条件sleep会延迟已ready工作，决定用官方prepare/poll/dispatch和同样2000us最长请求等待替代，不凭测试绿猜根因、不用prebuf0或扩队列掩盖。远端三次GET空规则/protected=false不能解释commit_refs_rules，未作写重试。
+2. **线程/状态/错误审查**：核对prepare单位microseconds、prepare/poll/dispatch全部负返回仍中断；Pulse对象仍只worker访问，没有跨线程wake指针新竞态。控制/cancel、stale/cork/connect deadline、服务确认sample、pause/rebind重建与drain EOF路径不变。修正新增可写诊断的未知值为有符号-1（避免size_t(-1)呈现巨大数），underflow index只记证据不变成时钟；dispatch计数含deferred/timer，不冒称全为IO。原ring/server/写batch/PCM有限门禁不动。
+3. **真实故障/回归审查**：加强已有真实probe验证event策略/协商minreq与prebuf保持8192bytes，实际SIGSTOP producer仍须underrun/clockValid=false、sample冻结且记录真实underflow index。原sink suspend、server stop/stale、显式恢复/重复resume、FD/坏输入拒绝仍保留。冻结包含既有crop/color12文件及本批2文件，实际串行执行233定向、monitor/fault、历史SQL/kill、CTest和取消，避免CPU并行污染Pulse；结果及失败按本冻结单列，未重跑范围与未闭合间歇问题如实保留。
+
+最终冻结14源码/测试文件所选233全部通过，另真实monitor/fault probe及800视频取消/CTest3/真实历史kill成功。真实SIGSTOP producer依然触发underrun且clockValid=false并冻结；server-stale/device-lost与显式恢复仍有效。新旧两个间歇case的本次通过不能证明根因闭合，诊断前两case也曾通过的反证和两份历史失败继续单列；不作再次刷绿。本批不push，远端原因未知及无已证实用户纠正动作结论不变。

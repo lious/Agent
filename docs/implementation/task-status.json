@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T23:43:11.567557+08:00",
+  "asOf": "2026-11-25T23:55:16.461480+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,9 +12,9 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Original I-005 multi-level undo/redo and atomic proposal inverse/coalescing dependencies; then remaining I-008 registered luma/full registry and I-022 consumers. Crop/color now have real CPU/UI/preencoder/export/archive evidence; not full-task qualification. No storage/fingerprint detour.",
+    "Continue original I-023 only with new causal evidence/controlled cases: readiness polling removes unconditional sleep but does NOT prove old intermittent startup/resume underrun closed. Do not repeat green tests as a fix. Original I-005 multi-level undo/redo/proposal inverse remains executable next, without storage/fingerprint expansion.",
     "Continue original48 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
-    "I-023 investigate retained startup/resume service clock underrun without changing bounded-queue/fault criteria: current frozen raster_clock interrupted at presented2877/submitted5168 before first explicit renderTimelineFromAudioClock; earlier opacity_clock failure remains unresolved. Physical/P0 qualification independent.",
+    "Remote publication blocked: read-only applicable rules=[] / repo rulesets=[] / protected=false does not explain commit_refs_rules rejection. No confirmed user-side corrective action. No further push until cause and compliant resolution evidence reported; continue ordinary local commits for authorized work.",
     "I-022 GPU effects/reference and consumption-safe GPU/encoder texture leases/full V-003 matrix; isolated100 scheduled CPU cancellations now tested, not full qualification.",
     "XD-003 existing managed zero-ICE policy blocker unchanged; no positive RTC retries or relay/policy workaround",
     "Continue same checkout/feature; no per-batch approval waits, no automatic main merge"
@@ -975,13 +975,14 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Increment1.7 adds actual optional libpulse17 asynchronous AudioSink with8192-frame ring/4096-frame server maximum; service-confirmed noninterpolated48k position, actual cork/drain, paused exact seek/rebind epochs, underflow/device-loss/stale timing freeze, cancellation and cleanup. SDK freezes persistent audio snapshot and uses existing actual PCM/SWR/Dart AudioBus; both native UIs expose audition controls and background pause/cancel. Physical presented clock remains unverified. Increment1.17 final current225-case selected matrix retains real static-opacity Pulse service timeout/underrun(1 of6 service cases failed); new dissolve-clock passed, which does NOT resolve the existing fault. Exact nonzero logs and first frozen reproduction retained separately; no queue/timeout relaxation or wall-clock substitution.",
+      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. Added actual persisted audio-clip own-stream/source-range/absolute-sample compilation and default AAC export, audible/muted independent sample checks after linked split/reopen/archive/fork. Existing real PCM/SWR/DSP/offline60s qualification preserved. Increment1.7 adds actual optional libpulse17 asynchronous AudioSink with8192-frame ring/4096-frame server maximum; service-confirmed noninterpolated48k position, actual cork/drain, paused exact seek/rebind epochs, underflow/device-loss/stale timing freeze, cancellation and cleanup. SDK freezes persistent audio snapshot and uses existing actual PCM/SWR/Dart AudioBus; both native UIs expose audition controls and background pause/cancel. Physical presented clock remains unverified. Increment1.17 final current225-case selected matrix retains real static-opacity Pulse service timeout/underrun(1 of6 service cases failed); new dissolve-clock passed, which does NOT resolve the existing fault. Exact nonzero logs and first frozen reproduction retained separately; no queue/timeout relaxation or wall-clock substitution. Increment1.19: official bounded readiness prepare/poll/dispatch replaces nonblocking iterate+unconditional2ms sleep, retains service-confirmed sample clock and identical ring/server/underrun/freeze/timeout rules. Adds minreq/underflow-index/request/event diagnostic facts. Existing real private monitor/SIGSTOP-starvation/suspend/server-stall/rebind/resume/EOF probe strengthened; exact frozen results recorded separately. This scheduling defect correction is NOT proof that intermittent first-play/resume root is identified or fixed; both old failures remain open.",
       "evidence": [
         "evidence/audio-aac/summary.json",
         "evidence/persistent-audio/summary.json",
         "evidence/audio-sink/summary.json",
         "evidence/dissolve/summary.json",
-        "evidence/raster-effects/summary.json"
+        "evidence/raster-effects/summary.json",
+        "evidence/audio-event-pump/summary.json"
       ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",
@@ -990,7 +991,7 @@
         "I-015"
       ],
       "blockers": [],
-      "remainingImplementation": "Actual software-service audio-only audition now exists, but full upstream AudioClip/link/route/DSP semantics, timeline video RenderGraph and60s PRESENTED AV sync, PipeWire/P0/physical device clocks and non-Linux adapters remain unqualified. Earlier offline60s file sync is not presentation latency. Increment1.18 frozen raster_clock first-play service underrun at presented2877, before its explicit timeline render; current old opacity_clock pass does not resolve previous failure. Final Pulse group6pass/1fail, no retry/timeout/queue relaxation."
+      "remainingImplementation": "Actual software-service audio-only audition now exists, but full upstream AudioClip/link/route/DSP semantics, timeline video RenderGraph and60s PRESENTED AV sync, PipeWire/P0/physical device clocks and non-Linux adapters remain unqualified. Earlier offline60s file sync is not presentation latency. Increment1.18 frozen raster_clock first-play service underrun at presented2877, before its explicit timeline render; current old opacity_clock pass does not resolve previous failure. Final Pulse group6pass/1fail, no retry/timeout/queue relaxation. Increment1.19 removes blind ready-event sleep, but diagnostic-only pre-change cases also passed, so no statistically/causally established intermittent fix or physical/P0 acceptance. Do not downgrade insufficient-audio interruption/frozen-clock policy."
     },
     {
       "id": "I-024",
@@ -1681,5 +1682,5 @@
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
   },
-  "iterationBaseCommit": "00c2e5d4b6e93d71ff3b19d8ddf5d30f95fdd77d"
+  "iterationBaseCommit": "e23a559c7178c5ee9a127780d199d098e60927c5"
 }

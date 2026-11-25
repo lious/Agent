@@ -1,0 +1,45 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":570128,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/transform_clock_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/transform_clock_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":7,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":578}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":580}
+{"test":{"id":3,"name":"REAL Pulse confirmed-sample clock consumes static transform plus clip-local opacity curve; paused seek pixels match, edits invalidate","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/transform_clock_test.dart"},"type":"testStart","time":580}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3811}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_sdk/test/raster_clock_test.dart"},"type":"suite","time":3818}
+{"test":{"id":5,"name":"loading packages/studio_sdk/test/raster_clock_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3820}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3970}
+{"group":{"id":6,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3971}
+{"test":{"id":7,"name":"REAL Pulse confirmed-sample clock consumes crop/colour2-source VIDEO dissolve plus transform/opacity; paused seek pixels match, edits invalidate","suiteID":4,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/raster_clock_test.dart"},"type":"testStart","time":3971}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6137}
+{"suite":{"id":8,"platform":"vm","path":"packages/studio_sdk/test/dissolve_clock_test.dart"},"type":"suite","time":6139}
+{"test":{"id":9,"name":"loading packages/studio_sdk/test/dissolve_clock_test.dart","suiteID":8,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6140}
+{"testID":9,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":6308}
+{"group":{"id":10,"suiteID":8,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":6309}
+{"test":{"id":11,"name":"REAL Pulse confirmed-sample clock consumes2-source VIDEO dissolve plus transform/opacity; paused seek pixels match, edits invalidate","suiteID":8,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/dissolve_clock_test.dart"},"type":"testStart","time":6309}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10216}
+{"suite":{"id":12,"platform":"vm","path":"packages/studio_sdk/test/opacity_keyframe_clock_test.dart"},"type":"suite","time":10219}
+{"test":{"id":13,"name":"loading packages/studio_sdk/test/opacity_keyframe_clock_test.dart","suiteID":12,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":10220}
+{"testID":13,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":10365}
+{"group":{"id":14,"suiteID":12,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":10366}
+{"test":{"id":15,"name":"REAL Pulse confirmed-sample clock consumes clip-local opacity curve; paused seek pixels match, edits invalidate","suiteID":12,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/opacity_keyframe_clock_test.dart"},"type":"testStart","time":10366}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12264}
+{"suite":{"id":16,"platform":"vm","path":"packages/studio_sdk/test/timeline_audio_test.dart"},"type":"suite","time":12266}
+{"test":{"id":17,"name":"loading packages/studio_sdk/test/timeline_audio_test.dart","suiteID":16,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":12266}
+{"testID":17,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":12399}
+{"group":{"id":18,"suiteID":16,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":12399}
+{"test":{"id":19,"name":"REAL Pulse SDK timeline prepare, confirmed clock, pause/seek/rebind/edit fence/cancel/close","suiteID":16,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":26,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/timeline_audio_test.dart"},"type":"testStart","time":12400}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":16829}
+{"suite":{"id":20,"platform":"vm","path":"packages/studio_sdk/test/timeline_video_test.dart"},"type":"suite","time":16831}
+{"test":{"id":21,"name":"loading packages/studio_sdk/test/timeline_video_test.dart","suiteID":20,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":16831}
+{"testID":21,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":16968}
+{"group":{"id":22,"suiteID":20,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":16969}
+{"test":{"id":23,"name":"REAL AudioSink-clock RenderGraph selects generated proxy, freezes paused, fences seek/rebind/revision and closes resources","suiteID":20,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/timeline_video_test.dart"},"type":"testStart","time":16969}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21530}
+{"suite":{"id":24,"platform":"vm","path":"packages/studio_sdk/test/opacity_clock_test.dart"},"type":"suite","time":21532}
+{"test":{"id":25,"name":"loading packages/studio_sdk/test/opacity_clock_test.dart","suiteID":24,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":21533}
+{"testID":25,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":21706}
+{"group":{"id":26,"suiteID":24,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":21707}
+{"test":{"id":27,"name":"REAL Pulse confirmed-sample clock consumes full-source opacity; paused seek pixels match, edits invalidate","suiteID":24,"groupIDs":[26],"metadata":{"skip":false,"skipReason":null},"line":12,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/opacity_clock_test.dart"},"type":"testStart","time":21707}
+{"testID":27,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":23633}
+{"success":true,"type":"done","time":23641}

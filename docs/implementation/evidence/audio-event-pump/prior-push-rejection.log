@@ -1,0 +1,61 @@
+---
+pid: 562194
+cwd: "/workspace/agent-foundation-20261125"
+command: "git commit -m \"feat(media): consume persisted crop and linear color in shared raster path\" && git push origin HEAD:refs/heads/feat/studio-foundation-20261125 && git rev-parse HEAD && git ls-remote --heads origin refs/heads/feat/studio-foundation-20261125 && git status --short"
+title: "Commit reviewed crop/color batch and push existing authorized feature branch, then verify exact remote SHA and clean worktree"
+status: failed
+started_at: 2026-11-25T15:43:47.165Z
+running_for_ms: 25323
+---
+[feat/studio-foundation-20261125 e23a559] feat(media): consume persisted crop and linear color in shared raster path
+ 50 files changed, 7048 insertions(+), 36 deletions(-)
+ create mode 100644 docs/adr/0025-static-crop-colorbasic-cpu-consumers.md
+ create mode 100644 docs/implementation/evidence/raster-effects/README.md
+ create mode 100644 docs/implementation/evidence/raster-effects/commands.json
+ create mode 100644 docs/implementation/evidence/raster-effects/final-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-actual-legacy-and-kill.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-analyzer.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-asan-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-asan-dissolve-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-asan-raster-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-asan-transform-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-chrome.jsonl
+ create mode 100644 docs/implementation/evidence/raster-effects/final-ctest.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-dissolve-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-native.jsonl
+ create mode 100644 docs/implementation/evidence/raster-effects/final-pulse.jsonl
+ create mode 100644 docs/implementation/evidence/raster-effects/final-raster-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-transform-100cancel.log
+ create mode 100644 docs/implementation/evidence/raster-effects/final-ui.jsonl
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-asan-build.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-cancel-build.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-final-actual-legacy.json
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-final-format.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-first-analyzer.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-first-build.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-first-clock.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-first-tests.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-first-ui.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-second-analyzer.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-second-tests.log
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-spec-integrity.json
+ create mode 100644 docs/implementation/evidence/raster-effects/raster-third-analyzer.log
+ create mode 100644 docs/implementation/evidence/raster-effects/run_selected.py
+ create mode 100644 docs/implementation/evidence/raster-effects/summary.json
+ create mode 100644 docs/implementation/evidence/raster-effects/toolchain-reused.json
+ create mode 100644 docs/implementation/evidence/raster-effects/write_evidence.py
+ create mode 100644 packages/studio_document/test/raster_effect_test.dart
+ create mode 100644 packages/studio_editor_ui/test/raster_ui_test.dart
+ create mode 100644 packages/studio_sdk/test/raster_clock_test.dart
+ create mode 100644 packages/studio_sdk/test/raster_render_test.dart
+remote: fatal error in commit_refs_rules
+To https://github.com/lious/Agent.git
+ ! [remote rejected] HEAD -> feat/studio-foundation-20261125 (fatal error in commit_refs_rules
+)
+error: failed to push some refs to 'https://github.com/lious/Agent.git'
+
+---
+exit_code: 1
+elapsed_ms: 25323
+ended_at: 2026-11-25T15:44:12.488Z
+---

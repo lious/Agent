@@ -1,0 +1,155 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":568691,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/raster_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/raster_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/dissolve_ui_test.dart"},"type":"suite","time":9}
+{"test":{"id":3,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/dissolve_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":9}
+{"suite":{"id":4,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/transform_ui_test.dart"},"type":"suite","time":10}
+{"test":{"id":5,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/transform_ui_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":10}
+{"suite":{"id":6,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_keyframe_ui_test.dart"},"type":"suite","time":10}
+{"test":{"id":7,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_keyframe_ui_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":11}
+{"count":12,"time":12,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2913}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2917}
+{"test":{"id":9,"name":"REAL crop/color UI combined transform-opacity-dissolve edit/preview/undo/save/fork/export","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":11,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/raster_ui_test.dart"},"type":"testStart","time":2917}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3222}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3222}
+{"test":{"id":11,"name":"REAL VIDEO dissolve UI handles/edit/preview/undo/save/fork/export","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":11,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/dissolve_ui_test.dart"},"type":"testStart","time":3223}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3412}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3413}
+{"test":{"id":13,"name":"REAL static transform UI edit/preview/undo/archive/fork/export","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/transform_ui_test.dart"},"type":"testStart","time":3413}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3656}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3657}
+{"test":{"id":15,"name":"REAL keyframe UI edit/preview/undo/archive/fork/export","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_keyframe_ui_test.dart"},"type":"testStart","time":3657}
+Shell: [libx264 @ 0x7ff82c1c0f40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7ff82c1c0f40] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7ff82c1c0f40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f9a2c00cb80] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f9a2c00cb80] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f9a2c00cb80] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f9a2c00cb80] frame I:13    Avg QP: 8.46  size:    49
+Shell: [libx264 @ 0x7f9a2c00cb80] frame P:47    Avg QP: 7.13  size:    14
+Shell: [libx264 @ 0x7f9a2c00cb80] mb I  I16..4: 97.5%  0.0%  2.5%
+Shell: [libx264 @ 0x7f9a2c00cb80] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+Shell: [libx264 @ 0x7f9a2c00cb80] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+Shell: [libx264 @ 0x7f9a2c00cb80] i16 v,h,dc,p: 82%  0% 18%  0%
+Shell: [libx264 @ 0x7f9a2c00cb80] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+Shell: [libx264 @ 0x7f9a2c00cb80] i8c dc,h,v,p: 100%  0%  0%  0%
+Shell: [libx264 @ 0x7f9a2c00cb80] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f9a2c00cb80] kb/s:5.16
+Shell: [libx264 @ 0x7ff82c1c0f40] frame I:3     Avg QP:13.12  size:  8741
+Shell: [libx264 @ 0x7ff82c1c0f40] frame P:87    Avg QP:21.70  size:  1500
+Shell: [libx264 @ 0x7ff82c1c0f40] mb I  I16..4: 49.4%  0.0% 50.6%
+Shell: [libx264 @ 0x7ff82c1c0f40] mb P  I16..4:  1.6%  0.0%  0.2%  P16..4:  9.8%  7.0%  6.2%  0.0%  0.0%    skip:75.3%
+Shell: [libx264 @ 0x7ff82c1c0f40] coded y,uvDC,uvAC intra: 28.1% 60.6% 49.7% inter: 9.9% 20.2% 18.5%
+Shell: [libx264 @ 0x7ff82c1c0f40] i16 v,h,dc,p: 76% 10% 13%  0%
+Shell: [libx264 @ 0x7ff82c1c0f40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 20% 21% 26%  7%  3%  2%  9% 11%  1%
+Shell: [libx264 @ 0x7ff82c1c0f40] i8c dc,h,v,p: 49% 18% 29%  4%
+Shell: [libx264 @ 0x7ff82c1c0f40] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7ff82c1c0f40] kb/s:417.94
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":30293}
+{"suite":{"id":16,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_ui_test.dart"},"type":"suite","time":30359}
+{"test":{"id":17,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_ui_test.dart","suiteID":16,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":30359}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":30428}
+{"suite":{"id":18,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/local_video_ui_test.dart"},"type":"suite","time":30479}
+{"test":{"id":19,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/local_video_ui_test.dart","suiteID":18,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":30479}
+Shell: [libx264 @ 0x7f99f4108d40] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f99f4108d40] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f99f4108d40] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f99f4108d40] frame I:4     Avg QP:11.14  size:  2923
+Shell: [libx264 @ 0x7f99f4108d40] frame P:86    Avg QP:16.22  size:  1614
+Shell: [libx264 @ 0x7f99f4108d40] mb I  I16..4: 78.8%  0.0% 21.2%
+Shell: [libx264 @ 0x7f99f4108d40] mb P  I16..4: 32.0%  0.0%  3.7%  P16..4: 16.9%  8.0%  4.6%  0.0%  0.0%    skip:34.8%
+Shell: [libx264 @ 0x7f99f4108d40] coded y,uvDC,uvAC intra: 8.8% 27.2% 21.3% inter: 10.9% 34.9% 21.5%
+Shell: [libx264 @ 0x7f99f4108d40] i16 v,h,dc,p: 87%  9%  4%  0%
+Shell: [libx264 @ 0x7f99f4108d40] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 22% 24%  3%  1%  1%  3%  2%  3%
+Shell: [libx264 @ 0x7f99f4108d40] i8c dc,h,v,p: 55% 15% 29%  1%
+Shell: [libx264 @ 0x7f99f4108d40] Weighted P-Frames: Y:66.3% UV:61.6%
+Shell: [libx264 @ 0x7f99f4108d40] kb/s:401.36
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":31079}
+{"suite":{"id":20,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart"},"type":"suite","time":31116}
+{"test":{"id":21,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart","suiteID":20,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":31116}
+{"testID":17,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":31236}
+{"group":{"id":22,"suiteID":16,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":31236}
+{"test":{"id":23,"name":"REAL opacity UI edit/preview/undo/archive/fork/export","suiteID":16,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/opacity_ui_test.dart"},"type":"testStart","time":31236}
+Shell: [libx264 @ 0x7f665002b040] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f665002b040] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f665002b040] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f665002b040] frame I:3     Avg QP: 5.00  size:    55
+Shell: [libx264 @ 0x7f665002b040] frame P:57    Avg QP: 7.05  size:    14
+Shell: [libx264 @ 0x7f665002b040] mb I  I16..4: 95.8%  0.0%  4.2%
+Shell: [libx264 @ 0x7f665002b040] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+Shell: [libx264 @ 0x7f665002b040] coded y,uvDC,uvAC intra: 1.0% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+Shell: [libx264 @ 0x7f665002b040] i16 v,h,dc,p: 83%  0% 17%  0%
+Shell: [libx264 @ 0x7f665002b040] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 30%  0% 70%  0%  0%  0%  0%  0%  0%
+Shell: [libx264 @ 0x7f665002b040] i8c dc,h,v,p: 100%  0%  0%  0%
+Shell: [libx264 @ 0x7f665002b040] Weighted P-Frames: Y:15.8% UV:0.0%
+Shell: [libx264 @ 0x7f665002b040] kb/s:3.96
+{"testID":19,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":31521}
+{"group":{"id":24,"suiteID":18,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":31521}
+{"test":{"id":25,"name":"real native UI import split trim undo archive fork export","suiteID":18,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/local_video_ui_test.dart"},"type":"testStart","time":31521}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":31543}
+{"suite":{"id":26,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart"},"type":"suite","time":31579}
+{"test":{"id":27,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart","suiteID":26,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":31580}
+{"testID":21,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":32072}
+{"group":{"id":28,"suiteID":20,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":32072}
+{"test":{"id":29,"name":"REAL UI resource JSON load/collect/confirm/archive/reopen/fork leaves editable workspace and CAS unchanged","suiteID":20,"groupIDs":[28],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":12,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart"},"type":"testStart","time":32073}
+{"testID":27,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":32358}
+{"group":{"id":30,"suiteID":26,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":32358}
+{"test":{"id":31,"name":"REAL UI explicit retention configuration/dry-run/confirmation removes only reviewed recovery indexes","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart"},"type":"testStart","time":32358}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":34763}
+{"test":{"id":32,"name":"REAL UI explicit native qualification and writable fork switches workspace with durable ImportMap","suiteID":20,"groupIDs":[28],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":145,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/resource_preservation_ui_test.dart"},"type":"testStart","time":34764}
+{"testID":32,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":35604}
+{"suite":{"id":33,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart"},"type":"suite","time":35642}
+{"test":{"id":34,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart","suiteID":33,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":35642}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":35757}
+{"suite":{"id":35,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart"},"type":"suite","time":35787}
+{"test":{"id":36,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart","suiteID":35,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":35787}
+{"testID":34,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":36449}
+{"group":{"id":37,"suiteID":33,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":36450}
+{"test":{"id":38,"name":"REAL UI explicit storage policy applies byte cap and rejects over-budget import without deleting data","suiteID":33,"groupIDs":[37],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/namespace_budget_ui_test.dart"},"type":"testStart","time":36450}
+{"testID":36,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":36669}
+{"group":{"id":39,"suiteID":35,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":36669}
+{"test":{"id":40,"name":"REAL UI selected source-qualified repair restores corrupt CAS without changing project revision","suiteID":35,"groupIDs":[39],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_repair_ui_test.dart"},"type":"testStart","time":36669}
+{"testID":38,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":38789}
+{"suite":{"id":41,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart"},"type":"suite","time":38818}
+{"test":{"id":42,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart","suiteID":41,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":38819}
+{"testID":42,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":39561}
+{"group":{"id":43,"suiteID":41,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":39562}
+{"test":{"id":44,"name":"REAL UI explicit selected proxy consent detaches references, resets consent and undo restores metadata","suiteID":41,"groupIDs":[43],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/proxy_discard_ui_test.dart"},"type":"testStart","time":39562}
+{"testID":40,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":40605}
+{"suite":{"id":45,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart"},"type":"suite","time":40636}
+{"test":{"id":46,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart","suiteID":45,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":40637}
+{"testID":46,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":41460}
+{"group":{"id":47,"suiteID":45,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":41461}
+{"test":{"id":48,"name":"real SQLite title save, validation, undo and reopen in Flutter widget","suiteID":45,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart"},"type":"testStart","time":41461}
+{"testID":44,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":42668}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":42962}
+Shell: [libx264 @ 0x7f29801084c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f29801084c0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f29801084c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f29801084c0] frame I:3     Avg QP:12.24  size:  4418
+Shell: [libx264 @ 0x7f29801084c0] frame P:87    Avg QP:18.24  size:  1318
+Shell: [libx264 @ 0x7f29801084c0] mb I  I16..4: 66.4%  0.0% 33.6%
+Shell: [libx264 @ 0x7f29801084c0] mb P  I16..4:  9.4%  0.0%  1.8%  P16..4: 12.7%  8.6%  4.8%  0.0%  0.0%    skip:62.7%
+Shell: [libx264 @ 0x7f29801084c0] coded y,uvDC,uvAC intra: 18.1% 44.9% 38.4% inter: 6.6% 20.5% 15.7%
+Shell: [libx264 @ 0x7f29801084c0] i16 v,h,dc,p: 86% 10%  4%  0%
+Shell: [libx264 @ 0x7f29801084c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 22% 21%  4%  1%  2%  3%  3%  3%
+Shell: [libx264 @ 0x7f29801084c0] i8c dc,h,v,p: 52% 19% 28%  1%
+Shell: [libx264 @ 0x7f29801084c0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f29801084c0] kb/s:341.15
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":57344}
+Shell: [libx264 @ 0x7f61a41084c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f61a41084c0] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f61a41084c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f61a41084c0] frame I:3     Avg QP:12.50  size:  5061
+Shell: [libx264 @ 0x7f61a41084c0] frame P:87    Avg QP:19.05  size:  1653
+Shell: [libx264 @ 0x7f61a41084c0] mb I  I16..4: 65.7%  0.0% 34.3%
+Shell: [libx264 @ 0x7f61a41084c0] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+Shell: [libx264 @ 0x7f61a41084c0] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+Shell: [libx264 @ 0x7f61a41084c0] i16 v,h,dc,p: 87% 10%  3%  0%
+Shell: [libx264 @ 0x7f61a41084c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+Shell: [libx264 @ 0x7f61a41084c0] i8c dc,h,v,p: 51% 19% 29%  1%
+Shell: [libx264 @ 0x7f61a41084c0] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f61a41084c0] kb/s:424.06
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":57723}
+{"success":true,"type":"done","time":57772}

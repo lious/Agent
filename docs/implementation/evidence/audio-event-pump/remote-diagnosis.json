@@ -1,0 +1,53 @@
+{
+  "asOf": "2026-11-25T23:48:04.795983+08:00",
+  "mode": "Read-only, three authorized GET calls, no push retry or permission/rule/identity/protocol change",
+  "localCommit": "e23a559c7178c5ee9a127780d199d098e60927c5",
+  "previousPushError": "remote rejected fatal error in commit_refs_rules",
+  "evidence": {
+    "remote-branch-rules.json": [],
+    "remote-rulesets.json": [],
+    "remote-branch.json": {
+      "name": "feat/studio-foundation-20261125",
+      "protected": false,
+      "sha": "00c2e5d4b6e93d71ff3b19d8ddf5d30f95fdd77d"
+    }
+  },
+  "conclusion": "No applicable branch rules or repository rulesets returned. This does not establish the cause of the remote internal error. No confirmed user-side corrective action; do not suggest disabling rules, changing auth or permissions. All new work remains local, no write retry this batch.",
+  "publicStatusRead": {
+    "url": "https://www.githubstatus.com/",
+    "asOf": "2026-11-25T23:52:32.568963+08:00",
+    "gitOperations": "Operational",
+    "caveat": "Public global/cached status does not explain this ref-specific commit_refs_rules rejection or prove no incident."
+  },
+  "reads": [
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/lious/Agent/rules/branches/feat%2Fstudio-foundation-20261125"
+      ],
+      "exitCode": 0,
+      "output": "remote-branch-rules.json"
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/lious/Agent/rulesets"
+      ],
+      "exitCode": 0,
+      "output": "remote-rulesets.json"
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/lious/Agent/branches/feat%2Fstudio-foundation-20261125",
+        "--jq",
+        "{name,protected,sha:.commit.sha}"
+      ],
+      "exitCode": 0,
+      "output": "remote-branch.json"
+    }
+  ]
+}

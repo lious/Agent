@@ -882,3 +882,14 @@ Native编辑器导入受支持SDR/CFR视频→点选VIDEO→填写 `crop-left/to
 另CTest3项、真实旧库/SQL barrier/SIGKILL重开成功；opacity、transform+curve、dissolve+transform/curve、新独立双腿crop/color四种active取消各普通/ASan100轮，共**800轮**，每轮自有AVFrame回baseline、各运行FD delta0，ASan/UBSan leak检测开启，无suppression。不表示codec/GPU内部全生命周期资格。真实12个主/副腿恶意recipe在创建输出前拒绝，SQL后段abort/stale revision、独立半像素/颜色参考≤2/255、四个实际编码前样本、归档fork/重开/资源采纳等通过；三轮实审和早期风格失败保留。[精确冻结hash/命令/所有结果与限制](evidence/raster-effects/summary.json)。非全仓/全87验收，非旧225/216/209混算。
 
 原87仍**0 complete/26 partial/48 planned/13 blocked**，XD10仍**0/8/1/1**。原104、验收和硬依赖未改。I-008仍缺注册luma/完整registry及I-005硬前置；I-022/V-003仍缺全GPU/FP16/纹理lease与完整profile。黑底opaque SDR CPU/FP32+RGB8、同尺寸单轨1x限制继续；物理同步/稳定帧率/其他平台/物理跨设备未验，RTC策略不重试绕过，Schema9旧writer共写与单级inverse限制保留。下一批回原I-005多级undo/redo与有界原子提案逆操作，或I-023已保留的startup/resume服务故障，不继续扩存储指纹旁支。
+
+
+## increment1.19 — Pulse readiness调度与真实不足诊断（仅本地，未发布）
+
+保留e23a559的crop/color真实可操作路径；这批只改Linux Pulse worker调度与诊断，不改AudioBus/精确source时间或预览编码像素。原nonblocking iterate后无条件sleep2ms会延迟已经ready的工作，现用官方 `prepare(2000us)→poll→dispatch`：有事件立即处理、无事件最多请求等2ms，**不是呈现时钟/物理延迟承诺**。新增协商minreq、实际underflow字节位置/当时可写量、dispatch计数，便于下次故障定位。ring8192帧、server32768字节上限、target/prebuf/minreq、写batch/500ms stale及真实underrun中断冻结策略不变，不改prebuf0、不扩队列、不放宽断言。
+
+一次仅加诊断而未改调度的两case和旧真实probe也通过，因此本批不能证明原间歇startup/resume不足的唯一根因。**旧00c opacity失败及e23a raster首次play presented2877失败仍未解**，不能以随后通过称修好。[ADR0026](../adr/0026-pulse-event-pump-and-underrun-diagnostics.md)记录明确修正与因果边界；[本冻结证据](evidence/audio-event-pump/summary.json)单列当前测试、真实monitor/SIGSTOP饥饿/设备丢失/服务stale/恢复/EOF及未跑范围，不混算旧通过数。
+
+发布边界：本轮只读查询的适用branch rules=[]、repo rulesets=[]、branch protected=false且仍00c2e5d；公开Git Operations显示operational，但不足以解释 `fatal error in commit_refs_rules`。**原因未知，未证实任何用户必须修改规则/授权/身份的动作**。保留原push错误，无push重试、无绕过或扩权；e23a559及本批普通本地commit均未发布。原104/87验收依赖、SQLite3.54.1严格门禁、87与XD10独立状态保持。旧writer共写/单次inverse、Linux CPU/GPU/物理/其他平台/RTC限制不变。
+
+本冻结实际**233项所选全部通过、0失败/0跳过**（208领域/SQLite/nativeSDK、13真实FFI UI、5Chrome资源/Inspector、7真实私有Pulse服务）；新增raster_clock与旧opacity_clock本次均通过，但不是间歇问题已修复。另真实monitor/fault完整probe、CTest3项、旧库/SQL-barrier/SIGKILL恢复成功；四种活动视频取消普通/ASan各100，共800轮，自有AVFrame/FD回基线。Pulse真实worker未跑ASan/TSan，不将视频ASan说成音频内存资格。不是全仓/全87/长时间负载/物理同步或其他平台验收。原87保持0 complete/26 partial/48 planned/13 blocked；XD10保持0/8/1/1。

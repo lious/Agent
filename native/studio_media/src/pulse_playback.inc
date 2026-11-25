@@ -22,6 +22,9 @@ struct PulsePlayback {
   std::chrono::steady_clock::time_point last_timing{}, cork_started{};
   bool timing_valid = false, cork_pending = false, drain_pending = false,
        drained = false;
+  int64_t underflow_index = -1;
+  int64_t writable_at_underflow = -1;
+  uint64_t event_sources_dispatched = 0;
   std::string fault, actual_sink;
   explicit PulsePlayback(const J &r, uint64_t gen, int64_t discarded_tail = -1)
       : recipe(r), resume_discarded_tail(discarded_tail), epoch(gen) {
@@ -82,6 +85,8 @@ struct PulsePlayback {
            {"baseSample", base},
            {"clockValid", timing_valid},
            {"clockSource", "pulse-service-noninterpolated"},
+           {"pumpPolicy", "pulse-event-poll-max2000us"},
+           {"eventSourcesDispatched", event_sources_dispatched},
            {"timingUpdates", updates},
            {"lastServiceLatencyUsec", latency_usec},
            {"serviceLatencyValid", latency_valid},
@@ -94,6 +99,9 @@ struct PulsePlayback {
            {"resumeRebuilt", resume_discarded_tail >= 0},
            {"serverMaxBytes", attr ? attr->maxlength : 0},
            {"serverTargetBytes", attr ? attr->tlength : 0},
+           {"serverMinRequestBytes", attr ? attr->minreq : 0},
+           {"underflowIndexBytes", underflow_index},
+           {"writableBytesAtUnderflow", writable_at_underflow},
            {"serverPrebufferBytes", attr ? attr->prebuf : 0},
            {"maxWorkerLoopGapUsec", max_loop_gap_usec},
            {"underruns", underflows},
@@ -147,10 +155,15 @@ struct PulsePlayback {
     else
       s.fault = "drain-failed";
   }
-  static void underflow(pa_stream *, void *p) {
+  static void underflow(pa_stream *stream, void *p) {
     auto &s = *static_cast<PulsePlayback *>(p);
     if (s.base + s.submitted < s.total) {
       ++s.underflows;
+      s.underflow_index = pa_stream_get_underflow_index(stream);
+      const auto available = pa_stream_writable_size(stream);
+      if (available != static_cast<size_t>(-1) &&
+          available <= static_cast<size_t>(INT64_MAX))
+        s.writable_at_underflow = static_cast<int64_t>(available);
       s.fault = "underrun";
     }
   }
@@ -196,9 +209,15 @@ struct PulsePlayback {
                              loop_now - previous_loop)
                              .count()));
         previous_loop = loop_now;
-        int rc = 0;
-        if (pa_mainloop_iterate(loop, 0, &rc) < 0)
+        // Wait for actual I/O readiness, up to the original2ms control cadence.
+        // A nonblocking iterate followed by an unconditional sleep delayed even
+        // already-ready socket/deferred work. This is scheduling, NEVER clock.
+        if (pa_mainloop_prepare(loop, 2000) < 0 || pa_mainloop_poll(loop) < 0)
           throw Error("AUDIO_SERVICE_LOST");
+        const int dispatched = pa_mainloop_dispatch(loop);
+        if (dispatched < 0)
+          throw Error("AUDIO_SERVICE_LOST");
+        event_sources_dispatched += static_cast<uint64_t>(dispatched);
         auto cs = pa_context_get_state(context);
         if (!PA_CONTEXT_IS_GOOD(cs))
           throw Error("AUDIO_SERVICE_LOST");
@@ -307,8 +326,6 @@ struct PulsePlayback {
           throw Error("AUDIO_DEVICE_LOST");
         else if (std::chrono::steady_clock::now() > deadline)
           throw Error("AUDIO_CONNECT_TIMEOUT");
-        std::this_thread::sleep_for(std::chrono::milliseconds(
-            2)); // Pump scheduling ONLY; never project clock.
       }
     } catch (const std::exception &e) {
       fault = e.what();

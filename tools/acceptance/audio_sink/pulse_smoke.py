@@ -36,6 +36,8 @@ def main():
    l=native();h=l.sm_create(b'test');status=lambda:call(l,h,{'op':'status'})
    call(l,h,{'op':'open','path':str(pcm),'sampleCount':48000*8,'sink':'studio_test'})
    first=wait(status,lambda s:s['state']=='playing' and s.get('clockValid') and s['presentedSample']>4800)
+   assert first['pumpPolicy']=='pulse-event-poll-max2000us' and first['eventSourcesDispatched']>0,first
+   assert first['serverMinRequestBytes']==8192 and first['serverPrebufferBytes']==8192,first
    for recipe,code in (({'op':'open','path':str(pcm),'sampleCount':48000*8},'PLAYBACK_BUSY'),({'op':'rebind','sink':'not a sink'},'AUDIO_SINK_NAME')):
     try:call(l,h,recipe);raise AssertionError('bad operation accepted')
     except RuntimeError as error:assert str(error)==code
@@ -65,6 +67,7 @@ def main():
    # consuming its finite queue. No synthetic/mock underflow injection.
    os.kill(worker.pid,signal.SIGSTOP);time.sleep(.3);os.kill(worker.pid,signal.SIGCONT)
    starved=wait(lambda:rpc({'op':'status'}),lambda s:s['state']=='interrupted');assert starved['underruns']>0 and starved['reason']=='underrun',starved
+   assert starved['clockValid'] is False and starved['underflowIndexBytes']>=0,starved
    frozen=starved['presentedSample'];time.sleep(.1);assert rpc({'op':'status'})['presentedSample']==frozen
    rpc({'op':'rebind','sink':'studio_test'});wait(lambda:rpc({'op':'status'}),lambda s:s['state']=='paused' and s.get('clockValid'))
    rpc({'op':'resume'});wait(lambda:rpc({'op':'status'}),lambda s:s['state']=='playing' and s.get('clockValid'))
@@ -107,7 +110,7 @@ def main():
     finally:l.sm_close(h,b'test');os.environ['PULSE_SERVER']=env['PULSE_SERVER']
 
    capture.terminate();capture.wait(timeout=5);raw=array.array('f');raw.frombytes((d/'capture.f32').read_bytes());rms=math.sqrt(sum(v*v for v in raw)/max(1,len(raw)));assert rms>.005,rms
-   print(json.dumps({'status':'passed','first':first,'paused':b,'plainResume':plain,'seek':seek,'rebound':rebound,'monitorRMS':rms,'captureSamples':len(raw)//2,'physicalDAC':False,'humanHearingClaim':False,'actualProducerStarvation':starved,'actualSuspendedDevice':lost,'actualServerStall':stale,'eof':eof,'repeatOpenStop':20,'fdBefore':fd_before,'fdAfter':fd_after,'nonFiniteRefused':invalid,'remoteServerListsRefused':3}))
+   print(json.dumps({'status':'passed','first':first,'paused':b,'plainResume':plain,'seek':seek,'rebound':rebound,'monitorRMS':rms,'captureSamples':len(raw)//2,'physicalDAC':False,'humanHearingClaim':False,'actualProducerStarvation':starved,'actualSuspendedDevice':lost,'actualServerStall':stale,'eof':eof,'repeatOpenStop':20,'fdBefore':fd_before,'fdAfter':fd_after,'nonFiniteRefused':invalid,'remoteServerListsRefused':3,'schedulingDefectRemoved':'no unconditional sleep after ready events; service sample clock unchanged','intermittentStartupRootCauseProven':False}))
   except BaseException:
    print('SERVER_LOG', (d/'pulse.log').read_text() if (d/'pulse.log').exists() else 'absent');print('SERVER_EXIT',server.poll());raise
   finally:
