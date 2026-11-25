@@ -496,6 +496,79 @@ int64_t target_ticks(const J &source, int64_t frame, AVRational output_tb,
     throw Error("TIME_OVERFLOW");
   return static_cast<int64_t>(ticks);
 }
+// Native source thumbnail only, NOT timeline/effect rendering. Real container
+// index seek + decoder flush + PTS floor; sequential mode is an independent
+// decoded reference path used by qualification, never a fake seek result.
+J preview(Engine &engine, const J &recipe) {
+  keys(recipe, {"path", "time", "indexed"});
+  if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
+    throw Error("RECIPE_TYPE");
+  Input in;
+  const auto epoch = engine.epoch.load();
+  in.check = [&engine, epoch] {
+    if (engine.epoch.load() != epoch)
+      throw Error("CANCELED");
+  };
+  in.open(recipe["path"].get<std::string>());
+  in.prepare();
+  auto *stream = in.format->streams[in.video];
+  int videos = 0;
+  for (unsigned i = 0; i < in.format->nb_streams; ++i)
+    if (in.format->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
+      ++videos;
+  if (videos != 1)
+    throw Error("MULTI_VIDEO_STREAM_PREVIEW_UNSUPPORTED");
+  if (in.decoder->width > 2048 || in.decoder->height > 2048)
+    throw Error("FRAME_SIZE_LIMIT");
+  const auto target = target_ticks(recipe["time"], 0, AVRational{1, 1}, stream);
+  if (recipe["indexed"].get<bool>()) {
+    const int r = avformat_seek_file(in.format, in.video,
+        std::numeric_limits<int64_t>::min(), target, target, AVSEEK_FLAG_BACKWARD);
+    if (r < 0)
+      throw Error("SEEK_UNAVAILABLE");
+    avcodec_flush_buffers(in.decoder);
+    in.drained = false;
+    in.current = in.decode();
+    if (!in.current)
+      throw Error("SOURCE_AFTER_LAST_FRAME");
+    in.next = in.decode();
+  }
+  AVFrame *frame = in.at(target);
+  if (frame->width < 1 || frame->height < 1 ||
+      frame->width > 2048 || frame->height > 2048)
+    throw Error("FRAME_SIZE_LIMIT");
+  if (frame->format != AV_PIX_FMT_YUV420P)
+    throw Error("PREVIEW_PIXEL_FORMAT_UNSUPPORTED");
+  if (frame->color_primaries != AVCOL_PRI_BT709 ||
+      frame->color_trc != AVCOL_TRC_BT709 ||
+      frame->colorspace != AVCOL_SPC_BT709 ||
+      frame->color_range != AVCOL_RANGE_MPEG)
+    throw Error("COLOR_POLICY_REQUIRED");
+  const double factor = 128.0 / std::max(frame->width, frame->height);
+  const int width = std::max(1, static_cast<int>(frame->width * std::min(1.0, factor))),
+      height = std::max(1, static_cast<int>(frame->height * std::min(1.0, factor)));
+  std::unique_ptr<SwsContext, decltype(&sws_freeContext)> sws(
+      sws_getContext(frame->width, frame->height,
+          static_cast<AVPixelFormat>(frame->format), width, height, AV_PIX_FMT_RGBA,
+          SWS_BILINEAR, nullptr, nullptr, nullptr), sws_freeContext);
+  if (!sws)
+    throw Error("SCALER_UNAVAILABLE");
+  const auto *coeff = sws_getCoefficients(SWS_CS_ITU709);
+  ok(sws_setColorspaceDetails(sws.get(), coeff, 0, coeff, 1, 0, 1 << 16, 1 << 16));
+  std::vector<uint8_t> rgba(static_cast<size_t>(width) * height * 4);
+  uint8_t *dst[] = {rgba.data(), nullptr, nullptr, nullptr};
+  const int stride[] = {width * 4, 0, 0, 0};
+  if (sws_scale(sws.get(), frame->data, frame->linesize, 0, frame->height,
+                dst, stride) != height)
+    throw Error("SCALE_INCOMPLETE");
+  in.check();
+  return J{{"width", width}, {"height", height}, {"rgba", rgba},
+      {"pts", std::to_string(in.pts(frame))},
+      {"startPts", std::to_string(stream->start_time)},
+      {"timeBase", {{"n", std::to_string(stream->time_base.num)},
+                    {"d", stream->time_base.den}}},
+      {"packetsRead", in.packets}, {"indexed", recipe["indexed"]}};
+}
 J render(Engine &engine, const J &recipe) {
   keys(recipe,
        {"outputPath", "width", "height", "fps", "frameCount", "segments"});
@@ -617,6 +690,7 @@ char *sm_capabilities(void) {
         {"decoderH264", avcodec_find_decoder(AV_CODEC_ID_H264) != nullptr},
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
+        {"sourcePreview128", true},
         {"audioExport", false},
         {"hardwareAcceleration", false}};
   });
@@ -637,6 +711,14 @@ char *sm_probe(uint64_t h, const char *ns, const char *path) {
     };
     in.open(path);
     return probe(in);
+  });
+}
+char *sm_preview(uint64_t h,const char *ns,const char *recipe) {
+  return boundary([&] {
+    auto e=engine(h,ns);std::unique_lock lock(e->busy,std::try_to_lock);
+    if(!lock.owns_lock())throw Error("RESOURCE_BUSY");
+    if(!recipe || std::strlen(recipe)>4096)throw Error("RECIPE_LIMIT");
+    return preview(*e,parse_recipe(recipe));
   });
 }
 char *sm_export(uint64_t h, const char *ns, const char *recipe) {

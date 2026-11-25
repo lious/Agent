@@ -264,3 +264,50 @@ final-source evidence. Final native/Chrome/UI/clean release gates and genuine
 v4/v5/v6->v7 migrations are rerun after freezing the apps/packages/tools tree.
 System SQLite3.46.1 is still refused, not relabeled approved. No non-Linux or
 physical-device result, Web transport, real audio/AAC/seek or full Schema claim.
+
+
+## v1.4 WebRTC + source seek/cache — three actual self-review/fix rounds
+
+Not an independent security audit. Failures are retained, never renamed passes.
+
+1. **Browser identity/protocol/durable authority:** actual RTCCertificate IDB races
+   and reopen, standard DTLS fingerprint pinning before SDP, no ICE servers or
+   anonymous endpoint. Real Chrome produced0 host candidates; inspected only
+   relevant managed WebRTC policy keys and STOPPED positive network qualification,
+   without changing policy/flags or substituting a transport. Default tests were
+   separated from explicit nonzero positive qualification, not silently skipped.
+   Bound request frame/body IDs, reject malformed pins, wake closed readiness
+   waiters; persist whole-session revoke so even unstarted local work is denied.
+   Real IDB rollback/reopen/legacy migration and UI identity/consent/revoke tested.
+2. **Actual media/index/cache ownership:** native container index+decoder flush,
+   independent sequential pixel/PTS reference,20 exact CFR targets and real
+   nonzero/VFR fixtures; reject EOF/multiple streams/HDR. Review caught decode
+   dispatch after CAS await/close and stale UI images: recheck epoch/project before
+   dispatch and on return, map canceled late errors to superseded, clear displayed
+   image on edit/selection. Validate pixel range/dimensions BEFORE allocation;
+   exercise immutable bytes/byte budget/oversize/LRU and256-entry cap.
+3. **Fence/resource/timing/final UI regression:** actual browser IDB lease expiry,
+   retry increasing fence, old result rejection, cross-session device reservation,
+   heartbeat regression/hash failure rollback and revoke before replay. No mock
+   transport is counted as network validation. Initial Flutter preview click test
+   really failed pumpAndSettle while asynchronous codec/busy animation remained;
+   pump real IO+frames before settling. Next run decoded a real RawImage but wrongly
+   asserted off-viewport lazy status text; assert actual128x72 decoded image and
+   stale-image removal after split instead. Corrected test ran import→source seek→
+   split/trim/undo→archive/fork→90-frame export. Browser widget test similarly needed
+   fake-time advancement for ICE timers; retained initial failure. Qualification
+   outside test/ failed compiler serving; moved unchanged explicit positive suite
+   under test/qualification with non-_test filename and retained compile failure.
+   Final signaling audit closes after-gather close race and validates fingerprint
+   type before JS; full frozen-source gates/migrations/OS UI/release starts rerun.
+
+Current managed-policy blocker is only the POSITIVE browser direct transport
+qualification. Native bridge/worker durable reconnect/media audio/proxy/full Schema
+remain actual implementation gaps, not excuses or fabricated external blockers.
+
+Final acceptance recheck: I-005 still lacks multi-select/group/snap/paste/overwrite;
+I-006 lacks linked multi-track propagation; I-009 lacks full Project Effect/link
+integration; I-010 lacks font/style fallback/rich anchors; I-012 lacks full exit/
+draft state machine and upstream I-011 closure. They are not marked complete just
+because some acceptance examples pass. Final buffer review includes the pending
+encoded frame bytes in the256KiB bound, rather than checking only old bufferedAmount.

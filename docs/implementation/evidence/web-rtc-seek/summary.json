@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "increment": "1.4.0",
+  "checkedAt": "2026-11-25T14:05:54.971641+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passedRestrictedSlicesWithPositiveWebTransportBlocked",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "baselineCommit": "b075763c404707bf5102c4315aca5613574a2719",
+  "scope": "Actual Chrome persistent RTC identity + explicit consent/manual direct-only UI and original Harness IDB lease/receipt/outbox adapter; positive DTLS/SCTP is blocked by managed0host-ICE policy, not passed. Actual C++/FFmpeg indexed source thumbnails + immutable pixel LRU + clicked native edit/save/fork/export; NOT full preview/proxy/audio.",
+  "counts": {
+    "nativeRegressionTests": 125,
+    "realChromeTests": 9,
+    "realOsKeyringNativeUiTests": 1,
+    "dartFlutterTotal": 135,
+    "skipped": 0,
+    "pythonToolTests": 6,
+    "nativeCTestCases": 3,
+    "internalSigkillExperiments": 50,
+    "cleanReleaseBuilds": 6,
+    "releaseFirstFrameStarts": 6,
+    "cleanAbiProbes": 3
+  },
+  "counting": "125+9+1=135 passing Dart/Flutter cases. Focused repeats,20 seek assertions, migrations,50 internal SIGKILL experiments and1passing identity case inside BLOCKED positive qualification are NOT extra passing cases. Nine Chrome cases are browser/IDB/widget/preflight tests, NOT nine network/App acceptance passes.",
+  "webTransport": {
+    "adapterImplemented": true,
+    "positiveEncryptedTransportPassed": false,
+    "nativeBridgeImplemented": false,
+    "qualificationStatus": "blocked",
+    "actualQualificationExitCode": 1,
+    "runnerExitCode": 2,
+    "observed": "Both real Chrome peers gathered complete with0host candidates; managed WebRtcIPHandlingUrl disable_non_proxied_udp for * and WebRtcIPHandling default_public_interface_only",
+    "policiesChanged": false,
+    "privacyEvasionFlags": false,
+    "stunTurnRelayCloudFallback": false,
+    "actualPassingScope": "Nonexported RTCCertificate HANDLE races/reopen; full pin/type/relay admission; actual direct-only reject; real IDB legacy fixture migration/transaction abort/lease expiry/retry fence/resource slot/heartbeat regression/result-hash rollback/revoke/read-only reopen; actual clicked UI",
+    "remainingImplementation": "Browser-native bridge; browser worker durable pending-result outbox/reconnect; browser explicit restart authority recovery; Web blob transfer; rotation UI and broad runtime/media/model tasks",
+    "notPhysicalDeviceQualification": true
+  },
+  "boundedPathsClosed": [
+    {
+      "path": "Linux selected clip -> exact source-ms indexed thumbnail -> real128x72 RawImage -> edit clears stale image -> archive/fork ->90-frame silent export",
+      "evidence": "verification.json + focused-source-ui.json",
+      "wholeTaskComplete": false
+    },
+    {
+      "path": "20 shuffled CFR exact Q targets and independent sequential pixel/PTS equality; real7s start and4VFR points including47/30; EOF/multistream/HDR rejection",
+      "evidence": "verification.json + focused-source-preview.json",
+      "wholeTaskComplete": false
+    },
+    {
+      "path": "SDK serialized separate preview handle, CAS hash verification, immutable2MiB retained-pixel LRU/256entries and queued old-epoch/project/close rejection",
+      "evidence": "verification.json packages/studio_sdk/test/source_preview_test.dart",
+      "wholeTaskComplete": false
+    },
+    {
+      "path": "Actual Web UI persistent identity -> consent denial/explicit owner approval -> real zero-candidate close -> local original Harness node -> durable receipt -> revoke -> reopen read-only with NO authority restored",
+      "evidence": "browser.json test/peer_panel_test.dart",
+      "wholeTaskComplete": false
+    }
+  ],
+  "sqlite": {
+    "version": "3.54.1",
+    "sourceId": "2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76",
+    "threadsafe": 1,
+    "schemaVersion": 7,
+    "genuineMigrations": [
+      "v4/system3.46.1 -> v7/fixed3.54.1",
+      "v5/fixed3.54.1 -> v7/fixed3.54.1",
+      "v6/fixed3.54.1 -> v7/fixed3.54.1"
+    ],
+    "oldSystemRuntimeDefaultRejected": true,
+    "fullProductionWalQualification": false,
+    "systemPkgConfigHeaders": "3.46.1 is system development metadata, NOT the approved Dart SQLite runtime"
+  },
+  "toolchain": {
+    "flutter": "3.50.1 stable official pinned archive",
+    "dart": "3.14.0",
+    "chrome": "156.0.8078.47 preinstalled",
+    "avformat": "61.7.103",
+    "avcodec": "61.19.101",
+    "avutil": "59.39.100",
+    "swscale": "8.3.100",
+    "sqliteRuntime": "3.54.1 approved exact SOURCE_ID"
+  },
+  "notValidated": [
+    "positive encrypted browser network or browser-native bridge",
+    "two physical devices/LAN/NAT",
+    "macOS/Windows/iOS/Android/other browsers",
+    "browser worker durable result outbox/reconnect and browser restart authority",
+    "OS suspend/reboot/background clocks",
+    "proxy generation/source-time mapping/full timeline/GPU preview",
+    "mid-seek cancel latency/performance/drop/RSS/thermal qualification",
+    "real native PCM decode/AudioSink/AAC/export A/V sync",
+    "full original Schema/RenderGraph/media formats/87 contracts",
+    "model weights/inference/paid APIs/deployment",
+    "physical power loss/disk-full/provider durability",
+    "adoption/GC widgets click-through (unchanged SDK received-video path regression passed)"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 21,
+    "planned": 53,
+    "blocked": 13
+  },
+  "newXd10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "original104SnapshotUnmodified": true,
+  "originalAcceptanceAndDependenciesUnchanged": true,
+  "activeCiInstalled": false,
+  "sourceHashEvidence": "Exact current143 files in verification.json plus11 Web files in browser.json/positive-web-rtc-blocked.json; validated against final files. Native UI rerun AFTER all6clean app launches, then formatter/analyzer passed. Failed/pre-final runs are historical only.",
+  "nextExecutable": [
+    "Native PCM decoder and checked sample mapping -> original Dart AudioBus mixer -> real AAC/mux/drain/timestamps/60s qualification, keeping free/local-only and fail-closed unsupported cases",
+    "I-021 actual proxy time mapping/full preview and V-004 clock/load; preserve source seek regression",
+    "I-002 full original Schema/invariants",
+    "Browser worker durable outbox/native bridge and positive transport qualification only in a permitted test environment, never bypass this managed policy",
+    "Continue remaining original87/XD10 dependency-ordered work without per-batch approval"
+  ],
+  "evidenceFiles": [
+    "V-001.json",
+    "browser.json",
+    "early-direct-ice-diagnostic.json",
+    "first-browser-ui-failed.json",
+    "first-native-regression-failed.json",
+    "first-qualification-serving-failed.json",
+    "focused-source-preview.json",
+    "focused-source-ui.json",
+    "native-ui.json",
+    "observed-managed-policy.json",
+    "positive-web-rtc-blocked.json",
+    "second-source-ui-failed.json",
+    "sqlite-migration-v4.json",
+    "sqlite-migration-v5.json",
+    "sqlite-migration-v6.json",
+    "verification.json"
+  ],
+  "evidenceSha256": {
+    "V-001.json": "96f9b93fc223ca4cf2f55d119364f34ef1378838331669f80c5cfad576564097",
+    "browser.json": "ea194e78b7370fc3f234a193a371e582b5c1bab7c09101f097181c22c2309218",
+    "early-direct-ice-diagnostic.json": "2a24de32f389603f801e48242e720d71d229c70031536a265e5f546dbea68837",
+    "first-browser-ui-failed.json": "078bd0cbbee55b161f61b55850d9bbc8d035a40d0d86a2e4aa555ac5f7b2a384",
+    "first-native-regression-failed.json": "27fa2e55761d03dfe6eaf75a4b3390f4038ce7b3a5b8c6108c46bf2755be5a6c",
+    "first-qualification-serving-failed.json": "fb6a18ecbf6855fb4d4c12c2fc92e8693e0048fd5b5fcb327679531626635130",
+    "focused-source-preview.json": "9173964cfd6abdb9b50763d93d4d795b36cc992da83e7bfd6e11f86197018813",
+    "focused-source-ui.json": "d583805d7b7ea942a11d7302d7a7e81f86072cdbe17cd0ca6bef1ce8bef42057",
+    "native-ui.json": "c0318375a477ac5afc5111ce937554cc5c064fb47acccebb017d51f7aa9ae01d",
+    "observed-managed-policy.json": "9281c0be3c77e92398e4724359becab5e9c977329b9f72e394a7e1ec49a5806a",
+    "positive-web-rtc-blocked.json": "e146734bc738f5d9d6973c61fcc6152b2bc8d7a9d7b5b9bdb9620d45d0c38a6e",
+    "second-source-ui-failed.json": "7437683efdfaccd00c0313ef17700e654be2d129107eb73240f8e51f1d801337",
+    "sqlite-migration-v4.json": "55c2047af149147e8d76d75566a9b123bcaaae10e0f2ec6d596eba2eaaae0ed0",
+    "sqlite-migration-v5.json": "2f42eb20735b9ba8188364d49b918534467abc5847399ad1c633fc0af7290fcf",
+    "sqlite-migration-v6.json": "3a4e0230aa4e7a68c903e742713c13123115a0ee747aead43b2ad509eb8ad3c8",
+    "verification.json": "b7f3728017ee503f79fdb6f34d28619ed4ef2f8309167a78474d8d9724ed6b8d"
+  }
+}

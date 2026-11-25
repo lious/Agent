@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T13:28:54.821920+08:00",
+  "asOf": "2026-11-25T13:57:54.588530+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,10 +12,11 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "XD-003 implement real browser WebRTC persisted-certificate/full-SHA256 identity and native interoperability, then original scoped scheduler RPC/revocation/receipt path; viable implementation dependency, not an external impossibility",
-    "I-021 indexed exact random seek and bounded generation-aware preview/cache, then I-023/I-024 real native PCM decode/audio clock/AAC and V-002 qualification; original complete Schema I-002 remains upstream",
-    "XD-002 browser/mobile/other-desktop identity qualification and rotation; XD-004 large-file streaming/full project transfer; XD-005/XD-006 arbitrary supported jobs beyond two metadata nodes, dynamic placement and global resource ownership",
-    "Continue all dependency-ready original tasks; physical devices/other-platform qualification is separate, never replace it with Linux/Chrome protocol tests"
+    "I-023/I-024/V-002: real native PCM decode -> existing Dart AudioBus DSP -> AAC encode/mux + timestamp/drain/60s sync/unsupported failures; no audio export currently",
+    "I-021 proxy generation/source-time mapping, full timeline RenderGraph preview and V-004 actual A/V-clock/load gates; source thumbnail indexed seek/LRU is now executable",
+    "I-002 complete original Schema/invariants (do not treat metadata/caption/audio subset as complete)",
+    "XD-003 positive WebRTC DTLS qualification is objectively blocked by current managed zero-host-ICE policy; do NOT bypass. Native bridge, browser worker durable result outbox/reconnect and authority recovery remain implementation work, not external blockers",
+    "Continue remaining original87/XD10 dependency-ordered executable work; physical and other-platform qualification stays separate"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -848,9 +849,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Actual selected video sequential PTS decode/CFR scan/EOF guard; no indexed random seek, proxies, LRU or preview",
+      "implementedScope": "Actual container-index backward seek + decoder flush/forward PTS-floor source thumbnails, exact rational FIRST-source-PTS time, separate preview engine/generation and verified CAS, immutable retained-pixel bounded LRU and clicked Linux UI.20 CFR points independently assert exact timestamp and pixels vs sequential reference; actual VFR/nonzero PTS and wrong-color/multistream/EOF failures. No proxy mapping/full timeline/GPU/clock qualification.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/web-rtc-seek/summary.json"
       ],
       "remainingAcceptance": "20点seek±1帧；VFR/非零PTS不误映射；缓存<=预算；取消epoch前帧不回流预览。",
       "remainingScope": "含PTS索引/VFR/代理时间映射/LRU；不做每次seek全片解码。",
@@ -859,7 +861,30 @@
         "I-015"
       ],
       "blockers": [
-        "Non-Linux platforms/P0 hardware and full original acceptance remain unverified"
+        "Proxy generation/mapping and full original upstream I-015/V-004 clock/load/P0 qualification are incomplete; source thumbnail slice cannot close whole I-021",
+        "Non-Linux platforms and hardware remain unverified"
+      ],
+      "criterionEvidence": [
+        {
+          "criterion": "20点seek±1帧",
+          "verifiedSlice": "20 deterministic shuffled CFR source positions assert EXACT requested rational frame timestamp and sequential-decoded PTS/RGBA; container indexed packet gain observed",
+          "fullScopeComplete": false
+        },
+        {
+          "criterion": "VFR/非零PTS不误映射",
+          "verifiedSlice": "Real generated nonzero7s start and4 VFR positions including known47/30 PTS; low-level native source only, NOT VFR editor import or proxy mapping",
+          "fullScopeComplete": false
+        },
+        {
+          "criterion": "缓存<=预算",
+          "verifiedSlice": "Actual immutable RGBA retained-byte LRU budget, oversize refusal, eviction and256-entry cap;2MiB default, NOT total RSS/disk cap",
+          "fullScopeComplete": false
+        },
+        {
+          "criterion": "取消epoch前帧不回流预览",
+          "verifiedSlice": "Actual queued supersession/close/project-drift SDK rejection and real UI clears thumbnail after edit; mid-seek cancellation latency/complete RenderGraph not qualified",
+          "fullScopeComplete": false
+        }
       ]
     },
     {
@@ -1582,5 +1607,6 @@
     "modelsDownloaded": false,
     "productionDeployed": false,
     "autoMergeFeatureBranch": false
-  }
+  },
+  "iterationBaseCommit": "b075763c404707bf5102c4315aca5613574a2719"
 }

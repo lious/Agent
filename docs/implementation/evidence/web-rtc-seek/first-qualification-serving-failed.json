@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "scopeStatus": "failed",
+  "checkedAt": "2026-11-25T13:50:48.475586+08:00",
+  "timezone": "Asia/Shanghai",
+  "positiveEncryptedTransportPassed": false,
+  "physicalDeviceQualification": false,
+  "fullTaskComplete": false,
+  "skippedTests": 0,
+  "checks": [
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "qualification/rtc_direct_qualification.dart",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "exitCode": 1,
+      "output": "org-dartlang-app:///main.dart:3:8: Error: Error when reading 'org-dartlang-app:///qualification/rtc_direct_qualification.dart': File not found\nimport 'org-dartlang-app:///../qualification/rtc_direct_qualification.dart' as test_0 show main;\n       ^\norg-dartlang-app:///main.dart:11:24: Error: Undefined name 'main'.\n    entryPoint: test_0.main,\n                       ^^^^\nFailed to compile\n",
+      "outputSha256": "48377d25a3b05f89ce285628d285f7d792a34e5f821ad3de27b1f5f8bf67036c"
+    }
+  ],
+  "blocker": null,
+  "sourceHashes": {
+    "apps/studio_web/lib/browser_compute.dart": "520da9d07ae182af497e4248185619e02299e688feb90c111500cc5d70a98ec6",
+    "apps/studio_web/lib/browser_store.dart": "937e1c3b352657374d94bfbc7c46712e78aeecf703f7e7604176280c50e36dc7",
+    "apps/studio_web/lib/main.dart": "060a2ae52300515ffb84cf0b6099148b4d853a46ecfd7f1f68590935b245b237",
+    "apps/studio_web/lib/peer_panel.dart": "25aea03d109996d4558430856de56cfc7f04c9c09c368f7e3ccdc6ed556ec6d8",
+    "apps/studio_web/lib/rtc_peer.dart": "0c88be6c73eddfce03331335278998c244cd0ed59bd701f5f6bd8b773f104a86",
+    "apps/studio_web/pubspec.yaml": "26a7dfce4acc5f944df6f40e69cabee5750822596b8c9113b9e96a5bbb4d6b4c",
+    "apps/studio_web/qualification/rtc_direct_qualification.dart": "66eb91df3eab50eb945e88f450e9cb4b02faf7b8063e56d1a204ff5e98027608",
+    "apps/studio_web/test/browser_test.dart": "3e340d7bde695ea15a0eab3dce07074b01f552a8c596ff1bc93bf1ca8a8bd579",
+    "apps/studio_web/test/peer_panel_test.dart": "16899a02cb8e7ef5a25292aeabb744468cf7fca2cba0d5240d7b38b2bf192008",
+    "apps/studio_web/test/rtc_test.dart": "be9def242f61a546b71c8d5dfcfd3edf74baf470e3e31aa3ec90613b6b5e0ffd",
+    "apps/studio_web/web/index.html": "d7e8ad98df9dc9e52f8310dcb6eeee2ad2048538d3864fa795dfecc55dca6a7a"
+  },
+  "notValidated": [
+    "physical devices",
+    "native WebRTC bridge",
+    "browser worker durable reconnect outbox",
+    "mobile/background/OS-sleep clocks",
+    "Web blob transfer"
+  ]
+}

@@ -86,7 +86,7 @@ def main():
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
         'notValidated': ['all 87 full acceptance contracts', '1080p Main L4/AAC qualification', 'audio export',
-                         'GPU or hardware adapters', 'full RenderGraph', 'random seek/cache/proxy', 'non-Linux platforms',
+                         'GPU or hardware adapters', 'full RenderGraph', 'full preview/PTS proxy mapping (only source thumbnail indexed seek/LRU qualified)' , 'non-Linux platforms',
                          'physical power-loss/disk-full/non-Linux provider durability faults', 'model inference', 'paid/remote services'],
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)

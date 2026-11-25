@@ -9,7 +9,7 @@
 原 104 文档不变；全部87项逐项保留原验收：21 partial、53 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **v1.3 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
+当前操作入口见文末 **v1.4 当前可操作增量**；此前章节保留历史证据，不冒充本轮计数。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -92,7 +92,7 @@ flutter run -d linux
 稳定目录需自行明确设置。两 App 各自 SQLite / namespace CAS，不访问旧 Mac 工程。
 
 在 UI 手动输入本地视频路径 → Import → 选择 clip → split/trim/delete/undo →
-输入归档路径保存 → Restore as fork → 输入 MP4 输出路径导出。无视频预览/原生音频混音；普通字幕可展开 Caption editor 编辑并导出SRT/VTT sidecar。
+输入归档路径保存 → Restore as fork → 输入 MP4 输出路径导出。仅源缩略图预览，非完整时间线播放；无原生音频混音；普通字幕可展开 Caption editor 编辑并导出SRT/VTT sidecar。
 归档和 MP4 输出会在成功校验后原子替换所选目标；不得将其指向原始素材或其他重要文件。
 已拒绝当前 CAS/数据库/本会话选过的原件，但尚无跨会话 host FileRegistry 误覆盖保护。
 
@@ -288,7 +288,7 @@ python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolc
 python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/local-video/recovery-V-001.json
 ```
 
-Web现有编辑/IndexedDB照常；**Web安全transport仍待实现，不宣称Web不可行/外部blocked**。
+**v1.3历史状态，已被下方v1.4覆盖**：Web现有编辑/IndexedDB照常；当时Web安全transport仍待实现，不宣称当时存在外部blocked。
 已核实WebRTC可持久RTCCertificate/独立确认SHA256+DTLS；仍需实际transport、native互通和
 持久scope/revocation/原scheduler receipts接通。未弱化配对、没有默认STUN/TURN/云端或付费中继。
 物理设备/LAN/NAT、iOS/Android/macOS/Windows、浏览器peer、模型/原生音频AAC/seek/cache/full Schema
@@ -302,3 +302,46 @@ v1.3最终实际结果：**127个Dart/Flutter测试（123 native回归 +3真实C
 13项focused重跑是native suite子集，不额外加计数。工具链Flutter3.50.1/Dart3.14.0、Chrome156.0.8078.47。
 原87仍0 complete /21 partial /53 planned /13 blocked；新增XD10仍0 complete /8 partial /1 planned /1 blocked。
 本轮闭合上面明确的受限操作路径，而不是任何完整原任务；后续不因本批提交等待逐批确认。
+
+
+## v1.4 当前可操作增量 — Web身份/原Harness适配与indexed源缩略图
+
+[ADR0008](../adr/0008-web-rtc-identity-and-indexed-source-preview.md) ·
+[版本规格增量](../addenda/multidevice-v1.4-web-rtc.md) ·
+[本轮证据](evidence/web-rtc-seek/summary.json)。历史计数不是本轮结果。
+
+- Linux编辑器：导入受支持视频→选clip→`Source thumbnail time ms`输入源时间→
+  `Seek selected source + show thumbnail`，显示真实FFmpeg解码RGBA缩略图；编辑后旧图清除。
+  源时间以第一PTS为0，不是timeline/effect播放。128边长、2MiB像素LRU、256项上限。
+- Web：`cd apps/studio_web && flutter run -d chrome`，主动展开
+  `Trusted direct WebRTC session`→加载持久浏览器证书→独立确认对方全SHA256→明确metadata同意→
+  手动Offer/Answer。没有自动信令/云传/中继。**当前受管Chrome候选为0，实际会关闭并显示
+  RTC_DIRECT_CANDIDATES_UNAVAILABLE；未跑通Web加密任务会话**，不能承诺可连接。
+- 可真实点击Owner本机第二节点、读取原Harness持久回执、撤销；重开同一浏览器身份可查看
+  只读历史，不自动恢复coordinator/权限。该本机路径不能冒充remote网络协作。
+- 原native libsecret/mTLS/受限断点blob/同会话恢复/显式CAS采纳路径保留；本轮回归而非重造。
+  未接browser↔native bridge、browser worker结果outbox/reconnect或Web blob传输。
+
+```sh
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+# 自己机器需按固定官方工具链/SQLite安装说明选择实际目录，不得用系统3.46.1冒充。
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /tmp/studio-media-native --report artifacts/local-video/current.json
+CHROME_EXECUTABLE=/workspace/toolchains/browser/chrome-test python3 tools/acceptance/run_multidevice_dev.py --report artifacts/local-video/browser-current.json
+# 正向资格独立运行：当前环境返回2=blocked，绝不是pass。无mock/skip/策略修改。
+CHROME_EXECUTABLE=/workspace/toolchains/browser/chrome-test python3 tools/acceptance/run_web_rtc_qualification.py --report artifacts/local-video/rtc-positive.json
+```
+
+所有原87任务仍0 complete /21 partial /53 planned /13 blocked；新增XD10仍
+0 complete /8 partial /1 planned /1 blocked。I-021按原四条验收逐条留下**受限源预览证据**，
+代理映射/完整preview/原P0设备与clock/load未完成，不能据此改成complete。真实音频解码/
+可听AudioSink/AAC、完整Schema和其他原任务继续待开发，不以本批Web阻塞停全部。
+没有物理多设备、macOS/Windows/iOS/Android或模型/付费服务验收结果。
+
+本轮最终真实结果：**125 native +9 Chrome +1 OS-keyring/native UI =135 Dart/Flutter测试**，
+0跳过；6个工具测试、3个CTest、50次内部SIGKILL（不额外计case），双宿主各3次
+clean/release构建和首帧启动均通过；Web release JS构建通过。SQLite3.54.1严格门禁，
+v4/v5/v6真实历史数据库→v7迁移与旧runtime默认拒绝保留并重新执行。
+正向WebRTC资格实际退出1，外层runner返回2=blocked；不计入135个通过case。
+完整命令/版本/失败记录/源hash及所有限制见本轮summary，不把模拟transport或同机Chrome
+当作物理协作验收，不把源缩略图当作完整预览/AAC。

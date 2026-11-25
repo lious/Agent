@@ -15,9 +15,15 @@ final class BrowserProjectStore {
   final Namespace namespace;
   static Future<BrowserProjectStore> open(String name, Namespace namespace) {
     final c = Completer<BrowserProjectStore>(),
-        request = web.window.indexedDB.open(name, 1);
+        request = web.window.indexedDB.open(name, 2);
     request.onupgradeneeded = ((web.Event e) {
-      (request.result as web.IDBDatabase).createObjectStore('projects');
+      final db = request.result as web.IDBDatabase;
+      if (!db.objectStoreNames.contains('projects')) {
+        db.createObjectStore('projects');
+      }
+      if (!db.objectStoreNames.contains('peer_runtime')) {
+        db.createObjectStore('peer_runtime');
+      }
     }).toJS;
     request.onsuccess = ((web.Event e) {
       final database = request.result as web.IDBDatabase;
@@ -228,6 +234,70 @@ final class BrowserProjectStore {
         'idCounter': counter.toString(),
       };
     });
+  }
+
+  /// Browser persistence adapter for original Harness state. Project revision and
+  /// peer record changes share one IDB transaction; only transaction.complete ACKs.
+  Future<Map<String, dynamic>> peerTransaction(
+    String projectId,
+    Map<String, dynamic> Function(ProjectDocument, Map<String, dynamic>) change,
+  ) {
+    final c = Completer<Map<String, dynamic>>();
+    final tx = _db.transaction(
+      ['projects'.toJS, 'peer_runtime'.toJS].toJS,
+      'readwrite',
+      web.IDBTransactionOptions(durability: 'strict'),
+    );
+    final project = tx.objectStore('projects').get(_key(projectId).toJS);
+    final store = tx.objectStore('peer_runtime');
+    final key = jsonEncode(namespace.toJson()).toJS;
+    final runtime = store.get(key);
+    Object? failure;
+    Map<String, dynamic>? result;
+    var loaded = 0;
+    void apply(web.Event _) {
+      if (++loaded != 2) return;
+      try {
+        if (project.result == null) {
+          throw const StudioException('PROJECT_NOT_FOUND');
+        }
+        final doc = _verified(
+          jsonDecode((project.result as JSString).toDart)
+              as Map<String, dynamic>,
+          projectId,
+        );
+        final raw = runtime.result;
+        final value = raw == null
+            ? <String, dynamic>{'sessions': <String, dynamic>{}}
+            : jsonDecode((raw as JSString).toDart) as Map<String, dynamic>;
+        result = change(doc, value);
+        final encoded = jsonEncode(value);
+        if (encoded.length > 512 * 1024) {
+          throw const StudioException('WEB_PEER_STORAGE_LIMIT');
+        }
+        store.put(encoded.toJS, key);
+      } catch (e) {
+        failure = e;
+        tx.abort();
+      }
+    }
+
+    project.onsuccess = apply.toJS;
+    runtime.onsuccess = apply.toJS;
+    tx.oncomplete = ((web.Event _) {
+      c.complete(result!);
+    }).toJS;
+    void abort(web.Event _) {
+      if (!c.isCompleted) {
+        c.completeError(
+          failure ?? const StudioException('WEB_STORAGE_TRANSACTION_FAILED'),
+        );
+      }
+    }
+
+    tx.onabort = abort.toJS;
+    tx.onerror = abort.toJS;
+    return c.future;
   }
 
   void close() => _db.close();

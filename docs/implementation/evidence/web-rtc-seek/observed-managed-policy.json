@@ -1,0 +1,20 @@
+{
+  "timezone": "Asia/Shanghai",
+  "observationDate": "2026-11-25",
+  "relevantKeysOnly": true,
+  "observed": {
+    "WebRtcIPHandlingUrl": [
+      {
+        "url": "*",
+        "handling": "disable_non_proxied_udp"
+      }
+    ],
+    "WebRtcIPHandling": "default_public_interface_only"
+  },
+  "policiesChanged": false,
+  "privacyEvasionFlagsAdded": false,
+  "mediaPermissionsRequested": false,
+  "stunTurnOrRelayFallback": false,
+  "positiveEncryptedTransportPassed": false,
+  "scope": "These relevant managed Chrome keys plus real0host candidates explain local direct-preflight blockage; no full policy dumps/credentials/private user files"
+}

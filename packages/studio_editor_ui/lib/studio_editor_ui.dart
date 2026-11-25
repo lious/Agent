@@ -2,6 +2,7 @@ import 'package:studio_peer_ui/studio_peer_ui.dart';
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:studio_sdk/studio_sdk.dart';
@@ -28,6 +29,8 @@ class _FoundationAppState extends State<FoundationApp>
       _captionDuration = TextEditingController(text: '1000'),
       _captionPath = TextEditingController();
   final _peerHash = TextEditingController();
+  final _previewTime = TextEditingController(text: '0');
+  ui.Image? _previewImage;
   String? _peerAdoptionId;
   BigInt? _peerAdoptionRevision;
   bool _gcConfirmed = false;
@@ -49,7 +52,13 @@ class _FoundationAppState extends State<FoundationApp>
     });
   }
 
+  void _clearPreview() {
+    _previewImage?.dispose();
+    _previewImage = null;
+  }
+
   void _refresh() {
+    if (_project.hash != widget.workspace.current.hash) _clearPreview();
     _project = widget.workspace.current;
     _title.text = _project.title;
     if (!_clips.any((c) => c['id'] == _selected)) _selected = null;
@@ -165,6 +174,9 @@ class _FoundationAppState extends State<FoundationApp>
 
   @override
   void dispose() {
+    widget.workspace.cancelSourcePreview();
+    _previewImage?.dispose();
+    _previewTime.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
     for (final c in [
@@ -295,7 +307,60 @@ class _FoundationAppState extends State<FoundationApp>
         ),
         onTap: _busy
             ? null
-            : () => setState(() => _selected = c['id'] as String),
+            : () => setState(() {
+                if (_selected != c['id']) _clearPreview();
+                _selected = c['id'] as String;
+              }),
+      ),
+    _path(
+      'preview-time-ms',
+      'Source thumbnail time ms from FIRST source PTS (not timeline position)',
+      _previewTime,
+    ),
+    OutlinedButton(
+      key: const Key('seek-source-frame'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _run(() async {
+              final ms = int.tryParse(_previewTime.text);
+              if (ms == null || ms < 0) {
+                throw const StudioException('PREVIEW_TIME_INVALID');
+              }
+              final selection = _selected,
+                  projectHash = widget.workspace.current.hash;
+              final clip = _clips.singleWhere((c) => c['id'] == selection);
+              final frame = await widget.workspace.previewAssetSource(
+                clip['source']['id'] as String,
+                Q.of(ms, 1000),
+              );
+              final decoded = Completer<ui.Image>();
+              ui.decodeImageFromPixels(
+                frame.rgba,
+                frame.width,
+                frame.height,
+                ui.PixelFormat.rgba8888,
+                decoded.complete,
+              );
+              final image = await decoded.future;
+              if (!mounted ||
+                  selection != _selected ||
+                  widget.workspace.current.hash != projectHash) {
+                image.dispose();
+                throw const StudioException('PREVIEW_SUPERSEDED');
+              }
+              _previewImage?.dispose();
+              _previewImage = image;
+              return 'Indexed source thumbnail PTS ${frame.pts}; retained pixel cache ${widget.workspace.sourcePreviewCache.bytes} bytes. Not timeline/effect preview.';
+            }),
+      child: const Text('Seek selected source + show thumbnail'),
+    ),
+    if (_previewImage != null)
+      RawImage(
+        key: const Key('source-preview'),
+        image: _previewImage,
+        width: 256,
+        height: 144,
+        fit: BoxFit.contain,
       ),
     _path(
       'edit-frames',
@@ -425,7 +490,7 @@ class _FoundationAppState extends State<FoundationApp>
         ),
       ],
     ),
-    if (_busy) const LinearProgressIndicator(),
+    if (_busy) const LinearProgressIndicator(key: Key('media-busy')),
     Text(_status, key: const Key('operation-status')),
   ];
 

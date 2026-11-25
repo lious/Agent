@@ -7,6 +7,7 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 
 import 'browser_store.dart';
+import 'peer_panel.dart';
 
 void main() => runApp(const WebStudioApp());
 
@@ -126,7 +127,7 @@ class _WebStudioState extends State<WebStudioApp> {
         child: ListView(
           children: [
             const Text(
-              'Browser IndexedDB metadata/caption editing only. No media renderer, peer connection, model or paid service is enabled. Browser storage can be evicted: export JSON; this is not a complete portable media archive.',
+              'Browser IndexedDB metadata/caption editing only. No media renderer, model or paid service. Peer networking requires separate explicit WebRTC pairing below. Browser storage can be evicted: export JSON; this is not a complete portable media archive.',
             ),
             if (_project == null)
               const Text('Opening local browser project…')
@@ -205,6 +206,7 @@ class _WebStudioState extends State<WebStudioApp> {
                 },
                 child: const Text('Show WebVTT'),
               ),
+              WebPeerPanel(store: _store!, projectId: _project!.projectId),
               OutlinedButton(
                 onPressed: _download,
                 child: const Text('Download project JSON metadata'),

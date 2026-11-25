@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "asOf": "2026-11-25T13:28:54.821920+08:00",
+  "asOf": "2026-11-25T13:57:54.588530+08:00",
   "timezone": "Asia/Shanghai",
   "sourceRequirements": [
     "t83u",
@@ -16,8 +16,11 @@
       "hardDeps": [
         "V-001"
       ],
-      "verifiedScopeOrRemaining": "Actual browser host + IndexedDB edit/CAS; full native workspace interface/media parity and SQLite WASM still missing",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Actual browser host + IndexedDB edit/CAS; full native workspace interface/media parity and SQLite WASM still missing Browser v2 additive IndexedDB migration from actual v1 record fixture preserves head; pure browser imports do not pull dart:io/FFI.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/web-rtc-seek/summary.json"
+      ]
     },
     {
       "id": "XD-002",
@@ -26,11 +29,12 @@
       "hardDeps": [
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Linux actual libsecret encrypted OS identity/readback + explicit two-sided full fingerprint pairing UI and ten-minute plan/node consent; one peer/session; SQLite epochs/revocation checked on every message/replay. Actual native UI re-pair creates a fresh session. No hardware nonextractability/rotation UI, browser/mobile/other-desktop identity or physical-device qualification. Explicit recovery is owner-identity-bound and atomically revokes all old session grants/offers; metadata/blob consent and listener are never restored. Actual old-TLS-endpoint cached request after recovery rejects.",
+      "verifiedScopeOrRemaining": "Linux actual libsecret encrypted OS identity/readback + explicit two-sided full fingerprint pairing UI and ten-minute plan/node consent; one peer/session; SQLite epochs/revocation checked on every message/replay. Actual native UI re-pair creates a fresh session. No hardware nonextractability/rotation UI, mobile/other-desktop identity or physical-device qualification. Explicit recovery is owner-identity-bound and atomically revokes all old session grants/offers; metadata/blob consent and listener are never restored. Actual old-TLS-endpoint cached request after recovery rejects. This batch: actual Chrome persistent nonexported RTCCertificate HANDLE/racing creation/reopen and full-fingerprint/explicit-consent UI, actual durable IDB revoke. Browser positive paired network/revocation qualification remains blocked, NOT complete; no hardware-store or browser rotation claim.",
       "fullTaskComplete": false,
       "evidence": [
         "evidence/peer-ui-blob/summary.json",
-        "evidence/recovery-adoption/summary.json"
+        "evidence/recovery-adoption/summary.json",
+        "evidence/web-rtc-seek/summary.json"
       ]
     },
     {
@@ -40,11 +44,12 @@
       "hardDeps": [
         "XD-002"
       ],
-      "verifiedScopeOrRemaining": "Actual native mTLS, CA validation and exact leaf SHA256 before HTTP bytes; no proxy/relay/cloud fallback. Explicit loopback default/LAN-enable UI and listener cleanup. Actual loopback TLS/native UI only: browser encrypted transport, LAN/NAT/mobile/physical devices remain unimplemented or unverified. WebRTC RTCCertificate persistence/full-fingerprint DTLS platform route researched from official docs; adapter/native bridge/authorization integration is still unimplemented, not an invented external blocker. No Web transport test is claimed.",
+      "verifiedScopeOrRemaining": "Actual native mTLS, CA validation and exact leaf SHA256 before HTTP bytes; no proxy/relay/cloud fallback. Explicit loopback default/LAN-enable UI and listener cleanup. Actual loopback TLS/native UI only: LAN/NAT/mobile/physical devices remain unverified. This batch implements browser-standard DTLS/SCTP manual host-only SDP adapter with persistent RTCCertificate pinning and no ICE servers/relay. Actual Chrome gathering completes with0 host candidates under managed disable_non_proxied_udp/default_public_interface_only; fail-closed preflight/UI verified. Explicit POSITIVE qualification returns nonzero blocked; no encrypted browser exchange claimed. No policy bypass. Browser-native bridge remains unimplemented, not an external blocker.",
       "fullTaskComplete": false,
       "evidence": [
         "evidence/peer-ui-blob/summary.json",
-        "evidence/recovery-adoption/summary.json"
+        "evidence/recovery-adoption/summary.json",
+        "evidence/web-rtc-seek/summary.json"
       ]
     },
     {
@@ -70,11 +75,12 @@
         "I-003",
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Original PlanGraph safe subset and host-qualified runtime/caps/model inventory/foreground/load; one-heavy-slot/device within namespace and restart quarantine. Actual UI places one free bounded metadata CPU node remotely and another locally in SAME session. No signed live/global telemetry, arbitrary model/FFmpeg distribution or general N-device UI. Local UI execution uses one stable logical namespace/database slot across sessions (real overlap busy/release/retry test), not a fresh per-session device ID; no global physical-host arbitration. Real failing fresh-session/foreign-boot quarantine bypass reproduced and fixed: all namespace/device quarantine boots checked, expiry only via that boot owner observation; conservative takeover carry. No global physical-host attestation.",
+      "verifiedScopeOrRemaining": "Original PlanGraph safe subset and host-qualified runtime/caps/model inventory/foreground/load; one-heavy-slot/device within namespace and restart quarantine. Actual UI places one free bounded metadata CPU node remotely and another locally in SAME session. No signed live/global telemetry, arbitrary model/FFmpeg distribution or general N-device UI. Local UI execution uses one stable logical namespace/database slot across sessions (real overlap busy/release/retry test), not a fresh per-session device ID; no global physical-host arbitration. Real failing fresh-session/foreign-boot quarantine bypass reproduced and fixed: all namespace/device quarantine boots checked, expiry only via that boot owner observation; conservative takeover carry. No global physical-host attestation. Browser adapter reuses same ORIGINAL placeTask/VerifiedDevice and bounded metadata PlanGraph, stable fingerprint device IDs and persisted namespace reservation check. Real IDB cross-session slot exclusion/release test; no signed live telemetry/global-host slot claim or browser-network success.",
       "fullTaskComplete": false,
       "evidence": [
         "evidence/peer-ui-blob/summary.json",
-        "evidence/recovery-adoption/summary.json"
+        "evidence/recovery-adoption/summary.json",
+        "evidence/web-rtc-seek/summary.json"
       ]
     },
     {
@@ -85,11 +91,12 @@
         "XD-005",
         "I-011"
       ],
-      "verifiedScopeOrRemaining": "Original PlanGraph with SQLite leases/attempt hard deadline/outbox/source/input/result pins and authenticated receipts; expiry/revoke/late result/rollback/reopen. New explicit owner-bound SAME-session native recovery UI persists bounded inputs/plan and Linux kernel boot anchor; atomic old-grant/offer revocation + boot CAS preserving attempts/fences/budget. Known same-OS-boot downtime measured; unknown/reboot exhausts remaining budget. SQL failure, exact recovery replay, revision drift, old endpoint replay and foreign-boot quarantine regressions exercised. No automatic listener/permissions. Full dynamic PlanGraph/general worker recovery, actual OS reboot, other-platform and physical devices remain.",
+      "verifiedScopeOrRemaining": "Original PlanGraph with SQLite leases/attempt hard deadline/outbox/source/input/result pins and authenticated receipts; expiry/revoke/late result/rollback/reopen. New explicit owner-bound SAME-session native recovery UI persists bounded inputs/plan and Linux kernel boot anchor; atomic old-grant/offer revocation + boot CAS preserving attempts/fences/budget. Known same-OS-boot downtime measured; unknown/reboot exhausts remaining budget. SQL failure, exact recovery replay, revision drift, old endpoint replay and foreign-boot quarantine regressions exercised. No automatic listener/permissions. Full dynamic PlanGraph/general worker recovery, actual OS reboot, other-platform and physical devices remain. Browser projects+peer_runtime IDB atomic receipt/outbox adapter uses ORIGINAL lease/fence contracts. Actual retry expiry/late result/heartbeat regression/hash rollback/revoke/reopen tested WITHOUT transport. UI read-only receipt inspection restores no authority. Browser coordinator recovery and worker durable pending-result reconnect outbox are missing.",
       "fullTaskComplete": false,
       "evidence": [
         "evidence/peer-ui-blob/summary.json",
-        "evidence/recovery-adoption/summary.json"
+        "evidence/recovery-adoption/summary.json",
+        "evidence/web-rtc-seek/summary.json"
       ]
     },
     {
@@ -100,8 +107,11 @@
         "XD-006",
         "XD-002"
       ],
-      "verifiedScopeOrRemaining": "Every authenticated task message and replay rechecks current certificate grant epoch, plan/revision/node scope and expiry; cancellation/lease fences and free-only execution. Unknown coordinator downtime exhausts rather than resets wall budget. Full privacy/rights epochs and paid unknown/budget reconciliation remain.",
-      "fullTaskComplete": false
+      "verifiedScopeOrRemaining": "Every authenticated task message and replay rechecks current certificate grant epoch, plan/revision/node scope and expiry; cancellation/lease fences and free-only execution. Unknown coordinator downtime exhausts rather than resets wall budget. Full privacy/rights epochs and paid unknown/budget reconciliation remain. Browser adapter denies revoked local/remote work and cached responses, suspends hidden/backward-clock sessions and bounds attempts/wall/receipts/state; no paid jobs or OS-sleep/background qualification.",
+      "fullTaskComplete": false,
+      "evidence": [
+        "evidence/web-rtc-seek/summary.json"
+      ]
     },
     {
       "id": "XD-008",
@@ -121,10 +131,11 @@
       "hardDeps": [
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Actual Linux native identity/keyring/UI/TLS/inbox and Linux Chrome editable IndexedDB/shared core; Chrome does not exercise peer transport. Non-Linux builds/key stores, mobile background behavior and physical devices remain unverified.",
+      "verifiedScopeOrRemaining": "Actual Linux native identity/keyring/UI/TLS/inbox and Linux Chrome editable IndexedDB/shared core; Chrome does not exercise peer transport. Non-Linux builds/key stores, mobile background behavior and physical devices remain unverified. Actual Chrome IDB/certificate/preflight/clickable receipt UI/release JS, but positive DTLS has zero-host-candidate policy blocker. No other-browser/mobile/non-Linux/physical-device result.",
       "fullTaskComplete": false,
       "evidence": [
-        "evidence/peer-ui-blob/summary.json"
+        "evidence/peer-ui-blob/summary.json",
+        "evidence/web-rtc-seek/summary.json"
       ]
     },
     {

@@ -1,0 +1,20 @@
+{
+  "scopeStatus": "passed",
+  "command": [
+    "dbus-run-session",
+    "--",
+    "/usr/bin/python3",
+    "/workspace/agent-foundation-20261125/tools/acceptance/run_peer_ui.py",
+    "--isolated"
+  ],
+  "exitCode": 0,
+  "checkedAt": "2026-11-25T14:04:54.270513+08:00",
+  "scope": "Linux actual native Flutter UI + OS libsecret, fresh isolated encrypted test keyring, localhost TLS; NOT physical devices",
+  "testsExecuted": 1,
+  "realKeyringFilePresent": true,
+  "plaintextPrivatePemFiles": false,
+  "existingOwnerKeyringAccessed": false,
+  "physicalDeviceQualification": false,
+  "fullTaskComplete": false,
+  "output": "00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/peer_identity_test.dart\nBuilding Linux application...                                   \n✓ Built build/linux/x64/debug/bundle/studio_demo\n00:00 +0: real native UI + encrypted OS keyring: pair, same-session local/remote CPU, separately approved blob, revoke; same host only\n00:21 +1: (tearDownAll)\n00:21 +1: All tests passed!\n"
+}

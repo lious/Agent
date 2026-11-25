@@ -1,3 +1,6 @@
+import 'preview_cache.dart';
+export 'preview_cache.dart';
+
 import 'package:studio_peer_io/compute_session.dart';
 export 'package:studio_peer_io/compute_session.dart';
 
@@ -395,6 +398,72 @@ final class StudioWorkspace {
     return current;
   }
 
+  final sourcePreviewCache = SourcePreviewCache();
+  NativeMedia? _previewMedia;
+  int _previewEpoch = 0;
+  Future<void> _previewTail = Future.value();
+  void cancelSourcePreview() {
+    ++_previewEpoch;
+    _previewMedia?.cancel();
+  }
+
+  Future<SourcePreviewFrame> previewAssetSource(String assetId, Q time) async {
+    _requireMedia();
+    if (time < Q.of(0)) throw const StudioException('PREVIEW_TIME_INVALID');
+    final project = current, epoch = ++_previewEpoch;
+    _previewMedia?.cancel();
+    final asset = (project.toJson()['assets'] as List).singleWhere(
+      (a) => a['id'] == assetId,
+      orElse: () => throw const StudioException('ASSET_NOT_FOUND'),
+    );
+    final hash = asset['originalBlobHash'] as String;
+    final key = contentHash({
+      'ns': project.namespace.toJson(),
+      'blob': hash,
+      'time': time.toJson(),
+      'preview': 'source-rgba128-1',
+    });
+    final cached = sourcePreviewCache.get(key);
+    if (cached != null) return cached;
+    final prior = _previewTail, done = Completer<void>();
+    _previewTail = done.future;
+    await prior;
+    try {
+      if (epoch != _previewEpoch || _closed) {
+        throw const StudioException('PREVIEW_SUPERSEDED');
+      }
+      _previewMedia ??= NativeMedia.open(
+        _media!.libraryPath,
+        _repository.namespace,
+      );
+      final file = await _blobs!.resolve(hash);
+      if (epoch != _previewEpoch || _closed) {
+        throw const StudioException('PREVIEW_SUPERSEDED');
+      }
+      if (current.hash != project.hash) {
+        throw const StudioException('PREVIEW_PROJECT_CHANGED');
+      }
+      final frame = SourcePreviewFrame(
+        await _previewMedia!.previewAsync(file, time),
+      );
+      if (epoch != _previewEpoch || _closed) {
+        throw const StudioException('PREVIEW_SUPERSEDED');
+      }
+      if (current.hash != project.hash) {
+        throw const StudioException('PREVIEW_PROJECT_CHANGED');
+      }
+      sourcePreviewCache.put(key, frame);
+      return frame;
+    } catch (_) {
+      if (epoch != _previewEpoch || _closed) {
+        throw const StudioException('PREVIEW_SUPERSEDED');
+      }
+      rethrow;
+    } finally {
+      done.complete();
+    }
+  }
+
   Future<Map<String, int>> collectLocalGarbage() async {
     _requireMedia();
     return _blobs!.withMaintenanceLease(() async {
@@ -697,6 +766,9 @@ final class StudioWorkspace {
       cancelExport();
       _closed = true;
       unawaited(_persistenceEvents.close());
+      cancelSourcePreview();
+      _previewMedia?.close();
+      sourcePreviewCache.clear();
       _media?.close();
       _repository.close();
     }

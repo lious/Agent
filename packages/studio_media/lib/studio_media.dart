@@ -95,6 +95,25 @@ final class NativeMedia {
     );
   }
 
+  Future<Map<String, dynamic>> previewAsync(
+    File file,
+    Q time, {
+    bool indexed = true,
+  }) {
+    if (capabilities['sourcePreview128'] != true) {
+      throw const StudioException('PREVIEW_ADAPTER_UNAVAILABLE');
+    }
+    final path = libraryPath, ns = namespace, h = handle;
+    final recipe = jsonEncode({
+      'path': file.absolute.path,
+      'time': time.toJson(),
+      'indexed': indexed,
+    });
+    return Isolate.run(
+      () => NativeMedia._attach(path, ns, h)._call('sm_preview', recipe),
+    );
+  }
+
   Map<String, dynamic> render(Map<String, dynamic> recipe) =>
       _call('sm_export', jsonEncode(recipe));
   Future<Map<String, dynamic>> renderAsync(Map<String, dynamic> recipe) {

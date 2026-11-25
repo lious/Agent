@@ -1,0 +1,5 @@
+{
+  "scope": "Two real native seek/cache tests,20 exact CFR points plus nonzero/VFR, faults and SDK generation; rerun subset NOT extra cases",
+  "historicalOrFocusedSubset": true,
+  "rawOutput": "00:00 +0: loading packages/studio_sdk/test/source_preview_test.dart\n00:00 +0: REAL FFmpeg indexed seeks equal sequential PTS/pixels at20 random CFR points plus nonzero PTS and VFR\n00:02 +1: REAL source preview LRU immutable bytes, budget/eviction/oversize and SDK superseded request cannot return stale frame\n00:02 +2: All tests passed!\n"
+}

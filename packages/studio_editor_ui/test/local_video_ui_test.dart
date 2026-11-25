@@ -50,6 +50,17 @@ void main() {
           }
           await Future<void>.delayed(const Duration(milliseconds: 20));
         });
+        // Codec completion can arrive after the SDK cache entry. Advance real
+        // engine IO and widget frames instead of spinning fake time while the
+        // indeterminate busy animation is still correctly active.
+        for (var n = 0; n < 200; n++) {
+          await tester.pump(const Duration(milliseconds: 16));
+          if (find.byKey(const Key('media-busy')).evaluate().isEmpty) break;
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 20)),
+          );
+        }
+        expect(find.byKey(const Key('media-busy')), findsNothing);
         await tester.pumpAndSettle();
         expect(find.byKey(const Key('error')), findsNothing);
         expect(done(), true, reason: '$key timed out');
@@ -60,7 +71,21 @@ void main() {
       final clips =
           w.current.toJson()['sequences'][0]['tracks'][0]['items'] as List;
       await tap('clip-${clips.first['id']}');
+      await enter('preview-time-ms', '1500');
+      await asyncTap(
+        'seek-source-frame',
+        () => w.sourcePreviewCache.entries == 1,
+      );
+      expect(find.byKey(const Key('source-preview')), findsOneWidget);
+      // Status is below this lazily built ListView viewport. Verify the actual
+      // decoded image rather than asserting text that has not been built.
+      final shown = tester.widget<RawImage>(
+        find.byKey(const Key('source-preview')),
+      );
+      expect(shown.image!.width, 128);
+      expect(shown.image!.height, 72);
       await tap('split');
+      expect(find.byKey(const Key('source-preview')), findsNothing);
       expect(w.current.revision, BigInt.two);
       await enter('edit-frames', '15');
       await tap('trim');
