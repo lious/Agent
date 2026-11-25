@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T11:45:24.062490+08:00",
+  "asOf": "2026-11-25T12:15:13.476543+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -509,12 +509,14 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "SQLite v2 migration, atomic generic edits/CAS/fence/receipts/outbox/definition history/blob pins/latest snapshot undo and persisted selection",
+      "implementedScope": "SQLite v2 migration, atomic generic edits/CAS/fence/receipts/outbox/definition history/blob pins/latest snapshot undo and persisted selection; v5 additive peer authority tables and nested savepoints; default approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate; actual original-v4/system3.46.1 -> current-v5/fixed3.54.1 compatibility probe and old runtime rejection.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/peer-tls-sqlite/sqlite-upgrade.json",
+        "evidence/peer-tls-sqlite/verification.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
-      "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。",
+      "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
       "hardDeps": [
         "I-002"
       ],
@@ -1045,10 +1047,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Original PlanGraph 1.0 safe execution subset, verified-device value placement and SQLite v4 durable plan/task leases/progress/attempts/candidate outbox; real two same-host CPU child workers and expiry/fence/late result/replay/rollback tests. No complete dynamic replan/100-restart proof/model loops/secure physical-device transport.",
+      "implementedScope": "Original PlanGraph 1.0 safe execution subset, verified-device value placement and SQLite v4 durable plan/task leases/progress/attempts/candidate outbox; real two same-host CPU child workers and expiry/fence/late result/replay/rollback tests. No complete dynamic replan/100-restart proof/model loops/secure physical-device transport.; actual authenticated native TLS safe-subset task endpoint with scoped grant/request idempotency/source validation, one-heavy-slot admission and local-only boot takeover/quarantine preserving wall budgets.",
       "evidence": [
         "evidence/caption-audio-harness/verification.json",
-        "evidence/caption-audio-harness/multidevice.json"
+        "evidence/caption-audio-harness/multidevice.json",
+        "evidence/peer-tls-sqlite/verification.json"
       ],
       "remainingAcceptance": "图环/越namespace拒绝；fanout/迭代不越上限；过期fence不提交；100重启无重复副作用；手动锁始终有效。",
       "remainingScope": "含扩图/replan/fanout/fanin/mapreduce/lease；不在手机内存托管云长job。",

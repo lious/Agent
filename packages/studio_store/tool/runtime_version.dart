@@ -7,6 +7,14 @@ void main() {
   try {
     print(
       jsonEncode({
+        'sqliteSourceId': db
+            .select('SELECT sqlite_source_id() AS source')
+            .single['source'],
+        'threadsafe': db
+            .select(
+              "SELECT sqlite_compileoption_used('THREADSAFE=1') AS enabled",
+            )
+            .single['enabled'],
         'sqliteVersion': db
             .select('SELECT sqlite_version() AS version')
             .single['version'],

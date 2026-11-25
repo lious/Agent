@@ -45,6 +45,114 @@ extension HarnessPersistence on DocumentRepository {
       coordinatorBoot,
     ]);
   });
+
+  /// LOCAL OWNER/coordinator administration ONLY; never a peer operation.
+  /// A trusted, measured upper bound on unobserved downtime is charged, not a
+  /// worker wall clock. Unknown duration consumes the entire remaining budget.
+  /// This grants no device permissions and does not reset attempts/cancel epochs.
+  /// Old work remains quarantined on its device until its old lease could expire.
+  void takeoverHarnessPlan(
+    SessionRef session,
+    String planHash, {
+    required String expectedBoot,
+    required String newBoot,
+    required String operationId,
+    int? unobservedElapsedUpperBoundMs,
+  }) => _transaction(() {
+    requireId(expectedBoot);
+    requireId(newBoot);
+    requireId(operationId);
+    final row = _planRow(session, planHash),
+        plan = HarnessPlan(
+          jsonDecode(row['json'] as String) as Map<String, dynamic>,
+        );
+    final wall = u63(plan.toJson()['limits']['maxWallMs']).toInt();
+    final downtime = unobservedElapsedUpperBoundMs ?? wall;
+    if (downtime < 0 || downtime > 604800000 || expectedBoot == newBoot) {
+      throw const StudioException('COORDINATOR_TAKEOVER_INVALID');
+    }
+    final inputHash = harnessHash({
+      'expectedBoot': expectedBoot,
+      'newBoot': newBoot,
+      'downtimeUpperBoundMs': downtime,
+    });
+    final receipts = _db.select(
+      'SELECT input_hash FROM harness_takeovers WHERE ns=? AND session_id=? AND plan_hash=? AND id=?',
+      [_ns, session.id, planHash, operationId],
+    );
+    if (receipts.isNotEmpty) {
+      if (receipts.single['input_hash'] != inputHash) {
+        throw const StudioException('IDEMPOTENCY_CONFLICT');
+      }
+      return;
+    }
+    if (row['boot'] != expectedBoot) {
+      throw const StudioException('COORDINATOR_FENCED');
+    }
+    final prior = _db.select(
+      'SELECT 1 FROM harness_takeovers WHERE ns=? AND session_id=? AND plan_hash=? AND (old_boot=? OR new_boot=?)',
+      [_ns, session.id, planHash, newBoot, newBoot],
+    );
+    if (prior.isNotEmpty) throw const StudioException('COORDINATOR_BOOT_REUSE');
+    final consumed =
+        (row['last_ms'] as int) - (row['started_ms'] as int) + downtime;
+    // Carry reservations even when a retry overwrote the old per-node lease.
+    for (final q in _db.select(
+      'SELECT device_id,until_ms FROM harness_quarantine WHERE ns=? AND boot=?',
+      [_ns, expectedBoot],
+    )) {
+      final remaining = (q['until_ms'] as int) - (row['last_ms'] as int);
+      if (remaining > 0) {
+        _db.execute(
+          'INSERT INTO harness_quarantine VALUES(?,?,?,?) ON CONFLICT(ns,device_id,boot) DO UPDATE SET until_ms=max(until_ms,excluded.until_ms)',
+          [_ns, q['device_id'], newBoot, remaining],
+        );
+      }
+    }
+    for (final step in _db.select(
+      'SELECT state_json FROM harness_steps WHERE ns=? AND session_id=? AND plan_hash=?',
+      [_ns, session.id, planHash],
+    )) {
+      final state = leaseStateFromJson(
+        jsonDecode(step['state_json'] as String) as Map<String, dynamic>,
+      );
+      if (state.status == 'running') {
+        // Never subtract an upper-bound downtime from the worker quarantine:
+        // an upper bound is not evidence that any minimum time has elapsed.
+        final priorQuarantine = _db.select(
+          'SELECT until_ms FROM harness_quarantine WHERE ns=? AND device_id=? AND boot=?',
+          [_ns, state.lease.deviceId, expectedBoot],
+        );
+        final remaining = state.lease.coordinatorBoot == expectedBoot
+            ? state.lease.untilMs - (row['last_ms'] as int)
+            : (priorQuarantine.isEmpty
+                  ? 0
+                  : (priorQuarantine.single['until_ms'] as int) -
+                        (row['last_ms'] as int));
+        if (remaining > 0) {
+          _db.execute(
+            'INSERT INTO harness_quarantine VALUES(?,?,?,?) ON CONFLICT(ns,device_id,boot) DO UPDATE SET until_ms=max(until_ms,excluded.until_ms)',
+            [_ns, state.lease.deviceId, newBoot, remaining],
+          );
+        }
+      }
+    }
+    _db.execute(
+      'UPDATE harness_plans SET boot=?,started_ms=?,last_ms=0 WHERE ns=? AND session_id=? AND plan_hash=?',
+      [newBoot, -consumed, _ns, session.id, planHash],
+    );
+    _db.execute('INSERT INTO harness_takeovers VALUES(?,?,?,?,?,?,?,?)', [
+      _ns,
+      session.id,
+      planHash,
+      operationId,
+      inputHash,
+      expectedBoot,
+      newBoot,
+      downtime,
+    ]);
+  });
+
   Map<String, dynamic> _planRow(SessionRef session, String hash) {
     session.requireScope(namespace);
     final rows = _db.select(
@@ -91,10 +199,19 @@ extension HarnessPersistence on DocumentRepository {
     String nodeId,
     LeaseState state,
     int attempt,
+    int attemptDeadlineMs,
   ) {
     _db.execute(
-      'INSERT INTO harness_steps VALUES(?,?,?,?,?,?) ON CONFLICT(ns,session_id,plan_hash,node_id) DO UPDATE SET state_json=excluded.state_json,attempt=excluded.attempt',
-      [_ns, session.id, planHash, nodeId, attempt, jsonEncode(state.toJson())],
+      'INSERT INTO harness_steps(ns,session_id,plan_hash,node_id,attempt,state_json,attempt_deadline_ms) VALUES(?,?,?,?,?,?,?) ON CONFLICT(ns,session_id,plan_hash,node_id) DO UPDATE SET state_json=excluded.state_json,attempt=excluded.attempt,attempt_deadline_ms=excluded.attempt_deadline_ms',
+      [
+        _ns,
+        session.id,
+        planHash,
+        nodeId,
+        attempt,
+        jsonEncode(state.toJson()),
+        attemptDeadlineMs,
+      ],
     );
   }
 
@@ -175,6 +292,31 @@ extension HarnessPersistence on DocumentRepository {
         throw const StudioException('LEASE_BUSY');
       }
     }
+    final quarantine = _db.select(
+      'SELECT until_ms FROM harness_quarantine WHERE ns=? AND device_id=? AND boot=?',
+      [_ns, device.id, coordinatorBoot],
+    );
+    if (quarantine.isNotEmpty &&
+        nowMs < (quarantine.single['until_ms'] as int)) {
+      throw const StudioException('DEVICE_RESOURCE_QUARANTINED');
+    }
+    // One heavy task/device, across all projects/plans in this namespace. A
+    // fenced old-boot lease cannot reserve a current coordinator slot.
+    for (final active in _db.select(
+      'SELECT s.state_json,p.boot FROM harness_steps s JOIN harness_plans p ON p.ns=s.ns AND p.session_id=s.session_id AND p.plan_hash=s.plan_hash WHERE s.ns=?',
+      [_ns],
+    )) {
+      final other = leaseStateFromJson(
+        jsonDecode(active['state_json'] as String) as Map<String, dynamic>,
+      );
+      if (other.status == 'running' &&
+          other.lease.deviceId == device.id &&
+          other.lease.coordinatorBoot == active['boot'] &&
+          (other.lease.coordinatorBoot != coordinatorBoot ||
+              other.lease.untilMs > nowMs)) {
+        throw const StudioException('DEVICE_RESOURCE_BUSY');
+      }
+    }
     final attempt = counts.isEmpty ? 1 : (counts.single['attempt'] as int) + 1;
     if (attempt > (node['maxAttempts'] as int)) {
       throw const StudioException('TASK_ATTEMPTS_EXHAUSTED');
@@ -190,7 +332,15 @@ extension HarnessPersistence on DocumentRepository {
       cancelEpoch: state?.lease.cancelEpoch ?? BigInt.zero,
       untilMs: nowMs + (leaseMs < remaining ? leaseMs : remaining),
     );
-    _putHarness(session, planHash, nodeId, LeaseState(lease: lease), attempt);
+    final timeout = u63(node['timeoutMs']).toInt();
+    _putHarness(
+      session,
+      planHash,
+      nodeId,
+      LeaseState(lease: lease),
+      attempt,
+      nowMs + (timeout < remaining ? timeout : remaining),
+    );
     _harnessOutbox(session, lease, 'dispatch', lease.toJson());
     return lease;
   });
@@ -218,6 +368,15 @@ extension HarnessPersistence on DocumentRepository {
     final timeout = u63(plan.node(token.nodeId)['timeoutMs']).toInt();
     if (extendMs > timeout || extendMs > budget) {
       throw const StudioException('PLAN_WALL_BUDGET_EXHAUSTED');
+    }
+    final attemptDeadline =
+        _db.select(
+              'SELECT attempt_deadline_ms FROM harness_steps WHERE ns=? AND session_id=? AND plan_hash=? AND node_id=?',
+              [_ns, session.id, token.planHash, token.nodeId],
+            ).single['attempt_deadline_ms']
+            as int;
+    if (nowMs + extendMs > attemptDeadline) {
+      throw const StudioException('TASK_ATTEMPT_TIMEOUT');
     }
     final next = state.heartbeat(
       token,

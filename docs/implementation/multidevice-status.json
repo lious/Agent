@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "asOf": "2026-11-25T11:38:34.350245+08:00",
+  "asOf": "2026-11-25T12:15:13.476543+08:00",
   "timezone": "Asia/Shanghai",
   "sourceRequirements": [
     "t83u",
@@ -22,21 +22,21 @@
     {
       "id": "XD-002",
       "title": "Trusted device pairing, scoped grants and revocation",
-      "status": "planned",
+      "status": "partial",
       "hardDeps": [
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "No pairing/authenticated remote endpoint enabled",
+      "verifiedScopeOrRemaining": "Native local offline one-use expiring full-certificate-fingerprint confirmation; SQLite scoped plan/node grant epochs, revocation checked on every request/replay; keys only supplied via TLS context. Actual mTLS tests including persisted expiry high-water. OS identity storage, pairing UI, browser identity and physical devices not qualified.",
       "fullTaskComplete": false
     },
     {
       "id": "XD-003",
       "title": "Encrypted direct transport and explicit unreachable state",
-      "status": "planned",
+      "status": "partial",
       "hardDeps": [
         "XD-002"
       ],
-      "verifiedScopeOrRemaining": "No LAN/WebRTC/TLS transport qualification; no cloud/paid relay fallback",
+      "verifiedScopeOrRemaining": "Actual native direct mutually authenticated TLS sockets with CA validation + exact SHA256 leaf pin BEFORE HTTP bytes, TLS>=1.2, no redirect/proxy/relay fallback, explicit unreachable, bounded messages/deadlines/concurrency. Tested loopback HTTPS/two local child workers, NOT physical devices/LAN/NAT/Web/mobile.",
       "fullTaskComplete": false
     },
     {
@@ -58,7 +58,7 @@
         "I-003",
         "XD-001"
       ],
-      "verifiedScopeOrRemaining": "Original PlanGraph compatible safe subset + real native/Chrome logic; signed/live telemetry, dynamic reservations and UI pending; per-device resource reservations/one-heavy-task admission and real signed capability qualification remain unimplemented",
+      "verifiedScopeOrRemaining": "Original PlanGraph safe subset and host-qualified runtime/caps/model inventory/foreground/load. Actual transactional one-heavy-slot/device within namespace and restart quarantine. No signed live telemetry, global cross-namespace resource arbitration or UI.",
       "fullTaskComplete": false
     },
     {
@@ -69,7 +69,7 @@
         "XD-005",
         "I-011"
       ],
-      "verifiedScopeOrRemaining": "Actual SQLite expiry/fence/heartbeat/late-result/idempotency/outbox + two native child CPU workers; network auth/revocation and coordinator restart authority incomplete; durable coordinator clock rollback check and actual outbox-trigger rollback/retry tested; no remote API enabled",
+      "verifiedScopeOrRemaining": "Actual SQLite v5 authenticated request receipts atomically bind lease/outbox/result source and input/result/schema pins; heartbeat/expiry/retry/revoke/late result/rollback/reopen, two same-host child HTTPS workers. Local-only CAS boot takeover with preserved attempts/wall budget, ABA rejection and conservative old-device quarantine. Full dynamic PlanGraph/physical devices remain. Hard attempt deadline survives reopen/migration; repeated takeover carries old-device quarantine even after node retry overwrote its step row (real reproduced failure + fixed regression).",
       "fullTaskComplete": false
     },
     {
@@ -80,7 +80,7 @@
         "XD-006",
         "XD-002"
       ],
-      "verifiedScopeOrRemaining": "Paid nodes rejected, cancellation fences work; full budget/privacy/device epoch reconciliation not implemented",
+      "verifiedScopeOrRemaining": "Every authenticated task message and replay rechecks current certificate grant epoch, plan/revision/node scope and expiry; cancellation/lease fences and free-only execution. Unknown coordinator downtime exhausts rather than resets wall budget. Full privacy/rights epochs and paid unknown/budget reconciliation remain.",
       "fullTaskComplete": false
     },
     {
@@ -122,8 +122,8 @@
     }
   ],
   "counts": {
-    "partial": 5,
-    "planned": 4,
+    "partial": 7,
+    "planned": 2,
     "blocked": 1
   }
 }

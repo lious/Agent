@@ -8,8 +8,10 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 export 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_harness/studio_harness.dart';
+import 'package:studio_harness/builtin_compute.dart';
 part 'persistence.dart';
 part 'harness_persistence.dart';
+part 'peer_authority.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -79,6 +81,22 @@ CREATE TABLE harness_outbox(ns TEXT NOT NULL,id TEXT NOT NULL,session_id TEXT NO
  PRIMARY KEY(ns,id),FOREIGN KEY(ns,session_id,plan_hash) REFERENCES harness_plans(ns,session_id,plan_hash));
 """;
 
+const _ddl5 = r"""
+ALTER TABLE harness_steps ADD COLUMN attempt_deadline_ms INTEGER NOT NULL DEFAULT 0;
+UPDATE harness_steps SET attempt_deadline_ms=CAST(json_extract(state_json,'$.lease.untilMs') AS INTEGER);
+CREATE TABLE harness_takeovers(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,id TEXT NOT NULL,input_hash TEXT NOT NULL,old_boot TEXT NOT NULL,new_boot TEXT NOT NULL,charged_ms INTEGER NOT NULL,PRIMARY KEY(ns,session_id,plan_hash,id));
+CREATE TABLE harness_quarantine(ns TEXT NOT NULL,device_id TEXT NOT NULL,boot TEXT NOT NULL,until_ms INTEGER NOT NULL,PRIMARY KEY(ns,device_id,boot));
+CREATE TABLE peer_clock(ns TEXT PRIMARY KEY,last_ms INTEGER NOT NULL);
+CREATE TABLE peer_offers(ns TEXT NOT NULL,id TEXT NOT NULL,json TEXT NOT NULL,expires_ms INTEGER NOT NULL,used INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(ns,id));
+CREATE TABLE peer_grants(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,epoch INTEGER NOT NULL,json TEXT NOT NULL,revoked INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(ns,fingerprint,session_id,plan_hash));
+CREATE TABLE peer_requests(ns TEXT NOT NULL,fingerprint TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,epoch INTEGER NOT NULL,id TEXT NOT NULL,input_hash TEXT NOT NULL,response_json TEXT NOT NULL,PRIMARY KEY(ns,fingerprint,session_id,plan_hash,epoch,id));
+CREATE TABLE peer_task_bindings(ns TEXT NOT NULL,session_id TEXT NOT NULL,plan_hash TEXT NOT NULL,node_id TEXT NOT NULL,fence TEXT NOT NULL,fingerprint TEXT NOT NULL,epoch INTEGER NOT NULL,PRIMARY KEY(ns,session_id,plan_hash,node_id,fence));
+""";
+
+const approvedSqliteVersion = '3.54.1';
+const approvedSqliteSourceId =
+    '2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76';
+
 final class WriterToken {
   WriterToken(this.namespace, this.projectId, this.owner, this.epoch);
   final Namespace namespace;
@@ -97,14 +115,29 @@ final class CommitReceipt {
 /// Trusted host only: one bound namespace for every query, never caller SQL.
 /// Sharing a file is logical isolation, not an OS sandbox/security boundary.
 final class DocumentRepository {
-  DocumentRepository.open(String path, this.namespace)
-    : _db = sqlite3.open(path) {
+  DocumentRepository.open(
+    String path,
+    this.namespace, {
+    bool allowUnqualifiedSqliteForDevelopment = false,
+  }) : _db = sqlite3.open(path) {
     try {
+      if (!allowUnqualifiedSqliteForDevelopment) {
+        final runtime = _db
+            .select(
+              "SELECT sqlite_version() AS version,sqlite_source_id() AS source,sqlite_compileoption_used('THREADSAFE=1') AS threadsafe",
+            )
+            .single;
+        if (runtime['version'] != approvedSqliteVersion ||
+            runtime['source'] != approvedSqliteSourceId ||
+            runtime['threadsafe'] != 1) {
+          throw const StudioException('SQLITE_RUNTIME_NOT_APPROVED');
+        }
+      }
       _db.execute('PRAGMA foreign_keys=ON');
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 4) {
+        if (version > 5) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -159,6 +192,19 @@ final class DocumentRepository {
         if (v4.length != 1 || v4.single['checksum'] != contentHash(_ddl4)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
+        if (version < 5) {
+          _db.execute(_ddl5);
+          _db.execute('INSERT INTO schema_migrations VALUES(5,?)', [
+            contentHash(_ddl5),
+          ]);
+          _db.userVersion = 5;
+        }
+        final v5 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=5',
+        );
+        if (v5.length != 1 || v5.single['checksum'] != contentHash(_ddl5)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
       });
       _db.execute('PRAGMA journal_mode=WAL');
       _db.execute('PRAGMA synchronous=FULL');
@@ -171,15 +217,27 @@ final class DocumentRepository {
   final Database _db;
   String get _ns => namespace.key;
   bool _closed = false;
+  int _transactionDepth = 0;
   T _transaction<T>(T Function() action) {
-    _db.execute('BEGIN IMMEDIATE');
+    final depth = _transactionDepth++,
+        savepoint = 'studio_nested_$_transactionDepth';
     try {
-      final result = action();
-      _db.execute('COMMIT');
-      return result;
-    } catch (_) {
-      _db.execute('ROLLBACK');
-      rethrow;
+      _db.execute(depth == 0 ? 'BEGIN IMMEDIATE' : 'SAVEPOINT $savepoint');
+      try {
+        final result = action();
+        _db.execute(depth == 0 ? 'COMMIT' : 'RELEASE $savepoint');
+        return result;
+      } catch (_) {
+        if (depth == 0) {
+          _db.execute('ROLLBACK');
+        } else {
+          _db.execute('ROLLBACK TO $savepoint');
+          _db.execute('RELEASE $savepoint');
+        }
+        rethrow;
+      }
+    } finally {
+      _transactionDepth--;
     }
   }
 

@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-11-25T12:15:13.476543+08:00",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "original87Complete": 0,
+  "physicalDeviceQualification": false,
+  "nonLinuxQualification": false,
+  "nativeDartFlutterTests": 112,
+  "actualChromeTests": 3,
+  "totalDartFlutterTests": 115,
+  "pythonToolTests": 6,
+  "nativeCTestCases": 3,
+  "internalSigkillTrials": 50,
+  "cleanLinuxReleaseBuildStarts": 6,
+  "sqliteLoadedVersion": "3.54.1",
+  "systemSqliteStillUnqualified": "3.46.1",
+  "peerIntegration": "real loopback mTLS with two native child processes; not physical devices",
+  "remaining": [
+    "OS identity storage and pairing UI",
+    "Web/other-platform encrypted transport",
+    "scoped resumable blobs",
+    "full privacy/rights/paid budget ledger",
+    "complete original Schema/dynamic PlanGraph/media contracts"
+  ]
+}

@@ -1,0 +1,21 @@
+00:00 +0: loading packages/studio_store/test/harness_takeover_test.dart
+00:00 +0: actual reopen requires local CAS authority; takeover fences old process, preserves attempt/fence and quarantines old device
+00:00 +1: takeover receipt persists and is idempotent, conflicts reject, old boot identifiers cannot be reused
+00:00 +2: unknown downtime consumes wall budget rather than resetting it; measured charge bounds execution
+00:00 +3: known downtime and subsequent ticks cannot escape original wall budget
+00:00 +4: old-device quarantine survives another restart after its step was reassigned
+00:00 +4 -1: old-device quarantine survives another restart after its step was reassigned [E]
+  Expected: throws <Instance of 'StudioException'> with `code`: 'DEVICE_RESOURCE_QUARANTINED'
+    Actual: <Closure: () => TaskLease>
+     Which: returned <Instance of 'TaskLease'>
+
+  package:matcher                                              expect
+  packages/studio_store/test/harness_takeover_test.dart 202:5  main.<fn>
+
+00:00 +4 -1: Some tests failed.
+
+Failing tests:
+  packages/studio_store/test/harness_takeover_test.dart: old-device quarantine survives another restart after its step was reassigned
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.

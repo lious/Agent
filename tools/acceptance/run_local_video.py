@@ -61,11 +61,12 @@ def main():
         ([dart, 'format', '--output=none', '--set-exit-if-changed', 'packages', 'apps/studio_demo/lib', 'apps/image_demo/lib', 'apps/studio_web/lib', 'apps/studio_web/test'], {}),
         ([flutter, 'analyze'], {}),
         ([dart, 'test', 'packages/studio_contracts/test', 'packages/studio_document/test',
-          'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', '--reporter=json'], {}),
+          'packages/studio_store/test', 'packages/studio_sdk/test', 'packages/studio_harness/test', 'packages/studio_peer_io/test', '--reporter=json'], {}),
         ([flutter, 'test', 'test', '--reporter=json'], {'cwd': ROOT / 'packages/studio_editor_ui'}),
         ([sys.executable, '-m', 'unittest', 'discover', '-s', 'tools/tests', '-v'], {}),
         (['sha256sum', '--quiet', '-c', 'SHA256SUMS'], {'cwd': ROOT / 'docs/studio'}),
         ([flutter, '--version', '--machine'], {}),
+        ([dart, 'run', 'packages/studio_store/tool/runtime_version.dart'], {}),
         (['pkg-config', '--modversion', 'libavformat', 'libavcodec', 'libavutil', 'libswscale', 'sqlite3'], {}),
         ([dart, 'run', 'packages/studio_media/tool/probe.dart', environment['STUDIO_MEDIA_LIBRARY'], fixture], {}),
     ]:

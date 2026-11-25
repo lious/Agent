@@ -162,3 +162,31 @@ python3 tools/acceptance/run_multidevice_dev.py --report artifacts/acceptance/mu
 再接 I-021 seek/cache、I-023真实音频执行、I-024 AAC/音画同步与60秒资格。
 并继续所有无外部条件阻塞的87项依赖就绪任务；详细每项仍欠缺的原验收在 task-status.json。
 没有自动 merge 功能分支、force/rebase 已推历史、访问 Mac、下载模型或部署。
+
+## Native authenticated peer + SQLite source correction
+
+Latest increment adds `packages/studio_peer_io`: an actual native mTLS HTTPS endpoint and real same-session child worker, backed by original PlanGraph/SQLite lease/outbox state, scoped expiring offline-confirmed grants, durable request receipts, revocation on keepalive/replay, pinned input/output schema/hash/source, one-heavy-slot admission and LOCAL owner boot takeover/quarantine. No peer can register plans, pair itself, grant permissions, run shell/model/provider work or write a project revision. Default bind is loopback; LAN bind requires explicit host selection/enablement. No production service is deployed. See ADR0005 for the exact security boundary.
+
+This is an SDK/maintainer development path, NOT yet an App pairing UI or OS key-store integration. The worker PEM CLI is exclusively for synthetic temporary test identities. Browser editing remains real, but native mTLS is not advertised as browser/mobile transport; no physical-device qualification has happened.
+
+### Reproduction (Linux only)
+
+Official Debian prerequisites: `cmake ninja-build pkg-config clang libgtk-3-dev libavformat-dev libavcodec-dev libavutil-dev libswscale-dev nlohmann-json3-dev`; OpenSSL, FFmpeg, Xvfb and Chrome are also required by their real tests. Use the already pinned official Flutter/Dart SDK from the earlier toolchain section.
+
+```
+python3 tools/bootstrap_sqlite.py --directory /workspace/toolchains/sqlite-3.54.1
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+flutter pub get
+dart test packages/studio_peer_io/test packages/studio_store/test/harness_takeover_test.dart --reporter expanded
+python3 tools/acceptance/verify_sqlite_upgrade.py --library-dir /workspace/toolchains/sqlite-3.54.1 --report artifacts/local-video/sqlite-upgrade.json
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /workspace/agent-media-native-peer --report artifacts/local-video/peer-verification.json
+CHROME_EXECUTABLE=/workspace/toolchains/browser/chrome-test python3 tools/acceptance/run_multidevice_dev.py --report artifacts/local-video/peer-browser.json
+python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/local-video/peer-V-001.json
+```
+
+Repository runtime now defaults to exact approved SQLite3.54.1 SOURCE_ID + THREADSAFE=1 before migrations; explicit `allowUnqualifiedSqliteForDevelopment` is NOT a qualification result. Old historical system3.46.1 reports remain DEV and are not rewritten. Real original-v4-code/system-SQLite -> current-v5/fixed-SQLite migration preserves project content and active lease cutoff; current code refuses old runtime. This fixes the Linux source/version gate, not every production/WAL/power-loss/platform gate. Never share a live WAL database across machines or run old/new runtimes concurrently against it.
+
+Evidence: `evidence/peer-tls-sqlite/`. Original87 and newXD10 remain independent; original I-003 local concurrency/undo/fault/isolation acceptance has been rechecked, but complete upstream Schema and the wider originals are still missing. Do not promote whole tasks merely because a bounded integration test passed.
+
+本增量最终实际结果：**115个Dart/Flutter测试（112 native + 3真实Chrome），零跳过**；另6个Python工具测试、3个native CTest，50次SIGKILL为内部实验；双Linux宿主各3次clean/release构建启动通过。Web release JS编译通过，不冒充release页面运行/其他浏览器/物理多设备。实际加载SQLite3.54.1精确SOURCE_ID、THREADSAFE=1；系统pkg-config仍报3.46.1，未替换系统库且它仍不合格。工具链Flutter3.50.1 / Dart3.14.0，Chrome156.0.8078.47，fixture证书工具OpenSSL3.5.9。最终报告与当前代码sourceHashes全部匹配。

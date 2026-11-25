@@ -22,6 +22,42 @@ final class BuiltinCompute {
     };
   }
 
+  static String outputSchemaHash(String id) {
+    pin(id);
+    return harnessHash({
+      'schemaVersion': '1.0.0',
+      'handler': id,
+      'closedFields': id == 'core.digest-json'
+          ? ['sha256:lower-hex64']
+          : ['rms:finite-unit', 'sampleCount:u63-positive-max480000'],
+    });
+  }
+
+  static void validateResult(String id, Object? result) {
+    pin(id);
+    if (result is! Map) throw const StudioException('COMPUTE_RESULT_SCHEMA');
+    if (id == 'core.digest-json') {
+      if (result.length != 1 ||
+          result['sha256'] is! String ||
+          !RegExp(r'^[a-f0-9]{64}$').hasMatch(result['sha256'] as String)) {
+        throw const StudioException('COMPUTE_RESULT_SCHEMA');
+      }
+    } else {
+      if (result.length != 2 ||
+          result['rms'] is! num ||
+          !(result['rms'] as num).isFinite ||
+          (result['rms'] as num) < 0 ||
+          (result['rms'] as num) > 1 ||
+          !result.containsKey('sampleCount')) {
+        throw const StudioException('COMPUTE_RESULT_SCHEMA');
+      }
+      final count = u63(result['sampleCount']);
+      if (count < BigInt.one || count > BigInt.from(480000)) {
+        throw const StudioException('COMPUTE_RESULT_SCHEMA');
+      }
+    }
+  }
+
   static Map<String, Object> execute(
     Map<String, dynamic> handler,
     Object? input,

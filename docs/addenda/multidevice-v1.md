@@ -1,8 +1,14 @@
-# 多端 + 同一会话分布式计算增量 v1.0.0
+# 多端 + 同一会话分布式计算增量 v1.1.0
 
 有效需求：t83u「web、桌面、iOS、安卓…多设备直通互联协同工作」；t84u进一步明确
 「同一个会话…多端调度算力分配任务协同」。本增量是用户新增范围，不改写原104份导出，
 不把原87项改成“已完成”，也不只交付文件同步/工程fork。
+
+## v1.1.0 实现增量
+
+在v1.0.0纯核心/持久lease基线上，新增native成熟TLS双向认证直连、HTTP前校验精确证书指纹、SQLite一次性离线配对确认/限定plan-node grant/epoch撤销/持久请求幂等、真实同会话双子进程HTTPS计算、每设备单重任务、保守资源隔离与LOCAL-owner boot CAS接管/不重置预算/硬attempt deadline。实际API与安全界限见 ADR0005 和 evidence/peer-tls-sqlite；原104快照不改。**不是物理多设备通过，也未完成Web transport、OS密钥库或App配对UI。** 没有生产/公网服务或付费中继。
+
+以下“v1.0.0基线”段落保留历史交付边界（其中“配对/网络未实现”仅指旧版），当前进度以版本增量、ADR和独立XD任务状态为准。
 
 ## 既有合同与增量
 
@@ -18,7 +24,7 @@ U63不能经JS Number；fence在Dart里为BigInt。时钟只解释为coordinator
 携带协议版本、消息ID、鉴权设备身份、scope、会话/plan pin和重放防护，不能把这个值对象
 当凭据。
 
-### 当前实际代码，不是全部支持声明
+### v1.0.0实际代码基线（历史；当前增量见上）
 
 * `studio_document`/`studio_harness` 运行核心无 dart:io/FFI；shared caption/DSP/PlanGraph/
   device placement/lease codec真实在Chrome执行。新增 `apps/studio_web` 为可编辑Flutter Web

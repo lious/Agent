@@ -1,0 +1,29 @@
+{
+  "name": "studio_peer_io",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_harness": {
+      "path": "../studio_harness"
+    },
+    "studio_store": {
+      "path": "../studio_store"
+    },
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    },
+    "crypto": "^3.0.8"
+  },
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "lints": "^6.0.0",
+    "sqlite3": "^2.9.4"
+  }
+}
