@@ -652,3 +652,34 @@ padding in the newly added analyzer evidence. Initial source commit retained;
 normal documentation-only follow-up removes padding, records testedSourceCommit,
 and reruns full base-to-index text/credential/whitespace checks. No source or
 test-result change; source hashes remain the exact70-test freeze.
+
+
+## Increment1.9.5 — three actual review/correction rounds
+
+1. Re-read s5b and s5d: actual resource GC needs full roots/grace and original age
+   windows lack trustworthy timestamps in current checkpoint rows. Kept runtime
+   preserveAll per user and explicitly limited opt-in policy to checkpoint index
+   rows. No commands/snapshots/undo/role/blob edges/files removed; no CAS/disk-free
+   claim. Added permanent unique named checkpoint labels rather than fake pinning.
+   Reused namespace owner proof/OS lease and SQL transaction/migration checksums.
+2. Reviewed stale/foreign replay and mutation races: receipt lookup is now project-
+   scoped, live revision/writer validated even on retry, old owner/fence cannot
+   replay after takeover; full root metadata/policy/labels/candidates bind review.
+   Historical snapshot hashes/project/namespace/revisions and label/pointer closure
+   validate before deletion. Added real SQL post-delete audit failure, final-owner
+   failure and SIGKILL before COMMIT, followed by fenced reopen/review/commit.
+   No production test bypass or direct-SQL simulated pruning substituted.
+3. Reviewed actual UI and bounds: initial failed assertion searched offscreen lazy
+   text; retained failure, explicitly scroll to review and wait on real media-busy
+   lifecycle. Consent is consumed before apply (including refusal); edits/new pins
+   are checked again by transaction. Bounded rows/labels/root text and DISTINCT
+   save checkpoint selection avoid pretending truncated reviews are complete.
+   Added readable hash-verified audit history (including result-vs-review tamper refusal), fixture-only kill-worker path guard,
+   actual native import/proxy/undo/archive/fork/reopen/original-byte preservation,
+   shared DB refusal, v7→v8 migration and injected partial-DDL rollback tests.
+
+Final tests/counts/source hashes are frozen in checkpoint-retention/summary.json.
+Initial UI/analyzer failures retained; interpolation/lint development issues fixed
+before final run. No old182 reuse, whole-repo/release/Chrome/audio stress or full
+historic migration matrix qualification. Runtime gate unchanged; intermittent
+underrun unresolved. Full age-window/resource-history pruning remains unfinished.

@@ -668,3 +668,31 @@ OS锁预留空间；不足明确拒绝，不以删历史换空间。实际SIGKIL
 原87仍0 complete/25 partial/49 planned/13 blocked；XD10仍0/8/1/1，原验收依赖不变。
 下一接续：默认preserveAll的可配置历史保留/剪枝，需要显式dry-run和确认，保护所有
 有效pins/角色/当前工程/其他工程/跨DB共享；先仅在隔离fixture验收，不能清理真实资料。
+
+
+## Increment1.9.5 — 显式恢复点保留、命名pin与可审计index pruning
+
+Native展开 **Recovery checkpoint retention**：可永久命名当前checkpoint（重名拒绝）→
+选择保留最近1–10000个或空白preserveAll → 显式配置（不删除）→ Dry-run →
+核对候选数量/前20个ID/hash → 单独勾选确认 → Apply。
+“Read recent retention audit receipts”可看最近20份本工程持久回执。
+所有删除实验仅在隔离临时fixtures执行，未清理任何真实工程。
+
+**只剪除符合策略的checkpoint索引行，不剪除快照、undo/命令、revisions、blob pins或CAS文件，
+不宣称释放磁盘空间。** 当前/最新恢复点、命名版本、所有保存操作、存在Harness会话的工程
+均保守保护；其他工程/namespace不选中，旧/共享DB ownership不明拒绝操作。
+默认preserveAll；预算不足、启动和后台从不自动触发剪枝。
+
+review绑定revision/root/writer-fence/策略/pins/候选全集；确认时重新核验，事务中原子删除和
+写入完整审计。SQL失败、最终权限丢失及真实SIGKILL均验证rollback；重开后新writer需重审。
+SQLite增量至v8，旧1–7校验和与3.54.1严格runtime门禁不变。未重跑完整旧版本迁移矩阵。
+
+年龄窗口/显式保存点轮换、备份策略及实体/资源历史压缩未实现；不以此代替原完整验收。
+命名pin/策略/审计属于原workspace本机历史，不假称包含在固定R fork工程包中。
+见[ADR0016](../adr/0016-explicit-checkpoint-index-retention.md)及
+[evidence](evidence/checkpoint-retention/summary.json)。下一步回到I-002其他资源闭包，
+避免继续无界扩建存储。原87/XD10计数不变，跨端/音频underrun限制仍保留。
+
+本冻结源码实际73个store/SDK＋5个native UI＝**78个定向测试通过，0跳过**；
+analyzer、10个修改Dart文件格式检查通过。新增6 store＋1 SDK＋1 UI case，内部SIGKILL等
+实验不重复计数。旧182/70不是此SHA全量证据；完整迁移矩阵/release/Chrome/音频压力未重跑。

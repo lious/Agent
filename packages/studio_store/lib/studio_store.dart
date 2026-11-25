@@ -15,6 +15,7 @@ part 'peer_authority.dart';
 part 'peer_blobs.dart';
 part 'peer_recovery.dart';
 part 'derived_repair.dart';
+part 'checkpoint_retention.dart';
 
 const _ddl = '''
 CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, checksum TEXT NOT NULL);
@@ -107,6 +108,12 @@ CREATE TABLE peer_session_recovery(ns TEXT NOT NULL,session_id TEXT NOT NULL,pla
 CREATE TABLE peer_adoptions(ns TEXT NOT NULL,project_id TEXT NOT NULL,id TEXT NOT NULL,input_hash TEXT NOT NULL,PRIMARY KEY(ns,project_id,id));
 """;
 
+const _ddl8 = """
+CREATE TABLE checkpoint_retention(ns TEXT NOT NULL,project_id TEXT NOT NULL,keep_latest INTEGER CHECK(keep_latest BETWEEN 1 AND 10000),PRIMARY KEY(ns,project_id),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+CREATE TABLE checkpoint_labels(ns TEXT NOT NULL,project_id TEXT NOT NULL,name TEXT NOT NULL,checkpoint_id TEXT NOT NULL,PRIMARY KEY(ns,project_id,name),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id),FOREIGN KEY(ns,checkpoint_id) REFERENCES checkpoints(ns,id));
+CREATE TABLE checkpoint_prune_audits(ns TEXT NOT NULL,id TEXT NOT NULL,project_id TEXT NOT NULL,review_hash TEXT NOT NULL,json TEXT NOT NULL,PRIMARY KEY(ns,id),FOREIGN KEY(ns,project_id) REFERENCES project_heads(ns,project_id));
+""";
+
 const approvedSqliteVersion = '3.54.1';
 const approvedSqliteSourceId =
     '2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76';
@@ -151,7 +158,7 @@ final class DocumentRepository {
       _db.execute('PRAGMA busy_timeout=10000');
       _transaction(() {
         final version = _db.userVersion;
-        if (version > 7) {
+        if (version > 8) {
           throw const StudioException('STORE_VERSION_UNSUPPORTED');
         }
         if (version == 0) {
@@ -243,6 +250,19 @@ final class DocumentRepository {
           'SELECT checksum FROM schema_migrations WHERE version=7',
         );
         if (v7.length != 1 || v7.single['checksum'] != contentHash(_ddl7)) {
+          throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
+        }
+        if (version < 8) {
+          _db.execute(_ddl8);
+          _db.execute('INSERT INTO schema_migrations VALUES(8,?)', [
+            contentHash(_ddl8),
+          ]);
+          _db.userVersion = 8;
+        }
+        final v8 = _db.select(
+          'SELECT checksum FROM schema_migrations WHERE version=8',
+        );
+        if (v8.length != 1 || v8.single['checksum'] != contentHash(_ddl8)) {
           throw const StudioException('MIGRATION_CHECKSUM_MISMATCH');
         }
       });

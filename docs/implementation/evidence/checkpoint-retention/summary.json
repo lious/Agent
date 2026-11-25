@@ -1,0 +1,97 @@
+{
+  "asOf": "2026-11-25T19:14:09.773918+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "4838d21ec17bf672d1804a59440f08e50e47cde6",
+  "freeze": "Containing commit is the freeze; exact sourceHashes below verified after test and before commit. No old182/70 results combined.",
+  "sourceHashes": {
+    "packages/studio_store/lib/studio_store.dart": "d1c7737e59bfbc724953db50037ac426fad0c97218d6a27e1ac97ddf797793f6",
+    "packages/studio_store/lib/checkpoint_retention.dart": "94c92e7b8bb7156be6662aad206d823406e645f4c3c75f92457b24a9aad16637",
+    "packages/studio_store/tool/checkpoint_prune_worker.dart": "cf30708561df6547a6b95149ba7a304fa855e829d5ed238fba7acaa58d77bdf8",
+    "packages/studio_store/test/checkpoint_retention_test.dart": "1ff100f20d8b7e101e9e5baec3449532c54b1ae638d0a8a508e14818ae3cfc41",
+    "packages/studio_store/test/transactions_test.dart": "ee70e30898e1acb9aed8127271b134550064083325b3a7454e22504be0d4f695",
+    "packages/studio_store/test/video_transactions_test.dart": "e8b6029980483496890940c59917523bbe3b4834317b8a418d2431000ce84309",
+    "packages/studio_sdk/lib/studio_sdk.dart": "3ba3de7ffb6abcc126e533d660f063e3378f6923e71cd625eb37afbba8c904dd",
+    "packages/studio_sdk/test/checkpoint_retention_test.dart": "1ce94d22f9305b4532ff81f74e09ed52ac5a91557ae309d0574911314711a9ba",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "e8dfd33f7ecf85dbd6f0fb0e65079ab39e84819837d245ef4db5e0356148b0be",
+    "packages/studio_editor_ui/test/checkpoint_retention_ui_test.dart": "5d1fc54cc148b426cb86de80aa913e37af376218f843115e6304f1920f2d0548"
+  },
+  "toolchain": {
+    "Flutter": "3.50.1",
+    "Dart": "3.14.0",
+    "SQLite": "3.54.1 strict approved version/SOURCE_ID/THREADSAFE gate unchanged",
+    "FFmpeg": "7.1.5 unmodified native library",
+    "platform": "Linux x86_64"
+  },
+  "environment": {
+    "PATH_prefix": "/workspace/toolchains/flutter/bin",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/workspace/agent-foundation-20261125/artifacts/local-video/input.mp4"
+  },
+  "commands": [
+    "flutter analyze",
+    "dart test packages/studio_sdk/test/checkpoint_retention_test.dart packages/studio_sdk/test/namespace_budget_test.dart packages/studio_sdk/test/proxy_repair_test.dart packages/studio_sdk/test/proxy_discard_test.dart packages/studio_sdk/test/durable_proxy_test.dart packages/studio_sdk/test/save_test.dart packages/studio_store/test --concurrency=2 --reporter=json",
+    "(cd packages/studio_editor_ui && flutter test test/checkpoint_retention_ui_test.dart test/namespace_budget_ui_test.dart test/proxy_repair_ui_test.dart test/proxy_discard_ui_test.dart test/foundation_app_test.dart --reporter=json)",
+    "dart format --output=none --set-exit-if-changed <10 sourceHashes paths>"
+  ],
+  "results": {
+    "retention-final-regression.jsonl": {
+      "success": 73
+    },
+    "retention-final-ui.jsonl": {
+      "success": 5
+    }
+  },
+  "totalTargetedTests": 78,
+  "newCases": {
+    "store": 6,
+    "sdk": 1,
+    "ui": 1
+  },
+  "analyzer": "No issues found",
+  "actualExperiments": [
+    "Default preserveAll, opt-in keep-count, permanent unique named pin, saved/current/latest pointer protections; remove only old checkpoint index rows",
+    "Review invalidated by policy/name/revision/writer changes; confirmation/bounds; project-scoped idempotent audit retry",
+    "SQL trigger failure AFTER deletes and final authority loss roll back index deletion AND audit",
+    "Actual production SQLite transaction in child SIGKILL after delete+audit before COMMIT; reopen retains all indexes/no audit; next fenced writer reviews and applies",
+    "Current project/other project/namespace and any Harness plan protection; corrupt root refuses",
+    "Real v7 layout to v8 upgrade and injected partial-DDL rollback, reopen integrity/FK checks",
+    "Native actual media import/proxy build, named pin, prune, byte preservation, undo/save/archive/fork/reopen/reuse; cross-DB sharing refuses",
+    "Actual widget explicit config/dry-run/confirmation/apply and consent reset; no mock repository/sink",
+    "Audit readback verifies review and result consistency; modified removed-ID receipt rejected"
+  ],
+  "migrationChanges": "Additive v8 policy/labels/audit tables only; original v1-v7 DDL/checksum strings unchanged. Existing current-version assertions move7→8, not removal of checks.",
+  "retainedFailures": [
+    "initial-ui-failure.jsonl: lazy offscreen assertion; corrected explicit locate and waits on actual busy lifecycle",
+    "development-analyzer-failure.log: missing flow-control braces fixed before final run; other development interpolation/lint/undefined test variable errors fixed before frozen verification"
+  ],
+  "scopeLimits": [
+    "CHECKPOINT INDEX pruning only. No snapshot/undo/revision/command/entity/receipt/blob-edge/CAS file deletion; no disk-byte savings claim",
+    "Default preserveAll per latest user; explicit keepLatest only, NOT original full count+age union or saved-point/backup rotation",
+    "All save states and any Harness plan pin checkpoint history conservatively; no session retirement inferred",
+    "Exclusive known-fresh namespace DB ownership required; shared/legacy fail closed",
+    "Labels/policy/audits are workspace-local history, not fixed-R portable fork history; original workspace metadata retained",
+    "No timer/low-budget/background/startup pruning; actual deletion tests only isolated temporary fixtures"
+  ],
+  "notRerun": [
+    "whole-repo/full182 or larger suites",
+    "full historical old-runtime/v4-v7 migration qualification matrix (new v7-v8 and selected store migration tests did run)",
+    "native rebuild/CTest/ABI probes/Linux release",
+    "Chrome/RTC or network-policy retries",
+    "real audio/Pulse stress/P0 physical synchronization; intermittent underrun unresolved",
+    "non-Linux or physical multi-device qualifications"
+  ],
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "separateXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "next": "Return to I-002 remaining image/font/LUT/mask/library/resource closure and original planned tasks; do not extend storage without original acceptance need."
+}

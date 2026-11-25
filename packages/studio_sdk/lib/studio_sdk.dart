@@ -607,6 +607,72 @@ final class StudioWorkspace {
     );
   }
 
+  List<Map<String, dynamic>> checkpointRetentionAuditHistory() {
+    _requireMedia();
+    return _repository.checkpointPruneAuditHistory(_activeProjectId);
+  }
+
+  WriterToken _retentionWriter() {
+    _requireMedia();
+    final writer = _writer;
+    if (writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    return writer;
+  }
+
+  Future<Map<String, dynamic>> reviewCheckpointRetention() async {
+    final writer = _retentionWriter(), revision = current.revision;
+    return _blobs!.withMaintenanceLease(() async {
+      _blobs!.requireExclusiveRepairDatabase(_databasePath);
+      return _repository.reviewCheckpointPruning(writer, revision);
+    });
+  }
+
+  Future<void> configureCheckpointRetention(
+    int? keepLatest, {
+    required bool confirmed,
+  }) async {
+    final writer = _retentionWriter(), revision = current.revision;
+    await _blobs!.withMaintenanceLease(() async {
+      _repository.configureCheckpointRetention(
+        writer,
+        revision,
+        keepLatest,
+        confirmed: confirmed,
+        validateStorageAuthority: () =>
+            _blobs!.requireExclusiveRepairDatabase(_databasePath),
+      );
+    });
+  }
+
+  Future<String> nameCurrentCheckpoint(
+    String name, {
+    required BigInt expectedRevision,
+  }) async {
+    final writer = _retentionWriter();
+    return _blobs!.withMaintenanceLease(
+      () async =>
+          _repository.nameCurrentCheckpoint(writer, expectedRevision, name),
+    );
+  }
+
+  Future<Map<String, dynamic>> applyCheckpointRetention({
+    required String reviewHash,
+    required BigInt expectedRevision,
+    required bool confirmed,
+  }) async {
+    final writer = _retentionWriter();
+    return _blobs!.withMaintenanceLease(
+      () async => _repository.applyCheckpointPruning(
+        writer,
+        expectedRevision,
+        reviewHash: reviewHash,
+        confirmed: confirmed,
+        validateStorageAuthority: () =>
+            _blobs!.requireExclusiveRepairDatabase(_databasePath),
+      ),
+    );
+  }
+
   int _previewDiskPeak(ProjectDocument snapshot) =>
       192 * 1024 * 1024 +
       (snapshot.toJson()['assets'] as List).length * (1024 * 1024 + 8192);

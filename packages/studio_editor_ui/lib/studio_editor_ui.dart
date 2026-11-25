@@ -227,6 +227,11 @@ class _FoundationAppState extends State<FoundationApp>
   BigInt? _peerAdoptionRevision;
   bool _gcConfirmed = false;
   String? _proxyDiscardConsent, _proxyRepairConsent;
+  final _historyKeep = TextEditingController();
+  final _historyName = TextEditingController();
+  Map<String, dynamic>? _historyReview;
+  bool _historyConsent = false;
+  String _historyStatus = 'No retention review. Default: preserveAll.';
   final _diskLimit = TextEditingController();
   String? _diskConsent;
   String _storageView = 'No namespace inventory requested.';
@@ -392,6 +397,8 @@ class _FoundationAppState extends State<FoundationApp>
     _masterGain.dispose();
     _inspectionPath.dispose();
     _diskLimit.dispose();
+    _historyKeep.dispose();
+    _historyName.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
     for (final c in [
@@ -687,6 +694,134 @@ class _FoundationAppState extends State<FoundationApp>
           ),
         ),
       ],
+    ),
+    ExpansionTile(
+      key: const Key('history-retention-panel'),
+      title: const Text(
+        'Recovery checkpoint retention (explicit, preserveAll default)',
+      ),
+      children: [
+        const Text(
+          'Only old recovery-checkpoint index rows can be pruned. ALL undo commands, revisions, snapshots, blob pins, originals and CAS files remain. No disk bytes reclaimed or history eviction promised. Named versions, saves, current/latest recovery points and session project history are protected.',
+        ),
+        TextField(
+          key: const Key('checkpoint-name'),
+          controller: _historyName,
+          decoration: const InputDecoration(
+            labelText: 'Permanent named checkpoint (unique, no overwrite)',
+          ),
+        ),
+        OutlinedButton(
+          key: const Key('name-checkpoint'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  await widget.workspace.nameCurrentCheckpoint(
+                    _historyName.text,
+                    expectedRevision: widget.workspace.current.revision,
+                  );
+                  _historyReview = null;
+                  _historyConsent = false;
+                  return 'Named checkpoint pinned; no overwrite or removal.';
+                }),
+          child: const Text('Pin named version'),
+        ),
+        TextField(
+          key: const Key('history-keep'),
+          controller: _historyKeep,
+          decoration: const InputDecoration(
+            labelText:
+                'Keep latest recovery checkpoints: 1–10000; blank preserveAll',
+          ),
+          onChanged: (_) => setState(() {
+            _historyReview = null;
+            _historyConsent = false;
+          }),
+        ),
+        OutlinedButton(
+          key: const Key('configure-history-retention'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  final text = _historyKeep.text;
+                  final value = text.isEmpty ? null : int.tryParse(text);
+                  if (text.isNotEmpty &&
+                      (value == null ||
+                          !RegExp(r'^[1-9][0-9]{0,4}$').hasMatch(text))) {
+                    throw const StudioException('RETENTION_POLICY_INVALID');
+                  }
+                  await widget.workspace.configureCheckpointRetention(
+                    value,
+                    confirmed: true,
+                  );
+                  _historyReview = null;
+                  _historyConsent = false;
+                  _historyStatus = 'Policy configured explicitly. Nothing deleted. Run dry-run before confirmation.';
+                  return _historyStatus;
+                }),
+          child: const Text('Explicitly configure policy (no deletion)'),
+        ),
+        OutlinedButton(
+          key: const Key('review-history-retention'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  final review = await widget.workspace
+                      .reviewCheckpointRetention();
+                  _historyReview = review;
+                  _historyConsent = false;
+                  final candidates = review['candidates'] as List;
+                  _historyStatus =
+                      'Policy ${review['policy']}; named versions (first20): ${(review['labels'] as List).take(20).map((l) => l['name']).join(', ')}; remove ${candidates.length} checkpoint INDEX rows; first20 IDs: ${candidates.take(20).join(', ')}; review ${review['reviewHash']}. All snapshots/pins/files remain.';
+                  return 'Read-only retention review ready.';
+                }),
+          child: const Text('Dry-run checkpoint retention'),
+        ),
+        Text(_historyStatus, key: const Key('history-retention-review')),
+        CheckboxListTile(
+          key: const Key('confirm-history-retention'),
+          value: _historyConsent,
+          onChanged: _busy || _historyReview == null
+              ? null
+              : (v) => setState(() => _historyConsent = v == true),
+          title: const Text(
+            'Apply exactly this reviewed checkpoint-index removal; preserve all resource/history pins.',
+          ),
+        ),
+        OutlinedButton(
+          key: const Key('apply-history-retention'),
+          onPressed: _busy || !_historyConsent || _historyReview == null
+              ? null
+              : () => _run(() async {
+                  final review = _historyReview!;
+                  // Consume consent even when the transaction refuses stale review.
+                  _historyReview = null;
+                  _historyConsent = false;
+                  final audit = await widget.workspace.applyCheckpointRetention(
+                    reviewHash: review['reviewHash'],
+                    expectedRevision: BigInt.parse(review['revision']),
+                    confirmed: true,
+                  );
+                  _historyStatus =
+                      'Audited checkpoint index removal: ${(audit['removedCheckpointIds'] as List).length}; ${audit['reviewHash']}. No snapshots/pins/files removed.';
+                  return _historyStatus;
+                }),
+          child: const Text('Apply reviewed checkpoint retention'),
+        ),
+      ],
+    ),
+    OutlinedButton(
+      key: const Key('history-retention-audits'),
+      onPressed: _busy
+          ? null
+          : () => _act(() {
+              final receipts = widget.workspace
+                  .checkpointRetentionAuditHistory();
+              _historyStatus =
+                  'Recent20 local prune audit receipts: ${receipts.map((a) => '${a['reviewHash']}: ${(a['removedCheckpointIds'] as List).length} checkpoint index rows').join('; ')}. No files removed.';
+              return widget.workspace.current;
+            }),
+      child: const Text('Read recent retention audit receipts'),
     ),
     ExpansionTile(
       key: const Key('storage-budget-panel'),

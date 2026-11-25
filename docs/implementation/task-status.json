@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-25T18:57:39.374689+08:00",
+  "asOf": "2026-11-25T19:14:09.773918+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,8 +12,8 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-002/I-021 explicit configurable history retention/pruning: default preserveAll, verified dry-run roles/pins/current/other-project/ownership closure, fixture-only delete qualification; no permission to prune actual user data",
-    "I-002 full resource/effect/business closure and I-021 durable VFR/multipipeline, legacy/recipe migration and full disk/export/free-volume budgets remain unfinished",
+    "I-002 remaining non-proxy resource closure: fonts/LUT/masks/imageDocuments/library references, preserved unknown-role/extension pins and honest missing-resource classification; original acceptance unchanged",
+    "Continue original49 planned dependencies after resource closure; no unbounded storage expansion. Full count+age retention/backup policies remain unfinished, checkpoint-index opt-in slice alone is not full compaction.",
     "I-023 diagnose retained service clock timeout/underrun and UI AV failures without relaxing bounded queues/fault gates; physical/P0 qualifications remain independent",
     "I-022 CPU/GPU effects/reference, preencoder colour patches and consumption-safe lease/100 cancel qualification",
     "XD-003 existing managed zero-ICE policy blocker unchanged; no positive RTC retries or relay/policy workaround",
@@ -533,14 +533,15 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope. Added real persistent AV transaction tests: all-table event-failure rollback after pins/definitions, retry/idempotency, stale CAS, undo/reopen and retired unlinked-audio-ID version reuse. Rich unsupported projects still refuse before definition writes. AV archive-fork group/member/anchor backlinks remap correctly. Original upstream Schema and broader contracts remain incomplete.",
+      "implementedScope": "SQLite migrations v1-v7, atomic generic edits/CAS/writer fence/receipts/outbox/history/blob pins/undo/checkpoints/persisted selection; nested SAVEPOINT peer scope/inbox/recovery/adoption transactions. Default exact approved SQLite3.54.1 SOURCE_ID/THREADSAFE gate unchanged. Real original-v4/system3.46.1 and committed-v5/v6/fixed3.54.1 -> v7 integrity/content/lease deadline probes and old runtime refusal. Owner-bound recovery + grant revocation/offer retirement/boot CAS/manifest update atomic; real SQL fault rollback and namespace-wide foreign-boot quarantine regression. Complete upstream Schema dependency remains unfulfilled; current profile is not all original I-003 scope. Added real persistent AV transaction tests: all-table event-failure rollback after pins/definitions, retry/idempotency, stale CAS, undo/reopen and retired unlinked-audio-ID version reuse. Rich unsupported projects still refuse before definition writes. AV archive-fork group/member/anchor backlinks remap correctly. Original upstream Schema and broader contracts remain incomplete. Increment1.9.5: additive SQLitev8 policy/named-checkpoint labels/atomic prune audit, explicit native UI configure/dry-run/confirm; only unprotected old checkpoint INDEX rows removed. All snapshots/undo/revisions/roles/blob pins/resources retained; current/latest/save/named/session/other-project roots and shared DB authority protected. Real SIGKILL/SQL-audit fault/final-authority rollback, stale review/fence, actual media/archive/reopen tests. Default preserveAll, explicit keep-count only; full age-window/backups/resource compaction and original remaining acceptance remain unfinished.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/peer-tls-sqlite/sqlite-upgrade.json",
         "evidence/peer-tls-sqlite/verification.json",
         "evidence/peer-ui-blob/summary.json",
         "evidence/recovery-adoption/summary.json",
-        "evidence/persistent-audio/summary.json"
+        "evidence/persistent-audio/summary.json",
+        "evidence/checkpoint-retention/summary.json"
       ],
       "remainingAcceptance": "100次并发同baseRevision仅1次成功；撤销产生新revision；事务故障无半写；namespace越界读写=0。",
       "remainingScope": "含SQLite/CAS/revision/单写者fence；不做多人实时协作。 Original acceptance rechecked: existing real 100-CAS/undo/rollback/namespace tests rerun on fixed source; full status still depends on I-002 complete current Schema/semantic contracts, not merely the already passing subset.",
@@ -705,10 +706,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Monotonic local checkpoint idle2s/max30s/50 commits/background/switch/close, actual virtual-clock failures/retry; identical save coalescing, serial targets, frozen snapshots/continued SDK edits, derived persisted state and actual Flutter progress/cancel/reconcile UI; no full draft/desktop exit state machine",
+      "implementedScope": "Monotonic local checkpoint idle2s/max30s/50 commits/background/switch/close, actual virtual-clock failures/retry; identical save coalescing, serial targets, frozen snapshots/continued SDK edits, derived persisted state and actual Flutter progress/cancel/reconcile UI; no full draft/desktop exit state machine Increment1.9.5: additive SQLitev8 policy/named-checkpoint labels/atomic prune audit, explicit native UI configure/dry-run/confirm; only unprotected old checkpoint INDEX rows removed. All snapshots/undo/revisions/roles/blob pins/resources retained; current/latest/save/named/session/other-project roots and shared DB authority protected. Real SIGKILL/SQL-audit fault/final-authority rollback, stale review/fence, actual media/archive/reopen tests. Default preserveAll, explicit keep-count only; full age-window/backups/resource compaction and original remaining acceptance remain unfinished.",
       "evidence": [
         "evidence/local-video/verification.json",
-        "evidence/save-checkpoints/verification.json"
+        "evidence/save-checkpoints/verification.json",
+        "evidence/checkpoint-retention/summary.json"
       ],
       "remainingAcceptance": "虚拟时钟验证全部触发；并发save合并；head继续编辑不伪改userSavedRevision；保存完成只在durable receipt之后。",
       "remainingScope": "含debounce/最大间隔/退出触发与保存中续编；不等同同步或导出。",
@@ -724,9 +726,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Frozen revision embedded original closure and checksums; no streaming/incremental backup/retention/job archival",
+      "implementedScope": "Frozen revision embedded original closure and checksums; no streaming/incremental backup/retention/job archival Increment1.9.5: additive SQLitev8 policy/named-checkpoint labels/atomic prune audit, explicit native UI configure/dry-run/confirm; only unprotected old checkpoint INDEX rows removed. All snapshots/undo/revisions/roles/blob pins/resources retained; current/latest/save/named/session/other-project roots and shared DB authority protected. Real SIGKILL/SQL-audit fault/final-authority rollback, stale review/fence, actual media/archive/reopen tests. Default preserveAll, explicit keep-count only; full age-window/backups/resource compaction and original remaining acceptance remain unfinished.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/checkpoint-retention/summary.json"
       ],
       "remainingAcceptance": "运行job归档固定rev并报告pending；凭据/已删正文不入包；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
       "remainingScope": "含逻辑archive和自包含包/代理/外链模式；不删原件或默认取消付费job。",
