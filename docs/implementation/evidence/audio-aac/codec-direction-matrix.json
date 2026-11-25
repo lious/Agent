@@ -1,0 +1,80 @@
+{
+  "scope": "Observed Linux development software directions; not full codec/runtime/P0 matrix or release redistribution approval",
+  "configuration": {
+    "aacMux48kV1": true,
+    "abi": 1,
+    "audioExport": true,
+    "avcodecLicense": "GPL version 2 or later",
+    "avcodecVersion": 4002661,
+    "avformatVersion": 3999591,
+    "configuration": "--prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared",
+    "decoderAAC": true,
+    "decoderH264": true,
+    "deviceAudioClock": false,
+    "encoderH264": true,
+    "ffmpegVersion": "7.1.5-0+deb13u1",
+    "hardwareAcceleration": false,
+    "networkAllowed": false,
+    "pcm48kStereoV1": true,
+    "sourcePreview128": true,
+    "swresampleLicense": "GPL version 2 or later",
+    "swresampleVersion": 328548
+  },
+  "directions": [
+    {
+      "codec": "H264 Main4 8bit420 SDR Rec709 limited",
+      "direction": "software encode MP4",
+      "qualification": "real60s1080p30 frozen export; macroblock/MBPS +20Mbps maxrate/25Mbit VBV; per-stream monotonic DTS and exact1800frame synthetic pattern",
+      "hardware": "unvalidated"
+    },
+    {
+      "codec": "AAC LC48k stereo",
+      "direction": "software encode + MP4 mux + independent decode",
+      "qualification": "real60s2880000 logical samples; actual priming1024 and metadata-derived final packet duration; no guessed padding subtraction"
+    },
+    {
+      "codec": "AAC44.1k/48k",
+      "direction": "decode→SWR48k float stereo",
+      "qualification": "actual3s44.1k source master-6dB/mute/reopen output and60s48k source"
+    },
+    {
+      "codec": "PCM_S16LE mono44.1k WAV",
+      "direction": "decode→SWR48k stereo/null-input drain",
+      "qualification": "actual impulse48000 samples,peak24000,trim peak23000; resource/overwrite/layout failure gates"
+    },
+    {
+      "codec": "PCM_F32LE",
+      "direction": "decode",
+      "qualification": "implemented; actual NaN failure cleanup only, positive format matrix not yet qualified"
+    },
+    {
+      "codec": "FLAC",
+      "direction": "decode",
+      "qualification": "implemented under same layout/rate/timing limits; no positive fixture qualification this increment"
+    },
+    {
+      "codec": "HDR/VFR export, arbitrary effects/scaling, hardware codecs, other audio formats",
+      "direction": "not qualified",
+      "qualification": "fail explicit existing gates or remain unavailable; no silent fallback"
+    }
+  ],
+  "actualDspMeasurements": [
+    {
+      "sourceSampleRate": 44100,
+      "outputSampleRate": 48000,
+      "contentSamples": 144000,
+      "gainRatio": 0.501650567355317,
+      "outputHash": "sha256:accbb4b79239f7e7d62f2560b44c56c959ba7522c7efa3e1769035abc03907e2"
+    },
+    {
+      "pcmImpulseSamples": 48000,
+      "resampledPeakSample": 24000,
+      "trimmedPeakSample": 23000,
+      "resampleDrainSamples": 48000,
+      "sourceRate": 44100
+    }
+  ],
+  "inventory": "codec-components.spdx.json",
+  "releaseSbomComplete": false,
+  "physicalDeviceQualification": false
+}

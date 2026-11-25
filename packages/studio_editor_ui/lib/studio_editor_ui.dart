@@ -30,6 +30,8 @@ class _FoundationAppState extends State<FoundationApp>
       _captionPath = TextEditingController();
   final _peerHash = TextEditingController();
   final _previewTime = TextEditingController(text: '0');
+  final _masterGain = TextEditingController(text: '0');
+  bool _includeEmbeddedAudio = false;
   ui.Image? _previewImage;
   String? _peerAdoptionId;
   BigInt? _peerAdoptionRevision;
@@ -46,6 +48,7 @@ class _FoundationAppState extends State<FoundationApp>
     super.initState();
     _project = widget.workspace.openDemo();
     _title = TextEditingController(text: _project.title);
+    _masterGain.text = '${_project.toJson()['audioBuses'][0]['gainDb']}';
     WidgetsBinding.instance.addObserver(this);
     _persistenceSubscription = widget.workspace.persistenceEvents.listen((_) {
       if (mounted) setState(() {});
@@ -61,6 +64,7 @@ class _FoundationAppState extends State<FoundationApp>
     if (_project.hash != widget.workspace.current.hash) _clearPreview();
     _project = widget.workspace.current;
     _title.text = _project.title;
+    _masterGain.text = '${_project.toJson()['audioBuses'][0]['gainDb']}';
     if (!_clips.any((c) => c['id'] == _selected)) _selected = null;
     if (!(_project.toJson()['captions'] as List).any(
       (c) => c['id'] == _captionSelected,
@@ -177,6 +181,7 @@ class _FoundationAppState extends State<FoundationApp>
     widget.workspace.cancelSourcePreview();
     _previewImage?.dispose();
     _previewTime.dispose();
+    _masterGain.dispose();
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistenceSubscription?.cancel());
     for (final c in [
@@ -208,16 +213,19 @@ class _FoundationAppState extends State<FoundationApp>
   List<Widget> _mediaControls() => [
     const Divider(),
     const Text(
-      'Local video · single track · no audio export',
+      'Local video · single track · optional offline AAC',
       style: TextStyle(fontSize: 22),
     ),
     const Text(
-      'CFR, 1×, Rec.709 limited, even canvas ≤2048. No scaling/effects/preview yet. Rights unknown = warning, not authorization. No media uploads.',
+      'CFR,1×, Rec.709 limited; H264 Main4 capacity gate. Source-frame thumbnails only, not timeline/device playback. No scaling/effects. Rights unknown = warning, not authorization. No media uploads.',
     ),
     _path('import-path', 'Selected local video path', _input),
     CheckboxListTile(
+      key: const Key('import-video-only'),
       value: _videoOnly,
-      title: const Text('If source has audio, explicitly import video only'),
+      title: const Text(
+        'Create a video clip only; source audio stays in the asset. Audio export requires separate opt-in.',
+      ),
       onChanged: _busy ? null : (v) => setState(() => _videoOnly = v ?? false),
     ),
     FilledButton(
@@ -463,6 +471,57 @@ class _FoundationAppState extends State<FoundationApp>
           child: const Text('Verify selected archive'),
         ),
       ),
+    const Text(
+      'Offline embedded audio export:48k stereo via Dart AudioBus + AAC. Explicit per-export option, NOT an AudioClip link or device playback clock.',
+    ),
+    _path('master-gain-db', 'Persisted master gain dB [-96,12]', _masterGain),
+    OutlinedButton(
+      key: const Key('save-master-audio'),
+      onPressed: _busy
+          ? null
+          : () => _act(() {
+              final gain = double.tryParse(_masterGain.text);
+              if (gain == null || !gain.isFinite) {
+                throw const StudioException('AUDIO_PARAMETER_RANGE');
+              }
+              final b = _project.toJson()['audioBuses'][0];
+              return widget.workspace.setMasterAudio(
+                gainDb: gain,
+                pan: (b['pan'] as num).toDouble(),
+                muted: b['muted'] as bool,
+                solo: b['solo'] as bool,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Save master audio gain'),
+    ),
+    CheckboxListTile(
+      key: const Key('master-audio-mute'),
+      value: _project.toJson()['audioBuses'][0]['muted'] as bool,
+      onChanged: _busy
+          ? null
+          : (v) => _act(() {
+              final b = _project.toJson()['audioBuses'][0];
+              return widget.workspace.setMasterAudio(
+                gainDb: (b['gainDb'] as num).toDouble(),
+                pan: (b['pan'] as num).toDouble(),
+                muted: v ?? false,
+                solo: b['solo'] as bool,
+                expectedRevision: _project.revision,
+              );
+            }),
+      title: const Text('Persisted master mute'),
+    ),
+    CheckboxListTile(
+      key: const Key('export-embedded-audio'),
+      value: _includeEmbeddedAudio,
+      onChanged: _busy
+          ? null
+          : (v) => setState(() => _includeEmbeddedAudio = v ?? false),
+      title: const Text(
+        'Explicitly include embedded audio of selected video clips in THIS export (not restored automatically)',
+      ),
+    ),
     _path(
       'export-path',
       'Local .mp4 destination (overwrites atomically on success)',
@@ -478,8 +537,9 @@ class _FoundationAppState extends State<FoundationApp>
               : () => _run(() async {
                   final receipt = await widget.workspace.exportVideo(
                     File(_output.text),
+                    includeEmbeddedAudio: _includeEmbeddedAudio,
                   );
-                  return 'MP4 exported from frozen revision ${receipt['revision']} · ${receipt['frames']} frames';
+                  return 'MP4 exported from frozen revision ${receipt['revision']} · ${receipt['frames']} frames · ${receipt['audio']}';
                 }),
           child: const Text('Export MP4'),
         ),

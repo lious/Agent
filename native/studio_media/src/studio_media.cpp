@@ -4,13 +4,18 @@ extern "C" {
 #include <libavformat/avformat.h>
 #include <libavutil/imgutils.h>
 #include <libavutil/pixdesc.h>
+#include <libswresample/swresample.h>
 #include <libswscale/swscale.h>
 }
 #include <algorithm>
 #include <atomic>
+#include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fcntl.h>
 #include <filesystem>
+#include <fstream>
 #include <functional>
 #include <limits>
 #include <map>
@@ -20,6 +25,7 @@ extern "C" {
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <unistd.h>
 #include <vector>
 using J = nlohmann::json;
 namespace {
@@ -54,6 +60,7 @@ struct Engine {
   std::string ns;
   std::mutex busy;
   std::atomic<uint64_t> epoch{0};
+  std::atomic<uint64_t> encoded_audio_samples{0};
   explicit Engine(std::string n) : ns(std::move(n)) {}
 };
 std::mutex registry_lock;
@@ -125,6 +132,7 @@ struct Input {
     if (!decoder)
       throw Error("OUT_OF_MEMORY");
     ok(avcodec_parameters_to_context(decoder, st->codecpar));
+    decoder->max_pixels = 8192LL * 8192;
     decoder->thread_count = 2;
     ok(avcodec_open2(decoder, codec, nullptr));
     packet = av_packet_alloc();
@@ -273,6 +281,7 @@ J probe(Input &in) {
         {"type", p->codec_type == AVMEDIA_TYPE_VIDEO ? "video" : "audio"},
         {"codec", avcodec_get_name(p->codec_id)},
         {"profile", profile ? J(profile) : J(nullptr)},
+        {"level", p->level},
         {"channelLayout",
          p->codec_type == AVMEDIA_TYPE_AUDIO ? J(layout) : J(nullptr)},
         {"width", p->width},
@@ -341,6 +350,7 @@ J probe(Input &in) {
   }
   return J{{"streams", streams}, {"videoIndex", in.video}};
 }
+#include "audio_io.inc"
 struct Output {
   AVFormatContext *format = nullptr;
   AVCodecContext *encoder = nullptr;
@@ -348,6 +358,7 @@ struct Output {
   AVFrame *frame = nullptr;
   AVPacket *packet = nullptr;
   SwsContext *scaler = nullptr;
+  std::unique_ptr<AudioEncoder> audio;
   ~Output() {
     sws_freeContext(scaler);
     av_packet_free(&packet);
@@ -359,7 +370,8 @@ struct Output {
       avformat_free_context(format);
     }
   }
-  void open(const std::string &path, int w, int h, AVRational fps) {
+  void open(const std::string &path, int w, int h, AVRational fps,
+            const J &audio_recipe = nullptr) {
     // Creation must not overwrite any existing file. Publication is a separate
     // host transaction.
     if (!std::filesystem::path(path).is_absolute() ||
@@ -380,6 +392,10 @@ struct Output {
     encoder->thread_count = 2;
     encoder->gop_size = 30;
     encoder->max_b_frames = 0;
+    // H264 Main Level4 VBV limits: setting only the SPS level label would
+    // permit a complex CRF source to exceed its declared bitrate/CPB envelope.
+    encoder->rc_max_rate = 20000000;
+    encoder->rc_buffer_size = 25000000;
     encoder->color_primaries = AVCOL_PRI_BT709;
     encoder->color_trc = AVCOL_TRC_BT709;
     encoder->colorspace = AVCOL_SPC_BT709;
@@ -387,7 +403,9 @@ struct Output {
     if (format->oformat->flags & AVFMT_GLOBALHEADER)
       encoder->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
     AVDictionary *options = nullptr;
-    av_dict_set(&options, "preset", "ultrafast", 0);
+    av_dict_set(&options, "preset", "veryfast", 0);
+    av_dict_set(&options, "profile", "main", 0);
+    av_dict_set(&options, "level", "4.0", 0);
     av_dict_set(&options, "crf", "18", 0);
     const int r = avcodec_open2(encoder, codec, &options);
     av_dict_free(&options);
@@ -397,6 +415,10 @@ struct Output {
       throw Error("OUT_OF_MEMORY");
     stream->time_base = encoder->time_base;
     ok(avcodec_parameters_from_context(stream->codecpar, encoder));
+    if (!audio_recipe.is_null()) {
+      audio = std::make_unique<AudioEncoder>();
+      audio->open(format, audio_recipe);
+    }
     ok(avio_open2(&format->pb, ("file:" + path).c_str(), AVIO_FLAG_WRITE,
                   nullptr, nullptr));
     ok(avformat_write_header(format, nullptr));
@@ -464,6 +486,8 @@ struct Output {
   void finish() {
     ok(avcodec_send_frame(encoder, nullptr));
     drain();
+    if (audio)
+      audio->finish();
     ok(av_write_trailer(format));
     ok(avio_closep(&format->pb));
   }
@@ -523,7 +547,8 @@ J preview(Engine &engine, const J &recipe) {
   const auto target = target_ticks(recipe["time"], 0, AVRational{1, 1}, stream);
   if (recipe["indexed"].get<bool>()) {
     const int r = avformat_seek_file(in.format, in.video,
-        std::numeric_limits<int64_t>::min(), target, target, AVSEEK_FLAG_BACKWARD);
+                                     std::numeric_limits<int64_t>::min(),
+                                     target, target, AVSEEK_FLAG_BACKWARD);
     if (r < 0)
       throw Error("SEEK_UNAVAILABLE");
     avcodec_flush_buffers(in.decoder);
@@ -534,8 +559,8 @@ J preview(Engine &engine, const J &recipe) {
     in.next = in.decode();
   }
   AVFrame *frame = in.at(target);
-  if (frame->width < 1 || frame->height < 1 ||
-      frame->width > 2048 || frame->height > 2048)
+  if (frame->width < 1 || frame->height < 1 || frame->width > 2048 ||
+      frame->height > 2048)
     throw Error("FRAME_SIZE_LIMIT");
   if (frame->format != AV_PIX_FMT_YUV420P)
     throw Error("PREVIEW_PIXEL_FORMAT_UNSUPPORTED");
@@ -545,33 +570,45 @@ J preview(Engine &engine, const J &recipe) {
       frame->color_range != AVCOL_RANGE_MPEG)
     throw Error("COLOR_POLICY_REQUIRED");
   const double factor = 128.0 / std::max(frame->width, frame->height);
-  const int width = std::max(1, static_cast<int>(frame->width * std::min(1.0, factor))),
-      height = std::max(1, static_cast<int>(frame->height * std::min(1.0, factor)));
+  const int width = std::max(
+                1, static_cast<int>(frame->width * std::min(1.0, factor))),
+            height = std::max(
+                1, static_cast<int>(frame->height * std::min(1.0, factor)));
   std::unique_ptr<SwsContext, decltype(&sws_freeContext)> sws(
       sws_getContext(frame->width, frame->height,
-          static_cast<AVPixelFormat>(frame->format), width, height, AV_PIX_FMT_RGBA,
-          SWS_BILINEAR, nullptr, nullptr, nullptr), sws_freeContext);
+                     static_cast<AVPixelFormat>(frame->format), width, height,
+                     AV_PIX_FMT_RGBA, SWS_BILINEAR, nullptr, nullptr, nullptr),
+      sws_freeContext);
   if (!sws)
     throw Error("SCALER_UNAVAILABLE");
   const auto *coeff = sws_getCoefficients(SWS_CS_ITU709);
-  ok(sws_setColorspaceDetails(sws.get(), coeff, 0, coeff, 1, 0, 1 << 16, 1 << 16));
+  ok(sws_setColorspaceDetails(sws.get(), coeff, 0, coeff, 1, 0, 1 << 16,
+                              1 << 16));
   std::vector<uint8_t> rgba(static_cast<size_t>(width) * height * 4);
   uint8_t *dst[] = {rgba.data(), nullptr, nullptr, nullptr};
   const int stride[] = {width * 4, 0, 0, 0};
-  if (sws_scale(sws.get(), frame->data, frame->linesize, 0, frame->height,
-                dst, stride) != height)
+  if (sws_scale(sws.get(), frame->data, frame->linesize, 0, frame->height, dst,
+                stride) != height)
     throw Error("SCALE_INCOMPLETE");
   in.check();
-  return J{{"width", width}, {"height", height}, {"rgba", rgba},
-      {"pts", std::to_string(in.pts(frame))},
-      {"startPts", std::to_string(stream->start_time)},
-      {"timeBase", {{"n", std::to_string(stream->time_base.num)},
-                    {"d", stream->time_base.den}}},
-      {"packetsRead", in.packets}, {"indexed", recipe["indexed"]}};
+  return J{{"width", width},
+           {"height", height},
+           {"rgba", rgba},
+           {"pts", std::to_string(in.pts(frame))},
+           {"startPts", std::to_string(stream->start_time)},
+           {"timeBase",
+            {{"n", std::to_string(stream->time_base.num)},
+             {"d", stream->time_base.den}}},
+           {"packetsRead", in.packets},
+           {"indexed", recipe["indexed"]}};
 }
 J render(Engine &engine, const J &recipe) {
-  keys(recipe,
-       {"outputPath", "width", "height", "fps", "frameCount", "segments"});
+  if (recipe.contains("audio"))
+    keys(recipe, {"outputPath", "width", "height", "fps", "frameCount",
+                  "segments", "audio"});
+  else
+    keys(recipe,
+         {"outputPath", "width", "height", "fps", "frameCount", "segments"});
   const auto w = integer(recipe, "width", 2, 2048),
              h = integer(recipe, "height", 2, 2048);
   if (w % 2 || h % 2)
@@ -581,6 +618,9 @@ J render(Engine &engine, const J &recipe) {
                        static_cast<int>(integer(recipe["fps"], "d", 1, 10000))};
   if (av_q2d(fps) > 120)
     throw Error("FRAME_RATE_LIMIT");
+  const int64_t macroblocks = ((w + 15) / 16) * ((h + 15) / 16);
+  if (macroblocks > 8192 || macroblocks * fps.num > 245760LL * fps.den)
+    throw Error("ENCODER_LEVEL_LIMIT");
   const auto count = integer(recipe, "frameCount", 1, 120000);
   const auto &segments = recipe["segments"];
   if (!segments.is_array() || segments.size() > 10000)
@@ -597,9 +637,25 @@ J render(Engine &engine, const J &recipe) {
     last_end = begin + length;
     local_file(segment.at("path").get<std::string>());
   }
+  if (recipe.contains("audio")) {
+    const int64_t num = count * static_cast<int64_t>(fps.den) * 48000,
+                  den = fps.num;
+    int64_t expected = num / den, rem = num % den;
+    if (rem * 2 > den || (rem * 2 == den && expected % 2))
+      ++expected;
+    if (integer(recipe["audio"], "sampleCount", 1, 48000 * 120) != expected)
+      throw Error("AUDIO_LENGTH_MISMATCH");
+  }
   const auto epoch = engine.epoch.load();
+  engine.encoded_audio_samples = 0;
   Output out;
-  out.open(recipe.at("outputPath").get<std::string>(), w, h, fps);
+  out.open(recipe.at("outputPath").get<std::string>(), w, h, fps,
+           recipe.value("audio", J(nullptr)));
+  if (out.audio)
+    out.audio->check = [&engine, epoch] {
+      if (engine.epoch.load() != epoch)
+        throw Error("CANCELED");
+    };
   std::unique_ptr<Input> input;
   size_t si = 0;
   int current_segment = -1;
@@ -636,10 +692,20 @@ J render(Engine &engine, const J &recipe) {
       source = input->at(target);
     }
     out.render(source, frame);
+    if (out.audio) {
+      const int64_t end = av_rescale_q_rnd(
+          frame + 1, av_inv_q(fps), AVRational{1, 48000}, AV_ROUND_NEAR_INF);
+      out.audio->until(end);
+      engine.encoded_audio_samples = out.audio->sent;
+    }
   }
   out.finish();
   return J{{"frames", count},
-           {"audio", "notRequested"},
+           {"audio", out.audio ? "aac" : "notRequested"},
+           {"audioFrameSize",
+            out.audio ? J(out.audio->encoder->frame_size) : J(nullptr)},
+           {"audioInitialPadding",
+            out.audio ? J(out.audio->encoder->initial_padding) : J(nullptr)},
            {"encoder", "libx264"},
            {"container", "mp4"}};
 }
@@ -671,12 +737,26 @@ int32_t sm_close(uint64_t h, const char *ns) {
     return -1;
   }
 }
+uint64_t sm_cancel_epoch(uint64_t h, const char *ns) {
+  try {
+    return engine(h, ns)->epoch.load();
+  } catch (...) {
+    return UINT64_MAX;
+  }
+}
 int32_t sm_cancel(uint64_t h, const char *ns) {
   try {
     engine(h, ns)->epoch.fetch_add(1);
     return 0;
   } catch (...) {
     return -1;
+  }
+}
+uint64_t sm_encoded_audio_samples(uint64_t h, const char *ns) {
+  try {
+    return engine(h, ns)->encoded_audio_samples.load();
+  } catch (...) {
+    return UINT64_MAX;
   }
 }
 char *sm_capabilities(void) {
@@ -691,7 +771,15 @@ char *sm_capabilities(void) {
         {"encoderH264", avcodec_find_encoder_by_name("libx264") != nullptr},
         {"networkAllowed", false},
         {"sourcePreview128", true},
-        {"audioExport", false},
+        {"audioExport", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr &&
+                            avcodec_find_encoder_by_name("libx264") != nullptr},
+        {"avcodecLicense", avcodec_license()},
+        {"swresampleLicense", swresample_license()},
+        {"pcm48kStereoV1", true},
+        {"decoderAAC", avcodec_find_decoder(AV_CODEC_ID_AAC) != nullptr},
+        {"deviceAudioClock", false},
+        {"swresampleVersion", swresample_version()},
+        {"aacMux48kV1", avcodec_find_encoder(AV_CODEC_ID_AAC) != nullptr},
         {"hardwareAcceleration", false}};
   });
 }
@@ -713,12 +801,26 @@ char *sm_probe(uint64_t h, const char *ns, const char *path) {
     return probe(in);
   });
 }
-char *sm_preview(uint64_t h,const char *ns,const char *recipe) {
+char *sm_decode_audio(uint64_t h, const char *ns, const char *text) {
   return boundary([&] {
-    auto e=engine(h,ns);std::unique_lock lock(e->busy,std::try_to_lock);
-    if(!lock.owns_lock())throw Error("RESOURCE_BUSY");
-    if(!recipe || std::strlen(recipe)>4096)throw Error("RECIPE_LIMIT");
-    return preview(*e,parse_recipe(recipe));
+    auto e = engine(h, ns);
+    std::unique_lock lock(e->busy, std::try_to_lock);
+    if (!lock.owns_lock())
+      throw Error("ENGINE_BUSY");
+    if (!text || std::strlen(text) > 4096)
+      throw Error("RECIPE_LIMIT");
+    return decode_audio(*e, parse_recipe(text));
+  });
+}
+char *sm_preview(uint64_t h, const char *ns, const char *recipe) {
+  return boundary([&] {
+    auto e = engine(h, ns);
+    std::unique_lock lock(e->busy, std::try_to_lock);
+    if (!lock.owns_lock())
+      throw Error("RESOURCE_BUSY");
+    if (!recipe || std::strlen(recipe) > 4096)
+      throw Error("RECIPE_LIMIT");
+    return preview(*e, parse_recipe(recipe));
   });
 }
 char *sm_export(uint64_t h, const char *ns, const char *recipe) {

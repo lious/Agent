@@ -42,13 +42,10 @@ void requireLocalEditingWritable(ProjectDocument project) {
       b['outputBusId'] != null ||
       (b['inputBusIds'] as List).isNotEmpty ||
       (b['effectIds'] as List).isNotEmpty ||
-      b['gainDb'] != 0 ||
-      b['pan'] != 0 ||
-      b['muted'] != false ||
-      b['solo'] != false ||
       (s['markerIds'] as List).isNotEmpty) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
+  AudioBus.fromJson(Map<String, dynamic>.from(b as Map));
   final assets = {for (final a in d['assets'] as List) a['id']: a};
   final blobs = {for (final v in d['blobs'] as List) v['hash']: v};
   if (blobs.length != (d['blobs'] as List).length) {

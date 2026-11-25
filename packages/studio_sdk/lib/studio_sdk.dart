@@ -623,7 +623,44 @@ final class StudioWorkspace {
     _media?.cancel();
   }
 
-  Future<Map<String, dynamic>> exportVideo(File destination) async {
+  bool _exportBusy = false;
+  ProjectDocument setMasterAudio({
+    double gainDb = 0,
+    double pan = 0,
+    bool muted = false,
+    bool solo = false,
+    required BigInt expectedRevision,
+  }) => edit(
+    SetMasterAudio(gainDb: gainDb, pan: pan, muted: muted, solo: solo),
+    expectedRevision: expectedRevision,
+  );
+  Future<Map<String, dynamic>> exportVideo(
+    File destination, {
+    bool includeEmbeddedAudio = false,
+  }) async {
+    _requireMedia();
+    final generation = _exportCancelEpoch;
+    if (_exportBusy) throw const StudioException('EXPORT_BUSY');
+    _exportBusy = true;
+    try {
+      return await _exportVideo(
+        destination,
+        includeEmbeddedAudio: includeEmbeddedAudio,
+      );
+    } catch (_) {
+      if (_closed || generation != _exportCancelEpoch) {
+        throw const StudioException('CANCELED');
+      }
+      rethrow;
+    } finally {
+      _exportBusy = false;
+    }
+  }
+
+  Future<Map<String, dynamic>> _exportVideo(
+    File destination, {
+    required bool includeEmbeddedAudio,
+  }) async {
     _requireMedia();
     _protectOutput(destination);
     final snapshot = current;
@@ -632,6 +669,12 @@ final class StudioWorkspace {
       throw const StudioException('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED');
     }
     final epoch = _exportCancelEpoch;
+    void checkCanceled() {
+      if (_closed || epoch != _exportCancelEpoch) {
+        throw const StudioException('CANCELED');
+      }
+    }
+
     final d = snapshot.toJson(), s = snapshot.toJson()['sequences'][0];
     final fps = FrameRate(
       s['frameRate']['n'] as int,
@@ -649,6 +692,7 @@ final class StudioWorkspace {
     if (count <= 0) throw const StudioException('EMPTY_SEQUENCE');
     final assets = {for (final a in d['assets'] as List) a['id']: a};
     final segments = <Map<String, dynamic>>[];
+    final audioSegments = <Map<String, dynamic>>[];
     final probed = <String, Map<String, dynamic>>{};
     for (final track in s['tracks']) {
       if (track['muted'] == true) continue;
@@ -675,9 +719,11 @@ final class StudioWorkspace {
           throw const StudioException('COLOR_POLICY_REQUIRED');
         }
         final file = await _blobs!.resolve(a['originalBlobHash'] as String);
+        checkCanceled();
         final fact = probed[a['originalBlobHash']] ??= await _media!.probeAsync(
           file,
         );
+        checkCanceled();
         final position = (a['streams'] as List).indexWhere(
           (v) => v['id'] == stream['id'],
         );
@@ -689,6 +735,41 @@ final class StudioWorkspace {
           throw const StudioException('SOURCE_STREAM_CHANGED');
         }
         final index = raw['index'] as int;
+        if (includeEmbeddedAudio) {
+          final audios = (fact['streams'] as List)
+              .where((v) => v['type'] == 'audio')
+              .toList();
+          if (audios.length > 1) {
+            throw const StudioException('AUDIO_STREAM_SELECTION_REQUIRED');
+          }
+          final start = sampleIndex(
+            Q.fromJson(clip['timelineRange']['start']),
+            48000,
+            Rounding.tiesToEven,
+          ).toInt();
+          final end = sampleIndex(
+            Q.fromJson(clip['timelineRange']['start']) +
+                Q.fromJson(clip['timelineRange']['duration']),
+            48000,
+            Rounding.tiesToEven,
+          ).toInt();
+          final origin = Q(
+            BigInt.parse(raw['startPTS'] as String) *
+                BigInt.from(raw['timeBase']['n'] as int),
+            BigInt.from(raw['timeBase']['d'] as int),
+          );
+          audioSegments.add({
+            'path': file.absolute.path,
+            'streamIndex': audios.isEmpty ? null : audios.single['index'],
+            'destStart': start,
+            'sampleCount': end - start,
+            'startSample': sampleIndex(
+              origin + Q.fromJson(clip['sourceRange']['start']),
+              48000,
+              Rounding.tiesToEven,
+            ).toInt(),
+          });
+        }
         segments.add({
           'path': file.absolute.path,
           'startFrame': fps
@@ -710,7 +791,33 @@ final class StudioWorkspace {
     }
     final publisher = AtomicFilePublisher(),
         stage = AtomicFilePublisher().stagingFor(destination);
+    Directory? audioDirectory;
+    Map<String, dynamic>? audioPcm;
     try {
+      checkCanceled();
+      if (includeEmbeddedAudio) {
+        if (!audioSegments.any((v) => v['streamIndex'] != null)) {
+          throw const StudioException('EMBEDDED_AUDIO_REQUIRED');
+        }
+        audioDirectory = await Directory.systemTemp.createTemp(
+          'studio-offline-audio-',
+        );
+        checkCanceled();
+        audioPcm = await _media!.prepareAudioAsync({
+          'directory': audioDirectory.path,
+          'sampleCount': sampleIndex(
+            Q.fromJson(s['duration']),
+            48000,
+            Rounding.tiesToEven,
+          ).toInt(),
+          'segments': audioSegments,
+          'buses': d['audioBuses'],
+          'masterId': s['masterBusId'],
+        });
+        if (epoch != _exportCancelEpoch || _closed) {
+          throw const StudioException('CANCELED');
+        }
+      }
       final result = await _media!.renderAsync({
         'outputPath': stage.absolute.path,
         'width': s['canvas']['width'],
@@ -718,11 +825,17 @@ final class StudioWorkspace {
         'fps': s['frameRate'],
         'frameCount': count,
         'segments': segments,
+        if (audioPcm != null)
+          'audio': {
+            'path': audioPcm['path'],
+            'sampleCount': audioPcm['sampleCount'],
+          },
       });
       if (epoch != _exportCancelEpoch || _closed) {
         throw const StudioException('CANCELED');
       }
       final verified = await _media!.probeAsync(stage);
+      checkCanceled();
       final video = (verified['streams'] as List).singleWhere(
         (v) => v['type'] == 'video',
       );
@@ -731,8 +844,48 @@ final class StudioWorkspace {
         assetId: 'export',
       );
       if (sd['codec'] != 'h264' ||
+          video['profile'] != 'Main' ||
+          video['level'] != 40 ||
+          video['pixelFormat'] != 'yuv420p' ||
           Q.fromJson(sd['duration']) != Q.fromJson(s['duration'])) {
         throw const StudioException('EXPORT_VERIFICATION_FAILED');
+      }
+      if (includeEmbeddedAudio) {
+        final audios = (verified['streams'] as List)
+            .where((v) => v['type'] == 'audio')
+            .toList();
+        if (audios.length != 1) {
+          throw const StudioException('AUDIO_EXPORT_VERIFICATION_FAILED');
+        }
+        final a = audios.single as Map<String, dynamic>,
+            tb = Q.of(a['timeBase']['n'] as int, a['timeBase']['d'] as int);
+        final duration =
+            Q(BigInt.parse(a['durationTicks'] as String), BigInt.one) *
+            Q.of(
+              a['durationTimeBase']['n'] as int,
+              a['durationTimeBase']['d'] as int,
+            );
+        if (a['codec'] != 'aac' ||
+            a['sampleRate'] != 48000 ||
+            a['channels'] != 2 ||
+            BigInt.parse(a['startPTS'] as String) != BigInt.zero ||
+            duration != Q.of(audioPcm!['sampleCount'] as int, 48000)) {
+          throw const StudioException('AUDIO_EXPORT_VERIFICATION_FAILED');
+        }
+        if (tb <= Q.of(0)) {
+          throw const StudioException('AUDIO_EXPORT_VERIFICATION_FAILED');
+        }
+        final decoded = await _media!.decodeAudioAsync({
+          'path': stage.path,
+          'outputPath': '${audioDirectory!.path}/verified.f32',
+          'streamIndex': a['index'],
+          'startSample': 0,
+          'sampleCount': audioPcm['sampleCount'],
+        });
+        if (decoded['writtenSamples'] != audioPcm['sampleCount'] ||
+            decoded['firstDecodedSample'] != 0) {
+          throw const StudioException('AUDIO_EXPORT_VERIFICATION_FAILED');
+        }
       }
       final hash = await hashLocalFile(stage);
       if (epoch != _exportCancelEpoch || _closed) {
@@ -744,8 +897,12 @@ final class StudioWorkspace {
         'snapshotHash': snapshot.hash,
         'revision': snapshot.revision.toString(),
         'outputHash': hash,
-        'audio': 'video-only',
+        'audio': includeEmbeddedAudio ? 'aac' : 'video-only',
+        if (audioPcm != null) 'audioSamples': audioPcm['sampleCount'],
         'warnings': [
+          ...?audioPcm?['warnings'] as List?,
+          if (includeEmbeddedAudio)
+            'EMBEDDED_AUDIO_EXPORT_OPTION_NOT_AUDIOCLIP_LINK',
           (d['rightsRecords'] as List).any((r) => r['verified'] != true)
               ? 'LICENSE_EVIDENCE_MISSING'
               : null,
@@ -753,6 +910,9 @@ final class StudioWorkspace {
       };
     } finally {
       if (stage.existsSync()) stage.deleteSync();
+      if (audioDirectory != null && audioDirectory.existsSync()) {
+        audioDirectory.deleteSync(recursive: true);
+      }
     }
   }
 

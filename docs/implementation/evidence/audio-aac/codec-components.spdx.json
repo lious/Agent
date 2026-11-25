@@ -1,0 +1,132 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "Studio Linux-dev codec-only observed binary inventory, NOT release SBOM",
+  "documentNamespace": "https://github.com/lious/Agent/spdx/d6ef67e8-b43c-4433-8ea1-f6653e5fd6b0",
+  "creationInfo": {
+    "creators": [
+      "Tool: Studio actual Linux package inventory"
+    ],
+    "created": "2026-11-25T06:33:40Z",
+    "comment": "Collected 2026-11-25T14:33:40.109813+08:00 Asia/Shanghai. License facts only; no redistribution approval and no full App/transitive SBOM assertion."
+  },
+  "documentDescribes": [
+    "SPDXRef-avformat",
+    "SPDXRef-avcodec",
+    "SPDXRef-avutil",
+    "SPDXRef-swscale",
+    "SPDXRef-swresample",
+    "SPDXRef-x264"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-avformat",
+      "name": "libavformat61",
+      "versionInfo": "7:7.1.5-0+deb13u1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "8cde31eb30ee1ccc7d3758f60fe46dc9f342c4c9fef98cef81ecf7b681b78eeb"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libavformat.so.61.7.103; API license string 'GPL version 2 or later'. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    },
+    {
+      "SPDXID": "SPDXRef-avcodec",
+      "name": "libavcodec61",
+      "versionInfo": "7:7.1.5-0+deb13u1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c01e80460c07b27883a61c53e549755b9ff052071a83f4912ff285168719219d"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libavcodec.so.61.19.101; API license string 'GPL version 2 or later'. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    },
+    {
+      "SPDXID": "SPDXRef-avutil",
+      "name": "libavutil59",
+      "versionInfo": "7:7.1.5-0+deb13u1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "6c463f7e033438989533aea3c35e4c9a98fd6b0a637ddb8529733c0f3db1850a"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libavutil.so.59.39.100; API license string 'GPL version 2 or later'. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    },
+    {
+      "SPDXID": "SPDXRef-swscale",
+      "name": "libswscale8",
+      "versionInfo": "7:7.1.5-0+deb13u1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "eae84e83e4972297dec340cd77499b0ef50bef445b3b1dd0eb501bbd466d4f93"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libswscale.so.8.3.100; API license string 'GPL version 2 or later'. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    },
+    {
+      "SPDXID": "SPDXRef-swresample",
+      "name": "libswresample5",
+      "versionInfo": "7:7.1.5-0+deb13u1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "de57f190891cf107b9c2fb51fc7d45c02c6c652f6fc7992a3c26d1f16f371674"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libswresample.so.5.3.100; API license string 'GPL version 2 or later'. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    },
+    {
+      "SPDXID": "SPDXRef-x264",
+      "name": "libx264-164",
+      "versionInfo": "2:0.164.3108+git31e19f9-2+b1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2965dc6471b4f72884fa17fc9c9ff8f43b604a0c6d7a2364ff40040e7181d9f6"
+        }
+      ],
+      "sourceInfo": "Observed installed Debian amd64 dynamic library libx264.so.164; API license string None. Not a source rebuild or audited transitive release SBOM.",
+      "comment": "Checksum refers only to the observed installed shared-object binary described in sourceInfo, NOT a Debian archive/full package or complete transitive dependency set."
+    }
+  ]
+}

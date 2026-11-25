@@ -1,0 +1,37 @@
+[
+  {
+    "evidence": "initial-sdk-compile-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "Test called a nonexported hash helper; corrected to actual exported rawBytesHash."
+  },
+  {
+    "evidence": "initial-pcm-layout-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "Ordinary PCM WAV unspecified1channel layout was rejected; standard mono/stereo normalization and WAV zero origin implemented."
+  },
+  {
+    "evidence": "initial-ui-root-assets-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "Wrong root Flutter test cwd lacked material shader asset; owning-package runner used."
+  },
+  {
+    "evidence": "initial-ui-lazy-control-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "Undo was outside the lazily built viewport; scroll to actual control."
+  },
+  {
+    "evidence": "initial-ui-lazy-status-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "Persistence text was not built at the viewport; scroll to keyed status and retain assertions."
+  },
+  {
+    "evidence": "initial-aac-buffered-progress-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "File-size progress was buffered, so export completed before cancellation. Replace with actual submitted AAC input diagnostic, not a playback clock."
+  },
+  {
+    "evidence": "unapplied-fix-repeat-failure.json",
+    "result": "failedBeforeCorrection",
+    "reason": "A failed unrelated shell guard prevented applying the first diagnostic correction; apply and rebuild for actual passing CTest."
+  }
+]

@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
-MEDIA_TASKS = {'I-009','I-010','I-032','I-004','I-005','I-006','I-011','I-012','I-013','I-014','I-015','I-021','I-024','I-025','V-002','V-005'}
+MEDIA_TASKS = {'I-009','I-010','I-032','I-004','I-005','I-006','I-011','I-012','I-013','I-014','I-015','I-021','I-023','I-024','I-025','V-002','V-005'}
 TESTS = {
     'I-001': ['packages/studio_contracts/test', 'packages/studio_sdk/test'],
     'I-002': ['packages/studio_document/test'],
@@ -58,7 +58,13 @@ def main():
     if args.task in MEDIA_TASKS:
         code = subprocess.call([sys.executable, str(ROOT/'tools/acceptance/run_local_video.py'), '--profile', args.profile, '--report', str(args.report)], cwd=ROOT)
         if args.report.exists():
-            value=json.loads(args.report.read_text());value['taskId']=args.task;value['taskStatus']='partial';args.report.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
+            value=json.loads(args.report.read_text());value['taskId']=args.task;value['taskStatus']='partial'
+            if code==0 and args.task in {'I-023','I-024','V-002'}:
+                audio_report=args.report.with_name(args.report.stem+'-60s-audio.json')
+                code=subprocess.call([sys.executable,str(ROOT/'tools/acceptance/run_audio_qualification.py'),'--native-library','/tmp/studio-media-native-dev/libstudio_media.so','--report',str(audio_report)],cwd=ROOT)
+                value['offline60sAudioQualificationReport']=str(audio_report)
+                value['scopeStatus']='passed' if code==0 else 'failed'
+            args.report.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
         return code
     flutter = shutil.which('flutter')
     dart = shutil.which('dart')

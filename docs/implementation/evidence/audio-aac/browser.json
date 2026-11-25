@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkedAt": "2026-11-25T14:36:07.197315+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "testsExecuted": 9,
+  "skippedTests": 0,
+  "scope": "One Linux physical host: actual Chrome persistent RTCCertificate/IndexedDB Harness/consent+receipt UI and direct-only preflight, editable Flutter Web and release JS build; NOT positive encrypted peer-network or physical-device qualification",
+  "sourceHashes": {
+    "apps/studio_web/lib/browser_compute.dart": "520da9d07ae182af497e4248185619e02299e688feb90c111500cc5d70a98ec6",
+    "apps/studio_web/lib/browser_store.dart": "937e1c3b352657374d94bfbc7c46712e78aeecf703f7e7604176280c50e36dc7",
+    "apps/studio_web/lib/main.dart": "060a2ae52300515ffb84cf0b6099148b4d853a46ecfd7f1f68590935b245b237",
+    "apps/studio_web/lib/peer_panel.dart": "25aea03d109996d4558430856de56cfc7f04c9c09c368f7e3ccdc6ed556ec6d8",
+    "apps/studio_web/lib/rtc_peer.dart": "1cc1173376cfe15927c1316791b30e68f85e2a13b8bc29f8a58d1dc1cfc076b1",
+    "apps/studio_web/pubspec.yaml": "26a7dfce4acc5f944df6f40e69cabee5750822596b8c9113b9e96a5bbb4d6b4c",
+    "apps/studio_web/test/browser_test.dart": "3e340d7bde695ea15a0eab3dce07074b01f552a8c596ff1bc93bf1ca8a8bd579",
+    "apps/studio_web/test/peer_panel_test.dart": "16899a02cb8e7ef5a25292aeabb744468cf7fca2cba0d5240d7b38b2bf192008",
+    "apps/studio_web/test/qualification/rtc_direct_qualification.dart": "66eb91df3eab50eb945e88f450e9cb4b02faf7b8063e56d1a204ff5e98027608",
+    "apps/studio_web/test/rtc_test.dart": "6c3b4bcf7eb845bbc105435c731c9d3f69f17f7e02ada9c133002d9d5f1af16a",
+    "apps/studio_web/web/index.html": "d7e8ad98df9dc9e52f8310dcb6eeee2ad2048538d3864fa795dfecc55dca6a7a"
+  },
+  "checks": [
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "test",
+        "--platform",
+        "chrome",
+        "test",
+        "--reporter=json"
+      ],
+      "cwd": "apps/studio_web",
+      "exitCode": 0,
+      "output": "{\"protocolVersion\":\"0.1.1\",\"runnerVersion\":\"1.32.0\",\"pid\":156615,\"type\":\"start\",\"time\":0}\n{\"suite\":{\"id\":0,\"platform\":\"chrome\",\"path\":\"/workspace/agent-foundation-20261125/apps/studio_web/test/peer_panel_test.dart\"},\"type\":\"suite\",\"time\":0}\n{\"test\":{\"id\":1,\"name\":\"loading /workspace/agent-foundation-20261125/apps/studio_web/test/peer_panel_test.dart\",\"suiteID\":0,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":0}\n{\"count\":3,\"time\":4,\"type\":\"allSuites\"}\n[BROWSER CONSOLE] [log]: Dart test runner browser host running\n[BROWSER CONSOLE] [log]: Starting suite http://localhost:46169/peer_panel_test.html\n[BROWSER CONSOLE] [log]: Appended iframe with src http://localhost:46169/peer_panel_test.html#%7B%22metadata%22:%7B%22testOn%22:%22browser%22,%22timeout%22:%7B%22duration%22:null,%22scaleFactor%22:1%7D,%22skip%22:null,%22skipReason%22:null,%22verboseTrace%22:null,%22chainStackTraces%22:true,%22retry%22:null,%22tags%22:%5B%5D,%22onPlatform%22:%5B%5D,%22forTag%22:%7B%7D,%22languageVersionComment%22:null%7D,%22browser%22:%22chrome%22%7D\n[BROWSER CONSOLE] [debug]: Injecting <script> tag. Using callback.\n[BROWSER CONSOLE] [info]: DDC is about to load 1/2 scripts with pool size = 1000\n[BROWSER CONSOLE] [info]: DDC is about to load 1519/1519 scripts with pool size = 1000\n[BROWSER CONSOLE] [log]: Starting application from main method in: org-dartlang-app:///main.dart.\n[BROWSER CONSOLE] [warning]: registerExtension() from dart:developer is only supported in build/run/test environments where the developer event method hooks have been set by package:dwds v11.1.0 or higher.\n[BROWSER CONSOLE] [warning]: Font manifest does not exist at `assets/FontManifest.json` - ignoring.\n[BROWSER CONSOLE] [log]: Connecting channel for suite http://localhost:46169/peer_panel_test.html\n{\"testID\":1,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":3944}\n{\"group\":{\"id\":2,\"suiteID\":0,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":1,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":3946}\n{\"test\":{\"id\":3,\"name\":\"REAL Chrome clickable persistent identity, consent, direct-only preflight, local Harness receipt, revoke/reopen read-only (NOT positive transport)\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":174,\"column\":5,\"url\":\"package:flutter_test/src/widget_tester.dart\"},\"type\":\"testStart\",\"time\":3946}\n{\"testID\":3,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":7632}\n{\"suite\":{\"id\":4,\"platform\":\"chrome\",\"path\":\"/workspace/agent-foundation-20261125/apps/studio_web/test/rtc_test.dart\"},\"type\":\"suite\",\"time\":7637}\n{\"test\":{\"id\":5,\"name\":\"loading /workspace/agent-foundation-20261125/apps/studio_web/test/rtc_test.dart\",\"suiteID\":4,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":7637}\n[BROWSER CONSOLE] [log]: Starting suite http://localhost:46169/rtc_test.html\n[BROWSER CONSOLE] [log]: Appended iframe with src http://localhost:46169/rtc_test.html#%7B%22metadata%22:%7B%22testOn%22:%22browser%22,%22timeout%22:%7B%22duration%22:null,%22scaleFactor%22:1%7D,%22skip%22:null,%22skipReason%22:null,%22verboseTrace%22:null,%22chainStackTraces%22:true,%22retry%22:null,%22tags%22:%5B%5D,%22onPlatform%22:%5B%5D,%22forTag%22:%7B%7D,%22languageVersionComment%22:null%7D,%22browser%22:%22chrome%22%7D\n[BROWSER CONSOLE] [debug]: Injecting <script> tag. Using callback.\n[BROWSER CONSOLE] [info]: DDC is about to load 1/2 scripts with pool size = 1000\n[BROWSER CONSOLE] [info]: DDC is about to load 1519/1519 scripts with pool size = 1000\n[BROWSER CONSOLE] [log]: Starting application from main method in: org-dartlang-app:///main.dart.\n[BROWSER CONSOLE] [warning]: registerExtension() from dart:developer is only supported in build/run/test environments where the developer event method hooks have been set by package:dwds v11.1.0 or higher.\n[BROWSER CONSOLE] [warning]: Font manifest does not exist at `assets/FontManifest.json` - ignoring.\n[BROWSER CONSOLE] [log]: Connecting channel for suite http://localhost:46169/rtc_test.html\n{\"testID\":5,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":9804}\n{\"group\":{\"id\":6,\"suiteID\":4,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":5,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":9805}\n{\"test\":{\"id\":7,\"name\":\"REAL Chrome RTCCertificate structured-clone IDB identity persists across racing creators/reopen\",\"suiteID\":4,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":22,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/rtc_test.dart\"},\"type\":\"testStart\",\"time\":9805}\n{\"testID\":7,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":9966}\n{\"test\":{\"id\":8,\"name\":\"REAL Chrome direct-only preflight NEVER falls back when host candidates are policy-suppressed; pure pin/relay admission\",\"suiteID\":4,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":34,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/rtc_test.dart\"},\"type\":\"testStart\",\"time\":9967}\n{\"testID\":8,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":10110}\n{\"test\":{\"id\":9,\"name\":\"REAL Chrome IDB ORIGINAL Harness adapter (NOT transport qualification): lease/receipt/result/outbox/revision/revoke/rollback/reopen\",\"suiteID\":4,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":83,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/rtc_test.dart\"},\"type\":\"testStart\",\"time\":10111}\n{\"testID\":9,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":10400}\n{\"test\":{\"id\":10,\"name\":\"REAL Chrome IDB lease expiry/retry fence, cross-session resource reservation, heartbeat regression and result rollback (NOT transport)\",\"suiteID\":4,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":178,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/rtc_test.dart\"},\"type\":\"testStart\",\"time\":10401}\n{\"testID\":10,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":11800}\n{\"test\":{\"id\":11,\"name\":\"REAL Chrome additive IndexedDB v1 project fixture migrates to v2 without losing head and can commit peer runtime\",\"suiteID\":4,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":294,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/rtc_test.dart\"},\"type\":\"testStart\",\"time\":11801}\n{\"testID\":11,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":11874}\n{\"suite\":{\"id\":12,\"platform\":\"chrome\",\"path\":\"/workspace/agent-foundation-20261125/apps/studio_web/test/browser_test.dart\"},\"type\":\"suite\",\"time\":11875}\n{\"test\":{\"id\":13,\"name\":\"loading /workspace/agent-foundation-20261125/apps/studio_web/test/browser_test.dart\",\"suiteID\":12,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":11875}\n[BROWSER CONSOLE] [warning]: A message on the flutter/lifecycle channel was discarded before it could be handled.\nThis happens when a plugin sends messages to the framework side before the framework has had an opportunity to register a listener. See the ChannelBuffers API documentation for details on how to configure the channel to expect more messages, or to expect messages to get discarded:\n  https://api.flutter.dev/flutter/dart-ui/ChannelBuffers-class.html\n[BROWSER CONSOLE] [log]: Starting suite http://localhost:46169/browser_test.html\n[BROWSER CONSOLE] [log]: Appended iframe with src http://localhost:46169/browser_test.html#%7B%22metadata%22:%7B%22testOn%22:%22browser%22,%22timeout%22:%7B%22duration%22:null,%22scaleFactor%22:1%7D,%22skip%22:null,%22skipReason%22:null,%22verboseTrace%22:null,%22chainStackTraces%22:true,%22retry%22:null,%22tags%22:%5B%5D,%22onPlatform%22:%5B%5D,%22forTag%22:%7B%7D,%22languageVersionComment%22:null%7D,%22browser%22:%22chrome%22%7D\n[BROWSER CONSOLE] [debug]: Injecting <script> tag. Using callback.\n[BROWSER CONSOLE] [info]: DDC is about to load 1/2 scripts with pool size = 1000\n[BROWSER CONSOLE] [info]: DDC is about to load 1519/1519 scripts with pool size = 1000\n[BROWSER CONSOLE] [log]: Starting application from main method in: org-dartlang-app:///main.dart.\n[BROWSER CONSOLE] [warning]: registerExtension() from dart:developer is only supported in build/run/test environments where the developer event method hooks have been set by package:dwds v11.1.0 or higher.\n[BROWSER CONSOLE] [warning]: Font manifest does not exist at `assets/FontManifest.json` - ignoring.\n[BROWSER CONSOLE] [log]: Connecting channel for suite http://localhost:46169/browser_test.html\n{\"testID\":13,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":14052}\n{\"group\":{\"id\":14,\"suiteID\":12,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":3,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":14053}\n{\"test\":{\"id\":15,\"name\":\"REAL Chrome IndexedDB edit/transaction ACK/idempotency/parallel CAS/reopen and exact >2^53 revisions\",\"suiteID\":12,\"groupIDs\":[14],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":18,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/browser_test.dart\"},\"type\":\"testStart\",\"time\":14053}\n{\"testID\":15,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":14164}\n{\"test\":{\"id\":16,\"name\":\"REAL Chrome shared subtitle, PCM and same-session placement/lease/compute code run without dart:io or FFI\",\"suiteID\":12,\"groupIDs\":[14],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":95,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/apps/studio_web/browser_test.dart\"},\"type\":\"testStart\",\"time\":14165}\n{\"testID\":16,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":14180}\n{\"test\":{\"id\":17,\"name\":\"REAL Chrome Flutter Web editor commits title to local storage\",\"suiteID\":12,\"groupIDs\":[14],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":174,\"column\":5,\"url\":\"package:flutter_test/src/widget_tester.dart\"},\"type\":\"testStart\",\"time\":14180}\n{\"testID\":17,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":14845}\n{\"success\":true,\"type\":\"done\",\"time\":14847}\n",
+      "outputSha256": "c2f9aa58901b1b9b78a8f7b7414bdc0b3d33057ed926207768eab64c5af62f97"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "web",
+        "--release",
+        "--no-pub"
+      ],
+      "cwd": "apps/studio_web",
+      "exitCode": 0,
+      "output": "Compiling lib/main.dart for the Web...                          \nWasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm\nUse --no-wasm-dry-run to disable these warnings.\nCompiling lib/main.dart for the Web...                             40.5s\n✓ Built build/web\n",
+      "outputSha256": "11c4bd17d6ecbdb83a2df516f3ce18872d887161bf2e1817ddaa9db44388d6c0"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "--version",
+        "--machine"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "{\n  \"frameworkVersion\": \"3.50.1\",\n  \"channel\": \"stable\",\n  \"repositoryUrl\": \"https://github.com/flutter/flutter.git\",\n  \"frameworkRevision\": \"ae9b586f34a8443573f82ef57c3bf914a908cbf7\",\n  \"frameworkCommitDate\": \"2026-11-18 17:01:07 -0800\",\n  \"engineRevision\": \"4d35714800b9266b6693a58e1225ecd7e9e45ed7\",\n  \"engineCommitDate\": \"2026-11-18 01:50:07.000Z\",\n  \"engineContentHash\": \"51379e6df48ea8ee7205623b90fe66491cad8df3\",\n  \"engineBuildDate\": \"2026-11-17 23:29:07.499\",\n  \"dartSdkVersion\": \"3.14.0\",\n  \"devToolsVersion\": \"2.61.0\",\n  \"flutterVersion\": \"3.50.1\",\n  \"flutterRoot\": \"/workspace/toolchains/flutter\"\n}\n",
+      "outputSha256": "819a3a38f324d77bdf0585e42a6fb6d147d65f972ce0a61a0fc2236cf167dca3"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/browser/chrome-test",
+        "--version"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Google Chrome 156.0.8078.47 \n",
+      "outputSha256": "8d7631c58053db6151fae1dbe220415fa30a8bfec85a95886027bf77f06f230b"
+    }
+  ],
+  "notValidated": [
+    "positive WebRTC DTLS/SCTP pair/revocation network qualification (managed host ICE suppressed)",
+    "resumable media transfer",
+    "two physical devices",
+    "browser-native live network session",
+    "models or paid jobs",
+    "macOS/Windows/iOS/Android",
+    "browser media rendering/SQLite WASM and background execution"
+  ]
+}

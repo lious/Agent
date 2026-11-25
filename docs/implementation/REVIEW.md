@@ -311,3 +311,52 @@ integration; I-010 lacks font/style fallback/rich anchors; I-012 lacks full exit
 draft state machine and upstream I-011 closure. They are not marked complete just
 because some acceptance examples pass. Final buffer review includes the pending
 encoded frame bytes in the256KiB bound, rather than checking only old bufferedAmount.
+
+## v1.5 offline audio/AAC — three actual review/fix rounds
+
+Not an independent codec/security audit. Failures remain failure evidence.
+
+1. **Native sample/format/duration ownership:** first real PCM44.1k impulse test
+   failed AUDIO_LAYOUT_UNSUPPORTED because ordinary WAV describes only a channel
+   count. Normalize ONLY standard1/2channel layouts and explicit PCM-WAV zero
+   origin; still reject surround/unknown timing. Bound rescaled timestamps before
+   subtraction, validate format/PTS continuity/all decoded finite floats, drain SWR
+   with actual null input, and require full coverage inside declared source bounds
+   rather than silently zero-pad truncation. Keep legitimate out-of-stream silence.
+   Fix single-close/cleanup ownership in the bounded Dart file pipeline. Real
+   impulse output48000samples and peak24000/trimmed23000, NaN/layout/PTS/overwrite/
+   duration limit failures are tested. The initial SDK test also had an undefined
+   hash helper compile failure; fix the test to actual exported rawBytesHash.
+2. **Revision/cancellation/edit contracts:** reject nonfinite/range-invalid master
+   commands BEFORE canonical command hashing, test no-op/revision preservation,
+   undo and actual store close/reopen. Introduce workspace export serialization,
+   reject EXPORT_BUSY and check cancellation after CAS/probe/temp awaits BEFORE
+   dispatching the next native stage. Map late close/cancel errors without false
+   publication. Real export concurrent with master gain/head edits retains the
+   frozen revision and -6dB content (measured RMS ratio, not just recipe equality).
+   Mute produces real decoded silence; canceled SDK export preserves existing target.
+3. **Actual UI/active codec/release envelope:** root-invoked widget test really
+   failed missing shader assets; use the owning Flutter package as the real runner
+   already does. Added controls shifted lazy-list navigation: undo and persistence
+   text really became unbuilt, so scroll to keyed controls/status and KEEP original
+   visible text assertions. Do not delete assertions or count test mocks as media.
+   Initial active-AAC cancel test wrongly inferred progress from buffered file size
+   and the export completed before cancel. A diagnostic now observes actual AAC
+   submitted input;10 new cancels wait for4800 submitted samples before cancel,
+   assert CANCELED/closed-handle rejection and FD delta0, retaining10 silent cancels.
+   This is explicitly NOT a presented AudioSink clock. One attempted fix was skipped
+   by an unrelated failed shell guard; retain that second failure and actually
+   apply/rebuild/rerun. Final codec review caught that an SPS Main4 label alone
+   does not constrain CRF bitrate: add actual20Mbps maxrate/25Mbit VBV CPB plus
+   existing frame/MBPS gates and profile/pixfmt verification. Re-run the ENTIRE
+   native/60s qualification after this correction; earlier passes are diagnostics,
+   not final-source qualification.
+
+The actual60s fixture runs the production SDK import/save/frozen export path while
+editing the head. Independent ffprobe/decoded flash+audio pulse observations test
+1800frames,2880000 logical samples, real AAC priming/last-packet duration and DTS.
+It is Linux software OFFLINE qualification, NOT an AudioSink presentation-clock,
+P0 device, other-platform or full original-task pass. Full Schema/AudioClip/link
+integration, proxy/timeline playback and RenderGraph still need actual coding.
+Original87 criteria/dependencies and104 snapshots are unchanged. Browser positive
+WebRTC remains nonzero/blocked; no managed-policy change or alternate route.

@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:typed_data';
+import 'dart:math' as math;
 
 import 'package:ffi/ffi.dart';
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
+
+part 'audio_pipeline.dart';
 
 typedef _CallNative = Pointer<Utf8> Function(
   Uint64,
@@ -123,6 +127,50 @@ final class NativeMedia {
         json = jsonEncode(recipe);
     return Isolate.run(
       () => NativeMedia._attach(path, ns, h)._call('sm_export', json),
+    );
+  }
+
+  int get cancelEpoch {
+    final ns = namespace.key.toNativeUtf8();
+    try {
+      return _lib.lookupFunction<
+        Uint64 Function(Uint64, Pointer<Utf8>),
+        int Function(int, Pointer<Utf8>)
+      >('sm_cancel_epoch')(handle, ns);
+    } finally {
+      malloc.free(ns);
+    }
+  }
+
+  Future<Map<String, dynamic>> decodeAudioAsync(Map<String, dynamic> recipe) {
+    if (capabilities['pcm48kStereoV1'] != true) {
+      throw const StudioException('AUDIO_ADAPTER_UNAVAILABLE');
+    }
+    final p = libraryPath,
+        ns = namespace,
+        h = handle,
+        json = jsonEncode(recipe);
+    return Isolate.run(
+      () => NativeMedia._attach(p, ns, h)._call('sm_decode_audio', json),
+    );
+  }
+
+  Future<Map<String, dynamic>> prepareAudioAsync(Map<String, dynamic> recipe) {
+    if (capabilities['pcm48kStereoV1'] != true ||
+        capabilities['aacMux48kV1'] != true) {
+      throw const StudioException('AUDIO_ADAPTER_UNAVAILABLE');
+    }
+    final p = libraryPath,
+        ns = namespace,
+        h = handle,
+        json = jsonEncode(recipe),
+        epoch = cancelEpoch;
+    return Isolate.run(
+      () => _prepareAudio(
+        NativeMedia._attach(p, ns, h),
+        jsonDecode(json) as Map<String, dynamic>,
+        epoch,
+      ),
     );
   }
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(studio_media LANGUAGES CXX)
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(AV REQUIRED IMPORTED_TARGET libavformat>=61 libavcodec>=61 libavutil>=59 libswscale>=8)
+pkg_check_modules(AV REQUIRED IMPORTED_TARGET libavformat>=61 libavcodec>=61 libavutil>=59 libswscale>=8 libswresample>=5)
 if(NOT AV_libavformat_VERSION VERSION_LESS 62 OR NOT AV_libavcodec_VERSION VERSION_LESS 62)
   message(FATAL_ERROR "This development adapter is qualified against FFmpeg 7.x only; do not silently substitute another ABI")
 endif()

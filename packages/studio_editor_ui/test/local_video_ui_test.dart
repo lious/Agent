@@ -29,18 +29,38 @@ void main() {
       });
       await tester.binding.setSurfaceSize(const Size(1100, 1700));
       await tester.pumpWidget(FoundationApp(workspace: w));
+      Future<void> locate(String key) async {
+        if (find.byKey(Key(key)).evaluate().isEmpty) {
+          tester
+              .state<ScrollableState>(find.byType(Scrollable).first)
+              .position
+              .jumpTo(0);
+          await tester.pump();
+          await tester.scrollUntilVisible(
+            find.byKey(Key(key)),
+            250,
+            scrollable: find.byType(Scrollable).first,
+            maxScrolls: 50,
+          );
+        }
+        await tester.ensureVisible(find.byKey(Key(key)));
+      }
+
       Future<void> tap(String key) async {
+        await locate(key);
         await tester.ensureVisible(find.byKey(Key(key)));
         await tester.tap(find.byKey(Key(key)));
         await tester.pump();
       }
 
       Future<void> enter(String key, String text) async {
+        await locate(key);
         await tester.ensureVisible(find.byKey(Key(key)));
         await tester.enterText(find.byKey(Key(key)), text);
       }
 
       Future<void> asyncTap(String key, bool Function() done) async {
+        await locate(key);
         await tester.ensureVisible(find.byKey(Key(key)));
         await tester.runAsync(() async {
           await tester.tap(find.byKey(Key(key)));
@@ -100,12 +120,14 @@ void main() {
             w.persistence(target: archive).targetSavedRevision ==
             w.current.revision,
       );
+      await locate('persistence-status');
       expect(find.textContaining('explicit save 4'), findsOneWidget);
       final old = w.projectId;
       await asyncTap('restore-archive', () => w.projectId != old);
       final output = File('${dir.path}/ui.mp4');
       await enter('export-path', output.path);
       await asyncTap('export-video', output.existsSync);
+      await locate('operation-status');
       expect(find.textContaining('90 frames'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());

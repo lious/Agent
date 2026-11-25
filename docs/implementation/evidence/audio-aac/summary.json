@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "increment": "1.5.0",
+  "checkedAt": "2026-11-25T14:42:41.190548+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passedRestrictedOfflineAudioSliceWithPositiveWebTransportBlocked",
+  "fullTaskComplete": false,
+  "physicalDeviceQualification": false,
+  "baselineCommit": "c718948bc35866c77700407cf87c091727f0c80a",
+  "branch": "feat/studio-foundation-20261125",
+  "scope": "Linux real PCM decode/resample→original Dart AudioBus→AAC/H264 Main4 mux, persisted master controls and actual native widget user path. Offline60s file sync is NOT an AudioSink/device presentation clock or full original task.",
+  "counts": {
+    "nativeRegressionTests": 128,
+    "realChromeTests": 9,
+    "realOsKeyringNativeUiTests": 1,
+    "dartFlutterTotal": 138,
+    "skipped": 0,
+    "pythonToolTests": 6,
+    "nativeCTestCases": 3,
+    "internalSilentCancelExperiments": 10,
+    "internalActiveAACCancelExperiments": 10,
+    "internalSigkillExperiments": 50,
+    "cleanReleaseBuilds": 6,
+    "releaseFirstFrameStarts": 6,
+    "cleanAbiProbes": 3
+  },
+  "counting": "128+9+1=138 passing Dart/Flutter cases.2new Dart audio cases+1new actual native widget audio case vs c718. Focused repeats,60pulse/20seek assertions,20internal cancels,50internal SIGKILL,migrations and the single passing certificate case inside BLOCKED positive RTC qualification are NOT extra passing cases. Release probe is build/start, not a full packaged60s audio UI/device-clock test.",
+  "original87": {
+    "complete": 0,
+    "partial": 22,
+    "planned": 52,
+    "blocked": 13
+  },
+  "separateXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "original104SnapshotsChanged": false,
+  "frozenSourceHashesMatch": true,
+  "userPath": [
+    "Linux editor imports selected supported audio-bearing video with explicit video-clip-only acknowledgment; original embedded bytes stay in local CAS",
+    "Select/source-seek/split/trim/undo; persist master gain/mute through original revision/CAS/no-op/undo/SQLite/archive/fork/reopen",
+    "Explicitly opt into embedded source audio for THIS export; real48k stereo float DSP then AAC LC/Main4 verified atomic MP4; no automatic AudioClip link or opt-in persistence",
+    "Frozen export survives concurrent gain/head edit; same-workspace parallel export rejects EXPORT_BUSY; cancel preserves existing target"
+  ],
+  "actualDspMeasurements": [
+    {
+      "sourceSampleRate": 44100,
+      "outputSampleRate": 48000,
+      "contentSamples": 144000,
+      "gainRatio": 0.501650567355317,
+      "outputHash": "sha256:accbb4b79239f7e7d62f2560b44c56c959ba7522c7efa3e1769035abc03907e2"
+    },
+    {
+      "pcmImpulseSamples": 48000,
+      "resampledPeakSample": 24000,
+      "trimmedPeakSample": 23000,
+      "resampleDrainSamples": 48000,
+      "sourceRate": 44100
+    }
+  ],
+  "offline60s": {
+    "evidence": "offline-60s.json",
+    "videoFrames": 1800,
+    "contentAudioSamples": 2880000,
+    "rawIndependentDecoderSamples": 2880512,
+    "maxAbsAVOffsetMs": 0.0,
+    "method": "60 one-frame white flashes and5ms audio pulses; independent decoded pulse first |sample|>0.1 in±20ms around each event. Full expected flash pattern/1800frames, per-stream strictly increasing DTS and exact60s container endpoints; synthetic file observations only.",
+    "actualEncoderFrameSize": 1024,
+    "actualInitialPadding": 1024,
+    "logicalEnd": "Native verifier and independent last packet/container duration determine end; raw decoder can emit the final padded AAC frame. No fixed896/1024 sample subtraction.",
+    "sha256": {
+      "input.mp4": "380048b682e4d9896915caafc2ff75209c1167cd033784f11430cc29080d6c6e",
+      "export.mp4": "f7139b9cf39ee68e4909df6bc04c687aee7f980d29add40b056cf67b880f66b0",
+      "sdk-result.json": "83df95a6954e414b166e279ea91d88bad8cf5b510c0ce3e49fc8d2d811db98d1",
+      "frames.gray": "0133865331085be337d43f29f3cabbd42bf0834ded14521c26b0092ace566782",
+      "decoded.f32": "80837f07a3c871743a60dd928428c465a2e6287b40d75827f3d235f21f8a7c8e"
+    }
+  },
+  "subcriteriaAudit": [
+    {
+      "task": "V-002",
+      "verifiedHere": "Linux software1080p30 Main4/AAC48k actual60s + active cancel10/no live handle/FD leak; observed codec inventory/profile/directions",
+      "remaining": "Original P0 physical/hardware/runtime/release matrix, full transitive App/SBOM/legal distribution qualification; remains partial"
+    },
+    {
+      "task": "I-023",
+      "verifiedHere": "Real44.1k/48k decode→SWR null drain→48k float DSP; exact48000sample impulse length/peak±1sample/trim; real gain/mute output and offline60s<=20ms",
+      "remaining": "Actual AudioSink presented clock, bounded ring/underrun/pause/device rebind, full AudioClip/route/link semantics and device60s sync; remains partial"
+    },
+    {
+      "task": "I-024",
+      "verifiedHere": "Frozen revision/Main4/AAC/mux/drain/DTS/content verifier/hash/atomic output,60s synthetic duration/flash pattern/sync, cancel no false final success",
+      "remaining": "Full original upstream RenderGraph/proxy/effects/AudioSink/restore contracts and P0 matrix. Synthetic flash match is not arbitrary-video anomaly proof; remains partial"
+    }
+  ],
+  "toolchain": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "chrome": "Google Chrome 156.0.8078.47",
+    "nativeCompiler": "Clang19.1.7 from actual cached CMakeCXXCompiler.cmake; Native README GCC14 line describes earlier historical probe",
+    "ffmpeg": "7.1.5-0+deb13u1",
+    "nativeCodecCapabilities": {
+      "aacMux48kV1": true,
+      "abi": 1,
+      "audioExport": true,
+      "avcodecLicense": "GPL version 2 or later",
+      "avcodecVersion": 4002661,
+      "avformatVersion": 3999591,
+      "configuration": "--prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared",
+      "decoderAAC": true,
+      "decoderH264": true,
+      "deviceAudioClock": false,
+      "encoderH264": true,
+      "ffmpegVersion": "7.1.5-0+deb13u1",
+      "hardwareAcceleration": false,
+      "networkAllowed": false,
+      "pcm48kStereoV1": true,
+      "sourcePreview128": true,
+      "swresampleLicense": "GPL version 2 or later",
+      "swresampleVersion": 328548
+    },
+    "swresamplePkgConfigVersion": "5.3.100",
+    "sqlite": "3.54.1 strict SOURCE_ID/THREADSAFE gate unchanged; schema7, actual historical v4/v5/v6→v7 migrations and default3.46.1 rejection rerun",
+    "installation": "Existing pinned official Flutter SDK and approved SQLite source build, existing Debian FFmpeg dev libraries. New dev-only clang-format18.1.8 from PyPI1.7MB wheel; no production dependency/model download."
+  },
+  "sqliteMigrations": [
+    "migration-v4.json",
+    "migration-v5.json",
+    "migration-v6.json"
+  ],
+  "webTransport": {
+    "positiveQualificationRerun": true,
+    "qualificationStatus": "blocked",
+    "actualQualificationExitCode": 1,
+    "runnerExitCode": 2,
+    "positiveEncryptedTransportPassed": false,
+    "blocker": "Direct-only host ICE candidates unavailable; no fallback attempted",
+    "evidence": "rtc-positive-blocked.json",
+    "policyFlagsTransportOrRelayChanged": false,
+    "notPhysicalDeviceQualification": true,
+    "remainingImplementation": "Native RTC bridge; browser worker durable pending-result outbox/reconnect/recovery; Web blob transport. Not external blockers, continue implementation when dependencies permit."
+  },
+  "bounds": {
+    "offlineAudioSeconds": 120,
+    "regions": 128,
+    "dspFramesPerBlock": 1024,
+    "nativeDecodeHistorySeconds": 600,
+    "channels": 2,
+    "sampleRate": 48000,
+    "stageOwnership": "private local temp dir, native NEW O_EXCL/O_NOFOLLOW0600 PCM; logical coverage/format/PTS/finite checks, cleanup, CAS and original output protections",
+    "audioModelDeviation": "Explicit transient embedded-video-source-audio export mode, NOT persisted AudioClip/link group. ADR0009 preserves original acceptance; no silent redesign."
+  },
+  "failures": "failures.json:7 real initial failures preserved, corrected and final-source gates rerun.3actual review/fix rounds in REVIEW.md; not independent audit.",
+  "codecLicenses": {
+    "inventory": "codec-components.spdx.json",
+    "directions": "codec-direction-matrix.json",
+    "completeReleaseSbom": false,
+    "redistributionPermissionInferred": false,
+    "constraint": "System FFmpeg/libx264 GPL-enabled; no bundled binaries or legal approval."
+  },
+  "notValidated": [
+    "AudioSink/device presented sample clock/ring/underrun/device switching",
+    "full original Project Schema/AudioClip/link/effects/duck/RenderGraph/proxy/timeline playback",
+    "original P0 hardware/device codec qualification",
+    "physical multi-device/browser-native live compute sessions",
+    "macOS/Windows/iOS/Android and mobile/background limitations",
+    "Web positive encrypted transport (currently measured BLOCKED)",
+    "models/large weights/paid APIs/production deployment/full release distribution"
+  ],
+  "nextContinuation": [
+    "Same checkout/branch, no reclone: packages/studio_document/lib/src/project_schema.dart + validator.dart vs original Project2.0.0 contract; preserve read-only unknown fields; implement full AudioClip/link-group semantics in domain/edit/store before calling embedded option full audio editing",
+    "I-023 add actual bounded AudioSink/ring and presented-sample clock pause/rebind; offline export count must never be used as playback time",
+    "I-021 real proxy generation/source-time mappings/full timeline preview and full RenderGraph; preserve existing20CFR/4VFR/nonzero source-seek/LRU tests",
+    "Extend original I-024/V-002 matrix without weakening acceptance. Continue other executable original87/XD10 work, no user-review stop"
+  ],
+  "safety": {
+    "userMacOrOtherDeviceAccessed": false,
+    "paidApiOrProductionDeployment": false,
+    "largeWeightsDownloaded": false,
+    "oauthOrWorkflowPermissionsExpanded": false,
+    "workflowRefusalBypassed": false,
+    "mainMergedOrHistoryRewritten": false,
+    "userMediaUploaded": false,
+    "originalTaskAcceptanceOrDependenciesReduced": false,
+    "activeCiInstalled": false
+  }
+}

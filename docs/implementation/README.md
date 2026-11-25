@@ -345,3 +345,55 @@ v4/v5/v6真实历史数据库→v7迁移与旧runtime默认拒绝保留并重新
 正向WebRTC资格实际退出1，外层runner返回2=blocked；不计入135个通过case。
 完整命令/版本/失败记录/源hash及所有限制见本轮summary，不把模拟transport或同机Chrome
 当作物理协作验收，不把源缩略图当作完整预览/AAC。
+
+## v1.5 当前可操作增量 — 真实离线音频→Dart AudioBus→AAC/MP4
+
+[ADR0009](../adr/0009-bounded-offline-audio-and-aac.md) ·
+[本轮真实证据/计数/限制](evidence/audio-aac/summary.json)。上方v1.0–v1.4计数与
+“尚无AAC”等描述是对应历史版本，不是本版状态；原始104规格没有覆盖修改。
+
+Linux运行入口（这里的路径是本云端环境；自己的机器需安装批准工具链并替换路径）：
+
+```sh
+export PATH=/workspace/toolchains/flutter/bin:$PATH
+export LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+cmake -S native/studio_media -B /tmp/studio-media-native -G Ninja
+cmake --build /tmp/studio-media-native
+export STUDIO_MEDIA_LIBRARY=/tmp/studio-media-native/libstudio_media.so
+cd apps/studio_demo
+flutter run -d linux
+```
+
+- 选含嵌入音轨的受支持SDR CFR视频；明确勾选“Create a video clip only…”后导入。
+  该确认只创建视频clip，原素材的音频字节仍在本地CAS，不是一个AudioClip链接。
+- 可选clip、源缩略图seek、split/trim/undo；输入master gain（-96..12dB）并保存，
+  或master mute。这些设置走原revision/CAS/undo/SQLite和归档，不是仅控件本地变量。
+- 显式保存归档、恢复fork/关闭重开保留master设置；在**本次导出**勾选
+  “Explicitly include embedded audio…”才会走真实AAC路径。该临时选择不会写进工程，
+  不偷偷把历史视频clip变成持久音视频链接。默认仍可导出无声视频。
+- 输出实际H264 Main4/8bit420 + AAC LC48k stereo MP4；内部使用成熟FFmpeg API和
+  原Dart AudioBus，不调用FFmpeg CLI、不用Python替代引擎。文件先校验/hash，后原子发布。
+- 当前音频离线导出<=120秒、<=128段、有界600秒源解码历史；仅master无效果子集，
+  不支持的声道/格式/时间戳/资源量会明确报错，不隐式重采样策略或云端降级。
+  原有HDR/VFR导出、字幕渲染、效果/缩放等未实现门禁仍保留。
+- **没有**可听timeline播放、AudioSink已呈现sample时钟/ring/设备切换、音频独立clip/
+  link-group/自动duck/full RenderGraph。这些原验收仍未完成；离线同步不是设备播放同步。
+
+真实独立验收入口（仅在checkout根目录）：
+
+```sh
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build "$STUDIO_NATIVE_BUILD" --report artifacts/audio-native.json
+python3 tools/acceptance/run_audio_qualification.py --native-library "$STUDIO_MEDIA_LIBRARY" --report artifacts/audio-60s.json
+# 原任务入口也会执行native回归，随后实际60s资格；不会将整项标complete。
+python3 tools/acceptance/run_task.py I-023 --profile linux-dev --report artifacts/I-023.json
+```
+
+`STUDIO_NATIVE_BUILD`需设为实际checkout外构建目录。测试用CLI生成合成素材和独立测量；
+没有提交媒体二进制、用户素材、私钥或模型。codec-only SPDX inventory只是实测动态库/许可证
+事实，不是完整App/transitive release SBOM或再分发授权；GPL/libx264限制仍需发布前核查。
+
+原87与新增XD10状态始终分开，完整任务完成不因本版受限用户路径闭合而虚增；实际结果、
+全状态、失败证据和下一步见summary/task-status。物理多设备与macOS/Windows/iOS/Android
+未验证；Web正向RTC仍受原受管0候选策略阻塞，不改策略、不走替代transport/中继绕过。
+
+本版最终实测：**128 native +9 Chrome +1真实OS-keyring/native UI =138个Dart/Flutter测试，零跳过**；另6工具测试、3 CTest、10主动AAC+10无声视频取消内部实验、50次内部SIGKILL。双宿主各3次clean/release构建及首帧启动、3次独立ABI probe通过。实际60秒1080p30输出1800帧/2880000逻辑音频samples，60个合成flash/pulse事件测得最大阈值起点偏差0ms（仅离线文件，不是设备时钟）。原87：**0 complete /22 partial /52 planned /13 blocked**；新增XD10：**0 /8 /1 /1**。正向RTC重跑仍实际退出1、外层runner2=blocked，不计通过。所有工具链/测量方法/失败/源hash见summary。

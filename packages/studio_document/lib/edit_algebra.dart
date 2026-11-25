@@ -12,6 +12,35 @@ sealed class EditOperation {
   Map<String, Object?> toJson();
 }
 
+final class SetMasterAudio extends EditOperation {
+  const SetMasterAudio({
+    this.gainDb = 0,
+    this.pan = 0,
+    this.muted = false,
+    this.solo = false,
+  });
+  final double gainDb, pan;
+  final bool muted, solo;
+  @override
+  Map<String, Object?> toJson() {
+    AudioBus(
+      id: 'validation',
+      inputs: const [],
+      gainDb: gainDb,
+      pan: pan,
+      muted: muted,
+      solo: solo,
+    );
+    return {
+      'kind': 'setMasterAudio',
+      'gainDb': gainDb,
+      'pan': pan,
+      'muted': muted,
+      'solo': solo,
+    };
+  }
+}
+
 final class RenameProject extends EditOperation {
   const RenameProject(this.title);
   final String title;
@@ -157,6 +186,30 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is SetMasterAudio) {
+    AudioBus(
+      id: 'validated-master',
+      inputs: [],
+      gainDb: operation.gainDb,
+      pan: operation.pan,
+      muted: operation.muted,
+      solo: operation.solo,
+    );
+    final d = before.toJson(),
+        b = (before.toJson()['audioBuses'] as List).single;
+    if (b['gainDb'] == operation.gainDb &&
+        b['pan'] == operation.pan &&
+        b['muted'] == operation.muted &&
+        b['solo'] == operation.solo) {
+      return before;
+    }
+    b['gainDb'] = operation.gainDb;
+    b['pan'] = operation.pan;
+    b['muted'] = operation.muted;
+    b['solo'] = operation.solo;
+    d['audioBuses'] = [b];
+    return ProjectDocument.fromJson(d);
+  }
   if (operation is RenameProject) {
     return before.withTitle(operation.title, before.revision);
   }
@@ -276,6 +329,8 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case SetMasterAudio():
+      throw StateError('Handled master audio edit');
     case SetCaptions():
       throw StateError('Handled caption edit');
     case RenameProject():

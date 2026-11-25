@@ -3,6 +3,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <mutex>
 #include <nlohmann/json.hpp>
@@ -76,7 +77,13 @@ int main(int argc, char **argv) {
            std::to_string(
                std::chrono::steady_clock::now().time_since_epoch().count()));
       std::filesystem::create_directory(root);
-      for (int i = 0; i < 10; i++) {
+      const auto pcm = root / "bounded.f32";
+      {
+        std::ofstream f(pcm, std::ios::binary);
+        f.seekp(48000LL * 120 * 8 - 1);
+        f.put(0);
+      }
+      for (int i = 0; i < 20; i++) {
         auto h = sm_create("cancel");
         std::atomic<bool> done = false;
         J result;
@@ -87,10 +94,30 @@ int main(int argc, char **argv) {
             {"fps", {{"n", 30}, {"d", 1}}},
             {"frameCount", 120000},
             {"segments", J::array()}};
+        if (i >= 10) {
+          recipe["frameCount"] = 3600;
+          recipe["audio"] = {{"path", pcm.string()},
+                             {"sampleCount", 48000 * 120}};
+        }
         std::thread work([&] {
           result = response(sm_export(h, "cancel", recipe.dump().c_str()));
           done = true;
         });
+        // Observe actual AAC input progress, not buffered file size or a sleep.
+        // This diagnostic is NOT a device presentation clock.
+        if (i >= 10) {
+          const auto limit =
+              std::chrono::steady_clock::now() + std::chrono::seconds(5);
+          while (!done && sm_encoded_audio_samples(h, "cancel") < 4800 &&
+                 std::chrono::steady_clock::now() < limit)
+            std::this_thread::yield();
+          if (done || sm_encoded_audio_samples(h, "cancel") < 4800) {
+            sm_cancel(h, "cancel");
+            work.join();
+            throw std::runtime_error(
+                "AAC cancellation missed active encoder progress");
+          }
+        }
         std::mutex m;
         std::condition_variable cv;
         std::unique_lock lock(m);
@@ -105,6 +132,8 @@ int main(int argc, char **argv) {
         work.join();
         require(result["code"] == "CANCELED");
         require(sm_close(h, "cancel") == 0);
+        require(response(sm_probe(h, "cancel", "/not/read"))["code"] ==
+                "INVALID_HANDLE");
       }
       std::filesystem::remove_all(root);
     } else

@@ -1,22 +1,23 @@
 {
-  "asOf": "2026-11-25T13:57:54.588530+08:00",
+  "asOf": "2026-11-25T14:36:32.773063+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
   "fullTasksCompleted": 0,
   "counts": {
     "complete": 0,
-    "partial": 21,
-    "planned": 53,
+    "partial": 22,
+    "planned": 52,
     "blocked": 13
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "I-023/I-024/V-002: real native PCM decode -> existing Dart AudioBus DSP -> AAC encode/mux + timestamp/drain/60s sync/unsupported failures; no audio export currently",
-    "I-021 proxy generation/source-time mapping, full timeline RenderGraph preview and V-004 actual A/V-clock/load gates; source thumbnail indexed seek/LRU is now executable",
-    "I-002 complete original Schema/invariants (do not treat metadata/caption/audio subset as complete)",
-    "XD-003 positive WebRTC DTLS qualification is objectively blocked by current managed zero-host-ICE policy; do NOT bypass. Native bridge, browser worker durable result outbox/reconnect and authority recovery remain implementation work, not external blockers",
-    "Continue remaining original87/XD10 dependency-ordered executable work; physical and other-platform qualification stays separate"
+    "I-002 complete original Schema/invariants and I-009 persistent AudioClip/link-group/time-map semantics; embedded source-audio opt-in is NOT that model",
+    "I-023 actual AudioSink bounded ring and presented-sample clock, pause/rebind/underrun; current60s<=20ms is OFFLINE file qualification, not playback",
+    "I-021 proxy generation/strict source-time map and full timeline RenderGraph preview; actual source thumbnails/LRU remain qualified",
+    "I-024 full effect/RenderGraph plan and remaining original upstream acceptance; extend60s synthetic qualification to original P0 device matrix",
+    "XD-003 positive WebRTC remains managed-policy blocked/nonzero; do not bypass. Native bridge/browser outbox/reconnect/recovery/blob are implementation work, not external blockers",
+    "Continue executable original87/XD10; no need for per-batch approval, non-Linux and physical devices remain separately unverified"
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -48,9 +49,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Real native probe/decode/software H264 mux and ten cancellation runs; no AAC/1080p release matrix/SBOM qualification",
+      "implementedScope": "Linux real44.1k AAC/PCM decode + SWR48k drain; bounded Dart AudioBus; software H264 Main4/VBV + AAC LC48k mux. Independent60s1080p30/1800frame/pulse/DTS/packet duration qualification and10 active AAC +10 silent cancels/closed handles/FD delta0. Observed codec-only SPDX inventory, NOT full App/transitive release SBOM or P0/hardware qualification.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/audio-aac/summary.json"
       ],
       "remainingAcceptance": "P0处理MP4/H264 Main L4.0 8bit420 1080p30/AAC48k；10次取消无活句柄；不支持格式100%明确reason。",
       "remainingScope": "含9.1配置/硬件帧/软件路径；不含全格式保证。",
@@ -623,10 +625,11 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Actual pure-Dart reciprocal AudioBus DAG, gain/pan/balance/mute/solo, exact sample/source gain automation, protected separate duck layers and bounded real Float32 PCM mixer; 60s sample-count/impulse proof. No native audio decode/device/AAC, project Effect integration or full link edits.",
+      "implementedScope": "Original pure Dart bus/routing/gain/pan/mute/solo/automation domain plus persisted master controls through original edit/revision/CAS/no-op/undo/archive/reopen, and REAL offline decode→AudioBus→AAC gain/mute output. Full AudioClip/link/effects/duck integration remains missing.",
       "evidence": [
         "evidence/caption-audio-harness/verification.json",
-        "evidence/caption-audio-harness/multidevice.json"
+        "evidence/caption-audio-harness/multidevice.json",
+        "evidence/audio-aac/summary.json"
       ],
       "remainingAcceptance": "总线路由环拒绝；相同cue变速后音频锚点正确；手调音量/锁轨修改=0；silent track不混入。",
       "remainingScope": "含mute/solo/link/gain与路由；不偷启limiter。",
@@ -908,19 +911,22 @@
     {
       "id": "I-023",
       "title": "音频混音执行与主时钟",
-      "status": "planned",
-      "implementationStatus": "notStarted",
-      "verificationStatus": "notRun",
+      "status": "partial",
+      "implementationStatus": "partial",
+      "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "No implementation or verification claimed in this batch",
-      "evidence": [],
+      "implementedScope": "REAL bounded native PCM/AAC/FLAC codec adapter (positive AAC/PCM16 qualified),44.1k→48k SWR null-input drain,1024frame Dart DSP blocks and finite/coverage/layout/PTS limits. Actual60s OFFLINE A/V pulse sync and exact PCM impulse length/peak/trim. NO AudioSink/ring/presented-device clock or switch qualification.",
+      "evidence": [
+        "evidence/audio-aac/summary.json"
+      ],
       "remainingAcceptance": "60秒音画偏差≤20ms；脉冲长度±1sample；mute/solo正确；ring有界、设备切换可暂停重绑。",
       "remainingScope": "含48k float总线/resample delay flush/ring；不以提交sample数当已播放时钟。",
       "hardDeps": [
         "I-009",
         "I-015"
       ],
-      "blockers": []
+      "blockers": [],
+      "remainingImplementation": "AudioSink actual presented sample clock, bounded producer/consumer ring, underrun/device rebind and device60s sync; full AudioClip/link/route semantics. Current offline qualification does not satisfy these."
     },
     {
       "id": "I-024",
@@ -929,9 +935,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Frozen snapshot native silent CFR Rec709 software H264/MP4 verification and atomic output; no AAC/audio sync/effects RenderGraph",
+      "implementedScope": "Frozen snapshot/revision real native Main4/AAC48k encode/drain/MP4 mux; actual profile/level/pixel format/logical audio content/duration/hash verification then atomic publication. Actual60s sync/DTS/pattern test, concurrent head edit/EXPORT_BUSY and canceled existing-target preservation. Full RenderGraph/effects/proxy/upstream/P0 contracts remain.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/audio-aac/summary.json"
       ],
       "remainingAcceptance": "时长误差≤1帧、音画≤20ms、无黑/丢帧异常；失败/取消无损坏成片伪成功；revision固定不被编辑中途改。",
       "remainingScope": "含H264/AAC基础preset/drain/DTS/校验；不默认smart-render。",
@@ -952,9 +959,10 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Shared real Flutter import/edit/undo/archive/fork/export controls tested through native output; not complete timeline/inspector/subtitle UI",
+      "implementedScope": "Actual clicked Linux native UI import/source seek/split/trim/undo/archive/fork/export, now with persisted master gain/mute and explicit embedded-source-audio opt-in producing real AAC output. NOT full timeline/inspector/AudioClip/device playback UI.",
       "evidence": [
-        "evidence/local-video/verification.json"
+        "evidence/local-video/verification.json",
+        "evidence/audio-aac/summary.json"
       ],
       "remainingAcceptance": "60秒6clip工程：手改字幕/trim/撤销/保存重开后等值；恢复最后durable编辑；导出通过I-024；无隐藏上传。",
       "remainingScope": "含触摸/键盘选择trim/undo/diff；不等全部模型再可用。",

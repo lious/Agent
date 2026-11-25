@@ -67,7 +67,7 @@ def main():
         (['sha256sum', '--quiet', '-c', 'SHA256SUMS'], {'cwd': ROOT / 'docs/studio'}),
         ([flutter, '--version', '--machine'], {}),
         ([dart, 'run', 'packages/studio_store/tool/runtime_version.dart'], {}),
-        (['pkg-config', '--modversion', 'libavformat', 'libavcodec', 'libavutil', 'libswscale', 'sqlite3'], {}),
+        (['pkg-config', '--modversion', 'libavformat', 'libavcodec', 'libavutil', 'libswscale', 'libswresample', 'sqlite3'], {}),
         ([dart, 'run', 'packages/studio_media/tool/probe.dart', environment['STUDIO_MEDIA_LIBRARY'], fixture], {}),
     ]:
         ok = check(command, **options) and ok
@@ -82,10 +82,10 @@ def main():
         'profile': args.profile, 'timezone': 'Asia/Shanghai',
         'checkedAt': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
         'scopeStatus': 'passed' if ok else 'failed', 'fullTaskComplete': False,
-        'scope': 'Linux dev: silent CFR H264, plain captions, PCM DSP, durable checkpoints/50 SIGKILL saves, same-session native process protocol; not physical devices',
+        'scope': 'Linux dev: CFR H264 Main4, explicit embedded AAC/PCM resample+DSP/offline export, plain captions, durable checkpoints/50 SIGKILL saves, same-session native process protocol; not physical devices',
         'testsExecuted': sum(test_count(r['output']) for r in test_records), 'skippedTests': skipped_tests,
         'nativeCTestCases': 3, 'sourceHashes': source_hashes, 'checks': records,
-        'notValidated': ['all 87 full acceptance contracts', '1080p Main L4/AAC qualification', 'audio export',
+        'notValidated': ['all 87 full acceptance contracts', 'full P0 hardware/codec release matrix (separate60s Linux offline qualification)', 'device AudioSink presentation clock',
                          'GPU or hardware adapters', 'full RenderGraph', 'full preview/PTS proxy mapping (only source thumbnail indexed seek/LRU qualified)' , 'non-Linux platforms',
                          'physical power-loss/disk-full/non-Linux provider durability faults', 'model inference', 'paid/remote services'],
     }
