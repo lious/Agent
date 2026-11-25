@@ -327,6 +327,285 @@ String? coveringCaptionHostClipId(Map d, TimeRange cue) {
   return null;
 }
 
+/// Crop, split, and shift admitted cues across one interval.
+///
+/// A close removes `[at, at+length)` then shifts later absolute cues left by
+/// [length]. An open splits at [at] and shifts the right side and later
+/// absolute cues right by [length]. Text is never rewritten. A right remnant
+/// gets a new id. A cue wholly inside a closed interval is dropped as a
+/// crop-to-empty, not as a silent loss, and comes back on undo. Source
+/// anchors stay refused.
+///
+/// clipLocal cues follow their current host when the host still fully covers
+/// the local range, so an insert-move of an unsplit host does not split its
+/// cues at the destination hole. When the host is gone or no longer covers
+/// the cue, the same interval transform is applied in timeline space and each
+/// remnant is rebound to a covering host. A remnant with no covering host
+/// refuses the whole command. This path must not also call
+/// [followClipLocalCaptions] on the same interval, which would double-shift
+/// later clipLocal cues that already followed here; a later MoveClips
+/// placement may still call follow once hosts move again.
+void applyCaptionIntervalEdit(
+  Map d, {
+  required Q at,
+  required Q length,
+  required bool opening,
+  required String Function() newId,
+  String Function(String id)? nextVersion,
+}) {
+  if (length <= Q.of(0)) {
+    throw const StudioException('INVALID_TIME_RANGE');
+  }
+  final captions = d['captions'];
+  if (captions is! List || captions.isEmpty) {
+    return;
+  }
+  final lockedTracks = <String>{};
+  for (final t in (d['sequences'] as List).first['tracks'] as List) {
+    if (t['kind'] == 'caption' && t['locked'] == true) {
+      lockedTracks.add(t['id'] as String);
+    }
+  }
+  final clips = _mediaClipsById(d);
+  final next = <Map<String, dynamic>>[];
+  for (final raw in captions) {
+    final cue = _cloneCaptionMap(raw as Map);
+    final kind = cue['anchor']['kind'] as String;
+    if (kind == 'source') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    if (kind != 'absolute' && kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    final start = Q.fromJson(cue['timelineRange']['start']);
+    final duration = Q.fromJson(cue['timelineRange']['duration']);
+    if (kind == 'clipLocal' &&
+        _clipLocalStillCoveredByHost(clips, cue, start, duration)) {
+      final followed = _clipLocalFollowedRange(clips, cue);
+      _emitCaptionPieces(
+        cue,
+        [(start: followed.start, duration: followed.duration)],
+        originalStart: start,
+        originalDuration: duration,
+        lockedTracks: lockedTracks,
+        next: next,
+        newId: newId,
+        nextVersion: nextVersion,
+      );
+      continue;
+    }
+    _emitCaptionPieces(
+      cue,
+      _captionIntervalPieces(
+        start: start,
+        duration: duration,
+        at: at,
+        length: length,
+        opening: opening,
+      ),
+      originalStart: start,
+      originalDuration: duration,
+      lockedTracks: lockedTracks,
+      next: next,
+      newId: newId,
+      nextVersion: nextVersion,
+    );
+  }
+  d['captions'] = next;
+  _rebindClipLocalCaptionsAfterInterval(d, nextVersion: nextVersion);
+}
+
+bool _clipLocalStillCoveredByHost(
+  Map<String, Map> clips,
+  Map cue,
+  Q timelineStart,
+  Q timelineDuration,
+) {
+  final anchor = cue['anchor'] as Map;
+  final host = clips[anchor['clipId']];
+  if (host == null || anchor['range'] is! Map) {
+    return false;
+  }
+  final hostStart = Q.fromJson(host['timelineRange']['start']);
+  final hostEnd = hostStart + Q.fromJson(host['timelineRange']['duration']);
+  final localStart = Q.fromJson(anchor['range']['start']);
+  final localDur = Q.fromJson(anchor['range']['duration']);
+  final desiredStart = hostStart + localStart;
+  final desiredEnd = desiredStart + localDur;
+  if (desiredStart < hostStart || desiredEnd > hostEnd) {
+    return false;
+  }
+  return true;
+}
+
+TimeRange _clipLocalFollowedRange(Map<String, Map> clips, Map cue) {
+  final anchor = cue['anchor'] as Map;
+  final host = clips[anchor['clipId']]!;
+  final hostStart = Q.fromJson(host['timelineRange']['start']);
+  final localStart = Q.fromJson(anchor['range']['start']);
+  final localDur = Q.fromJson(anchor['range']['duration']);
+  return TimeRange(hostStart + localStart, localDur);
+}
+
+List<({Q start, Q duration})> _captionIntervalPieces({
+  required Q start,
+  required Q duration,
+  required Q at,
+  required Q length,
+  required bool opening,
+}) {
+  final cueEnd = start + duration;
+  final end = at + length;
+  if (opening) {
+    if (cueEnd <= at) {
+      return [(start: start, duration: duration)];
+    }
+    if (start >= at) {
+      return [(start: start + length, duration: duration)];
+    }
+    return [
+      (start: start, duration: at - start),
+      (start: at + length, duration: cueEnd - at),
+    ];
+  }
+  if (cueEnd <= at) {
+    return [(start: start, duration: duration)];
+  }
+  if (start >= end) {
+    return [(start: start - length, duration: duration)];
+  }
+  if (start >= at && cueEnd <= end) {
+    return const [];
+  }
+  if (start < at && cueEnd <= end) {
+    return [(start: start, duration: at - start)];
+  }
+  if (start >= at && cueEnd > end) {
+    return [(start: at, duration: cueEnd - end)];
+  }
+  return [
+    (start: start, duration: at - start),
+    (start: at, duration: cueEnd - end),
+  ];
+}
+
+void _emitCaptionPieces(
+  Map<String, dynamic> cue,
+  List<({Q start, Q duration})> pieces, {
+  required Q originalStart,
+  required Q originalDuration,
+  required Set<String> lockedTracks,
+  required List<Map<String, dynamic>> next,
+  required String Function() newId,
+  String Function(String id)? nextVersion,
+}) {
+  final changed =
+      pieces.length != 1 ||
+      pieces.isEmpty ||
+      pieces.first.start != originalStart ||
+      pieces.first.duration != originalDuration;
+  if (changed && lockedTracks.contains(cue['trackId'])) {
+    throw const StudioException('FIELD_LOCKED');
+  }
+  if (pieces.isEmpty) {
+    return;
+  }
+  _writeCaptionTimeline(
+    cue,
+    pieces.first.start,
+    pieces.first.duration,
+    nextVersion,
+  );
+  next.add(cue);
+  for (final piece in pieces.skip(1)) {
+    final right = _cloneCaptionMap(cue);
+    right['id'] = newId();
+    right['version'] = nextVersion != null
+        ? nextVersion(right['id'] as String)
+        : '1';
+    _writeCaptionTimeline(right, piece.start, piece.duration, null);
+    next.add(right);
+  }
+}
+
+void _writeCaptionTimeline(
+  Map cue,
+  Q start,
+  Q duration,
+  String Function(String id)? nextVersion,
+) {
+  final prevStart = Q.fromJson(cue['timelineRange']['start']);
+  final prevDur = Q.fromJson(cue['timelineRange']['duration']);
+  if (prevStart == start && prevDur == duration) {
+    return;
+  }
+  cue['timelineRange'] = {
+    'start': start.toJson(),
+    'duration': duration.toJson(),
+  };
+  if (nextVersion != null) {
+    cue['version'] = nextVersion(cue['id'] as String);
+  }
+}
+
+Map<String, dynamic> _cloneCaptionMap(Map raw) {
+  final anchor = Map<String, dynamic>.from(raw['anchor'] as Map);
+  if (anchor['range'] is Map) {
+    anchor['range'] = Map<String, dynamic>.from(anchor['range'] as Map);
+  }
+  return <String, dynamic>{
+    ...Map<String, dynamic>.from(raw),
+    'timelineRange': Map<String, dynamic>.from(raw['timelineRange'] as Map),
+    'anchor': anchor,
+    'manualFields': List<String>.from(
+      (raw['manualFields'] as List?) ?? const [],
+    ),
+    if (raw['words'] is List) 'words': List<dynamic>.from(raw['words'] as List),
+  };
+}
+
+/// Rebind each clipLocal cue to a host that fully covers its (already
+/// transformed) timeline range, then sync local ranges. Missing coverage
+/// refuses the whole command; remnants are never silently dropped or
+/// converted to absolute.
+void _rebindClipLocalCaptionsAfterInterval(
+  Map d, {
+  String Function(String id)? nextVersion,
+}) {
+  final clips = _mediaClipsById(d);
+  for (final cue in d['captions'] as List) {
+    final anchor = cue['anchor'];
+    if (anchor['kind'] != 'clipLocal') {
+      continue;
+    }
+    final range = TimeRange(
+      Q.fromJson(cue['timelineRange']['start']),
+      Q.fromJson(cue['timelineRange']['duration']),
+    );
+    final preferred = anchor['clipId'] as String;
+    final current = clips[preferred];
+    var hostId = preferred;
+    if (current == null ||
+        range.start < Q.fromJson(current['timelineRange']['start']) ||
+        range.end >
+            Q.fromJson(current['timelineRange']['start']) +
+                Q.fromJson(current['timelineRange']['duration'])) {
+      final cover = coveringCaptionHostClipId(d, range);
+      if (cover == null) {
+        throw const StudioException('ANCHOR_OUT_OF_RANGE');
+      }
+      hostId = cover;
+    }
+    if (hostId != preferred) {
+      anchor['clipId'] = hostId;
+      if (nextVersion != null) {
+        cue['version'] = nextVersion(cue['id'] as String);
+      }
+    }
+  }
+  syncClipLocalCaptionRanges(d);
+}
+
 final class CaptionStore {
   CaptionStore(List<CaptionCue> values)
     : cues = List.unmodifiable(

@@ -188,7 +188,7 @@ void main() {
   });
 
   test(
-    'ripple trim lengthen refuses when absolute captions would have to shift',
+    'ripple trim lengthen splits an absolute cue across the opened tail',
     () async {
       final srt = File('${root.path}/cue.srt')
         ..writeAsStringSync('1\n00:00:00,000 --> 00:00:02,000\nAbsolute cue\n');
@@ -197,19 +197,31 @@ void main() {
         CaptionFormat.srt,
         expectedRevision: w.current.revision,
       );
-      final captioned = w.current.hash;
-      expect(
-        () => w.edit(
-          RippleTrimClip(
-            moveVideos(w.current).first['id'] as String,
-            'out',
-            Q.of(1, 2),
-          ),
-          expectedRevision: w.current.revision,
+      final captioned = w.current;
+      w.edit(
+        RippleTrimClip(
+          moveVideos(w.current).first['id'] as String,
+          'out',
+          Q.of(1, 2),
         ),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+        expectedRevision: w.current.revision,
       );
-      expect(w.current.hash, captioned);
+      expect(w.current.revision, captioned.revision + BigInt.one);
+      final cues = (w.current.toJson()['captions'] as List).cast<Map>();
+      cues.sort(
+        (a, b) => Q
+            .fromJson(a['timelineRange']['start'])
+            .compareTo(Q.fromJson(b['timelineRange']['start'])),
+      );
+      expect(cues, hasLength(2));
+      expect(cues[0]['text'], 'Absolute cue');
+      expect(cues[1]['text'], 'Absolute cue');
+      expect(Q.fromJson(cues[0]['timelineRange']['start']), Q.of(0));
+      expect(Q.fromJson(cues[0]['timelineRange']['duration']), Q.of(3, 2));
+      expect(Q.fromJson(cues[1]['timelineRange']['start']), Q.of(2));
+      expect(Q.fromJson(cues[1]['timelineRange']['duration']), Q.of(1, 2));
+      w.undo(expectedRevision: w.current.revision);
+      expect(contents(w.current), contents(captioned));
     },
   );
 }

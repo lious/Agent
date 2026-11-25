@@ -1,0 +1,51 @@
+{
+  "increment": "1.34",
+  "title": "Crop, split, and shift captions across a ripple or insert interval",
+  "baseCommit": "723200d33803979e5e403bbe38741696bfb3d24b",
+  "aggregateSha256": "ed923ac7abe189c667f2e5201a96010075ce09377bf335c6c012f25c494ba86d",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "selected": {
+    "document": {
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sdk": {
+      "passed": 39,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ui": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "passed": 128,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Ripple delete, range close, ripple trim shorten/lengthen, and insert paste or insert-move crop, split, and shift absolute cues across that interval and rebind clipLocal remnants to a covering host.",
+    "Insert-move still leaves a source gap and does not auto-close it; captions are applied after moved hosts are placed again so clipLocal cues on an unsplit moving host are not split at the destination hole.",
+    "A cue wholly inside a closed interval is dropped as crop-to-empty and returns on undo; remnants without a covering host refuse the whole command (ANCHOR_OUT_OF_RANGE).",
+    "Source anchors stay CAPTION_RICH_EDIT_NOT_IMPLEMENTED; a locked caption track is FIELD_LOCKED for the whole group; listing a caption track as a media ripple track stays CAPTION_SYNC_EDIT_NOT_IMPLEMENTED.",
+    "MP4 text burn-in stays CAPTION_RENDER_POLICY_NOT_IMPLEMENTED; sidecar VTT is the export path.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, marker business, I-006, default-on-create clipLocal, or 1000 random NLE undo.",
+    "I-005 remains partial; I-010 remainingAcceptance unchanged; 87 counts stay 26/48/13/0; XD10 unchanged.",
+    "Previous 119/104/95/85/75/64/51/37/7/281 counts are not mixed in."
+  ],
+  "asOf": "2026-11-26T04:53:43.176105+08:00",
+  "timezone": "Asia/Shanghai",
+  "fullTaskComplete": false
+}

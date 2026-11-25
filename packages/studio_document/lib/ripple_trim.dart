@@ -86,9 +86,6 @@ ProjectDocument _rippleTrimClip(
   final closeStart = durationDelta < Q.of(0) ? oldEnd + durationDelta : oldEnd;
   final closeEnd = durationDelta < Q.of(0) ? oldEnd : oldEnd + durationDelta;
   final span = closeEnd - closeStart;
-  if (_captionsWouldShift(d, closeStart)) {
-    throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
-  }
   final fps = FrameRate(s['frameRate']['n'], s['frameRate']['d']);
   final targets = {for (final id in memberIds) clips[id]['trackId'] as String};
   final ripple = _resolveRippleTrackIds(
@@ -250,6 +247,14 @@ ProjectDocument _rippleTrimClip(
     minimum = Q.of(0);
   }
   _rewriteMediaTracks(s, tracks, ripple, version, newId, minimum);
+  applyCaptionIntervalEdit(
+    d,
+    at: closeStart,
+    length: span,
+    opening: durationDelta > Q.of(0),
+    newId: newId,
+    nextVersion: version,
+  );
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

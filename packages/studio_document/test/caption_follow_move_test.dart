@@ -122,35 +122,25 @@ void main() {
     );
   });
 
-  test(
-    'source anchors and cues past the host still refuse; ripple stays closed',
-    () {
-      final (base, video, _) = linked();
-      final p = attachCue(base, video);
-      final d = p.toJson();
-      d['captions'][0]['anchor'] = {
-        'kind': 'source',
-        'clipId': video,
-        'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1, 2).toJson()},
-      };
-      final unsupported = ProjectDocument.fromJson(d);
-      expect(
-        () => expandedMoveClipIds(unsupported, MoveClips([video], Q.of(1, 2))),
-        code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
-      );
-      expect(
-        () => attachCue(base, video, start: Q.of(5, 2), duration: Q.of(1)),
-        code('ANCHOR_OUT_OF_RANGE'),
-      );
-      expect(
-        () => move.change(
-          p,
-          RippleDeleteClips(const [], range: TimeRange(Q.of(0), Q.of(1, 2))),
-        ),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    },
-  );
+  test('source anchors and cues past the host still refuse', () {
+    final (base, video, _) = linked();
+    final p = attachCue(base, video);
+    final d = p.toJson();
+    d['captions'][0]['anchor'] = {
+      'kind': 'source',
+      'clipId': video,
+      'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1, 2).toJson()},
+    };
+    final unsupported = ProjectDocument.fromJson(d);
+    expect(
+      () => expandedMoveClipIds(unsupported, MoveClips([video], Q.of(1, 2))),
+      code('CAPTION_RICH_EDIT_NOT_IMPLEMENTED'),
+    );
+    expect(
+      () => attachCue(base, video, start: Q.of(5, 2), duration: Q.of(1)),
+      code('ANCHOR_OUT_OF_RANGE'),
+    );
+  });
 
   test('text edit preserves clipLocal; making absolute stops follow on the next move', () {
     final (base, video, _) = linked();

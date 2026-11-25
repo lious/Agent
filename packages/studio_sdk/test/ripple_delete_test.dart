@@ -170,7 +170,7 @@ void main() {
   );
 
   test(
-    'ripple delete refuses when absolute captions would have to shift',
+    'ripple delete crops an absolute cue that spanned the closed range',
     () async {
       final srt = File('${root.path}/cue.srt')
         ..writeAsStringSync('1\n00:00:00,000 --> 00:00:02,000\nAbsolute cue\n');
@@ -179,15 +179,19 @@ void main() {
         CaptionFormat.srt,
         expectedRevision: w.current.revision,
       );
-      final captioned = w.current.hash;
-      expect(
-        () => w.edit(
-          RippleDeleteClips([moveVideos(w.current).first['id'] as String]),
-          expectedRevision: w.current.revision,
-        ),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+      final captioned = w.current;
+      w.edit(
+        RippleDeleteClips([moveVideos(w.current).first['id'] as String]),
+        expectedRevision: w.current.revision,
       );
-      expect(w.current.hash, captioned);
+      expect(w.current.revision, captioned.revision + BigInt.one);
+      final cues = (w.current.toJson()['captions'] as List).cast<Map>();
+      expect(cues, hasLength(1));
+      expect(cues.single['text'], 'Absolute cue');
+      expect(Q.fromJson(cues.single['timelineRange']['start']), Q.of(0));
+      expect(Q.fromJson(cues.single['timelineRange']['duration']), Q.of(1, 2));
+      w.undo(expectedRevision: w.current.revision);
+      expect(contents(w.current), contents(captioned));
     },
   );
 }

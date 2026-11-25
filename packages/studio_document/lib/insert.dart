@@ -39,17 +39,6 @@ void _requireGrid(Map track, Q t, FrameRate fps) {
   }
 }
 
-bool _captionsWouldShift(Map d, Q at) {
-  for (final c in d['captions'] as List) {
-    final start = Q.fromJson(c['timelineRange']['start']);
-    final end = start + Q.fromJson(c['timelineRange']['duration']);
-    if (end > at) {
-      return true;
-    }
-  }
-  return false;
-}
-
 Set<String> _defaultSyncMediaTrackIds(List tracks) {
   return {
     for (final t in tracks)
@@ -384,15 +373,13 @@ _InsertOpening _openInsertHole(
   required Set<String> protected,
   required VersionAllocator version,
   required IdAllocator newId,
+  bool applyCaptions = true,
 }) {
   if (at < Q.of(0)) {
     throw const StudioException('NEGATIVE_TIMELINE_START');
   }
   if (length <= Q.of(0)) {
     throw const StudioException('OVERWRITE_INTERVAL_INVALID');
-  }
-  if (_captionsWouldShift(d, at)) {
-    throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final s = d['sequences'][0];
   final tracks = s['tracks'] as List;
@@ -417,6 +404,16 @@ _InsertOpening _openInsertHole(
   final splitMap = _splitRippleAt(d, ripple, at, protected, version, newId);
   _shiftRippleFrom(d, ripple, at, length, protected, version);
   _rebuildSplitLinkGroups(d, splitMap, newId);
+  if (applyCaptions) {
+    applyCaptionIntervalEdit(
+      d,
+      at: at,
+      length: length,
+      opening: true,
+      newId: newId,
+      nextVersion: version,
+    );
+  }
   final old = Q.fromJson(s['duration']);
   return _InsertOpening(
     rippleTrackIds: ripple,
@@ -522,6 +519,7 @@ ProjectDocument _insertMoveClips(
     protected: moved,
     version: version,
     newId: newId,
+    applyCaptions: false,
   );
   for (final id in moved) {
     final c = clips[id] as Map;
@@ -545,6 +543,14 @@ ProjectDocument _insertMoveClips(
     version,
     newId,
     opened.minimumDuration,
+  );
+  applyCaptionIntervalEdit(
+    d,
+    at: at,
+    length: span.duration,
+    opening: true,
+    newId: newId,
+    nextVersion: version,
   );
   followClipLocalCaptions(d, nextVersion: version);
   _markMovedLinksOutOfSync(d, moved);

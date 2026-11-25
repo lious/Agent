@@ -153,13 +153,6 @@ void main() {
       db.execute('DROP TRIGGER cf_fail');
       db.dispose();
     }
-    expect(
-      () => w.edit(
-        RippleDeleteClips(const [], range: TimeRange(Q.of(0), Q.of(1, 2))),
-        expectedRevision: w.current.revision,
-      ),
-      code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-    );
     expect(w.current.hash, frozen);
   });
 }

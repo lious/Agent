@@ -197,36 +197,65 @@ void main() {
     }
   });
 
-  test('insert refuses when absolute captions would have to shift', () async {
-    final srt = File('${root.path}/cue.srt')
-      ..writeAsStringSync('1\n00:00:00,000 --> 00:00:02,000\nAbsolute cue\n');
-    await w.importCaptions(
-      LocalFileGrant.fromUserSelection(srt),
-      CaptionFormat.srt,
-      expectedRevision: w.current.revision,
-    );
-    final captioned = w.current.hash;
-    expect(
-      () => w.edit(
+  test(
+    'insert move and insert paste split an absolute cue across the hole',
+    () async {
+      final srt = File('${root.path}/cue.srt')
+        ..writeAsStringSync('1\n00:00:00,000 --> 00:00:02,000\nAbsolute cue\n');
+      await w.importCaptions(
+        LocalFileGrant.fromUserSelection(srt),
+        CaptionFormat.srt,
+        expectedRevision: w.current.revision,
+      );
+      final captioned = w.current;
+      w.edit(
         MoveClips(
           [moveVideos(w.current).first['id'] as String],
           Q.of(1, 2),
           mode: 'insert',
         ),
         expectedRevision: w.current.revision,
-      ),
-      code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-    );
-    expect(w.current.hash, captioned);
-    w.copySelection([moveVideos(w.current).first['id'] as String]);
-    expect(
-      () => w.pasteClipboard(
+      );
+      expect(w.current.revision, captioned.revision + BigInt.one);
+      final movedCues = (w.current.toJson()['captions'] as List).cast<Map>();
+      movedCues.sort(
+        (a, b) => Q
+            .fromJson(a['timelineRange']['start'])
+            .compareTo(Q.fromJson(b['timelineRange']['start'])),
+      );
+      expect(movedCues, hasLength(2));
+      expect(movedCues[0]['text'], 'Absolute cue');
+      expect(movedCues[1]['text'], 'Absolute cue');
+      expect(Q.fromJson(movedCues[0]['timelineRange']['start']), Q.of(0));
+      expect(Q.fromJson(movedCues[0]['timelineRange']['duration']), Q.of(1, 2));
+      expect(Q.fromJson(movedCues[1]['timelineRange']['start']), Q.of(2));
+      expect(Q.fromJson(movedCues[1]['timelineRange']['duration']), Q.of(3, 2));
+      expect(startOf(moveVideos(w.current).first), Q.of(1, 2));
+      w.undo(expectedRevision: w.current.revision);
+      expect(contents(w.current), contents(captioned));
+      w.copySelection([moveVideos(w.current).first['id'] as String]);
+      w.pasteClipboard(
         at: Q.of(1, 2),
         mode: 'insert',
         expectedRevision: w.current.revision,
-      ),
-      code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-    );
-    expect(w.current.hash, captioned);
-  });
+      );
+      final pastedCues = (w.current.toJson()['captions'] as List).cast<Map>();
+      pastedCues.sort(
+        (a, b) => Q
+            .fromJson(a['timelineRange']['start'])
+            .compareTo(Q.fromJson(b['timelineRange']['start'])),
+      );
+      expect(pastedCues, hasLength(2));
+      expect(Q.fromJson(pastedCues[0]['timelineRange']['start']), Q.of(0));
+      expect(
+        Q.fromJson(pastedCues[0]['timelineRange']['duration']),
+        Q.of(1, 2),
+      );
+      expect(Q.fromJson(pastedCues[1]['timelineRange']['start']), Q.of(2));
+      expect(
+        Q.fromJson(pastedCues[1]['timelineRange']['duration']),
+        Q.of(3, 2),
+      );
+    },
+  );
 }

@@ -1,0 +1,7 @@
+{
+  "flutter": "Flutter 3.50.1 \u2022 channel stable \u2022 https://github.com/flutter/flutter.git\nFramework \u2022 revision ae9b586f34 (7 days ago) \u2022 2026-11-18 17:01:07 -0800\nEngine \u2022 hash 51379e6df48ea8ee7205623b90fe66491cad8df3 (revision 4d35714800) (8 days ago) \u2022 2026-11-18 01:50:07.000Z\nTools \u2022 Dart 3.14.0 \u2022 DevTools 2.61.0\n",
+  "ldLibraryPath": "/workspace/toolchains/sqlite-3.54.1",
+  "media": "/workspace/agent-media-native-peer/libstudio_media.so",
+  "asOf": "2026-11-26T04:53:43.176105+08:00",
+  "timezone": "Asia/Shanghai"
+}

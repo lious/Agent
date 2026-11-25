@@ -185,9 +185,6 @@ ProjectDocument _rippleDeleteClips(
     length = span.duration;
     end = at + length;
   }
-  if (_captionsWouldShift(d, at)) {
-    throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
-  }
   final fps = FrameRate(s['frameRate']['n'], s['frameRate']['d']);
   final targets = {for (final id in removedIds) clips[id]['trackId'] as String};
   final ripple = _resolveRippleTrackIds(
@@ -265,6 +262,14 @@ ProjectDocument _rippleDeleteClips(
     minimum = Q.of(0);
   }
   _rewriteMediaTracks(s, tracks, ripple, version, newId, minimum);
+  applyCaptionIntervalEdit(
+    d,
+    at: at,
+    length: length,
+    opening: false,
+    newId: newId,
+    nextVersion: version,
+  );
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;
