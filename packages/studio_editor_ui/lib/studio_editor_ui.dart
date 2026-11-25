@@ -96,6 +96,8 @@ class _FoundationAppState extends State<FoundationApp>
   bool _snapExpanded = false;
   bool _pointerActive = false;
   final _pasteAt = TextEditingController();
+  final _rippleCloseStart = TextEditingController();
+  final _rippleCloseDuration = TextEditingController();
   String _collisionMode = 'reject';
   String? _clipboardError;
   final _multiSelection = <String>{};
@@ -457,6 +459,8 @@ class _FoundationAppState extends State<FoundationApp>
   @override
   void dispose() {
     _pasteAt.dispose();
+    _rippleCloseStart.dispose();
+    _rippleCloseDuration.dispose();
     for (final c in [_snapZoom, _snapOrigin, _snapPointer, _snapPlayhead]) {
       c.dispose();
     }
@@ -1111,6 +1115,35 @@ class _FoundationAppState extends State<FoundationApp>
               ? null
               : () => _edit(() => RippleTrimClip(_selected!, 'in', _delta())),
           child: const Text('Ripple trim in'),
+        ),
+        TextField(
+          key: const Key('ripple-close-start'),
+          controller: _rippleCloseStart,
+          decoration: const InputDecoration(
+            labelText: 'Ripple close range start seconds',
+          ),
+        ),
+        TextField(
+          key: const Key('ripple-close-duration'),
+          controller: _rippleCloseDuration,
+          decoration: const InputDecoration(
+            labelText: 'Ripple close range duration seconds',
+          ),
+        ),
+        OutlinedButton(
+          key: const Key('ripple-close-range'),
+          onPressed: _busy
+              ? null
+              : () => _edit(
+                  () => RippleDeleteClips(
+                    const [],
+                    range: TimeRange(
+                      _snapDecimal(_rippleCloseStart.text.trim()),
+                      _snapDecimal(_rippleCloseDuration.text.trim()),
+                    ),
+                  ),
+                ),
+          child: const Text('Ripple close range'),
         ),
       ],
     ),

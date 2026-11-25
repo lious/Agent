@@ -164,7 +164,7 @@ extension _MultiMoveControls on _FoundationAppState {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap / preserve ALL linked members. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; ripple-close and cross-track are not in this slice.',
+            'Multi-select move · uses the shared positive “Frame count” field below. Same tracks / reject overlap / preserve ALL linked members. Absolute captions stay at their authored times; unsupported clip/source anchors refuse. Uses the shared Collision mode below for reject, overwrite or insert. Source holes stay as gaps under insert; close a vacated interval with Ripple close range. Cross-track moves are not in this slice.',
           ),
           Text(
             'Requested viewport IDs (${_multiSelection.length}): ${_multiSelection.toList()..sort()}',

@@ -1,22 +1,40 @@
 part of 'edit_algebra.dart';
 
-/// First-version ripple delete: a single continuous timeline range defined by
-/// the complete link and selection closure. Later content on participating
-/// tracks shifts left by L; the source hole is closed. Ripple trim and
-/// closing a move's vacated source are not opened in this slice.
+/// First-version ripple delete or close: a single continuous timeline range
+/// either from the complete link and selection closure, or from an explicit
+/// [range] (DeleteSelection range). Later content on participating tracks
+/// shifts left by L. Insert-mode moves still vacate their source as a gap;
+/// closing that hole is this range command, not a new MoveClips mode.
+/// Ripple-trim lengthening is not opened in this slice.
 final class RippleDeleteClips extends EditOperation {
-  RippleDeleteClips(Iterable<String> ids, {Iterable<String>? rippleTrackIds})
-    : clipIds = List.unmodifiable(ids.take(100001).toList()..sort()),
-      rippleTrackIds = _optionalRippleTrackList(rippleTrackIds) {
-    _requireSelection(clipIds);
+  RippleDeleteClips(
+    Iterable<String> ids, {
+    this.range,
+    Iterable<String>? rippleTrackIds,
+  }) : clipIds = List.unmodifiable(ids.take(100001).toList()..sort()),
+       rippleTrackIds = _optionalRippleTrackList(rippleTrackIds) {
+    if (range != null && clipIds.isNotEmpty) {
+      throw const StudioException('RIPPLE_RANGE_AND_SELECTION');
+    }
+    if (range == null) {
+      _requireSelection(clipIds);
+    } else if (range!.start < Q.of(0)) {
+      throw const StudioException('NEGATIVE_TIMELINE_START');
+    }
   }
   final List<String> clipIds;
+  final TimeRange? range;
   final List<String>? rippleTrackIds;
   @override
   Map<String, Object?> toJson() => {
     'kind': 'rippleDeleteClips',
     'clipIds': clipIds,
     'includeLinks': true,
+    if (range != null)
+      'range': {
+        'start': range!.start.toJson(),
+        'duration': range!.duration.toJson(),
+      },
     if (rippleTrackIds != null) 'rippleTrackIds': rippleTrackIds,
   };
 }
@@ -139,7 +157,6 @@ ProjectDocument _rippleDeleteClips(
   VersionAllocator version,
   IdAllocator newId,
 ) {
-  final removedIds = expandedEditClipIds(before, operation.clipIds).toSet();
   final d = before.toJson(), s = d['sequences'][0];
   final tracks = s['tracks'] as List;
   final clips = {
@@ -147,16 +164,32 @@ ProjectDocument _rippleDeleteClips(
       for (final c in t['items'])
         if (c['source'] != null) c['id']: c,
   };
-  final selected = [for (final id in removedIds) clips[id] as Map];
-  final span = _contiguousRange(selected);
-  final at = span.start;
-  final length = span.duration;
-  final end = at + length;
+  late final Set<String> removedIds;
+  late final Q at;
+  late final Q length;
+  late final Q end;
+  if (operation.range != null) {
+    final span = operation.range!;
+    if (span.start < Q.of(0)) {
+      throw const StudioException('NEGATIVE_TIMELINE_START');
+    }
+    removedIds = {};
+    at = span.start;
+    length = span.duration;
+    end = span.end;
+  } else {
+    removedIds = expandedEditClipIds(before, operation.clipIds).toSet();
+    final selected = [for (final id in removedIds) clips[id] as Map];
+    final span = _contiguousRange(selected);
+    at = span.start;
+    length = span.duration;
+    end = at + length;
+  }
   if (_captionsWouldShift(d, at)) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final fps = FrameRate(s['frameRate']['n'], s['frameRate']['d']);
-  final targets = {for (final c in selected) c['trackId'] as String};
+  final targets = {for (final id in removedIds) clips[id]['trackId'] as String};
   final ripple = _resolveRippleTrackIds(
     tracks: tracks,
     targets: targets,
