@@ -340,23 +340,32 @@ void main() {
     expect(cueOf(sourced, 'cue-src')['text'], 'source-wide');
   });
 
-  test('ripple TrimClip with captions still refuses; lifting a clipLocal-marker host still refuses', () {
+  test('video-only ripple TrimClip with captions uses the interval transform; lifting a clipLocal-marker host still refuses', () {
     var p = avFixture();
     final a = algebra.firstId(p);
     p = attachDefaults(p, [
       CaptionCue(
         'cue-1',
-        TimeRange(Q.of(0), Q.of(1, 2)),
+        TimeRange(Q.of(0), Q.of(7, 2)),
         'hello',
         manualFields: {'text', 'timing'},
       ),
     ]);
-    assertPure(p, () {
-      expect(
-        () => move.change(p, TrimClip(a, 'out', Q.of(-1, 2), ripple: true)),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    });
+    final trimmed = move.change(
+      p,
+      TrimClip(a, 'out', Q.of(-1, 2), ripple: true),
+    );
+    expect(durOf(trimmed, a), Q.of(5, 2));
+    final left = cueOf(trimmed);
+    final right = (trimmed.toJson()['captions'] as List)
+        .cast<Map>()
+        .singleWhere((c) => c['id'] != left['id']);
+    expect(left['text'], 'hello');
+    expect(Q.fromJson(left['timelineRange']['start']), Q.of(0));
+    expect(Q.fromJson(left['timelineRange']['duration']), Q.of(5, 2));
+    expect(right['text'], 'hello');
+    expect(Q.fromJson(right['timelineRange']['start']), Q.of(5, 2));
+    expect(Q.fromJson(right['timelineRange']['duration']), Q.of(1, 2));
     p = move.change(
       p,
       SetMarkers(

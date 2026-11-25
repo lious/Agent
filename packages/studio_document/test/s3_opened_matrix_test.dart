@@ -451,6 +451,30 @@ void main() {
     expect(startOf(inTrim, 's3-c'), f(285));
     expect(seqDur(inTrim), f(435));
     expect(p.toJson()['assets'], inTrim.toJson()['assets']);
+
+    final withCue = attachCue(p, id: 'cue-1', start: f(15));
+    final viaFlag = move.change(
+      withCue,
+      TrimClip(a, 'out', Q.of(0) - f(15), ripple: true),
+    );
+    final viaCommand = move.change(
+      withCue,
+      RippleTrimClip(a, 'out', Q.of(0) - f(15)),
+    );
+    expect(durOf(viaFlag, a), f(135));
+    expect(startOf(viaFlag, 's3-b'), f(135));
+    expect(seqDur(viaFlag), f(435));
+    expect(viaFlag.toJson()['captions'][0]['text'], 'hello');
+    expect(
+      Q.fromJson(viaFlag.toJson()['captions'][0]['timelineRange']['start']),
+      Q.fromJson(viaCommand.toJson()['captions'][0]['timelineRange']['start']),
+    );
+    expect(
+      Q.fromJson(viaFlag.toJson()['captions'][0]['timelineRange']['duration']),
+      Q.fromJson(
+        viaCommand.toJson()['captions'][0]['timelineRange']['duration'],
+      ),
+    );
   });
 
   test('s3 link: includeLinks keeps a frame-grid offset; ignore-links marks allowOutOfSync; unlink keeps both', () {

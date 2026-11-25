@@ -402,18 +402,19 @@ void main() {
     expect(durOf(w.current, a), f(135));
     w.undo(expectedRevision: w.current.revision);
     expect(contents(w.current), withCues);
-    expect(
-      () => w.edit(
-        TrimClip(a, 'out', Q.of(0) - f(15), ripple: true),
-        expectedRevision: w.current.revision,
-      ),
-      code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+    w.edit(
+      TrimClip(a, 'out', Q.of(0) - f(15), ripple: true),
+      expectedRevision: w.current.revision,
     );
-    expect(contents(w.current), withCues);
+    expect(durOf(w.current, a), f(135));
+    expect(startOf(w.current, idAt(w.current, f(135))), f(135));
+    expect(seqDur(w.current), f(435));
     expect(
       (w.current.toJson()['captions'] as List).map((c) => c['text']).toSet(),
       {'follow', 'stay'},
     );
+    w.undo(expectedRevision: w.current.revision);
+    expect(contents(w.current), withCues);
   });
 
   test('short s3 path: one ripple-trim, undo/redo, archive fork, sidecar, no MP4 burn-in', () async {

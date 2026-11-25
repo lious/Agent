@@ -1042,7 +1042,7 @@ ProjectDocument applyEdit(
   if ((before.toJson()['captions'] as List).isNotEmpty &&
       operation is! AppendVideoAsset &&
       operation is! SplitClip &&
-      !(operation is TrimClip && !operation.ripple)) {
+      operation is! TrimClip) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1055,7 +1055,35 @@ ProjectDocument applyEdit(
   };
   final d = before.toJson();
   final sourceAbs = snapshotSourceCaptionAbsolutes(d);
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   ({Q start, Q end})? leaveGapBounds;
+  ({Q at, Q length, bool opening})? rippleTrimBounds;
+  if (operation is TrimClip && operation.ripple) {
+    for (final track in d['sequences'][0]['tracks'] as List) {
+      for (final item in track['items']) {
+        if (item['id'] == operation.clipId && item['source'] != null) {
+          final start = Q.fromJson(item['timelineRange']['start']);
+          final oldEnd = start + Q.fromJson(item['timelineRange']['duration']);
+          final durationDelta = operation.edge == 'out'
+              ? operation.delta
+              : Q.of(0) - operation.delta;
+          final closeStart = durationDelta < Q.of(0)
+              ? oldEnd + durationDelta
+              : oldEnd;
+          final span = durationDelta < Q.of(0)
+              ? Q.of(0) - durationDelta
+              : durationDelta;
+          if (span > Q.of(0)) {
+            rippleTrimBounds = (
+              at: closeStart,
+              length: span,
+              opening: durationDelta > Q.of(0),
+            );
+          }
+        }
+      }
+    }
+  }
   if (operation is TrimClip && !operation.ripple) {
     for (final track in d['sequences'][0]['tracks'] as List) {
       for (final item in track['items']) {
@@ -1581,7 +1609,42 @@ ProjectDocument applyEdit(
         );
       }
     }
+  } else if (operation is TrimClip &&
+      operation.ripple &&
+      rippleTrimBounds != null) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    applyCaptionIntervalEdit(
+      d,
+      at: rippleTrimBounds.at,
+      length: rippleTrimBounds.length,
+      opening: rippleTrimBounds.opening,
+      newId: newId,
+      nextVersion: nextVersion,
+    );
+    applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+    applyMarkerIntervalEdit(
+      d,
+      at: rippleTrimBounds.at,
+      length: rippleTrimBounds.length,
+      opening: rippleTrimBounds.opening,
+      newId: newId,
+    );
   }
+  var covered = Q.of(0);
+  for (final track in d['sequences'][0]['tracks'] as List) {
+    for (final item in track['items']) {
+      final itemEnd =
+          Q.fromJson(item['timelineRange']['start']) +
+          Q.fromJson(item['timelineRange']['duration']);
+      if (itemEnd > covered) covered = itemEnd;
+    }
+  }
+  for (final c in d['captions'] as List) {
+    final r = c['timelineRange'];
+    final cueEnd = Q.fromJson(r['start']) + Q.fromJson(r['duration']);
+    if (cueEnd > covered) covered = cueEnd;
+  }
+  d['sequences'][0]['duration'] = covered.toJson();
   final after = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(after);
   return after;

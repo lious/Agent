@@ -1,0 +1,19 @@
+{
+  "baseCommit": "ee3e7056e1e23e7a797338968489a28217714a9c",
+  "sourceSha256": {
+    "packages/studio_document/lib/edit_algebra.dart": "542134810e7dfe0b7bcf910b144290a48b3a36c55379520abca90967b68cd445",
+    "packages/studio_document/test/caption_ripple_trim_test.dart": "66e50200e16cf89474b110c1c8e951fc036bfdc74dddcd6d3869c0e922fe6b35",
+    "packages/studio_document/test/caption_split_trim_test.dart": "944e2340c8d1382a32aff3cd92793efe06b93c82e804e2f78274cdc61fe08223",
+    "packages/studio_document/test/s3_opened_matrix_test.dart": "5abb64b8cfc0b4580480f0a9078ae2199cea36780c22e9edf8394f801de8e80c",
+    "packages/studio_sdk/test/caption_ripple_trim_test.dart": "524962855d6b57eb0c87b4d2658aea6f62b27d3cccb416486686dd721c47ce9e",
+    "packages/studio_sdk/test/s3_opened_matrix_test.dart": "c2538192c9d9661d0e0a3b3e7dcfbf3a9d402cf5f1455eb66812eb15d531fbed",
+    "packages/studio_editor_ui/test/caption_ripple_trim_ui_test.dart": "49d08072eb50e7cfd5d32101cd30122900f7117ba96190f99f3ff45aa6bde39c"
+  },
+  "aggregateSha256": "a5601106f97ec73631271a37db57f002df984350f4585a3b1ec12f857e24a985",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T07:36:01+08:00",
+  "timezone": "Asia/Shanghai"
+}
