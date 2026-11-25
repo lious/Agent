@@ -1,3 +1,5 @@
+import 'package:studio_store/proxy_resources.dart';
+
 import 'frame_proxy.dart';
 export 'frame_proxy.dart' show TimelinePreviewFrame;
 import 'preview_cache.dart';
@@ -146,7 +148,7 @@ final class StudioWorkspace {
   }
 
   ProjectDocument openDemo() {
-    stopTimelinePlayback();
+    clearPreviewProxies();
     _requireMetadata();
     _activeProjectId = _repository.selectedProjectId ?? 'demo-project';
     var project = _repository.read(_activeProjectId);
@@ -225,7 +227,7 @@ final class StudioWorkspace {
     EditOperation operation, {
     required BigInt expectedRevision,
   }) {
-    if (operation is AppendVideoAsset) {
+    if (operation is AppendVideoAsset || operation is AttachPreviewProxies) {
       throw const StudioException('CONTROLLED_IMPORT_REQUIRED');
     }
     return _commitImportedEdit(operation, expectedRevision: expectedRevision);
@@ -419,6 +421,8 @@ final class StudioWorkspace {
     'blob': asset['originalBlobHash'],
     'version': asset['version'],
     'pipeline': FrameProxy.pipeline,
+    'proxyRefs': asset['proxyRefs'],
+    'streams': asset['streams'],
   });
   void cancelPreviewProxyBuild() {
     _proxyEpoch++;
@@ -435,12 +439,139 @@ final class StudioWorkspace {
     sourcePreviewCache.clear();
   }
 
-  /// Explicit bounded derived preview resource; not an archive/original mutation.
+  Map<String, dynamic> _previewProof(Map asset, Map proxy) => {
+    'kind': 'studio-preview-proof',
+    'version': 1,
+    'sourceHash': asset['originalBlobHash'],
+    'rgbaHash': proxy['blobHash'],
+    'mapHash': proxy['ptsMapBlobHash'],
+    'pipelineHash': previewProxyPipelineHash,
+  };
+  Future<void> _qualifyPreview(
+    Map asset,
+    Map proxy,
+    Map facts,
+    File source, {
+    required bool ownsLease,
+  }) async {
+    final record = _previewProof(asset, proxy);
+    if (_blobs!.hasPreviewProof(record)) return;
+    Future<void> qualify() async {
+      if (_blobs!.hasPreviewProof(record)) return;
+      final stage = _blobs!.newProxyStage(),
+          engine = NativeMedia.open(_media!.libraryPath, _repository.namespace);
+      try {
+        final actual = await engine.buildPreviewProxyAsync(source, stage);
+        if (_closed) throw const StudioException('WORKSPACE_CLOSED');
+        if (contentHash(actual) != contentHash(facts) ||
+            await hashLocalFile(stage) != proxy['blobHash']) {
+          throw const StudioException('PROXY_DERIVATION_MISMATCH');
+        }
+        await _blobs!.resolve(asset['originalBlobHash']);
+        _blobs!.markPreviewProof(record);
+      } finally {
+        engine.close();
+        if (stage.existsSync()) stage.deleteSync();
+      }
+    }
+
+    if (ownsLease) {
+      await qualify();
+    } else {
+      await _blobs!.withMaintenanceLease(qualify);
+    }
+  }
+
+  Future<FrameProxy> _loadStoredProxy(
+    Map<String, dynamic> asset,
+    Map blobs, {
+    bool ownsLease = false,
+  }) async {
+    final refs = asset['proxyRefs'] as List;
+    if (refs.length != 1) {
+      throw const StudioException('TIMELINE_PROXY_REQUIRED');
+    }
+    final ref = refs.single;
+    validatePreviewProxyMetadata(asset, ref, blobs);
+    final key = contentHash({
+          'mapping': _proxyKey(asset),
+          'raw': blobs[ref['blobHash']],
+          'map': blobs[ref['ptsMapBlobHash']],
+          'source': blobs[asset['originalBlobHash']],
+        }),
+        cached = _frameProxies[key];
+    if (cached != null) return cached;
+    final original = await _blobs!.resolve(asset['originalBlobHash']);
+    final actual = await _media!.probeAsync(original);
+    final video = (actual['streams'] as List).singleWhere(
+      (v) => v['type'] == 'video',
+    );
+    final expected = Map<String, dynamic>.from(
+      (asset['streams'] as List).singleWhere((v) => v['type'] == 'video'),
+    );
+    final observed = streamDocument(
+      Map<String, dynamic>.from(video),
+      assetId: asset['id'],
+    );
+    expected.remove('id');
+    observed.remove('id');
+    if (contentHash(expected) != contentHash(observed)) {
+      throw const StudioException('PROXY_SOURCE_FACTS_MISMATCH');
+    }
+    final map = await _blobs!.resolve(
+      ref['ptsMapBlobHash'],
+      maxBytes: 1024 * 1024,
+    );
+    if (await map.length() > 1024 * 1024) {
+      throw const StudioException('PROXY_MAP_INVALID');
+    }
+    final file = await _blobs!.resolve(
+      ref['blobHash'],
+      maxBytes: 64 * 1024 * 1024,
+    );
+    if (await map.length() !=
+            int.parse(blobs[ref['ptsMapBlobHash']]['bytes']) ||
+        await file.length() != int.parse(blobs[ref['blobHash']]['bytes']) ||
+        await original.length() !=
+            int.parse(blobs[asset['originalBlobHash']]['bytes'])) {
+      throw const StudioException('BLOB_SIZE_MISMATCH');
+    }
+    final facts = validateProxyResourceBytes(
+      asset,
+      ref,
+      await map.readAsBytes(),
+      await file.readAsBytes(),
+    );
+    await _qualifyPreview(asset, ref, facts, original, ownsLease: ownsLease);
+    final proxy = await FrameProxy.admit(file.parent, facts, dataFile: file);
+    if (proxy.blobHash != ref['blobHash']) {
+      proxy.dispose();
+      throw const StudioException('PROXY_BLOB_HASH_MISMATCH');
+    }
+    if (_closed) {
+      proxy.dispose();
+      throw const StudioException('WORKSPACE_CLOSED');
+    }
+    if (previewProxyBytes + proxy.bytes > 64 * 1024 * 1024) {
+      proxy.dispose();
+      throw const StudioException('PROXY_CACHE_QUOTA');
+    }
+    _frameProxies[key] = proxy;
+    return proxy;
+  }
+
+  /// Publish immutable CAS bytes under namespace maintenance ownership, then
+  /// atomically attach valid SchemaProxy + map resources with revision/writer CAS.
   Future<Map<String, dynamic>> buildTimelinePreviewProxies() async {
     _requireMedia();
     if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
     final snapshot = current;
     requireLocalEditingWritable(snapshot);
+    stopTimelinePlayback();
+    for (final reader in _frameProxies.values) {
+      reader.dispose();
+    }
+    _frameProxies.clear();
     final builder = NativeMedia.open(_media!.libraryPath, snapshot.namespace);
     _proxyBusy = true;
     final epoch = ++_proxyEpoch;
@@ -453,49 +584,128 @@ final class StudioWorkspace {
 
     try {
       return await _blobs!.withMaintenanceLease(() async {
+        final orphans = _blobs!.collectProxyOrphans();
+        final resources = <Map<String, dynamic>>[];
+        var pendingBytes = 0;
         for (final raw in snapshot.toJson()['assets']) {
-          final asset = Map<String, dynamic>.from(raw as Map),
-              key = _proxyKey(asset);
-          if (_frameProxies.containsKey(key)) continue;
           check();
-          final source = await _blobs!.resolve(
-            asset['originalBlobHash'] as String,
-          );
+          final asset = Map<String, dynamic>.from(raw as Map);
+          if ((asset['proxyRefs'] as List).isNotEmpty) {
+            await _loadStoredProxy(asset, {
+              for (final b in snapshot.toJson()['blobs']) b['hash']: b,
+            }, ownsLease: true);
+            check();
+            continue;
+          }
+          final source = await _blobs!.resolve(asset['originalBlobHash']);
           check();
-          final directory = await Directory.systemTemp.createTemp(
-            'studio-frame-proxy-',
-          );
-          var adopted = false;
-          FrameProxy? proxy;
+          final stage = _blobs!.newProxyStage();
+          FrameProxy? staged;
           try {
-            final facts = await builder.buildPreviewProxyAsync(
-              source,
-              File('${directory.path}/frames.rgba'),
+            final facts = await builder.buildPreviewProxyAsync(source, stage);
+            check();
+            staged = await FrameProxy.admit(
+              stage.parent,
+              facts,
+              dataFile: stage,
             );
             check();
-            proxy = await FrameProxy.admit(directory, facts);
-            check();
-            if (previewProxyBytes + proxy.bytes > 64 * 1024 * 1024) {
+            pendingBytes += staged.bytes;
+            if (previewProxyBytes + pendingBytes > 64 * 1024 * 1024) {
               throw const StudioException('PROXY_CACHE_QUOTA');
             }
-            _frameProxies[key] = proxy;
-            adopted = true;
+            final original = await _blobs!.importDerivedStage(
+              stage,
+              staged.blobHash,
+            );
+            check();
+            final manifest = {
+              'protocol': 'studio.preview-pts',
+              'version': 1,
+              'sourceHash': asset['originalBlobHash'],
+              'pipelineHash': previewProxyPipelineHash,
+              'rgbaHash': original.hash,
+              'facts': facts,
+              'frameHashes': staged.frameHashes,
+            };
+            final mapBytes = utf8.encode(jsonEncode(manifest)),
+                mapHash = rawBytesHash(utf8.encode(jsonEncode(manifest)));
+            await _blobs!.putVerifiedBytes(mapHash, mapBytes);
+            check();
+            final stream = (asset['streams'] as List).singleWhere(
+              (v) => v['type'] == 'video',
+            );
+            final proxy = {
+              'blobHash': original.hash,
+              'pipelineHash': previewProxyPipelineHash,
+              'sourceVersion': asset['version'],
+              'ptsMapBlobHash': mapHash,
+              'width': staged.width,
+              'height': staged.height,
+              'frameRate': stream['nominalFrameRate'],
+              'colorPolicy': previewProxyColorPolicy,
+            };
+            await _blobs!.resolve(asset['originalBlobHash']);
+            check();
+            _blobs!.markPreviewProof(_previewProof(asset, proxy));
+            validateProxyResourceBytes(
+              asset,
+              proxy,
+              mapBytes,
+              await original.file.readAsBytes(),
+            );
+            check();
+            Map<String, dynamic> record(
+              String hash,
+              int bytes,
+              String role,
+              String extension,
+            ) => {
+              'hash': hash,
+              'bytes': bytes.toString(),
+              'mime': 'application/octet-stream',
+              'packagePath': 'proxies/${hash.substring(7)}.$extension',
+              'role': role,
+            };
+            resources.add({
+              'assetId': asset['id'],
+              'sourceHash': asset['originalBlobHash'],
+              'proxy': proxy,
+              'blobs': [
+                record(original.hash, original.bytes, 'proxy', 'rgba'),
+                record(mapHash, mapBytes.length, 'ptsMap', 'pts.json'),
+              ],
+            });
           } finally {
-            if (!adopted) {
-              if (proxy != null) {
-                proxy.dispose();
-              } else if (directory.existsSync()) {
-                directory.deleteSync(recursive: true);
-              }
-            }
+            staged?.dispose();
+            if (stage.existsSync()) stage.deleteSync();
           }
         }
         check();
+        if (resources.isNotEmpty) {
+          _commitImportedEdit(
+            AttachPreviewProxies(resources),
+            expectedRevision: snapshot.revision,
+          );
+        }
+        for (final reader in _frameProxies.values) {
+          reader.dispose();
+        }
+        _frameProxies.clear();
+        for (final a in current.toJson()['assets']) {
+          await _loadStoredProxy(Map<String, dynamic>.from(a), {
+            for (final b in current.toJson()['blobs']) b['hash']: b,
+          }, ownsLease: true);
+        }
         return {
           'pipeline': FrameProxy.pipeline,
           'proxies': previewProxyCount,
           'bytes': previewProxyBytes,
-          'persistent': false,
+          'persistent': true,
+          'built': resources.length,
+          'reused':
+              (snapshot.toJson()['assets'] as List).length - resources.length,
+          'orphanFiles': orphans['files'],
         };
       });
     } catch (_) {
@@ -517,8 +727,14 @@ final class StudioWorkspace {
     if (_closed) throw const StudioException('WORKSPACE_CLOSED');
     if (_timelineFrameBusy) throw const StudioException('TIMELINE_RENDER_BUSY');
     _timelineFrameBusy = true;
+    final generation = _playbackGeneration;
     try {
       return await _renderTimelineFromAudioClock();
+    } catch (_) {
+      if (_closed || generation != _playbackGeneration) {
+        throw const StudioException('TIMELINE_FRAME_STALE');
+      }
+      rethrow;
     } finally {
       _timelineFrameBusy = false;
     }
@@ -567,8 +783,7 @@ final class StudioWorkspace {
       });
     } else {
       final asset = _playbackAssets[point.assetId]!;
-      final proxy = _frameProxies[_proxyKey(asset)];
-      if (proxy == null) throw const StudioException('TIMELINE_PROXY_REQUIRED');
+      final proxy = await _loadStoredProxy(asset, _playbackBlobs);
       index = proxy.indexAt(point.sourceTime);
       final key = contentHash({
         'proxy': proxy.blobHash,
@@ -686,10 +901,16 @@ final class StudioWorkspace {
       final cas = _repository.withRetainedBlobPins(
         (pins) => _blobs!.collectUnreferenced(pins),
       );
+      final proxyOrphans = _blobs!.collectProxyOrphans();
       final inbox = _repository.collectPeerInbox(
         nowMs: DateTime.now().millisecondsSinceEpoch,
       );
-      return {'casFiles': cas['files']!, 'casBytes': cas['bytes']!, ...inbox};
+      return {
+        'casFiles': cas['files']!,
+        'casBytes': cas['bytes']!,
+        'proxyOrphans': proxyOrphans['files']!,
+        ...inbox,
+      };
     });
   }
 
@@ -805,7 +1026,7 @@ final class StudioWorkspace {
   }
 
   Future<ProjectDocument> _restoreArchiveLocked(LocalFileGrant source) async {
-    stopTimelinePlayback();
+    clearPreviewProxies();
     _requireMedia();
     final verified = ProjectArchive().open(source.file);
     final fork = forkLocalProject(
@@ -815,6 +1036,31 @@ final class StudioWorkspace {
     );
     for (final e in verified.originals.entries) {
       await _blobs!.putVerifiedBytes(e.key, e.value);
+    }
+    for (final a in fork.toJson()['assets']) {
+      for (final p in a['proxyRefs']) {
+        final mf = await _blobs!.resolve(
+              p['ptsMapBlobHash'],
+              maxBytes: 1024 * 1024,
+            ),
+            rf = await _blobs!.resolve(
+              p['blobHash'],
+              maxBytes: 64 * 1024 * 1024,
+            );
+        final facts = validateProxyResourceBytes(
+          a,
+          p,
+          await mf.readAsBytes(),
+          await rf.readAsBytes(),
+        );
+        await _qualifyPreview(
+          a,
+          p,
+          facts,
+          await _blobs!.resolve(a['originalBlobHash']),
+          ownsLease: true,
+        );
+      }
     }
     if (_closed) throw const StudioException('WORKSPACE_CLOSED');
     flushCheckpoint();
@@ -847,6 +1093,7 @@ final class StudioWorkspace {
   ProjectDocument? _playbackSnapshot;
   TimelineVideoGraph? _playbackGraph;
   Map<String, Map<String, dynamic>> _playbackAssets = const {};
+  Map<String, dynamic> _playbackBlobs = const {};
   Map<String, dynamic> get timelinePlayback {
     final result =
         _playbackMedia?.playback({'op': 'status'}) ?? {'state': 'stopped'};
@@ -868,6 +1115,7 @@ final class StudioWorkspace {
     _playbackSnapshot = null;
     _playbackGraph = null;
     _playbackAssets = const {};
+    _playbackBlobs = const {};
     if (dir != null && dir.existsSync()) dir.deleteSync(recursive: true);
   }
 
@@ -924,6 +1172,7 @@ final class StudioWorkspace {
     _playbackMedia = media;
     _playbackHash = snapshot.hash;
     _playbackSnapshot = snapshot;
+    _playbackBlobs = {for (final b in d['blobs']) b['hash'] as String: b};
     _playbackAssets = {
       for (final a in d['assets'])
         a['id'] as String: Map<String, dynamic>.from(a as Map),
@@ -1043,6 +1292,7 @@ final class StudioWorkspace {
           _playbackSnapshot = null;
           _playbackGraph = null;
           _playbackAssets = const {};
+          _playbackBlobs = const {};
         }
         if (owned != null && owned.existsSync()) {
           owned.deleteSync(recursive: true);

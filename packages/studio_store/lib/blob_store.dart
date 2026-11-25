@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 
 import 'atomic_file.dart';
 
@@ -13,6 +14,7 @@ import 'package:studio_document/studio_document.dart';
 /// Never obtained from an LLM, archive, URL or model tool argument.
 final class LocalFileGrant {
   LocalFileGrant.fromUserSelection(this.file);
+  LocalFileGrant._managed(this.file);
   final File file;
 }
 
@@ -102,6 +104,111 @@ final class BlobStore {
       file.deleteSync();
       files++;
     }
+    for (final e in directory.listSync(followLinks: false)) {
+      if (!RegExp(r'^\.preview-proof-v1-[a-f0-9]{64}\.json$')
+          .hasMatch(p.basename(e.path))) {
+        continue;
+      }
+      if (FileSystemEntity.typeSync(e.path, followLinks: false) !=
+              FileSystemEntityType.file ||
+          File(e.path).lengthSync() > 4096) {
+        throw const StudioException('PROXY_PROOF_UNSAFE');
+      }
+      final record = readStrictJson(
+        File(e.path).readAsBytesSync(),
+        maxBytes: 4096,
+      );
+      if (record is! Map<String, dynamic> ||
+          _proofFile(record).path != e.path) {
+        throw const StudioException('PROXY_PROOF_INVALID');
+      }
+      if (![
+        record['sourceHash'],
+        record['rgbaHash'],
+        record['mapHash'],
+      ].every(retained.contains)) {
+        bytes += File(e.path).lengthSync();
+        File(e.path).deleteSync();
+        files++;
+      }
+      if (files >= 1000) break;
+    }
+    if (files > 0) AtomicFilePublisher().syncDirectory(directory);
+    return {'files': files, 'bytes': bytes};
+  }
+
+  // Local trusted-producer cache, never imported from a project/peer. This is
+  // NOT a signature against the OS owner; archive hashes alone prove no derivation.
+  File _proofFile(Map<String, dynamic> record) => File(
+    p.join(
+      directory.path,
+      '.preview-proof-v1-${contentHash(record).substring(7)}.json',
+    ),
+  );
+  bool hasPreviewProof(Map<String, dynamic> record) {
+    final f = _proofFile(record),
+        type = FileSystemEntity.typeSync(
+          _proofFile(record).path,
+          followLinks: false,
+        );
+    if (type == FileSystemEntityType.notFound) return false;
+    if (type != FileSystemEntityType.file || f.lengthSync() > 4096) {
+      throw const StudioException('PROXY_PROOF_UNSAFE');
+    }
+    final value = readStrictJson(f.readAsBytesSync(), maxBytes: 4096);
+    if (contentHash(value) != contentHash(record)) {
+      throw const StudioException('PROXY_PROOF_INVALID');
+    }
+    return true;
+  }
+
+  void markPreviewProof(Map<String, dynamic> record) {
+    if (hasPreviewProof(record)) return;
+    final stage = File(p.join(directory.path, '.restore-${const Uuid().v7()}'));
+    try {
+      stage.writeAsBytesSync(utf8.encode(jsonEncode(record)), flush: true);
+      AtomicFilePublisher().publish(stage, _proofFile(record));
+    } finally {
+      if (stage.existsSync()) stage.deleteSync();
+    }
+  }
+
+  /// Caller MUST hold the namespace maintenance lease. Only this version's
+  /// canonical file names are owned; never recurse or follow links.
+  Future<ImportedBlob> importDerivedStage(File stage, String expectedHash) {
+    if (p.normalize(stage.absolute.parent.path) !=
+            p.normalize(directory.absolute.path) ||
+        !RegExp(r'^\.proxy-v1-[0-9a-f-]{36}\.rgba$')
+            .hasMatch(p.basename(stage.path))) {
+      throw const StudioException('PROXY_STAGE_INVALID');
+    }
+    return importFile(
+      LocalFileGrant._managed(stage),
+      expectedHash: expectedHash,
+    );
+  }
+
+  File newProxyStage() =>
+      File(p.join(directory.path, '.proxy-v1-${const Uuid().v7()}.rgba'));
+  Map<String, int> collectProxyOrphans() {
+    _checkDirectory();
+    var files = 0, bytes = 0;
+    for (final e in directory.listSync(followLinks: false)) {
+      if (!RegExp(
+        r'^\.(proxy-v1-[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\.rgba|(import|restore)-[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$',
+      ).hasMatch(p.basename(e.path))) {
+        continue;
+      }
+      if (FileSystemEntity.typeSync(e.path, followLinks: false) !=
+          FileSystemEntityType.file) {
+        throw const StudioException('PROXY_ORPHAN_UNSAFE_ENTRY');
+      }
+      final f = File(e.path);
+      bytes += f.lengthSync();
+      f.deleteSync();
+      files++;
+      if (files == 1000) break;
+    }
     if (files > 0) AtomicFilePublisher().syncDirectory(directory);
     return {'files': files, 'bytes': bytes};
   }
@@ -174,11 +281,14 @@ final class BlobStore {
     }
   }
 
-  Future<File> resolve(String hash) async {
+  Future<File> resolve(String hash, {int? maxBytes}) async {
     final file = _path(hash);
     if (FileSystemEntity.typeSync(file.path, followLinks: false) !=
         FileSystemEntityType.file) {
       throw const StudioException('MISSING_MEDIA');
+    }
+    if (maxBytes != null && file.lengthSync() > maxBytes) {
+      throw const StudioException('BLOB_SIZE_LIMIT');
     }
     if ('sha256:${await sha256.bind(file.openRead()).first}' != hash) {
       throw const StudioException('BLOB_HASH_MISMATCH');

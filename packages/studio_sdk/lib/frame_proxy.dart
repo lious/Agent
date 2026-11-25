@@ -20,8 +20,9 @@ final class FrameProxy {
     this.durations,
     this.frameHashes,
     this.blobHash,
-    this.bytes,
-  );
+    this.bytes, {
+    this.storedFile,
+  });
   static const pipeline = 'rgba128-pts-v1';
   final Directory directory;
   final int width, height, bytes;
@@ -33,11 +34,13 @@ final class FrameProxy {
   int _readers = 0;
   bool _disposed = false;
   Object? cleanupError;
-  File get file => File('${directory.path}/frames.rgba');
+  final File? storedFile;
+  File get file => storedFile ?? File('${directory.path}/frames.rgba');
   static Future<FrameProxy> admit(
     Directory directory,
-    Map<String, dynamic> facts,
-  ) async {
+    Map<String, dynamic> facts, {
+    File? dataFile,
+  }) async {
     final w = facts['width'], h = facts['height'], table = facts['frames'];
     if (facts['schema'] != 1 ||
         facts['pipeline'] != pipeline ||
@@ -77,7 +80,7 @@ final class FrameProxy {
       points.add(p);
       lengths.add(n);
     }
-    final f = File('${directory.path}/frames.rgba'),
+    final f = dataFile ?? File('${directory.path}/frames.rgba'),
         bytes = w * h * 4 * points.length;
     if (FileSystemEntity.typeSync(f.path, followLinks: false) !=
         FileSystemEntityType.file) {
@@ -113,6 +116,7 @@ final class FrameProxy {
       List.unmodifiable(hashes),
       hash,
       bytes,
+      storedFile: dataFile,
     );
   }
 
@@ -183,7 +187,10 @@ final class FrameProxy {
   }
 
   void _cleanup() {
-    if (_disposed && _readers == 0 && directory.existsSync()) {
+    if (storedFile == null &&
+        _disposed &&
+        _readers == 0 &&
+        directory.existsSync()) {
       try {
         directory.deleteSync(recursive: true);
       } catch (e) {

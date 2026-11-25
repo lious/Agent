@@ -14,6 +14,71 @@ sealed class EditOperation {
   Map<String, Object?> toJson();
 }
 
+/// SDK-controlled, fully byte-validated CAS resources, committed with revision CAS.
+final class AttachPreviewProxies extends EditOperation {
+  AttachPreviewProxies(List<Map<String, dynamic>> resources)
+    : _json = jsonEncode(resources);
+  final String _json;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'attachPreviewProxies',
+    'resources': jsonDecode(_json),
+  };
+}
+
+ProjectDocument _attachPreviewProxies(
+  ProjectDocument before,
+  AttachPreviewProxies op,
+  VersionAllocator nextVersion,
+) {
+  final d = before.toJson();
+  final changed = <String, String>{};
+  for (final raw in op.toJson()['resources'] as List) {
+    final a = (d['assets'] as List).singleWhere(
+      (a) => a['id'] == raw['assetId'],
+    );
+    if (changed.containsKey(a['id']) ||
+        a['originalBlobHash'] != raw['sourceHash'] ||
+        (a['proxyRefs'] as List).isNotEmpty) {
+      throw const StudioException('PROXY_ADOPTION_CONFLICT');
+    }
+    final v = nextVersion(a['id']);
+    a['version'] = v;
+    changed[a['id'] as String] = v;
+    a['proxyRefs'] = [
+      {...Map<String, dynamic>.from(raw['proxy'] as Map), 'sourceVersion': v},
+    ];
+    for (final blob in raw['blobs']) {
+      final previous = (d['blobs'] as List).where(
+        (b) => b['hash'] == blob['hash'],
+      );
+      if (previous.isEmpty) {
+        d['blobs'].add(blob);
+      } else if (contentHash(previous.single) != contentHash(blob)) {
+        throw const StudioException('BLOB_METADATA_INVALID');
+      }
+    }
+  }
+  if (changed.isEmpty) return before;
+  for (final s in d['sequences']) {
+    for (final t in s['tracks']) {
+      for (final c in t['items']) {
+        final source = c['source'];
+        if (source != null &&
+            source['kind'] == 'asset' &&
+            changed.containsKey(source['id'])) {
+          source['version'] = changed[source['id']];
+          c['version'] = nextVersion(c['id']);
+        }
+      }
+    }
+    s['version'] = nextVersion(s['id']);
+  }
+  final result = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(result);
+  return result;
+}
+
 final class SetMasterAudio extends EditOperation {
   const SetMasterAudio({
     this.gainDb = 0,
@@ -188,6 +253,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is AttachPreviewProxies) {
+    return _attachPreviewProxies(before, operation, nextVersion);
+  }
   if (operation is ExtractAudioClip ||
       operation is LinkAudioVideo ||
       operation is UnlinkAudioVideo ||
@@ -309,6 +377,8 @@ ProjectDocument applyEdit(
 
   if (zeroDelta) {
     switch (operation) {
+      case AttachPreviewProxies():
+        throw StateError("handled above");
       case MoveClip():
         clip(operation.clipId, ['timelineRange']);
       case TrimClip():
@@ -344,6 +414,8 @@ ProjectDocument applyEdit(
     return before;
   }
   switch (operation) {
+    case AttachPreviewProxies():
+      throw StateError("handled above");
     case ExtractAudioClip():
     case LinkAudioVideo():
     case UnlinkAudioVideo():

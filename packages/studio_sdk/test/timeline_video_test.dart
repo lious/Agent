@@ -66,10 +66,13 @@ void main() {
         ExtractAudioClip(clip['id'] as String, audio['id'] as String),
         expectedRevision: w.current.revision,
       );
-      final revision = w.current.hash,
-          facts = await w.buildTimelinePreviewProxies();
+      final beforeProxy = w.current;
+      final facts = await w.buildTimelinePreviewProxies();
+      final revision = w.current.hash;
+      expect(w.current.revision, beforeProxy.revision + BigInt.one);
+      expect(revision, isNot(beforeProxy.hash));
       expect(facts['proxies'], 1);
-      expect(w.current.hash, revision);
+      expect(facts['persistent'], isTrue);
       expect(w.previewProxyBytes, lessThanOrEqualTo(64 * 1024 * 1024));
       expect((await w.buildTimelinePreviewProxies())['bytes'], facts['bytes']);
       await w.playTimeline(sink: 'studio_test');

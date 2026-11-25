@@ -1,0 +1,105 @@
+{
+  "increment": "1.9",
+  "checkedAt": "2026-11-25T18:10:04.486495+08:00",
+  "timezone": "Asia/Shanghai",
+  "baselineCommit": "a09dda766a644dbb891ef987f307b17aeac88aa3",
+  "branch": "feat/studio-foundation-20261125",
+  "scope": "Registered CFR/SDR raw SchemaProxy + original-PTS map CAS closure, native producer provenance qualification, immutable version/receipt/history pins and explicit managed-stage crash recovery; constrained Linux dev slice",
+  "scopeStatus": "passedWithinStatedLimits",
+  "fullTaskComplete": false,
+  "original87": {
+    "complete": 0,
+    "partial": 25,
+    "planned": 49,
+    "blocked": 13
+  },
+  "additionalXD10": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "userPath": [
+    "import admitted local AV; explicit Build persists source-bound proxy/map and increments revision once",
+    "same native button reuses without new revision",
+    "save complete ZIP, fork/close/reopen, reuse already locally qualified proxies; no temp path in root",
+    "unknown producer archive gets bounded one-time actual native verification before project commit; forged source pixels rejected even with valid hashes",
+    "best-effort real AudioSink sample video; existing pause/seek/rebind/edit invalidation retained",
+    "MP4/AAC encoding remains from original files, not preview pixels",
+    "next explicit build or Collect local garbage reclaims killed-owner native/copy/map stages; pins preserve originals/history"
+  ],
+  "tests": {
+    "nativeDartFlutterDistinct": 172,
+    "chromeDistinct": 9,
+    "osKeyringUiDistinct": 1,
+    "totalDistinctDartFlutter": 182,
+    "skipped": 0,
+    "newComplexNativeCases": 3,
+    "pythonToolCases": 6,
+    "nativeCTestDistinct": 3,
+    "freshServiceSdkRerunExit": 0,
+    "freshServiceSdkCasesAreAlreadyCounted": true,
+    "internalSigkillBaselineTrials": 50,
+    "additionalActualKilledStageOwner": 1,
+    "internalAssertionsNotExtraDistinctCases": true,
+    "cleanReleaseRerun": "passed; six clean release builds/first-frame starts (three per app), three minimal ABI probes; not extra Dart test cases",
+    "cleanReleaseStarts": 6,
+    "minimalAbiProbes": 3
+  },
+  "limits": {
+    "liveRootRgbaBytes": 67108864,
+    "oneStageRgbaBytes": 67108864,
+    "maxFrames": 2048,
+    "ptsMapBytes": 1048576,
+    "pixelLruBytes": 2097152,
+    "wholeNamespaceDiskBudgetQualified": false,
+    "historyPruning": false,
+    "physicalAvSync": false,
+    "stableFps": false,
+    "holdLastImagePossible": true,
+    "startupBackgroundOrphanSweep": false,
+    "onlyKnownStageFamilies": [
+      "proxy-v1 UUIDv7 rgba",
+      "import UUIDv7",
+      "restore UUIDv7"
+    ],
+    "unknownNamesAndSymlinkTargetsNeverDeleted": true,
+    "persistentVfr": false,
+    "foreignPlatformByteCompatibilityQualified": false
+  },
+  "provenanceBoundary": {
+    "hashesAloneNotProducerEvidence": true,
+    "localRecordIsSignature": false,
+    "trust": "trusted local host filesystem, like SQLite; no protection against OS owner",
+    "archiveOrPeerCanImportLocalRecord": false,
+    "unknownProducerActualNativeRequalification": true,
+    "nativeWholeRawDigestAndOriginalFactsCompared": true,
+    "foreignForgedValidChecksumsTest": "PROXY_DERIVATION_MISMATCH before project commit",
+    "recordsGcWithAllSourceRawMapPins": true
+  },
+  "retainedFailures": {
+    "firstFullGate": "172 executed;4 actual SDK/audio/nativeUI timeout/underrun failures; not erased or stress-qualified by final pass",
+    "firstKilledOwnerFixture": "uncompleted Future let VM exit; real timer keeps child alive; unchanged blocked-until-SIGKILL assertion then passed"
+  },
+  "verificationCurrentSourceHashesMatch": true,
+  "original104Unmodified": true,
+  "toolchain": {
+    "flutter": "3.50.1 official pinned SDK",
+    "dart": "3.14.0",
+    "sqlite": "approved3.54.1; old3.46.1 refused",
+    "ffmpeg": "7.1.5",
+    "pulse": "17.0",
+    "clang": "19.1.7"
+  },
+  "remaining": [
+    "rich Schema readonly app and other resource/effect/history business closure",
+    "history/global storage budget and pruning policies",
+    "explicit corrupt/incompatible proxy discard+rebuild UX",
+    "startup UI background sweep",
+    "durable VFR/multiple pipeline",
+    "retained audio underflow/stall resilience and V004/P0/physical performance",
+    "macOS/Windows/iOS/Android and physical multi-device",
+    "unchanged managed RTC policy blocker; no positive retry/relay bypass"
+  ],
+  "next": "I-002 rich Schema readonly UI and complete resource/history business rules; I-021 explicit repair and global lifecycle; separately diagnose retained audio service failures without relaxing bounds"
+}

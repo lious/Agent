@@ -510,3 +510,37 @@ positive RTC rerun/policy change/relay, production/paid/OAuth/workflow/Mac actio
    relaxed assertion. Final verification source hashes match the checkpoint source.
    Original87 remain0 complete/25 partial/49 planned/13 blocked; XD10 separate
    0/8/1/1. No platform/hardware/P0 or physical-device claim follows these counts.
+
+
+## Increment1.9 — actual review / correction rounds
+
+1. Read preserved I-002/I-021 contracts and unchanged Proxy/Blob schema. Replaced
+   temp-only references with registered raw+PTS-map CAS resources, immutable
+   asset/clip/sequence versions and existing transaction/history pins. Actual
+   native save/fork/reopen/original-file export passed. Checked metadata roles,
+   exact CFR time bounds and canonical paths; no new root field/schema migration.
+2. Corrected cache identity to include frozen source streams/ref/blob metadata,
+   enforced declared byte lengths and pre-hash limits, checked post-admission hash,
+   kept CAS readers non-owning and generation-fenced stale asynchronous reads.
+   Added duplicate/reuse, corruption, missing refs, cycles/path/PTS/overflow,
+   real mid-output concurrent edit rejection and original-retaining GC tests.
+3. Actual cross-process lock test initially failed: an unresolved Future alone
+   allowed the Dart fixture VM to exit, so parent correctly acquired the lock.
+   Retained failure; added a real timer-backed live child, then proved parent
+   remains blocked until SIGKILL and reclaims the native/copy/map stages. No
+   weakening of lock assertion. Files outside ownership and symlink targets stay.
+4. Adversarial review: self-consistent hashes can still lie about source pixels.
+   Added local trusted-producer records (NOT cryptographic signatures), excluded
+   from archives/peer paths and GC-owned by resource pins. Unknown producer is
+   requalified once using real native generation and whole raw/facts comparison
+   before creating a project. Actual forged archive with recomputed correct
+   frame/blob/map checksums now fails PROXY_DERIVATION_MISMATCH; valid independent
+   namespace archive qualifies, then reuses. Existing records allow reopen reuse.
+
+First complete 172-case rerun genuinely failed four real-service audio/UI cases
+(timeout/stale state/underrun); retained report, not marked all passed. The same
+run's offline AAC, independent actual Pulse fault fixture,9 Chrome and real OS
+keyring UI passed. Final source rerun and fresh-service diagnosis are recorded
+separately; a later pass cannot erase the original failure or qualify P0/AV stress.
+
+Final frozen-source increment1.9 rerun:172 native +9 Chrome +1 actual OS-keyring UI =182 distinct Dart/Flutter,0 skips;6 Python,3 CTest. Six clean Linux release builds/starts and three minimal ABI probes passed. Actual60s offline PCM→AudioBus→AAC/mux, independent private Pulse faults, Pulse-OFF refusal and v4/v5/v6→v7 migrations passed. Verification source hashes match; the first four service failures remain unresolved intermittent-stress evidence, not erased by the passing rerun.

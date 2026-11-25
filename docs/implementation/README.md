@@ -9,7 +9,7 @@
 原104文档不变；当前全部87项逐项保留原验收：25 partial、49 planned、13 blocked（验证资源）。
 **整任务完成数为0**；blocked 不等于实现完成，尚有大量可继续的纯 Dart 工作。
 
-当前操作入口见文末 **increment1.8**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
+当前操作入口见文末 **increment1.9**；v1.0–1.6及以下旧计数是历史切片，以task-status和最新summary为准。
 
 原始规划：[工程文档](../studio/README.md) · [87项任务](../studio/tasks/work-items.md)
 
@@ -519,3 +519,46 @@ SWR5.3.100 / Clang19.1.7；诊断GDB16.3/strace来自官方Debian包，仅自有
 不读取Mac/用户素材/现有keyring，不付费/部署/下载权重、不启用远端workflow、不合并main。
 下一接续点：原I-002持久SchemaProxy/CAS资源与历史pins/ownership回收及rich Schema只读UI，
 再做完整CPU/GPU effects/编码前patch/texture lease资格；现有preview临时格式不得静默写入Schema。
+
+
+## increment1.9 — 持久代理 / PTS-map CAS与历史资源
+
+原87仍0 complete /25 partial /49 planned /13 blocked；XD10仍单列0/8/1/1。
+I-002/I-021获得下述可复跑实现，不代表全部原验收已闭合。原104和原验收/依赖不变。
+
+Linux现有Build timeline video preview proxies按钮现在将已注册CFR/SDR RGBA128代理与
+精确原PTS sidecar写入CAS，并以revision/writer CAS一次采用到原Schema的proxyRefs/blobs。
+这是真正持久资源，不是临时路径或新根字段。首次成功增加revision；再次点击、归档/fork/
+关闭重开可复用已验证资源，不新增revision。Play也可lazy-load持久proxy。Clear只清reader/
+cache，不删除项目/历史持有的CAS资源。导出仍从原件按相同source-time graph编码，绝不截屏/
+编码低清代理；原MP4/AAC保存恢复路径保留。
+
+资源同时验source hash/原生源事实、pipeline/sourceVersion、原origin/timeBase、每帧有理时间/
+长度/哈希、整blob/PTS-map与规范路径/role。自洽checksum不证明源像素：本机受信生成记录不
+进入ZIP/peer；没有记录的外来派生首次接纳时实际native重算一次并比较完整结果，失败不创建
+项目。其他CPU/平台严格字节重验未资格，不保证跨任意端即插即用；详见ADR，不称签名认证。
+
+数据库保留所有历史revision的blob pins；实际undo后GC仍保护原件/旧代理/map。真实SIGKILL
+持锁worker后，下一次显式build/reuse或Collect local garbage回收已知native/copy/map staging，
+不跟随symlink、不递归、不删未知版本/其他文件。尚未实现启动UI自动扫描/历史裁剪/整个CAS
+总配额。每个live root RGBA<=64MiB、单stage<=64MiB、map<=1MiB、像素LRU2MiB，不是总磁盘/RSS上限。
+
+新增3个复杂native-backed测试实际涵盖：归档/fork/重开/原件导出、重复采用无revision漂移、
+历史pins/损坏map/raw/缺引用/循环/路径/PTS/overflow、自洽假像素拒绝与独立namespace合法重验、
+真实中途输出后的revision冲突、真实持锁SIGKILL及三个stage回收。内部断言不伪报独立case数。
+第一轮全172-case回归实际有4个音频/AV/UI失败，已保留；不能将旧179通过或本轮3个新case通过
+当成本轮全部回归成功。最终完整结果/工具版本/命令/失败以最新evidence汇总为准。
+
+best-effort视频跳帧/保持旧图、非物理AV同步/非稳定帧率限制不变；原VFR独立seek测试保留，
+不擅开持久VFR/任意pipeline。rich Schema只读UI、损坏代理显式丢弃重建UX、全资源类型及
+P0/非Linux/物理跨设备验收仍未完成。已知RTC政策阻塞没有重试、放宽或中继绕过。
+
+[ADR0013](../adr/0013-durable-preview-cas.md) · [证据](evidence/durable-proxy/summary.json)
+
+新增复跑入口（沿用PATH/LD_LIBRARY_PATH=已批准SQLite3.54.1/STUDIO_MEDIA_LIBRARY）：
+```sh
+dart test packages/studio_sdk/test/durable_proxy_test.dart --reporter=expanded
+python3 tools/acceptance/run_local_video.py --profile linux-dev --native-build /自己的native-build --report /自己的结果/durable.json
+```
+
+Final increment1.9 frozen-source evidence: **172 native +9 Chrome +1 actual OS-keyring UI =182 distinct Dart/Flutter tests,0 skips**; 6 Python tool cases,3 native CTest; six clean Linux release builds/first-frame starts (three per host) and three minimal ABI probes passed. Actual offline60s AAC/mux, private Pulse fault fixture, explicit Pulse-OFF refusal and v4/v5/v6→v7 migrations passed. Evidence: `evidence/durable-proxy/summary.json`. First full gate's four real audio/UI failures remain recorded; final pass does not prove intermittent underrun/load fixed, physical synchronization or P0 qualification.

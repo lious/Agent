@@ -1,3 +1,5 @@
+import 'proxy_resources.dart';
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -70,7 +72,13 @@ final class ProjectArchive {
       'snapshotPath': snapshotPath,
       'snapshotHash': project.hash,
       'packMode': 'embedded',
-      'includedGroups': ['originals'],
+      'includedGroups': [
+        'originals',
+        if ((project.toJson()['blobs'] as List).any(
+          (b) => b['role'] == 'proxy',
+        ))
+          'proxies',
+      ],
       'missingExternalRefs': [],
       'checksumsPath': 'checksums.json',
       'createdAt': DateTime.now().toUtc().toIso8601String(),
@@ -250,8 +258,6 @@ final class ProjectArchive {
           manifest['createdAt'] is! String ||
           !((manifest['createdAt'] as String).endsWith('Z')) ||
           DateTime.tryParse(manifest['createdAt'] as String) == null ||
-          contentHash(manifest['includedGroups']) !=
-              contentHash(['originals']) ||
           contentHash(manifest['missingExternalRefs']) != contentHash([])) {
         throw const StudioException('MANIFEST_SCHEMA');
       }
@@ -270,6 +276,16 @@ final class ProjectArchive {
           project.revision.toString() != manifest['revision']) {
         throw const StudioException('MANIFEST_SNAPSHOT_MISMATCH');
       }
+      if (contentHash(manifest['includedGroups']) !=
+          contentHash([
+            'originals',
+            if ((project.toJson()['blobs'] as List).any(
+              (b) => b['role'] == 'proxy',
+            ))
+              'proxies',
+          ])) {
+        throw const StudioException('MANIFEST_SCHEMA');
+      }
       final originals = <String, Uint8List>{};
       final expected = {'manifest.json', 'checksums.json', path};
       for (final blob in project.toJson()['blobs'] as List) {
@@ -287,6 +303,16 @@ final class ProjectArchive {
       if (expected.length != files.length ||
           !files.keys.every(expected.contains)) {
         throw const StudioException('ARCHIVE_UNDECLARED_ENTRY');
+      }
+      for (final a in project.toJson()['assets']) {
+        for (final p in a['proxyRefs']) {
+          validateProxyResourceBytes(
+            a,
+            p,
+            originals[p['ptsMapBlobHash']]!,
+            originals[p['blobHash']]!,
+          );
+        }
       }
       return VerifiedArchive(project, Map.unmodifiable(originals));
     } on StudioException {

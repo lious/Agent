@@ -51,20 +51,35 @@ void requireLocalEditingWritable(ProjectDocument project) {
     throw const StudioException('DUPLICATE_BLOB');
   }
   for (final blob in blobs.values) {
-    if (blob['role'] != 'original' ||
-        blob['packagePath'] !=
-            'originals/${(blob['hash'] as String).substring(7)}' ||
+    if (!{'original', 'proxy', 'ptsMap'}.contains(blob['role']) ||
+        (blob['role'] == 'original' &&
+            blob['packagePath'] !=
+                'originals/${(blob['hash'] as String).substring(7)}') ||
         BigInt.parse(blob['bytes'] as String) <= BigInt.zero) {
       throw const StudioException('BLOB_METADATA_INVALID');
     }
+  }
+  if (blobs.values
+          .where((b) => b['role'] == 'proxy')
+          .fold<BigInt>(BigInt.zero, (n, b) => n + BigInt.parse(b['bytes'])) >
+      BigInt.from(64 * 1024 * 1024)) {
+    throw const StudioException('PROXY_CACHE_QUOTA');
   }
   final rights = {for (final v in d['rightsRecords'] as List) v['id']: v};
   for (final a in assets.values) {
     if (a['kind'] != 'video' ||
         a['status'] != 'ready' ||
-        a['externalLocator'] != null ||
-        (a['proxyRefs'] as List).isNotEmpty) {
+        a['externalLocator'] != null) {
       throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+    }
+    if ((a['proxyRefs'] as List).length > 1) {
+      throw const StudioException('PROXY_METADATA_INVALID');
+    }
+    for (final p in a['proxyRefs']) {
+      validatePreviewProxyMetadata(a, p, blobs);
+    }
+    if (blobs[a['originalBlobHash']]?['role'] != 'original') {
+      throw const StudioException('PROXY_METADATA_INVALID');
     }
     if (!rights.containsKey(a['rightsId']) ||
         !blobs.containsKey(a['originalBlobHash'])) {
@@ -85,6 +100,18 @@ void requireLocalEditingWritable(ProjectDocument project) {
           Q.fromJson(st['duration']) <= Q.of(0)) {
         throw const StudioException('INVALID_RANGE');
       }
+    }
+  }
+  final usedDerived = <String>{
+    for (final a in assets.values)
+      for (final p in a['proxyRefs']) ...[
+        p['blobHash'] as String,
+        p['ptsMapBlobHash'] as String,
+      ],
+  };
+  for (final b in blobs.values) {
+    if (b['role'] != 'original' && !usedDerived.contains(b['hash'])) {
+      throw const StudioException('PROXY_RESOURCE_UNREFERENCED');
     }
   }
   final tracks = s['tracks'] as List;

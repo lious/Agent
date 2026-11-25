@@ -1,0 +1,18 @@
+{
+  "focused-native.log": {
+    "rawSource": "artifacts/local-video/durable-proxy-provenance-focused.log",
+    "rawSha256": "23a5e8de4f8cc2b0bd0f04b627c28fa22b29bd06cf53285b74f74da65cc434b9"
+  },
+  "owner-fixture-premature-exit-failed.log": {
+    "rawSource": "artifacts/local-video/durable-proxy-owner-fixture-exit-failed.log",
+    "rawSha256": "0d1198e513f08fbd53749f3bf0b0d6e58724f0a0d338661fdaa59d0694f5e3cd"
+  },
+  "fresh-service-sdk-audio.log": {
+    "rawSource": "artifacts/local-video/durable-proxy-fresh-sdk-audio.log",
+    "rawSha256": "724fdb2d72b41a2236898857b62cda0bb6337c93b6abdde621c892557e12bab1"
+  },
+  "pulse-off.log": {
+    "rawSource": "artifacts/local-video/durable-proxy-off.log",
+    "rawSha256": "2d220a00b9f00a02f1f1b0228de1a44374de33bc5d84274bded11b5dc9d3266a"
+  }
+}
