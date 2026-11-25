@@ -394,6 +394,7 @@ ProjectDocument _overwriteMoveClips(
     }
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, needed);
+  followClipLocalCaptions(d, nextVersion: version);
   _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

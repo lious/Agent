@@ -1840,6 +1840,56 @@ class _FoundationAppState extends State<FoundationApp>
                 ),
           child: const Text('Delete selected cue'),
         ),
+        OutlinedButton(
+          key: const Key('caption-follow-clip'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues((cues) {
+                  final selected = cues.singleWhere(
+                    (c) => c.id == _captionSelected,
+                  );
+                  final id = coveringCaptionHostClipId(
+                    _project.toJson(),
+                    selected.range,
+                  );
+                  if (id == null) {
+                    throw const StudioException('ANCHOR_OUT_OF_RANGE');
+                  }
+                  Map? host;
+                  for (final t in _project.toJson()['sequences'][0]['tracks']) {
+                    for (final item in t['items']) {
+                      if (item['id'] == id) host = item as Map;
+                    }
+                  }
+                  return [
+                    for (final cue in cues)
+                      if (cue.id == _captionSelected)
+                        cue.anchoredToClip(
+                          id,
+                          Q.fromJson(host!['timelineRange']['start']),
+                          Q.fromJson(host['timelineRange']['duration']),
+                        )
+                      else
+                        cue,
+                  ];
+                }),
+          child: const Text('Anchor selected cue to covering clip'),
+        ),
+        OutlinedButton(
+          key: const Key('caption-make-absolute'),
+          onPressed: _busy || _captionSelected == null
+              ? null
+              : () => _setCues(
+                  (c) => [
+                    for (final cue in c)
+                      if (cue.id == _captionSelected)
+                        cue.makeAbsolute()
+                      else
+                        cue,
+                  ],
+                ),
+          child: const Text('Make selected cue absolute'),
+        ),
       ],
     ),
     for (final cue in _cues)
@@ -1847,7 +1897,11 @@ class _FoundationAppState extends State<FoundationApp>
         key: Key('cue-${cue.id}'),
         selected: cue.id == _captionSelected,
         title: Text(cue.text),
-        subtitle: Text('${cue.range.start} → ${cue.range.end}'),
+        subtitle: Text(
+          cue.anchorKind == 'clipLocal'
+              ? '${cue.range.start} → ${cue.range.end} · follows ${cue.anchorClipId}'
+              : '${cue.range.start} → ${cue.range.end} · absolute',
+        ),
         onTap: _busy
             ? null
             : () => setState(() {
@@ -1856,7 +1910,7 @@ class _FoundationAppState extends State<FoundationApp>
               }),
       ),
     const Text(
-      'Deterministic single caption-track overlap rejection. Video timing edits while cues exist are refused until synchronized caption ripple is implemented. No silent text loss.',
+      'Deterministic single caption-track overlap rejection. New and imported cues stay absolute until you anchor them. Anchor selected cue to covering clip makes a cue clipLocal so MoveClips (including insert-move later hosts) translates it with that clip; stored clip-local range is unchanged. Absolute cues stay at authored times. Source anchors, cue crop/split on ripple/insert-paste, and MP4 text burn-in remain refused. No silent text loss.',
     ),
     _path(
       'caption-path',

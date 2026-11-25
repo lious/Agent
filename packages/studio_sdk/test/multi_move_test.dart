@@ -209,7 +209,7 @@ void main() {
     expect(w.current.hash, before);
     expect(journal(), counts);
   });
-  test('absolute captions preserved; clip-local anchors refuse; no implicit caption loss on preview/export', () async {
+  test('absolute captions preserved; clipLocal now follows; source anchors still refuse; no implicit caption loss on preview/export', () async {
     final srt = File('${root.path}/cue.srt')
       ..writeAsStringSync(
         '1\n00:00:00,000 --> 00:00:01,000\nAbsolute cue stays\n',
@@ -231,9 +231,40 @@ void main() {
       code('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED'),
     );
     expect(File('${root.path}/must-not.mp4').existsSync(), false);
+    w.undo(expectedRevision: w.current.revision);
+    expect(w.current.toJson()['captions'], captions);
     final d = w.current.toJson(), clip = ids().first;
+    final cue = CaptionCue.fromProjectJson(
+      Map<String, dynamic>.from(d['captions'][0] as Map),
+    );
+    final host = moveVideos(w.current).first;
+    w.edit(
+      SetCaptions(
+        CaptionStore([
+          cue.anchoredToClip(
+            clip,
+            Q.fromJson(host['timelineRange']['start']),
+            Q.fromJson(host['timelineRange']['duration']),
+          ),
+        ]),
+      ),
+      expectedRevision: w.current.revision,
+    );
+    final beforeFollow = w.current;
+    w.edit(MoveClips(ids(), Q.of(1)), expectedRevision: w.current.revision);
+    expect(
+      Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
+      Q.of(1),
+    );
+    expect(w.current.toJson()['captions'][0]['anchor']['kind'], 'clipLocal');
+    w.undo(expectedRevision: w.current.revision);
+    expect(contents(w.current), contents(beforeFollow));
+    expect(
+      Q.fromJson(w.current.toJson()['captions'][0]['timelineRange']['start']),
+      Q.of(0),
+    );
     d['captions'][0]['anchor'] = {
-      'kind': 'clipLocal',
+      'kind': 'source',
       'clipId': clip,
       'range': {'start': Q.of(0).toJson(), 'duration': Q.of(1).toJson()},
     };

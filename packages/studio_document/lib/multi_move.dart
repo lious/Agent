@@ -239,9 +239,10 @@ ProjectDocument _moveClips(
   }
   s['duration'] = maximum.toJson();
   s['version'] = version(s['id'] as String);
-  // Source ranges/time maps, clip-local effects/keyframes/automation, link offsets
-  // and admitted absolute captions remain byte-for-byte unchanged. Unsupported
-  // source/clip-local caption anchors and richer maps already refuse admission.
+  // Source ranges/time maps, clip-local effects/keyframes/automation and link
+  // offsets remain unchanged. Absolute captions stay at authored times.
+  // clipLocal cues translate with their host clip; source anchors still refuse.
+  followClipLocalCaptions(d, nextVersion: version);
   _markMovedLinksOutOfSync(d, moved);
   final result = ProjectDocument.fromJson(
     d,

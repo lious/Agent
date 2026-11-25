@@ -506,6 +506,10 @@ void _projectSemantics(
         if (q(ar['start']) < Q.of(0) ||
             q(ar['start']) + q(ar['duration']) > limit) {
           issue('ANCHOR_OUT_OF_RANGE', '/captions/anchor');
+        } else if (anchor['kind'] == 'clipLocal' &&
+            (start(c) != start(clip) + q(ar['start']) ||
+                duration(c) != q(ar['duration']))) {
+          issue('ANCHOR_INVALID', '/captions/anchor');
         }
       }
     }

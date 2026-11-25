@@ -2,8 +2,9 @@ import 'package:studio_contracts/studio_contracts.dart';
 
 import 'time.dart';
 
-/// Plain, absolute-time caption subset. Rich styles/word alignments/anchors are
-/// deliberately rejected on project admission until their editing is implemented.
+/// Plain captions. Absolute cues stay at authored timeline times. clipLocal cues
+/// follow their host media clip on MoveClips. Source anchors, styles, words and
+/// speakers remain refused on admission. Cue crop/split on ripple is not opened.
 final class CaptionCue {
   CaptionCue(
     this.id,
@@ -11,6 +12,9 @@ final class CaptionCue {
     this.text, {
     this.language = 'und',
     Set<String> manualFields = const {},
+    this.anchorKind = 'absolute',
+    this.anchorClipId,
+    this.anchorRange,
   }) : manualFields = Set.unmodifiable(manualFields) {
     requireId(id);
     if (range.start < Q.of(0) ||
@@ -20,19 +24,52 @@ final class CaptionCue {
         !manualFields.every(['text', 'timing', 'style', 'speaker'].contains)) {
       throw const StudioException('CAPTION_INVALID');
     }
+    if (anchorKind == 'absolute') {
+      if (anchorClipId != null || anchorRange != null) {
+        throw const StudioException('ANCHOR_INVALID');
+      }
+    } else if (anchorKind == 'clipLocal') {
+      if (anchorClipId == null ||
+          anchorRange == null ||
+          anchorRange!.start < Q.of(0) ||
+          anchorRange!.duration <= Q.of(0)) {
+        throw const StudioException('ANCHOR_INVALID');
+      }
+      requireId(anchorClipId!);
+    } else {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
   }
-  final String id, text, language;
+  final String id, text, language, anchorKind;
+  final String? anchorClipId;
   final TimeRange range;
+  final TimeRange? anchorRange;
   final Set<String> manualFields;
+
+  CaptionCue _copy({
+    TimeRange? range,
+    String? text,
+    Set<String>? manualFields,
+    String? anchorKind,
+    String? anchorClipId,
+    TimeRange? anchorRange,
+    bool clearAnchor = false,
+  }) => CaptionCue(
+    id,
+    range ?? this.range,
+    text ?? this.text,
+    language: language,
+    manualFields: manualFields ?? this.manualFields,
+    anchorKind: clearAnchor ? 'absolute' : (anchorKind ?? this.anchorKind),
+    anchorClipId: clearAnchor ? null : (anchorClipId ?? this.anchorClipId),
+    anchorRange: clearAnchor ? null : (anchorRange ?? this.anchorRange),
+  );
   CaptionCue editText(String value, {bool automatic = false}) {
     if (automatic && manualFields.contains('text') && value != text) {
       throw const StudioException('MANUAL_FIELD_LOCKED');
     }
-    return CaptionCue(
-      id,
-      range,
-      value,
-      language: language,
+    return _copy(
+      text: value,
       manualFields: {...manualFields, if (!automatic) 'text'},
     );
   }
@@ -43,11 +80,8 @@ final class CaptionCue {
     }
     final r = range.intersect(selection);
     if (r == null) throw const StudioException('CAPTION_EMPTY_TRIM');
-    return CaptionCue(
-      id,
-      r,
-      text,
-      language: language,
+    return _copy(
+      range: r,
       manualFields: {...manualFields, if (!automatic) 'timing'},
     );
   }
@@ -57,11 +91,8 @@ final class CaptionCue {
       throw const StudioException('CAPTION_SPLIT_RANGE');
     }
     return [
-      CaptionCue(
-        id,
-        TimeRange(range.start, at - range.start),
-        text,
-        language: language,
+      _copy(
+        range: TimeRange(range.start, at - range.start),
         manualFields: {...manualFields, 'timing'},
       ),
       CaptionCue(
@@ -70,6 +101,9 @@ final class CaptionCue {
         text,
         language: language,
         manualFields: {...manualFields, 'timing'},
+        anchorKind: anchorKind,
+        anchorClipId: anchorClipId,
+        anchorRange: anchorRange,
       ),
     ];
   }
@@ -106,19 +140,58 @@ final class CaptionCue {
         'text': text,
         'language': language,
         'styleEffectId': null,
-        'anchor': {'kind': 'absolute', 'clipId': null, 'range': null},
+        'anchor': anchorKind == 'absolute'
+            ? {'kind': 'absolute', 'clipId': null, 'range': null}
+            : {
+                'kind': anchorKind,
+                'clipId': anchorClipId,
+                'range': {
+                  'start': anchorRange!.start.toJson(),
+                  'duration': anchorRange!.duration.toJson(),
+                },
+              },
         'manualFields': manualFields.toList()..sort(),
         'words': <Object>[],
         'speakerId': null,
       };
+  CaptionCue anchoredToClip(String clipId, Q clipStart, Q clipDuration) {
+    final local = TimeRange(range.start - clipStart, range.duration);
+    if (local.start < Q.of(0) || local.start + local.duration > clipDuration) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    return _copy(
+      anchorKind: 'clipLocal',
+      anchorClipId: clipId,
+      anchorRange: local,
+    );
+  }
+
+  CaptionCue makeAbsolute() => _copy(clearAnchor: true);
+
   factory CaptionCue.fromProjectJson(Map<String, dynamic> c) {
     if (c['styleEffectId'] != null ||
         c['speakerId'] != null ||
-        (c['words'] as List).isNotEmpty ||
-        c['anchor']['kind'] != 'absolute' ||
-        c['anchor']['clipId'] != null ||
-        c['anchor']['range'] != null) {
+        (c['words'] as List).isNotEmpty) {
       throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    final anchor = c['anchor'];
+    final kind = anchor['kind'] as String;
+    if (kind == 'source' || (kind != 'absolute' && kind != 'clipLocal')) {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    String? clipId;
+    TimeRange? local;
+    if (kind == 'clipLocal') {
+      if (anchor['clipId'] == null || anchor['range'] == null) {
+        throw const StudioException('ANCHOR_INVALID');
+      }
+      clipId = anchor['clipId'] as String;
+      local = TimeRange(
+        Q.fromJson(anchor['range']['start']),
+        Q.fromJson(anchor['range']['duration']),
+      );
+    } else if (anchor['clipId'] != null || anchor['range'] != null) {
+      throw const StudioException('ANCHOR_INVALID');
     }
     return CaptionCue(
       c['id'] as String,
@@ -129,8 +202,129 @@ final class CaptionCue {
       c['text'] as String,
       language: c['language'] as String,
       manualFields: Set<String>.from(c['manualFields'] as List),
+      anchorKind: kind,
+      anchorClipId: clipId,
+      anchorRange: local,
     );
   }
+}
+
+Map<String, Map> _mediaClipsById(Map d) {
+  final clips = <String, Map>{};
+  for (final t in (d['sequences'] as List).first['tracks'] as List) {
+    for (final c in t['items']) {
+      if (c['source'] != null &&
+          (t['kind'] == 'video' || t['kind'] == 'audio')) {
+        clips[c['id'] as String] = c as Map;
+      }
+    }
+  }
+  return clips;
+}
+
+/// Rewrite clipLocal cue timelineRange from the host clip's current start.
+/// Absolute cues are left unchanged. Missing hosts or source anchors refuse.
+void followClipLocalCaptions(Map d, {String Function(String id)? nextVersion}) {
+  final clips = _mediaClipsById(d);
+  for (final cue in d['captions'] as List) {
+    final anchor = cue['anchor'];
+    final kind = anchor['kind'] as String;
+    if (kind == 'absolute') {
+      continue;
+    }
+    if (kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    final clip = clips[anchor['clipId']];
+    if (clip == null || anchor['range'] == null) {
+      throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
+    }
+    final localStart = Q.fromJson(anchor['range']['start']);
+    final localDur = Q.fromJson(anchor['range']['duration']);
+    final clipStart = Q.fromJson(clip['timelineRange']['start']);
+    final clipDur = Q.fromJson(clip['timelineRange']['duration']);
+    if (localStart < Q.of(0) || localStart + localDur > clipDur) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    final nextStart = clipStart + localStart;
+    final prevStart = Q.fromJson(cue['timelineRange']['start']);
+    final prevDur = Q.fromJson(cue['timelineRange']['duration']);
+    if (prevStart == nextStart && prevDur == localDur) {
+      continue;
+    }
+    cue['timelineRange'] = {
+      'start': nextStart.toJson(),
+      'duration': localDur.toJson(),
+    };
+    if (nextVersion != null) {
+      cue['version'] = nextVersion(cue['id'] as String);
+    }
+  }
+}
+
+/// After a cue timing edit, recompute clipLocal anchor.range from timelineRange.
+void syncClipLocalCaptionRanges(Map d) {
+  final clips = _mediaClipsById(d);
+  for (final cue in d['captions'] as List) {
+    final anchor = cue['anchor'];
+    final kind = anchor['kind'] as String;
+    if (kind == 'absolute') {
+      continue;
+    }
+    if (kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    final clip = clips[anchor['clipId']];
+    if (clip == null) {
+      throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
+    }
+    final clipStart = Q.fromJson(clip['timelineRange']['start']);
+    final clipDur = Q.fromJson(clip['timelineRange']['duration']);
+    final start = Q.fromJson(cue['timelineRange']['start']);
+    final duration = Q.fromJson(cue['timelineRange']['duration']);
+    final localStart = start - clipStart;
+    if (localStart < Q.of(0) || localStart + duration > clipDur) {
+      throw const StudioException('ANCHOR_OUT_OF_RANGE');
+    }
+    anchor['range'] = {
+      'start': localStart.toJson(),
+      'duration': duration.toJson(),
+    };
+  }
+}
+
+String? coveringCaptionHostClipId(Map d, TimeRange cue) {
+  String? videoId;
+  String? mediaId;
+  var videoCount = 0, mediaCount = 0;
+  for (final t in (d['sequences'] as List).first['tracks'] as List) {
+    if (t['kind'] != 'video' && t['kind'] != 'audio') {
+      continue;
+    }
+    for (final c in t['items']) {
+      if (c['source'] == null) {
+        continue;
+      }
+      final start = Q.fromJson(c['timelineRange']['start']);
+      final end = start + Q.fromJson(c['timelineRange']['duration']);
+      if (cue.start < start || cue.end > end) {
+        continue;
+      }
+      mediaCount++;
+      mediaId = c['id'] as String;
+      if (t['kind'] == 'video') {
+        videoCount++;
+        videoId = mediaId;
+      }
+    }
+  }
+  if (videoCount == 1) {
+    return videoId;
+  }
+  if (mediaCount == 1) {
+    return mediaId;
+  }
+  return null;
 }
 
 final class CaptionStore {

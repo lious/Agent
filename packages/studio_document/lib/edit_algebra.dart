@@ -1530,7 +1530,7 @@ ProjectDocument _setCaptions(
   final track = existingTracks.isEmpty ? null : existingTracks.single;
   final trackId = track == null ? newId() : track['id'] as String;
   final byId = {for (final c in old) c['id']: c};
-  final result = <Map<String, Object?>>[];
+  var result = <Map<String, Object?>>[];
   if (operation.automatic) {
     final incoming = {for (final c in captions) c.id: c};
     for (final c in old) {
@@ -1568,6 +1568,9 @@ ProjectDocument _setCaptions(
         : nextVersion(c.id);
     result.add(next);
   }
+  d['captions'] = result;
+  syncClipLocalCaptionRanges(d);
+  result = List<Map<String, Object?>>.from(d['captions'] as List);
   if (contentHash(old) == contentHash(result)) return before;
   if (track == null) {
     tracks.add({

@@ -782,6 +782,7 @@ ProjectDocument _pasteClips(
     (d['transitions'] as List).add(t);
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, minimumDuration);
+  followClipLocalCaptions(d, nextVersion: version);
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;
