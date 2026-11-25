@@ -1,0 +1,21 @@
+{
+  "name": "studio_workspace",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "workspace": [
+    "packages/studio_contracts",
+    "packages/studio_document",
+    "packages/studio_store",
+    "packages/studio_harness",
+    "packages/studio_sdk",
+    "apps/studio_demo",
+    "apps/image_demo",
+    "packages/studio_editor_ui"
+  ],
+  "dev_dependencies": {
+    "lints": "^6.0.0",
+    "ffi": "^2.1.4"
+  }
+}

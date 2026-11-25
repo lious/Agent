@@ -1,0 +1,9 @@
+.dart_tool/
+**/build/
+**/ephemeral/
+**/.flutter-plugins*
+artifacts/
+*.sqlite*
+
+__pycache__/
+*.pyc

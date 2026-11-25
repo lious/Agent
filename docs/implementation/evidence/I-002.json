@@ -1,0 +1,50 @@
+{
+  "taskId": "I-002",
+  "profile": "linux-dev",
+  "checkedAt": "2026-11-25T09:44:41.987263+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "taskStatus": "partial",
+  "testsExecuted": 15,
+  "toolchain": {
+    "frameworkVersion": "3.50.1",
+    "channel": "stable",
+    "repositoryUrl": "https://github.com/flutter/flutter.git",
+    "frameworkRevision": "ae9b586f34a8443573f82ef57c3bf914a908cbf7",
+    "frameworkCommitDate": "2026-11-18 17:01:07 -0800",
+    "engineRevision": "4d35714800b9266b6693a58e1225ecd7e9e45ed7",
+    "engineCommitDate": "2026-11-18 01:50:07.000Z",
+    "engineContentHash": "51379e6df48ea8ee7205623b90fe66491cad8df3",
+    "engineBuildDate": "2026-11-17 23:29:07.499",
+    "dartSdkVersion": "3.14.0",
+    "devToolsVersion": "2.61.0",
+    "flutterVersion": "3.50.1",
+    "flutterRoot": "/workspace/toolchains/flutter"
+  },
+  "checks": [
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "test",
+        "packages/studio_document/test",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "{\"protocolVersion\":\"0.1.1\",\"runnerVersion\":\"1.32.0\",\"pid\":222860,\"type\":\"start\",\"time\":0}\n{\"suite\":{\"id\":0,\"platform\":\"vm\",\"path\":\"packages/studio_document/test/document_test.dart\"},\"type\":\"suite\",\"time\":0}\n{\"test\":{\"id\":1,\"name\":\"loading packages/studio_document/test/document_test.dart\",\"suiteID\":0,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":1}\n{\"suite\":{\"id\":2,\"platform\":\"vm\",\"path\":\"packages/studio_document/test/time_test.dart\"},\"type\":\"suite\",\"time\":5}\n{\"test\":{\"id\":3,\"name\":\"loading packages/studio_document/test/time_test.dart\",\"suiteID\":2,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":5}\n{\"count\":2,\"time\":7,\"type\":\"allSuites\"}\n{\"testID\":1,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":341}\n{\"group\":{\"id\":4,\"suiteID\":0,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":9,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":343}\n{\"test\":{\"id\":5,\"name\":\"complete 2.0 empty project roundtrip is immutable\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":13,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":344}\n{\"testID\":3,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":345}\n{\"group\":{\"id\":6,\"suiteID\":2,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":6,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":346}\n{\"test\":{\"id\":7,\"name\":\"10000 exact rational arithmetic and JSON roundtrips\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":8,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":346}\n{\"testID\":5,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":405}\n{\"test\":{\"id\":8,\"name\":\"structural errors are distinct from semantic errors\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":33,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":405}\n{\"testID\":8,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":413}\n{\"test\":{\"id\":9,\"name\":\"closed root, unknown version and invalid namespace rejected\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":40,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":414}\n{\"testID\":9,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":423}\n{\"test\":{\"id\":10,\"name\":\"ID duplicates, time encoding and numeric overflow rejected\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":57,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":423}\n{\"testID\":10,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":431}\n{\"test\":{\"id\":11,\"name\":\"bus references and cycles rejected\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":76,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":432}\n{\"testID\":11,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":436}\n{\"test\":{\"id\":12,\"name\":\"half-open gap intervals and duration validate, overlap rejects\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":90,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":436}\n{\"testID\":12,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":445}\n{\"test\":{\"id\":13,\"name\":\"JCS number vectors, UTF16 order and exact I64 string\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":129,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":445}\n{\"testID\":13,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":449}\n{\"test\":{\"id\":14,\"name\":\"validator rejects cyclic/nonJSON input without recursing forever\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":137,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":449}\n{\"testID\":14,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":454}\n{\"test\":{\"id\":15,\"name\":\"unknown extensions roundtrip unchanged and are not interpreted as time\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":145,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/document_test.dart\"},\"type\":\"testStart\",\"time\":454}\n{\"testID\":15,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":458}\n{\"testID\":7,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":493}\n{\"test\":{\"id\":16,\"name\":\"300 frames at NTSC are 10.01 seconds and no cumulative sample drift\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":18,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":493}\n{\"testID\":16,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":522}\n{\"test\":{\"id\":17,\"name\":\"negative and positive ties to even, floor and ceil\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":47,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":522}\n{\"testID\":17,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":523}\n{\"test\":{\"id\":18,\"name\":\"canonical wire rejects noncanonical, overflow and divide by zero\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":58,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":523}\n{\"testID\":18,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":525}\n{\"test\":{\"id\":19,\"name\":\"half-open intervals and checked end\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":76,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":525}\n{\"testID\":19,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":526}\n{\"test\":{\"id\":20,\"name\":\"frame rate and sample rate bounds\",\"suiteID\":2,\"groupIDs\":[6],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":87,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_document/test/time_test.dart\"},\"type\":\"testStart\",\"time\":526}\n{\"testID\":20,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":527}\n{\"success\":true,\"type\":\"done\",\"time\":529}\n",
+      "outputSha256": "107fa9312a98d96a9ff9544df621dfad102a25f792a71ecf081e703354b18214"
+    }
+  ],
+  "notValidated": [
+    "iOS",
+    "iPadOS",
+    "Android",
+    "macOS",
+    "Windows",
+    "Web",
+    "production media pipeline",
+    "model inference",
+    "paid or remote APIs"
+  ]
+}

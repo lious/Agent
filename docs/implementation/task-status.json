@@ -1,0 +1,68 @@
+{
+  "asOf": "2026-11-25 Asia/Shanghai",
+  "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
+  "originalPlanningExportUnmodified": true,
+  "fullTasksCompleted": 0,
+  "tasks": [
+    {
+      "id": "V-001",
+      "status": "partial",
+      "scope": "Linux development-only C ABI and dual Flutter clean-build/first-frame probe",
+      "evidence": "evidence/V-001.json",
+      "remaining": [
+        "freeze and validate primary release P0 device",
+        "non-Linux target native builds/starts",
+        "real media/hardware ABI qualification"
+      ]
+    },
+    {
+      "id": "I-001",
+      "status": "partial",
+      "scope": "shared Dart workspace, two actual Linux Flutter host shells, profile/namespace composition, runner and CI",
+      "evidence": "evidence/I-001.json",
+      "remaining": [
+        "complete AppProfile fields",
+        "all intended platform qualification",
+        "real provider/native media port implementations"
+      ]
+    },
+    {
+      "id": "I-002",
+      "status": "partial",
+      "scope": "exact time and document value, full project schema copy, bounded vocabulary structure checks, selected semantics and golden",
+      "evidence": "evidence/I-002.json",
+      "remaining": [
+        "all other current schemas",
+        "complete cross-reference/version/DAG semantics",
+        "strict external JSON reader and version migrations",
+        "full conformance suite"
+      ]
+    },
+    {
+      "id": "I-003",
+      "status": "partial",
+      "scope": "actual SQLite create/rename/latest-undo with CAS/fence, idempotency, atomic journal/outbox/receipt, corruption and namespace guards",
+      "evidence": "evidence/I-003.json",
+      "remaining": [
+        "full entity command/readset/write lock model",
+        "definition closure and retained-source/blob pins",
+        "arbitrary command inverse patches and undo/redo stack",
+        "writer lease lifetime/renewal and full recovery"
+      ]
+    }
+  ],
+  "safety": {
+    "macAccessed": false,
+    "paidApisCalled": false,
+    "modelsDownloaded": false,
+    "deployed": false,
+    "autoMergeFeatureBranch": false
+  },
+  "scopedChecksVerified": true,
+  "dartAndFlutterTests": 39,
+  "toolingUnitTests": 4,
+  "nativeProbeRuns": 3,
+  "nativeFirstFrameStarts": 6,
+  "activeCiInstalled": false,
+  "ciRecipe": "foundation-ci.yml"
+}

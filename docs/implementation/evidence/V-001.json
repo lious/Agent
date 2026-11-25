@@ -1,0 +1,489 @@
+{
+  "taskId": "V-001",
+  "profile": "linux-dev",
+  "checkedAt": "2026-11-25T09:50:03.370787+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "taskStatus": "partial",
+  "fullTaskComplete": false,
+  "toolchain": {
+    "frameworkVersion": "3.50.1",
+    "channel": "stable",
+    "repositoryUrl": "https://github.com/flutter/flutter.git",
+    "frameworkRevision": "ae9b586f34a8443573f82ef57c3bf914a908cbf7",
+    "frameworkCommitDate": "2026-11-18 17:01:07 -0800",
+    "engineRevision": "4d35714800b9266b6693a58e1225ecd7e9e45ed7",
+    "engineCommitDate": "2026-11-18 01:50:07.000Z",
+    "engineContentHash": "51379e6df48ea8ee7205623b90fe66491cad8df3",
+    "engineBuildDate": "2026-11-17 23:29:07.499",
+    "dartSdkVersion": "3.14.0",
+    "devToolsVersion": "2.61.0",
+    "flutterVersion": "3.50.1",
+    "flutterRoot": "/workspace/toolchains/flutter"
+  },
+  "host": "Linux 6.12.113+ x86_64",
+  "checks": [
+    {
+      "command": [
+        "cmake",
+        "-S",
+        "tools/spikes/toolchain",
+        "-B",
+        "/tmp/studio-abi-wbrcm4yr",
+        "-G",
+        "Ninja"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- Configuring done (0.1s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/studio-abi-wbrcm4yr\n",
+      "outputSha256": "9a65ac0115a7bdb5048d57c55bfca49e1d030db230d3ee2b088da36ba18b3b8d",
+      "repetition": 1
+    },
+    {
+      "command": [
+        "cmake",
+        "--build",
+        "/tmp/studio-abi-wbrcm4yr"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "[1/2] Building CXX object CMakeFiles/studio_probe.dir/probe.cpp.o\n[2/2] Linking CXX shared library libstudio_probe.so\n",
+      "outputSha256": "841d08390c0de9291734990bb4f813fcf3ee2436b35b2032b89c8f7d5a31b9a4",
+      "repetition": 1
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "run",
+        "tools/spikes/toolchain/ffi_probe.dart",
+        "/tmp/studio-abi-wbrcm4yr/libstudio_probe.so"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "C_ABI_PROBE_OK abi=1 namespaceIsolation=true\n",
+      "outputSha256": "e68ffc44181e13a0a0b207fa7fd3ea9c462a16e21d1cb6080963b04c2d8ab430",
+      "repetition": 1
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    4ms\nDeleting .dart_tool...                                               5ms\nDeleting ephemeral...                                                3ms\n",
+      "outputSha256": "c257a10458fedf93c1d79b93fb2c3d1be8d9e2e01d8d678c211ca675ed40394b",
+      "repetition": 1,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 1,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/studio_demo\n",
+      "outputSha256": "3bf835c85d39196acd46c0879606f803114b016a4cbeed142c27ece1b41a9897",
+      "repetition": 1,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/studio_demo/build/linux/x64/release/bundle/studio_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.studio_demo:227090): dbind-WARNING **: 09:48:09.322: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.studio_demo:227090): Atk-CRITICAL **: 09:48:09.366: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK studio_demo revision=0\n",
+      "outputSha256": "707506d2a0135e47d1a58c618c31e8b36df1cf30c20da857798c61b2efbc9df2",
+      "repetition": 1,
+      "app": "studio_demo",
+      "firstFrameObserved": true
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    4ms\nDeleting .dart_tool...                                               4ms\nDeleting ephemeral...                                                2ms\n",
+      "outputSha256": "d01aa1867b28f0005eb0570faa9ada7e9eaddec388ea2278d4e1416453d5fc2e",
+      "repetition": 1,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 1,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/image_demo\n",
+      "outputSha256": "92b0a7a48787e909764152638d8884a77b80838f8ffff04f4a764cc09f78b5d3",
+      "repetition": 1,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/image_demo/build/linux/x64/release/bundle/image_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.image_demo:227857): dbind-WARNING **: 09:48:32.211: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.image_demo:227857): Atk-CRITICAL **: 09:48:32.256: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK image_demo revision=0\n",
+      "outputSha256": "b775eae8f7df309bda25c27babac530b624477502ee55c9aa1a66433f2872b28",
+      "repetition": 1,
+      "app": "image_demo",
+      "firstFrameObserved": true
+    },
+    {
+      "command": [
+        "cmake",
+        "-S",
+        "tools/spikes/toolchain",
+        "-B",
+        "/tmp/studio-abi-a3eylhvr",
+        "-G",
+        "Ninja"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- Configuring done (0.1s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/studio-abi-a3eylhvr\n",
+      "outputSha256": "e0f84bd724edb58e07dfde36a1480478f3bd2186edebeb9631a2d5ae2466f336",
+      "repetition": 2
+    },
+    {
+      "command": [
+        "cmake",
+        "--build",
+        "/tmp/studio-abi-a3eylhvr"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "[1/2] Building CXX object CMakeFiles/studio_probe.dir/probe.cpp.o\n[2/2] Linking CXX shared library libstudio_probe.so\n",
+      "outputSha256": "841d08390c0de9291734990bb4f813fcf3ee2436b35b2032b89c8f7d5a31b9a4",
+      "repetition": 2
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "run",
+        "tools/spikes/toolchain/ffi_probe.dart",
+        "/tmp/studio-abi-a3eylhvr/libstudio_probe.so"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "C_ABI_PROBE_OK abi=1 namespaceIsolation=true\n",
+      "outputSha256": "e68ffc44181e13a0a0b207fa7fd3ea9c462a16e21d1cb6080963b04c2d8ab430",
+      "repetition": 2
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    4ms\nDeleting .dart_tool...                                               4ms\nDeleting ephemeral...                                                3ms\n",
+      "outputSha256": "1dbfe995e303d18ca19b52e1558c7438fc1bf174e9791d4e153fe6944fa2c465",
+      "repetition": 2,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 2,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/studio_demo\n",
+      "outputSha256": "3bf835c85d39196acd46c0879606f803114b016a4cbeed142c27ece1b41a9897",
+      "repetition": 2,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/studio_demo/build/linux/x64/release/bundle/studio_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.studio_demo:228441): dbind-WARNING **: 09:48:55.504: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.studio_demo:228441): Atk-CRITICAL **: 09:48:55.547: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK studio_demo revision=0\n",
+      "outputSha256": "6ada6f8751129827cc8b7fb8f160ff5d214c46b10b6daa858bd006f0925b92c5",
+      "repetition": 2,
+      "app": "studio_demo",
+      "firstFrameObserved": true
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    5ms\nDeleting .dart_tool...                                               4ms\nDeleting ephemeral...                                                3ms\n",
+      "outputSha256": "7c6861fb869ea72095d534d3e0bb221f3458d190bfdfe4517309d7b803eb9c48",
+      "repetition": 2,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 2,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/image_demo\n",
+      "outputSha256": "92b0a7a48787e909764152638d8884a77b80838f8ffff04f4a764cc09f78b5d3",
+      "repetition": 2,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/image_demo/build/linux/x64/release/bundle/image_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.image_demo:229056): dbind-WARNING **: 09:49:17.626: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.image_demo:229056): Atk-CRITICAL **: 09:49:17.671: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK image_demo revision=0\n",
+      "outputSha256": "b411f97008c70d34463eb964a05006e904ffbe16fa30a864a3d1aa44dae67a62",
+      "repetition": 2,
+      "app": "image_demo",
+      "firstFrameObserved": true
+    },
+    {
+      "command": [
+        "cmake",
+        "-S",
+        "tools/spikes/toolchain",
+        "-B",
+        "/tmp/studio-abi-vue6kzzw",
+        "-G",
+        "Ninja"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- Configuring done (0.1s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/studio-abi-vue6kzzw\n",
+      "outputSha256": "d36e3ca20f80846884c0a6ba7d2dd24c0e21688cdaf0bc8c1df22e51886ed233",
+      "repetition": 3
+    },
+    {
+      "command": [
+        "cmake",
+        "--build",
+        "/tmp/studio-abi-vue6kzzw"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "[1/2] Building CXX object CMakeFiles/studio_probe.dir/probe.cpp.o\n[2/2] Linking CXX shared library libstudio_probe.so\n",
+      "outputSha256": "841d08390c0de9291734990bb4f813fcf3ee2436b35b2032b89c8f7d5a31b9a4",
+      "repetition": 3
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "run",
+        "tools/spikes/toolchain/ffi_probe.dart",
+        "/tmp/studio-abi-vue6kzzw/libstudio_probe.so"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "C_ABI_PROBE_OK abi=1 namespaceIsolation=true\n",
+      "outputSha256": "e68ffc44181e13a0a0b207fa7fd3ea9c462a16e21d1cb6080963b04c2d8ab430",
+      "repetition": 3
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    5ms\nDeleting .dart_tool...                                               4ms\nDeleting ephemeral...                                                2ms\n",
+      "outputSha256": "e5068874e41b7e3ed74f4a0818c729a791d11857ea9337174abf4eecfe74972d",
+      "repetition": 3,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 3,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/studio_demo\n",
+      "outputSha256": "3bf835c85d39196acd46c0879606f803114b016a4cbeed142c27ece1b41a9897",
+      "repetition": 3,
+      "app": "studio_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/studio_demo/build/linux/x64/release/bundle/studio_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/studio_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.studio_demo:229848): dbind-WARNING **: 09:49:40.962: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.studio_demo:229848): Atk-CRITICAL **: 09:49:41.007: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK studio_demo revision=0\n",
+      "outputSha256": "8235c0d166431cccee4c852d58872051054c852dcbaafbd21120d6bcafdd63ed",
+      "repetition": 3,
+      "app": "studio_demo",
+      "firstFrameObserved": true
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "clean"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Deleting build...                                                    5ms\nDeleting .dart_tool...                                               5ms\nDeleting ephemeral...                                                2ms\n",
+      "outputSha256": "c3354816562e23b2010455b5425354a4649f3d946bfc50b3067a4f1580b643a8",
+      "repetition": 3,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "pub",
+        "get",
+        "--enforce-lockfile"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Resolving dependencies in `/workspace/agent-foundation-20261125`...\nDownloading packages...\n  material_color_utilities 0.13.0 (0.13.1 available)\n  sqlite3 2.9.4 (3.9.2 available)\n  test 1.32.0 (1.33.0 available)\n  test_api 0.7.14 (0.7.15 available)\n  test_core 0.6.20 (0.6.21 available)\nGot dependencies in `/workspace/agent-foundation-20261125`!\n5 packages have newer versions incompatible with dependency constraints.\nTry `flutter pub outdated` for more information.\n",
+      "outputSha256": "8347427d4c8ff578dc64c72fe4a4d7c13ac2f494167045d1e1a3f0114a629512",
+      "repetition": 3,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "build",
+        "linux",
+        "--release"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "Building Linux application...                                   \n✓ Built build/linux/x64/release/bundle/image_demo\n",
+      "outputSha256": "92b0a7a48787e909764152638d8884a77b80838f8ffff04f4a764cc09f78b5d3",
+      "repetition": 3,
+      "app": "image_demo"
+    },
+    {
+      "command": [
+        "xvfb-run",
+        "-a",
+        "/workspace/agent-foundation-20261125/apps/image_demo/build/linux/x64/release/bundle/image_demo",
+        "--smoke-test"
+      ],
+      "cwd": "apps/image_demo",
+      "exitCode": 0,
+      "output": "\n(dev.studio.image_demo:230361): dbind-WARNING **: 09:50:03.193: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.image_demo:230361): Atk-CRITICAL **: 09:50:03.242: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\nSTUDIO_SMOKE_OK image_demo revision=0\n",
+      "outputSha256": "06935745761f73826d8ecfce94e066d3675c6a114d65492a0bc6a216778808cd",
+      "repetition": 3,
+      "app": "image_demo",
+      "firstFrameObserved": true
+    }
+  ],
+  "primaryReleaseDeviceFrozen": false,
+  "notValidated": [
+    "all non-Linux platforms",
+    "P0 real target device",
+    "FFmpeg",
+    "hardware codecs/textures/audio",
+    "store distribution",
+    "model inference"
+  ]
+}

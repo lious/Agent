@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+project(studio_toolchain_probe LANGUAGES CXX)
+add_library(studio_probe SHARED probe.cpp)
+target_compile_features(studio_probe PRIVATE cxx_std_20)
+target_compile_options(studio_probe PRIVATE -Wall -Wextra -Werror -Wpedantic)

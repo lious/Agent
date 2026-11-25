@@ -1,0 +1,109 @@
+import 'dart:io';
+
+import 'package:studio_sdk/studio_sdk.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test(
+    'two host profiles share implementation, never session/project scope',
+    () {
+      final dir = Directory.systemTemp.createTempSync('studio-sdk-');
+      final a = StudioWorkspace.open(
+        profile: AppProfile(
+          appId: 'image',
+          region: 'local',
+          features: {'project.metadata'},
+        ),
+        databasePath: '${dir.path}/both.sqlite',
+        tenantId: 't',
+        workspaceId: 'w',
+      );
+      final b = StudioWorkspace.open(
+        profile: AppProfile(
+          appId: 'studio',
+          region: 'local',
+          features: {'project.metadata'},
+        ),
+        databasePath: '${dir.path}/both.sqlite',
+        tenantId: 't',
+        workspaceId: 'w',
+      );
+      try {
+        a.openDemo();
+        b.openDemo();
+        a.rename('Image title', expectedRevision: BigInt.zero);
+        expect(a.current.title, 'Image title');
+        expect(b.current.title, 'Untitled');
+        final session = SessionRef(
+          namespace: Namespace('image', 't', 'w'),
+          id: 's1',
+        );
+        expect(
+          () => session.requireScope(Namespace('studio', 't', 'w')),
+          throwsA(isA<StudioException>()),
+        );
+      } finally {
+        a.close();
+        b.close();
+        dir.deleteSync(recursive: true);
+      }
+    },
+  );
+  test('disabled profile cannot open writable project metadata', () {
+    final workspace = StudioWorkspace.open(
+      profile: AppProfile(appId: 'disabled', region: 'local', features: {}),
+      databasePath: ':memory:',
+      tenantId: 't',
+      workspaceId: 'w',
+    );
+    try {
+      expect(
+        () => workspace.openDemo(),
+        throwsA(
+          isA<StudioException>().having(
+            (e) => e.code,
+            'code',
+            'CAPABILITY_UNAVAILABLE',
+          ),
+        ),
+      );
+    } finally {
+      workspace.close();
+    }
+  });
+  test(
+    'facade requires revision the user actually saw, not latest DB revision',
+    () {
+      final workspace = StudioWorkspace.open(
+        profile: AppProfile(
+          appId: 'studio',
+          region: 'local',
+          features: {'project.metadata'},
+        ),
+        databasePath: ':memory:',
+        tenantId: 't',
+        workspaceId: 'w',
+      );
+      try {
+        workspace.openDemo();
+        workspace.rename('User edit', expectedRevision: BigInt.zero);
+        expect(
+          () => workspace.rename(
+            'Stale overwrite',
+            expectedRevision: BigInt.zero,
+          ),
+          throwsA(
+            isA<StudioException>().having(
+              (e) => e.code,
+              'code',
+              'REVISION_CONFLICT',
+            ),
+          ),
+        );
+        expect(workspace.current.title, 'User edit');
+      } finally {
+        workspace.close();
+      }
+    },
+  );
+}

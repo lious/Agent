@@ -1,0 +1,39 @@
+name: Foundation acceptance
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-foundation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev libsqlite3-dev g++ xvfb xauth
+      - name: Install pinned official Flutter SDK
+        shell: bash
+        run: |
+          curl -fL https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.50.1-stable.tar.xz -o "$RUNNER_TEMP/flutter.tar.xz"
+          echo "4ad17fc8462fbcef2ba19ff4a78c0a16b7147fde1add8578e267ea62cdb92678  $RUNNER_TEMP/flutter.tar.xz" | sha256sum -c -
+          tar -xf "$RUNNER_TEMP/flutter.tar.xz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - run: flutter --disable-analytics && flutter pub get --enforce-lockfile
+      - name: Tooling regressions
+        run: python3 -m unittest discover -s tools/tests -v
+      - name: Scoped implementation checks (full tasks remain partial)
+        run: |
+          python3 tools/acceptance/run_task.py I-001 --profile linux-dev --report artifacts/acceptance/I-001.json
+          python3 tools/acceptance/run_task.py I-002 --profile linux-dev --report artifacts/acceptance/I-002.json
+          python3 tools/acceptance/run_task.py I-003 --profile linux-dev --report artifacts/acceptance/I-003.json
+      - name: Three clean native builds and first-frame starts per demo
+        run: python3 tools/spikes/toolchain/run_probe.py --profile linux-dev --report artifacts/acceptance/V-001.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: foundation-acceptance-linux
+          path: artifacts/acceptance/

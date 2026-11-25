@@ -1,0 +1,50 @@
+{
+  "taskId": "I-003",
+  "profile": "linux-dev",
+  "checkedAt": "2026-11-25T09:47:43.629040+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "taskStatus": "partial",
+  "testsExecuted": 17,
+  "toolchain": {
+    "frameworkVersion": "3.50.1",
+    "channel": "stable",
+    "repositoryUrl": "https://github.com/flutter/flutter.git",
+    "frameworkRevision": "ae9b586f34a8443573f82ef57c3bf914a908cbf7",
+    "frameworkCommitDate": "2026-11-18 17:01:07 -0800",
+    "engineRevision": "4d35714800b9266b6693a58e1225ecd7e9e45ed7",
+    "engineCommitDate": "2026-11-18 01:50:07.000Z",
+    "engineContentHash": "51379e6df48ea8ee7205623b90fe66491cad8df3",
+    "engineBuildDate": "2026-11-17 23:29:07.499",
+    "dartSdkVersion": "3.14.0",
+    "devToolsVersion": "2.61.0",
+    "flutterVersion": "3.50.1",
+    "flutterRoot": "/workspace/toolchains/flutter"
+  },
+  "checks": [
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "test",
+        "packages/studio_store/test",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "{\"protocolVersion\":\"0.1.1\",\"runnerVersion\":\"1.32.0\",\"pid\":226415,\"type\":\"start\",\"time\":0}\n{\"suite\":{\"id\":0,\"platform\":\"vm\",\"path\":\"packages/studio_store/test/transactions_test.dart\"},\"type\":\"suite\",\"time\":0}\n{\"test\":{\"id\":1,\"name\":\"loading packages/studio_store/test/transactions_test.dart\",\"suiteID\":0,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":1}\n{\"count\":1,\"time\":6,\"type\":\"allSuites\"}\n{\"testID\":1,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":359}\n{\"group\":{\"id\":2,\"suiteID\":0,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":17,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":360}\n{\"test\":{\"id\":3,\"name\":\"migration, commit, reopen, checksum and foreign key enforcement\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":81,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":361}\n{\"testID\":3,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":472}\n{\"test\":{\"id\":4,\"name\":\"same key same input returns original receipt even after a new writer\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":97,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":472}\n{\"testID\":4,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":498}\n{\"test\":{\"id\":5,\"name\":\"no-op records only receipt, retains revision, images and event tail\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":111,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":499}\n{\"testID\":5,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":519}\n{\"test\":{\"id\":6,\"name\":\"undo restores content in a NEW revision, stale undo cannot overwrite\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":132,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":519}\n{\"testID\":6,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":559}\n{\"test\":{\"id\":7,\"name\":\"fence transfer invalidates old writer and expected epoch CAS\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":158,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":559}\n{\"testID\":7,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":572}\n{\"test\":{\"id\":8,\"name\":\"SQL failure after event append rolls back EVERY write\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":167,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":572}\n{\"testID\":8,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":598}\n{\"test\":{\"id\":9,\"name\":\"invalid title, project namespace and duplicate create are rejected\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":197,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":598}\n{\"testID\":9,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":618}\n{\"test\":{\"id\":10,\"name\":\"dual hosts, tenants and workspaces cannot read each other through APIs\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":210,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":618}\n{\"testID\":10,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":644}\n{\"test\":{\"id\":11,\"name\":\"real 100 competing commands on 10 isolates: exactly one CAS succeeds\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":250,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":644}\n{\"testID\":11,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1138}\n{\"test\":{\"id\":12,\"name\":\"unknown schema version refuses without modifying it\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":282,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1139}\n{\"testID\":12,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1154}\n{\"test\":{\"id\":13,\"name\":\"migration checksum mismatch fails closed\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":295,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1154}\n{\"testID\":13,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1166}\n{\"test\":{\"id\":14,\"name\":\"stored snapshot tampering is detected on read\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":307,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1166}\n{\"testID\":14,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1174}\n{\"test\":{\"id\":15,\"name\":\"writer tokens cannot cross namespaces even with identical owner/epoch\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":319,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1174}\n{\"testID\":15,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1187}\n{\"test\":{\"id\":16,\"name\":\"fixture blob corruption is detected\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":353,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1187}\n{\"testID\":16,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1195}\n{\"test\":{\"id\":17,\"name\":\"missing referenced snapshot is corruption, never an absent project\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":366,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1195}\n{\"testID\":17,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1202}\n{\"test\":{\"id\":18,\"name\":\"failed first migration preserves original database and version\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":379,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1202}\n{\"testID\":18,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1211}\n{\"test\":{\"id\":19,\"name\":\"undo verifies historical before-image hash, not just current head\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":404,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_store/test/transactions_test.dart\"},\"type\":\"testStart\",\"time\":1211}\n{\"testID\":19,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":1229}\n{\"success\":true,\"type\":\"done\",\"time\":1235}\n",
+      "outputSha256": "5371951bc1ddef3a37fdcf86d0ee3b2ab4ce7804eebc2648214037e4c9000697"
+    }
+  ],
+  "notValidated": [
+    "iOS",
+    "iPadOS",
+    "Android",
+    "macOS",
+    "Windows",
+    "Web",
+    "production media pipeline",
+    "model inference",
+    "paid or remote APIs"
+  ]
+}

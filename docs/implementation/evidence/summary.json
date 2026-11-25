@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-11-25T09:50:29.119311+08:00",
+  "timezone": "Asia/Shanghai",
+  "fullTasksCompleted": 0,
+  "taskStatus": "partial",
+  "checks": {
+    "I-001": {
+      "scopeStatus": "passed",
+      "testsExecuted": 7,
+      "fullTaskComplete": false,
+      "checkedAt": "2026-11-25T09:49:21.891786+08:00"
+    },
+    "I-002": {
+      "scopeStatus": "passed",
+      "testsExecuted": 15,
+      "fullTaskComplete": false,
+      "checkedAt": "2026-11-25T09:44:41.987263+08:00"
+    },
+    "I-003": {
+      "scopeStatus": "passed",
+      "testsExecuted": 17,
+      "fullTaskComplete": false,
+      "checkedAt": "2026-11-25T09:47:43.629040+08:00"
+    },
+    "V-001": {
+      "scopeStatus": "passed",
+      "testsExecuted": null,
+      "fullTaskComplete": false,
+      "checkedAt": "2026-11-25T09:50:03.370787+08:00"
+    }
+  },
+  "toolingUnitTests": 4,
+  "toolingUnitTestsResult": "passed",
+  "ciWorkflowSyntax": "parsed locally with PyYAML 6.0.3; not a remote CI result",
+  "originalPlanningChecksums": "104 entries verified; unchanged",
+  "selfReviewRounds": 3,
+  "remoteCiStatus": "not installed: GitHub OAuth lacks workflow scope; non-executing recipe delivered instead",
+  "nativeProbeRuns": 3,
+  "nativeFirstFrameStarts": 6,
+  "dartAndFlutterTests": 39,
+  "activeCiInstalled": false
+}

@@ -1,0 +1,28 @@
+{
+  "name": "studio_sdk",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    },
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "studio_store": {
+      "path": "../studio_store"
+    },
+    "studio_harness": {
+      "path": "../studio_harness"
+    },
+    "uuid": "^4.5.1"
+  },
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "lints": "^6.0.0"
+  }
+}

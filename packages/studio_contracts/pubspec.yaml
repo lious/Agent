@@ -1,0 +1,14 @@
+{
+  "name": "studio_contracts",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {},
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "lints": "^6.0.0"
+  }
+}

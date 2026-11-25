@@ -1,0 +1,32 @@
+{
+  "profileId": "linux-dev",
+  "scope": "development-only; not a frozen release P0 device",
+  "validatedHost": "Linux 6.12.113+ x86_64",
+  "sdk": {
+    "flutter": "3.50.1",
+    "dart": "3.14.0",
+    "channel": "stable",
+    "archive": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.50.1-stable.tar.xz",
+    "sha256": "4ad17fc8462fbcef2ba19ff4a78c0a16b7147fde1add8578e267ea62cdb92678",
+    "source": "https://docs.flutter.dev/install/archive"
+  },
+  "commands": {
+    "clang --version": "Debian clang version 19.1.7 (3+b1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-19/bin",
+    "g++ --version": "g++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "cmake --version": "cmake version 3.31.6\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+    "ninja --version": "1.12.1"
+  },
+  "targets": {
+    "linux-x64": "scoped probe; see evidence",
+    "ios": "unvalidated",
+    "ipados": "unvalidated",
+    "android": "unvalidated",
+    "macos": "unvalidated",
+    "windows": "unvalidated",
+    "web": "unvalidated"
+  },
+  "sqliteRuntime": {
+    "sqliteVersion": "3.46.1"
+  },
+  "linuxPrerequisiteSource": "Debian configured apt repositories via apt-get (not included in repository)"
+}

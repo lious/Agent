@@ -1,0 +1,89 @@
+{
+  "taskId": "I-001",
+  "profile": "linux-dev",
+  "checkedAt": "2026-11-25T09:49:21.891786+08:00",
+  "timezone": "Asia/Shanghai",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "taskStatus": "partial",
+  "testsExecuted": 7,
+  "toolchain": {
+    "frameworkVersion": "3.50.1",
+    "channel": "stable",
+    "repositoryUrl": "https://github.com/flutter/flutter.git",
+    "frameworkRevision": "ae9b586f34a8443573f82ef57c3bf914a908cbf7",
+    "frameworkCommitDate": "2026-11-18 17:01:07 -0800",
+    "engineRevision": "4d35714800b9266b6693a58e1225ecd7e9e45ed7",
+    "engineCommitDate": "2026-11-18 01:50:07.000Z",
+    "engineContentHash": "51379e6df48ea8ee7205623b90fe66491cad8df3",
+    "engineBuildDate": "2026-11-17 23:29:07.499",
+    "dartSdkVersion": "3.14.0",
+    "devToolsVersion": "2.61.0",
+    "flutterVersion": "3.50.1",
+    "flutterRoot": "/workspace/toolchains/flutter"
+  },
+  "checks": [
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "format",
+        "--output=none",
+        "--set-exit-if-changed",
+        "packages",
+        "apps/studio_demo/lib",
+        "apps/image_demo/lib",
+        "tools/spikes/toolchain/ffi_probe.dart"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Formatted 22 files (0 changed) in 0.08 seconds.\n",
+      "outputSha256": "a0dd5d97de49ce71dda8923d206493d3cfc85c3539f39ba77f8867b98216b053"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "analyze"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Analyzing agent-foundation-20261125...                          \nNo issues found! (ran in 0.7s)\n",
+      "outputSha256": "4374a078c83e81cd27905ec92dab776b32687587264f827844db0e69ce7ee651"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/dart",
+        "test",
+        "packages/studio_contracts/test",
+        "packages/studio_sdk/test",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "{\"protocolVersion\":\"0.1.1\",\"runnerVersion\":\"1.32.0\",\"pid\":229077,\"type\":\"start\",\"time\":0}\n{\"suite\":{\"id\":0,\"platform\":\"vm\",\"path\":\"packages/studio_contracts/test/scope_test.dart\"},\"type\":\"suite\",\"time\":0}\n{\"test\":{\"id\":1,\"name\":\"loading packages/studio_contracts/test/scope_test.dart\",\"suiteID\":0,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":0}\n{\"suite\":{\"id\":2,\"platform\":\"vm\",\"path\":\"packages/studio_sdk/test/workspace_test.dart\"},\"type\":\"suite\",\"time\":8}\n{\"test\":{\"id\":3,\"name\":\"loading packages/studio_sdk/test/workspace_test.dart\",\"suiteID\":2,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":8}\n{\"count\":2,\"time\":10,\"type\":\"allSuites\"}\n{\"testID\":1,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":322}\n{\"group\":{\"id\":4,\"suiteID\":0,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":3,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":324}\n{\"test\":{\"id\":5,\"name\":\"namespace tuple cannot collide on delimiter-like identifiers\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":5,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_contracts/test/scope_test.dart\"},\"type\":\"testStart\",\"time\":324}\n{\"testID\":5,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":336}\n{\"test\":{\"id\":6,\"name\":\"empty, paths, unicode and oversized IDs are rejected\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":9,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_contracts/test/scope_test.dart\"},\"type\":\"testStart\",\"time\":336}\n{\"testID\":6,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":338}\n{\"test\":{\"id\":7,\"name\":\"profile feature collection cannot be mutated through caller reference\",\"suiteID\":0,\"groupIDs\":[4],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":15,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_contracts/test/scope_test.dart\"},\"type\":\"testStart\",\"time\":339}\n{\"testID\":7,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":341}\n{\"testID\":3,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":358}\n{\"group\":{\"id\":8,\"suiteID\":2,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":3,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":358}\n{\"test\":{\"id\":9,\"name\":\"two host profiles share implementation, never session/project scope\",\"suiteID\":2,\"groupIDs\":[8],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":7,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/workspace_test.dart\"},\"type\":\"testStart\",\"time\":359}\n{\"testID\":9,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":476}\n{\"test\":{\"id\":10,\"name\":\"disabled profile cannot open writable project metadata\",\"suiteID\":2,\"groupIDs\":[8],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":52,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/workspace_test.dart\"},\"type\":\"testStart\",\"time\":477}\n{\"testID\":10,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":481}\n{\"test\":{\"id\":11,\"name\":\"facade requires revision the user actually saw, not latest DB revision\",\"suiteID\":2,\"groupIDs\":[8],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":74,\"column\":3,\"url\":\"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/workspace_test.dart\"},\"type\":\"testStart\",\"time\":481}\n{\"testID\":11,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":498}\n{\"success\":true,\"type\":\"done\",\"time\":501}\n",
+      "outputSha256": "b35e0c9aa1d2dadc144dd76e06d58365d14b173afa9a0e6cdf30cf5d29ae2e39"
+    },
+    {
+      "command": [
+        "/workspace/toolchains/flutter/bin/flutter",
+        "test",
+        "test",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "exitCode": 0,
+      "output": "{\"protocolVersion\":\"0.1.1\",\"runnerVersion\":\"1.32.0\",\"pid\":229222,\"type\":\"start\",\"time\":0}\n{\"suite\":{\"id\":0,\"platform\":\"vm\",\"path\":\"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart\"},\"type\":\"suite\",\"time\":0}\n{\"test\":{\"id\":1,\"name\":\"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart\",\"suiteID\":0,\"groupIDs\":[],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":null,\"column\":null,\"url\":null},\"type\":\"testStart\",\"time\":1}\n{\"count\":1,\"time\":4,\"type\":\"allSuites\"}\n{\"testID\":1,\"result\":\"success\",\"skipped\":false,\"hidden\":true,\"type\":\"testDone\",\"time\":1831}\n{\"group\":{\"id\":2,\"suiteID\":0,\"parentID\":null,\"name\":\"\",\"metadata\":{\"skip\":false,\"skipReason\":null},\"testCount\":1,\"line\":null,\"column\":null,\"url\":null},\"type\":\"group\",\"time\":1832}\n{\"test\":{\"id\":3,\"name\":\"real SQLite title save, validation, undo and reopen in Flutter widget\",\"suiteID\":0,\"groupIDs\":[2],\"metadata\":{\"skip\":false,\"skipReason\":null},\"line\":174,\"column\":5,\"url\":\"package:flutter_test/src/widget_tester.dart\",\"root_line\":9,\"root_column\":3,\"root_url\":\"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/foundation_app_test.dart\"},\"type\":\"testStart\",\"time\":1833}\n{\"testID\":3,\"result\":\"success\",\"skipped\":false,\"hidden\":false,\"type\":\"testDone\",\"time\":2766}\n{\"success\":true,\"type\":\"done\",\"time\":2785}\n",
+      "outputSha256": "6c2a37cef6c3dbb3ff356fbc01be17251837dfc4858ed83c8f98e107529b6543"
+    }
+  ],
+  "notValidated": [
+    "iOS",
+    "iPadOS",
+    "Android",
+    "macOS",
+    "Windows",
+    "Web",
+    "production media pipeline",
+    "model inference",
+    "paid or remote APIs"
+  ]
+}
