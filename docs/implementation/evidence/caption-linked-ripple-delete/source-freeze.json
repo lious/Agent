@@ -1,0 +1,19 @@
+{
+  "baseCommit": "47bb47e621814915f4b6f2bda1644fbdf7fe44a4",
+  "sourceSha256": {
+    "packages/studio_document/lib/edit_algebra.dart": "23c3800f535a8db3582779d40f8504a41501fba5a6869588abf3be4e814f283d",
+    "packages/studio_document/lib/persistent_audio.dart": "b7d2b2a6b590b99743ec7fb00ce75d81d1d182832e8a4fca7cec71ad16dee68c",
+    "packages/studio_document/test/caption_linked_ripple_delete_test.dart": "7e6803ea093cb10efb03ce111bf32bb10700cb2a58e941ab8733b3ff46e557e8",
+    "packages/studio_document/test/caption_linked_ripple_trim_test.dart": "7e97bd5875bfc13c3d2ad8c42d961f38f872850f9e9034cef7a88ef2e45e6bb4",
+    "packages/studio_document/test/persistent_audio_test.dart": "c690b889272f83465a094c21df3bfdc92f051d0925390dbff9aa15c954bd4465",
+    "packages/studio_sdk/test/caption_linked_ripple_delete_test.dart": "6f53f784ab1b476acd084b35231e643e7d4d187993f2efd9f4bcae5d9ed59365",
+    "packages/studio_editor_ui/test/caption_linked_ripple_delete_ui_test.dart": "79db37afb874a0cfac12949922cbe16a9c91353685b0e3282750f3cd1d95f61f"
+  },
+  "aggregateSha256": "157d3dacd3a26b54fb6857af6b38fd11596fad29f9cb4a844ffdd8637ae25036",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T08:10:11+08:00",
+  "timezone": "Asia/Shanghai"
+}

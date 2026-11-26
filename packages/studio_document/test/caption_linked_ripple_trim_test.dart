@@ -107,40 +107,37 @@ void main() {
     expect(Q.fromJson(right['timelineRange']['duration']), Q.of(1, 2));
   });
 
-  test(
-    'leave-gap trim and MoveClip stay unchanged; ripple delete still refuses',
-    () {
-      var p = avFixture();
-      final a = algebra.firstId(p);
-      p = move.change(p, ExtractAudioClip(a, 'audio-stream'));
-      p = move.change(p, SplitClip(a, Q.of(2), 'right'));
-      p = attachDefaults(p, [
-        CaptionCue(
-          'cue-later',
-          TimeRange(Q.of(5, 2), Q.of(1, 5)),
-          'stay',
-          manualFields: {'text', 'timing'},
-        ),
-      ]);
-      final leave = move.change(p, TrimClip(a, 'out', Q.of(-1, 2)));
-      expect(durOf(leave, a), Q.of(3, 2));
-      expect(startOf(leave, 'right'), Q.of(2));
+  test('leave-gap trim and MoveClip stay unchanged; leave-gap delete still refuses', () {
+    var p = avFixture();
+    final a = algebra.firstId(p);
+    p = move.change(p, ExtractAudioClip(a, 'audio-stream'));
+    p = move.change(p, SplitClip(a, Q.of(2), 'right'));
+    p = attachDefaults(p, [
+      CaptionCue(
+        'cue-later',
+        TimeRange(Q.of(5, 2), Q.of(1, 5)),
+        'stay',
+        manualFields: {'text', 'timing'},
+      ),
+    ]);
+    final leave = move.change(p, TrimClip(a, 'out', Q.of(-1, 2)));
+    expect(durOf(leave, a), Q.of(3, 2));
+    expect(startOf(leave, 'right'), Q.of(2));
+    expect(
+      Q.fromJson(cueOf(leave, 'cue-later')['timelineRange']['start']),
+      Q.of(5, 2),
+    );
+    assertPure(p, () {
       expect(
-        Q.fromJson(cueOf(leave, 'cue-later')['timelineRange']['start']),
-        Q.of(5, 2),
+        () => move.change(p, MoveClip(a, Q.of(1))),
+        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
       );
-      assertPure(p, () {
-        expect(
-          () => move.change(p, MoveClip(a, Q.of(1))),
-          code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-        );
-        expect(
-          () => move.change(p, DeleteClip(a, ripple: true)),
-          code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-        );
-      });
-    },
-  );
+      expect(
+        () => move.change(p, DeleteClip(a)),
+        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
+      );
+    });
+  });
 
   test('uncovering a source cue refuses; lifting a clipLocal-marker host still refuses', () {
     var sourced = avFixture();

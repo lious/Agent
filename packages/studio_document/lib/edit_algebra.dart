@@ -1042,7 +1042,8 @@ ProjectDocument applyEdit(
   if ((before.toJson()['captions'] as List).isNotEmpty &&
       operation is! AppendVideoAsset &&
       operation is! SplitClip &&
-      operation is! TrimClip) {
+      operation is! TrimClip &&
+      !(operation is DeleteClip && operation.ripple)) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1058,6 +1059,20 @@ ProjectDocument applyEdit(
   final markerLocals = snapshotClipLocalMarkerLocals(d);
   ({Q start, Q end})? leaveGapBounds;
   ({Q at, Q length, bool opening})? rippleTrimBounds;
+  ({Q at, Q length})? rippleDeleteBounds;
+  if (operation is DeleteClip && operation.ripple) {
+    for (final track in d['sequences'][0]['tracks'] as List) {
+      for (final item in track['items']) {
+        if (item['id'] == operation.clipId && item['source'] != null) {
+          final start = Q.fromJson(item['timelineRange']['start']);
+          final span = Q.fromJson(item['timelineRange']['duration']);
+          if (span > Q.of(0)) {
+            rippleDeleteBounds = (at: start, length: span);
+          }
+        }
+      }
+    }
+  }
   if (operation is TrimClip && operation.ripple) {
     for (final track in d['sequences'][0]['tracks'] as List) {
       for (final item in track['items']) {
@@ -1627,6 +1642,26 @@ ProjectDocument applyEdit(
       at: rippleTrimBounds.at,
       length: rippleTrimBounds.length,
       opening: rippleTrimBounds.opening,
+      newId: newId,
+    );
+  } else if (operation is DeleteClip &&
+      operation.ripple &&
+      rippleDeleteBounds != null) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    applyCaptionIntervalEdit(
+      d,
+      at: rippleDeleteBounds.at,
+      length: rippleDeleteBounds.length,
+      opening: false,
+      newId: newId,
+      nextVersion: nextVersion,
+    );
+    applyClipLocalMarkerLocals(d, markerLocals, refuseUncovered: false);
+    applyMarkerIntervalEdit(
+      d,
+      at: rippleDeleteBounds.at,
+      length: rippleDeleteBounds.length,
+      opening: false,
       newId: newId,
     );
   }

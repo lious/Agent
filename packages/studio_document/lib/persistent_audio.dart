@@ -263,6 +263,16 @@ ProjectDocument _persistentAudioEdit(
     }
     t['muted'] = operation.muted;
     t['solo'] = operation.solo;
+  } else if (operation is DeleteClip && operation.ripple) {
+    // Reuse RippleDeleteClips: link closure, interval captions/markers, and
+    // source-window refusal. Do not rewrite this as LINKED_RIPPLE or
+    // CAPTION_SYNC_EDIT_NOT_IMPLEMENTED.
+    return _rippleDeleteClips(
+      before,
+      RippleDeleteClips([operation.clipId]),
+      version,
+      id,
+    );
   } else if (operation is TrimClip && operation.ripple) {
     // Reuse RippleTrimClip: link closure, interval captions/markers, and
     // source-window refusal. Do not rewrite this as LINKED_RIPPLE.

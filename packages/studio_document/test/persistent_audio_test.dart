@@ -120,16 +120,20 @@ void main() {
       tracks(rippled)[1]['items'].last['timelineRange'],
     );
     expect(p.hash, frozen);
+    final deleted = apply(p, const DeleteClip('video-right', ripple: true));
+    expect([
+      for (final c in tracks(deleted)[0]['items'])
+        if (c['source'] != null) c['id'],
+    ], isNot(contains('video-right')));
     expect(
-      () => apply(p, DeleteClip('video-right', ripple: true)),
-      throwsA(
-        isA<StudioException>().having(
-          (e) => e.code,
-          'code',
-          'LINKED_RIPPLE_NOT_IMPLEMENTED',
-        ),
-      ),
-    );
+      [
+        for (final t in tracks(deleted))
+          for (final c in t['items'])
+            if (c['source'] != null) c['id'],
+      ].length,
+      2,
+    ); // left AV pair remains
+    expect(p.hash, frozen);
   });
   test('1000 linked legal trim/inverse commands conserve exact offsets/source windows; failures do not mutate', () {
     var p = avFixture();
