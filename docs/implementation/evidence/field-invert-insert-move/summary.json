@@ -1,0 +1,55 @@
+{
+  "increment": "1.66",
+  "title": "Field-aware invert of a prior insert-mode MoveClips command",
+  "baseCommit": "c4f58904fa0b865d09be78b6d999820fe5370d94",
+  "aggregateSha256": "c0e81686977120fa94f987f9b5ebc7e9f15cf4b146fcb552623ba33462282c59",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 236,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 109,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 389,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip insert-mode MoveClips of a left remnant by +1s restores only that command's insert write set when those fields still match the command's after-image. A later unrelated SetMarkers does not conflict: invert restores the moving remnant's start, restores the destination-shifted remnant's start, restores sequence duration 3, restores both followed cues, and keeps the later markers. A later text edit of the followed destination-shifted cue, or of the followed moving cue, also does not conflict; invert keeps the new text. Insert still leaves a vacated source gap and does not auto-close it.",
+    "A later leave-gap MoveClip of the destination-shifted remnant, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Leaf-level rational n/d granularity is unchanged. This slice does not change production algebra, insertion order, or IMPLICIT_GAP, and does not officialize includeLinks=false invert, overwrite or insert PasteClips invert, SetDissolve invert, or auto-close of a vacated source gap. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered RippleDeleteClips, RippleTrimClip, leave-gap TrimClip, leave-gap DeleteClip, MoveClip / MoveClips, LiftClips/Cut, SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. A diverging unlink invert remains LINK_OFFSET_MISMATCH. An overwrite that would uncover or crop a source cue remains ANCHOR_OUT_OF_RANGE. An overwrite that would overlap a followed cue and a dest remnant remains CAPTION_OVERLAP. The single-clip Move button stays MoveClip and is not used on this path.",
+    "A real UI path splits at 1s, adds hello and stay cues, sets collision mode to insert, multi-selects the left remnant, previews and commits a +1s insert MoveClips, adds a later marker, inverts the MoveClips command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The native multi-move ghost of a caption-bearing timeline also refuses that policy, but that refusal does not block committing the pending gesture. Extract is not required. Official later work is a marker or a text edit, not a later move of the destination-shifted remnant. Persist-path checks use a saved remnant id because firstId after a later leave-gap move can return a gap filler.",
+    "Already-delivered ripple delete, ripple trim, leave-gap trim, leave-gap delete, move, lift/cut, split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip / SplitClip / leave-gap TrimClip / RippleTrimClip / rightmost RippleDeleteClips / leave-gap DeleteClip / leave-gap MoveClip / LiftClips / reject-mode MoveClips / overwrite-mode MoveClips, insert-move leave-gap, overwrite, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND."
+  ],
+  "asOf": "2026-11-26T15:49:15+08:00",
+  "timezone": "Asia/Shanghai"
+}
