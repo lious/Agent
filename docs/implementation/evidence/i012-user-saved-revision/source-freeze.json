@@ -1,0 +1,22 @@
+{
+  "increment": "1.91",
+  "title": "Official I-012 continued head edits do not falsely rewrite userSavedRevision",
+  "baseCommit": "0fcb2226e16c46c08a87a89e5f5e7cf246b61770",
+  "sourceSha256": {
+    "packages/studio_store/test/i012_user_saved_revision_test.dart": "be55c91cc686c2cad5f93475532891b28997197f80d42f2bc09a8d689f6b522d",
+    "packages/studio_sdk/test/i012_user_saved_revision_test.dart": "b31b093076d5854826e27dbe266b0ecb903792cd131c5ac24737172bad449723",
+    "packages/studio_editor_ui/test/i012_user_saved_revision_ui_test.dart": "5303a52ace4e781d569712120f3618fe72e606a2c1a72d3aff04f075f5aab36e",
+    "docs/adr/0098-i012-user-saved-revision.md": "86688647b2950906d81da243d0bb83af493e20d4282fa8f76deb7e57b8ab9d68",
+    "docs/implementation/README.md": "1e089447475a9f0ec23a59ea4966a692f492efc098624985a40fc39d7cb914ea",
+    "docs/implementation/REVIEW.md": "1f0e786c6b35658de8b502835b49157681eda5d56811a1b153e20d4da2bd3710",
+    "docs/implementation/task-status.json": "ca7bdaa5d740c63809f2a8d48aae2182229e58bab23985f2e51e8aa061837f42"
+  },
+  "aggregateSha256": "1d0831501dfc22ce1d7f614b65ad2c7d38d2e1b9b0d27c9d8f82717b7556f074",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "868c5888dc526eb8e3640a4992f9881060c4eadad40b34e34d15c2f0dc59a5ac",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T00:02:42+08:00",
+  "timezone": "Asia/Shanghai"
+}

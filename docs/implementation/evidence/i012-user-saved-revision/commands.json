@@ -1,0 +1,132 @@
+{
+  "increment": "1.91",
+  "title": "Official I-012 continued head edits do not falsely rewrite userSavedRevision",
+  "baseCommit": "0fcb2226e16c46c08a87a89e5f5e7cf246b61770",
+  "asOf": "2026-11-27T00:02:42+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.644
+    },
+    {
+      "name": "store-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_store/test/i012_user_saved_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-store.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.208
+    },
+    {
+      "name": "sdk-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/i012_user_saved_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-sdk-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.372
+    },
+    {
+      "name": "ui-new",
+      "command": [
+        "flutter",
+        "test",
+        "test/i012_user_saved_revision_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-ui-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 4.807
+    },
+    {
+      "name": "i012-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/save_crash_test.dart",
+        "packages/studio_store/test/files_test.dart",
+        "packages/studio_store/test/i011_durable_revision_test.dart",
+        "packages/studio_sdk/test/i011_durable_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-i012-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 154.52
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i008_unsupported_edit_technique_test.dart",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 25.581
+    },
+    {
+      "name": "sdk-caption-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-sdk-caption.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 3.832
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/i012_user_saved_revision_ui_test.dart",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i012-user-saved-revision/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 15.252
+    }
+  ]
+}

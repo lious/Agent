@@ -1,0 +1,93 @@
+{
+  "increment": "1.91",
+  "title": "Official I-012 continued head edits do not falsely rewrite userSavedRevision",
+  "baseCommit": "0fcb2226e16c46c08a87a89e5f5e7cf246b61770",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "store": 1,
+    "sdk": 1,
+    "ui": 1
+  },
+  "clauseOfficialized": "head继续编辑不伪改userSavedRevision",
+  "task": "I-012",
+  "surveyedButNotOfficialized": {
+    "task": "I-011",
+    "clause": "各崩溃点注入后只开最后好snapshot+tail",
+    "reason": "ADR 0003 still records unfinished validated fallback checkpoint+tail reconstruction and missing-revision reports; no RecoveryService or crash_points suite; V-005 / save_crash fifty SIGKILL archive-phase trials are not this clause and were not re-qualified; no tightly bounded already-admitted subset was genuinely new without inventing reconstruction."
+  },
+  "clausesNotRequalified": [
+    "虚拟时钟验证全部触发",
+    "并发save合并",
+    "保存完成只在durable receipt之后"
+  ],
+  "whyNotAlreadyOfficial": "Existing save_test.dart officializes virtual-clock triggers, identical-request coalescing, and “no receipt means the save is not complete”, and the coalesce test asserts that head and the saved artifact do not move backwards after both saves complete. Increment 1.90 asserts userSavedRevision only as support for I-011 durableRevision. No official I-012 suite had closed this remainingAcceptance wording for post-receipt and in-flight continued head edits. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI012": [
+    "虚拟时钟验证全部触发 (already official in save_test.dart idle/max/50 commits/lifecycle flush; not re-qualified)",
+    "并发save合并 (already official in identical-request coalesce and two-coordinator tests; not re-qualified)",
+    "保存完成只在durable receipt之后 (already official in receipt-INSERT-failure and staging-failure tests; not re-qualified)"
+  ],
+  "i011RemainingAcceptanceUnchanged": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "seeds": null,
+  "regressions": {
+    "i011SaveFilesCrashAndDurableRevision": {
+      "sdkAndStore": 28
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "foundationAppTestNotInOfficialRegression": "foundation_app_test.dart fails standalone on this tip because find.textContaining misses the off-viewport persistence-status label after ensureVisible(save-managed). It was not rewritten, and it was not part of the official 1.84–1.90 UI regressions. The new I-012 UI test uses the already-admitted locate() helper and passed.",
+  "analyzerExitCode": 0,
+  "aggregateSha256": "1d0831501dfc22ce1d7f614b65ad2c7d38d2e1b9b0d27c9d8f82717b7556f074",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i012Status": "partial",
+  "remainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T00:02:42+08:00",
+  "timezone": "Asia/Shanghai"
+}
