@@ -1,0 +1,56 @@
+{
+  "increment": "1.85",
+  "title": "Official I-006 trim-mode matrix (handles, cross-link, locked tracks)",
+  "baseCommit": "f1848df03658c10ae00eac1995493cc71b0f0db8",
+  "productionChanged": false,
+  "newCount": 8,
+  "newTests": {
+    "document": 8,
+    "sdk": 0,
+    "ui": 0
+  },
+  "modesOfficialized": [
+    "leave-gap TrimClip (in/out shorten; lengthen into a gap)",
+    "RippleTrimClip (in/out shorten and lengthen)",
+    "SlipClip",
+    "RollCut",
+    "SlideClip"
+  ],
+  "assertions": [
+    "handles: sourceRange inside available stream; shortfall is SOURCE_OUT_OF_RANGE or existing INVALID_RANGE; leave-gap collision does not delete a neighbor",
+    "cross-link: linked AV stays whole-group; locked audio partner is FIELD_LOCKED",
+    "locked tracks/fields: host track, partner track, or sourceRange is whole-group FIELD_LOCKED and does not half-write"
+  ],
+  "regressions": {
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "0b57d0797fe06d7316f63178f67aa323e2bbc6b8e00821e2cff93231502391f7",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i006Status": "partial",
+  "remainingAcceptance": "",
+  "remainingScope": "含轨锁/syncLock/link/unlink/多轨边界；不静默破同步。",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T22:13:20+08:00",
+  "timezone": "Asia/Shanghai"
+}

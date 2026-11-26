@@ -1,0 +1,20 @@
+{
+  "increment": "1.85",
+  "title": "Official I-006 trim-mode matrix (handles, cross-link, locked tracks)",
+  "baseCommit": "f1848df03658c10ae00eac1995493cc71b0f0db8",
+  "sourceSha256": {
+    "packages/studio_document/test/i006_trim_mode_matrix_test.dart": "88cbeff6bb3fb7f410e8794b590810a1725912c42842c6e250d0a6ba744a6ec5",
+    "docs/adr/0092-i006-trim-mode-matrix.md": "19842b2b8c2a7f28a3250ee7d4df795876a90811ae42a7d194ba5b11a1a3c165",
+    "docs/implementation/README.md": "39e7f15d32b1be38a21cbae585149774b350b49f794c68d793775f0879f2ce4d",
+    "docs/implementation/REVIEW.md": "b4fc8c80c9e7a0692f5cecfb55930df6c1a53dc98f6c8f1bb57b5fd978590ee0",
+    "docs/implementation/task-status.json": "7d3ddf7aeb430b46893f2dae31d40f5efa7973884f7d0088532c842aa2ae069b"
+  },
+  "aggregateSha256": "0b57d0797fe06d7316f63178f67aa323e2bbc6b8e00821e2cff93231502391f7",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "0f756ed3c0624841ed5bd2c696f218e1f101a23b0e3bc0eb138083e7f32dadec",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T22:13:20+08:00",
+  "timezone": "Asia/Shanghai"
+}

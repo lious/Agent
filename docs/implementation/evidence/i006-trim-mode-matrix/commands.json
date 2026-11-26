@@ -1,0 +1,76 @@
+{
+  "increment": "1.85",
+  "title": "Official I-006 trim-mode matrix (handles, cross-link, locked tracks)",
+  "baseCommit": "f1848df03658c10ae00eac1995493cc71b0f0db8",
+  "asOf": "2026-11-26T22:13:20+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i006-trim-mode-matrix/final-analyzer.log",
+      "exitCode": 0
+    },
+    {
+      "name": "document-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i006-trim-mode-matrix/final-document.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i006-trim-mode-matrix/final-document-regression.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "sdk-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i006-trim-mode-matrix/final-sdk.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i006-trim-mode-matrix/final-ui.jsonl",
+      "exitCode": 0
+    }
+  ]
+}
