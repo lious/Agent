@@ -1,0 +1,51 @@
+{
+  "increment": "1.84",
+  "title": "Official I-006 1000 random legal inputs (length/source-range conservation; no half-write)",
+  "baseCommit": "3152d48bdbb7c3b201d24ac0a7eb6ab6760176dd",
+  "productionChanged": false,
+  "newCount": 2,
+  "newTests": {
+    "document": 2,
+    "sdk": 0,
+    "ui": 0,
+    "legalAppliesInsideFirstTest": 1000
+  },
+  "seed": "0x16061E84",
+  "legalInputCount": 1000,
+  "legalCollectionAttempts": 503,
+  "legalFamilies": {
+    "slip": 202,
+    "roll": 208,
+    "slide": 168,
+    "leave-gap-trim": 216,
+    "ripple-trim": 206
+  },
+  "regressions": {
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "2b85f6ba984c8bdf530575c96b8e381219c94bbd1c9f3459518ee381c3820378",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i006Status": "partial",
+  "remainingAcceptance": "全部trim模式逐条含handles/跨链接/锁轨断言。",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T22:05:56+08:00",
+  "timezone": "Asia/Shanghai"
+}

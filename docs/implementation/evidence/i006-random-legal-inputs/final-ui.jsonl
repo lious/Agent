@@ -1,0 +1,21 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1796202,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart"},"type":"suite","time":5}
+{"test":{"id":3,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":4,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart"},"type":"suite","time":6}
+{"test":{"id":5,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"count":3,"time":6,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2559}
+{"group":{"id":6,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2561}
+{"test":{"id":7,"name":"REAL path: slip the left remnant +15 source frames through the Slip button, undo/archive/sidecar, no MP4","suiteID":0,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart"},"type":"testStart","time":2561}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2893}
+{"group":{"id":8,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2893}
+{"test":{"id":9,"name":"REAL path: roll a packed 1s cut +15 frames through the Roll button, undo/archive/sidecar, no MP4","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart"},"type":"testStart","time":2893}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3277}
+{"group":{"id":10,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3277}
+{"test":{"id":11,"name":"REAL path: slide a packed middle remnant +15 frames through the Slide button, undo/archive/sidecar, no MP4","suiteID":4,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart"},"type":"testStart","time":3277}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11831}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12219}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":13652}
+{"success":true,"type":"done","time":13692}
