@@ -1,0 +1,57 @@
+{
+  "increment": "1.74",
+  "title": "Field-aware invert of a prior SetClipOpacity command",
+  "baseCommit": "223475fee81e89de36a61397131c47cbc4c7233c",
+  "aggregateSha256": "d0a03500ff08a0b252cd3a25f3583f53494152ec674d168dee6cac1aeb77c5de",
+  "sourceSha256": {
+    "packages/studio_document/test/field_invert_set_clip_opacity_test.dart": "d4e6063c1bf1278553bd690cc1ad82ff46061a0151a17dde2f033c708fc9d900",
+    "packages/studio_sdk/test/field_invert_set_clip_opacity_test.dart": "5f2207ca2326099d3d5b38dcfbf1c1f50ed728cae93f57fa084f0c79695fb87b",
+    "packages/studio_editor_ui/test/field_invert_set_clip_opacity_ui_test.dart": "be1bb5a8d3ed8462742b5de3553cbd96c36b3bb34215d2b1bac128d972877288"
+  },
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "freezeAsOf": "2026-11-26T18:11:34+08:00",
+  "selectedAsOf": "2026-11-26T18:22:57+08:00",
+  "timezone": "Asia/Shanghai",
+  "officialCounts": {
+    "document": 268,
+    "sdk": 125,
+    "ui": 52,
+    "total": 445,
+    "failed": 0,
+    "notRun": 0,
+    "newTests": 7
+  },
+  "runs": {
+    "analyzer": {
+      "exitCode": 0,
+      "elapsedSeconds": 1.803
+    },
+    "document": {
+      "exitCode": 0,
+      "elapsedSeconds": 47.579
+    },
+    "sdk": {
+      "exitCode": 0,
+      "elapsedSeconds": 448.776
+    },
+    "ui": {
+      "exitCode": 0,
+      "elapsedSeconds": 136.744
+    },
+    "actual-legacy-and-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 12.585
+    },
+    "undo-redo-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 20.118
+    },
+    "100cancel": {
+      "exitCode": 0,
+      "elapsedSeconds": 0.704
+    }
+  },
+  "notes": "Official selected document+SDK+UI 445/0/0 (268+125+52). New tests 7 (4+2+1). Hidden loader testDone events excluded from dart JSON counts. UI counted from compact reporter +N: All tests passed!. Analyzer, actual old-library, SIGKILL undo/redo and 100 opacity_cancel all exited 0. Do not mix prior official 438/431/424/417/410/403/396/389/382/375/368/361/354/347/340/333/326/319/312/304/297/290/283/275/268/260/252/245/238/231/224/217/211/204/190/171/166/152/134/128/119/104/95/85/75/64/51/37/7 or 281."
+}
