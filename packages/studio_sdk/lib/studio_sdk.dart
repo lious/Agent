@@ -227,6 +227,32 @@ final class StudioWorkspace {
     return result;
   }
 
+  List<Map<String, String>> get commandLog {
+    _requireMetadata();
+    return _repository.listCommands(_activeProjectId);
+  }
+
+  ProjectDocument invertCommand(
+    String targetCommandId, {
+    required BigInt expectedRevision,
+  }) {
+    stopTimelinePlayback();
+    _requireMetadata();
+    if (_writer == null) throw const StudioException('PROJECT_NOT_OPEN');
+    requireId(targetCommandId);
+    final id = _uuid.v7();
+    _repository.invertCommand(
+      writer: _writer!,
+      commandId: id,
+      receiptKey: id,
+      expectedRevision: expectedRevision,
+      targetCommandId: targetCommandId,
+    );
+    final result = current;
+    if (result.revision != expectedRevision) _durableCommit();
+    return result;
+  }
+
   ProjectDocument redo({required BigInt expectedRevision}) {
     stopTimelinePlayback();
     _requireMetadata();

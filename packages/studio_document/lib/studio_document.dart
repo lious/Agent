@@ -20,6 +20,7 @@ export 'audio_bus.dart';
 export 'validator.dart';
 export 'strict_json.dart';
 export 'edit_algebra.dart';
+export 'field_invert.dart';
 export 'local_admission.dart';
 
 String contentHash(Object? value) =>

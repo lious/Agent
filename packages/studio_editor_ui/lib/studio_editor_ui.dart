@@ -101,6 +101,7 @@ class _FoundationAppState extends State<FoundationApp>
   bool _snapExpanded = false;
   bool _pointerActive = false;
   final _pasteAt = TextEditingController();
+  final _invertCommandId = TextEditingController();
   final _rippleCloseStart = TextEditingController();
   final _rippleCloseDuration = TextEditingController();
   String _collisionMode = 'reject';
@@ -470,6 +471,7 @@ class _FoundationAppState extends State<FoundationApp>
   @override
   void dispose() {
     _pasteAt.dispose();
+    _invertCommandId.dispose();
     _rippleCloseStart.dispose();
     _rippleCloseDuration.dispose();
     for (final c in [_snapZoom, _snapOrigin, _snapPointer, _snapPlayhead]) {
@@ -2373,6 +2375,27 @@ class _FoundationAppState extends State<FoundationApp>
                       key: const Key('marker-panel'),
                       title: const Text('Markers'),
                       children: _markerControls(),
+                    ),
+                    TextField(
+                      key: const Key('invert-command-id'),
+                      controller: _invertCommandId,
+                      enabled: !_busy,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        hintText: 'Prior command id',
+                      ),
+                    ),
+                    OutlinedButton(
+                      key: const Key('invert-command'),
+                      onPressed: _busy
+                          ? null
+                          : () => _act(
+                              () => widget.workspace.invertCommand(
+                                _invertCommandId.text.trim(),
+                                expectedRevision: _project.revision,
+                              ),
+                            ),
+                      child: const Text('Invert prior command'),
                     ),
                   ],
                 ),

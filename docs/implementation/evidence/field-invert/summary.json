@@ -1,0 +1,55 @@
+{
+  "increment": "1.47",
+  "title": "Field-aware invert of a prior command",
+  "baseCommit": "01ce5512eaa04e7ca7ea42df5d7b7170434b7078",
+  "aggregateSha256": "5e7ed086e219f8c641e861560de963de1030263eafef1fcf6d0067eccfe89953",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 156,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 71,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 252,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "A named invert of a prior committed command that is not the undo tip restores only that command's content write set when those fields still match the command's after-image. A later edit to any of those fields, or a tip / undo / redo / invertCommand target, is whole-group UNDO_CONFLICT and does not roll the database back.",
+    "Linear undo/redo stay tip snapshot restores. Official InversePatch kind stays restoreSnapshot; version and revision are concurrency clocks and are reallocated on the invert commit. No new persistence table. The workbench exposes a dense command-id field and Invert button after the Markers panel and does not list every history row.",
+    "A real UI path imports AV, extracts persistent audio, splits, adds two left-side captions, moves the uninvolved right remnant, inverts the later SetCaptions (the extra cue is removed; the earlier cue, the moved remnant, and later markers stay), then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. Invert after a followed clipLocal host move is UNDO_CONFLICT.",
+    "Already-delivered LiftClips/Cut, MoveClip, DeleteClip, TrimClip, split/interval/source-window, insert-move leave-gap, includeLinks=false, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, and the table's 0.02s off-grid offset are not in this slice. I-005 and I-010 stay partial."
+  ],
+  "asOf": "2026-11-26T10:07:13+08:00",
+  "timezone": "Asia/Shanghai"
+}

@@ -727,6 +727,8 @@ final class DocumentRepository {
         );
       } else if (payload['kind'] == 'undo' || payload['kind'] == 'redo') {
         candidate = _restoreCommandHistory(before, payload);
+      } else if (payload['kind'] == 'invertCommand') {
+        candidate = _invertCommand(before, payload);
       } else {
         requireId(payload['targetCommandId'] as String);
         final target = _db.select(

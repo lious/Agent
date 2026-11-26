@@ -172,4 +172,212 @@ extension CommandHistory on DocumentRepository {
     }
     return savedBefore.withTitle(savedBefore.title, before.revision);
   }
+
+  /// Named field-aware invert of a prior command that is not the undo tip.
+  /// Restores only that command's content fields when they still match the
+  /// command's after-image; a later edit to any of those fields, or a tip
+  /// target, is whole-group UNDO_CONFLICT and does not roll the database back.
+  /// Linear [undoCommand]/[redoCommand] stay snapshot restores of the tip.
+  CommitReceipt invertCommand({
+    required WriterToken writer,
+    required String commandId,
+    required String receiptKey,
+    required BigInt expectedRevision,
+    required String targetCommandId,
+  }) => _commit(writer, commandId, receiptKey, expectedRevision, {
+    'kind': 'invertCommand',
+    'historyVersion': 1,
+    'targetCommandId': targetCommandId,
+  });
+
+  /// Chronological committed commands, including undo/redo/invert rows.
+  List<Map<String, String>> listCommands(String projectId) {
+    requireId(projectId);
+    final rows = _db.select(
+      """
+        SELECT r.revision,c.id,c.payload_json
+        FROM project_heads h
+        JOIN revisions r ON r.ns=h.ns AND r.project_id=h.project_id
+        JOIN commands c ON c.ns=r.ns AND c.id=r.command_id AND c.project_id=h.project_id
+        WHERE h.ns=? AND h.project_id=?
+        ORDER BY r.revision
+      """,
+      [_ns, projectId],
+    );
+    final out = <Map<String, String>>[];
+    for (final row in rows) {
+      final payload = jsonDecode(row['payload_json'] as String);
+      if (payload is! Map || payload['kind'] is! String) {
+        throw const StudioException('HISTORY_FORMAT_UNSUPPORTED');
+      }
+      out.add({
+        'id': row['id'] as String,
+        'kind': payload['kind'] as String,
+        'revision': (row['revision'] as int).toString(),
+      });
+    }
+    return out;
+  }
+
+  ProjectDocument _invertCommand(
+    ProjectDocument current,
+    Map<String, Object?> payload,
+  ) {
+    if (payload['historyVersion'] != 1 ||
+        payload['targetCommandId'] is! String ||
+        payload.length != 3) {
+      throw const StudioException('HISTORY_FORMAT_UNSUPPORTED');
+    }
+    final targetId = payload['targetCommandId'] as String;
+    requireId(targetId);
+    final cursor = commandHistory(current.projectId);
+    if (cursor.undoCommandId == null || cursor.undoCommandId == targetId) {
+      throw const StudioException('UNDO_CONFLICT');
+    }
+    final row = _db.select(
+      'SELECT * FROM commands WHERE ns=? AND project_id=? AND id=?',
+      [_ns, current.projectId, targetId],
+    );
+    if (row.length != 1) {
+      throw const StudioException('UNDO_CONFLICT');
+    }
+    dynamic targetPayload;
+    try {
+      targetPayload = jsonDecode(row.single['payload_json'] as String);
+    } on FormatException {
+      throw const StudioException('HISTORY_FORMAT_UNSUPPORTED');
+    }
+    if (targetPayload is! Map ||
+        targetPayload['kind'] is! String ||
+        targetPayload['kind'] == 'undo' ||
+        targetPayload['kind'] == 'redo' ||
+        targetPayload['kind'] == 'undoLatest' ||
+        targetPayload['kind'] == 'invertCommand') {
+      throw const StudioException('UNDO_CONFLICT');
+    }
+    ProjectDocument image(String column, int revision) {
+      final ref = row.single[column];
+      final rows = _db.select(
+        'SELECT json FROM snapshots WHERE ns=? AND hash=?',
+        [_ns, ref],
+      );
+      if (rows.length != 1) throw const StudioException('STORE_INTEGRITY');
+      final p = ProjectDocument.fromJson(
+        jsonDecode(rows.single['json'] as String) as Map<String, dynamic>,
+      );
+      if (p.hash != ref ||
+          p.namespace != namespace ||
+          p.projectId != current.projectId ||
+          p.revision != BigInt.from(revision)) {
+        throw const StudioException('STORE_INTEGRITY');
+      }
+      return p;
+    }
+
+    final revision = row.single['expected_revision'] as int;
+    final savedBefore = image('before_ref', revision);
+    final savedAfter = image('after_ref', revision + 1);
+    final changes = documentFieldChanges(
+      savedBefore.toJson(),
+      savedAfter.toJson(),
+    );
+    if (changes.isEmpty) {
+      throw const StudioException('UNDO_CONFLICT');
+    }
+    if (fieldInvertConflicts(current.toJson(), changes)) {
+      throw const StudioException('UNDO_CONFLICT');
+    }
+    var next = applyFieldInvert(current.toJson(), changes);
+    String bump(String id) {
+      final max =
+          _db.select(
+                'SELECT max(version) AS version FROM entity_versions WHERE ns=? AND project_id=? AND entity_id=?',
+                [_ns, current.projectId, id],
+              ).single['version']
+              as int?;
+      final value = BigInt.from(max ?? 0) + BigInt.one;
+      if (value > maxI64) throw const StudioException('VERSION_OVERFLOW');
+      return value.toString();
+    }
+
+    Map<String, Map<String, dynamic>> index(dynamic node) {
+      final out = <String, Map<String, dynamic>>{};
+      void walk(dynamic value) {
+        if (value is Map) {
+          if (value['id'] is String && value.containsKey('version')) {
+            out[value['id'] as String] = Map<String, dynamic>.from(value);
+          }
+          for (final child in value.values) {
+            walk(child);
+          }
+        } else if (value is List) {
+          for (final child in value) {
+            walk(child);
+          }
+        }
+      }
+
+      walk(node);
+      return out;
+    }
+
+    dynamic stripClocks(dynamic node) {
+      if (node is Map) {
+        return {
+          for (final e in node.entries)
+            if (e.key != 'version' && e.key != 'revision')
+              e.key: stripClocks(e.value),
+        };
+      }
+      if (node is List) {
+        return [for (final e in node) stripClocks(e)];
+      }
+      return node;
+    }
+
+    String clocksOff(dynamic node) => contentHash(stripClocks(node));
+    final beforeIndex = index(current.toJson());
+    final afterIndex = index(next);
+    final bumpIds = <String>{};
+    for (final e in afterIndex.entries) {
+      final previous = beforeIndex[e.key];
+      if (previous == null || clocksOff(previous) != clocksOff(e.value)) {
+        bumpIds.add(e.key);
+      }
+    }
+    if (clocksOff(current.toJson()['captions']) !=
+            clocksOff(next['captions']) ||
+        clocksOff(current.toJson()['markers']) != clocksOff(next['markers'])) {
+      for (final sequence in next['sequences'] as List) {
+        if (sequence is Map && sequence['id'] is String) {
+          bumpIds.add(sequence['id'] as String);
+        }
+      }
+    }
+    final allocated = <String, String>{};
+    void bumpIn(dynamic node) {
+      if (node is Map) {
+        if (node['id'] is String &&
+            node.containsKey('version') &&
+            bumpIds.contains(node['id'])) {
+          node['version'] = allocated.putIfAbsent(
+            node['id'] as String,
+            () => bump(node['id'] as String),
+          );
+        }
+        for (final value in node.values) {
+          bumpIn(value);
+        }
+      } else if (node is List) {
+        for (final value in node) {
+          bumpIn(value);
+        }
+      }
+    }
+
+    bumpIn(next);
+    final result = ProjectDocument.fromJson(next);
+    requireLocalEditingWritable(result);
+    return result.withTitle(result.title, current.revision);
+  }
 }

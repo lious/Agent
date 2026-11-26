@@ -1,0 +1,21 @@
+{
+  "baseCommit": "01ce5512eaa04e7ca7ea42df5d7b7170434b7078",
+  "sourceSha256": {
+    "packages/studio_document/lib/field_invert.dart": "1ebd7afe999c25a09f276a49b7129bd9c9ce25e42fc56d90484af5ad0aaeed4d",
+    "packages/studio_document/lib/studio_document.dart": "b269c687d9790ed4bf7a297e139a39c90d29c87b63cb4172d105c90ac4a595f3",
+    "packages/studio_store/lib/command_history.dart": "8cfb04549c220dad5d496be8a541077900d27259e8282cd8ce14fcff93ee307a",
+    "packages/studio_store/lib/studio_store.dart": "ef14a0b4b2310d7f04ffaa17e384a73696cb1d769d717f51c3ba66b8ed912367",
+    "packages/studio_sdk/lib/studio_sdk.dart": "4c9c71c2a9c99c232e7de125a00b29465c260e2a87acdc087e791e57d0d93442",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "58d043ea2b674038078d02eb0d6850199044b5f66fa035fd71020f11e55f29a4",
+    "packages/studio_document/test/field_invert_test.dart": "82c9bb32941fb4f8bf77e2bd9c8f06f0aae55fec0b26ab151523e2b147f05bc2",
+    "packages/studio_sdk/test/field_invert_test.dart": "db06538b947c12199981868a1467403764c39d3f91375c7636ac66f3d4559575",
+    "packages/studio_editor_ui/test/field_invert_ui_test.dart": "83e6b64942db876cdad3c583fed9c143c7c05eaea330a77d7a747de1617af2d4"
+  },
+  "aggregateSha256": "5e7ed086e219f8c641e861560de963de1030263eafef1fcf6d0067eccfe89953",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T09:55:54+08:00",
+  "timezone": "Asia/Shanghai"
+}
