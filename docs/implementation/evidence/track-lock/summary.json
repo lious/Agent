@@ -1,0 +1,55 @@
+{
+  "increment": "1.49",
+  "title": "SetTrackState locked (track lock / unlock)",
+  "baseCommit": "d01b11d9164343423c04b198b82c4897f82dfe7c",
+  "aggregateSha256": "d85a851507cf31167375fa575df2070de83cc4f17c70f2a71574fdecc158ee8a",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 5,
+    "sdk": 2,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 166,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 5
+    },
+    "sdk": {
+      "passed": 75,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 268,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "SetTrackState writes only the existing locked flag on one video, audio, or caption track. The track's own lock does not block this meta-op, so unlock still works. A missing track is TRACK_NOT_FOUND. A no-op same-value lock does not rewrite the document.",
+    "After a video track is locked, opened clip edits refuse FIELD_LOCKED as a whole group and do not drop or retarget captions. SetCaptions on an unlocked caption track still applies. Locking the caption track refuses a changing SetCaptions with FIELD_LOCKED. Locking a persistent audio track refuses SetAudioTrackState mute/solo and clip edits on that track until it is unlocked.",
+    "A real UI path imports AV, extracts persistent audio, adds a clipLocal cue, locks the video track, undoes and redoes the lock, confirms a move is refused, unlocks, then moves the host so the cue follows, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED.",
+    "Video and caption muted/solo remain FEATURE_NOT_IMPLEMENTED at admission; audio muted/solo stay SetAudioTrackState; syncLock is not toggled here. Already-delivered insert-move leave-gap, explicit-range ripple close, includeLinks=false, leave-gap and ripple trim/delete, caption-aware MoveClip and LiftClips/Cut, field-aware invert, caption-aware overwrite, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Source-interval crop stays ANCHOR_OUT_OF_RANGE. Lifting a clipLocal-marker host stays REF_NOT_FOUND. Auto-close-on-move, new-track, cross-project bake, OS clipboard, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice."
+  ],
+  "asOf": "2026-11-26T10:54:25+08:00",
+  "timezone": "Asia/Shanghai"
+}

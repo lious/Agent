@@ -11,6 +11,7 @@ part 'overwrite.dart';
 part 'insert.dart';
 part 'ripple.dart';
 part 'ripple_trim.dart';
+part 'track_state.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -917,6 +918,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is SetTrackState) {
+    return _setTrackState(before, operation, nextVersion);
+  }
   if (operation is MoveClips) {
     return _moveClips(before, operation, nextVersion, newId);
   }
@@ -1257,6 +1261,8 @@ ProjectDocument applyEdit(
       throw StateError('Handled caption edit');
     case SetMarkers():
       throw StateError('Handled marker edit');
+    case SetTrackState():
+      throw StateError('Handled track state edit');
     case RenameProject():
       throw StateError('Handled before sequence edit');
     case AppendVideoAsset():

@@ -2397,6 +2397,21 @@ class _FoundationAppState extends State<FoundationApp>
                             ),
                       child: const Text('Invert prior command'),
                     ),
+                    for (final t
+                        in _project.toJson()['sequences'][0]['tracks'] as List)
+                      CheckboxListTile(
+                        key: Key('${t['kind']}-track-lock-${t['id']}'),
+                        value: t['locked'] as bool,
+                        onChanged: _busy
+                            ? null
+                            : (v) => _edit(
+                                () => SetTrackState(
+                                  t['id'] as String,
+                                  locked: v ?? false,
+                                ),
+                              ),
+                        title: Text('Lock ${t['kind']} track'),
+                      ),
                   ],
                 ),
                 if (_busy)

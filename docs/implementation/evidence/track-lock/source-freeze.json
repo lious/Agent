@@ -1,0 +1,18 @@
+{
+  "baseCommit": "d01b11d9164343423c04b198b82c4897f82dfe7c",
+  "sourceSha256": {
+    "packages/studio_document/lib/track_state.dart": "90ade8132f5705e81f9e2df0c8399499e424de197ae4e5aa905fd79c4aabf9c9",
+    "packages/studio_document/lib/edit_algebra.dart": "6a5920a91b870ebac73b6a4df1fca6b1b7c1558aced8adb29854b736867e1175",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "3fe5e60782978b2406d7bb4147e9284eac73a3f1db52ccaf77acbdcd46213dcb",
+    "packages/studio_document/test/track_lock_test.dart": "b63b89bcfd3d80c949803f896f58db621dd231334a9a674696ffbe851cc5270b",
+    "packages/studio_sdk/test/track_lock_test.dart": "b9be3878e4edbc242ceb6ad343929b1aa514f2f44cd64f9c798345ae924dd230",
+    "packages/studio_editor_ui/test/track_lock_ui_test.dart": "e163cd74d1aeb541b606e5c865c2dbe45dc6eaefe55c4a872b9e48821f2eb7c8"
+  },
+  "aggregateSha256": "d85a851507cf31167375fa575df2070de83cc4f17c70f2a71574fdecc158ee8a",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T10:54:25+08:00",
+  "timezone": "Asia/Shanghai"
+}
