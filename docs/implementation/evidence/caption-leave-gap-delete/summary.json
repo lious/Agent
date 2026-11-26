@@ -1,0 +1,100 @@
+{
+  "increment": "1.44",
+  "title": "Caption-aware leave-gap DeleteClip",
+  "baseCommit": "9043cce869466f918efee67432caf452cdd5b6dc",
+  "aggregateSha256": "fd6c55228b134ebbc13296a90f7498f5d493792178552f9f8be08490cd3b4d20",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 144,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 65,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 231,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "DeleteClip(ripple:false) with captions is no longer CAPTION_SYNC_EDIT_NOT_IMPLEMENTED. Later content is not shifted. A clipLocal cue bound to a removed host becomes an absolute remnant at the same times with the same text; later cues keep their times. On a persistent-audio timeline, linked members are removed together and the vacated hole is left on both tracks.",
+    "Source uncover is whole-group ANCHOR_OUT_OF_RANGE. A locked caption track that would have to rewrite a bound cue is FIELD_LOCKED. A clipLocal marker bound to a removed host becomes absolute at the same time rather than being dropped.",
+    "A real UI path imports AV, extracts persistent audio, splits at one second, adds a left-hand cue, uses Delete (leave gap), undoes and redoes that command, archives a fork, exports a VTT sidecar, and still refuses preview/MP4 burn-in. The same persist path is also exercised with DeleteClip(ripple:false) through the SDK.",
+    "DeleteClip(ripple:true) is unchanged from Increment 1.43 and still uses the RippleDeleteClips interval crop/split/shift. Leave-gap TrimClip still does not shift later content and still leaves an absolute remnant in the vacated gap. MoveClip with captions still refuses CAPTION_SYNC_EDIT_NOT_IMPLEMENTED. Lifting a clipLocal-marker host is still REF_NOT_FOUND. The table 0.02s AV offset is off the 30 fps grid and still refuses OFF_FRAME_GRID; alignment stays 1/30 s.",
+    "Already-delivered leave-gap trim, single-range ripple delete/close, shorten and lengthen RippleTrimClip, video-only and linked-audio TrimClip(ripple:true), DeleteClip(ripple:true), reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default clipLocal / follow / interval / source-window, split and leave-gap rebind/remnants, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. No silent caption or marker drop. No MP4 burn-in. No new persistence table. Auto-close is not a MoveClips mode.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, marker sidecar formats, or the full section-3 matrix.",
+    "I-005 and I-010 remain partial; 87 count and XD10 stay separately counted. Intermittent underrun, old-writer schema9 as a product qualification, and other-end GPU physical sync remain unproven."
+  ],
+  "runs": [
+    {
+      "name": "analyzer",
+      "exitCode": 0,
+      "elapsedSeconds": 1.757,
+      "log": "artifacts/caption-leave-gap-delete/final-analyzer.log"
+    },
+    {
+      "name": "document",
+      "exitCode": 0,
+      "elapsedSeconds": 43.389,
+      "log": "artifacts/caption-leave-gap-delete/final-document.jsonl"
+    },
+    {
+      "name": "sdk",
+      "exitCode": 0,
+      "elapsedSeconds": 474.746,
+      "log": "artifacts/caption-leave-gap-delete/final-sdk.jsonl"
+    },
+    {
+      "name": "ui",
+      "exitCode": 0,
+      "elapsedSeconds": 67.534,
+      "log": "artifacts/caption-leave-gap-delete/final-ui.jsonl"
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 14.659,
+      "log": "artifacts/caption-leave-gap-delete/final-actual-legacy-and-kill.log"
+    },
+    {
+      "name": "undo-redo-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 24.047,
+      "log": "artifacts/caption-leave-gap-delete/final-undo-redo-kill.log"
+    },
+    {
+      "name": "100cancel",
+      "exitCode": 0,
+      "elapsedSeconds": 0.852,
+      "log": "artifacts/caption-leave-gap-delete/final-100cancel.log"
+    }
+  ]
+}

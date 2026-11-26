@@ -64,17 +64,22 @@ ProjectDocument _persistentAudioEdit(
   final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   ({Q start, Q end, String id})? leaveGapHost;
   final leaveGapHostIds = <String>[];
-  if (operation is TrimClip && !operation.ripple) {
+  final leaveGapClipId = switch (operation) {
+    TrimClip(:final clipId, ripple: false) => clipId,
+    DeleteClip(:final clipId, ripple: false) => clipId,
+    _ => null,
+  };
+  if (leaveGapClipId != null) {
     for (final t in tracks) {
       for (final c in t['items']) {
-        if (c['id'] == operation.clipId && c['source'] != null) {
+        if (c['id'] == leaveGapClipId && c['source'] != null) {
           final cs = Q.fromJson(c['timelineRange']['start']);
           leaveGapHost = (
             start: cs,
             end: cs + Q.fromJson(c['timelineRange']['duration']),
-            id: operation.clipId,
+            id: leaveGapClipId,
           );
-          leaveGapHostIds.add(operation.clipId);
+          leaveGapHostIds.add(leaveGapClipId);
           final gid = c['linkGroupId'];
           if (gid != null) {
             for (final g in groups) {
@@ -285,7 +290,8 @@ ProjectDocument _persistentAudioEdit(
   } else {
     if ((d['captions'] as List).isNotEmpty &&
         !(operation is SplitClip ||
-            (operation is TrimClip && !operation.ripple))) {
+            (operation is TrimClip && !operation.ripple) ||
+            (operation is DeleteClip && !operation.ripple))) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
     final key = switch (operation) {
@@ -475,6 +481,14 @@ ProjectDocument _persistentAudioEdit(
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
     applyCaptionsAfterSplit(d, nextVersion: version);
     applyMarkersAfterSplit(d);
+  } else if (operation is DeleteClip &&
+      !operation.ripple &&
+      leaveGapHost != null) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+    for (final hostId in leaveGapHostIds) {
+      applyCaptionsAfterLeaveGapDelete(d, hostId: hostId, nextVersion: version);
+      applyMarkersAfterLeaveGapDelete(d, hostId: hostId);
+    }
   } else if (operation is TrimClip &&
       !operation.ripple &&
       leaveGapHost != null) {

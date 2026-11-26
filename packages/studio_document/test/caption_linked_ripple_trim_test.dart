@@ -107,7 +107,7 @@ void main() {
     expect(Q.fromJson(right['timelineRange']['duration']), Q.of(1, 2));
   });
 
-  test('leave-gap trim and MoveClip stay unchanged; leave-gap delete still refuses', () {
+  test('leave-gap trim and MoveClip stay unchanged', () {
     var p = avFixture();
     final a = algebra.firstId(p);
     p = move.change(p, ExtractAudioClip(a, 'audio-stream'));
@@ -130,10 +130,6 @@ void main() {
     assertPure(p, () {
       expect(
         () => move.change(p, MoveClip(a, Q.of(1))),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-      expect(
-        () => move.change(p, DeleteClip(a)),
         code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
       );
     });

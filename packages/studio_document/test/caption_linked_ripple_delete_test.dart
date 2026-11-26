@@ -131,7 +131,7 @@ void main() {
     expect(Q.fromJson(remnant['timelineRange']['duration']), Q.of(3, 2));
   });
 
-  test('leave-gap delete and MoveClip stay refused; leave-gap trim still leaves a gap', () {
+  test('leave-gap trim still leaves a gap; MoveClip stays refused', () {
     final p = prepared(extract: true);
     final a = algebra.firstId(p);
     final leave = move.change(p, TrimClip(a, 'out', Q.of(-1, 2)));
@@ -140,10 +140,6 @@ void main() {
     assertPure(p, () {
       expect(
         () => move.change(p, MoveClip(a, Q.of(1))),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-      expect(
-        () => move.change(p, DeleteClip(a)),
         code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
       );
     });

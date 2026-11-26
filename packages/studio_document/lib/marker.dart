@@ -571,3 +571,22 @@ void applyMarkersAfterLeaveGapTrim(
     _makeMarkerAbsolute(m);
   }
 }
+
+/// Leave-gap delete keeps sequence times. A clipLocal marker bound to the
+/// removed host becomes absolute at the same time rather than being dropped.
+void applyMarkersAfterLeaveGapDelete(Map d, {required String hostId}) {
+  final markers = d['markers'];
+  if (markers is! List || markers.isEmpty) {
+    return;
+  }
+  for (final raw in markers) {
+    final m = raw as Map;
+    if (m['anchor']['kind'] != 'clipLocal') {
+      continue;
+    }
+    if (m['anchor']['clipId'] != hostId) {
+      continue;
+    }
+    _makeMarkerAbsolute(m);
+  }
+}

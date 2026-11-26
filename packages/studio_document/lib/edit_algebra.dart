@@ -1043,7 +1043,7 @@ ProjectDocument applyEdit(
       operation is! AppendVideoAsset &&
       operation is! SplitClip &&
       operation is! TrimClip &&
-      !(operation is DeleteClip && operation.ripple)) {
+      operation is! DeleteClip) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1099,10 +1099,15 @@ ProjectDocument applyEdit(
       }
     }
   }
-  if (operation is TrimClip && !operation.ripple) {
+  final leaveGapClipId = switch (operation) {
+    TrimClip(:final clipId, ripple: false) => clipId,
+    DeleteClip(:final clipId, ripple: false) => clipId,
+    _ => null,
+  };
+  if (leaveGapClipId != null) {
     for (final track in d['sequences'][0]['tracks'] as List) {
       for (final item in track['items']) {
-        if (item['id'] == operation.clipId && item['source'] != null) {
+        if (item['id'] == leaveGapClipId && item['source'] != null) {
           final start = Q.fromJson(item['timelineRange']['start']);
           leaveGapBounds = (
             start: start,
@@ -1624,6 +1629,16 @@ ProjectDocument applyEdit(
         );
       }
     }
+  } else if (operation is DeleteClip &&
+      !operation.ripple &&
+      leaveGapBounds != null) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    applyCaptionsAfterLeaveGapDelete(
+      d,
+      hostId: operation.clipId,
+      nextVersion: nextVersion,
+    );
+    applyMarkersAfterLeaveGapDelete(d, hostId: operation.clipId);
   } else if (operation is TrimClip &&
       operation.ripple &&
       rippleTrimBounds != null) {

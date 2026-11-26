@@ -1307,3 +1307,36 @@ void applyCaptionsAfterLeaveGapTrim(
   }
   d['captions'] = next;
 }
+
+/// Leave-gap delete keeps later content unmoved. clipLocal cues bound to the
+/// removed host become absolute remnants at the same times with the same text,
+/// rather than being dropped. Absolute and source cues are left alone here;
+/// source uncover is refused by [applySourceCaptionAbsolutes].
+void applyCaptionsAfterLeaveGapDelete(
+  Map d, {
+  required String hostId,
+  String Function(String id)? nextVersion,
+}) {
+  final captions = d['captions'];
+  if (captions is! List || captions.isEmpty) {
+    return;
+  }
+  final locked = _lockedCaptionTrackIds(d);
+  for (final raw in captions) {
+    final cue = raw as Map;
+    final kind = cue['anchor']['kind'] as String;
+    if (kind == 'absolute' || kind == 'source') {
+      continue;
+    }
+    if (kind != 'clipLocal') {
+      throw const StudioException('CAPTION_RICH_EDIT_NOT_IMPLEMENTED');
+    }
+    if (cue['anchor']['clipId'] != hostId) {
+      continue;
+    }
+    if (locked.contains(cue['trackId'])) {
+      throw const StudioException('FIELD_LOCKED');
+    }
+    _makeCaptionAbsolute(cue, nextVersion);
+  }
+}

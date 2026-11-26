@@ -1,0 +1,21 @@
+{
+  "baseCommit": "9043cce869466f918efee67432caf452cdd5b6dc",
+  "sourceSha256": {
+    "packages/studio_document/lib/caption.dart": "fd7b4d21df131b21217b550ed659390517f077b3d27bddd2f049c17c9d6e50c8",
+    "packages/studio_document/lib/marker.dart": "951c4cede3061be2d83f34d1ee9d3a1c7c908698d2baa6d951f3db2e9c15faa7",
+    "packages/studio_document/lib/edit_algebra.dart": "c4ba4f3e550899855f843e2077757bfe93fff6b515b38781552f23e5dc07ed3e",
+    "packages/studio_document/lib/persistent_audio.dart": "1446af0b4492d62dafbb304be66e1a8a449f9c59a894d341bf8d98b5b7e35455",
+    "packages/studio_document/test/caption_leave_gap_delete_test.dart": "3dc0514a8a31ca2213705be6eb2165e93b2175072e90542fbd118c60349f3921",
+    "packages/studio_document/test/caption_linked_ripple_delete_test.dart": "3b26d2552de2c51226c9bf3728dbedbf82085cb076639a6d44f786866f209f90",
+    "packages/studio_document/test/caption_linked_ripple_trim_test.dart": "99558183b18432c83556745622a4d0576312e0f10bab6b4d4b1200618e46f4dd",
+    "packages/studio_sdk/test/caption_leave_gap_delete_test.dart": "ab9e469c80030acaf394c5421bb457918ff823f2c00d9d849eb5afe819e904c3",
+    "packages/studio_editor_ui/test/caption_leave_gap_delete_ui_test.dart": "88fa2b71a526d45bb2bb8fc0355ea22cce96c970e8f8d546f486818e593a94f4"
+  },
+  "aggregateSha256": "fd6c55228b134ebbc13296a90f7498f5d493792178552f9f8be08490cd3b4d20",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T08:27:17+08:00",
+  "timezone": "Asia/Shanghai"
+}
