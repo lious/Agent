@@ -1,0 +1,55 @@
+{
+  "increment": "1.51",
+  "title": "Caption-aware GroupClips / UngroupClips",
+  "baseCommit": "0bd65b0c40bdb3eec22976634496c250369df588",
+  "aggregateSha256": "a850d5fe94d5fdc5e133d4e51497e9e266dd54ba1de8f5712288400d9d0fb2bd",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 5,
+    "sdk": 2,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 175,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 5
+    },
+    "sdk": {
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 283,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "GroupClips / UngroupClips with captions or markers present do not retarget, drop, or burn cues. A later default MoveClips of one member expands the selection group, translates grouped members together, leaves a source gap, follows clipLocal cues and markers, leaves absolute cues at authored times, and reprojects still-covered source cues.",
+    "includeLinks=false still moves only the explicit IDs. After UngroupClips, a later move of one member leaves the other cue in place. An ungrouped move that would overlap a neighbor remains whole-group COLLISION. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE. The single-clip Move button stays MoveClip and is not silently expanded.",
+    "A real UI path imports AV, extracts persistent audio, splits, adds left and right cues, groups the two remnants, commits a multi-select move, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED.",
+    "Already-delivered insert-move leave-gap, SetTrackState locked, field-aware invert including SetMarkers, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, video/caption mute/solo, syncLock, and the table's 0.02s off-grid offset are not in this slice."
+  ],
+  "asOf": "2026-11-26T11:25:08+08:00",
+  "timezone": "Asia/Shanghai"
+}

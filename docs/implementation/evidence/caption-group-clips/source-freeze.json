@@ -1,0 +1,15 @@
+{
+  "baseCommit": "0bd65b0c40bdb3eec22976634496c250369df588",
+  "sourceSha256": {
+    "packages/studio_document/test/caption_group_clips_test.dart": "7746070a3a815d6279fcb944880c26db50db752ad5a8459960e23f4e1aa87f72",
+    "packages/studio_sdk/test/caption_group_clips_test.dart": "ecd447a2bb5411ba845151eac795c2581d5b88d79fc80db0d01990aea1470eaf",
+    "packages/studio_editor_ui/test/caption_group_clips_ui_test.dart": "9904ef573ba26424ffba221f645f26f286b23a2816486677434102e279e4f54e"
+  },
+  "aggregateSha256": "a850d5fe94d5fdc5e133d4e51497e9e266dd54ba1de8f5712288400d9d0fb2bd",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T11:25:08+08:00",
+  "timezone": "Asia/Shanghai"
+}
