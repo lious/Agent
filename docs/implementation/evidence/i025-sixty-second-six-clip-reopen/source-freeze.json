@@ -1,0 +1,21 @@
+{
+  "increment": "1.97",
+  "title": "Official I-025 60s 6-clip caption, trim, undo, save, and reopen document equality",
+  "baseCommit": "e1252c210e9d1b0d3164d4a919d7b07f0e46b1bb",
+  "sourceSha256": {
+    "packages/studio_sdk/test/i025_sixty_second_six_clip_reopen_test.dart": "cfc93252abe957bf88a7e96f932e41473cd135d2f41154e52db87979cd8d91a3",
+    "packages/studio_editor_ui/test/i025_sixty_second_six_clip_reopen_ui_test.dart": "77f92090a1afbf244455fb3f504ce6d51ff2146fa796972c1c1dd8868514d502",
+    "docs/adr/0104-i025-sixty-second-six-clip-reopen.md": "506468624a5d407b92c19a7f4af5e31818a1443adac30cc1e00b52e62efa46a1",
+    "docs/implementation/README.md": "6a6c0d5b07179f6762077f2368da043557e96313f123b63611acea065e3df38a",
+    "docs/implementation/REVIEW.md": "31a9db18669523a549dcb1b2ba8932631601e0538c52e85496b3641537ed294e",
+    "docs/implementation/task-status.json": "4f3f585865f02bfac65bba028d4cfab939b46ae13a88297ffe5f1c8fcf700e5f"
+  },
+  "aggregateSha256": "960757eebb6cdb462d465515066fed7b50c64892c0ef8bac901f394ffd43773d",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "327720acca0210993dd33f7bf08664c83960f2da4f3c4edc8d0b5420d671989f",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T01:36:12+08:00",
+  "timezone": "Asia/Shanghai"
+}
