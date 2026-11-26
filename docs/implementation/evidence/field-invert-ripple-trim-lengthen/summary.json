@@ -1,0 +1,23 @@
+{
+  "increment": "1.80",
+  "title": "Field-aware invert of a prior ripple-trim-lengthen command",
+  "baseCommit": "d19ec5dd192bd2d8e508ad82fd6a0167a726b9cf",
+  "officialSelected": {
+    "document": 292,
+    "sdk": 137,
+    "ui": 58,
+    "total": 487,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "aggregateSha256": "044c940bf902cd5788062e983e10ecc1a0d709c9bea1c857b7c2d60b236e02d3",
+  "asOf": "2026-11-26T20:16:44+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": false
+}
