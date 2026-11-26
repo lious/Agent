@@ -1,0 +1,115 @@
+{
+  "increment": "1.90",
+  "title": "Official I-011 durableRevision is the derived ACK'd head (not falsely reported)",
+  "baseCommit": "af2789d848710c11817448a99443df3697c89a8e",
+  "asOf": "2026-11-26T23:45:06+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_store",
+        "packages/studio_sdk"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.016
+    },
+    {
+      "name": "store-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_store/test/i011_durable_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-store.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.407
+    },
+    {
+      "name": "sdk-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/i011_durable_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-sdk-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.912
+    },
+    {
+      "name": "i011-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/save_crash_test.dart",
+        "packages/studio_store/test/files_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-i011-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 171.609
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i008_unsupported_edit_technique_test.dart",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 26.594
+    },
+    {
+      "name": "sdk-caption-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-sdk-caption.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 3.121
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i011-durable-revision/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 16.157
+    }
+  ]
+}

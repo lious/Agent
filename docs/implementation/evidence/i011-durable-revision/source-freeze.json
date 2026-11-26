@@ -1,0 +1,21 @@
+{
+  "increment": "1.90",
+  "title": "Official I-011 durableRevision is the derived ACK'd head (not falsely reported)",
+  "baseCommit": "af2789d848710c11817448a99443df3697c89a8e",
+  "sourceSha256": {
+    "packages/studio_store/test/i011_durable_revision_test.dart": "1aa47dff8092188ca6204edc4cc986e93f042529d1d67ab31f01b16a6c908bca",
+    "packages/studio_sdk/test/i011_durable_revision_test.dart": "23759d18bd263d707f80be9eee5ce9a2dca55e8ed74e2875cabbe3e86daf78ae",
+    "docs/adr/0097-i011-durable-revision.md": "16fee2f9b61780d151255086a5879b7ab83c22e8348b72781b26f1894484b8b3",
+    "docs/implementation/README.md": "dbd8f79aaa0d7114c0f6ee649bf68dedb661c1c8d7a41f65975ca6cfc8799da2",
+    "docs/implementation/REVIEW.md": "0e8c8c9528a48c67837474bcee619913a800286f52dda1e49e6a61f585c49bf8",
+    "docs/implementation/task-status.json": "a0897a8035540f052212aaa51dbf4bc0ab9132b9679b3d028b1dce88d9c3bf94"
+  },
+  "aggregateSha256": "991e035aba7cfab4555f6e33a2cae904331a72bce54929f1dd74e6e14809d481",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "a18225f42e6b6f84d1d684391259a3d28e7c2926aa9c81bed8a0a585f0b3bebc",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T23:45:06+08:00",
+  "timezone": "Asia/Shanghai"
+}

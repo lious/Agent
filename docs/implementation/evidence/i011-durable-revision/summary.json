@@ -1,0 +1,81 @@
+{
+  "increment": "1.90",
+  "title": "Official I-011 durableRevision is the derived ACK'd head (not falsely reported)",
+  "baseCommit": "af2789d848710c11817448a99443df3697c89a8e",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "store": 2,
+    "sdk": 1,
+    "ui": 0
+  },
+  "clauseOfficialized": "durableRevision不虚报",
+  "clausesNotRequalified": [
+    "各崩溃点注入后只开最后好snapshot+tail",
+    "损坏唯一好副本不覆盖",
+    "Schema完整往返"
+  ],
+  "whyNotAlreadyOfficial": "Production already derives durableRevision as PersistenceView.headRevision / the ACK’d project_heads.revision and does not store a durableRevision column, but no official suite had closed this I-011 remainingAcceptance wording. Existing save_test.dart and save_crash_test.dart inspect headRevision / userSavedRevision on related save paths and were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI011": [
+    "各崩溃点注入后只开最后好snapshot+tail (ADR 0003 still records unfinished checkpoint+tail reconstruction; V-005 / save_crash fifty SIGKILL archive-phase trials are not this clause; not re-qualified)",
+    "损坏唯一好副本不覆盖 (already official in save_test.dart / files_test.dart; not re-qualified)",
+    "Schema完整往返 (empty-document, archive, and semantic-closure roundtrips already official; implementedScope declines general corrupt-DB / full-Schema recovery qualification; not re-qualified)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i011SaveFilesCrash": {
+      "sdkAndStore": 25
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "991e035aba7cfab4555f6e33a2cae904331a72bce54929f1dd74e6e14809d481",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i011Status": "partial",
+  "remainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-26T23:45:06+08:00",
+  "timezone": "Asia/Shanghai"
+}
