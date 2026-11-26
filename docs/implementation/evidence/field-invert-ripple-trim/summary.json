@@ -1,0 +1,55 @@
+{
+  "increment": "1.59",
+  "title": "Field-aware invert of a prior RippleTrimClip command",
+  "baseCommit": "59a32d36f361ada3c23d91e55ca11a74080e3363",
+  "aggregateSha256": "8f1f44c37f35554f6183d6b20fc70b8863e9a290b65ff68db52533399ad65d63",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 208,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 95,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 37,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 340,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip RippleTrimClip command restores only that command's ripple-trim write set when those fields still match the command's after-image. A later unrelated SetMarkers does not conflict: invert of a rightmost ripple out-trim restores the pre-trim duration and keeps the later markers and unmoved cues. Invert of a left ripple out-trim also restores later starts and already-shifted followed cues.",
+    "A later out-trim that changes a recorded duration numerator, a later leave-gap move of a remnant whose start was shifted by the ripple, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Leaf-level rational n/d granularity is unchanged. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered RippleTrimClip, leave-gap TrimClip, SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. A diverging unlink invert remains LINK_OFFSET_MISMATCH.",
+    "A real UI path splits at 1s, adds left and right cues, ripple out-trims the right remnant by 0.5s, adds a later marker, inverts the RippleTrimClip command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The single-clip Move button stays MoveClip. Extract is not required for this path.",
+    "Already-delivered ripple trim, leave-gap trim, split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip / SplitClip / leave-gap TrimClip, insert-move leave-gap, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE."
+  ],
+  "asOf": "2026-11-26T13:54:14+08:00",
+  "timezone": "Asia/Shanghai"
+}
