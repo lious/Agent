@@ -1,0 +1,17 @@
+00:00 +0: loading packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart
+00:00 +0: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: route group with a cycle is refused as a whole and leaves the current graph unused
+00:00 +1: packages/studio_document/test/audio_bus_test.dart: graph reciprocal refs, duplicate and disconnected cycles are refused deterministically
+00:00 +2: packages/studio_document/test/audio_bus_test.dart: graph reciprocal refs, duplicate and disconnected cycles are refused deterministically
+00:00 +3: packages/studio_document/test/audio_bus_test.dart: graph reciprocal refs, duplicate and disconnected cycles are refused deterministically
+00:00 +4: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +5: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +6: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +7: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +8: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +9: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +10: packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart: source-anchored gain cues follow the admitted linear timeMap/rate after 2x retime
+00:00 +11: packages/studio_document/test/audio_bus_test.dart: real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification
+00:00 +12: packages/studio_document/test/audio_bus_test.dart: real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification
+00:00 +13: packages/studio_document/test/audio_bus_test.dart: real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification
+00:00 +14: packages/studio_document/test/audio_bus_test.dart: real 60 second 48k PCM processing preserves exact sample count and impulse index, not device/AAC qualification
+00:05 +15: All tests passed!

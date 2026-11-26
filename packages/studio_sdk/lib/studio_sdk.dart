@@ -2190,6 +2190,7 @@ final class StudioWorkspace {
               48000,
               Rounding.tiesToEven,
             ).toInt(),
+            'busId': track['busId'],
           });
         }
       }
@@ -2249,6 +2250,19 @@ final class StudioWorkspace {
     required BigInt expectedRevision,
   }) => edit(
     SetMasterAudio(gainDb: gainDb, pan: pan, muted: muted, solo: solo),
+    expectedRevision: expectedRevision,
+  );
+  ProjectDocument setAudioBusRoutes({
+    required List<Map<String, dynamic>> buses,
+    required String masterId,
+    Map<String, String> trackBusIds = const {},
+    required BigInt expectedRevision,
+  }) => edit(
+    SetAudioBusRoutes(
+      buses: buses,
+      masterId: masterId,
+      trackBusIds: trackBusIds,
+    ),
     expectedRevision: expectedRevision,
   );
   Future<Map<String, dynamic>> exportVideo(
@@ -2417,6 +2431,7 @@ final class StudioWorkspace {
               48000,
               Rounding.tiesToEven,
             ).toInt(),
+            'busId': track['busId'],
           });
           continue;
         }
@@ -2453,6 +2468,7 @@ final class StudioWorkspace {
               48000,
               Rounding.tiesToEven,
             ).toInt(),
+            'busId': (track['busId'] as String?) ?? s['masterBusId'],
           });
         }
         final segment = videoGraph.encoderSegment(

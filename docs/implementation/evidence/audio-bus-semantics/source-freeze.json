@@ -1,0 +1,32 @@
+{
+  "baseCommit": "fd916aabefa6997f4e8752e78105bcb537c60336",
+  "sourceSha256": {
+    "packages/studio_document/lib/audio_bus.dart": "3022c7f24bc686c6481782e5e402b1464670ed939a1bef21c217bfe1258ae1c5",
+    "packages/studio_document/lib/audio_routes.dart": "4d49784a06af783aab0164c1ce295f3a608fecf9d5ed2bd3b191b70dd20863b7",
+    "packages/studio_document/lib/audio_mix_recipe.dart": "e6319e1d5b0ddd7f9d175924c090b103b0ea4ada79786c87f93759c3b9d11150",
+    "packages/studio_document/lib/local_admission.dart": "18682d43e5fc70ff10bad9de1a465f15a7cf03d23843ae49d9a3a37eed365e4e",
+    "packages/studio_document/lib/edit_algebra.dart": "e7ef39459b869cbef8377354ef0c4a895b8ee416d950c710bfd56fd4a0dd604e",
+    "packages/studio_document/lib/studio_document.dart": "98e7f2de8b2d1b25aa8bc6b65ccb859c82eef77070e494fa4097be9010935933",
+    "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart": "d2fd26930660ddfecfea13ecec01e4c27121d70b98d272257019d511718c6371",
+    "packages/studio_media/lib/audio_pipeline.dart": "9a2d353f038b621babda594f9b4abf67118b4977942571fb912b7698a8716578",
+    "packages/studio_sdk/lib/studio_sdk.dart": "642e6bcf9e9ef5eb1b08ed8b457d636d22e88ffcd057a935379ddd60d1ef0dab"
+  },
+  "aggregateSha256": "55368a5d7598e6194c4fe8b4077a3ac1f73666aa6666eca56cf51405e491c776",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T21:20:05+08:00",
+  "timezone": "Asia/Shanghai",
+  "tipSha256": {
+    "packages/studio_document/lib/audio_bus.dart": "3022c7f24bc686c6481782e5e402b1464670ed939a1bef21c217bfe1258ae1c5",
+    "packages/studio_document/lib/audio_routes.dart": "4d49784a06af783aab0164c1ce295f3a608fecf9d5ed2bd3b191b70dd20863b7",
+    "packages/studio_document/lib/audio_mix_recipe.dart": "e6319e1d5b0ddd7f9d175924c090b103b0ea4ada79786c87f93759c3b9d11150",
+    "packages/studio_document/lib/local_admission.dart": "18682d43e5fc70ff10bad9de1a465f15a7cf03d23843ae49d9a3a37eed365e4e",
+    "packages/studio_document/lib/edit_algebra.dart": "8d04081215c60634b9d3559193a037bfa51490703a1a148e39b4d1bba565a10f",
+    "packages/studio_document/lib/studio_document.dart": "930a741d1b4c6ecb43af939c4ad35acf5dd77da8a4ac0f319b3121d966f23448",
+    "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart": "d2fd26930660ddfecfea13ecec01e4c27121d70b98d272257019d511718c6371",
+    "packages/studio_media/lib/audio_pipeline.dart": "9a2d353f038b621babda594f9b4abf67118b4977942571fb912b7698a8716578",
+    "packages/studio_sdk/lib/studio_sdk.dart": "03405cc7a23fde21089878a4befbf051407175c370d40343d5d4eb258bf4a284"
+  },
+  "tipAggregateSha256": "4b9cbb1749c6e10656d10dd0f92e972037b00d8e77ad173cda9a7e72622dce30",
+  "tipAggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of tipSha256",
+  "tipNote": "edit_algebra.dart, studio_document.dart, and studio_sdk.dart differ from the parent-verified sourceSha256 because later feature-branch Slip/Roll, official marker sidecar, and C.1\u2013C.3 captions work was preserved beside I-009. All other listed files match the source freeze. The previously claimed source aggregate 58943e397d6a8fd6fb1abd86de2c862adf24f8b1ab20e6099e9c6ac55b5a7c55 is the path-sorted digest; the documented canonicalization (sorted \"digest  path\\n\" lines) is 55368a5d7598e6194c4fe8b4077a3ac1f73666aa6666eca56cf51405e491c776."
+}

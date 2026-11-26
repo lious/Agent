@@ -12,6 +12,7 @@ part 'insert.dart';
 part 'ripple.dart';
 part 'ripple_trim.dart';
 part 'track_state.dart';
+part 'audio_routes.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -999,11 +1000,15 @@ ProjectDocument applyEdit(
             (t) => t['kind'] == 'audio',
           ) &&
           operation is! SetMasterAudio &&
+          operation is! SetAudioBusRoutes &&
           operation is! RenameProject &&
           operation is! SetCaptions &&
           operation is! SetMarkers &&
           operation is! AppendVideoAsset)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
+  }
+  if (operation is SetAudioBusRoutes) {
+    return _setAudioBusRoutes(before, operation, nextVersion);
   }
   if (operation is SetMasterAudio) {
     AudioBus(
@@ -1015,7 +1020,13 @@ ProjectDocument applyEdit(
       solo: operation.solo,
     );
     final d = before.toJson(),
-        b = (before.toJson()['audioBuses'] as List).single;
+        buses = d['audioBuses'] as List,
+        masterId = d['sequences'][0]['masterBusId'],
+        index = buses.indexWhere((b) => b['id'] == masterId);
+    if (index < 0) {
+      throw const StudioException('AUDIO_MASTER_INVALID');
+    }
+    final b = Map<String, dynamic>.from(buses[index] as Map);
     if (b['gainDb'] == operation.gainDb &&
         b['pan'] == operation.pan &&
         b['muted'] == operation.muted &&
@@ -1026,13 +1037,15 @@ ProjectDocument applyEdit(
     b['pan'] = operation.pan;
     b['muted'] = operation.muted;
     b['solo'] = operation.solo;
-    d['audioBuses'] = [b];
+    buses[index] = b;
+    d['audioBuses'] = buses;
     // AudioBus is unversioned, but its rendered sequence definition is not.
-    // Local writable admission currently permits exactly one sequence/bus.
     for (final sequence in d['sequences']) {
       sequence['version'] = nextVersion(sequence['id'] as String);
     }
-    return ProjectDocument.fromJson(d);
+    final result = ProjectDocument.fromJson(d);
+    requireLocalEditingWritable(result);
+    return result;
   }
   if (operation is RenameProject) {
     return before.withTitle(operation.title, before.revision);
@@ -1258,6 +1271,7 @@ ProjectDocument applyEdit(
     case SetOpacityKeyframe():
     case RemoveOpacityKeyframe():
     case SetMasterAudio():
+    case SetAudioBusRoutes():
       throw StateError('Handled master audio edit');
     case SetCaptions():
       throw StateError('Handled caption edit');

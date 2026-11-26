@@ -255,6 +255,90 @@ final class DuckingProposal {
 
 /// CPU reference mixer for already-decoded 48k PCM. It is NOT a decoder,
 /// resampler, output clock, time-stretcher, limiter or AAC encoder (I-023/I-024).
+/// One atomic group of bus route assignments. The resulting graph is validated
+/// as a whole; a cycle or reciprocal mismatch leaves the current graph unused.
+final class AudioRouteChange {
+  AudioRouteChange({required this.busId, this.output = _omit, this.inputs});
+  static const Object _omit = Object();
+  final String busId;
+  final Object? output;
+  final List<String>? inputs;
+  bool get _replacesOutput => !identical(output, _omit);
+  String? get outputBusId => output as String?;
+}
+
+AudioBusGraph applyAudioBusRouteGroup(
+  AudioBusGraph current,
+  List<AudioRouteChange> changes,
+) {
+  if (changes.isEmpty) return current;
+  final ids = [for (final change in changes) change.busId];
+  if (ids.toSet().length != ids.length) {
+    throw const StudioException('DUPLICATE_AUDIO_ROUTE');
+  }
+  final next = <String, AudioBus>{
+    for (final e in current.buses.entries) e.key: e.value,
+  };
+  for (final change in changes) {
+    final existing = next[change.busId];
+    if (existing == null) {
+      throw const StudioException('AUDIO_BUS_MISSING');
+    }
+    next[change.busId] = AudioBus(
+      id: existing.id,
+      inputs: change.inputs ?? existing.inputs,
+      output: change._replacesOutput ? change.outputBusId : existing.output,
+      gainDb: existing.gainDb,
+      pan: existing.pan,
+      muted: existing.muted,
+      solo: existing.solo,
+    );
+  }
+  // Reciprocal links are not auto-repaired; a partial group is refused intact.
+  return AudioBusGraph(next.values.toList(), current.masterId);
+}
+
+/// Manual points stay verbatim. AUTO duck is a separate lower envelope; locks
+/// refuse the whole application. Playback dB is manual + auto (amplitudes multiply).
+final class AnalysisGainPlayback {
+  AnalysisGainPlayback._(this.manual, this.auto, this.warnings);
+  final GainEnvelope manual;
+  final DuckingProposal auto;
+  final List<String> warnings;
+  int get manualMutations => 0;
+  double at(Q localTime) => manual.at(localTime) + auto.at(localTime);
+
+  static AnalysisGainPlayback apply({
+    required GainEnvelope manual,
+    required TimeRange clip,
+    required List<TimeRange> speech,
+    List<TimeRange> manualProtected = const [],
+    bool trackLocked = false,
+    bool gainLocked = false,
+  }) {
+    final original = List<GainPoint>.from(manual.points);
+    final proposal = DuckingProposal.plan(
+      clip: clip,
+      speech: speech,
+      manualProtected: manualProtected,
+      trackLocked: trackLocked,
+      gainLocked: gainLocked,
+    );
+    if (manual.points.length != original.length) {
+      throw const StudioException('MANUAL_LOCKED');
+    }
+    for (var i = 0; i < original.length; i++) {
+      if (!identical(manual.points[i], original[i]) ||
+          manual.points[i].time != original[i].time ||
+          manual.points[i].db != original[i].db ||
+          manual.points[i].interpolation != original[i].interpolation) {
+        throw const StudioException('MANUAL_LOCKED');
+      }
+    }
+    return AnalysisGainPlayback._(manual, proposal, proposal.warnings);
+  }
+}
+
 final class PcmInput {
   PcmInput({
     required this.busId,
@@ -264,7 +348,16 @@ final class PcmInput {
     this.pan = 0,
     this.muted = false,
     this.solo = false,
-  }) : samples = Float32List.fromList(samples).asUnmodifiableView() {
+    this.silent = false,
+    this.automation,
+    Q? clipStart,
+    Q? sourceStart,
+    Q? rate,
+    this.sourceAnchored = false,
+  }) : samples = Float32List.fromList(samples).asUnmodifiableView(),
+       clipStart = clipStart ?? Q.of(0),
+       sourceStart = sourceStart ?? Q.of(0),
+       rate = rate ?? Q.of(1) {
     if (channels != 1 && channels != 2) {
       throw const StudioException('AUDIO_LAYOUT_UNSUPPORTED');
     }
@@ -273,12 +366,19 @@ final class PcmInput {
     }
     _bounded(gainDb, -96, 12);
     _bounded(pan, -1, 1);
+    if (this.rate <= Q.of(0)) {
+      throw const StudioException('TIME_MAP_MISMATCH');
+    }
   }
   final String busId;
   final Float32List samples;
   final int channels;
   final double gainDb, pan;
-  final bool muted, solo;
+  final bool muted, solo, silent;
+  final GainEnvelope? automation;
+  final Q clipStart, sourceStart, rate;
+  final bool sourceAnchored;
+  bool get excludedFromMix => muted || silent;
 }
 
 final class MixedAudio {
@@ -295,7 +395,9 @@ MixedAudio mix48k(
   AudioBusGraph graph,
   List<PcmInput> inputs, {
   Map<String, GainEnvelope> automation = const {},
+  Q? timelineStart,
 }) {
+  final origin = timelineStart ?? Q.of(0);
   final frames = inputs.isEmpty
       ? 0
       : inputs.first.samples.length ~/ inputs.first.channels;
@@ -308,7 +410,7 @@ MixedAudio mix48k(
       throw const StudioException('AUDIO_LENGTH_MISMATCH');
     }
     final path = graph.pathToMaster(input.busId);
-    if (!path.contains(graph.masterId) && !input.muted) {
+    if (!path.contains(graph.masterId) && !input.excludedFromMix) {
       throw const StudioException('AUDIO_BUS_UNROUTED');
     }
   }
@@ -330,7 +432,9 @@ MixedAudio mix48k(
           out[i] += pcm[i];
         }
       }
-      for (final input in inputs.where((i) => i.busId == id && !i.muted)) {
+      for (final input in inputs.where(
+        (i) => i.busId == id && !i.excludedFromMix,
+      )) {
         if (anySolo &&
             !input.solo &&
             !graph
@@ -341,13 +445,28 @@ MixedAudio mix48k(
         final gain = gainAmplitude(input.gainDb),
             pan = input.channels == 1
                 ? monoPan(input.pan)
-                : stereoBalance(input.pan);
+                : stereoBalance(input.pan),
+            curve = input.automation;
         for (var f = 0; f < frames; f++) {
-          out[f * 2] += input.samples[f * input.channels] * gain * pan[0];
+          final time = origin + Q.of(f, 48000);
+          final g =
+              gain *
+              (curve == null
+                  ? 1
+                  : gainAmplitude(
+                      curve.atTimeline(
+                        time,
+                        clipStart: input.clipStart,
+                        sourceStart: input.sourceStart,
+                        rate: input.rate,
+                        sourceAnchored: input.sourceAnchored,
+                      ),
+                    ));
+          out[f * 2] += input.samples[f * input.channels] * g * pan[0];
           out[f * 2 + 1] +=
               input.samples[f * input.channels +
                   (input.channels == 1 ? 0 : 1)] *
-              gain *
+              g *
               pan[1];
         }
       }
@@ -357,7 +476,9 @@ MixedAudio mix48k(
       for (var f = 0; f < frames; f++) {
         final g =
             gain *
-            (curve == null ? 1 : gainAmplitude(curve.at(Q.of(f, 48000))));
+            (curve == null
+                ? 1
+                : gainAmplitude(curve.at(origin + Q.of(f, 48000))));
         out[f * 2] *= g * pan[0];
         out[f * 2 + 1] *= g * pan[1];
       }

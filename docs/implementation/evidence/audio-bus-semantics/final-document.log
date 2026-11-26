@@ -1,0 +1,328 @@
+00:00 +0: loading packages/studio_document/test/ripple_delete_test.dart
+00:00 +0: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +1: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +2: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +3: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +4: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +5: packages/studio_document/test/ripple_delete_test.dart: lift still leaves a gap; gapped selections refuse; insert stays distinct
+00:00 +6: packages/studio_document/test/caption_overwrite_test.dart: overwrite move follows the moving cue, rebinds a dest remnant, and keeps carved text as absolute
+00:00 +7: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later marker edit restores the cue
+00:00 +8: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later marker edit restores the cue
+00:00 +9: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later marker edit restores the cue
+00:00 +10: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later marker edit restores the cue
+00:00 +11: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later marker edit restores the cue
+00:00 +12: packages/studio_document/test/caption_overwrite_test.dart: linked overwrite move carves both tracks and does not shift later captions
+00:00 +13: packages/studio_document/test/caption_overwrite_test.dart: linked overwrite move carves both tracks and does not shift later captions
+00:00 +14: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later text edit of the left cue keeps the new text
+00:00 +15: packages/studio_document/test/ripple_delete_test.dart: ripple delete preserves later opacity curves when a middle clip is removed
+00:00 +16: packages/studio_document/test/ripple_delete_test.dart: ripple delete preserves later opacity curves when a middle clip is removed
+00:00 +17: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later text edit of the leftover cue keeps the new text
+00:00 +18: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: inverting leave-gap delete of the right remnant after a later text edit of the leftover cue keeps the new text
+00:00 +19: packages/studio_document/test/ripple_delete_test.dart: ripple delete crops an unselected sync-lock audio spanning the range and keeps both remnants
+00:00 +20: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: a later leave-gap out-trim of the left remnant remints the filler and conflicts with invert
+00:00 +21: packages/studio_document/test/field_invert_leave_gap_delete_test.dart: a later leave-gap out-trim of the left remnant remints the filler and conflicts with invert
+00:00 +22: packages/studio_document/test/caption_linked_ripple_delete_test.dart: video-only ripple DeleteClip matches RippleDeleteClips caption geometry
+00:00 +23: packages/studio_document/test/caption_linked_ripple_delete_test.dart: video-only ripple DeleteClip matches RippleDeleteClips caption geometry
+00:00 +24: packages/studio_document/test/caption_linked_ripple_delete_test.dart: video-only ripple DeleteClip matches RippleDeleteClips caption geometry
+00:00 +25: packages/studio_document/test/caption_source_anchor_test.dart: new covered cues still default to clipLocal, not source
+00:00 +26: packages/studio_document/test/caption_source_anchor_test.dart: new covered cues still default to clipLocal, not source
+00:00 +27: packages/studio_document/test/caption_leave_gap_delete_test.dart: video-only leave-gap DeleteClip leaves an absolute remnant and does not shift later cues
+00:00 +28: packages/studio_document/test/caption_leave_gap_delete_test.dart: video-only leave-gap DeleteClip leaves an absolute remnant and does not shift later cues
+00:00 +29: packages/studio_document/test/opacity_keyframe_test.dart: rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal
+00:00 +30: packages/studio_document/test/opacity_keyframe_test.dart: rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal
+00:00 +31: packages/studio_document/test/opacity_keyframe_test.dart: rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal
+00:00 +32: packages/studio_document/test/opacity_keyframe_test.dart: rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal
+00:00 +33: packages/studio_document/test/opacity_keyframe_test.dart: rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal
+00:00 +34: packages/studio_document/test/caption_leave_gap_delete_test.dart: leave-gap trim still does not close the hole
+00:00 +35: packages/studio_document/test/caption_source_anchor_test.dart: insert move still leaves a source gap and the host source cue follows
+00:00 +36: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +37: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +38: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +39: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +40: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +41: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +42: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +43: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +44: packages/studio_document/test/opacity_keyframe_test.dart: split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys
+00:00 +45: packages/studio_document/test/field_invert_move_clips_test.dart: inverting a leave-gap MoveClips of both remnants after a later marker edit restores followed cues
+00:01 +46: packages/studio_document/test/field_invert_move_clips_test.dart: inverting a leave-gap MoveClips of both remnants after a later marker edit restores followed cues
+00:01 +47: packages/studio_document/test/field_invert_move_clips_test.dart: inverting a leave-gap MoveClips of both remnants after a later marker edit restores followed cues
+00:01 +48: packages/studio_document/test/document_test.dart: complete 2.0 empty project roundtrip is immutable
+00:01 +49: packages/studio_document/test/document_test.dart: complete 2.0 empty project roundtrip is immutable
+00:01 +50: packages/studio_document/test/field_invert_move_clips_test.dart: inverting a leave-gap MoveClips of both remnants after a later text edit of the followed right cue keeps the new text
+00:01 +51: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +52: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +53: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +54: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +55: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +56: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +57: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +58: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +59: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +60: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +61: packages/studio_document/test/opacity_test.dart: static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds
+00:01 +62: packages/studio_document/test/opacity_test.dart: split clones owner, trim preserves node, deleting removes current orphan only
+00:01 +63: packages/studio_document/test/track_lock_test.dart: locking the video track refuses clip edits and leaves captions in place
+00:01 +64: packages/studio_document/test/track_lock_test.dart: locking the video track refuses clip edits and leaves captions in place
+00:01 +65: packages/studio_document/test/track_lock_test.dart: locking the video track refuses clip edits and leaves captions in place
+00:01 +66: packages/studio_document/test/track_lock_test.dart: locking the video track refuses clip edits and leaves captions in place
+00:01 +67: packages/studio_document/test/caption_follow_move_test.dart: clipLocal cue follows a reject move; absolute sibling stays; text and local range unchanged
+00:01 +68: packages/studio_document/test/caption_follow_move_test.dart: clipLocal cue follows a reject move; absolute sibling stays; text and local range unchanged
+00:01 +69: packages/studio_document/test/caption_follow_move_test.dart: clipLocal cue follows a reject move; absolute sibling stays; text and local range unchanged
+00:01 +70: packages/studio_document/test/raster_effect_test.dart: static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse
+00:01 +71: packages/studio_document/test/raster_effect_test.dart: static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse
+00:01 +72: packages/studio_document/test/raster_effect_test.dart: static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse
+00:01 +73: packages/studio_document/test/raster_effect_test.dart: static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse
+00:01 +74: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +75: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +76: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +77: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +78: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +79: packages/studio_document/test/nle_random_undo_test.dart: locked host or negative start refuses the whole group and mutates nothing
+00:01 +80: packages/studio_document/test/field_invert_overwrite_move_test.dart: inverting an overwrite MoveClips of the left remnant after a later marker edit restores the carved dest and leftover cue
+00:01 +81: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:01 +82: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:01 +83: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:01 +84: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:01 +85: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:01 +86: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +87: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +88: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +89: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +90: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +91: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +92: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +93: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +94: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +95: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +96: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +97: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +98: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +99: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +100: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +101: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +102: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +103: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +104: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +105: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +106: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +107: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +108: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +109: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +110: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +111: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +112: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +113: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +114: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +115: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +116: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +117: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +118: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +119: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:02 +120: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +121: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +122: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +123: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +124: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +125: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +126: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +127: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +128: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +129: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +130: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +131: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +132: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +133: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +134: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +135: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +136: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +137: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +138: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +139: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +140: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +141: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +142: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +143: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +144: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +145: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +146: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +147: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +148: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +149: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +150: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +151: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +152: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +153: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +154: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +155: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +156: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +157: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +158: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +159: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +160: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +161: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +162: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +163: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +164: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +165: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +166: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +167: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +168: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +169: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +170: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +171: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +172: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +173: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +174: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:03 +175: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +176: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +177: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +178: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +179: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +180: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +181: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +182: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +183: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +184: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +185: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +186: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +187: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +188: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +189: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +190: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +191: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +192: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +193: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +194: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +195: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +196: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +197: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +198: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +199: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +200: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +201: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +202: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +203: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +204: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +205: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +206: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +207: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +208: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +209: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +210: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +211: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +212: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +213: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +214: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +215: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +216: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +217: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +218: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +219: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +220: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +221: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +222: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +223: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +224: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +225: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +226: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +227: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +228: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +229: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:04 +230: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +231: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +232: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +233: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +234: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +235: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +236: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +237: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +238: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +239: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +240: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +241: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +242: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +243: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +244: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +245: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +246: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +247: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +248: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +249: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +250: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +251: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +252: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +253: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:05 +254: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:06 +255: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:06 +256: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:06 +257: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:06 +258: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:06 +259: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +260: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +261: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +262: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +263: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +264: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +265: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +266: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +267: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +268: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +269: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +270: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +271: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +272: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:07 +273: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +274: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +275: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +276: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +277: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +278: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +279: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +280: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +281: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +282: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +283: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:08 +284: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +285: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +286: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +287: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +288: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +289: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +290: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +291: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +292: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +293: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +294: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +295: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +296: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +297: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +298: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +299: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +300: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +301: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +302: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:09 +303: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +304: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +305: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +306: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +307: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +308: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +309: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +310: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +311: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +312: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +313: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +314: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +315: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +316: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +317: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +318: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +319: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +320: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +321: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +322: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +323: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:10 +324: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:11 +325: packages/studio_document/test/nle_random_undo_test.dart: 1000 seeded random opened-NLE sequences stay pure; undo snapshots hash-equal; refusals are atomic
+00:36 +326: All tests passed!

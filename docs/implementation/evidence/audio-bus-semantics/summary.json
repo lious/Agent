@@ -1,0 +1,37 @@
+{
+  "increment": "A.1",
+  "title": "Official AudioBus routing, silent exclusion, and analysis gain protection",
+  "baseCommit": "fd916aabefa6997f4e8752e78105bcb537c60336",
+  "aggregateSha256": "55368a5d7598e6194c4fe8b4077a3ac1f73666aa6666eca56cf51405e491c776",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "newThisIncrement": {
+    "document": 7,
+    "sdk": 0,
+    "ui": 0,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 326,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 7
+    },
+    "total": {
+      "passed": 326,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0
+  },
+  "bounds": [
+    "SetAudioBusRoutes applies the intended audio bus DAG and optional audio trackBusIds as one group. A cycle (AUDIO_ROUTE_CYCLE), reciprocal mismatch, or FIELD_LOCKED retarget of a locked audio track leaves the document unchanged; no subset of the routes is committed. Official admission allows a bounded DAG (≤64 buses, no bus effectIds). SetMasterAudio updates only the master bus and keeps sibling buses.",
+    "Muted official audio tracks and domain PcmInput.silent/muted inputs are omitted from compileOfficialMixInputs and mix48k; they are not mixed into the master. Export and playback segment builders pass the track busId and already skip muted tracks.",
+    "AnalysisGainPlayback.apply plans ducking as a separate AUTO layer and adds it to manual dB at playback. Manual gain points are never rewritten (mutations=0). trackLocked/gainLocked refuse the whole application (TRACK_LOCKED/MANUAL_LOCKED) and leave the document and manual envelope unchanged.",
+    "Source-anchored gain cues are sampled with GainEnvelope.atTimeline through already-admitted linear timeMap/rate only. This slice does not time-stretch PCM, open I-007 remapping or nest, start I-060/V-024 limiter, change Pulse startup scheduling, or claim I-023 complete. Increment 1.17/1.18 stay open. Video and caption mute/solo stay FEATURE_NOT_IMPLEMENTED; audio muted/solo stay SetAudioTrackState; syncLock is not toggled. New-track, independent audio import, bus Effect persist, official clip gain Effect writes, invert-matrix rows, caption export, and cross-device/RTC are not in this slice."
+  ],
+  "asOf": "2026-11-26T21:20:05+08:00",
+  "timezone": "Asia/Shanghai"
+}

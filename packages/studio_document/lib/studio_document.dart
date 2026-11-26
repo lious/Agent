@@ -18,6 +18,7 @@ export 'caption.dart';
 export 'marker.dart';
 export 'marker_sidecar.dart';
 export 'audio_bus.dart';
+export 'audio_mix_recipe.dart';
 export 'validator.dart';
 export 'strict_json.dart';
 export 'edit_algebra.dart';

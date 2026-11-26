@@ -30,18 +30,22 @@ void requireLocalEditingWritable(ProjectDocument project) {
   final sequences = d['sequences'] as List, buses = d['audioBuses'] as List;
   if (sequences.length != 1 ||
       sequences.single['id'] != d['rootSequenceId'] ||
-      buses.length != 1) {
+      buses.isEmpty) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
-  final s = sequences.single, b = buses.single;
-  if (s['masterBusId'] != b['id'] ||
-      b['outputBusId'] != null ||
-      (b['inputBusIds'] as List).isNotEmpty ||
-      (b['effectIds'] as List).isNotEmpty) {
-    throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+  final s = sequences.single;
+  for (final raw in buses) {
+    if ((raw['effectIds'] as List).isNotEmpty) {
+      throw const StudioException('AUDIO_EFFECT_NOT_IMPLEMENTED');
+    }
   }
+  // Official writable slice now admits a bounded bus DAG. Cycles, mismatches
+  // and an invalid master refuse the whole graph rather than a partial route.
+  final graph = AudioBusGraph([
+    for (final raw in buses)
+      AudioBus.fromJson(Map<String, dynamic>.from(raw as Map)),
+  ], s['masterBusId'] as String);
   requireWritableMarkers(d);
-  AudioBus.fromJson(Map<String, dynamic>.from(b as Map));
   final consumed = <String>{
     for (final t in s['tracks'])
       for (final c in t['items'])
@@ -134,8 +138,12 @@ void requireLocalEditingWritable(ProjectDocument project) {
   }
   for (final t in tracks) {
     if (t['kind'] == 'audio') {
-      if (t['busId'] != s['masterBusId']) {
-        throw const StudioException('AUDIO_ROUTE_NOT_IMPLEMENTED');
+      final busId = t['busId'] as String?;
+      if (busId == null || !graph.buses.containsKey(busId)) {
+        throw const StudioException('AUDIO_BUS_MISSING');
+      }
+      if (!graph.pathToMaster(busId).contains(graph.masterId)) {
+        throw const StudioException('AUDIO_BUS_UNROUTED');
       }
     } else if (t['busId'] != null ||
         t['muted'] != false ||

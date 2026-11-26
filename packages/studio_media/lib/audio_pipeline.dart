@@ -86,7 +86,11 @@ Map<String, dynamic> _prepareAudio(
             frames * 2,
           );
           final result = mix48k(graph, [
-            PcmInput(busId: graph.masterId, samples: raw, channels: 2),
+            PcmInput(
+              busId: (segment['busId'] as String?) ?? graph.masterId,
+              samples: raw,
+              channels: 2,
+            ),
           ]);
           peak = math.max(peak, result.peak);
           file.writeFromSync(result.interleavedStereo.buffer.asUint8List());
