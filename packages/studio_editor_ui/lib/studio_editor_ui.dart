@@ -38,7 +38,11 @@ class _FoundationAppState extends State<FoundationApp>
   final _captionText = TextEditingController(),
       _captionStart = TextEditingController(text: '0'),
       _captionDuration = TextEditingController(text: '1000'),
-      _captionPath = TextEditingController();
+      _captionPath = TextEditingController(),
+      _assRequestedFont = TextEditingController(),
+      _assFallbackFonts = TextEditingController(),
+      _assAvailableFonts = TextEditingController(),
+      _assPlayRes = TextEditingController(text: '1920x1080');
   final _markerLabel = TextEditingController(text: 'Marker'),
       _markerTime = TextEditingController(text: '0'),
       _markerDuration = TextEditingController(text: '0'),
@@ -556,6 +560,10 @@ class _FoundationAppState extends State<FoundationApp>
       _captionStart,
       _captionDuration,
       _captionPath,
+      _assRequestedFont,
+      _assFallbackFonts,
+      _assAvailableFonts,
+      _assPlayRes,
       _markerLabel,
       _markerTime,
       _markerDuration,
@@ -565,6 +573,33 @@ class _FoundationAppState extends State<FoundationApp>
       c.dispose();
     }
     super.dispose();
+  }
+
+  AssFontLayoutPolicy? _assFontPolicy() {
+    final requested = _assRequestedFont.text.trim();
+    final available = [
+      for (final part in _assAvailableFonts.text.split(','))
+        if (part.trim().isNotEmpty) part.trim(),
+    ];
+    final fallbacks = [
+      for (final part in _assFallbackFonts.text.split(','))
+        if (part.trim().isNotEmpty) part.trim(),
+    ];
+    if (requested.isEmpty && available.isEmpty && fallbacks.isEmpty) {
+      return null;
+    }
+    final play = _assPlayRes.text.trim();
+    final size = RegExp(r'^(\d+)x(\d+)$').firstMatch(play);
+    if (size == null) {
+      throw const StudioException('ASS_FONT_POLICY_INVALID');
+    }
+    return AssFontLayoutPolicy(
+      requestedFontFamily: requested,
+      availableFontFamilies: available.toSet(),
+      fallbackFontFamilies: fallbacks,
+      playResX: int.parse(size[1]!),
+      playResY: int.parse(size[2]!),
+    );
   }
 
   Widget _path(String key, String label, TextEditingController controller) =>
@@ -2057,7 +2092,7 @@ class _FoundationAppState extends State<FoundationApp>
   List<Widget> _plainCaptionControls() => [
     const Divider(),
     const Text(
-      'Plain captions · SRT/VTT sidecar · no MP4 text rendering',
+      'Plain captions · SRT/VTT/ASS sidecar · no MP4 text rendering',
       style: TextStyle(fontSize: 20),
     ),
     _path('caption-text', 'Caption text', _captionText),
@@ -2271,13 +2306,29 @@ class _FoundationAppState extends State<FoundationApp>
               }),
       ),
     const Text(
-      'Deterministic single caption-track overlap rejection. New and imported cues that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips; cues in a gap or spanning a cut stay absolute. Make selected cue absolute keeps that cue at authored times; Anchor selected cue to covering clip re-attaches an absolute cue as clipLocal. Anchor selected cue to source of covering clip stores a source-window range and reprojects from the host linear time map when that window still covers the cue; an interval that would uncover or crop a source cue refuses the whole command. New cues never default to source. Styles, words, speakers, and MP4 text burn-in remain refused. Ripple and insert interval crop/split of absolute and clipLocal cues stay as already delivered. No silent text loss.',
+      'Deterministic single caption-track overlap rejection. New and imported cues that sit fully on a unique covering clip default to clipLocal and follow that host on MoveClips; cues in a gap or spanning a cut stay absolute. Make selected cue absolute keeps that cue at authored times; Anchor selected cue to covering clip re-attaches an absolute cue as clipLocal. Anchor selected cue to source of covering clip stores a source-window range and reprojects from the host linear time map when that window still covers the cue; an interval that would uncover or crop a source cue refuses the whole command. New cues never default to source. Project styles, words, speakers, and MP4 text burn-in remain refused. ASS sidecar export requires an explicit registered font/layout policy: a missing requested font is listed with its substitute and may change layout, and is never written as the original family. This is a supported static ASS subset, not lossless effect roundtrip or deterministic shaping. Ripple and insert interval crop/split of absolute and clipLocal cues stay as already delivered. No silent text loss.',
     ),
     _path(
       'caption-path',
       'Selected subtitle path (import appends; export overwrites atomically)',
       _captionPath,
     ),
+    _path(
+      'caption-ass-font',
+      'ASS requested font family (export only; never inferred)',
+      _assRequestedFont,
+    ),
+    _path(
+      'caption-ass-fallback',
+      'ASS fallback font families, comma-separated',
+      _assFallbackFonts,
+    ),
+    _path(
+      'caption-ass-available',
+      'ASS registered available font families, comma-separated',
+      _assAvailableFonts,
+    ),
+    _path('caption-ass-play-res', 'ASS PlayRes as WIDTHxHEIGHT', _assPlayRes),
     Wrap(
       spacing: 8,
       children: [
@@ -2291,6 +2342,9 @@ class _FoundationAppState extends State<FoundationApp>
                       LocalFileGrant.fromUserSelection(File(_captionPath.text)),
                       format,
                       expectedRevision: _project.revision,
+                      fontPolicy: format == CaptionFormat.ass
+                          ? _assFontPolicy()
+                          : null,
                     );
                     return 'Imported ${result.captions.cues.length} cues; warnings: ${result.warnings.join(", ")}';
                   }),
@@ -2310,8 +2364,26 @@ class _FoundationAppState extends State<FoundationApp>
                   }),
             child: Text('Export ${format.name.toUpperCase()}'),
           ),
+        OutlinedButton(
+          key: const Key('caption-export-ass'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  final written = widget.workspace.writeCaptionSidecar(
+                    File(_captionPath.text),
+                    CaptionFormat.ass,
+                    fontPolicy: _assFontPolicy(),
+                  );
+                  final warnings = written.warnings.isEmpty
+                      ? 'none'
+                      : written.warnings.join(', ');
+                  return 'ASS sidecar exported from revision ${written.revision}; warnings: $warnings';
+                }),
+          child: const Text('Export ASS'),
+        ),
       ],
     ),
+    Text(_status, key: const Key('caption-export-status')),
   ];
 
   @override

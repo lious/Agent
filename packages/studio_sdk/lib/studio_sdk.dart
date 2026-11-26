@@ -40,6 +40,13 @@ export 'package:studio_media/studio_media.dart' show NativeMedia;
 part 'edit_gesture.dart';
 part 'clipboard_workspace.dart';
 
+final class CaptionSidecarWrite {
+  CaptionSidecarWrite(this.revision, this.export);
+  final BigInt revision;
+  final CaptionExport export;
+  Set<String> get warnings => export.warnings;
+}
+
 /// Composition root for both hosts. No media, model, payment or upload port is
 /// implicitly installed. All mutating calls use the same repository coordinator.
 final class StudioWorkspace {
@@ -1556,6 +1563,7 @@ final class StudioWorkspace {
     LocalFileGrant source,
     CaptionFormat format, {
     required BigInt expectedRevision,
+    AssFontLayoutPolicy? fontPolicy,
   }) async {
     _requireMetadata();
     final selectedProject = _activeProjectId;
@@ -1566,6 +1574,7 @@ final class StudioWorkspace {
     final imported = CaptionFormats.decode(
       await source.file.readAsString(),
       format,
+      fontPolicy: fontPolicy,
     );
     if (_closed || selectedProject != _activeProjectId) {
       throw const StudioException('PROJECT_CHANGED');
@@ -1588,7 +1597,17 @@ final class StudioWorkspace {
     return imported;
   }
 
-  BigInt exportCaptions(File target, CaptionFormat format) {
+  BigInt exportCaptions(
+    File target,
+    CaptionFormat format, {
+    AssFontLayoutPolicy? fontPolicy,
+  }) => writeCaptionSidecar(target, format, fontPolicy: fontPolicy).revision;
+
+  CaptionSidecarWrite writeCaptionSidecar(
+    File target,
+    CaptionFormat format, {
+    AssFontLayoutPolicy? fontPolicy,
+  }) {
     _requireMetadata();
     _protectOutput(target);
     final snapshot = current;
@@ -1603,11 +1622,13 @@ final class StudioWorkspace {
     final cues = (snapshot.toJson()['captions'] as List)
         .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
         .toList();
-    AtomicFilePublisher().write(
-      target,
-      utf8.encode(CaptionFormats.encode(CaptionStore(cues), format)),
+    final exported = CaptionFormats.export(
+      CaptionStore(cues),
+      format,
+      fontPolicy: fontPolicy,
     );
-    return snapshot.revision;
+    AtomicFilePublisher().write(target, utf8.encode(exported.text));
+    return CaptionSidecarWrite(snapshot.revision, exported);
   }
 
   /// Official `studio.markers.sidecar` import. Restores every official field

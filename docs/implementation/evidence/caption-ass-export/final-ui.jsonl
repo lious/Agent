@@ -1,0 +1,25 @@
+Resolving dependencies in `/workspace/studio-i010-captions-export`...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  sqlite3 2.9.4 (3.9.2 available)
+  test 1.32.0 (1.33.0 available)
+  test_api 0.7.14 (0.7.15 available)
+  test_core 0.6.20 (0.6.21 available)
+Got dependencies in `/workspace/studio-i010-captions-export`!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1392808,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ass_export_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ass_export_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ui_test.dart"},"type":"suite","time":4}
+{"test":{"id":3,"name":"loading /workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4}
+{"count":2,"time":4,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2199}
+{"group":{"id":4,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2200}
+{"test":{"id":5,"name":"REAL path: add an emoji/RTL/newline cue, export ASS with a listed font substitute, keep policy-less export refused, no MP4 burn-in","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ass_export_ui_test.dart"},"type":"testStart","time":2201}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2425}
+{"group":{"id":6,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2426}
+{"test":{"id":7,"name":"actual native Flutter caption add, manual edit, split, trim, SRT sidecar and durable reopen","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":9,"root_column":3,"root_url":"file:///workspace/studio-i010-captions-export/packages/studio_editor_ui/test/caption_ui_test.dart"},"type":"testStart","time":2426}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3979}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4343}
+{"success":true,"type":"done","time":4369}

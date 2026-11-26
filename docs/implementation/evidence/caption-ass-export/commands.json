@@ -1,0 +1,66 @@
+{
+  "increment": "C.1",
+  "title": "ASS sidecar export with an explicit font/layout policy",
+  "baseCommit": "c4f58904fa0b865d09be78b6d999820fe5370d94",
+  "asOf": "2026-11-26T16:00:56+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-ass-export/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 2.165
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart",
+        "packages/studio_document/test/caption_test.dart",
+        "packages/studio_store/test/caption_transactions_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-ass-export/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.253
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_ass_export_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-ass-export/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.515
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_ass_export_ui_test.dart",
+        "test/caption_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/caption-ass-export/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 5.341
+    }
+  ]
+}

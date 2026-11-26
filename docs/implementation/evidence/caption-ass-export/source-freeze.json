@@ -1,0 +1,18 @@
+{
+  "baseCommit": "c4f58904fa0b865d09be78b6d999820fe5370d94",
+  "sourceSha256": {
+    "packages/studio_document/lib/caption.dart": "fa7993da5982271a21cfd4165197392ac56701611e57004090a4ef6ae49a124c",
+    "packages/studio_sdk/lib/studio_sdk.dart": "dddd7ba1be032f8a7900cf6392785634c2a8c168d8d0b055fc2a1c72eb7a1bbd",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "c372a4eef424b445a57e71f0a9a9029374b6c9ca280427c7d25e574ea3582ba7",
+    "packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart": "7535f8c4cf794048cb993898cd7a8211d9a9a4875ec159873fdb4b6cfed9d06a",
+    "packages/studio_sdk/test/caption_ass_export_test.dart": "ec2378465df67d346e1feaacb0ea282ec0be3ad102f0cbb2ea83e332f5094b6e",
+    "packages/studio_editor_ui/test/caption_ass_export_ui_test.dart": "aa8926bc8f254ef4c91f91f316af052085952748497f2c0413b9ac97688711d6"
+  },
+  "aggregateSha256": "79a49f9e173d310911ed777a05d0c4e08172d2b9610de02ed1524a2a46be2c3e",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T16:00:56+08:00",
+  "timezone": "Asia/Shanghai"
+}

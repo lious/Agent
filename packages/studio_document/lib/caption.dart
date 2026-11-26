@@ -944,6 +944,71 @@ final class CaptionStore {
 
 enum CaptionFormat { srt, vtt, ass }
 
+/// Explicit ASS sidecar font and layout policy. Available families are a
+/// registered name set for this export, not a claim that glyph files were
+/// embedded, shaped, or redistributed. A missing requested family is never
+/// written as if it were present.
+final class AssFontLayoutPolicy {
+  AssFontLayoutPolicy({
+    required this.requestedFontFamily,
+    required Set<String> availableFontFamilies,
+    List<String> fallbackFontFamilies = const [],
+    this.playResX = 1920,
+    this.playResY = 1080,
+    this.fontSize = 48,
+    this.marginL = 10,
+    this.marginR = 10,
+    this.marginV = 10,
+    this.styleName = 'Default',
+  }) : fallbackFontFamilies = List.unmodifiable(fallbackFontFamilies),
+       availableFontFamilies = Set<String>.unmodifiable(availableFontFamilies) {
+    if (!_assName(requestedFontFamily) ||
+        !_assName(styleName) ||
+        playResX <= 0 ||
+        playResY <= 0 ||
+        fontSize <= 0 ||
+        marginL < 0 ||
+        marginR < 0 ||
+        marginV < 0 ||
+        fallbackFontFamilies.any((f) => !_assName(f)) ||
+        availableFontFamilies.any((f) => !_assName(f))) {
+      throw const StudioException('ASS_FONT_POLICY_INVALID');
+    }
+  }
+  final String requestedFontFamily, styleName;
+  final List<String> fallbackFontFamilies;
+  final Set<String> availableFontFamilies;
+  final int playResX, playResY, fontSize, marginL, marginR, marginV;
+
+  AssFontResolution resolve() {
+    if (availableFontFamilies.contains(requestedFontFamily)) {
+      return AssFontResolution(requestedFontFamily, const {});
+    }
+    for (final candidate in fallbackFontFamilies) {
+      if (availableFontFamilies.contains(candidate)) {
+        return AssFontResolution(candidate, {
+          'ASS_FONT_SUBSTITUTED:$requestedFontFamily->$candidate',
+          'ASS_LAYOUT_MAY_CHANGE',
+        }, requestedFontFamily: requestedFontFamily);
+      }
+    }
+    throw const StudioException('ASS_FONT_UNAVAILABLE');
+  }
+}
+
+final class AssFontResolution {
+  AssFontResolution(
+    this.usedFontFamily,
+    Set<String> warnings, {
+    this.requestedFontFamily,
+  }) : warnings = Set.unmodifiable(warnings),
+       substituted = requestedFontFamily != null;
+  final String usedFontFamily;
+  final String? requestedFontFamily;
+  final bool substituted;
+  final Set<String> warnings;
+}
+
 final class CaptionImport {
   CaptionImport(List<CaptionCue> values, Set<String> warnings)
     : captions = CaptionStore(values),
@@ -951,6 +1016,18 @@ final class CaptionImport {
   final CaptionStore captions;
   final Set<String> warnings;
 }
+
+final class CaptionExport {
+  CaptionExport(this.text, [Set<String> warnings = const {}])
+    : warnings = Set.unmodifiable(warnings);
+  final String text;
+  final Set<String> warnings;
+}
+
+bool _assName(String value) =>
+    value.isNotEmpty &&
+    value.length <= 128 &&
+    !RegExp(r'[\n\r,{}]').hasMatch(value);
 
 final class CaptionFormats {
   static Q _time(String raw, {bool ass = false}) {
@@ -979,7 +1056,95 @@ final class CaptionFormats {
         .replaceAll('&amp;', '&');
   }
 
-  static CaptionImport decode(String input, CaptionFormat format) {
+  static String _unescapeAss(String raw, Set<String> warnings) {
+    const lbrace = '\uE000', rbrace = '\uE001', slash = '\uE002';
+    var text = raw
+        .replaceAll(r'\\', slash)
+        .replaceAll(r'\{', lbrace)
+        .replaceAll(r'\}', rbrace);
+    if (RegExp(r'\{[^}]*\}').hasMatch(text)) {
+      warnings.add('ASS_OVERRIDE_DROPPED');
+    }
+    return text
+        .replaceAll(RegExp(r'\{[^}]*\}'), '')
+        .replaceAll(r'\N', '\n')
+        .replaceAll(r'\n', '\n')
+        .replaceAll(r'\h', '\u00a0')
+        .replaceAll(lbrace, '{')
+        .replaceAll(rbrace, '}')
+        .replaceAll(slash, r'\');
+  }
+
+  static String _escapeAss(String raw) => raw
+      .replaceAll(r'\', r'\\')
+      .replaceAll('{', r'\{')
+      .replaceAll('}', r'\}')
+      .replaceAll('\n', r'\N')
+      .replaceAll('\u00a0', r'\h');
+
+  static void _applyStyleFonts(
+    String line,
+    List<String>? columns,
+    AssFontLayoutPolicy? fontPolicy,
+    Set<String> warnings,
+  ) {
+    if (columns == null) {
+      warnings.add('ASS_STYLE_FORMAT_DROPPED');
+      return;
+    }
+    final fontIndex = columns.indexOf('Fontname');
+    if (fontIndex < 0) {
+      warnings.add('ASS_STYLE_FORMAT_DROPPED');
+      return;
+    }
+    final fields = line.substring(6).trimLeft().split(',');
+    if (fields.length <= fontIndex) {
+      warnings.add('ASS_STYLE_FORMAT_DROPPED');
+      return;
+    }
+    final font = fields[fontIndex].trim();
+    if (fontPolicy == null) {
+      warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
+      if (font.isNotEmpty) {
+        warnings.add('ASS_STYLE_FONT_UNRESOLVED:$font');
+      }
+      return;
+    }
+    try {
+      final resolved = AssFontLayoutPolicy(
+        requestedFontFamily: font,
+        availableFontFamilies: fontPolicy.availableFontFamilies,
+        fallbackFontFamilies: [
+          if (font != fontPolicy.requestedFontFamily)
+            fontPolicy.requestedFontFamily,
+          ...fontPolicy.fallbackFontFamilies,
+        ],
+        playResX: fontPolicy.playResX,
+        playResY: fontPolicy.playResY,
+        fontSize: fontPolicy.fontSize,
+        marginL: fontPolicy.marginL,
+        marginR: fontPolicy.marginR,
+        marginV: fontPolicy.marginV,
+        styleName: fontPolicy.styleName,
+      ).resolve();
+      warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
+      warnings.addAll(resolved.warnings);
+    } on StudioException catch (e) {
+      if (e.code == 'ASS_FONT_UNAVAILABLE' ||
+          e.code == 'ASS_FONT_POLICY_INVALID') {
+        warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
+        warnings.add('ASS_FONT_UNAVAILABLE:$font');
+        return;
+      }
+      rethrow;
+    }
+  }
+
+  static CaptionImport decode(
+    String input,
+    CaptionFormat format, {
+    AssFontLayoutPolicy? fontPolicy,
+  }) {
     if (input.length > 4 * 1024 * 1024) {
       throw const StudioException('SUBTITLE_RESOURCE_LIMIT');
     }
@@ -1002,11 +1167,27 @@ final class CaptionFormats {
     }
 
     if (format == CaptionFormat.ass) {
-      warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
-      var events = false, formatSeen = false;
+      var events = false, styles = false, formatSeen = false, sawStyle = false;
+      List<String>? styleColumns;
       for (final line in input.split('\n')) {
         if (line.startsWith('[')) {
-          events = line.trim() == '[Events]';
+          final name = line.trim();
+          events = name == '[Events]';
+          styles = name == '[V4+ Styles]' || name == '[V4 Styles]';
+          continue;
+        }
+        if (styles) {
+          if (line.trim().isEmpty || line.startsWith(';')) continue;
+          if (line.startsWith('Format:')) {
+            styleColumns = [
+              for (final part in line.substring(7).split(',')) part.trim(),
+            ];
+            continue;
+          }
+          if (line.startsWith('Style:')) {
+            sawStyle = true;
+            _applyStyleFonts(line, styleColumns, fontPolicy, warnings);
+          }
           continue;
         }
         if (!events || line.trim().isEmpty || line.startsWith(';')) continue;
@@ -1027,20 +1208,14 @@ final class CaptionFormats {
         if (fields.length < 10) {
           throw const StudioException('ASS_DIALOGUE_INVALID');
         }
-        var text = fields.sublist(9).join(',');
-        if (RegExp(r'\{[^}]*\}').hasMatch(text)) {
-          warnings.add('ASS_OVERRIDE_DROPPED');
-        }
-        text = text
-            .replaceAll(RegExp(r'\{[^}]*\}'), '')
-            .replaceAll(r'\N', '\n')
-            .replaceAll(r'\n', '\n')
-            .replaceAll(r'\h', '\u00a0');
         add(
           _time(fields[1].trim(), ass: true),
           _time(fields[2].trim(), ass: true),
-          text,
+          _unescapeAss(fields.sublist(9).join(','), warnings),
         );
+      }
+      if (!sawStyle) {
+        warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
       }
       return CaptionImport(cues, warnings);
     }
@@ -1081,11 +1256,22 @@ final class CaptionFormats {
     return CaptionImport(cues, warnings);
   }
 
-  /// ASS export requires registered font/style layout and is intentionally absent;
-  /// parsing the static text subset does not claim deterministic ASS rendering.
-  static String encode(CaptionStore store, CaptionFormat format) {
+  /// ASS export requires an explicit registered font/style layout policy.
+  /// Parsing or writing the static text subset does not claim deterministic
+  /// ASS rendering, shaping, or lossless effect roundtrip.
+  static String encode(
+    CaptionStore store,
+    CaptionFormat format, {
+    AssFontLayoutPolicy? fontPolicy,
+  }) => export(store, format, fontPolicy: fontPolicy).text;
+
+  static CaptionExport export(
+    CaptionStore store,
+    CaptionFormat format, {
+    AssFontLayoutPolicy? fontPolicy,
+  }) {
     if (format == CaptionFormat.ass) {
-      throw const StudioException('ASS_EXPORT_FONT_POLICY_REQUIRED');
+      return _exportAss(store, fontPolicy);
     }
     String clock(BigInt ms) {
       if (ms > BigInt.from(3599999999999)) {
@@ -1118,7 +1304,67 @@ final class CaptionFormats {
           .replaceAll('>', '&gt;');
       out.writeln('${++index}\n${clock(start)} --> ${clock(end)}\n$text\n');
     }
-    return out.toString();
+    return CaptionExport(out.toString());
+  }
+
+  static CaptionExport _exportAss(
+    CaptionStore store,
+    AssFontLayoutPolicy? fontPolicy,
+  ) {
+    if (fontPolicy == null) {
+      throw const StudioException('ASS_EXPORT_FONT_POLICY_REQUIRED');
+    }
+    final resolved = fontPolicy.resolve();
+    String clock(BigInt cs) {
+      if (cs > BigInt.from(3599999999999)) {
+        throw const StudioException('SUBTITLE_TIMECODE_RANGE');
+      }
+      final t = cs.toInt(),
+          h = t ~/ 360000,
+          m = t ~/ 6000 % 60,
+          s = t ~/ 100 % 60,
+          f = t % 100;
+      return '$h:${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}.${f.toString().padLeft(2, '0')}';
+    }
+
+    final warnings = {...resolved.warnings};
+    final out = StringBuffer()
+      ..writeln('[Script Info]')
+      ..writeln('ScriptType: v4.00+')
+      ..writeln('PlayResX: ${fontPolicy.playResX}')
+      ..writeln('PlayResY: ${fontPolicy.playResY}')
+      ..writeln('WrapStyle: 0')
+      ..writeln('ScaledBorderAndShadow: yes');
+    if (resolved.substituted) {
+      out.writeln(
+        '; Font policy: requested ${resolved.requestedFontFamily} is unavailable; wrote ${resolved.usedFontFamily}; layout may change. This is not the original font and is not a rendered preview.',
+      );
+    }
+    out
+      ..writeln()
+      ..writeln('[V4+ Styles]')
+      ..writeln(
+        'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
+      )
+      ..writeln(
+        'Style: ${fontPolicy.styleName},${resolved.usedFontFamily},${fontPolicy.fontSize},&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,${fontPolicy.marginL},${fontPolicy.marginR},${fontPolicy.marginV},1',
+      )
+      ..writeln()
+      ..writeln('[Events]')
+      ..writeln(
+        'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',
+      );
+    for (final c in store.cues) {
+      final start = sampleIndex(c.range.start, 100, Rounding.tiesToEven),
+          end = sampleIndex(c.range.end, 100, Rounding.tiesToEven);
+      if (end <= start) {
+        throw const StudioException('SUBTITLE_TIME_QUANTIZATION');
+      }
+      out.writeln(
+        'Dialogue: 0,${clock(start)},${clock(end)},${fontPolicy.styleName},,0,0,0,,${_escapeAss(c.text)}',
+      );
+    }
+    return CaptionExport(out.toString(), warnings);
   }
 }
 

@@ -1,0 +1,16 @@
+import json,os,subprocess,hashlib,time
+from pathlib import Path
+root=Path('/workspace/studio-i010-captions-export');os.chdir(root)
+env=os.environ.copy();env.update(PATH='/workspace/toolchains/flutter/bin:'+env['PATH'], LD_LIBRARY_PATH='/workspace/toolchains/sqlite-3.54.1', STUDIO_MEDIA_LIBRARY='/workspace/agent-media-native-peer/libstudio_media.so')
+p=root/'docs/implementation/evidence/caption-ass-export/commands.json';d=json.loads(p.read_text());freeze=json.loads((root/'docs/implementation/evidence/caption-ass-export/source-freeze.json').read_text())
+for f,h in freeze['sourceSha256'].items():assert hashlib.sha256((root/f).read_bytes()).hexdigest()==h,f
+failed=[]
+for r in d['runs']:
+    print('START',r['name'],flush=True);e=env.copy();e.update(r.get('environment') or {});start=time.monotonic()
+    log_path=root/r['log']
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(log_path,'w') as out:r['exitCode']=subprocess.run(r['command'],cwd=root/r['cwd'],env=e,stdout=out,stderr=subprocess.STDOUT).returncode
+    r['elapsedSeconds']=round(time.monotonic()-start,3);p.write_text(json.dumps(d,indent=2)+'\n');print('END',r['name'],r['exitCode'],r['elapsedSeconds'],flush=True)
+    if r['exitCode']:failed.append(r['name'])
+print('FAILED',failed,flush=True)
+raise SystemExit(bool(failed))

@@ -1,0 +1,54 @@
+{
+  "increment": "C.1",
+  "title": "ASS sidecar export with an explicit font/layout policy",
+  "baseCommit": "c4f58904fa0b865d09be78b6d999820fe5370d94",
+  "aggregateSha256": "79a49f9e173d310911ed777a05d0c4e08172d2b9610de02ed1524a2a46be2c3e",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 5,
+    "sdk": 1,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 5
+    },
+    "sdk": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "ui": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "legacyAndKill": "notRe-run for this format slice",
+    "opacityCancel100": "notRe-run for this format slice"
+  },
+  "bounds": [
+    "ASS sidecar export is admitted only with an explicit AssFontLayoutPolicy that names a requested family, fallbacks, a registered available-family set, and PlayRes/layout values. encode without a policy remains ASS_EXPORT_FONT_POLICY_REQUIRED. A missing requested family is never written as the Style Fontname; the first registered fallback is written, warnings include ASS_FONT_SUBSTITUTED:requested->used and ASS_LAYOUT_MAY_CHANGE, and a Script Info comment records the same fact. No registered substitute is ASS_FONT_UNAVAILABLE. Available names are a DEV registry, not a claim that glyph files were embedded, shaped, or redistributed.",
+    "Supported static ASS text, commas, literal braces/backslashes, newlines, emoji, RTL, and exact centisecond (not 30 fps frame) times roundtrip in this subset. Collapsed sub-centisecond ranges are SUBTITLE_TIME_QUANTIZATION. Overrides and unsupported styles continue to warn or drop and are not executed. Import may use the same policy to list a Style-font substitute while still warning ASS_STYLE_FONT_NOT_RENDERED. This slice does not claim lossless arbitrary ASS effects or deterministic shaping.",
+    "A workbench path adds an emoji/RTL/newline cue, refuses Export ASS without a policy, then exports with a missing requested font so the sidecar and caption-export-status list the substitute and layout change. An SDK persist path also imports a missing-font ASS with the same policy, confirms SetCaptions(automatic: true) is MANUAL_FIELD_LOCKED on a hand-edited cue, keeps CAPTION_OVERLAP as the determined overlap policy, and keeps MP4 export CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. Source-interval crop stays closed.",
+    "Already-delivered plain caption domain, split/trim/exact positive-rate map, manual ownership, overlap rejection, bounded SRT/VTT/static ASS import, SRT/VTT export, cue versions/undo/reopen/archive/fork, clipLocal default, explicit source anchors, caption-aware editor commands, and field-aware invert stay unchanged. Official InversePatch kind stays restoreSnapshot. This slice does not change production algebra, insertion order, or IMPLICIT_GAP. I-005 and I-010 stay partial."
+  ],
+  "asOf": "2026-11-26T16:00:56+08:00",
+  "timezone": "Asia/Shanghai"
+}
