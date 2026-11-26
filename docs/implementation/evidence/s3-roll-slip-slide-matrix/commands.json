@@ -1,0 +1,78 @@
+{
+  "increment": "1.87",
+  "title": "Official section-3 roll, slip, and slide positive/negative rows",
+  "baseCommit": "b1d2e99ff4915659b404886f7059bacc9a1a7410",
+  "asOf": "2026-11-26T22:25:51+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/s3-roll-slip-slide-matrix/final-analyzer.log",
+      "exitCode": 0
+    },
+    {
+      "name": "document-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/s3-roll-slip-slide-matrix/final-document.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/s3-roll-slip-slide-matrix/final-document-regression.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "sdk-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/s3-roll-slip-slide-matrix/final-sdk.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/s3-roll-slip-slide-matrix/final-ui.jsonl",
+      "exitCode": 0
+    }
+  ]
+}

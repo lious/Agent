@@ -1,0 +1,69 @@
+{
+  "increment": "1.87",
+  "title": "Official section-3 roll, slip, and slide positive/negative rows",
+  "baseCommit": "b1d2e99ff4915659b404886f7059bacc9a1a7410",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "document": 3,
+    "sdk": 0,
+    "ui": 0
+  },
+  "rowsOfficialized": [
+    "s3 roll A/B cut 150→165 (positive geometry, linked AV, NOT_ADJACENT / INVALID_RANGE / FIELD_LOCKED)",
+    "s3 slip B +15 source frames (positive geometry, linked AV, SOURCE_OUT_OF_RANGE / INVALID_RANGE / FIELD_LOCKED)",
+    "s3 slide B +15 (positive geometry, linked AV, NOT_ADJACENT / INVALID_RANGE / FIELD_LOCKED)"
+  ],
+  "rowsStillOpen": [
+    "copy-to-a-new-track",
+    "keyframe row",
+    "Retime/transition",
+    "compound/nest",
+    "video/caption mute/solo",
+    "syncLock",
+    "0.02s OFF_FRAME_GRID link offset",
+    "mobile long-press/pinch",
+    "auto-close-after-move",
+    "OS clipboard",
+    "field-aware invert of Slip/Roll/Slide"
+  ],
+  "regressions": {
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "fc7f0ce798383ef1b2e640b3764d20ae92721282fef9879b7b7fbebd251b37fc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i005Status": "partial",
+  "remainingAcceptance": "第3节每操作正反例通过（未完成：复制到新轨、关键帧行、Retime/转场、复合嵌套、视频/字幕mute/solo、syncLock、0.02s OFF_FRAME_GRID链接偏移、移动端长按/双指、auto-close、OS剪贴板、Slip/Roll/Slide字段级invert）；1千随机序列undo后文档hash相等。",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T22:25:51+08:00",
+  "timezone": "Asia/Shanghai"
+}

@@ -1,0 +1,20 @@
+{
+  "increment": "1.87",
+  "title": "Official section-3 roll, slip, and slide positive/negative rows",
+  "baseCommit": "b1d2e99ff4915659b404886f7059bacc9a1a7410",
+  "sourceSha256": {
+    "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart": "11afd87df86bddd54cf7fac5b285e72963e2f48a1714daddf5e55843c2a2b5f7",
+    "docs/adr/0094-s3-roll-slip-slide-matrix.md": "668ba4fb55f32e3d2f2242c3fa974baf3eaebd878c68265adb4254216122af9d",
+    "docs/implementation/README.md": "2f1e21bce9921bad005605e108626159be7fd27096a3d1bc2cce631faf096ae3",
+    "docs/implementation/REVIEW.md": "fdac2ea249e43610a6674d71ed225250ea8672a84acdef3a959f7e3c1155edb6",
+    "docs/implementation/task-status.json": "e4925a1ef4c0e0e18c0b06541c2bf4f1c2cee05a851ec7e75bb7c6fb8ccfaa4c"
+  },
+  "aggregateSha256": "fc7f0ce798383ef1b2e640b3764d20ae92721282fef9879b7b7fbebd251b37fc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "8b4122bcf9b8d5198b41dcced291e79fa18ee0b11db3d967b22590be8443a243",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T22:25:51+08:00",
+  "timezone": "Asia/Shanghai"
+}
