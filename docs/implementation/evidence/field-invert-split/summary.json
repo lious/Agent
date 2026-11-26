@@ -1,0 +1,55 @@
+{
+  "increment": "1.57",
+  "title": "Field-aware invert of a prior SplitClip command",
+  "baseCommit": "54f62c06e315462222fa567379451aaf9e364849",
+  "aggregateSha256": "7bfb0686370825e692e98073afecdc0cfdf9871f1f8f286a0b2baff406d87bfa",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 200,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 91,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 35,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 326,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip SplitClip command restores only that command's split write set (the shortened left remnant's recorded range leaves and the added mid/right clip) when those fields still match the command's after-image. A later leave-gap move of an uninvolved remnant does not conflict: invert restores the split host, removes the new remnant, and keeps the moved remnants and already-followed cues.",
+    "A later leave-gap move of a split product, a later out-trim of the left remnant that changes a recorded duration numerator, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Leaf-level rational n/d granularity is unchanged; a later trim that only changes an unrecorded component is not retargeted to UNDO_CONFLICT. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. A diverging unlink invert remains LINK_OFFSET_MISMATCH.",
+    "A real UI path first splits at 2s, adds left and right cues, splits the left remnant at 1s, commits a single-clip leave-gap move of the uninvolved right remnant, inverts the second SplitClip command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The single-clip Move button stays MoveClip.",
+    "Already-delivered split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip, insert-move leave-gap, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE."
+  ],
+  "asOf": "2026-11-26T13:21:11+08:00",
+  "timezone": "Asia/Shanghai"
+}
