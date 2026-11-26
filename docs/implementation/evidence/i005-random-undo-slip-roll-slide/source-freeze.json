@@ -1,0 +1,21 @@
+{
+  "increment": "1.88",
+  "title": "Official I-005 1000-random-sequence undo hash including Slip, Roll, and Slide",
+  "baseCommit": "e19b1aaf6b53814b5c9e70e13c071b9fe0b257a7",
+  "sourceSha256": {
+    "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart": "8611aea70c045fbed5a110e43a5f15101cb0c10c88bf4946c01f0db313f2c4c0",
+    "packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart": "8cde738632fdcc12896651493590f6d104df1b5fff5281bea7ad470acc990c34",
+    "docs/adr/0095-i005-random-undo-slip-roll-slide.md": "9799d6d849a42814f3461d0a6a76cb1e9ccebac4453366f285b450035e0d400b",
+    "docs/implementation/README.md": "7be04183d0f949056a9e36f89824c82213fad71facd22b81b6d6153f02f8f035",
+    "docs/implementation/REVIEW.md": "656e5ecd0077f69484cf1e8f55414310de1a4027f07638ec770e227c63c0fd03",
+    "docs/implementation/task-status.json": "3009726bf517197b6d9bf1a1053dcb022d799609b1ab4728f557d8d64cd87a1a"
+  },
+  "aggregateSha256": "8c201f39ab7e70fb574f4a3e9c35b8a750dd537354c2d4d4a7cd34309928e41d",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "16dea0bd7222cbccd24a9a651be2859b1e9dec66457a8a45c427eed05899503c",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T22:59:59+08:00",
+  "timezone": "Asia/Shanghai"
+}

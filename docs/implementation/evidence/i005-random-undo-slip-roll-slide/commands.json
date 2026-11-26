@@ -1,0 +1,98 @@
+{
+  "increment": "1.88",
+  "title": "Official I-005 1000-random-sequence undo hash including Slip, Roll, and Slide",
+  "baseCommit": "e19b1aaf6b53814b5c9e70e13c071b9fe0b257a7",
+  "asOf": "2026-11-26T22:59:59+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_sdk"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.701
+    },
+    {
+      "name": "document-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 23.349
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 12.151
+    },
+    {
+      "name": "sdk-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-sdk-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 417.619
+    },
+    {
+      "name": "sdk-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 2.755
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i005-random-undo-slip-roll-slide/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 16.918
+    }
+  ]
+}

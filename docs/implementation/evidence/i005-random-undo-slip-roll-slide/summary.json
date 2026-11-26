@@ -1,0 +1,99 @@
+{
+  "increment": "1.88",
+  "title": "Official I-005 1000-random-sequence undo hash including Slip, Roll, and Slide",
+  "baseCommit": "e19b1aaf6b53814b5c9e70e13c071b9fe0b257a7",
+  "productionChanged": false,
+  "newCount": 2,
+  "newTests": {
+    "document": 1,
+    "sdk": 1,
+    "ui": 0
+  },
+  "seeds": {
+    "document": "0x18800505",
+    "sdk": "0x188005E5"
+  },
+  "documentResults": {
+    "sequences": 1000,
+    "legal": 2769,
+    "refusals": 256,
+    "families": {
+      "slip": 491,
+      "roll": 464,
+      "slide": 324,
+      "leave-gap-trim": 500,
+      "ripple-trim": 496,
+      "move": 494
+    }
+  },
+  "sdkResults": {
+    "sequences": 1000,
+    "legal": 3018,
+    "refusals": 0,
+    "families": {
+      "slip": 536,
+      "roll": 504,
+      "slide": 352,
+      "leave-gap-trim": 542,
+      "ripple-trim": 538,
+      "move": 546,
+      "set-captions": 0
+    }
+  },
+  "clauseBound": "already-official command set including SlipClip, RollCut, and SlideClip; official InversePatch kind stays restoreSnapshot; not a full randomized NLE matrix",
+  "rowsStillOpen": [
+    "copy-to-a-new-track",
+    "keyframe row",
+    "Retime/transition",
+    "compound/nest",
+    "video/caption mute/solo",
+    "syncLock",
+    "0.02s OFF_FRAME_GRID link offset",
+    "mobile long-press/pinch",
+    "auto-close-after-move",
+    "OS clipboard",
+    "field-aware invert of Slip/Roll/Slide"
+  ],
+  "regressions": {
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "8c201f39ab7e70fb574f4a3e9c35b8a750dd537354c2d4d4a7cd34309928e41d",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i005Status": "partial",
+  "remainingAcceptance": "第3节每操作正反例通过（未完成：复制到新轨、关键帧行、Retime/转场、复合嵌套、视频/字幕mute/solo、syncLock、0.02s OFF_FRAME_GRID链接偏移、移动端长按/双指、auto-close、OS剪贴板、Slip/Roll/Slide字段级invert）。",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T22:59:59+08:00",
+  "timezone": "Asia/Shanghai"
+}
