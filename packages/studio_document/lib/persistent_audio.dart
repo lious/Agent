@@ -295,10 +295,107 @@ ProjectDocument _persistentAudioEdit(
             (operation is DeleteClip && !operation.ripple) ||
             operation is MoveClip ||
             operation is SlipClip ||
-            operation is RollCut)) {
+            operation is RollCut ||
+            operation is SlideClip)) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
-    if (operation is RollCut) {
+    if (operation is SlideClip) {
+      final left = clip(operation.leftId);
+      final mid = clip(operation.clipId);
+      final right = clip(operation.rightId);
+      if (left['trackId'] != mid['trackId'] ||
+          mid['trackId'] != right['trackId'] ||
+          start(left) + duration(left) != start(mid) ||
+          start(mid) + duration(mid) != start(right)) {
+        throw const StudioException('NOT_ADJACENT');
+      }
+      List<Map> groupOf(Map c) => c['linkGroupId'] == null
+          ? [c]
+          : [
+              for (final m in groups.singleWhere(
+                (g) => g['id'] == c['linkGroupId'],
+              )['members'])
+                clip(m['clipId'] as String),
+            ];
+      final lefts = groupOf(left);
+      final mids = groupOf(mid);
+      final rights = groupOf(right);
+      for (final c in [...lefts, ...mids, ...rights]) {
+        writable(c, ['timelineRange', 'sourceRange', 'timeMap']);
+      }
+      if (operation.delta == Q.of(0)) {
+        return before;
+      }
+      final usedLefts = <String>{};
+      final usedRights = <String>{};
+      for (final m in mids) {
+        Map? leftPartner;
+        Map? rightPartner;
+        for (final a in lefts) {
+          if (a['trackId'] == m['trackId'] &&
+              start(a) + duration(a) == start(m)) {
+            leftPartner = a;
+            break;
+          }
+        }
+        for (final b in rights) {
+          if (b['trackId'] == m['trackId'] &&
+              start(m) + duration(m) == start(b)) {
+            rightPartner = b;
+            break;
+          }
+        }
+        if (leftPartner == null || rightPartner == null) {
+          throw const StudioException('NOT_ADJACENT');
+        }
+        usedLefts.add(leftPartner['id'] as String);
+        usedRights.add(rightPartner['id'] as String);
+        final ra = Q.fromJson(leftPartner['timeMap']['rate']);
+        final rb = Q.fromJson(rightPartner['timeMap']['rate']);
+        final delta = operation.delta;
+        set(
+          leftPartner,
+          'timelineRange',
+          'duration',
+          duration(leftPartner) + delta,
+        );
+        set(
+          leftPartner,
+          'sourceRange',
+          'duration',
+          Q.fromJson(leftPartner['sourceRange']['duration']) + ra * delta,
+        );
+        set(m, 'timelineRange', 'start', start(m) + delta);
+        set(
+          rightPartner,
+          'timelineRange',
+          'start',
+          start(rightPartner) + delta,
+        );
+        set(
+          rightPartner,
+          'timelineRange',
+          'duration',
+          duration(rightPartner) - delta,
+        );
+        set(
+          rightPartner,
+          'sourceRange',
+          'start',
+          Q.fromJson(rightPartner['sourceRange']['start']) + rb * delta,
+        );
+        set(
+          rightPartner,
+          'sourceRange',
+          'duration',
+          Q.fromJson(rightPartner['sourceRange']['duration']) - rb * delta,
+        );
+      }
+      if (usedLefts.length != lefts.length ||
+          usedRights.length != rights.length) {
+        throw const StudioException('NOT_ADJACENT');
+      }
+    } else if (operation is RollCut) {
       final left = clip(operation.leftId);
       final right = clip(operation.rightId);
       if (left['trackId'] != right['trackId'] ||
@@ -604,6 +701,10 @@ ProjectDocument _persistentAudioEdit(
   } else if (operation is SlipClip) {
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   } else if (operation is RollCut) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+    followClipLocalCaptions(d, nextVersion: version);
+    applyClipLocalMarkerLocals(d, markerLocals);
+  } else if (operation is SlideClip) {
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
     followClipLocalCaptions(d, nextVersion: version);
     applyClipLocalMarkerLocals(d, markerLocals);

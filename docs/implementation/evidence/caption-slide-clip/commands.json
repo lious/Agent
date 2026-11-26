@@ -1,0 +1,58 @@
+{
+  "increment": "1.83",
+  "title": "Official persist path for caption-aware SlideClip",
+  "baseCommit": "784480123130bc4cb617af7523d0e5bd295ba1b6",
+  "asOf": "2026-11-26T21:52:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_editor_ui",
+        "packages/studio_sdk"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/caption-slide-clip/final-analyzer.log",
+      "exitCode": 0
+    },
+    {
+      "name": "document-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/caption-slide-clip/final-document.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "sdk-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/caption-slide-clip/final-sdk.jsonl",
+      "exitCode": 0
+    },
+    {
+      "name": "ui-new",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/caption-slide-clip/final-ui.jsonl",
+      "exitCode": 0
+    }
+  ]
+}

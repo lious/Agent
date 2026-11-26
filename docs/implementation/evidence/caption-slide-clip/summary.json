@@ -1,0 +1,50 @@
+{
+  "increment": "1.83",
+  "title": "Official persist path for caption-aware SlideClip",
+  "baseCommit": "784480123130bc4cb617af7523d0e5bd295ba1b6",
+  "newTests": {
+    "document": 6,
+    "sdk": 2,
+    "ui": 1,
+    "total": 9
+  },
+  "regressions": {
+    "markerSidecarOfficial12": {
+      "document": 9,
+      "sdk": 2,
+      "ui": 1,
+      "passed": 12,
+      "failed": 0
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1,
+      "passed": 9,
+      "failed": 0
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1,
+      "passed": 9,
+      "failed": 0
+    },
+    "i009OfficialMixA1": {
+      "document": 7,
+      "passed": 7,
+      "failed": 0
+    }
+  },
+  "aggregateSha256": "e1133c2287b72bec03b62f01e21d40fa2f9fa2e1c4c47f96049fe4269c237137",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T21:52:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true,
+  "bounds": [
+    "Caption-aware SlideClip is officially admitted on the persist path. Command shape stays SlideClip(leftId, clipId, rightId, delta). After splits at 1s and 2s, a +15-frame slide yields left duration 1.5, middle start 1.5 duration 1, right start 2.5 duration 0.5, sequence duration 3. clipLocal on the left stays; clipLocal on the middle and right follow; absolute cues stay at author time; covered source-anchored cues reproject.",
+    "Whole-group refusals stay NOT_ADJACENT, ANCHOR_OUT_OF_RANGE, SOURCE_OUT_OF_RANGE, and FIELD_LOCKED. TRANSITION_RANGE_EDIT_REQUIRES_REMOVAL is kept; official path is dissolve-free. Preview/MP4 stay CAPTION_RENDER_POLICY_NOT_IMPLEMENTED.",
+    "This increment authors 9 new official tests (document 6 + SDK 2 + UI 1). Official 505 and C.1\u2013C.3/A.1 selected counts are not mixed into the new-count. Marker sidecar 12, Slip 6+2+1, Roll 6+2+1, and A.1 I-009 7 were re-run as regressions and passed.",
+    "Field-aware invert of Slide, Slip, or Roll is not officialized. Official InversePatch kind stays restoreSnapshot. I-005 and I-006 stay partial; 1000 random legal I-006 inputs remain."
+  ]
+}

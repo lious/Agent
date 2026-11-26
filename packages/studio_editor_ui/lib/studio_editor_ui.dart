@@ -458,6 +458,78 @@ class _FoundationAppState extends State<FoundationApp>
     throw const StudioException('NOT_ADJACENT');
   }
 
+  EditOperation _slideClip() {
+    final selected = _clips.singleWhere((c) => c['id'] == _selected);
+    final selectedStart = Q.fromJson(selected['timelineRange']['start']);
+    final selectedEnd =
+        selectedStart + Q.fromJson(selected['timelineRange']['duration']);
+    final selectedTrack = selected['trackId'];
+    Map? later;
+    Map? earlier;
+    for (final c in _clips) {
+      if (c['id'] == selected['id'] || c['trackId'] != selectedTrack) {
+        continue;
+      }
+      final start = Q.fromJson(c['timelineRange']['start']);
+      final end = start + Q.fromJson(c['timelineRange']['duration']);
+      if (start == selectedEnd) {
+        later = c as Map;
+      } else if (end == selectedStart) {
+        earlier = c as Map;
+      }
+    }
+    Map? neighborOnTrack(Map host, {required bool laterNeighbor}) {
+      final hostStart = Q.fromJson(host['timelineRange']['start']);
+      final hostEnd = hostStart + Q.fromJson(host['timelineRange']['duration']);
+      for (final c in _clips) {
+        if (c['id'] == host['id'] || c['trackId'] != selectedTrack) {
+          continue;
+        }
+        final start = Q.fromJson(c['timelineRange']['start']);
+        final end = start + Q.fromJson(c['timelineRange']['duration']);
+        if (laterNeighbor && start == hostEnd) {
+          return c as Map;
+        }
+        if (!laterNeighbor && end == hostStart) {
+          return c as Map;
+        }
+      }
+      return null;
+    }
+
+    if (earlier != null && later != null) {
+      return SlideClip(
+        earlier['id'] as String,
+        selected['id'] as String,
+        later['id'] as String,
+        _delta(),
+      );
+    }
+    if (later != null) {
+      final far = neighborOnTrack(later, laterNeighbor: true);
+      if (far != null) {
+        return SlideClip(
+          selected['id'] as String,
+          later['id'] as String,
+          far['id'] as String,
+          _delta(),
+        );
+      }
+    }
+    if (earlier != null) {
+      final far = neighborOnTrack(earlier, laterNeighbor: false);
+      if (far != null) {
+        return SlideClip(
+          far['id'] as String,
+          earlier['id'] as String,
+          selected['id'] as String,
+          _delta(),
+        );
+      }
+    }
+    throw const StudioException('NOT_ADJACENT');
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed) {
@@ -1267,6 +1339,13 @@ class _FoundationAppState extends State<FoundationApp>
           key: const Key('roll'),
           onPressed: _busy || _selected == null ? null : () => _edit(_rollCut),
           child: const Text('Roll'),
+        ),
+        OutlinedButton(
+          key: const Key('slide'),
+          onPressed: _busy || _selected == null
+              ? null
+              : () => _edit(_slideClip),
+          child: const Text('Slide'),
         ),
         TextField(
           key: const Key('ripple-close-start'),

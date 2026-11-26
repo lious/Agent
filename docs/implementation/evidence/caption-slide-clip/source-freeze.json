@@ -1,0 +1,20 @@
+{
+  "increment": "1.83",
+  "title": "Official persist path for caption-aware SlideClip",
+  "baseCommit": "784480123130bc4cb617af7523d0e5bd295ba1b6",
+  "sourceSha256": {
+    "packages/studio_document/lib/edit_algebra.dart": "c74cfbdadc1c81e17910e2c3480fdd372098292d940282c0230ab577e75be53b",
+    "packages/studio_document/lib/persistent_audio.dart": "0d1bbbfa57b9185c2c08117cb26a37a9ed7b1cf29b63a11d76502c31761527f2",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "d91ef42f9ef0bd7b444e3b77c10b28f8abe1b332392481d4b3405002acff5738",
+    "packages/studio_document/test/caption_slide_clip_test.dart": "a6d2dbfb1c4e22cc4328a71307a3301eaa512d13ceda0b5444482b79b2525c2e",
+    "packages/studio_sdk/test/caption_slide_clip_test.dart": "12c0314c2e312e8b7b6fd4b0c50989cf9919b909f3215efac414692e3822b96d",
+    "packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart": "06e7661d4c3a5ca8bdb5fe3e54d527623757e1ebd08c9ad4924a8743bf9e61f3"
+  },
+  "aggregateSha256": "e1133c2287b72bec03b62f01e21d40fa2f9fa2e1c4c47f96049fe4269c237137",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T21:52:12+08:00",
+  "timezone": "Asia/Shanghai"
+}
