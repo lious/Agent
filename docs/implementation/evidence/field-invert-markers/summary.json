@@ -1,0 +1,55 @@
+{
+  "increment": "1.50",
+  "title": "Field-aware invert of a prior SetMarkers command",
+  "baseCommit": "a2dffe0d812a0d255277a97f3571d8a337963f29",
+  "aggregateSha256": "b57f05e64fb12775c2831979f3e7f543e6ec494a0d4337c13087887866ff7fa0",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 170,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 275,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip SetMarkers command restores only that command's marker write set when those fields still match the after-image. Earlier captions and an unrelated leave-gap MoveClip of a non-host remnant stay.",
+    "A later edit to those markers, a followed clipLocal marker that has already moved with its host, or invert of the tip / undo / redo / invertCommand itself, is whole-group UNDO_CONFLICT and does not roll the database back. Linear undo/redo stay tip snapshot restores. Official InversePatch kind stays restoreSnapshot.",
+    "A real UI path imports AV, extracts persistent audio, splits, adds a clipLocal cue, adds an absolute marker, moves the right remnant, inverts the SetMarkers command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED.",
+    "Already-delivered SetTrackState locked, overwrite, LiftClips/Cut, MoveClip, Delete/Trim, insert-move leave-gap, includeLinks=false, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Source-interval crop stays ANCHOR_OUT_OF_RANGE. Lifting a clipLocal-marker host stays REF_NOT_FOUND. Video/caption mute/solo stay FEATURE_NOT_IMPLEMENTED; syncLock is not toggled. Auto-close-on-move, new-track, cross-project bake, OS clipboard, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice."
+  ],
+  "asOf": "2026-11-26T11:10:33+08:00",
+  "timezone": "Asia/Shanghai"
+}
