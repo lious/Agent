@@ -1,0 +1,27 @@
+{
+  "increment": "1.79",
+  "title": "Field-aware invert of a prior ripple-close command",
+  "baseCommit": "d66459eff3b9087c737fd52a492b88bda13f7746",
+  "officialSelected": {
+    "document": 288,
+    "sdk": 135,
+    "ui": 57,
+    "total": 480,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "aggregateSha256": "ca5cc3a668d9359a8b65786e77d5b3115a4eee7ff7f1d8048417b9b3348e0fac",
+  "asOf": "2026-11-26T19:58:34+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true,
+  "productionFiles": [
+    "packages/studio_document/lib/field_invert.dart"
+  ],
+  "productionChangeBound": "invert restores in-place fields first, then inserts a missing track gap by timeline start; media clips still append; IMPLICIT_GAP is not retargeted; production edit algebra is unchanged"
+}

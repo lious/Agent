@@ -182,12 +182,21 @@ Map<String, dynamic> applyFieldInvert(
     throw const StudioException('UNDO_CONFLICT');
   }
   final next = jsonDecode(jsonEncode(current)) as Map<String, dynamic>;
+  final pendingGaps = <FieldChange>[];
   for (final change in changes) {
     if (change.beforeMissing) {
       _remove(next, change.path);
+    } else if (_isTrackGap(change.path, change.before) &&
+        !_exists(next, change.path)) {
+      // Restore clip starts first so a mid-span gap can be inserted by time
+      // instead of being appended after later remnants.
+      pendingGaps.add(change);
     } else {
       _put(next, change.path, change.before);
     }
+  }
+  for (final change in pendingGaps) {
+    _put(next, change.path, change.before);
   }
   return next;
 }
@@ -252,9 +261,39 @@ void _put(dynamic root, List<Object> path, Object? value) {
   final index = list.indexWhere((e) => e is Map && e['id'] == id);
   if (index >= 0) {
     list[index] = value;
+  } else if (_isTrackGap(path, value)) {
+    // Restoring a track gap must keep list order by start time. Appending
+    // would leave a mid-span hole as IMPLICIT_GAP even when the restored
+    // starts are otherwise legal. Media clips still append, so invert of a
+    // non-trailing leave-gap delete, LiftClips, or mid-span insert paste
+    // stays IMPLICIT_GAP.
+    list.insert(_gapInsertIndex(list, value as Map), value);
   } else {
     list.add(value);
   }
+}
+
+bool _isTrackGap(List<Object> path, Object? value) {
+  if (path.length < 2 || path[path.length - 2] != 'items') {
+    return false;
+  }
+  return value is Map &&
+      value['source'] == null &&
+      value['timelineRange'] is Map;
+}
+
+int _gapInsertIndex(List list, Map value) {
+  final start = Q.fromJson((value['timelineRange'] as Map)['start']);
+  for (var i = 0; i < list.length; i++) {
+    final item = list[i];
+    if (item is Map && item['timelineRange'] is Map) {
+      final other = Q.fromJson((item['timelineRange'] as Map)['start']);
+      if (other > start) {
+        return i;
+      }
+    }
+  }
+  return list.length;
 }
 
 void _remove(dynamic root, List<Object> path) {
