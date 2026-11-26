@@ -1610,6 +1610,45 @@ final class StudioWorkspace {
     return snapshot.revision;
   }
 
+  /// Official `studio.markers.sidecar` import. Restores every official field
+  /// or refuses the whole file; never appends a partial list or rewrites
+  /// clipLocal markers as absolute.
+  Future<MarkerSidecarImport> importMarkers(
+    LocalFileGrant source, {
+    required BigInt expectedRevision,
+  }) async {
+    _requireMetadata();
+    final selectedProject = _activeProjectId;
+    _selectedInputs.add(source.file.resolveSymbolicLinksSync());
+    if (await source.file.length() > 16 * 1024 * 1024) {
+      throw const StudioException('DOCUMENT_LIMIT');
+    }
+    final imported = MarkerSidecar.tryImport(
+      await source.file.readAsBytes(),
+      current.toJson(),
+    );
+    if (_closed || selectedProject != _activeProjectId) {
+      throw const StudioException('PROJECT_CHANGED');
+    }
+    final store = imported.requireOk;
+    edit(SetMarkers(store), expectedRevision: expectedRevision);
+    return imported;
+  }
+
+  /// Official `studio.markers.sidecar` export of every project marker.
+  /// Marker labels are not burned into preview or MP4.
+  BigInt exportMarkers(File target) {
+    _requireMetadata();
+    _protectOutput(target);
+    final snapshot = current;
+    requireLocalEditingWritable(snapshot);
+    AtomicFilePublisher().write(
+      target,
+      MarkerSidecar.exportBytes(snapshot.toJson()),
+    );
+    return snapshot.revision;
+  }
+
   PersistenceView persistence({File? target}) => _repository.persistenceView(
     _activeProjectId,
     targetPath: target?.absolute.uri.normalizePath().toFilePath(),

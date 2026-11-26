@@ -1,0 +1,19 @@
+{
+  "baseCommit": "6cfe464ff2ae39dbf09d5eba614dd01a502be79d",
+  "sourceSha256": {
+    "docs/addenda/marker-sidecar-v1.md": "31d1c2acc7a0db7c60d0286d9420ca38982064eff4f1cfe8349b61a3fbfc4392",
+    "docs/adr/m001-marker-sidecar-v1.md": "7d31d765d4efd3bbe20845188272386fe3779c40bc9444f6c907b8869bd1eaab",
+    "docs/adr/m002-marker-sidecar-workbench.md": "e6916a5ca05e20b2ccfd0a0606a8ba5d92a69ab9d60801540f9d608456404637",
+    "packages/studio_sdk/lib/studio_sdk.dart": "d3388f188550c13005ba489f3409ecc11a91e20668b48dc349f5cefe6eae0ae4",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "cb5b6563d1bbddb541bc4e811b866f74ab3d20a56d938a68c6072b821a456054",
+    "packages/studio_sdk/test/marker_sidecar_workbench_test.dart": "df6b2ac0c3b9fc3e24dd8588c23f032b961a5d780b7dd3ada98f3cc823ab4be0",
+    "packages/studio_editor_ui/test/marker_sidecar_ui_test.dart": "177f2c22c8e51fdd015b55774f4d2ee749e7bc69461c4a07d3f65a8101d333f2"
+  },
+  "aggregateSha256": "2ea1f71e3c354439ab03b79b7a75fe01a45378578bb135775739a6800dacad5d",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T17:59:00+08:00",
+  "timezone": "Asia/Shanghai"
+}

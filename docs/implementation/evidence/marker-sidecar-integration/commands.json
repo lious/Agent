@@ -1,0 +1,114 @@
+{
+  "title": "Integrate official marker sidecar onto the feature branch after Increment 1.82",
+  "baseCommit": "6732b0818e07732aa232e985a9b9f84b8bdd9136",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "flutter",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar-integration/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 3.708
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/markers/formats/marker_sidecar_test.dart",
+        "packages/studio_document/test/marker_edit_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar-integration/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 2.437
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/marker_sidecar_test.dart",
+        "packages/studio_sdk/test/marker_sidecar_workbench_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "--concurrency=1",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar-integration/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 5.328
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/marker_sidecar_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slip_clip_ui_test.dart"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/marker-sidecar-integration/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 13.811
+    }
+  ],
+  "asOf": "2026-11-26T21:16:44+08:00",
+  "aggregateSha256": "747faeecfcb0abba68265733f4fc9f57ef523244e5331a6ffa56cafee9912697",
+  "officialSidecarSelected": {
+    "document": 9,
+    "sdk": 2,
+    "ui": 1,
+    "total": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "selectedIncludingRegressions": {
+    "document": 27,
+    "sdk": 6,
+    "ui": 3,
+    "total": 36,
+    "failed": 0,
+    "skipped": 0,
+    "includes": {
+      "officialSidecar": {
+        "document": 9,
+        "sdk": 2,
+        "ui": 1
+      },
+      "markerEditRegression": {
+        "document": 6
+      },
+      "rollRegression": {
+        "document": 6,
+        "sdk": 2,
+        "ui": 1
+      },
+      "slipRegression": {
+        "document": 6,
+        "sdk": 2,
+        "ui": 1
+      }
+    }
+  },
+  "newTestsAuthoredThisIntegration": {
+    "document": 0,
+    "sdk": 0,
+    "ui": 0,
+    "total": 0
+  }
+}

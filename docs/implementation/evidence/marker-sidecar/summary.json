@@ -1,0 +1,48 @@
+{
+  "increment": "M.1",
+  "title": "Official studio.markers.sidecar import and export",
+  "baseCommit": "6a9b4bafe25320c0b0e5f14e21207208ee3db50e",
+  "aggregateSha256": "a0044aeebbb86ad04871d8c94fb5fa124566b2eb86dff5546d4920b9a74993e2",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 9,
+    "sdk": 1,
+    "ui": 0,
+    "total": 10
+  },
+  "selected": {
+    "document": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 9
+    },
+    "sdk": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "legacyAndKill": "notRe-run for this format slice",
+    "opacityCancel100": "notRe-run for this format slice"
+  },
+  "bounds": [
+    "This increment admits only the official marker sidecar named studio.markers.sidecar, recorded as a new written authorization in docs/addenda/marker-sidecar-v1.md and ADR docs/adr/m001-marker-sidecar-v1.md. Those two documents are included in sourceSha256 / aggregateSha256. The original 104-spec snapshot is not rewritten. The envelope is format, formatVersion 1.0.0 (import admits the same major 1.y.z), and markers (an array that may be empty). Each entry round-trips the existing Marker object with rational Time JSON, not floating-point seconds, and does not change the core project schema.",
+    "Export writes every selected marker (default: all project markers) and refuses a missing selected id rather than dropping it. Import restores every official field or rejects the whole file. Unknown extra fields are listed as MARKER_SIDECAR_UNSUPPORTED warnings and the file is refused; they are never stripped to invent success. A clipLocal host that is missing or no longer covers the marker is ANCHOR_OUT_OF_RANGE, never quietly rewritten as absolute. A missing target sequenceId is PARENT_MISMATCH. Wrong format or unrecognized major version is MARKER_SIDECAR_INVALID. Marker labels are not burned into preview or MP4, and this sidecar is not an MP4 mux option.",
+    "A persist path exports absolute and clipLocal markers to a .studio-markers.json file, refuses a CSV-like format, then imports the sidecar over a later SetMarkers rewrite so the official fields come back and the intervening marker does not remain. WebVTT chapters, CSV, and FCPXML stay closed and are not claimed compatible.",
+    "Already-delivered marker absolute default / clipLocal follow / ripple interval, caption semantics, and field-aware invert stay unchanged. Official InversePatch kind stays restoreSnapshot. This slice does not change production algebra, insertion order, or IMPLICIT_GAP. I-005 and I-010 stay partial."
+  ],
+  "asOf": "2026-11-26T17:42:12+08:00",
+  "timezone": "Asia/Shanghai"
+}

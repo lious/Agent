@@ -1,0 +1,5 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/marker_sidecar_ui_test.dart
+00:00 +0: /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/marker_sidecar_ui_test.dart: workbench exports and imports official studio.markers.sidecar, refuses silent drops and unknown fields
+00:03 +1: /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart: REAL path: roll a packed 1s cut +15 frames through the Roll button, undo/archive/sidecar, no MP4
+00:09 +2: /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart: REAL path: slip the left remnant +15 source frames through the Slip button, undo/archive/sidecar, no MP4
+00:09 +3: All tests passed!

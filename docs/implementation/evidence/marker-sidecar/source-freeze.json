@@ -1,0 +1,18 @@
+{
+  "baseCommit": "6a9b4bafe25320c0b0e5f14e21207208ee3db50e",
+  "sourceSha256": {
+    "docs/addenda/marker-sidecar-v1.md": "55343a0617ca8f6893ba41a1d4aebbc5f43ab43fe3ac1ac4646c83bb3ad6328b",
+    "docs/adr/m001-marker-sidecar-v1.md": "c3b7f6cd03d1d2dc7fb53f1926fd5989db4c1c0ef2d2ef96da59dd95761d5b71",
+    "packages/studio_document/lib/marker_sidecar.dart": "d806c39697d55aa7f00e60a717b6d21efc665157b57f6cfc8cb6e1cdada8828c",
+    "packages/studio_document/lib/studio_document.dart": "201c29da788d9db626e8dec2a065b995db89db89835424213fd68597a03adfa4",
+    "packages/studio_document/test/markers/formats/marker_sidecar_test.dart": "8d8e51e1775231d2cb1477a5faa8b144adad7658f98765a75dd50d5e294fc750",
+    "packages/studio_sdk/test/marker_sidecar_test.dart": "9585b215b0565f951743230de16573c3ca5a4d09d0686b70d1a92a4854c27dec"
+  },
+  "aggregateSha256": "a0044aeebbb86ad04871d8c94fb5fa124566b2eb86dff5546d4920b9a74993e2",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T17:42:12+08:00",
+  "timezone": "Asia/Shanghai"
+}

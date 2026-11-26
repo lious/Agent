@@ -1,0 +1,55 @@
+{
+  "increment": "M.1",
+  "title": "Official studio.markers.sidecar import and export",
+  "baseCommit": "6a9b4bafe25320c0b0e5f14e21207208ee3db50e",
+  "asOf": "2026-11-26T17:42:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.305
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/markers/formats/marker_sidecar_test.dart",
+        "packages/studio_document/test/marker_edit_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.191
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/marker_sidecar_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar/final-sdk.jsonl",
+      "environment": {
+        "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+        "STUDIO_TEST_VIDEO": "/workspace/studio-marker-sidecar/artifacts/local-video/input.mp4"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 2.193
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+Resolving dependencies in `/workspace/studio-marker-sidecar`...
+Downloading packages...
+  material_color_utilities 0.13.0 (0.13.1 available)
+  sqlite3 2.9.4 (3.9.2 available)
+  test 1.32.0 (1.33.0 available)
+  test_api 0.7.14 (0.7.15 available)
+  test_core 0.6.20 (0.6.21 available)
+Got dependencies in `/workspace/studio-marker-sidecar`!
+5 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1562357,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/studio-marker-sidecar/packages/studio_editor_ui/test/marker_sidecar_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/studio-marker-sidecar/packages/studio_editor_ui/test/marker_sidecar_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"count":1,"time":3,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1978}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":1980}
+{"test":{"id":3,"name":"workbench exports and imports official studio.markers.sidecar, refuses silent drops and unknown fields","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":10,"root_column":3,"root_url":"file:///workspace/studio-marker-sidecar/packages/studio_editor_ui/test/marker_sidecar_ui_test.dart"},"type":"testStart","time":1980}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4456}
+{"success":true,"type":"done","time":4481}

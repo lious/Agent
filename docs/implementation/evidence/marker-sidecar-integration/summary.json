@@ -1,0 +1,52 @@
+{
+  "title": "Integrate official marker sidecar onto the feature branch after Increment 1.82",
+  "baseCommit": "6732b0818e07732aa232e985a9b9f84b8bdd9136",
+  "note": "Not a new editing increment. New authored tests in this integration: 0. Official 505 is not mixed into a new-count.",
+  "officialSidecarSelected": {
+    "document": 9,
+    "sdk": 2,
+    "ui": 1,
+    "total": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "selectedIncludingRegressions": {
+    "document": 27,
+    "sdk": 6,
+    "ui": 3,
+    "total": 36,
+    "failed": 0,
+    "skipped": 0,
+    "includes": {
+      "officialSidecar": {
+        "document": 9,
+        "sdk": 2,
+        "ui": 1
+      },
+      "markerEditRegression": {
+        "document": 6
+      },
+      "rollRegression": {
+        "document": 6,
+        "sdk": 2,
+        "ui": 1
+      },
+      "slipRegression": {
+        "document": 6,
+        "sdk": 2,
+        "ui": 1
+      }
+    }
+  },
+  "newTestsAuthoredThisIntegration": {
+    "document": 0,
+    "sdk": 0,
+    "ui": 0,
+    "total": 0
+  },
+  "aggregateSha256": "747faeecfcb0abba68265733f4fc9f57ef523244e5331a6ffa56cafee9912697",
+  "asOf": "2026-11-26T21:16:44+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true,
+  "productionChangeSummary": "Added marker_sidecar.dart and exported it; added StudioWorkspace.exportMarkers/importMarkers; added workbench sidecar path and import/export buttons. Did not change edit_algebra, persistent_audio, field_invert, or command_history. Slip and Roll buttons remain."
+}

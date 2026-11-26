@@ -1,0 +1,54 @@
+{
+  "increment": "M.2",
+  "title": "Workbench import and export of official studio.markers.sidecar",
+  "baseCommit": "6cfe464ff2ae39dbf09d5eba614dd01a502be79d",
+  "asOf": "2026-11-26T17:59:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar-workbench/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.244
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/marker_sidecar_workbench_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/marker-sidecar-workbench/final-sdk.jsonl",
+      "environment": {
+        "STUDIO_MEDIA_LIBRARY": "/workspace/agent-media-native-peer/libstudio_media.so",
+        "STUDIO_TEST_VIDEO": "/workspace/studio-marker-sidecar/artifacts/local-video/input.mp4"
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 1.466
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/marker_sidecar_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/marker-sidecar-workbench/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 5.421
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "increment": "M.2",
+  "title": "Workbench import and export of official studio.markers.sidecar",
+  "baseCommit": "6cfe464ff2ae39dbf09d5eba614dd01a502be79d",
+  "aggregateSha256": "2ea1f71e3c354439ab03b79b7a75fe01a45378578bb135775739a6800dacad5d",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 0,
+    "sdk": 1,
+    "ui": 1,
+    "total": 2
+  },
+  "selected": {
+    "sdk": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "ui": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "legacyAndKill": "notRe-run for this workbench slice",
+    "opacityCancel100": "notRe-run for this workbench slice"
+  },
+  "bounds": [
+    "This increment opens only a workbench import/export path for the official studio.markers.sidecar format already admitted in M.1. StudioWorkspace.importMarkers / exportMarkers and the Markers panel Import official marker sidecar / Export official marker sidecar controls use .studio-markers.json. Export writes every current project marker atomically. Import applies SetMarkers with the complete official store, restoring official ids and fields or refusing the whole file. Unknown extra fields stay MARKER_SIDECAR_UNSUPPORTED and are never stripped to invent success. A clipLocal host that is missing or no longer covering stays ANCHOR_OUT_OF_RANGE, never rewritten as absolute. Marker labels are not burned into preview or MP4, and this path is not an MP4 mux option.",
+    "A typo in docs/addenda/marker-sidecar-v1.md and docs/adr/m001-marker-sidecar-v1.md that wrote 喵喵 was corrected to 啾啾 (U+557E). That correction is not a new authorization. The M.1 commit 6cfe464ff2ae39dbf09d5eba614dd01a502be79d was not amended, and the frozen M.1 aggregate a0044aeebbb86ad04871d8c94fb5fa124566b2eb86dff5546d4920b9a74993e2 was not changed. The typo-corrected addendum and m001, plus ADR m002, are included in this increment's sourceSha256 / aggregateSha256.",
+    "A metadata workbench path adds two absolute markers, exports the official sidecar, deletes one marker, imports the file so both official objects return, then imports a file with an unknown field and shows MARKER_SIDECAR_UNSUPPORTED without changing the project. A persist-path SDK test covers the same APIs with a clipLocal marker present.",
+    "Already-delivered M.1 document-level sidecar contract, marker absolute default / clipLocal follow / ripple interval, caption SRT/VTT workbench sidecars, and field-aware invert stay unchanged. Official InversePatch kind stays restoreSnapshot. WebVTT chapters, CSV, and FCPXML stay closed. I-005 and I-010 stay partial."
+  ],
+  "asOf": "2026-11-26T17:59:00+08:00",
+  "timezone": "Asia/Shanghai"
+}

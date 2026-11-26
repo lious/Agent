@@ -1,0 +1,41 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1546873,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/markers/formats/marker_sidecar_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_document/test/marker_edit_test.dart"},"type":"suite","time":8}
+{"test":{"id":3,"name":"loading packages/studio_document/test/marker_edit_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"count":2,"time":8,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":502}
+{"group":{"id":4,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":504}
+{"test":{"id":5,"name":"empty markers export and import round-trip","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":65,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":504}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":508}
+{"group":{"id":6,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":508}
+{"test":{"id":7,"name":"SetMarkers writes absolute markers and is a no-op when unchanged","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":508}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":567}
+{"test":{"id":8,"name":"absolute and clipLocal official fields round-trip and are not dropped","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":81,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":567}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":593}
+{"test":{"id":9,"name":"clipLocal marker follows a reject move; absolute sibling stays","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":69,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":593}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":615}
+{"test":{"id":10,"name":"applying a full-file import restores official fields via SetMarkers","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":145,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":616}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":625}
+{"test":{"id":11,"name":"ripple close drops a marker inside the hole; ripple=false later stays; ripple=true later shifts","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":88,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":626}
+{"testID":10,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":642}
+{"test":{"id":12,"name":"missing required marker field or illegal value refuses the whole file","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":180,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":642}
+{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":654}
+{"test":{"id":13,"name":"duplicate id, wrong format, and unknown major version refuse the file","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":234,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":655}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":662}
+{"test":{"id":14,"name":"unknown extra fields warn MARKER_SIDECAR_UNSUPPORTED and refuse the file","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":311,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":662}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":669}
+{"test":{"id":15,"name":"insert-move leaves a source gap and does not split a following clipLocal marker at the destination","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":118,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":669}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":684}
+{"test":{"id":16,"name":"unknown anchor kind is MARKER_ANCHOR_NOT_IMPLEMENTED, not stripped","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":359,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":684}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":692}
+{"test":{"id":17,"name":"missing sequenceId or uncovered clipLocal host refuses, never becomes absolute","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":383,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":693}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":696}
+{"test":{"id":18,"name":"unsupported marker anchor kinds refuse; lifting a clipLocal host is atomic","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":166,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":696}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":702}
+{"test":{"id":19,"name":"absolute with a clipId or clipLocal without clipId is ANCHOR_INVALID","suiteID":0,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":455,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/markers/formats/marker_sidecar_test.dart"},"type":"testStart","time":702}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":706}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":711}
+{"test":{"id":20,"name":"planMoveSnap uses admitted markers as targets and does not strip them","suiteID":2,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":194,"column":3,"url":"file:///workspace/studio-marker-sidecar/packages/studio_document/test/marker_edit_test.dart"},"type":"testStart","time":712}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":733}
+{"success":true,"type":"done","time":735}

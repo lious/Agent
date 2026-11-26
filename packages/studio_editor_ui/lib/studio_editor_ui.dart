@@ -41,7 +41,8 @@ class _FoundationAppState extends State<FoundationApp>
       _captionPath = TextEditingController();
   final _markerLabel = TextEditingController(text: 'Marker'),
       _markerTime = TextEditingController(text: '0'),
-      _markerDuration = TextEditingController(text: '0');
+      _markerDuration = TextEditingController(text: '0'),
+      _markerSidecarPath = TextEditingController();
   bool _markerRipple = false;
   String? _markerSelected;
   final _peerHash = TextEditingController();
@@ -558,6 +559,7 @@ class _FoundationAppState extends State<FoundationApp>
       _markerLabel,
       _markerTime,
       _markerDuration,
+      _markerSidecarPath,
       _peerHash,
     ]) {
       c.dispose();
@@ -1986,7 +1988,44 @@ class _FoundationAppState extends State<FoundationApp>
         ),
       ),
     const Text(
-      'New markers are sequence-absolute and stay put unless Ripple this marker is on, or the marker is anchored to a covering clip and follows that host. A ripple or insert interval drops markers wholly inside a closed range (undo restores them) and shifts later ripple=true absolute markers; ripple=false later markers do not move. Insert-move still leaves a source gap. Marker labels are not burned into preview or export. Split/roll/slip/slide rebinding, new tracks, and auto-close-on-move stay closed.',
+      'New markers are sequence-absolute and stay put unless Ripple this marker is on, or the marker is anchored to a covering clip and follows that host. A ripple or insert interval drops markers wholly inside a closed range (undo restores them) and shifts later ripple=true absolute markers; ripple=false later markers do not move. Insert-move still leaves a source gap. Marker labels are not burned into preview or export. Official workbench import/export uses only studio.markers.sidecar (.studio-markers.json): import replaces all project markers or refuses the whole file; unknown extra fields warn MARKER_SIDECAR_UNSUPPORTED and refuse; a clipLocal host that is missing or no longer covering is not rewritten as absolute. WebVTT chapters, CSV, FCPXML, and MP4 mux stay closed. Split/roll/slip/slide rebinding, new tracks, and auto-close-on-move stay closed.',
+    ),
+    _path(
+      'marker-sidecar-path',
+      'Official marker sidecar path (.studio-markers.json; import replaces all project markers; export overwrites atomically; never burned into MP4)',
+      _markerSidecarPath,
+    ),
+    Wrap(
+      spacing: 8,
+      children: [
+        OutlinedButton(
+          key: const Key('marker-import-sidecar'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  final result = await widget.workspace.importMarkers(
+                    LocalFileGrant.fromUserSelection(
+                      File(_markerSidecarPath.text),
+                    ),
+                    expectedRevision: _project.revision,
+                  );
+                  return 'Imported ${result.markers!.markers.length} official markers; warnings: ${result.warnings.join(", ")}';
+                }),
+          child: const Text('Import official marker sidecar'),
+        ),
+        OutlinedButton(
+          key: const Key('marker-export-sidecar'),
+          onPressed: _busy
+              ? null
+              : () => _run(() async {
+                  final r = widget.workspace.exportMarkers(
+                    File(_markerSidecarPath.text),
+                  );
+                  return 'Official marker sidecar exported from revision $r';
+                }),
+          child: const Text('Export official marker sidecar'),
+        ),
+      ],
     ),
   ];
 
