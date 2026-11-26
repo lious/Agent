@@ -1,0 +1,17 @@
+{
+  "baseCommit": "2f1fd3c4b3bfbbf3cd94e04221e7710e50330b77",
+  "sourceSha256": {
+    "packages/studio_document/lib/clipboard.dart": "91ffc8ce59f28455bdcd7819c9c3e9942637b42b5eaede6cfb8c6b7cd79203c2",
+    "packages/studio_editor_ui/lib/clipboard_controls.dart": "8238dee4b9c557fc29ab5d5d5814f703464515862cf168a95edefa959f3b0c81",
+    "packages/studio_document/test/caption_lift_clips_test.dart": "26bcdf25c115566ef2ed28c91e5764ca8343d5f6be4baff2de30d097d5a0c60b",
+    "packages/studio_sdk/test/caption_lift_clips_test.dart": "0a50becb46e42dab1485691792d6a6db19eb243e0f6e8d74d3cd1f9917c58f78",
+    "packages/studio_editor_ui/test/caption_lift_clips_ui_test.dart": "048d0499d3ac159d25f6b668602eed608666bb2de648c876e16715a631942f6a"
+  },
+  "aggregateSha256": "b910e25dca8f38c5ccae48b5faa8e1961cde3f60e88dc9ae1aaf093266061f58",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T09:24:31+08:00",
+  "timezone": "Asia/Shanghai"
+}

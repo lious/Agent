@@ -1,0 +1,100 @@
+{
+  "increment": "1.46",
+  "title": "Caption-aware LiftClips (leave-gap cut)",
+  "baseCommit": "2f1fd3c4b3bfbbf3cd94e04221e7710e50330b77",
+  "aggregateSha256": "b910e25dca8f38c5ccae48b5faa8e1961cde3f60e88dc9ae1aaf093266061f58",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 152,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 245,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "LiftClips (Cut) with captions no longer leaves a dangling clipLocal host as REF_NOT_FOUND. The admitted link-and-selection closure is lifted together; the vacated source stays a gap; a clipLocal cue bound to a lifted host becomes an absolute remnant at the same times with the same text; later cues are not shifted; absolute cues stay put.",
+    "A source-anchored cue whose host is lifted is whole-group ANCHOR_OUT_OF_RANGE, matching leave-gap DeleteClip uncover. Lifting a clipLocal-marker host remains an explicit whole-group REF_NOT_FOUND and is not rewritten as ANCHOR_OUT_OF_RANGE or converted to a remnant. Captions do not enter the internal clipboard package, so paste after cut does not copy or move them.",
+    "A real UI path imports AV, extracts persistent audio, splits, adds a clipLocal cue, uses Cut selection (LiftClips), undoes and redoes that command, archives a fork, exports a VTT sidecar, and still refuses preview/MP4 burn-in. The same persist path is also exercised with cutSelection through the SDK.",
+    "MoveClip / MoveClips, including insert-move leave-gap and includeLinks=false, is unchanged. Leave-gap and ripple DeleteClip / TrimClip stay as already delivered. The table 0.02s AV offset is off the 30 fps grid and still refuses OFF_FRAME_GRID; alignment stays 1/30 s.",
+    "Already-delivered leave-gap trim/delete, single-range ripple delete/close, shorten and lengthen RippleTrimClip, video-only and linked-audio TrimClip(ripple:true), DeleteClip(ripple:true) and leave-gap DeleteClip, caption-aware MoveClip, reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default/follow/interval/source-window, split and leave-gap rebind/remnants, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, marker sidecar formats, or the full section-3 matrix.",
+    "I-005 and I-010 remain partial; 87 count and XD10 stay separately counted. Intermittent underrun, old-writer schema9 as a product qualification, and other-end GPU physical sync remain unproven."
+  ],
+  "runs": [
+    {
+      "name": "analyzer",
+      "exitCode": 0,
+      "elapsedSeconds": 2.278,
+      "log": "artifacts/caption-lift-clips/final-analyzer.log"
+    },
+    {
+      "name": "document",
+      "exitCode": 0,
+      "elapsedSeconds": 44.437,
+      "log": "artifacts/caption-lift-clips/final-document.jsonl"
+    },
+    {
+      "name": "sdk",
+      "exitCode": 0,
+      "elapsedSeconds": 489.526,
+      "log": "artifacts/caption-lift-clips/final-sdk.jsonl"
+    },
+    {
+      "name": "ui",
+      "exitCode": 0,
+      "elapsedSeconds": 76.33,
+      "log": "artifacts/caption-lift-clips/final-ui.jsonl"
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 14.791,
+      "log": "artifacts/caption-lift-clips/final-actual-legacy-and-kill.log"
+    },
+    {
+      "name": "undo-redo-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 23.263,
+      "log": "artifacts/caption-lift-clips/final-undo-redo-kill.log"
+    },
+    {
+      "name": "100cancel",
+      "exitCode": 0,
+      "elapsedSeconds": 0.852,
+      "log": "artifacts/caption-lift-clips/final-100cancel.log"
+    }
+  ]
+}

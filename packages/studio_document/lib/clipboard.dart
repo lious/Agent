@@ -99,6 +99,11 @@ final class UngroupClips extends EditOperation {
 
 /// Non-ripple lift of the complete admitted link+selection closure. Never
 /// deletes original blobs/assets; leaves legal gaps and keeps duration.
+/// With captions, clipLocal cues whose host is lifted become absolute
+/// remnants at their original times (same policy as leave-gap DeleteClip).
+/// Absolute cues stay put. Source-anchored cues whose host is lifted refuse
+/// ANCHOR_OUT_OF_RANGE. Lifting a clipLocal-marker host still refuses
+/// REF_NOT_FOUND. Captions do not enter the clipboard payload in this slice.
 final class LiftClips extends EditOperation {
   LiftClips(Iterable<String> ids)
     : clipIds = List.unmodifiable(ids.take(100001).toList()..sort()) {
@@ -538,6 +543,17 @@ ProjectDocument _liftClips(
         if (c['source'] != null) c['id']: c,
   };
   final affected = <String>{};
+  // Lifting a clipLocal-marker host stays a whole-group REF_NOT_FOUND.
+  // Do not convert those markers to absolute remnants (leave-gap DeleteClip
+  // already does) and do not silently rewrite the error as ANCHOR_OUT_OF_RANGE.
+  for (final raw in d['markers'] as List) {
+    final m = raw as Map;
+    if (m['anchor']['kind'] == 'clipLocal' &&
+        removed.contains(m['anchor']['clipId'])) {
+      throw const StudioException('REF_NOT_FOUND');
+    }
+  }
+  final sourceAbs = snapshotSourceCaptionAbsolutes(d);
   for (final id in removed) {
     final c = clips[id] as Map, t = trackById[c['trackId']] as Map;
     _requireUnlocked(t, c, 'timelineRange.start');
@@ -581,6 +597,10 @@ ProjectDocument _liftClips(
     newId,
     Q.fromJson(s['duration']),
   );
+  applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+  for (final hostId in removed) {
+    applyCaptionsAfterLeaveGapDelete(d, hostId: hostId, nextVersion: version);
+  }
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;

@@ -85,7 +85,7 @@ extension _ClipboardControls on _FoundationAppState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject, overwrite or insert. Ripple delete of a selected continuous range, ripple trim out/in (shorten or lengthen) of one clip, and Ripple close range of an explicit interval (including a vacated move source) are separate buttons. New tracks and cross-project paste are not in this slice. Insert-mode moves still leave a source gap until it is closed. Admitted captions are absolute and stay put; clip-local caption follow is not opened. Marker-bearing projects still refuse editing.',
+          'Internal clipboard and selection groups. This is NOT the operating-system clipboard and is cleared when the open project changes. Same-project paste onto existing same-kind tracks only. Collision mode (shared control above) is reject, overwrite or insert. Ripple delete of a selected continuous range, ripple trim out/in (shorten or lengthen) of one clip, and Ripple close range of an explicit interval (including a vacated move source) are separate buttons. New tracks and cross-project paste are not in this slice. Insert-mode moves still leave a source gap until it is closed. Cut leaves a source gap; clipLocal remnants stay off the clipboard. Lifting a clipLocal-marker host still refuses REF_NOT_FOUND.',
         ),
         Text(
           payload == null
