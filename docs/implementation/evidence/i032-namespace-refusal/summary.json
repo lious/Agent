@@ -1,0 +1,112 @@
+{
+  "increment": "2.00",
+  "title": "Official I-032 cross-namespace PlanGraph placement is refused",
+  "baseCommit": "7088ffb6b8474d3a62facf76f87f8656a126ca94",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "harness": 2,
+    "store": 1,
+    "sdk": 0,
+    "ui": 0
+  },
+  "clauseOfficialized": "越namespace拒绝",
+  "task": "I-032",
+  "whyNotAlreadyOfficial": "device_scheduler_test.dart mentions namespace in a test name, but the body officializes PLAN_CYCLE, paid-execution subset, protocol version, and closed schema, and never asserts NAMESPACE_MISMATCH. harness_transactions_test.dart and harness_takeover_test.dart officialize same-namespace durable dispatch and takeover. transactions_test.dart officializes project/document NAMESPACE_MISMATCH, not PlanGraph inputRef / placeTask / registerHarnessPlan. Increment 1.99 i032_fanout_iteration_limits_test.dart officializes fan-out and iteration caps. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI032": [
+    "图环 (already official as PLAN_CYCLE in device_scheduler_test.dart; not re-qualified; kept listed after an honest split of 「图环/越namespace拒绝」 so the officialized namespace half could be cleared without silently dropping the cycle half)",
+    "过期fence不提交 (already official in device_scheduler_test.dart and harness_transactions_test.dart; not re-qualified)",
+    "100重启无重复副作用 (unfinished; implementedScope already records no complete 100-restart proof; takeover idempotency is not this wording and was not re-qualified; a new restart product surface is not invented)",
+    "手动锁始终有效 (no admitted PlanGraph manual-lock API; caption/audio MANUAL_LOCKED is not this wording and was not re-qualified; a new lock surface is not invented)"
+  ],
+  "leftoverWordingAfterSplit": "图环；过期fence不提交；100重启无重复副作用；手动锁始终有效。",
+  "seeds": null,
+  "regressions": {
+    "i032FilesRetentionSaveCrashPriorIncrementsAndSourcePreview": {
+      "sdkStoreDocumentMediaHarness": 61
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    },
+    "i025NoHiddenUploadUi": {
+      "ui": 1
+    },
+    "i025SixtySecondSixClipReopenUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "aa3f4ce17ecd340b8c3d39e915b4b962b1966d183566fb798e1a622bbe696014",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "7a1381a1a3fa9266e4f71ec1126ab022646ad94a9b4a1abce5ef5cd5a14421d0",
+  "i032Status": "partial",
+  "remainingAcceptance": "图环；过期fence不提交；100重启无重复副作用；手动锁始终有效。",
+  "i027Status": "partial",
+  "i027RemainingAcceptance": "tool-call/result配对；fork/resume不重放HTTP副作用；删除正文不留可搜索副本。",
+  "i025Status": "partial",
+  "i025RemainingAcceptance": "恢复最后durable编辑；导出通过I-024。",
+  "i022Status": "partial",
+  "i022RemainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
+  "i024Status": "partial",
+  "i024RemainingAcceptance": "时长误差≤1帧、音画≤20ms、无黑/丢帧异常；失败/取消无损坏成片伪成功；revision固定不被编辑中途改。",
+  "i021Status": "partial",
+  "i021RemainingAcceptance": "20点seek±1帧；VFR/非零PTS不误映射；缓存<=预算。",
+  "i015Status": "partial",
+  "i015RemainingAcceptance": "borrow/retain/release配对；100次开关0活句柄；越权路径/网络读取=0。",
+  "i014Status": "partial",
+  "i014RemainingAcceptance": "zip slip/炸弹/符号链接均拒；恢复不倒退事件；fork新projectId；迁移中断保好副本；不支持feature只读保留。",
+  "i013Status": "partial",
+  "i013RemainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T02:10:47+08:00",
+  "timezone": "Asia/Shanghai"
+}

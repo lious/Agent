@@ -1,0 +1,21 @@
+{
+  "increment": "2.00",
+  "title": "Official I-032 cross-namespace PlanGraph placement is refused",
+  "baseCommit": "7088ffb6b8474d3a62facf76f87f8656a126ca94",
+  "sourceSha256": {
+    "packages/studio_harness/test/i032_namespace_refusal_test.dart": "85684ad403b09c5b75da91216f177b89ee9304f1d16c2d1591a3c0f921850227",
+    "packages/studio_store/test/i032_namespace_refusal_test.dart": "c8386a5250b13aae14eb26de6ea452a2a0bb8c65ef94eb7360574357742ff422",
+    "docs/adr/0107-i032-namespace-refusal.md": "5703fc15ce67587cb050e712aa3deae639d94841852a4cefab54522de256ace2",
+    "docs/implementation/task-status.json": "043f65550dcd50b3095132d8b615478d4cce764ee6fdc59569d2407468bb7df7",
+    "docs/implementation/README.md": "3e4e00d834b81a860a9903253bbcd4d74512a0fedcda4896fec8a7b5059dcde7",
+    "docs/implementation/REVIEW.md": "5e38034e1a99ae99ed4e1af0eedf06137a9f07093f7c15e2ab8ee0fe55c46801"
+  },
+  "aggregateSha256": "aa3f4ce17ecd340b8c3d39e915b4b962b1966d183566fb798e1a622bbe696014",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "7a1381a1a3fa9266e4f71ec1126ab022646ad94a9b4a1abce5ef5cd5a14421d0",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T02:10:47+08:00",
+  "timezone": "Asia/Shanghai"
+}
