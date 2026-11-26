@@ -1,0 +1,59 @@
+{
+  "increment": "1.86",
+  "title": "Official I-005 locked-member and negative-range whole-group refusal",
+  "baseCommit": "83f6ff1ac9d968237d8700ac9afccaf1592ed5bb",
+  "productionChanged": false,
+  "newCount": 5,
+  "newTests": {
+    "document": 5,
+    "sdk": 0,
+    "ui": 0
+  },
+  "clauseOfficialized": "锁定成员与负区间整组拒",
+  "commands": [
+    "MoveClips reject/overwrite/insert",
+    "SplitClip",
+    "leave-gap TrimClip",
+    "LiftClips",
+    "leave-gap DeleteClip",
+    "RippleDeleteClips",
+    "RippleTrimClip",
+    "PasteClips reject/insert/overwrite"
+  ],
+  "regressions": {
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "c7e1006e1c25b68d9570f893e536d46f8482d9740522750123fd832f71783e77",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i005Status": "partial",
+  "remainingAcceptance": "第3节每操作正反例通过；1千随机序列undo后文档hash相等。",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T22:21:17+08:00",
+  "timezone": "Asia/Shanghai"
+}

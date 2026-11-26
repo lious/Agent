@@ -1,0 +1,20 @@
+{
+  "increment": "1.86",
+  "title": "Official I-005 locked-member and negative-range whole-group refusal",
+  "baseCommit": "83f6ff1ac9d968237d8700ac9afccaf1592ed5bb",
+  "sourceSha256": {
+    "packages/studio_document/test/i005_locked_members_negative_range_test.dart": "737f7c0ddf02af92c3ebb4b5e2ff8c2d290469f3b1ce76c9824c581fa0e2cb9c",
+    "docs/adr/0093-i005-locked-members-negative-range.md": "79202964928825bd5aa1699dbddfeb45324b14a41fab0b9e725aaf5fceda77ea",
+    "docs/implementation/README.md": "46e80d42c0568d7f36dda3250c73dbadefdc1fdb45ffb8d77fa632ad6d8faa2d",
+    "docs/implementation/REVIEW.md": "7162d506db5483627644e7277a04b429fe90c4e9c20e69bed055c0a66341eca9",
+    "docs/implementation/task-status.json": "b194445009a55debf382d68e01c62c423c4a1787359de14639f1c369e34ee746"
+  },
+  "aggregateSha256": "c7e1006e1c25b68d9570f893e536d46f8482d9740522750123fd832f71783e77",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "8eb4881b548b1c698d3b10db202348ab35a015e77b70bb60ab826626c831d53c",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T22:21:17+08:00",
+  "timezone": "Asia/Shanghai"
+}
