@@ -133,7 +133,7 @@ void main() {
     expect(cueOf(trimmed, 'cue-abs')['text'], 'later');
   });
 
-  test('leave-gap TrimClip still does not shift later cues; linked ripple still refuses', () {
+  test('leave-gap TrimClip still does not shift later cues', () {
     var p = avFixture();
     final a = algebra.firstId(p);
     p = move.change(p, SplitClip(a, Q.of(2), 'right'));
@@ -155,24 +155,6 @@ void main() {
       Q.fromJson(cueOf(leave, 'cue-later')['timelineRange']['start']),
       Q.of(5, 2),
     );
-
-    var linked = avFixture();
-    linked = move.change(linked, ExtractAudioClip(a, 'audio-stream'));
-    linked = attachDefaults(linked, [
-      CaptionCue(
-        'cue-1',
-        TimeRange(Q.of(0), Q.of(1, 2)),
-        'hello',
-        manualFields: {'text', 'timing'},
-      ),
-    ]);
-    assertPure(linked, () {
-      expect(
-        () =>
-            move.change(linked, TrimClip(a, 'out', Q.of(-1, 2), ripple: true)),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    });
   });
 
   test('uncovering a source cue refuses the whole ripple TrimClip; locked tracks refuse', () {

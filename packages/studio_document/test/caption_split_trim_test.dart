@@ -405,10 +405,6 @@ void main() {
         () => move.change(p, MoveClip(a, Q.of(1))),
         code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
       );
-      expect(
-        () => move.change(p, TrimClip(a, 'out', Q.of(-1, 2), ripple: true)),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
     });
     final split = move.change(p, SplitClip(a, Q.of(1), 'right'));
     final splitTracks = split.toJson()['sequences'][0]['tracks'] as List;

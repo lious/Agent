@@ -100,8 +100,28 @@ void main() {
       ),
     );
     expect(p.hash, frozen);
+    final beforeRight = Q.fromJson(
+      tracks(p)[0]['items'].last['timelineRange']['duration'],
+    );
+    final rippled = apply(
+      p,
+      TrimClip('video-right', 'out', Q.of(-1, 2), ripple: true),
+    );
     expect(
-      () => apply(p, TrimClip('video-right', 'out', Q.of(1), ripple: true)),
+      Q.fromJson(tracks(rippled)[0]['items'].last['timelineRange']['duration']),
+      beforeRight - Q.of(1, 2),
+    );
+    expect(
+      Q.fromJson(tracks(rippled)[1]['items'].last['timelineRange']['duration']),
+      beforeRight - Q.of(1, 2),
+    );
+    expect(
+      tracks(rippled)[0]['items'].last['timelineRange'],
+      tracks(rippled)[1]['items'].last['timelineRange'],
+    );
+    expect(p.hash, frozen);
+    expect(
+      () => apply(p, DeleteClip('video-right', ripple: true)),
       throwsA(
         isA<StudioException>().having(
           (e) => e.code,

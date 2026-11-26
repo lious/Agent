@@ -1,0 +1,100 @@
+{
+  "increment": "1.42",
+  "title": "Caption-aware linked-audio ripple TrimClip",
+  "baseCommit": "82eb84aadd61e7182d391cdb1e445676947bdf25",
+  "aggregateSha256": "e49210ad98581002a9b11753abe2c13096dd8e1df9e16d80438e5d88bd92f104",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 3,
+    "sdk": 2,
+    "ui": 1,
+    "total": 6
+  },
+  "selected": {
+    "document": {
+      "passed": 136,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 3
+    },
+    "sdk": {
+      "passed": 61,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 217,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "TrimClip(ripple:true) on a document that already has a persistent audio track now delegates to the existing RippleTrimClip path: linked members ripple together, and captions and markers use the same interval crop/split/shift. It is not refused as CAPTION_SYNC_EDIT_NOT_IMPLEMENTED and is not rewritten as LINKED_RIPPLE_NOT_IMPLEMENTED.",
+    "A spanning cue keeps authored text; the portion inside the closed interval is cropped and the portion after is shifted. Source uncover is whole-group ANCHOR_OUT_OF_RANGE. A locked partner is FIELD_LOCKED. Out-trim caption geometry matches RippleTrimClip (remnant ids may differ). An in trim still pins timeline start.",
+    "A real UI path imports AV, extracts persistent audio, adds a spanning cue, uses Ripple trim out for 15 frames, undoes and redoes that command, archives a fork, exports a VTT sidecar, and still refuses preview/MP4 burn-in. The same persist path is also exercised with TrimClip(ripple:true) through the SDK.",
+    "Leave-gap TrimClip still does not shift later content and still leaves an absolute remnant in the vacated gap. MoveClip with captions still refuses CAPTION_SYNC_EDIT_NOT_IMPLEMENTED. DeleteClip(ripple:true) on a linked pair still refuses LINKED_RIPPLE_NOT_IMPLEMENTED without captions and CAPTION_SYNC_EDIT_NOT_IMPLEMENTED when captions exist. Lifting a clipLocal-marker host is still REF_NOT_FOUND. The table 0.02s AV offset is off the 30 fps grid and still refuses OFF_FRAME_GRID; alignment stays 1/30 s.",
+    "Already-delivered leave-gap, single-range ripple delete/close, shorten and lengthen RippleTrimClip, video-only TrimClip(ripple:true), reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default clipLocal / follow / interval / source-window, split and leave-gap rebind/remnants, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. No silent caption or marker drop. No MP4 burn-in. No new persistence table. Auto-close is not a MoveClips mode.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, marker sidecar formats, linked ripple delete, or the full section-3 matrix.",
+    "I-005 and I-010 remain partial; 87 count and XD10 stay separately counted. Intermittent underrun, old-writer schema9 as a product qualification, and other-end GPU physical sync remain unproven."
+  ],
+  "runs": [
+    {
+      "name": "analyzer",
+      "exitCode": 0,
+      "elapsedSeconds": 1.649,
+      "log": "artifacts/caption-linked-ripple-trim/final-analyzer.log"
+    },
+    {
+      "name": "document",
+      "exitCode": 0,
+      "elapsedSeconds": 43.929,
+      "log": "artifacts/caption-linked-ripple-trim/final-document.jsonl"
+    },
+    {
+      "name": "sdk",
+      "exitCode": 0,
+      "elapsedSeconds": 477.169,
+      "log": "artifacts/caption-linked-ripple-trim/final-sdk.jsonl"
+    },
+    {
+      "name": "ui",
+      "exitCode": 0,
+      "elapsedSeconds": 62.533,
+      "log": "artifacts/caption-linked-ripple-trim/final-ui.jsonl"
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 14.857,
+      "log": "artifacts/caption-linked-ripple-trim/final-actual-legacy-and-kill.log"
+    },
+    {
+      "name": "undo-redo-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 23.277,
+      "log": "artifacts/caption-linked-ripple-trim/final-undo-redo-kill.log"
+    },
+    {
+      "name": "100cancel",
+      "exitCode": 0,
+      "elapsedSeconds": 0.876,
+      "log": "artifacts/caption-linked-ripple-trim/final-100cancel.log"
+    }
+  ]
+}

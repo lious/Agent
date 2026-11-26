@@ -263,6 +263,15 @@ ProjectDocument _persistentAudioEdit(
     }
     t['muted'] = operation.muted;
     t['solo'] = operation.solo;
+  } else if (operation is TrimClip && operation.ripple) {
+    // Reuse RippleTrimClip: link closure, interval captions/markers, and
+    // source-window refusal. Do not rewrite this as LINKED_RIPPLE.
+    return _rippleTrimClip(
+      before,
+      RippleTrimClip(operation.clipId, operation.edge, operation.delta),
+      version,
+      id,
+    );
   } else {
     if ((d['captions'] as List).isNotEmpty &&
         !(operation is SplitClip ||

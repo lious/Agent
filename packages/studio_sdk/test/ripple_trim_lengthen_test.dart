@@ -117,13 +117,12 @@ void main() {
     expect(startOf(moveVideos(w.current).first), Q.of(0));
     w.undo(expectedRevision: w.current.revision);
     expect(contents(w.current), contents(baseline));
-    expect(
-      () => w.edit(
-        TrimClip(firstId, 'out', Q.of(1, 2), ripple: true),
-        expectedRevision: w.current.revision,
-      ),
-      code('LINKED_RIPPLE_NOT_IMPLEMENTED'),
+    w.edit(
+      TrimClip(firstId, 'out', Q.of(1, 2), ripple: true),
+      expectedRevision: w.current.revision,
     );
+    expect(seqDur(w.current), oldDur + Q.of(1, 2));
+    w.undo(expectedRevision: w.current.revision);
     expect(contents(w.current), contents(baseline));
     final frozen = w.current.hash;
     final counts = journal(root);
