@@ -1043,7 +1043,8 @@ ProjectDocument applyEdit(
       operation is! AppendVideoAsset &&
       operation is! SplitClip &&
       operation is! TrimClip &&
-      operation is! DeleteClip) {
+      operation is! DeleteClip &&
+      operation is! MoveClip) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1679,6 +1680,10 @@ ProjectDocument applyEdit(
       opening: false,
       newId: newId,
     );
+  } else if (operation is MoveClip) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    followClipLocalCaptions(d, nextVersion: nextVersion);
+    applyClipLocalMarkerLocals(d, markerLocals);
   }
   var covered = Q.of(0);
   for (final track in d['sequences'][0]['tracks'] as List) {

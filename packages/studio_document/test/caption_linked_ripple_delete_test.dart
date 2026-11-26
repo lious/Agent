@@ -131,18 +131,12 @@ void main() {
     expect(Q.fromJson(remnant['timelineRange']['duration']), Q.of(3, 2));
   });
 
-  test('leave-gap trim still leaves a gap; MoveClip stays refused', () {
+  test('leave-gap trim still leaves a gap', () {
     final p = prepared(extract: true);
     final a = algebra.firstId(p);
     final leave = move.change(p, TrimClip(a, 'out', Q.of(-1, 2)));
     expect(durOf(leave, a), Q.of(1, 2));
     expect(startOf(leave, 'right'), Q.of(1));
-    assertPure(p, () {
-      expect(
-        () => move.change(p, MoveClip(a, Q.of(1))),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    });
   });
 
   test('uncovering a source cue refuses; lifting a clipLocal-marker host still refuses', () {

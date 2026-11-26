@@ -1,0 +1,100 @@
+{
+  "increment": "1.45",
+  "title": "Caption-aware MoveClip",
+  "baseCommit": "9271758e71c957812d5bdf5ff41ab78171e8162b",
+  "aggregateSha256": "344591ae043031d6dec063573101827b2fc333a1eb2a4af8d201f67c473ac886",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 148,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 238,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "MoveClip with captions is no longer CAPTION_SYNC_EDIT_NOT_IMPLEMENTED. The selected clip, and on a persistent-audio timeline its linked members, translate together. clipLocal cues and markers follow the host; absolute cues and default absolute markers stay at authored times; source-anchored cues reproject when the source window still covers them.",
+    "The vacated source is left as a gap; this is not auto-close as a MoveClips mode. A colliding destination is whole-group COLLISION. Uncovering a source window is still whole-group ANCHOR_OUT_OF_RANGE. Lifting a clipLocal-marker host is still REF_NOT_FOUND.",
+    "A real UI path imports AV, extracts persistent audio, adds a clipLocal cue, uses the new Move control for 15 frames, undoes and redoes that command, archives a fork, exports a VTT sidecar, and still refuses preview/MP4 burn-in. The same persist path is also exercised with MoveClip through the SDK.",
+    "MoveClips, including insert-move leave-gap and includeLinks=false, is unchanged. Leave-gap and ripple DeleteClip / TrimClip stay as already delivered. The table 0.02s AV offset is off the 30 fps grid and still refuses OFF_FRAME_GRID; alignment stays 1/30 s.",
+    "Already-delivered leave-gap trim/delete, single-range ripple delete/close, shorten and lengthen RippleTrimClip, video-only and linked-audio TrimClip(ripple:true), DeleteClip(ripple:true) and leave-gap DeleteClip, reject/overwrite/insert, includeLinks=false, insert-move leave-gap, caption default clipLocal / follow / interval / source-window, split and leave-gap rebind/remnants, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. No silent caption or marker drop. No MP4 burn-in. No new persistence table. Auto-close is not a MoveClips mode.",
+    "Not auto-close-on-move, new-track, cross-project bake, OS clipboard, I-006 roll/slip/slide, source-interval crop, field-aware inverse, marker sidecar formats, or the full section-3 matrix.",
+    "I-005 and I-010 remain partial; 87 count and XD10 stay separately counted. Intermittent underrun, old-writer schema9 as a product qualification, and other-end GPU physical sync remain unproven."
+  ],
+  "runs": [
+    {
+      "name": "analyzer",
+      "exitCode": 0,
+      "elapsedSeconds": 2.276,
+      "log": "artifacts/caption-move-clip/final-analyzer.log"
+    },
+    {
+      "name": "document",
+      "exitCode": 0,
+      "elapsedSeconds": 41.926,
+      "log": "artifacts/caption-move-clip/final-document.jsonl"
+    },
+    {
+      "name": "sdk",
+      "exitCode": 0,
+      "elapsedSeconds": 448.624,
+      "log": "artifacts/caption-move-clip/final-sdk.jsonl"
+    },
+    {
+      "name": "ui",
+      "exitCode": 0,
+      "elapsedSeconds": 61.236,
+      "log": "artifacts/caption-move-clip/final-ui.jsonl"
+    },
+    {
+      "name": "actual-legacy-and-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 13.613,
+      "log": "artifacts/caption-move-clip/final-actual-legacy-and-kill.log"
+    },
+    {
+      "name": "undo-redo-kill",
+      "exitCode": 0,
+      "elapsedSeconds": 20.283,
+      "log": "artifacts/caption-move-clip/final-undo-redo-kill.log"
+    },
+    {
+      "name": "100cancel",
+      "exitCode": 0,
+      "elapsedSeconds": 0.757,
+      "log": "artifacts/caption-move-clip/final-100cancel.log"
+    }
+  ]
+}

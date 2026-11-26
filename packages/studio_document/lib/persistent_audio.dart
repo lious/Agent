@@ -62,6 +62,7 @@ ProjectDocument _persistentAudioEdit(
       tracks = s['tracks'] as List,
       groups = d['linkGroups'] as List;
   final sourceAbs = snapshotSourceCaptionAbsolutes(d);
+  final markerLocals = snapshotClipLocalMarkerLocals(d);
   ({Q start, Q end, String id})? leaveGapHost;
   final leaveGapHostIds = <String>[];
   final leaveGapClipId = switch (operation) {
@@ -291,7 +292,8 @@ ProjectDocument _persistentAudioEdit(
     if ((d['captions'] as List).isNotEmpty &&
         !(operation is SplitClip ||
             (operation is TrimClip && !operation.ripple) ||
-            (operation is DeleteClip && !operation.ripple))) {
+            (operation is DeleteClip && !operation.ripple) ||
+            operation is MoveClip)) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
     final key = switch (operation) {
@@ -481,6 +483,10 @@ ProjectDocument _persistentAudioEdit(
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
     applyCaptionsAfterSplit(d, nextVersion: version);
     applyMarkersAfterSplit(d);
+  } else if (operation is MoveClip) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+    followClipLocalCaptions(d, nextVersion: version);
+    applyClipLocalMarkerLocals(d, markerLocals);
   } else if (operation is DeleteClip &&
       !operation.ripple &&
       leaveGapHost != null) {

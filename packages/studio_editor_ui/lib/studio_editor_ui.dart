@@ -1057,7 +1057,7 @@ class _FoundationAppState extends State<FoundationApp>
       ),
     _path(
       'edit-frames',
-      'Positive frames (split: local offset; trim: remove from out)',
+      'Positive frames (split: local offset; trim: remove from out; move: timeline shift)',
       _frames,
     ),
     Wrap(
@@ -1076,6 +1076,13 @@ class _FoundationAppState extends State<FoundationApp>
                   );
                 }),
           child: const Text('Split'),
+        ),
+        OutlinedButton(
+          key: const Key('move'),
+          onPressed: _busy || _selected == null
+              ? null
+              : () => _edit(() => MoveClip(_selected!, _delta())),
+          child: const Text('Move'),
         ),
         OutlinedButton(
           key: const Key('trim'),

@@ -107,7 +107,7 @@ void main() {
     expect(Q.fromJson(right['timelineRange']['duration']), Q.of(1, 2));
   });
 
-  test('leave-gap trim and MoveClip stay unchanged', () {
+  test('leave-gap trim stays unchanged', () {
     var p = avFixture();
     final a = algebra.firstId(p);
     p = move.change(p, ExtractAudioClip(a, 'audio-stream'));
@@ -127,12 +127,6 @@ void main() {
       Q.fromJson(cueOf(leave, 'cue-later')['timelineRange']['start']),
       Q.of(5, 2),
     );
-    assertPure(p, () {
-      expect(
-        () => move.change(p, MoveClip(a, Q.of(1))),
-        code('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED'),
-      );
-    });
   });
 
   test('uncovering a source cue refuses; lifting a clipLocal-marker host still refuses', () {
