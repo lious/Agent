@@ -353,17 +353,19 @@ extension CommandHistory on DocumentRepository {
         bumpIds.add(e.key);
       }
     }
-    // Sequence fingerprints already close captions, transitions, and
-    // clip-owned effects that live outside the sequence object. Invert must
-    // mint a new sequence version when those children change, same as later
-    // marker or caption text edits.
+    // Sequence fingerprints already close captions, transitions,
+    // clip-owned effects, and the resolved audio bus that live outside the
+    // sequence object. Invert must mint a new sequence version when those
+    // children change, same as later marker or caption text edits.
     if (clocksOff(current.toJson()['captions']) !=
             clocksOff(next['captions']) ||
         clocksOff(current.toJson()['markers']) != clocksOff(next['markers']) ||
         clocksOff(current.toJson()['transitions']) !=
             clocksOff(next['transitions']) ||
         clocksOff(current.toJson()['effects']) !=
-            clocksOff(next['effects'])) {
+            clocksOff(next['effects']) ||
+        clocksOff(current.toJson()['audioBuses']) !=
+            clocksOff(next['audioBuses'])) {
       for (final sequence in next['sequences'] as List) {
         if (sequence is Map && sequence['id'] is String) {
           bumpIds.add(sequence['id'] as String);

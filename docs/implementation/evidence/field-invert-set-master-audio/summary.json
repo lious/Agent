@@ -1,0 +1,27 @@
+{
+  "increment": "1.78",
+  "title": "Field-aware invert of a prior SetMasterAudio command",
+  "baseCommit": "4ac74b1157fe89153e7ea9d488188e7d85c65f19",
+  "officialSelected": {
+    "document": 284,
+    "sdk": 133,
+    "ui": 56,
+    "total": 473,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "aggregateSha256": "bd606188104240e86a5aa7e95350dbead9515403d3bf9cc3b75f26c473fec953",
+  "asOf": "2026-11-26T19:37:50+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true,
+  "productionFiles": [
+    "packages/studio_store/lib/command_history.dart"
+  ],
+  "productionChangeBound": "invert also mints a new sequence version when clocksOff(audioBuses) changes; IMMUTABLE_VERSION_CONFLICT is not retargeted; production edit algebra is unchanged"
+}
