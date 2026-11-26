@@ -1,0 +1,57 @@
+{
+  "increment": "1.76",
+  "title": "Field-aware invert of a prior SetClipCrop command",
+  "baseCommit": "8640718870c01c854737e84410eb43661e556159",
+  "aggregateSha256": "a666b2684d8d19ade3316da3f08c89699a46b2af0890afb8e6a1c37c68f53803",
+  "sourceSha256": {
+    "packages/studio_document/test/field_invert_set_clip_crop_test.dart": "d6dd61e8ef91c028de890f729b492450a31ff2170e230cdcc79e5dab8a455657",
+    "packages/studio_sdk/test/field_invert_set_clip_crop_test.dart": "eaf3e2dad054461a1e71416f8d177caaf9fa6fd480e3fe305d4cac7d862f4335",
+    "packages/studio_editor_ui/test/field_invert_set_clip_crop_ui_test.dart": "3f2c5ab2bdf8305a3a46fdc68cf3b41a0c059d4a17a0792e6fc285eda78e8926"
+  },
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "freezeAsOf": "2026-11-26T18:42:58+08:00",
+  "selectedAsOf": "2026-11-26T18:54:34+08:00",
+  "timezone": "Asia/Shanghai",
+  "officialCounts": {
+    "document": 276,
+    "sdk": 129,
+    "ui": 54,
+    "total": 459,
+    "failed": 0,
+    "notRun": 0,
+    "newTests": 7
+  },
+  "runs": {
+    "analyzer": {
+      "exitCode": 0,
+      "elapsedSeconds": 1.7
+    },
+    "document": {
+      "exitCode": 0,
+      "elapsedSeconds": 49.224
+    },
+    "sdk": {
+      "exitCode": 0,
+      "elapsedSeconds": 457.714
+    },
+    "ui": {
+      "exitCode": 0,
+      "elapsedSeconds": 138.798
+    },
+    "actual-legacy-and-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 12.716
+    },
+    "undo-redo-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 20.789
+    },
+    "100cancel": {
+      "exitCode": 0,
+      "elapsedSeconds": 0.809
+    }
+  },
+  "notes": "Official selected document+SDK+UI 459/0/0 (276+129+54). New tests 7 (4+2+1). Hidden loader testDone events excluded from dart JSON counts. UI counted from compact reporter +N: All tests passed!. Analyzer, actual old-library, SIGKILL undo/redo and 100 opacity_cancel all exited 0. Do not mix prior official 452/445/438/431/424/417/410/403/396/389/382/375/368/361/354/347/340/333/326/319/312/304/297/290/283/275/268/260/252/245/238/231/224/217/211/204/190/171/166/152/134/128/119/104/95/85/75/64/51/37/7 or 281."
+}
