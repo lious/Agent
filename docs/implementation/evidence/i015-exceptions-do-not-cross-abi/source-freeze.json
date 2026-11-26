@@ -1,0 +1,21 @@
+{
+  "increment": "1.94",
+  "title": "Official I-015 C++ exceptions do not cross the C ABI",
+  "baseCommit": "cd757fc3d2a4713efc5f3f38398191eb5d5833c2",
+  "sourceSha256": {
+    "packages/studio_media/test/i015_exceptions_do_not_cross_abi_test.dart": "d2c0adcf8fcef59688cd3ca8ee8bf95b96317e1e5ca4fb4fd16810394678e05a",
+    "packages/studio_sdk/test/i015_exceptions_do_not_cross_abi_test.dart": "355b2fc45ede99289723bfb0b6bd7912472c4f205e62057f645011a770bc18a5",
+    "docs/adr/0101-i015-exceptions-do-not-cross-abi.md": "31fe18f712775900ff7a9c9c725717cc7869e81afbe9aafebe060123eee9cc3f",
+    "docs/implementation/README.md": "57b5a560f35b7eefe484b1dbfd403ac1765da10cb4fcf5a50ce0709165d86e29",
+    "docs/implementation/REVIEW.md": "5a9b0bcab4387800c061166df2b3e5647792ce991fd1d1c18cfb6ee57e6bfb24",
+    "docs/implementation/task-status.json": "1633d1e127aef8ab9c2e876aa78d3920a34aa45f8fb3825e98d4b666ea706a05"
+  },
+  "aggregateSha256": "7f058ac669b5498903673dc67cccc1009e5545d6aad1e0c78d2606cf500ad68e",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "44d16bc3524c182c80be451685a782d175bd7dc090dd5c2157f740f68d19b284",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T00:47:40+08:00",
+  "timezone": "Asia/Shanghai"
+}

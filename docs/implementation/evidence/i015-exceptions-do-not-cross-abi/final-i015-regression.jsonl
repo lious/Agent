@@ -1,0 +1,146 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1904679,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_store/test/files_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_store/test/files_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_store/test/checkpoint_retention_test.dart"},"type":"suite","time":6}
+{"test":{"id":3,"name":"loading packages/studio_store/test/checkpoint_retention_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_sdk/test/checkpoint_retention_test.dart"},"type":"suite","time":6}
+{"test":{"id":5,"name":"loading packages/studio_sdk/test/checkpoint_retention_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_sdk/test/save_test.dart"},"type":"suite","time":7}
+{"test":{"id":7,"name":"loading packages/studio_sdk/test/save_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":14,"time":10,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":531}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":9,"line":null,"column":null,"url":null},"type":"group","time":533}
+{"test":{"id":9,"name":"explicit CAS GC keeps pins/other namespaces, refuses symlinks and releases lock after failure","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":22,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":533}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":548}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":548}
+{"test":{"id":11,"name":"REAL default preserveAll, named/save/latest pins; prune indexes only, repeat audited once and undo remains","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":549}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":572}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":572}
+{"test":{"id":13,"name":"REAL SDK video proxies, named checkpoint/undo/archive/reopen survive explicit index pruning; shared DB refuses","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":8,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/checkpoint_retention_test.dart"},"type":"testStart","time":572}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":596}
+{"test":{"id":14,"name":"actual CAS deduplicates, rejects wrong relink, preserves source and rejects corruption","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":596}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":613}
+{"test":{"id":15,"name":"oversize import and symlink selection publish no blob","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":614}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":617}
+{"test":{"id":16,"name":"atomic sibling publication replaces complete file; failure never overwrites old good target","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":95,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":617}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":621}
+{"group":{"id":17,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":11,"line":null,"column":null,"url":null},"type":"group","time":621}
+{"test":{"id":18,"name":"virtual monotonic clock: idle, continuous maximum, 50 commits, lifecycle flush","suiteID":6,"groupIDs":[17],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":621}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":621}
+{"test":{"id":19,"name":"archive valid roundtrip/fork and damaged checksum preserve original","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":113,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":621}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":635}
+{"test":{"id":20,"name":"scheduler surfaces failure, retains pending and explicit retry succeeds","suiteID":6,"groupIDs":[17],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":636}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":637}
+{"test":{"id":21,"name":"actual workspace autosave derives checkpoint without claiming user/package save","suiteID":6,"groupIDs":[17],"metadata":{"skip":false,"skipReason":null},"line":67,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":637}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":715}
+{"test":{"id":22,"name":"hostile ZIP paths rejected before extraction","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":169,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":715}
+{"testID":22,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":719}
+{"test":{"id":23,"name":"ZIP duplicate headers and advertised expanded-size bomb are rejected before decompression","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":187,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":719}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":722}
+{"test":{"id":24,"name":"ZIP Unix symlink metadata is rejected before contents are trusted","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":220,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":722}
+{"testID":24,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":724}
+{"test":{"id":25,"name":"valid checksums cannot authorize unknown manifest fields; unlisted entries rejected","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":228,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/files_test.dart"},"type":"testStart","time":724}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":738}
+{"suite":{"id":26,"platform":"vm","path":"packages/studio_sdk/test/save_crash_test.dart"},"type":"suite","time":742}
+{"test":{"id":27,"name":"loading packages/studio_sdk/test/save_crash_test.dart","suiteID":26,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":743}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":834}
+{"group":{"id":28,"suiteID":6,"parentID":17,"name":"real save journal/filesystem","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":96,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"group","time":835}
+{"test":{"id":29,"name":"real save journal/filesystem identical requests coalesce; edits during save never move head or saved receipt backwards","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":134,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":835}
+{"testID":27,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":879}
+{"group":{"id":30,"suiteID":26,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":880}
+{"test":{"id":31,"name":"real SIGKILL at preparing, 10 repeats: acknowledged head survives; file is old/new verified snapshot","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":18,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_crash_test.dart"},"type":"testStart","time":880}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":880}
+{"test":{"id":32,"name":"REAL stale policy/name/row/revision/fence reviews refuse; explicit confirmation and bounds","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":112,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":880}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":977}
+{"test":{"id":33,"name":"real save journal/filesystem queued cancellation does not publish or manufacture a receipt; retry works","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":156,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":978}
+{"testID":33,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1038}
+{"test":{"id":34,"name":"real save journal/filesystem actual receipt INSERT failure leaves uncertain publication and explicit regrant reconciles after reopen","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":166,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1038}
+{"testID":32,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1064}
+{"test":{"id":35,"name":"REAL audit SQL failure and lost ownership after deletion roll back ALL indexes and audit","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":175,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":1064}
+{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1100}
+{"test":{"id":36,"name":"real save journal/filesystem receipt replay is idempotent only for its committed artifact hash","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":209,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1101}
+{"testID":36,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1133}
+{"test":{"id":37,"name":"real save journal/filesystem corrupt only-copy target and corrupt backup never get overwritten; queue remains usable","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":228,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1133}
+{"testID":35,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1152}
+{"test":{"id":38,"name":"REAL other projects/namespaces and ANY session plan retain their roots; corrupt root refuses review","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":209,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":1152}
+{"testID":37,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1184}
+{"test":{"id":39,"name":"real save journal/filesystem staging failure preserves old copy and no successful receipt; explicit retry succeeds","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":250,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1184}
+{"testID":39,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1238}
+{"test":{"id":40,"name":"real save journal/filesystem external target change and stale writer refuse publication","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":271,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1239}
+{"testID":38,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1244}
+{"test":{"id":41,"name":"REAL v7 through v8/v9 migration atomic failure/reopen and integrity retain old snapshots/checkpoints","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":271,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":1244}
+{"testID":40,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1285}
+{"test":{"id":42,"name":"real save journal/filesystem two coordinators serialize a shared target and older snapshots cannot overwrite newer receipts","suiteID":6,"groupIDs":[17,28],"metadata":{"skip":false,"skipReason":null},"line":301,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_test.dart"},"type":"testStart","time":1286}
+{"testID":41,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1289}
+{"test":{"id":43,"name":"REAL SIGKILL after index deletes and audit insert rolls back; next writer re-reviews and commits","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":312,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/checkpoint_retention_test.dart"},"type":"testStart","time":1290}
+{"testID":42,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1359}
+{"suite":{"id":44,"platform":"vm","path":"packages/studio_store/test/i011_durable_revision_test.dart"},"type":"suite","time":1362}
+{"test":{"id":45,"name":"loading packages/studio_store/test/i011_durable_revision_test.dart","suiteID":44,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1362}
+{"testID":45,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1503}
+{"group":{"id":46,"suiteID":44,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1505}
+{"test":{"id":47,"name":"durableRevision is the derived headRevision and is not a stored column","suiteID":44,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":50,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i011_durable_revision_test.dart"},"type":"testStart","time":1506}
+{"testID":47,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1640}
+{"test":{"id":48,"name":"reopen reports the last acknowledged head as durableRevision and does not invent a later value","suiteID":44,"groupIDs":[46],"metadata":{"skip":false,"skipReason":null},"line":73,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i011_durable_revision_test.dart"},"type":"testStart","time":1641}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1687}
+{"suite":{"id":49,"platform":"vm","path":"packages/studio_sdk/test/i011_durable_revision_test.dart"},"type":"suite","time":1688}
+{"test":{"id":50,"name":"loading packages/studio_sdk/test/i011_durable_revision_test.dart","suiteID":49,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1688}
+{"testID":50,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1804}
+{"group":{"id":51,"suiteID":49,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":1805}
+{"test":{"id":52,"name":"a failed or unacked save does not report durableRevision ahead of the acknowledged head","suiteID":49,"groupIDs":[51],"metadata":{"skip":false,"skipReason":null},"line":43,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/i011_durable_revision_test.dart"},"type":"testStart","time":1805}
+{"testID":52,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2076}
+{"suite":{"id":53,"platform":"vm","path":"packages/studio_store/test/i012_user_saved_revision_test.dart"},"type":"suite","time":2077}
+{"test":{"id":54,"name":"loading packages/studio_store/test/i012_user_saved_revision_test.dart","suiteID":53,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2077}
+{"testID":54,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2197}
+{"group":{"id":55,"suiteID":53,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2197}
+{"test":{"id":56,"name":"continued head edits after saveManaged leave userSavedRevision at the receipt revision","suiteID":53,"groupIDs":[55],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i012_user_saved_revision_test.dart"},"type":"testStart","time":2197}
+{"testID":56,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2359}
+{"suite":{"id":57,"platform":"vm","path":"packages/studio_sdk/test/i012_user_saved_revision_test.dart"},"type":"suite","time":2359}
+{"test":{"id":58,"name":"loading packages/studio_sdk/test/i012_user_saved_revision_test.dart","suiteID":57,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2360}
+{"testID":58,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2479}
+{"group":{"id":59,"suiteID":57,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2479}
+{"test":{"id":60,"name":"an in-flight explicit archive of a frozen snapshot does not rewrite userSavedRevision to a later head","suiteID":57,"groupIDs":[59],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/i012_user_saved_revision_test.dart"},"type":"testStart","time":2479}
+{"testID":60,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2722}
+{"suite":{"id":61,"platform":"vm","path":"packages/studio_store/test/i013_credentials_deleted_body_test.dart"},"type":"suite","time":2723}
+{"test":{"id":62,"name":"loading packages/studio_store/test/i013_credentials_deleted_body_test.dart","suiteID":61,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2723}
+{"testID":62,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2849}
+{"group":{"id":63,"suiteID":61,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":2849}
+{"test":{"id":64,"name":"a current-revision archive excludes superseded body, sessions, and credentials","suiteID":61,"groupIDs":[63],"metadata":{"skip":false,"skipReason":null},"line":60,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i013_credentials_deleted_body_test.dart"},"type":"testStart","time":2850}
+{"testID":64,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3068}
+{"test":{"id":65,"name":"a planted sessionArchive is refused and does not authorize credentials into the package","suiteID":61,"groupIDs":[63],"metadata":{"skip":false,"skipReason":null},"line":135,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i013_credentials_deleted_body_test.dart"},"type":"testStart","time":3069}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3102}
+{"suite":{"id":66,"platform":"vm","path":"packages/studio_sdk/test/i013_credentials_deleted_body_test.dart"},"type":"suite","time":3103}
+{"test":{"id":67,"name":"loading packages/studio_sdk/test/i013_credentials_deleted_body_test.dart","suiteID":66,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3103}
+{"testID":65,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3107}
+{"suite":{"id":68,"platform":"vm","path":"packages/studio_document/test/i014_auto_external_link_refusal_test.dart"},"type":"suite","time":3108}
+{"test":{"id":69,"name":"loading packages/studio_document/test/i014_auto_external_link_refusal_test.dart","suiteID":68,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3108}
+{"testID":69,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3249}
+{"group":{"id":70,"suiteID":68,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3249}
+{"test":{"id":71,"name":"writable admission refuses a non-null externalLocator and does not resolve it","suiteID":68,"groupIDs":[70],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/i014_auto_external_link_refusal_test.dart"},"type":"testStart","time":3250}
+{"testID":67,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3261}
+{"group":{"id":72,"suiteID":66,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3262}
+{"test":{"id":73,"name":"workspace archive of the current revision excludes superseded body and session credentials","suiteID":66,"groupIDs":[72],"metadata":{"skip":false,"skipReason":null},"line":17,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/i013_credentials_deleted_body_test.dart"},"type":"testStart","time":3262}
+{"testID":71,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3339}
+{"suite":{"id":74,"platform":"vm","path":"packages/studio_store/test/i014_auto_external_link_refusal_test.dart"},"type":"suite","time":3342}
+{"test":{"id":75,"name":"loading packages/studio_store/test/i014_auto_external_link_refusal_test.dart","suiteID":74,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3342}
+{"testID":75,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3476}
+{"group":{"id":76,"suiteID":74,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3476}
+{"test":{"id":77,"name":"ProjectArchive.save refuses an externalLocator and does not publish a package","suiteID":74,"groupIDs":[76],"metadata":{"skip":false,"skipReason":null},"line":40,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_store/test/i014_auto_external_link_refusal_test.dart"},"type":"testStart","time":3477}
+{"testID":73,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3530}
+{"suite":{"id":78,"platform":"vm","path":"packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart"},"type":"suite","time":3531}
+{"test":{"id":79,"name":"loading packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart","suiteID":78,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3531}
+{"testID":77,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3554}
+{"testID":79,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3654}
+{"group":{"id":80,"suiteID":78,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3655}
+{"test":{"id":81,"name":"preservation open and writable pack do not auto-fetch planted external locators","suiteID":78,"groupIDs":[80],"metadata":{"skip":false,"skipReason":null},"line":45,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart"},"type":"testStart","time":3655}
+{"testID":81,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3841}
+{"testID":43,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4467}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29633}
+{"test":{"id":82,"name":"real SIGKILL at verifying, 10 repeats: acknowledged head survives; file is old/new verified snapshot","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":18,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_crash_test.dart"},"type":"testStart","time":29635}
+{"testID":82,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":57689}
+{"test":{"id":83,"name":"real SIGKILL at publishing, 10 repeats: acknowledged head survives; file is old/new verified snapshot","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":18,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_crash_test.dart"},"type":"testStart","time":57690}
+{"testID":83,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":86879}
+{"test":{"id":84,"name":"real SIGKILL at published, 10 repeats: acknowledged head survives; file is old/new verified snapshot","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":18,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_crash_test.dart"},"type":"testStart","time":86880}
+{"testID":84,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":116135}
+{"test":{"id":85,"name":"real SIGKILL at committed, 10 repeats: acknowledged head survives; file is old/new verified snapshot","suiteID":26,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":18,"column":5,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/save_crash_test.dart"},"type":"testStart","time":116136}
+{"testID":85,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":145335}
+{"success":true,"type":"done","time":145341}

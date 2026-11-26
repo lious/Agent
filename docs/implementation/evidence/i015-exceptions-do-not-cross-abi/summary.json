@@ -1,0 +1,96 @@
+{
+  "increment": "1.94",
+  "title": "Official I-015 C++ exceptions do not cross the C ABI",
+  "baseCommit": "cd757fc3d2a4713efc5f3f38398191eb5d5833c2",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "studio_media": 2,
+    "sdk": 1,
+    "ui": 0
+  },
+  "clauseOfficialized": "异常不穿C ABI",
+  "task": "I-015",
+  "clausesNotRequalified": [
+    "borrow/retain/release配对",
+    "100次开关0活句柄",
+    "越权路径/网络读取=0"
+  ],
+  "whyNotAlreadyOfficial": "native/studio_media/tests/abi_test.cpp already officializes 100 create/close cycles with fd delta 0 and refusal of https://, file:/etc/passwd, and relative paths as LOCAL_FILE_REQUIRED, and every official native response is sm_string_free’d; timeline_video_test.dart already shows loaded-Flutter missing-file probe/probeAsync becoming LOCAL_FILE_REQUIRED. None of those suites officialized this I-015 remainingAcceptance wording that a C++ Error becomes a typed StudioException, the same handle remains usable for a later legal probe, and close reports NATIVE_ENGINE_CLOSED rather than unwinding across the FFI boundary. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI015": [
+    "borrow/retain/release配对 (already covered by sm_string_free on every official native response and sm_live_owned_frames delta 0 in the 100-cycle cancel suites; not re-qualified)",
+    "100次开关0活句柄 (already official in abi_test.cpp handles; not re-qualified)",
+    "越权路径/网络读取=0 (already official in abi_test.cpp errors; not re-qualified)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i015FilesRetentionSaveCrashAndPriorIncrements": {
+      "sdkAndStoreAndDocument": 43
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "7f058ac669b5498903673dc67cccc1009e5545d6aad1e0c78d2606cf500ad68e",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "44d16bc3524c182c80be451685a782d175bd7dc090dd5c2157f740f68d19b284",
+  "i015Status": "partial",
+  "remainingAcceptance": "borrow/retain/release配对；100次开关0活句柄；越权路径/网络读取=0。",
+  "i014Status": "partial",
+  "i014RemainingAcceptance": "zip slip/炸弹/符号链接均拒；恢复不倒退事件；fork新projectId；迁移中断保好副本；不支持feature只读保留。",
+  "i013Status": "partial",
+  "i013RemainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T00:47:40+08:00",
+  "timezone": "Asia/Shanghai"
+}
