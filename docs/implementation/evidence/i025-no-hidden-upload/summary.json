@@ -1,0 +1,103 @@
+{
+  "increment": "1.96",
+  "title": "Official I-025 local import, archive, and export issue no hidden upload",
+  "baseCommit": "91b7ebc3a0f27d38704f8569609d12d8b185b9bb",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "studio_media": 0,
+    "sdk": 2,
+    "ui": 1
+  },
+  "clauseOfficialized": "无隐藏上传",
+  "task": "I-025",
+  "surveyedFirst": {
+    "I-022": "all three remainingAcceptance items already official or inventable-only; left listed, not re-qualified",
+    "I-024": "all three remainingAcceptance items already official; left listed, not re-qualified"
+  },
+  "whyNotAlreadyOfficial": "local_video_test.dart and local_video_ui_test.dart already write a local archive and MP4, but they never plant a trap HTTP server or assert that import, saveManaged, saveArchive, and exportVideo issue zero requests. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI025": [
+    "60秒6clip工程：手改字幕/trim/撤销/保存重开后等值 (not officialized; a 60s 6-clip / caption-burn path is not invented; exportVideo still refuses captions as CAPTION_RENDER_POLICY_NOT_IMPLEMENTED)",
+    "恢复最后durable编辑 (left listed; not re-qualified)",
+    "导出通过I-024 (already exercised in local_video suites; left listed, not re-qualified)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i025FilesRetentionSaveCrashPriorIncrementsAndSourcePreview": {
+      "sdkStoreDocumentMedia": 51
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "9e4b3604896b4ad289ca703139e77188f3c208fe2676230e1ffbb9b16ff2b7fc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "b96778759c62dd44dc3d64ab69f338764f4409c92a67d185d821a54d1d789439",
+  "i025Status": "partial",
+  "remainingAcceptance": "60秒6clip工程：手改字幕/trim/撤销/保存重开后等值；恢复最后durable编辑；导出通过I-024。",
+  "i022Status": "partial",
+  "i022RemainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
+  "i024Status": "partial",
+  "i024RemainingAcceptance": "时长误差≤1帧、音画≤20ms、无黑/丢帧异常；失败/取消无损坏成片伪成功；revision固定不被编辑中途改。",
+  "i021Status": "partial",
+  "i021RemainingAcceptance": "20点seek±1帧；VFR/非零PTS不误映射；缓存<=预算。",
+  "i015Status": "partial",
+  "i015RemainingAcceptance": "borrow/retain/release配对；100次开关0活句柄；越权路径/网络读取=0。",
+  "i014Status": "partial",
+  "i014RemainingAcceptance": "zip slip/炸弹/符号链接均拒；恢复不倒退事件；fork新projectId；迁移中断保好副本；不支持feature只读保留。",
+  "i013Status": "partial",
+  "i013RemainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T01:16:34+08:00",
+  "timezone": "Asia/Shanghai"
+}

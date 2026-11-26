@@ -1,0 +1,21 @@
+{
+  "increment": "1.96",
+  "title": "Official I-025 local import, archive, and export issue no hidden upload",
+  "baseCommit": "91b7ebc3a0f27d38704f8569609d12d8b185b9bb",
+  "sourceSha256": {
+    "packages/studio_sdk/test/i025_no_hidden_upload_test.dart": "36b5be190bbc17d4c9e48ba4ab88e2471ca3079284d039742c5a14b4939a142b",
+    "packages/studio_editor_ui/test/i025_no_hidden_upload_ui_test.dart": "3b593c8124030123ba4b42840fe6ee2581e3738ad71486cefa3f8396cae6e7ae",
+    "docs/adr/0103-i025-no-hidden-upload.md": "c51b2de4bfeb6d606c99029770e930d687fa2363421d617dee1a4995075e2d70",
+    "docs/implementation/README.md": "f115d318ddd60d47e44a24b7e1f4e27e4f67b9b9bb2f112d62eb995dbddb1975",
+    "docs/implementation/REVIEW.md": "82f857028ed14e7370b3d5d301017a02cd393d88eff56b5307f993edd902d708",
+    "docs/implementation/task-status.json": "e7dc2da249ee6012d2e29c0d6238b746ae7fa3c0cd72a8df35d04125bd26d02f"
+  },
+  "aggregateSha256": "9e4b3604896b4ad289ca703139e77188f3c208fe2676230e1ffbb9b16ff2b7fc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "b96778759c62dd44dc3d64ab69f338764f4409c92a67d185d821a54d1d789439",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T01:16:34+08:00",
+  "timezone": "Asia/Shanghai"
+}
