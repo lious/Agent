@@ -1,0 +1,569 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1338926,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/field_invert_overwrite_move_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/field_invert_overwrite_move_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":43,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":875}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":877}
+{"test":{"id":3,"name":"persist path: invert overwrite MoveClips of the left remnant after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":95,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_overwrite_move_test.dart"},"type":"testStart","time":877}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1718}
+{"test":{"id":4,"name":"invert of the tip overwrite MoveClips or of overwrite MoveClips after a later out-trim of the carved dest is UNDO_CONFLICT","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":209,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_overwrite_move_test.dart"},"type":"testStart","time":1719}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2003}
+{"suite":{"id":5,"platform":"vm","path":"packages/studio_sdk/test/field_invert_move_clips_test.dart"},"type":"suite","time":2008}
+{"test":{"id":6,"name":"loading packages/studio_sdk/test/field_invert_move_clips_test.dart","suiteID":5,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2008}
+{"testID":6,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2140}
+{"group":{"id":7,"suiteID":5,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":2140}
+{"test":{"id":8,"name":"persist path: invert leave-gap MoveClips of both remnants after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":5,"groupIDs":[7],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_move_clips_test.dart"},"type":"testStart","time":2140}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2877}
+{"test":{"id":9,"name":"invert of the tip leave-gap MoveClips or of MoveClips after a later second move of the same remnants is UNDO_CONFLICT","suiteID":5,"groupIDs":[7],"metadata":{"skip":false,"skipReason":null},"line":194,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_move_clips_test.dart"},"type":"testStart","time":2878}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3194}
+{"suite":{"id":10,"platform":"vm","path":"packages/studio_sdk/test/field_invert_lift_clips_test.dart"},"type":"suite","time":3196}
+{"test":{"id":11,"name":"loading packages/studio_sdk/test/field_invert_lift_clips_test.dart","suiteID":10,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3197}
+{"testID":11,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3340}
+{"group":{"id":12,"suiteID":10,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":3340}
+{"test":{"id":13,"name":"persist path: invert LiftClips of the right remnant after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":10,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_lift_clips_test.dart"},"type":"testStart","time":3340}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4066}
+{"test":{"id":14,"name":"invert of the tip LiftClips or of LiftClips after a later out-trim of the left remnant is UNDO_CONFLICT","suiteID":10,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":177,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_lift_clips_test.dart"},"type":"testStart","time":4067}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":4339}
+{"suite":{"id":15,"platform":"vm","path":"packages/studio_sdk/test/field_invert_move_clip_test.dart"},"type":"suite","time":4341}
+{"test":{"id":16,"name":"loading packages/studio_sdk/test/field_invert_move_clip_test.dart","suiteID":15,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4341}
+{"testID":16,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4467}
+{"group":{"id":17,"suiteID":15,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":4467}
+{"test":{"id":18,"name":"persist path: invert leave-gap MoveClip of the right remnant after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":15,"groupIDs":[17],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_move_clip_test.dart"},"type":"testStart","time":4467}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5199}
+{"test":{"id":19,"name":"invert of the tip leave-gap MoveClip or of MoveClip after a later second move of the same remnant is UNDO_CONFLICT","suiteID":15,"groupIDs":[17],"metadata":{"skip":false,"skipReason":null},"line":188,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_move_clip_test.dart"},"type":"testStart","time":5200}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":5522}
+{"suite":{"id":20,"platform":"vm","path":"packages/studio_sdk/test/field_invert_leave_gap_delete_test.dart"},"type":"suite","time":5523}
+{"test":{"id":21,"name":"loading packages/studio_sdk/test/field_invert_leave_gap_delete_test.dart","suiteID":20,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5524}
+{"testID":21,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":5650}
+{"group":{"id":22,"suiteID":20,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":5651}
+{"test":{"id":23,"name":"persist path: invert leave-gap delete of the right remnant after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":20,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_leave_gap_delete_test.dart"},"type":"testStart","time":5651}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6362}
+{"test":{"id":24,"name":"invert of the tip leave-gap delete or of leave-gap delete after a later out-trim of the left remnant is UNDO_CONFLICT","suiteID":20,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":177,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_leave_gap_delete_test.dart"},"type":"testStart","time":6363}
+{"testID":24,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":6657}
+{"suite":{"id":25,"platform":"vm","path":"packages/studio_sdk/test/field_invert_ripple_delete_test.dart"},"type":"suite","time":6659}
+{"test":{"id":26,"name":"loading packages/studio_sdk/test/field_invert_ripple_delete_test.dart","suiteID":25,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6659}
+{"testID":26,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":6784}
+{"group":{"id":27,"suiteID":25,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":6784}
+{"test":{"id":28,"name":"persist path: invert ripple delete of the right remnant after a later marker edit, undo/redo, archive, VTT, no MP4","suiteID":25,"groupIDs":[27],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_ripple_delete_test.dart"},"type":"testStart","time":6784}
+{"testID":28,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7540}
+{"test":{"id":29,"name":"invert of the tip ripple delete or of ripple delete after a later move of a shifted remnant is UNDO_CONFLICT","suiteID":25,"groupIDs":[27],"metadata":{"skip":false,"skipReason":null},"line":175,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_ripple_delete_test.dart"},"type":"testStart","time":7541}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":7848}
+{"suite":{"id":30,"platform":"vm","path":"packages/studio_sdk/test/field_invert_ripple_trim_test.dart"},"type":"suite","time":7850}
+{"test":{"id":31,"name":"loading packages/studio_sdk/test/field_invert_ripple_trim_test.dart","suiteID":30,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7850}
+{"testID":31,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":7995}
+{"group":{"id":32,"suiteID":30,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":7995}
+{"test":{"id":33,"name":"persist path: invert ripple out-trim after an unrelated marker edit, undo/redo, archive, VTT, no MP4","suiteID":30,"groupIDs":[32],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_ripple_trim_test.dart"},"type":"testStart","time":7995}
+{"testID":33,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":8806}
+{"test":{"id":34,"name":"invert of the tip ripple trim or of ripple trim after a later numerator-changing trim is UNDO_CONFLICT","suiteID":30,"groupIDs":[32],"metadata":{"skip":false,"skipReason":null},"line":174,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_ripple_trim_test.dart"},"type":"testStart","time":8807}
+{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":9117}
+{"suite":{"id":35,"platform":"vm","path":"packages/studio_sdk/test/field_invert_trim_test.dart"},"type":"suite","time":9119}
+{"test":{"id":36,"name":"loading packages/studio_sdk/test/field_invert_trim_test.dart","suiteID":35,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":9120}
+{"testID":36,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":9268}
+{"group":{"id":37,"suiteID":35,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":9269}
+{"test":{"id":38,"name":"persist path: invert leave-gap out-trim after an unrelated marker edit, undo/redo, archive, VTT, no MP4","suiteID":35,"groupIDs":[37],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_trim_test.dart"},"type":"testStart","time":9269}
+{"testID":38,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10040}
+{"test":{"id":39,"name":"invert of the tip trim or of trim after a later numerator-changing trim is UNDO_CONFLICT","suiteID":35,"groupIDs":[37],"metadata":{"skip":false,"skipReason":null},"line":176,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_trim_test.dart"},"type":"testStart","time":10041}
+{"testID":39,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":10341}
+{"suite":{"id":40,"platform":"vm","path":"packages/studio_sdk/test/field_invert_split_test.dart"},"type":"suite","time":10343}
+{"test":{"id":41,"name":"loading packages/studio_sdk/test/field_invert_split_test.dart","suiteID":40,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":10343}
+{"testID":41,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":10476}
+{"group":{"id":42,"suiteID":40,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":10476}
+{"test":{"id":43,"name":"persist path: invert split after moving an uninvolved remnant, undo/redo, archive, VTT, no MP4","suiteID":40,"groupIDs":[42],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_split_test.dart"},"type":"testStart","time":10476}
+{"testID":43,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11221}
+{"test":{"id":44,"name":"invert of the tip split or of split after a later remnant move is UNDO_CONFLICT","suiteID":40,"groupIDs":[42],"metadata":{"skip":false,"skipReason":null},"line":150,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_split_test.dart"},"type":"testStart","time":11222}
+{"testID":44,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11508}
+{"suite":{"id":45,"platform":"vm","path":"packages/studio_sdk/test/field_invert_extract_test.dart"},"type":"suite","time":11509}
+{"test":{"id":46,"name":"loading packages/studio_sdk/test/field_invert_extract_test.dart","suiteID":45,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":11510}
+{"testID":46,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":11637}
+{"group":{"id":47,"suiteID":45,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":11638}
+{"test":{"id":48,"name":"persist path: invert extract after moving an uninvolved remnant, undo/redo, archive, VTT, no MP4","suiteID":45,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":71,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_extract_test.dart"},"type":"testStart","time":11638}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12418}
+{"test":{"id":49,"name":"invert of the tip extract or of extract after a later host move is UNDO_CONFLICT","suiteID":45,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":165,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_extract_test.dart"},"type":"testStart","time":12419}
+{"testID":49,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12699}
+{"suite":{"id":50,"platform":"vm","path":"packages/studio_sdk/test/field_invert_unlink_test.dart"},"type":"suite","time":12700}
+{"test":{"id":51,"name":"loading packages/studio_sdk/test/field_invert_unlink_test.dart","suiteID":50,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":12701}
+{"testID":51,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":12825}
+{"group":{"id":52,"suiteID":50,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":12826}
+{"test":{"id":53,"name":"persist path: invert unlink after an aligned leave-gap move, undo/redo, archive, VTT, no MP4","suiteID":50,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_unlink_test.dart"},"type":"testStart","time":12826}
+{"testID":53,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":13680}
+{"test":{"id":54,"name":"invert of the tip unlink, a later relink, or a diverging move is refused atomically","suiteID":50,"groupIDs":[52],"metadata":{"skip":false,"skipReason":null},"line":174,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_unlink_test.dart"},"type":"testStart","time":13681}
+{"testID":54,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":14166}
+{"suite":{"id":55,"platform":"vm","path":"packages/studio_sdk/test/field_invert_audio_mute_test.dart"},"type":"suite","time":14168}
+{"test":{"id":56,"name":"loading packages/studio_sdk/test/field_invert_audio_mute_test.dart","suiteID":55,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":14168}
+{"testID":56,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":14294}
+{"group":{"id":57,"suiteID":55,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":14295}
+{"test":{"id":58,"name":"persist path: invert audio mute after a leave-gap move, undo/redo, archive, VTT, no MP4","suiteID":55,"groupIDs":[57],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_audio_mute_test.dart"},"type":"testStart","time":14295}
+{"testID":58,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15094}
+{"test":{"id":59,"name":"invert of the tip SetAudioTrackState or of a later unmute is UNDO_CONFLICT","suiteID":55,"groupIDs":[57],"metadata":{"skip":false,"skipReason":null},"line":159,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_audio_mute_test.dart"},"type":"testStart","time":15095}
+{"testID":59,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":15454}
+{"suite":{"id":60,"platform":"vm","path":"packages/studio_sdk/test/field_invert_track_lock_test.dart"},"type":"suite","time":15456}
+{"test":{"id":61,"name":"loading packages/studio_sdk/test/field_invert_track_lock_test.dart","suiteID":60,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":15456}
+{"testID":61,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":15584}
+{"group":{"id":62,"suiteID":60,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":15584}
+{"test":{"id":63,"name":"persist path: invert caption lock after a leave-gap move, undo/redo, archive, VTT, no MP4","suiteID":60,"groupIDs":[62],"metadata":{"skip":false,"skipReason":null},"line":63,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_track_lock_test.dart"},"type":"testStart","time":15584}
+{"testID":63,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":16384}
+{"test":{"id":64,"name":"invert of the tip SetTrackState or of a later-unlocked lock is UNDO_CONFLICT","suiteID":60,"groupIDs":[62],"metadata":{"skip":false,"skipReason":null},"line":158,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_track_lock_test.dart"},"type":"testStart","time":16385}
+{"testID":64,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":16698}
+{"suite":{"id":65,"platform":"vm","path":"packages/studio_sdk/test/field_invert_group_test.dart"},"type":"suite","time":16700}
+{"test":{"id":66,"name":"loading packages/studio_sdk/test/field_invert_group_test.dart","suiteID":65,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":16700}
+{"testID":66,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":16833}
+{"group":{"id":67,"suiteID":65,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":16834}
+{"test":{"id":68,"name":"persist path: invert GroupClips after a group move, undo/redo, archive, VTT, no MP4","suiteID":65,"groupIDs":[67],"metadata":{"skip":false,"skipReason":null},"line":58,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_group_test.dart"},"type":"testStart","time":16834}
+{"testID":68,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":17658}
+{"test":{"id":69,"name":"invert of the tip GroupClips or of a later-ungrouped GroupClips is UNDO_CONFLICT","suiteID":65,"groupIDs":[67],"metadata":{"skip":false,"skipReason":null},"line":149,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_group_test.dart"},"type":"testStart","time":17659}
+{"testID":69,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":17953}
+{"suite":{"id":70,"platform":"vm","path":"packages/studio_sdk/test/caption_group_clips_test.dart"},"type":"suite","time":17954}
+{"test":{"id":71,"name":"loading packages/studio_sdk/test/caption_group_clips_test.dart","suiteID":70,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":17955}
+{"testID":71,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":18084}
+{"group":{"id":72,"suiteID":70,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":18085}
+{"test":{"id":73,"name":"persist path: group two captioned remnants, move the group, undo/redo, archive, VTT, no MP4","suiteID":70,"groupIDs":[72],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_group_clips_test.dart"},"type":"testStart","time":18085}
+{"testID":73,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":18858}
+{"test":{"id":74,"name":"persist path: ungroup then move one member, leaving the other cue in place","suiteID":70,"groupIDs":[72],"metadata":{"skip":false,"skipReason":null},"line":154,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_group_clips_test.dart"},"type":"testStart","time":18859}
+{"testID":74,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":19158}
+{"suite":{"id":75,"platform":"vm","path":"packages/studio_sdk/test/field_invert_markers_test.dart"},"type":"suite","time":19160}
+{"test":{"id":76,"name":"loading packages/studio_sdk/test/field_invert_markers_test.dart","suiteID":75,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":19160}
+{"testID":76,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":19290}
+{"group":{"id":77,"suiteID":75,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":19291}
+{"test":{"id":78,"name":"persist path: invert SetMarkers after an unrelated move, undo/redo, archive, VTT, no MP4","suiteID":75,"groupIDs":[77],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_markers_test.dart"},"type":"testStart","time":19291}
+{"testID":78,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20077}
+{"test":{"id":79,"name":"invert of the tip or of a later-edited SetMarkers is UNDO_CONFLICT","suiteID":75,"groupIDs":[77],"metadata":{"skip":false,"skipReason":null},"line":154,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_markers_test.dart"},"type":"testStart","time":20078}
+{"testID":79,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":20331}
+{"suite":{"id":80,"platform":"vm","path":"packages/studio_sdk/test/track_lock_test.dart"},"type":"suite","time":20332}
+{"test":{"id":81,"name":"loading packages/studio_sdk/test/track_lock_test.dart","suiteID":80,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":20333}
+{"testID":81,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":20455}
+{"group":{"id":82,"suiteID":80,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":20456}
+{"test":{"id":83,"name":"persist path: lock video, refuse move, unlock, follow cue, undo/redo, archive, VTT, no MP4","suiteID":80,"groupIDs":[82],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/track_lock_test.dart"},"type":"testStart","time":20456}
+{"testID":83,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21149}
+{"test":{"id":84,"name":"persist path: locked caption track refuses SetCaptions; video lock is independent","suiteID":80,"groupIDs":[82],"metadata":{"skip":false,"skipReason":null},"line":148,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/track_lock_test.dart"},"type":"testStart","time":21150}
+{"testID":84,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":21407}
+{"suite":{"id":85,"platform":"vm","path":"packages/studio_sdk/test/caption_overwrite_test.dart"},"type":"suite","time":21409}
+{"test":{"id":86,"name":"loading packages/studio_sdk/test/caption_overwrite_test.dart","suiteID":85,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":21409}
+{"testID":86,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":21536}
+{"group":{"id":87,"suiteID":85,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":21537}
+{"test":{"id":88,"name":"linked overwrite move follows, keeps carved text, rebinds the remnant; undo restores","suiteID":85,"groupIDs":[87],"metadata":{"skip":false,"skipReason":null},"line":108,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_overwrite_test.dart"},"type":"testStart","time":21537}
+{"testID":88,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":22106}
+{"test":{"id":89,"name":"short path: linked overwrite move, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":85,"groupIDs":[87],"metadata":{"skip":false,"skipReason":null},"line":154,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_overwrite_test.dart"},"type":"testStart","time":22107}
+{"testID":89,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":22654}
+{"suite":{"id":90,"platform":"vm","path":"packages/studio_sdk/test/field_invert_test.dart"},"type":"suite","time":22656}
+{"test":{"id":91,"name":"loading packages/studio_sdk/test/field_invert_test.dart","suiteID":90,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":22656}
+{"testID":91,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":22786}
+{"group":{"id":92,"suiteID":90,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":22787}
+{"test":{"id":93,"name":"inverts a prior SetCaptions after an unrelated move; tip invert and followed host conflict","suiteID":90,"groupIDs":[92],"metadata":{"skip":false,"skipReason":null},"line":104,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_test.dart"},"type":"testStart","time":22787}
+{"testID":93,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":23452}
+{"test":{"id":94,"name":"short path: invert SetCaptions, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":90,"groupIDs":[92],"metadata":{"skip":false,"skipReason":null},"line":166,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/field_invert_test.dart"},"type":"testStart","time":23453}
+{"testID":94,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":23975}
+{"suite":{"id":95,"platform":"vm","path":"packages/studio_sdk/test/caption_lift_clips_test.dart"},"type":"suite","time":23976}
+{"test":{"id":96,"name":"loading packages/studio_sdk/test/caption_lift_clips_test.dart","suiteID":95,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":23977}
+{"testID":96,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":24104}
+{"group":{"id":97,"suiteID":95,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":24104}
+{"test":{"id":98,"name":"linked LiftClips leaves an absolute remnant and does not shift later content; undo restores","suiteID":95,"groupIDs":[97],"metadata":{"skip":false,"skipReason":null},"line":102,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_lift_clips_test.dart"},"type":"testStart","time":24104}
+{"testID":98,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":24655}
+{"test":{"id":99,"name":"short path: linked LiftClips cut, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":95,"groupIDs":[97],"metadata":{"skip":false,"skipReason":null},"line":130,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_lift_clips_test.dart"},"type":"testStart","time":24656}
+{"testID":99,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25254}
+{"suite":{"id":100,"platform":"vm","path":"packages/studio_sdk/test/caption_move_clip_test.dart"},"type":"suite","time":25255}
+{"test":{"id":101,"name":"loading packages/studio_sdk/test/caption_move_clip_test.dart","suiteID":100,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":25256}
+{"testID":101,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":25383}
+{"group":{"id":102,"suiteID":100,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":25383}
+{"test":{"id":103,"name":"linked MoveClip follows a clipLocal cue and leaves the source gap; undo restores","suiteID":100,"groupIDs":[102],"metadata":{"skip":false,"skipReason":null},"line":95,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_move_clip_test.dart"},"type":"testStart","time":25383}
+{"testID":103,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":25842}
+{"test":{"id":104,"name":"short path: linked MoveClip, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":100,"groupIDs":[102],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_move_clip_test.dart"},"type":"testStart","time":25843}
+{"testID":104,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":26373}
+{"suite":{"id":105,"platform":"vm","path":"packages/studio_sdk/test/caption_leave_gap_delete_test.dart"},"type":"suite","time":26374}
+{"test":{"id":106,"name":"loading packages/studio_sdk/test/caption_leave_gap_delete_test.dart","suiteID":105,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":26375}
+{"testID":106,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":26509}
+{"group":{"id":107,"suiteID":105,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":26509}
+{"test":{"id":108,"name":"linked leave-gap DeleteClip leaves an absolute remnant and does not shift later content; undo restores","suiteID":105,"groupIDs":[107],"metadata":{"skip":false,"skipReason":null},"line":102,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_leave_gap_delete_test.dart"},"type":"testStart","time":26509}
+{"testID":108,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":27056}
+{"test":{"id":109,"name":"short path: linked leave-gap DeleteClip, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":105,"groupIDs":[107],"metadata":{"skip":false,"skipReason":null},"line":128,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_leave_gap_delete_test.dart"},"type":"testStart","time":27057}
+{"testID":109,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":27545}
+{"suite":{"id":110,"platform":"vm","path":"packages/studio_sdk/test/caption_linked_ripple_delete_test.dart"},"type":"suite","time":27546}
+{"test":{"id":111,"name":"loading packages/studio_sdk/test/caption_linked_ripple_delete_test.dart","suiteID":110,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":27547}
+{"testID":111,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":27677}
+{"group":{"id":112,"suiteID":110,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":27678}
+{"test":{"id":113,"name":"linked ripple DeleteClip removes both members and shifts a spanning cue; undo restores","suiteID":110,"groupIDs":[112],"metadata":{"skip":false,"skipReason":null},"line":96,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_linked_ripple_delete_test.dart"},"type":"testStart","time":27678}
+{"testID":113,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28191}
+{"test":{"id":114,"name":"short path: linked ripple DeleteClip, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":110,"groupIDs":[112],"metadata":{"skip":false,"skipReason":null},"line":121,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_linked_ripple_delete_test.dart"},"type":"testStart","time":28192}
+{"testID":114,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":28686}
+{"suite":{"id":115,"platform":"vm","path":"packages/studio_sdk/test/caption_linked_ripple_trim_test.dart"},"type":"suite","time":28687}
+{"test":{"id":116,"name":"loading packages/studio_sdk/test/caption_linked_ripple_trim_test.dart","suiteID":115,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":28687}
+{"testID":116,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":28810}
+{"group":{"id":117,"suiteID":115,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":28810}
+{"test":{"id":118,"name":"linked ripple TrimClip shortens both members and splits a spanning cue; undo restores","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":71,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_linked_ripple_trim_test.dart"},"type":"testStart","time":28810}
+{"testID":118,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29320}
+{"test":{"id":119,"name":"short path: linked ripple TrimClip, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":115,"groupIDs":[117],"metadata":{"skip":false,"skipReason":null},"line":118,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_linked_ripple_trim_test.dart"},"type":"testStart","time":29321}
+{"testID":119,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":29812}
+{"suite":{"id":120,"platform":"vm","path":"packages/studio_sdk/test/caption_ripple_trim_test.dart"},"type":"suite","time":29814}
+{"test":{"id":121,"name":"loading packages/studio_sdk/test/caption_ripple_trim_test.dart","suiteID":120,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":29814}
+{"testID":121,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":29946}
+{"group":{"id":122,"suiteID":120,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":29947}
+{"test":{"id":123,"name":"ripple TrimClip out crops and shifts a spanning cue; undo restores","suiteID":120,"groupIDs":[122],"metadata":{"skip":false,"skipReason":null},"line":64,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_ripple_trim_test.dart"},"type":"testStart","time":29947}
+{"testID":123,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":30404}
+{"test":{"id":124,"name":"short path: ripple TrimClip, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":120,"groupIDs":[122],"metadata":{"skip":false,"skipReason":null},"line":105,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_ripple_trim_test.dart"},"type":"testStart","time":30405}
+{"testID":124,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":30846}
+{"suite":{"id":125,"platform":"vm","path":"packages/studio_sdk/test/caption_split_trim_test.dart"},"type":"suite","time":30848}
+{"test":{"id":126,"name":"loading packages/studio_sdk/test/caption_split_trim_test.dart","suiteID":125,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":30849}
+{"testID":126,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":30973}
+{"group":{"id":127,"suiteID":125,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":30973}
+{"test":{"id":128,"name":"split keeps a left clipLocal cue; a spanning cue becomes absolute; undo restores","suiteID":125,"groupIDs":[127],"metadata":{"skip":false,"skipReason":null},"line":88,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_split_trim_test.dart"},"type":"testStart","time":30974}
+{"testID":128,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":31436}
+{"test":{"id":129,"name":"leave-gap out trim leaves an absolute remnant in the gap; later content unmoved","suiteID":125,"groupIDs":[127],"metadata":{"skip":false,"skipReason":null},"line":120,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_split_trim_test.dart"},"type":"testStart","time":31437}
+{"testID":129,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":31711}
+{"test":{"id":130,"name":"short path: leave-gap trim, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":125,"groupIDs":[127],"metadata":{"skip":false,"skipReason":null},"line":147,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_split_trim_test.dart"},"type":"testStart","time":31712}
+{"testID":130,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":32130}
+{"suite":{"id":131,"platform":"vm","path":"packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"suite","time":32131}
+{"test":{"id":132,"name":"loading packages/studio_sdk/test/s3_opened_matrix_test.dart","suiteID":131,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":32131}
+{"testID":132,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":32261}
+{"group":{"id":133,"suiteID":131,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":32261}
+{"test":{"id":134,"name":"s3 reject move of A by +30 collides; negative start and revision stay","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":205,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":32261}
+{"testID":134,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":32794}
+{"test":{"id":135,"name":"s3 split of A at 60 remaps the planted source window; endpoints refuse","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":229,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":32795}
+{"testID":135,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":33230}
+{"test":{"id":136,"name":"s3 insert paste of 60 frames at 150 shifts B and C and grows duration","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":259,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":33231}
+{"testID":136,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":33643}
+{"test":{"id":137,"name":"s3 overwrite [120,210) keeps C and duration; remaps the B tail","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":284,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":33644}
+{"testID":137,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":34322}
+{"test":{"id":138,"name":"s3 ripple R=[120,180) remaps B and shortens to 390; lift of clipLocal-marker host refuses","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":309,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":34324}
+{"testID":138,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":34838}
+{"test":{"id":139,"name":"s3 ordinary leave-gap trim and ripple trim match the table; captions now survive split and leave-gap trim","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":351,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":34839}
+{"testID":139,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":35534}
+{"test":{"id":140,"name":"short s3 path: one ripple-trim, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":131,"groupIDs":[133],"metadata":{"skip":false,"skipReason":null},"line":420,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/s3_opened_matrix_test.dart"},"type":"testStart","time":35535}
+{"testID":140,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":36133}
+{"suite":{"id":141,"platform":"vm","path":"packages/studio_sdk/test/nle_random_undo_test.dart"},"type":"suite","time":36135}
+{"test":{"id":142,"name":"loading packages/studio_sdk/test/nle_random_undo_test.dart","suiteID":141,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":36135}
+{"testID":142,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":36281}
+{"group":{"id":143,"suiteID":141,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":36281}
+{"test":{"id":144,"name":"locked-or-negative move refuses atomically; 1000 seeded NLE edits undo to the same content hash","suiteID":141,"groupIDs":[143],"metadata":{"skip":false,"skipReason":null},"line":157,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/nle_random_undo_test.dart"},"type":"testStart","time":36281}
+{"testID":144,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":431441}
+{"test":{"id":145,"name":"short opened-NLE path: one command, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":141,"groupIDs":[143],"metadata":{"skip":false,"skipReason":null},"line":223,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/nle_random_undo_test.dart"},"type":"testStart","time":431444}
+{"testID":145,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":432052}
+{"suite":{"id":146,"platform":"vm","path":"packages/studio_sdk/test/caption_source_anchor_test.dart"},"type":"suite","time":432055}
+{"test":{"id":147,"name":"loading packages/studio_sdk/test/caption_source_anchor_test.dart","suiteID":146,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":432056}
+{"testID":147,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":432247}
+{"group":{"id":148,"suiteID":146,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":432247}
+{"test":{"id":149,"name":"source cue follows one MoveClips, undo/reopen/fork/sidecar; MP4 stays refused","suiteID":146,"groupIDs":[148],"metadata":{"skip":false,"skipReason":null},"line":61,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_source_anchor_test.dart"},"type":"testStart","time":432248}
+{"testID":149,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":433051}
+{"test":{"id":150,"name":"insert move leaves a source gap; uncovering ripple close refuses; SQL failure is a no-op","suiteID":146,"groupIDs":[148],"metadata":{"skip":false,"skipReason":null},"line":109,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_source_anchor_test.dart"},"type":"testStart","time":433052}
+{"testID":150,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":433490}
+{"suite":{"id":151,"platform":"vm","path":"packages/studio_sdk/test/marker_edit_test.dart"},"type":"suite","time":433492}
+{"test":{"id":152,"name":"loading packages/studio_sdk/test/marker_edit_test.dart","suiteID":151,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":433492}
+{"testID":152,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":433633}
+{"group":{"id":153,"suiteID":151,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":433634}
+{"test":{"id":154,"name":"clipLocal marker follows a host move, one command, undo/reopen/fork; export stays caption-free","suiteID":151,"groupIDs":[153],"metadata":{"skip":false,"skipReason":null},"line":39,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/marker_edit_test.dart"},"type":"testStart","time":433634}
+[libx264 @ 0x7f65fcb20a80] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65fcb20a80] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65fcb20a80] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65fcb20a80] frame I:4     Avg QP:12.60  size:  5228
+[libx264 @ 0x7f65fcb20a80] frame P:101   Avg QP:17.19  size:  1407
+[libx264 @ 0x7f65fcb20a80] mb I  I16..4: 64.0%  0.0% 36.0%
+[libx264 @ 0x7f65fcb20a80] mb P  I16..4:  9.3%  0.0%  1.7%  P16..4: 10.9%  7.4%  4.4%  0.0%  0.0%    skip:66.3%
+[libx264 @ 0x7f65fcb20a80] coded y,uvDC,uvAC intra: 17.7% 43.6% 36.7% inter: 6.1% 18.6% 14.7%
+[libx264 @ 0x7f65fcb20a80] i16 v,h,dc,p: 88%  9%  3%  0%
+[libx264 @ 0x7f65fcb20a80] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 21% 20%  4%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65fcb20a80] i8c dc,h,v,p: 55% 17% 26%  1%
+[libx264 @ 0x7f65fcb20a80] Weighted P-Frames: Y:1.0% UV:1.0%
+[libx264 @ 0x7f65fcb20a80] kb/s:372.71
+[aac @ 0x7f65fc0244c0] Qavg: 23739.543
+{"testID":154,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":434608}
+{"test":{"id":155,"name":"ripple close drops an in-range marker, shifts ripple=true, SQL failure is a no-op","suiteID":151,"groupIDs":[153],"metadata":{"skip":false,"skipReason":null},"line":90,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/marker_edit_test.dart"},"type":"testStart","time":434609}
+{"testID":155,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":435002}
+{"suite":{"id":156,"platform":"vm","path":"packages/studio_sdk/test/caption_default_cliplocal_test.dart"},"type":"suite","time":435003}
+{"test":{"id":157,"name":"loading packages/studio_sdk/test/caption_default_cliplocal_test.dart","suiteID":156,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":435004}
+{"testID":157,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":435176}
+{"group":{"id":158,"suiteID":156,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":435177}
+{"test":{"id":159,"name":"import of a uniquely covered cue defaults to clipLocal, one command, undo/reopen/fork/sidecar","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_default_cliplocal_test.dart"},"type":"testStart","time":435177}
+{"testID":159,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":436121}
+{"test":{"id":160,"name":"import spanning a cut stays absolute; SQL failure is a no-op","suiteID":156,"groupIDs":[158],"metadata":{"skip":false,"skipReason":null},"line":82,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_default_cliplocal_test.dart"},"type":"testStart","time":436122}
+{"testID":160,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":436518}
+{"suite":{"id":161,"platform":"vm","path":"packages/studio_sdk/test/caption_interval_edit_test.dart"},"type":"suite","time":436519}
+{"test":{"id":162,"name":"loading packages/studio_sdk/test/caption_interval_edit_test.dart","suiteID":161,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":436520}
+{"testID":162,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":436649}
+{"group":{"id":163,"suiteID":161,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":436649}
+{"test":{"id":164,"name":"ripple close crops a spanning absolute cue, one command, undo/reopen/fork/sidecar","suiteID":161,"groupIDs":[163],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_interval_edit_test.dart"},"type":"testStart","time":436649}
+{"testID":164,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":437347}
+{"test":{"id":165,"name":"insert paste splits a spanning absolute cue and SQL failure is a no-op","suiteID":161,"groupIDs":[163],"metadata":{"skip":false,"skipReason":null},"line":89,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_interval_edit_test.dart"},"type":"testStart","time":437348}
+{"testID":165,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":437779}
+{"suite":{"id":166,"platform":"vm","path":"packages/studio_sdk/test/caption_follow_move_test.dart"},"type":"suite","time":437780}
+{"test":{"id":167,"name":"loading packages/studio_sdk/test/caption_follow_move_test.dart","suiteID":166,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":437781}
+{"testID":167,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":437906}
+{"group":{"id":168,"suiteID":166,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":437907}
+{"test":{"id":169,"name":"clipLocal cue follows ignore-links move, one command, undo/reopen/fork/sidecar","suiteID":166,"groupIDs":[168],"metadata":{"skip":false,"skipReason":null},"line":52,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_follow_move_test.dart"},"type":"testStart","time":437907}
+{"testID":169,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":438680}
+{"test":{"id":170,"name":"default closure, SQL and ripple still refuse wholly; absolute cue does not follow","suiteID":166,"groupIDs":[168],"metadata":{"skip":false,"skipReason":null},"line":103,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_follow_move_test.dart"},"type":"testStart","time":438681}
+{"testID":170,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":439183}
+{"suite":{"id":171,"platform":"vm","path":"packages/studio_sdk/test/ignore_links_move_test.dart"},"type":"suite","time":439185}
+{"test":{"id":172,"name":"loading packages/studio_sdk/test/ignore_links_move_test.dart","suiteID":171,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":439186}
+{"testID":172,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":439341}
+{"group":{"id":173,"suiteID":171,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":439341}
+{"test":{"id":174,"name":"ignore links moves only selected video, one command, undo/reopen/fork/AAC","suiteID":171,"groupIDs":[173],"metadata":{"skip":false,"skipReason":null},"line":61,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ignore_links_move_test.dart"},"type":"testStart","time":439342}
+[libx264 @ 0x7f661002ea00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f661002ea00] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f661002ea00] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f661002ea00] frame I:4     Avg QP:12.60  size:  5228
+[libx264 @ 0x7f661002ea00] frame P:101   Avg QP:17.19  size:  1407
+[libx264 @ 0x7f661002ea00] mb I  I16..4: 64.0%  0.0% 36.0%
+[libx264 @ 0x7f661002ea00] mb P  I16..4:  9.3%  0.0%  1.7%  P16..4: 10.9%  7.4%  4.4%  0.0%  0.0%    skip:66.3%
+[libx264 @ 0x7f661002ea00] coded y,uvDC,uvAC intra: 17.7% 43.6% 36.7% inter: 6.1% 18.6% 14.7%
+[libx264 @ 0x7f661002ea00] i16 v,h,dc,p: 88%  9%  3%  0%
+[libx264 @ 0x7f661002ea00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 21% 20%  4%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f661002ea00] i8c dc,h,v,p: 55% 17% 26%  1%
+[libx264 @ 0x7f661002ea00] Weighted P-Frames: Y:1.0% UV:1.0%
+[libx264 @ 0x7f661002ea00] kb/s:372.71
+[aac @ 0x7f661017ab00] Qavg: 9837.248
+{"testID":174,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":440339}
+{"test":{"id":175,"name":"default closure, locks, SQL and fence still refuse wholly","suiteID":171,"groupIDs":[173],"metadata":{"skip":false,"skipReason":null},"line":130,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ignore_links_move_test.dart"},"type":"testStart","time":440340}
+{"testID":175,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":440925}
+{"suite":{"id":176,"platform":"vm","path":"packages/studio_sdk/test/multi_move_test.dart"},"type":"suite","time":440926}
+{"test":{"id":177,"name":"loading packages/studio_sdk/test/multi_move_test.dart","suiteID":176,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":440927}
+{"testID":177,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":441075}
+{"group":{"id":178,"suiteID":176,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":8,"line":null,"column":null,"url":null},"type":"group","time":441076}
+{"test":{"id":179,"name":"REAL linked4 atomic gesture -> exact native preview/preencoder/AAC MP4 -> undo redo save reopen fork","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":78,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":441076}
+[libx264 @ 0x7f65f00bb4c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f00bb4c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f00bb4c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f00bb4c0] frame I:5     Avg QP:10.26  size:  3380
+[libx264 @ 0x7f65f00bb4c0] frame P:115   Avg QP:14.24  size:  1090
+[libx264 @ 0x7f65f00bb4c0] mb I  I16..4: 75.0%  0.0% 25.0%
+[libx264 @ 0x7f65f00bb4c0] mb P  I16..4: 15.3%  0.0%  1.9%  P16..4:  9.5%  5.6%  3.2%  0.0%  0.0%    skip:64.5%
+[libx264 @ 0x7f65f00bb4c0] coded y,uvDC,uvAC intra: 10.4% 31.6% 24.2% inter: 5.6% 16.4% 11.0%
+[libx264 @ 0x7f65f00bb4c0] i16 v,h,dc,p: 90%  5%  5%  0%
+[libx264 @ 0x7f65f00bb4c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 18% 25%  3%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65f00bb4c0] i8c dc,h,v,p: 52% 10% 36%  1%
+[libx264 @ 0x7f65f00bb4c0] Weighted P-Frames: Y:24.3% UV:23.5%
+[libx264 @ 0x7f65f00bb4c0] kb/s:284.51
+[aac @ 0x7f65f00743c0] Qavg: 43271.508
+{"testID":179,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":444258}
+{"test":{"id":180,"name":"linked closure lock/field/grid failures reject whole DB mutation, never skip audio","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":159,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":444259}
+{"testID":180,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":444883}
+{"test":{"id":181,"name":"imported covered cues default to clipLocal and follow; made-absolute cues stay; source still refuses; no MP4 burn-in","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":212,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":444884}
+{"testID":181,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":445363}
+{"test":{"id":182,"name":"mixed exact grids reject fractional audio samples; nonzero link offsets remain exact","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":279,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":445364}
+{"testID":182,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":445766}
+{"test":{"id":183,"name":"real dissolve endpoints move together, exact cut/handles/effect order shared with encoder and archive","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":344,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":445767}
+[libx264 @ 0x7f65fcb03dc0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65fcb03dc0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65fcb03dc0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65fcb03dc0] frame I:3     Avg QP: 5.57  size:    52
+[libx264 @ 0x7f65fcb03dc0] frame P:87    Avg QP:14.88  size:    15
+[libx264 @ 0x7f65fcb03dc0] mb I  I16..4: 95.8%  0.0%  4.2%
+[libx264 @ 0x7f65fcb03dc0] mb P  I16..4:  3.3%  0.0%  0.1%  P16..4:  0.3%  0.0%  0.0%  0.0%  0.0%    skip:96.4%
+[libx264 @ 0x7f65fcb03dc0] coded y,uvDC,uvAC intra: 0.9% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f65fcb03dc0] i16 v,h,dc,p: 83%  0% 17%  0%
+[libx264 @ 0x7f65fcb03dc0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 54%  0% 46%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f65fcb03dc0] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f65fcb03dc0] Weighted P-Frames: Y:9.2% UV:0.0%
+[libx264 @ 0x7f65fcb03dc0] kb/s:3.87
+{"testID":183,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":446812}
+{"test":{"id":184,"name":"late SQL rollback/retry/receipt idempotency, revision and stale writer fencing","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":396,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":446814}
+{"testID":184,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":447175}
+{"test":{"id":185,"name":"actual two independent SQLite contenders publish one entire four-member move","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":445,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":447176}
+{"testID":185,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":447501}
+{"test":{"id":186,"name":"100 seeded selection moves each undo/redo retain exact full roots, source and canceled candidate","suiteID":176,"groupIDs":[178],"metadata":{"skip":false,"skipReason":null},"line":502,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/multi_move_test.dart"},"type":"testStart","time":447502}
+{"testID":186,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":458305}
+{"suite":{"id":187,"platform":"vm","path":"packages/studio_sdk/test/snap_move_test.dart"},"type":"suite","time":458308}
+{"test":{"id":188,"name":"loading packages/studio_sdk/test/snap_move_test.dart","suiteID":187,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":458308}
+{"testID":188,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":458472}
+{"group":{"id":189,"suiteID":187,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":458472}
+{"test":{"id":190,"name":"real snapped linked4 -> ghost/one history -> exact pixels/AAC leading silence -> reopen/fork","suiteID":187,"groupIDs":[189],"metadata":{"skip":false,"skipReason":null},"line":64,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":458472}
+[libx264 @ 0x7f661c1f1800] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f661c1f1800] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f661c1f1800] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f661c1f1800] frame I:4     Avg QP:10.37  size:  3937
+[libx264 @ 0x7f661c1f1800] frame P:116   Avg QP:15.99  size:  1244
+[libx264 @ 0x7f661c1f1800] mb I  I16..4: 73.8%  0.0% 26.2%
+[libx264 @ 0x7f661c1f1800] mb P  I16..4:  7.1%  0.0%  1.5%  P16..4:  9.7%  6.4%  4.0%  0.0%  0.0%    skip:71.3%
+[libx264 @ 0x7f661c1f1800] coded y,uvDC,uvAC intra: 16.9% 43.4% 36.8% inter: 5.2% 16.4% 12.8%
+[libx264 @ 0x7f661c1f1800] i16 v,h,dc,p: 87%  9%  3%  0%
+[libx264 @ 0x7f661c1f1800] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f661c1f1800] i8c dc,h,v,p: 54% 18% 27%  1%
+[libx264 @ 0x7f661c1f1800] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f661c1f1800] kb/s:320.16
+[aac @ 0x7f661c1fb4c0] Qavg: 43271.508
+{"testID":190,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":459742}
+{"test":{"id":191,"name":"late SQL failure fully rolls back snapped command; retry same candidate, stale plan/candidate and writer refuse","suiteID":187,"groupIDs":[189],"metadata":{"skip":false,"skipReason":null},"line":139,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":459743}
+{"testID":191,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":460143}
+{"test":{"id":192,"name":"stationary cut snap cannot hide collision; linked locks/negative boundary reject whole DB change","suiteID":187,"groupIDs":[189],"metadata":{"skip":false,"skipReason":null},"line":181,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":460144}
+{"testID":192,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":460511}
+{"test":{"id":193,"name":"real dissolve snapped pair retains handles/shared preview and encoder; lone endpoint refuses","suiteID":187,"groupIDs":[189],"metadata":{"skip":false,"skipReason":null},"line":202,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":460512}
+[libx264 @ 0x7f661c259680] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f661c259680] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f661c259680] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f661c259680] frame I:14    Avg QP: 8.14  size:    49
+[libx264 @ 0x7f661c259680] frame P:76    Avg QP: 7.12  size:    14
+[libx264 @ 0x7f661c259680] mb I  I16..4: 97.5%  0.0%  2.5%
+[libx264 @ 0x7f661c259680] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+[libx264 @ 0x7f661c259680] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f661c259680] i16 v,h,dc,p: 82%  0% 18%  0%
+[libx264 @ 0x7f661c259680] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f661c259680] i8c dc,h,v,p: 100%  0%  0%  0%
+[libx264 @ 0x7f661c259680] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f661c259680] kb/s:4.66
+{"testID":193,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":461351}
+{"test":{"id":194,"name":"real AV-derived metadata: exact mixed frame/sample gate and standalone audio sample snapping","suiteID":187,"groupIDs":[189],"metadata":{"skip":false,"skipReason":null},"line":240,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/snap_move_test.dart"},"type":"testStart","time":461352}
+{"testID":194,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":461614}
+{"suite":{"id":195,"platform":"vm","path":"packages/studio_sdk/test/ripple_trim_lengthen_test.dart"},"type":"suite","time":461616}
+{"test":{"id":196,"name":"loading packages/studio_sdk/test/ripple_trim_lengthen_test.dart","suiteID":195,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":461616}
+{"testID":196,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":461775}
+{"group":{"id":197,"suiteID":195,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":461775}
+{"test":{"id":198,"name":"ripple trim lengthens linked AV, one command, undo/reopen/fork/AAC","suiteID":195,"groupIDs":[197],"metadata":{"skip":false,"skipReason":null},"line":51,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":461775}
+[libx264 @ 0x7f65f00783c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f00783c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f00783c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f00783c0] frame I:4     Avg QP:12.60  size:  5228
+[libx264 @ 0x7f65f00783c0] frame P:101   Avg QP:19.11  size:  1648
+[libx264 @ 0x7f65f00783c0] mb I  I16..4: 64.0%  0.0% 36.0%
+[libx264 @ 0x7f65f00783c0] mb P  I16..4:  9.5%  0.0%  2.0%  P16..4: 12.6%  8.5%  5.2%  0.0%  0.0%    skip:62.2%
+[libx264 @ 0x7f65f00783c0] coded y,uvDC,uvAC intra: 19.1% 47.1% 39.9% inter: 7.1% 21.6% 17.2%
+[libx264 @ 0x7f65f00783c0] i16 v,h,dc,p: 87%  9%  3%  0%
+[libx264 @ 0x7f65f00783c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65f00783c0] i8c dc,h,v,p: 52% 19% 28%  1%
+[libx264 @ 0x7f65f00783c0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f65f00783c0] kb/s:428.27
+[aac @ 0x7f65f002ff00] Qavg: 810.576
+{"testID":198,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":462662}
+{"test":{"id":199,"name":"source exhaustion, leave-gap, locks/SQL/fence refuse wholly","suiteID":195,"groupIDs":[197],"metadata":{"skip":false,"skipReason":null},"line":99,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":462664}
+{"testID":199,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":463306}
+{"test":{"id":200,"name":"ripple trim lengthen splits an absolute cue across the opened tail","suiteID":195,"groupIDs":[197],"metadata":{"skip":false,"skipReason":null},"line":189,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_lengthen_test.dart"},"type":"testStart","time":463307}
+{"testID":200,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":463642}
+{"suite":{"id":201,"platform":"vm","path":"packages/studio_sdk/test/ripple_trim_test.dart"},"type":"suite","time":463644}
+{"test":{"id":202,"name":"loading packages/studio_sdk/test/ripple_trim_test.dart","suiteID":201,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":463645}
+{"testID":202,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":463796}
+{"group":{"id":203,"suiteID":201,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":463796}
+{"test":{"id":204,"name":"ripple trim shortens linked AV, one command, undo/reopen/fork/AAC","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":51,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_test.dart"},"type":"testStart","time":463797}
+[libx264 @ 0x7f65f00783c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f00783c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f00783c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f00783c0] frame I:3     Avg QP:12.76  size:  5175
+[libx264 @ 0x7f65f00783c0] frame P:72    Avg QP:18.67  size:  1675
+[libx264 @ 0x7f65f00783c0] mb I  I16..4: 63.3%  0.0% 36.7%
+[libx264 @ 0x7f65f00783c0] mb P  I16..4: 10.1%  0.0%  2.0%  P16..4: 12.8%  8.7%  5.4%  0.0%  0.0%    skip:61.1%
+[libx264 @ 0x7f65f00783c0] coded y,uvDC,uvAC intra: 18.3% 46.2% 39.1% inter: 7.3% 22.3% 17.8%
+[libx264 @ 0x7f65f00783c0] i16 v,h,dc,p: 87%  9%  3%  0%
+[libx264 @ 0x7f65f00783c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 20%  4%  2%  2%  3%  3%  4%
+[libx264 @ 0x7f65f00783c0] i8c dc,h,v,p: 53% 18% 27%  1%
+[libx264 @ 0x7f65f00783c0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f65f00783c0] kb/s:435.69
+[aac @ 0x7f65f00b2340] Qavg: 953.884
+{"testID":204,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":464691}
+{"test":{"id":205,"name":"leave-gap trim still leaves duration; locks/SQL/fence refuse wholly","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":99,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_test.dart"},"type":"testStart","time":464692}
+{"testID":205,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":465354}
+{"test":{"id":206,"name":"ripple trim shortens and splits an absolute cue across the vacated tail","suiteID":201,"groupIDs":[203],"metadata":{"skip":false,"skipReason":null},"line":193,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_trim_test.dart"},"type":"testStart","time":465354}
+{"testID":206,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":465658}
+{"suite":{"id":207,"platform":"vm","path":"packages/studio_sdk/test/ripple_close_test.dart"},"type":"suite","time":465660}
+{"test":{"id":208,"name":"loading packages/studio_sdk/test/ripple_close_test.dart","suiteID":207,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":465660}
+{"testID":208,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":465805}
+{"group":{"id":209,"suiteID":207,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":465806}
+{"test":{"id":210,"name":"close vacated insert-move hole, one command, undo/reopen/fork/AAC","suiteID":207,"groupIDs":[209],"metadata":{"skip":false,"skipReason":null},"line":50,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_close_test.dart"},"type":"testStart","time":465806}
+[libx264 @ 0x7f660c0a4980] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f660c0a4980] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f660c0a4980] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f660c0a4980] frame I:3     Avg QP:12.50  size:  5061
+[libx264 @ 0x7f660c0a4980] frame P:87    Avg QP:19.05  size:  1653
+[libx264 @ 0x7f660c0a4980] mb I  I16..4: 65.7%  0.0% 34.3%
+[libx264 @ 0x7f660c0a4980] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+[libx264 @ 0x7f660c0a4980] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+[libx264 @ 0x7f660c0a4980] i16 v,h,dc,p: 87% 10%  3%  0%
+[libx264 @ 0x7f660c0a4980] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+[libx264 @ 0x7f660c0a4980] i8c dc,h,v,p: 51% 19% 29%  1%
+[libx264 @ 0x7f660c0a4980] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f660c0a4980] kb/s:424.06
+[aac @ 0x7f660c04c780] Qavg: 411.628
+{"testID":210,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":466731}
+{"test":{"id":211,"name":"insert-move gap remains until close; locks/SQL/fence refuse wholly","suiteID":207,"groupIDs":[209],"metadata":{"skip":false,"skipReason":null},"line":109,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_close_test.dart"},"type":"testStart","time":466732}
+{"testID":211,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":467373}
+{"test":{"id":212,"name":"range close crops an absolute cue that spanned the closed hole","suiteID":207,"groupIDs":[209],"metadata":{"skip":false,"skipReason":null},"line":187,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_close_test.dart"},"type":"testStart","time":467374}
+{"testID":212,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":467750}
+{"suite":{"id":213,"platform":"vm","path":"packages/studio_sdk/test/ripple_delete_test.dart"},"type":"suite","time":467751}
+{"test":{"id":214,"name":"loading packages/studio_sdk/test/ripple_delete_test.dart","suiteID":213,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":467752}
+{"testID":214,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":467882}
+{"group":{"id":215,"suiteID":213,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":467883}
+{"test":{"id":216,"name":"ripple delete closes linked AV, one command, undo/reopen/fork/AAC","suiteID":213,"groupIDs":[215],"metadata":{"skip":false,"skipReason":null},"line":50,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_delete_test.dart"},"type":"testStart","time":467883}
+[libx264 @ 0x7f65e0231440] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65e0231440] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65e0231440] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65e0231440] frame I:2     Avg QP:13.74  size:  5314
+[libx264 @ 0x7f65e0231440] frame P:43    Avg QP:19.51  size:  1717
+[libx264 @ 0x7f65e0231440] mb I  I16..4: 62.1%  0.0% 37.9%
+[libx264 @ 0x7f65e0231440] mb P  I16..4: 10.6%  0.0%  1.6%  P16..4: 12.9%  8.9%  5.7%  0.0%  0.0%    skip:60.2%
+[libx264 @ 0x7f65e0231440] coded y,uvDC,uvAC intra: 16.4% 42.6% 35.7% inter: 7.4% 23.3% 19.5%
+[libx264 @ 0x7f65e0231440] i16 v,h,dc,p: 89%  7%  4%  0%
+[libx264 @ 0x7f65e0231440] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 19% 22%  4%  2%  2%  3%  3%  4%
+[libx264 @ 0x7f65e0231440] i8c dc,h,v,p: 53% 16% 29%  1%
+[libx264 @ 0x7f65e0231440] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f65e0231440] kb/s:450.36
+[aac @ 0x7f65e0201600] Qavg: 1281.567
+{"testID":216,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":468793}
+{"test":{"id":217,"name":"lift still leaves a gap; ripple delete locks/SQL/fence refuse wholly","suiteID":213,"groupIDs":[215],"metadata":{"skip":false,"skipReason":null},"line":95,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_delete_test.dart"},"type":"testStart","time":468794}
+{"testID":217,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":469425}
+{"test":{"id":218,"name":"ripple delete crops an absolute cue that spanned the closed range","suiteID":213,"groupIDs":[215],"metadata":{"skip":false,"skipReason":null},"line":172,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/ripple_delete_test.dart"},"type":"testStart","time":469426}
+{"testID":218,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":469741}
+{"suite":{"id":219,"platform":"vm","path":"packages/studio_sdk/test/insert_test.dart"},"type":"suite","time":469743}
+{"test":{"id":220,"name":"loading packages/studio_sdk/test/insert_test.dart","suiteID":219,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":469743}
+{"testID":220,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":469878}
+{"group":{"id":221,"suiteID":219,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":469878}
+{"test":{"id":222,"name":"insert paste splits linked destinations, grows duration, one command, undo/reopen/fork/AAC","suiteID":219,"groupIDs":[221],"metadata":{"skip":false,"skipReason":null},"line":57,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/insert_test.dart"},"type":"testStart","time":469879}
+[libx264 @ 0x7f65f0052d00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f0052d00] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f0052d00] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f0052d00] frame I:6     Avg QP:12.20  size:  5171
+[libx264 @ 0x7f65f0052d00] frame P:129   Avg QP:18.87  size:  1627
+[libx264 @ 0x7f65f0052d00] mb I  I16..4: 64.4%  0.0% 35.6%
+[libx264 @ 0x7f65f0052d00] mb P  I16..4:  9.1%  0.0%  2.0%  P16..4: 12.7%  8.5%  5.2%  0.0%  0.0%    skip:62.5%
+[libx264 @ 0x7f65f0052d00] coded y,uvDC,uvAC intra: 19.7% 47.7% 40.7% inter: 7.2% 21.8% 16.8%
+[libx264 @ 0x7f65f0052d00] i16 v,h,dc,p: 86% 11%  3%  0%
+[libx264 @ 0x7f65f0052d00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 22% 20%  3%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65f0052d00] i8c dc,h,v,p: 51% 19% 28%  1%
+[libx264 @ 0x7f65f0052d00] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f65f0052d00] kb/s:428.24
+[aac @ 0x7f65f001de80] Qavg: 432.323
+{"testID":222,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":470977}
+{"test":{"id":223,"name":"insert move is one command; locks/SQL/fence refuse wholly; reject and captions stay bounded","suiteID":219,"groupIDs":[221],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/insert_test.dart"},"type":"testStart","time":470978}
+{"testID":223,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":471627}
+{"test":{"id":224,"name":"insert move and insert paste split an absolute cue across the hole","suiteID":219,"groupIDs":[221],"metadata":{"skip":false,"skipReason":null},"line":200,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/insert_test.dart"},"type":"testStart","time":471628}
+{"testID":224,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":471991}
+{"suite":{"id":225,"platform":"vm","path":"packages/studio_sdk/test/overwrite_test.dart"},"type":"suite","time":471992}
+{"test":{"id":226,"name":"loading packages/studio_sdk/test/overwrite_test.dart","suiteID":225,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":471993}
+{"testID":226,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":472131}
+{"group":{"id":227,"suiteID":225,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":472131}
+{"test":{"id":228,"name":"overwrite paste carves linked destinations, one command, undo/reopen/fork/AAC","suiteID":225,"groupIDs":[227],"metadata":{"skip":false,"skipReason":null},"line":55,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/overwrite_test.dart"},"type":"testStart","time":472131}
+[libx264 @ 0x7f65f00783c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f00783c0] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f00783c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f00783c0] frame I:4     Avg QP:12.08  size:  4929
+[libx264 @ 0x7f65f00783c0] frame P:86    Avg QP:18.88  size:  1646
+[libx264 @ 0x7f65f00783c0] mb I  I16..4: 66.0%  0.0% 34.0%
+[libx264 @ 0x7f65f00783c0] mb P  I16..4:  9.4%  0.0%  2.1%  P16..4: 13.1%  8.7%  5.3%  0.0%  0.0%    skip:61.4%
+[libx264 @ 0x7f65f00783c0] coded y,uvDC,uvAC intra: 19.1% 46.3% 39.5% inter: 7.3% 22.7% 17.4%
+[libx264 @ 0x7f65f00783c0] i16 v,h,dc,p: 86% 11%  3%  0%
+[libx264 @ 0x7f65f00783c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 42% 22% 20%  3%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65f00783c0] i8c dc,h,v,p: 50% 20% 29%  1%
+[libx264 @ 0x7f65f00783c0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f65f00783c0] kb/s:430.03
+[aac @ 0x7f65f0054a00] Qavg: 415.414
+{"testID":228,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":473149}
+{"test":{"id":229,"name":"overwrite move is one command; locks/SQL/fence refuse wholly; reject is unchanged","suiteID":225,"groupIDs":[227],"metadata":{"skip":false,"skipReason":null},"line":115,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/overwrite_test.dart"},"type":"testStart","time":473150}
+{"testID":229,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":473785}
+{"suite":{"id":230,"platform":"vm","path":"packages/studio_sdk/test/clipboard_test.dart"},"type":"suite","time":473787}
+{"test":{"id":231,"name":"loading packages/studio_sdk/test/clipboard_test.dart","suiteID":230,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":473787}
+{"testID":231,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":473934}
+{"group":{"id":232,"suiteID":230,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":473934}
+{"test":{"id":233,"name":"copy is not a document write; cut/paste/group are one command each with undo/reopen/fork/AAC","suiteID":230,"groupIDs":[232],"metadata":{"skip":false,"skipReason":null},"line":53,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/clipboard_test.dart"},"type":"testStart","time":473935}
+[libx264 @ 0x7f65f0057040] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x7f65f0057040] profile Main, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f65f0057040] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+[libx264 @ 0x7f65f0057040] frame I:5     Avg QP:11.79  size:  4457
+[libx264 @ 0x7f65f0057040] frame P:130   Avg QP:18.69  size:  1381
+[libx264 @ 0x7f65f0057040] mb I  I16..4: 66.3%  0.0% 33.7%
+[libx264 @ 0x7f65f0057040] mb P  I16..4:  8.8%  0.0%  1.9%  P16..4: 12.9%  8.4%  4.8%  0.0%  0.0%    skip:63.2%
+[libx264 @ 0x7f65f0057040] coded y,uvDC,uvAC intra: 18.0% 47.1% 40.6% inter: 6.8% 20.4% 15.1%
+[libx264 @ 0x7f65f0057040] i16 v,h,dc,p: 86% 10%  4%  0%
+[libx264 @ 0x7f65f0057040] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 43% 22% 21%  3%  2%  2%  3%  3%  3%
+[libx264 @ 0x7f65f0057040] i8c dc,h,v,p: 50% 20% 30%  1%
+[libx264 @ 0x7f65f0057040] Weighted P-Frames: Y:0.8% UV:0.8%
+[libx264 @ 0x7f65f0057040] kb/s:358.67
+[aac @ 0x7f65f014aec0] Qavg: 427.860
+{"testID":233,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":475253}
+{"test":{"id":234,"name":"cut is one lift command; group expands later moves; locks/collisions/transitions refuse wholly","suiteID":230,"groupIDs":[232],"metadata":{"skip":false,"skipReason":null},"line":117,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/clipboard_test.dart"},"type":"testStart","time":475254}
+{"testID":234,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":476307}
+{"test":{"id":235,"name":"clipboard stays internal and session-scoped; stale/SQL/fence failures do not commit partial members","suiteID":230,"groupIDs":[232],"metadata":{"skip":false,"skipReason":null},"line":217,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/clipboard_test.dart"},"type":"testStart","time":476308}
+{"testID":235,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":476666}
+{"success":true,"type":"done","time":476672}
