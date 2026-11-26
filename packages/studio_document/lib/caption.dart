@@ -1256,6 +1256,12 @@ final class CaptionFormats {
     if (font.isNotEmpty) {
       styleFonts?.add(font);
     }
+    // Plain cues do not store Style properties other than a listed Fontname
+    // for policy warnings. Those static fields must appear in the loss
+    // report rather than being silently dropped.
+    if (columns.any((c) => c != 'Name' && c != 'Fontname')) {
+      warnings.add('ASS_STYLE_FIELDS_DROPPED');
+    }
     if (fontPolicy == null) {
       warnings.add('ASS_STYLE_FONT_NOT_RENDERED');
       if (font.isNotEmpty) {
@@ -1352,6 +1358,17 @@ final class CaptionFormats {
         final fields = line.substring(9).trimLeft().split(',');
         if (fields.length < 10) {
           throw const StudioException('ASS_DIALOGUE_INVALID');
+        }
+        // Layer, actor Name, per-event margins and Effect are outside the
+        // supported static subset and are not mapped onto the cue. Warn
+        // instead of silently dropping them.
+        if (fields[0].trim() != '0' ||
+            fields[4].trim().isNotEmpty ||
+            fields[5].trim() != '0' ||
+            fields[6].trim() != '0' ||
+            fields[7].trim() != '0' ||
+            fields[8].trim().isNotEmpty) {
+          warnings.add('ASS_EVENT_STYLE_DROPPED');
         }
         add(
           _time(fields[1].trim(), ass: true),

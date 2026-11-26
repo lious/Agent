@@ -1,0 +1,54 @@
+{
+  "increment": "C.3",
+  "title": "Official I-010 sidecar acceptance: overlap path, unsupported-style loss report, and format goldens",
+  "baseCommit": "ed0d6b8272da028ab150e00500771c3096a1f382",
+  "aggregateSha256": "e53d67f32e43a81c35472ace981d604d7d9513f88477ec9ede54a9408d2074b5",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 3,
+    "sdk": 2,
+    "ui": 1,
+    "total": 6
+  },
+  "selected": {
+    "document": {
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 3
+    },
+    "sdk": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "legacyAndKill": "notRe-run for this format/acceptance slice",
+    "opacityCancel100": "notRe-run for this format/acceptance slice"
+  },
+  "bounds": [
+    "Checked-in SRT/VTT/ASS goldens under packages/studio_document/test/captions/formats/goldens/ officialize already-opened sidecar roundtrip of emoji, RTL, newline and non-frame times (SRT/VTT millisecond, including 101 ms; ASS exact centiseconds). Re-encoding matches the golden bytes; decode restores the same text and rational times. This is not a claim of lossless arbitrary ASS effects.",
+    "Unsupported ASS Style properties other than Name and Fontname are listed as ASS_STYLE_FIELDS_DROPPED. Unsupported Dialogue Layer other than 0, actor Name, per-event margins and Effect are listed as ASS_EVENT_STYLE_DROPPED. Existing ASS_STYLE_FONT_NOT_RENDERED, ASS_OVERRIDE_DROPPED, ASS_EVENT_DROPPED, WEBVTT_METADATA_DROPPED, WEBVTT_CUE_SETTINGS_DROPPED and SUBTITLE_MARKUP_DROPPED warnings stay. Those fields are not silently dropped and are not mapped onto the plain cue model or styleEffectId.",
+    "The already-delivered overlap policy stays a deterministic CAPTION_OVERLAP reject of intersecting half-open ranges; touching ranges remain allowed. Official paths are format decode (CaptionFormats.decode via CaptionImport/CaptionStore), the SDK persist path (importCaptions/SetCaptions), and the workbench import controls. An overlapping sidecar is refused as a whole file with no partial commit; cues that overlap already-committed project cues likewise leave the revision unchanged.",
+    "Already-delivered AssFontLayoutPolicy name fallback, declared script coverage, ASS_EXPORT_FONT_POLICY_REQUIRED, MANUAL_FIELD_LOCKED, CAPTION_RENDER_POLICY_NOT_IMPLEMENTED, caption-aware editor commands, and field-aware invert stay unchanged. Official InversePatch kind stays restoreSnapshot. This slice does not change production algebra, insertion order, or IMPLICIT_GAP, and does not claim deterministic shaping or lossless arbitrary ASS effects. Source-interval crop stays closed. I-005 and I-010 stay partial. This captions-side increment is C.3; Increment C.1 and C.2 evidence remain in evidence/caption-ass-export and evidence/caption-font-coverage-fallback."
+  ],
+  "asOf": "2026-11-26T21:11:40+08:00",
+  "timezone": "Asia/Shanghai"
+}

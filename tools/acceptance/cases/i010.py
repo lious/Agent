@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Selected I-010 sidecar format/font/ASS export checks. Does not declare the task complete."""
+"""Selected I-010 sidecar official-acceptance checks. Does not declare the task complete."""
 import argparse
 import json
 import os
@@ -23,14 +23,17 @@ def main():
     env.setdefault('STUDIO_MEDIA_LIBRARY', '/workspace/agent-media-native-peer/libstudio_media.so')
     commands = [
         (['dart', 'test',
+          'packages/studio_document/test/captions/formats/official_sidecar_acceptance_test.dart',
           'packages/studio_document/test/captions/formats/font_coverage_fallback_test.dart',
           'packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart',
           'packages/studio_document/test/caption_test.dart',
           'packages/studio_store/test/caption_transactions_test.dart',
+          'packages/studio_sdk/test/caption_official_sidecar_path_test.dart',
           'packages/studio_sdk/test/caption_font_coverage_test.dart',
           'packages/studio_sdk/test/caption_ass_export_test.dart',
           '--reporter=json'], ROOT, 'document-sdk'),
         (['flutter', 'test',
+          'test/caption_official_sidecar_path_ui_test.dart',
           'test/caption_font_coverage_ui_test.dart',
           'test/caption_ass_export_ui_test.dart',
           'test/caption_ui_test.dart',
@@ -63,7 +66,7 @@ def main():
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-    print('I-010 selected format/font/ASS export: scope=%s fullTaskComplete=false' % report['scopeStatus'])
+    print('I-010 selected official sidecar acceptance: scope=%s fullTaskComplete=false' % report['scopeStatus'])
     return 1 if failed else 0
 
 

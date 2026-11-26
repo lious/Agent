@@ -1,0 +1,20 @@
+{
+  "baseCommit": "ed0d6b8272da028ab150e00500771c3096a1f382",
+  "sourceSha256": {
+    "packages/studio_document/lib/caption.dart": "cb3bf731e87fbec112ffcee571756c1d7a265bbbb170a081d232064785e5438e",
+    "packages/studio_document/test/captions/formats/official_sidecar_acceptance_test.dart": "22a5d4ccce73029eca9fc52c49ab4f18eba5726deb908d43c2b212a1cf51e7bc",
+    "packages/studio_document/test/captions/formats/goldens/emoji-rtl-newline.srt": "6a67fe2b2777b0a02283384edfb3d9dc38f271cbe409a000d8cebc981a8f41cc",
+    "packages/studio_document/test/captions/formats/goldens/emoji-rtl-newline.vtt": "74db8be4f1d745ce9d1ebce2fee5616072e140b54c73de854cb125edc1143dda",
+    "packages/studio_document/test/captions/formats/goldens/emoji-rtl-newline.ass": "562bf85eecb905be7dc8b5a17e540d46b433b4dae30811bf45556df2c93a09dd",
+    "packages/studio_sdk/test/caption_official_sidecar_path_test.dart": "584b2625b6a1ab87590432c98732312d06d62bd23fde7aa0aa176aae4d3707c2",
+    "packages/studio_editor_ui/test/caption_official_sidecar_path_ui_test.dart": "b2077be15a0af6076be5724e48864eae347488b3ad98df00df88d40117864924",
+    "tools/acceptance/cases/i010.py": "a88f6e6844c7947b321949e41014a59b960b2a9259550ef5439a41fd0125f8a6"
+  },
+  "aggregateSha256": "e53d67f32e43a81c35472ace981d604d7d9513f88477ec9ede54a9408d2074b5",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T21:11:40+08:00",
+  "timezone": "Asia/Shanghai"
+}

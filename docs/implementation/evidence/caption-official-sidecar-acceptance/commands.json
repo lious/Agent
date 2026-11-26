@@ -1,0 +1,72 @@
+{
+  "increment": "C.3",
+  "title": "Official I-010 sidecar acceptance: overlap path, unsupported-style loss report, and format goldens",
+  "baseCommit": "ed0d6b8272da028ab150e00500771c3096a1f382",
+  "asOf": "2026-11-26T21:11:40+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-official-sidecar-acceptance/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.412
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/captions/formats/official_sidecar_acceptance_test.dart",
+        "packages/studio_document/test/captions/formats/font_coverage_fallback_test.dart",
+        "packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart",
+        "packages/studio_document/test/caption_test.dart",
+        "packages/studio_store/test/caption_transactions_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-official-sidecar-acceptance/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.651
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_official_sidecar_path_test.dart",
+        "packages/studio_sdk/test/caption_font_coverage_test.dart",
+        "packages/studio_sdk/test/caption_ass_export_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-official-sidecar-acceptance/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.681
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_official_sidecar_path_ui_test.dart",
+        "test/caption_font_coverage_ui_test.dart",
+        "test/caption_ass_export_ui_test.dart",
+        "test/caption_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/caption-official-sidecar-acceptance/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 6.765
+    }
+  ]
+}
