@@ -23,12 +23,15 @@ def main():
     env.setdefault('STUDIO_MEDIA_LIBRARY', '/workspace/agent-media-native-peer/libstudio_media.so')
     commands = [
         (['dart', 'test',
+          'packages/studio_document/test/captions/formats/font_coverage_fallback_test.dart',
           'packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart',
           'packages/studio_document/test/caption_test.dart',
           'packages/studio_store/test/caption_transactions_test.dart',
+          'packages/studio_sdk/test/caption_font_coverage_test.dart',
           'packages/studio_sdk/test/caption_ass_export_test.dart',
           '--reporter=json'], ROOT, 'document-sdk'),
         (['flutter', 'test',
+          'test/caption_font_coverage_ui_test.dart',
           'test/caption_ass_export_ui_test.dart',
           'test/caption_ui_test.dart',
           '--reporter=json'], ROOT / 'packages/studio_editor_ui', 'ui'),

@@ -42,7 +42,8 @@ class _FoundationAppState extends State<FoundationApp>
       _assRequestedFont = TextEditingController(),
       _assFallbackFonts = TextEditingController(),
       _assAvailableFonts = TextEditingController(),
-      _assPlayRes = TextEditingController(text: '1920x1080');
+      _assPlayRes = TextEditingController(text: '1920x1080'),
+      _assScriptCoverage = TextEditingController();
   final _markerLabel = TextEditingController(text: 'Marker'),
       _markerTime = TextEditingController(text: '0'),
       _markerDuration = TextEditingController(text: '0'),
@@ -564,6 +565,7 @@ class _FoundationAppState extends State<FoundationApp>
       _assFallbackFonts,
       _assAvailableFonts,
       _assPlayRes,
+      _assScriptCoverage,
       _markerLabel,
       _markerTime,
       _markerDuration,
@@ -573,6 +575,33 @@ class _FoundationAppState extends State<FoundationApp>
       c.dispose();
     }
     super.dispose();
+  }
+
+  Map<String, Set<String>> _assScriptCoverageMap() {
+    final raw = _assScriptCoverage.text.trim();
+    if (raw.isEmpty) {
+      return const {};
+    }
+    final coverage = <String, Set<String>>{};
+    for (final entry in raw.split(';')) {
+      if (entry.trim().isEmpty) {
+        continue;
+      }
+      final parts = entry.split(':');
+      if (parts.length != 2) {
+        throw const StudioException('ASS_FONT_POLICY_INVALID');
+      }
+      final family = parts[0].trim();
+      final tags = {
+        for (final tag in parts[1].split(','))
+          if (tag.trim().isNotEmpty) tag.trim(),
+      };
+      if (family.isEmpty || tags.isEmpty) {
+        throw const StudioException('ASS_FONT_POLICY_INVALID');
+      }
+      coverage[family] = tags;
+    }
+    return coverage;
   }
 
   AssFontLayoutPolicy? _assFontPolicy() {
@@ -597,6 +626,7 @@ class _FoundationAppState extends State<FoundationApp>
       requestedFontFamily: requested,
       availableFontFamilies: available.toSet(),
       fallbackFontFamilies: fallbacks,
+      scriptCoverage: _assScriptCoverageMap(),
       playResX: int.parse(size[1]!),
       playResY: int.parse(size[2]!),
     );
@@ -2329,6 +2359,11 @@ class _FoundationAppState extends State<FoundationApp>
       _assAvailableFonts,
     ),
     _path('caption-ass-play-res', 'ASS PlayRes as WIDTHxHEIGHT', _assPlayRes),
+    _path(
+      'caption-ass-coverage',
+      'ASS declared script coverage as Family:Tag,Tag;Family:Tag (optional; empty keeps name-only fallback)',
+      _assScriptCoverage,
+    ),
     Wrap(
       spacing: 8,
       children: [

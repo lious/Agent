@@ -1,0 +1,69 @@
+{
+  "increment": "C.2",
+  "title": "Declared script coverage fallback for ASS sidecar fonts",
+  "baseCommit": "5ec0e22e4bc0bf61f8346be22389d3b4e041f89f",
+  "asOf": "2026-11-26T16:21:50+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document",
+        "packages/studio_store",
+        "packages/studio_sdk",
+        "packages/studio_editor_ui"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-font-coverage-fallback/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.867
+    },
+    {
+      "name": "document",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/captions/formats/font_coverage_fallback_test.dart",
+        "packages/studio_document/test/captions/formats/ass_export_font_policy_test.dart",
+        "packages/studio_document/test/caption_test.dart",
+        "packages/studio_store/test/caption_transactions_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-font-coverage-fallback/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 2.066
+    },
+    {
+      "name": "sdk",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_font_coverage_test.dart",
+        "packages/studio_sdk/test/caption_ass_export_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "artifacts/caption-font-coverage-fallback/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 2.663
+    },
+    {
+      "name": "ui",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_font_coverage_ui_test.dart",
+        "test/caption_ass_export_ui_test.dart",
+        "test/caption_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "artifacts/caption-font-coverage-fallback/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 10.309
+    }
+  ]
+}

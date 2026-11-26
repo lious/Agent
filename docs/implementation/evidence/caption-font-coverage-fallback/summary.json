@@ -1,0 +1,54 @@
+{
+  "increment": "C.2",
+  "title": "Declared script coverage fallback for ASS sidecar fonts",
+  "baseCommit": "5ec0e22e4bc0bf61f8346be22389d3b4e041f89f",
+  "aggregateSha256": "6da6f3382a8cfa4a2fa6bd6dad1184afc55eecd25818cf25ad890d0016afd758",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 6,
+    "sdk": 1,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 6
+    },
+    "sdk": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "ui": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "legacyAndKill": "notRe-run for this format slice",
+    "opacityCancel100": "notRe-run for this format slice"
+  },
+  "bounds": [
+    "When AssFontLayoutPolicy.scriptCoverage is non-empty, ASS sidecar export resolves the written Style Fontname against declared script tags in the cue text (bounded Latn/Han/Hira/Kana/Hang/Arab/Hebr/Zsye, not a full UCD Script property). A Latin-only requested family is not written as if it covered CJK, emoji, or RTL: the first listed registered fallback that declares complete coverage is written, with ASS_FONT_COVERAGE_SUBSTITUTED:from->to:missingTags and ASS_LAYOUT_MAY_CHANGE. If no listed registered fallback declares complete coverage, export is ASS_FONT_COVERAGE_UNAVAILABLE rather than silently keeping the original family.",
+    "An empty coverage map keeps the Increment C.1 name-only fallback on this branch and invents no coverage warnings. encode without a policy remains ASS_EXPORT_FONT_POLICY_REQUIRED. A missing requested family remains ASS_FONT_UNAVAILABLE when no name fallback exists, and may also emit ASS_FONT_SUBSTITUTED to the final covering family when a later fallback supplies coverage. Import with a coverage policy lists the same substitute and still warns ASS_STYLE_FONT_NOT_RENDERED; it does not refuse the file. This is not deterministic shaping, bidi layout, glyph rendering, or lossless arbitrary ASS effects.",
+    "A workbench path adds a CJK/emoji/RTL cue, fills a declared coverage map (StudioTestSans:Latn and StudioTestNoto covering Latn,Han,Hebr,Arab,Zsye), and exports ASS so the sidecar and caption-export-status list the coverage substitute and do not write the Latin-only requested family. An SDK persist path also imports an Arabic ASS whose Style names the Latin-only family, confirms SetCaptions(automatic: true) is MANUAL_FIELD_LOCKED on a hand-edited cue, keeps CAPTION_OVERLAP, and keeps MP4 export CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. Source-interval crop stays closed.",
+    "Already-delivered plain caption domain, split/trim/exact positive-rate map, manual ownership, overlap rejection, bounded SRT/VTT/static ASS import, SRT/VTT export, AssFontLayoutPolicy name fallback, cue versions/undo/reopen/archive/fork, clipLocal default, explicit source anchors, caption-aware editor commands, and field-aware invert stay unchanged. Official InversePatch kind stays restoreSnapshot. This slice does not change production algebra, insertion order, or IMPLICIT_GAP. I-005 and I-010 stay partial. This captions-side increment is C.2; Increment C.1 evidence remains in evidence/caption-ass-export, and mainline 1.66/1.67 remain invert slices."
+  ],
+  "asOf": "2026-11-26T16:21:50+08:00",
+  "timezone": "Asia/Shanghai"
+}
