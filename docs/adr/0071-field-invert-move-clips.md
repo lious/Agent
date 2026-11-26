@@ -1,0 +1,23 @@
+# ADR 0071 — Field-aware invert of a prior leave-gap MoveClips command
+
+## Status
+
+Accepted for Increment 1.64 as a bounded slice of the original I-005 remaining work on the field-aware invert matrix (s3 / s5a). I-005 and I-010 remain partial. This increment does not claim a complete invert matrix. Official InversePatch `kind` stays `restoreSnapshot`. Linear undo/redo stay tip snapshot restores. Already-delivered RippleDeleteClips, RippleTrimClip, leave-gap TrimClip, leave-gap DeleteClip, MoveClip / MoveClips, LiftClips/Cut, SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. The single-clip Move button stays `MoveClip` and does not silently take an unlinked audio partner or expand into a group move. Video and caption mute/solo stay refused at admission with `FEATURE_NOT_IMPLEMENTED`; audio muted/solo stay `SetAudioTrackState`; `syncLock` is not toggled. This increment does not open auto-close as a MoveClips mode, or open new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, overwrite/insert MoveClips modes, `includeLinks=false` invert, or I-006. A diverging unlink invert remains `LINK_OFFSET_MISMATCH`. Invert's version indexer continues to skip source refs (`streamId` present). Leaf-level rational `n`/`d` granularity is unchanged. This slice does not change field-invert list insertion order or retarget `IMPLICIT_GAP`.
+
+## Context
+
+Increment 1.63 officially admitted invert of a prior non-tip `LiftClips` of a rightmost remnant. Increment 1.62 officially admitted invert of a prior non-tip leave-gap `MoveClip`. `MoveClips` (the workbench multi-select + preview + commit path) was already the admitted caption-aware leave-gap multi-clip move in default reject mode: the vacated source is left as a gap, `clipLocal` cues follow their hosts, and the single-clip Move button stays `MoveClip`. It had not been qualified as an invert-matrix target on a persist path with captions present.
+
+A later leave-gap out-trim of a moved remnant remints a gap filler written in a vacated range and therefore conflicts with invert of the move, the same filler-remint bound already documented for leave-gap delete, leave-gap MoveClip, and LiftClips invert. Official later work is a marker or a text edit, not a later left trim. Native preview of a caption-bearing timeline still refuses `CAPTION_RENDER_POLICY_NOT_IMPLEMENTED`; that refusal does not block committing the pending MoveClips gesture, and this slice does not burn captions into the ghost, preview, or MP4.
+
+## Decision
+
+Officially admit invert of a prior committed reject-mode leave-gap `MoveClips` of both remnants of a split that is not the undo tip. Only that command's move write set is restored when those fields still match the command's after-image. A later unrelated `SetMarkers`, or a later text edit of either followed cue, therefore does not conflict: invert restores both remnant starts and both followed cue times, and keeps the later markers and revised text. A later second leave-gap MoveClips of the same remnants, a later leave-gap out-trim that remints a vacated filler, or invert of the tip, is whole-group `UNDO_CONFLICT` and does not roll the database back. Official workbench path uses multi-select, preview, and commit — not the single-clip Move button — and a later marker; extract is not required. Overwrite mode, insert mode, and `includeLinks=false` are not this slice's official success path. Captions and markers are not burned into preview or MP4; export stays a VTT sidecar.
+
+## Consequences
+
+A complete invert matrix remains unfinished. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, I-006, MP4 burn-in, video/caption mute/solo, and syncLock remain unfinished. The table’s 0.02s AV offset remains off the 30 fps grid and still refuses `OFF_FRAME_GRID`; alignment stays at 1/30 s. Already-delivered ripple delete, ripple trim, leave-gap trim, leave-gap delete, move, lift/cut, split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip / SplitClip / leave-gap TrimClip / RippleTrimClip / rightmost RippleDeleteClips / leave-gap DeleteClip / leave-gap MoveClip / LiftClips, overwrite, caption default/follow/interval/source-window, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. No new persistence table. No production algebra change.
+
+## Evidence
+
+`docs/implementation/evidence/field-invert-move-clips/`.
