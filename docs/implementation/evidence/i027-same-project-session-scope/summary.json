@@ -1,0 +1,107 @@
+{
+  "increment": "1.98",
+  "title": "Official I-027 same-project session scope isolation",
+  "baseCommit": "14fa09155e3640b2d3f2c443db14d28f9ca24281",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "store": 2,
+    "sdk": 1,
+    "ui": 0
+  },
+  "clauseOfficialized": "同一项目两个会话作用域隔离",
+  "task": "I-027",
+  "whyNotAlreadyOfficial": "transactions_test.dart officializes cross-namespace isolation of the same session id, not two sessions on one project. workspace_test.dart officializes cross-App isolation and that two metadata sessions share one local executor slot, not that their plans and statuses stay isolated. harness_transactions_test.dart officializes one session’s durable DAG and project-revision isolation. peer_recovery_test.dart officializes same-id recovery fencing. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI027": [
+    "tool-call/result配对 (no message/tool-call pairing API; one-session harness receipts are not this wording and were not re-qualified)",
+    "fork/resume不重放HTTP副作用 (session fork and HTTP-replay mapping are not invented; recoverMetadataSession was not re-qualified)",
+    "删除正文不留可搜索副本 (not officialized as an I-027 session-body close; I-013 archive wording was not re-qualified; a session message-delete API is not invented)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i027FilesRetentionSaveCrashPriorIncrementsAndSourcePreview": {
+      "sdkStoreDocumentMedia": 55
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    },
+    "i025NoHiddenUploadUi": {
+      "ui": 1
+    },
+    "i025SixtySecondSixClipReopenUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "4ae971f49eb4265b1e7bd066d3a8a2f074bf50816d5a62016e2967bb582b0ef7",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "e5749e9795676e43e36fe98edad369e72ba63cd286a66ca67c50c82f064908bc",
+  "i027Status": "partial",
+  "remainingAcceptance": "tool-call/result配对；fork/resume不重放HTTP副作用；删除正文不留可搜索副本。",
+  "i025Status": "partial",
+  "i025RemainingAcceptance": "恢复最后durable编辑；导出通过I-024。",
+  "i022Status": "partial",
+  "i022RemainingAcceptance": "同revision预览/编码前取样在V-003容差内；free仅在GPU/encoder消费后；100次取消无frame泄漏。",
+  "i024Status": "partial",
+  "i024RemainingAcceptance": "时长误差≤1帧、音画≤20ms、无黑/丢帧异常；失败/取消无损坏成片伪成功；revision固定不被编辑中途改。",
+  "i021Status": "partial",
+  "i021RemainingAcceptance": "20点seek±1帧；VFR/非零PTS不误映射；缓存<=预算。",
+  "i015Status": "partial",
+  "i015RemainingAcceptance": "borrow/retain/release配对；100次开关0活句柄；越权路径/网络读取=0。",
+  "i014Status": "partial",
+  "i014RemainingAcceptance": "zip slip/炸弹/符号链接均拒；恢复不倒退事件；fork新projectId；迁移中断保好副本；不支持feature只读保留。",
+  "i013Status": "partial",
+  "i013RemainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T01:47:41+08:00",
+  "timezone": "Asia/Shanghai"
+}

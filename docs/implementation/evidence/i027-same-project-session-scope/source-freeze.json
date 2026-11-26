@@ -1,0 +1,21 @@
+{
+  "increment": "1.98",
+  "title": "Official I-027 same-project session scope isolation",
+  "baseCommit": "14fa09155e3640b2d3f2c443db14d28f9ca24281",
+  "sourceSha256": {
+    "packages/studio_store/test/i027_same_project_session_scope_test.dart": "1930179beab9e37a4cacbf7c7c05986e5699e0203ff1571616a839b1f98bf19c",
+    "packages/studio_sdk/test/i027_same_project_session_scope_test.dart": "5bfa47bb7f9518f564718153ee9ea1794ef8392007c65ef5aaefc07bd44224f4",
+    "docs/adr/0105-i027-same-project-session-scope.md": "6f41dbb81e591b56898099013dd1b432cc50b918f9c5e8aebc508d64d0b66558",
+    "docs/implementation/README.md": "6f287fe42bcff1fdc789627c7b32ffd7753812074520153208e5f2859059ad3f",
+    "docs/implementation/REVIEW.md": "c35afd65110f74113583854219816aeb9558494b87d6c997950b4f97b408e376",
+    "docs/implementation/task-status.json": "c3d6dd5185357683c4b2bc33ed2c29797819c423ff84cfd8c4ef1cc7fbe09095"
+  },
+  "aggregateSha256": "4ae971f49eb4265b1e7bd066d3a8a2f074bf50816d5a62016e2967bb582b0ef7",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "e5749e9795676e43e36fe98edad369e72ba63cd286a66ca67c50c82f064908bc",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T01:47:41+08:00",
+  "timezone": "Asia/Shanghai"
+}

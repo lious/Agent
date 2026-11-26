@@ -1,0 +1,52 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1953499,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i012_user_saved_revision_ui_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i012_user_saved_revision_ui_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart"},"type":"suite","time":5}
+{"test":{"id":3,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":4,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart"},"type":"suite","time":5}
+{"test":{"id":5,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":6,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart"},"type":"suite","time":6}
+{"test":{"id":7,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"count":6,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2344}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2346}
+{"test":{"id":9,"name":"continued title edits after save-managed keep the explicit-save label at the receipt revision","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":13,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i012_user_saved_revision_ui_test.dart"},"type":"testStart","time":2346}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2682}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":2682}
+{"test":{"id":11,"name":"REAL path: slip the left remnant +15 source frames through the Slip button, undo/archive/sidecar, no MP4","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slip_clip_ui_test.dart"},"type":"testStart","time":2682}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3028}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3028}
+{"test":{"id":13,"name":"REAL path: roll a packed 1s cut +15 frames through the Roll button, undo/archive/sidecar, no MP4","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart"},"type":"testStart","time":3029}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3310}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":3310}
+{"test":{"id":15,"name":"REAL path: slide a packed middle remnant +15 frames through the Slide button, undo/archive/sidecar, no MP4","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":24,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/caption_slide_clip_ui_test.dart"},"type":"testStart","time":3310}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":3880}
+{"suite":{"id":16,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_no_hidden_upload_ui_test.dart"},"type":"suite","time":3919}
+{"test":{"id":17,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_no_hidden_upload_ui_test.dart","suiteID":16,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":3919}
+{"testID":17,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4706}
+{"group":{"id":18,"suiteID":16,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":4707}
+{"test":{"id":19,"name":"import archive and export stay local and do not issue hidden HTTP","suiteID":16,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":17,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_no_hidden_upload_ui_test.dart"},"type":"testStart","time":4707}
+Shell: [libx264 @ 0x7f67d800f180] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7f67d800f180] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7f67d800f180] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7f67d800f180] frame I:3     Avg QP:12.50  size:  5061
+Shell: [libx264 @ 0x7f67d800f180] frame P:87    Avg QP:19.05  size:  1653
+Shell: [libx264 @ 0x7f67d800f180] mb I  I16..4: 65.7%  0.0% 34.3%
+Shell: [libx264 @ 0x7f67d800f180] mb P  I16..4:  9.8%  0.0%  2.0%  P16..4: 12.8%  8.6%  5.2%  0.0%  0.0%    skip:61.6%
+Shell: [libx264 @ 0x7f67d800f180] coded y,uvDC,uvAC intra: 18.2% 45.8% 38.9% inter: 7.2% 22.1% 17.4%
+Shell: [libx264 @ 0x7f67d800f180] i16 v,h,dc,p: 87% 10%  3%  0%
+Shell: [libx264 @ 0x7f67d800f180] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 41% 21% 21%  4%  2%  2%  3%  4%  3%
+Shell: [libx264 @ 0x7f67d800f180] i8c dc,h,v,p: 51% 19% 29%  1%
+Shell: [libx264 @ 0x7f67d800f180] Weighted P-Frames: Y:0.0% UV:0.0%
+Shell: [libx264 @ 0x7f67d800f180] kb/s:424.06
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":8027}
+{"suite":{"id":20,"platform":"vm","path":"/workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_sixty_second_six_clip_reopen_ui_test.dart"},"type":"suite","time":8054}
+{"test":{"id":21,"name":"loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_sixty_second_six_clip_reopen_ui_test.dart","suiteID":20,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8054}
+{"testID":21,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":8718}
+{"group":{"id":22,"suiteID":20,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":8719}
+{"test":{"id":23,"name":"sixty-second six-clip caption trim undo save-managed reopen stays equal","suiteID":20,"groupIDs":[22],"metadata":{"skip":false,"skipReason":null},"line":174,"column":5,"url":"package:flutter_test/src/widget_tester.dart","root_line":19,"root_column":3,"root_url":"file:///workspace/agent-foundation-20261125/packages/studio_editor_ui/test/i025_sixty_second_six_clip_reopen_ui_test.dart"},"type":"testStart","time":8719}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11621}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":11954}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":12849}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":17136}
+{"success":true,"type":"done","time":17189}
