@@ -1,0 +1,20 @@
+{
+  "increment": "1.89",
+  "title": "Official I-008 unknown-technique refusal UNSUPPORTED_EDIT_TECHNIQUE",
+  "baseCommit": "ac5601ae4f10682d7a067c2f62c27a0ef34de2a6",
+  "sourceSha256": {
+    "packages/studio_document/test/i008_unsupported_edit_technique_test.dart": "814c1d406029634efbfb07cb749e14a14fd85e9fae6541c0895e064c4aafeb11",
+    "docs/adr/0096-i008-unsupported-edit-technique.md": "8e07c8d2f696e0455941ea4b3000f2d848c16e2615dffb97946867ef58c8a610",
+    "docs/implementation/README.md": "74c20c076ce752372cbfb0e1fee49bf3a194793dd840d7641c7963fcd2357a04",
+    "docs/implementation/REVIEW.md": "d2e56d2a1ceefdf198e9e6543e0df679a7c505c664b1d8a3b3fb259cef31e2a8",
+    "docs/implementation/task-status.json": "292de8c1f8574874259a8c8c7d8f449591e23024b6a342913c972260a7542cad"
+  },
+  "aggregateSha256": "d76b5eda00eb473b746f067b8c2dfeb54d3b786159922d417634363eae8afc8c",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "b1402de75b34f19b037767f6d375cdd95bb1c686b16450a6ee1c56fce2e1b774",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-26T23:26:13+08:00",
+  "timezone": "Asia/Shanghai"
+}

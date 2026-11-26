@@ -1,0 +1,34 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1840256,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"suite","time":8}
+{"test":{"id":3,"name":"loading packages/studio_sdk/test/caption_slip_clip_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"suite","time":8}
+{"test":{"id":5,"name":"loading packages/studio_sdk/test/caption_roll_cut_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":8}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"suite","time":10}
+{"test":{"id":7,"name":"loading packages/studio_sdk/test/caption_slide_clip_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":10}
+{"count":4,"time":11,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1166}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":1168}
+{"test":{"id":9,"name":"1000 official random sequences including Slip/Roll/Slide undo via restoreSnapshot to the start content hash","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":349,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart"},"type":"testStart","time":1169}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1215}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1216}
+{"test":{"id":11,"name":"short path: caption-aware SlipClip of the left remnant, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"testStart","time":1216}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1306}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1307}
+{"test":{"id":13,"name":"short path: caption-aware RollCut of a packed 1s cut, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"testStart","time":1307}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1467}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1467}
+{"test":{"id":15,"name":"short path: caption-aware SlideClip of a packed 3s triple, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":186,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"testStart","time":1467}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2276}
+{"test":{"id":16,"name":"slip that would uncover a source cue or exhaust the source tail is a whole-group refusal","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":211,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"testStart","time":2277}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2284}
+{"test":{"id":17,"name":"a roll that would uncover a source cue, leave the cut, or exhaust source is a whole-group refusal","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":215,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"testStart","time":2284}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2401}
+{"test":{"id":18,"name":"a slide that would uncover a source cue, leave the triple, or exhaust source is a whole-group refusal","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":250,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"testStart","time":2402}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2604}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2720}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2931}
+{"testID":9,"messageType":"print","message":"i005-1.88 sdk: 1000 sequences, legal=3018 refusals=0 families={slip: 536, roll: 504, slide: 352, leave-gap-trim: 542, ripple-trim: 538, move: 546, set-captions: 0} seed=0x188005e5","type":"print","time":480261}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":480311}
+{"success":true,"type":"done","time":480348}

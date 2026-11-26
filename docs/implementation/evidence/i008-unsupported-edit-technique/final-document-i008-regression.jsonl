@@ -1,0 +1,61 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1839909,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_document/test/opacity_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_document/test/opacity_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_document/test/opacity_keyframe_test.dart"},"type":"suite","time":6}
+{"test":{"id":3,"name":"loading packages/studio_document/test/opacity_keyframe_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_document/test/transform_test.dart"},"type":"suite","time":6}
+{"test":{"id":5,"name":"loading packages/studio_document/test/transform_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"suite":{"id":6,"platform":"vm","path":"packages/studio_document/test/raster_effect_test.dart"},"type":"suite","time":7}
+{"test":{"id":7,"name":"loading packages/studio_document/test/raster_effect_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":5,"time":9,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":424}
+{"group":{"id":8,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":426}
+{"test":{"id":9,"name":"static opacity creates immutable effect/clip/sequence versions, exact Q16, identity/noop and input bounds","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":33,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_test.dart"},"type":"testStart","time":426}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":443}
+{"group":{"id":10,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":444}
+{"test":{"id":11,"name":"rational linear/hold, outgoing half-open semantics, endpoint holds, replacement identity/noop and explicit removal","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":39,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":444}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":479}
+{"group":{"id":12,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":479}
+{"test":{"id":13,"name":"registered transform preserves opacity curves, order, split ownership and slip/trim semantics","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":22,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":480}
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":492}
+{"group":{"id":14,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":492}
+{"test":{"id":15,"name":"strict crop/colour bounds, finite values and captured parameter ownership","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":15,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":492}
+{"testID":15,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":510}
+{"test":{"id":16,"name":"static nodes sort crop transform colour opacity; same-time graph, noop, locks and unknown animation refuse","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":510}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":553}
+{"test":{"id":17,"name":"split clones owner, trim preserves node, deleting removes current orphan only","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":62,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_test.dart"},"type":"testStart","time":554}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":597}
+{"test":{"id":18,"name":"linked audio extraction does not inherit visual node, linked split owns independent video effects","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":87,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_test.dart"},"type":"testStart","time":598}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":603}
+{"test":{"id":19,"name":"split/crop/rebase, trims preserve function, slip keeps clip-local curve, move does not shift local keys","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":81,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":604}
+{"testID":18,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":635}
+{"test":{"id":20,"name":"locks, unknown effect versions and extensions never become writable by replacing semantics","suiteID":0,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":99,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_test.dart"},"type":"testStart","time":636}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":662}
+{"suite":{"id":21,"platform":"vm","path":"packages/studio_document/test/dissolve_test.dart"},"type":"suite","time":668}
+{"test":{"id":22,"name":"loading packages/studio_document/test/dissolve_test.dart","suiteID":21,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":668}
+{"testID":16,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":682}
+{"test":{"id":23,"name":"split clone ownership and slip preserve source-space crop/colour; two-leg encoder recipes carry both","suiteID":6,"groupIDs":[14],"metadata":{"skip":false,"skipReason":null},"line":138,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/raster_effect_test.dart"},"type":"testStart","time":683}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":729}
+{"testID":22,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":800}
+{"group":{"id":24,"suiteID":21,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":800}
+{"test":{"id":25,"name":"rational window half-open, exact handles, source offsets, curve endpoint hold and bounded composite recipes","suiteID":21,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":39,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/dissolve_test.dart"},"type":"testStart","time":801}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":807}
+{"test":{"id":26,"name":"linked split clones only video curve and linked trim preserves exact boundary value","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":105,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":807}
+{"testID":26,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":838}
+{"test":{"id":27,"name":"off-grid, invalid range/type and locked implicit curve edits refuse whole operation","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":114,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":839}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":844}
+{"test":{"id":28,"name":"static transform identity bypass, value noop, readonly unsupported animation/order and lock protection","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":56,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":844}
+{"testID":27,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":850}
+{"test":{"id":29,"name":"editing disabled animation preserves enable state; crop extension holds edges and unsupported values remain refused","suiteID":2,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":137,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/opacity_keyframe_test.dart"},"type":"testStart","time":850}
+{"testID":28,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":858}
+{"test":{"id":30,"name":"finite static transform bounds, anchor, singular matrix and unknown field rejection","suiteID":4,"groupIDs":[12],"metadata":{"skip":false,"skipReason":null},"line":98,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/transform_test.dart"},"type":"testStart","time":859}
+{"testID":30,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":860}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":869}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":958}
+{"test":{"id":31,"name":"missing head/tail handles, zero range/offgrid/freeze and disabled legs refuse without changing input","suiteID":21,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":77,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/dissolve_test.dart"},"type":"testStart","time":959}
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1024}
+{"test":{"id":32,"name":"slip revalidates handles, topology edits demand explicit removal, locked removal and noop/NOT_FOUND are real","suiteID":21,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":139,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/dissolve_test.dart"},"type":"testStart","time":1025}
+{"testID":32,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1073}
+{"test":{"id":33,"name":"dissolve sequence closes both rendered leg definitions; schedule allocations retain native limits","suiteID":21,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":202,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_document/test/dissolve_test.dart"},"type":"testStart","time":1074}
+{"testID":33,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1105}
+{"success":true,"type":"done","time":1108}

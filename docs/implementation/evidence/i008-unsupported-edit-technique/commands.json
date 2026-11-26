@@ -1,0 +1,103 @@
+{
+  "increment": "1.89",
+  "title": "Official I-008 unknown-technique refusal UNSUPPORTED_EDIT_TECHNIQUE",
+  "baseCommit": "ac5601ae4f10682d7a067c2f62c27a0ef34de2a6",
+  "asOf": "2026-11-26T23:26:13+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_document"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.5
+    },
+    {
+      "name": "document-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i008_unsupported_edit_technique_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-document.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.155
+    },
+    {
+      "name": "document-i008-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/opacity_test.dart",
+        "packages/studio_document/test/opacity_keyframe_test.dart",
+        "packages/studio_document/test/transform_test.dart",
+        "packages/studio_document/test/raster_effect_test.dart",
+        "packages/studio_document/test/dissolve_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-document-i008-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.662
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 25.692
+    },
+    {
+      "name": "sdk-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-sdk.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 481.217
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i008-unsupported-edit-technique/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 21.494
+    }
+  ]
+}

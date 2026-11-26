@@ -1,0 +1,74 @@
+{
+  "increment": "1.89",
+  "title": "Official I-008 unknown-technique refusal UNSUPPORTED_EDIT_TECHNIQUE",
+  "baseCommit": "ac5601ae4f10682d7a067c2f62c27a0ef34de2a6",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "document": 3,
+    "sdk": 0,
+    "ui": 0
+  },
+  "clauseOfficialized": "未知技术UNSUPPORTED_EDIT_TECHNIQUE",
+  "clausesNotRequalified": [
+    "缺handles拒",
+    "关键帧边界连续",
+    "一次提案原子undo恢复hash"
+  ],
+  "skippedI005RemainingScope": "Gap / multi-select / snap / same-track copy-paste / grouping already official in 1.22–1.27 and 1.51–1.52; closed s3 rows were not opened",
+  "rowsStillOpenOnI008": [
+    "缺handles拒 (already official in 1.17 as TRANSITION_HANDLE_MISSING; not re-qualified)",
+    "关键帧边界连续 (already official in 1.15; not re-qualified)",
+    "一次提案原子undo恢复hash (already official in 1.15–1.18 workspace undo + content hash; not re-qualified)"
+  ],
+  "regressions": {
+    "i008DocumentSuites": {
+      "document": 19
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1,
+      "sdk": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    }
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "d76b5eda00eb473b746f067b8c2dfeb54d3b786159922d417634363eae8afc8c",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i008Status": "partial",
+  "remainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "fullTaskComplete": false,
+  "asOf": "2026-11-26T23:26:13+08:00",
+  "timezone": "Asia/Shanghai"
+}
