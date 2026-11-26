@@ -1,0 +1,23 @@
+{
+  "increment": "1.81",
+  "title": "Official persist path for caption-aware SlipClip",
+  "baseCommit": "a7e7b040fa39e91cbf7963b888ea64dd04d17a49",
+  "officialSelected": {
+    "document": 298,
+    "sdk": 139,
+    "ui": 59,
+    "total": 496,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 6,
+    "sdk": 2,
+    "ui": 1,
+    "total": 9
+  },
+  "aggregateSha256": "89f6bd4ba5aa7525e0cd89c275a01369ca623cc1f1a98804fe4d9567f45e6931",
+  "asOf": "2026-11-26T20:46:52+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true
+}

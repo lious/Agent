@@ -1156,6 +1156,13 @@ class _FoundationAppState extends State<FoundationApp>
                 ),
           child: const Text('Ripple trim in lengthen'),
         ),
+        OutlinedButton(
+          key: const Key('slip'),
+          onPressed: _busy || _selected == null
+              ? null
+              : () => _edit(() => SlipClip(_selected!, _delta())),
+          child: const Text('Slip'),
+        ),
         TextField(
           key: const Key('ripple-close-start'),
           controller: _rippleCloseStart,

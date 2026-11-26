@@ -293,7 +293,8 @@ ProjectDocument _persistentAudioEdit(
         !(operation is SplitClip ||
             (operation is TrimClip && !operation.ripple) ||
             (operation is DeleteClip && !operation.ripple) ||
-            operation is MoveClip)) {
+            operation is MoveClip ||
+            operation is SlipClip)) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
     final key = switch (operation) {
@@ -531,6 +532,8 @@ ProjectDocument _persistentAudioEdit(
         );
       }
     }
+  } else if (operation is SlipClip) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   }
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
