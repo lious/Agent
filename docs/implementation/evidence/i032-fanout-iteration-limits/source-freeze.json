@@ -1,0 +1,20 @@
+{
+  "increment": "1.99",
+  "title": "Official I-032 fan-out and iteration limits are refused at plan construction",
+  "baseCommit": "c95e7abd199e94ee026477766f1604f5d9f856a6",
+  "sourceSha256": {
+    "packages/studio_harness/test/i032_fanout_iteration_limits_test.dart": "c4faee01e84e976ac98ebac09a17625b40ab8cde6ffa0ad922b7a52a8db09a7d",
+    "docs/adr/0106-i032-fanout-iteration-limits.md": "3d5632a1282f9d6b10c39bfb2f5b2532a9a960b6276c9874e34354e45c11dc80",
+    "docs/implementation/task-status.json": "56e2fbf1a121bad9b22074101c2fb2925f0d92e906fef41e86f6d6441e87c348",
+    "docs/implementation/README.md": "8e5082b09ae71b0c455cd0bfc2b40571770728283356b49dc0c3ce5a88099a63",
+    "docs/implementation/REVIEW.md": "d0c756d9aace0f1c6e65bb9303bdb8e4dcde87e1f1f0a1664de685298e404fde"
+  },
+  "aggregateSha256": "417d88dbc446f614d47ac15e2483cbf2d7f69e4ed69f7657b642b5678ec58e99",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "fc751b48a11bc6670681d7bbb2d7dc9a069832270b9bf95b617712956e731d04",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T01:59:10+08:00",
+  "timezone": "Asia/Shanghai"
+}

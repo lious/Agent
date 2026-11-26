@@ -1,0 +1,124 @@
+{
+  "increment": "1.99",
+  "title": "Official I-032 fan-out and iteration limits are refused at plan construction",
+  "baseCommit": "c95e7abd199e94ee026477766f1604f5d9f856a6",
+  "asOf": "2026-11-27T01:59:10+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_harness"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.231
+    },
+    {
+      "name": "harness-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_harness/test/i032_fanout_iteration_limits_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-harness-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 0.863
+    },
+    {
+      "name": "i032-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_store/test/files_test.dart",
+        "packages/studio_store/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/save_crash_test.dart",
+        "packages/studio_store/test/i011_durable_revision_test.dart",
+        "packages/studio_sdk/test/i011_durable_revision_test.dart",
+        "packages/studio_store/test/i012_user_saved_revision_test.dart",
+        "packages/studio_sdk/test/i012_user_saved_revision_test.dart",
+        "packages/studio_store/test/i013_credentials_deleted_body_test.dart",
+        "packages/studio_sdk/test/i013_credentials_deleted_body_test.dart",
+        "packages/studio_document/test/i014_auto_external_link_refusal_test.dart",
+        "packages/studio_store/test/i014_auto_external_link_refusal_test.dart",
+        "packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart",
+        "packages/studio_media/test/i015_exceptions_do_not_cross_abi_test.dart",
+        "packages/studio_sdk/test/i015_exceptions_do_not_cross_abi_test.dart",
+        "packages/studio_sdk/test/i021_canceled_epoch_preview_test.dart",
+        "packages/studio_media/test/i021_canceled_epoch_preview_test.dart",
+        "packages/studio_sdk/test/i025_no_hidden_upload_test.dart",
+        "packages/studio_sdk/test/i025_sixty_second_six_clip_reopen_test.dart",
+        "packages/studio_store/test/i027_same_project_session_scope_test.dart",
+        "packages/studio_sdk/test/i027_same_project_session_scope_test.dart",
+        "packages/studio_sdk/test/source_preview_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-i032-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 147.784
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i008_unsupported_edit_technique_test.dart",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 22.052
+    },
+    {
+      "name": "sdk-caption-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-sdk-caption.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 2.942
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/i012_user_saved_revision_ui_test.dart",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "test/i025_no_hidden_upload_ui_test.dart",
+        "test/i025_sixty_second_six_clip_reopen_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i032-fanout-iteration-limits/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 17.944
+    }
+  ]
+}
