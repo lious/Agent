@@ -1,0 +1,15 @@
+{
+  "baseCommit": "95d34b33d0f1694b18f350ebfddb9da206b42200",
+  "sourceSha256": {
+    "packages/studio_document/test/field_invert_move_clip_test.dart": "73376c62a34fea1c9d287786622993d69e768b24699cad1468851d5be34d96ca",
+    "packages/studio_sdk/test/field_invert_move_clip_test.dart": "e50f20f490d55c0dd6879c4d8107b68ce0f6ebfc40848ac2f67c7dcdd872d2e9",
+    "packages/studio_editor_ui/test/field_invert_move_clip_ui_test.dart": "c5e0ff05e58a6bd429d2f1b6c986c0b81bd6989ffab1a7e82fc7dd029fb20c70"
+  },
+  "aggregateSha256": "8e0c66181de66a25dbc1f924152c02e14449cce6c2ec9f7bfa566945a0ff357d",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T14:30:08+08:00",
+  "timezone": "Asia/Shanghai"
+}
