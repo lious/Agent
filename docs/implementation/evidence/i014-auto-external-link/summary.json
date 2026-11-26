@@ -1,0 +1,99 @@
+{
+  "increment": "1.93",
+  "title": "Official I-014 refusal of automatic external-link resolution",
+  "baseCommit": "2cc9568de500b76bf74a3bf56fd8e42274d8dfdc",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "document": 1,
+    "store": 1,
+    "sdk": 1,
+    "ui": 0
+  },
+  "clauseOfficialized": "自动外链均拒",
+  "task": "I-014",
+  "clausesNotRequalified": [
+    "zip slip/炸弹/符号链接均拒",
+    "恢复不倒退事件",
+    "fork新projectId",
+    "迁移中断保好副本",
+    "不支持feature只读保留"
+  ],
+  "whyNotAlreadyOfficial": "files_test.dart already officializes hostile ZIP paths, advertised-size ZIP bombs, Unix symlinks, unknown manifests, and unlisted entries, and resource_preservation_test.dart already treats a planted locator as opaque extension metadata for UNRESOLVED_EXTENSION_CLOSURE, but no official suite had closed this I-014 remainingAcceptance wording that writable admission and archive pack/open must refuse a non-null externalLocator (FEATURE_NOT_IMPLEMENTED / EXTERNAL_MEDIA_UNRESOLVED) and must not auto-fetch a planted HTTP locator or follow a file locator. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI014": [
+    "zip slip/炸弹/符号链接均拒 (already official in files_test.dart; not re-qualified; left listed after removing only 自动外链 from the compound item)",
+    "恢复不倒退事件 (same-project RestoreService head+1 restore is not invented; not officialized)",
+    "fork新projectId (already official in files_test.dart archive fork and related suites; not re-qualified)",
+    "迁移中断保好副本 (already official in transactions_test.dart, resource_import_test.dart, and checkpoint-retention migration-failure suites; not re-qualified)",
+    "不支持feature只读保留 (already official in Increment 1.11 implementedScope and persistent_audio_transaction_test.dart; not re-qualified)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i014FilesRetentionSaveCrashAndPriorIncrements": {
+      "sdkAndStore": 40
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "c8b4c2b476c9b7377e263b8d00b11c41b3924c2a056a704c40619368039be2dc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "36a4d1b8a1c652ada1f22dfad66c152fee51f185a4ab14eb8286f63908d2b07c",
+  "i014Status": "partial",
+  "remainingAcceptance": "zip slip/炸弹/符号链接均拒；恢复不倒退事件；fork新projectId；迁移中断保好副本；不支持feature只读保留。",
+  "i013Status": "partial",
+  "i013RemainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T00:35:41+08:00",
+  "timezone": "Asia/Shanghai"
+}

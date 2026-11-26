@@ -1,0 +1,22 @@
+{
+  "increment": "1.93",
+  "title": "Official I-014 refusal of automatic external-link resolution",
+  "baseCommit": "2cc9568de500b76bf74a3bf56fd8e42274d8dfdc",
+  "sourceSha256": {
+    "packages/studio_document/test/i014_auto_external_link_refusal_test.dart": "0df0088706cda61539ae069a26109492ec2297e17a89fefce850f66a3a3f5190",
+    "packages/studio_store/test/i014_auto_external_link_refusal_test.dart": "3966b29142a76e4f91273190967e072ccda77289e4d21f6046c4f1cc4c71f4cb",
+    "packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart": "ecb4cff68273448b21513c8182e0852af033a5f760f3d3e8c47b5331d87c160e",
+    "docs/adr/0100-i014-auto-external-link.md": "6cc4314ff49f62c827f44c0e2bd109b05f835a39b29dffd7da5ce8f25f60d71c",
+    "docs/implementation/README.md": "a0bfee2fdd7e8f65a904fa1d78746e03559732e23c255bc96d07a1a34ead2249",
+    "docs/implementation/REVIEW.md": "1ec7a39329af697bc275073450ff9691e4206315f846bb21901f452491722b2e",
+    "docs/implementation/task-status.json": "7b63235d1d5025680c57d223d03067b8b1f26d6be8e50132ad8fab14a539449e"
+  },
+  "aggregateSha256": "c8b4c2b476c9b7377e263b8d00b11c41b3924c2a056a704c40619368039be2dc",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "36a4d1b8a1c652ada1f22dfad66c152fee51f185a4ab14eb8286f63908d2b07c",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T00:35:41+08:00",
+  "timezone": "Asia/Shanghai"
+}
