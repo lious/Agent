@@ -1,0 +1,55 @@
+{
+  "increment": "1.54",
+  "title": "Field-aware invert of a prior SetAudioTrackState command",
+  "baseCommit": "4b75df906a618a595c70b1ba8ec64cebee521a45",
+  "aggregateSha256": "7357eeacdd486a9cd2860f03f77405cef14ae5f7d27dba9dfd1077cf2d0e9995",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 187,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 85,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 304,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip SetAudioTrackState command restores only that command's audio-state write set when those fields still match the command's after-image. A later leave-gap move that only changes geometry does not conflict: invert of a mute unmutes the track and keeps the moved remnants and already-followed cues. Invert of a later unmute after a leave-gap move restores only the mute.",
+    "A later mute change of the same track, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered SetTrackState locked/unlock semantics stay unchanged.",
+    "A real UI path extracts persistent audio, splits, adds left and right cues, mutes the audio track, commits a single-clip leave-gap MoveClip, inverts the SetAudioTrackState command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The single-clip Move button stays MoveClip.",
+    "Already-delivered SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState, insert-move leave-gap, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE."
+  ],
+  "asOf": "2026-11-26T12:13:48+08:00",
+  "timezone": "Asia/Shanghai"
+}
