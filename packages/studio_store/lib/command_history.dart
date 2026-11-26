@@ -300,11 +300,19 @@ extension CommandHistory on DocumentRepository {
       return value.toString();
     }
 
+    // Source refs share an asset id and version but are not the asset entity.
+    // Indexing them would overwrite the asset and can bump clip source.version.
+    bool isVersionedEntity(dynamic value) =>
+        value is Map &&
+        value['id'] is String &&
+        value.containsKey('version') &&
+        value['streamId'] == null;
+
     Map<String, Map<String, dynamic>> index(dynamic node) {
       final out = <String, Map<String, dynamic>>{};
       void walk(dynamic value) {
         if (value is Map) {
-          if (value['id'] is String && value.containsKey('version')) {
+          if (isVersionedEntity(value)) {
             out[value['id'] as String] = Map<String, dynamic>.from(value);
           }
           for (final child in value.values) {
@@ -357,9 +365,7 @@ extension CommandHistory on DocumentRepository {
     final allocated = <String, String>{};
     void bumpIn(dynamic node) {
       if (node is Map) {
-        if (node['id'] is String &&
-            node.containsKey('version') &&
-            bumpIds.contains(node['id'])) {
+        if (isVersionedEntity(node) && bumpIds.contains(node['id'])) {
           node['version'] = allocated.putIfAbsent(
             node['id'] as String,
             () => bump(node['id'] as String),
