@@ -1,0 +1,23 @@
+{
+  "increment": "1.77",
+  "title": "Field-aware invert of a prior SetClipColorBasic command",
+  "baseCommit": "343770754d8a72fe6a2bf7afc3a283a12badeeae",
+  "officialSelected": {
+    "document": 280,
+    "sdk": 131,
+    "ui": 55,
+    "total": 466,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "aggregateSha256": "1cec21b1d09642420dbed7cdd9bf9a56e6c7208acfae9000c99eca3cd1b31273",
+  "asOf": "2026-11-26T19:09:17+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": false
+}
