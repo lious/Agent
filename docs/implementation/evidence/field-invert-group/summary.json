@@ -1,0 +1,55 @@
+{
+  "increment": "1.52",
+  "title": "Field-aware invert of a prior GroupClips command",
+  "baseCommit": "faf8d7080cfb3282b79bbb448261ab3256d53e3f",
+  "aggregateSha256": "42269bf9012321cf708f2b61890d1be5dfbebf98ccf612457166f2787565f103",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 179,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 81,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 290,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip GroupClips or UngroupClips command restores only that command's grouping write set (selectionGroups and selectionGroupId) when those fields still match the command's after-image. A later default MoveClips of the group that only changes geometry does not conflict: invert dissolves the group and keeps the moved remnants and already-followed cues.",
+    "A later UngroupClips of the same group, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Invert of a prior UngroupClips after a later single-member move restores only the group membership and leaves the later geometry and cues. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores.",
+    "A real UI path extracts persistent audio, splits, adds left and right cues, groups the remnants, commits a multi-select move, inverts the GroupClips command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The single-clip Move button stays MoveClip.",
+    "Already-delivered caption-aware GroupClips/UngroupClips, insert-move leave-gap, SetTrackState locked, invert of SetCaptions and SetMarkers, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, video/caption mute/solo, syncLock, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE."
+  ],
+  "asOf": "2026-11-26T11:40:17+08:00",
+  "timezone": "Asia/Shanghai"
+}

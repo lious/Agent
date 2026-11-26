@@ -1,0 +1,68 @@
+{
+  "checkedAt": "2026-11-26T11:53:14.769106+08:00",
+  "timezone": "Asia/Shanghai",
+  "baselineCommit": "06a254506c7eae2e585e363978eede4cd40cf851",
+  "scope": "Real old studio_store AND studio_document schema9 legacy audio history; current compatibility/undo/reopen plus real SIGKILL in explicitly instrumented temp mirror; not App/platform qualification",
+  "checks": [
+    {
+      "stage": "normal-actual-old",
+      "actual": {
+        "actualOldStoreAndDocument": true,
+        "revision": "1",
+        "sequenceVersion": "0",
+        "gain": -6
+      }
+    },
+    {
+      "stage": "crash-actual-old",
+      "actual": {
+        "actualOldStoreAndDocument": true,
+        "revision": "1",
+        "sequenceVersion": "0",
+        "gain": -6
+      }
+    },
+    {
+      "stage": "unchanged-current-normal",
+      "actual": {
+        "mode": "normal",
+        "schema": 9,
+        "headRevision": "14",
+        "exactLegacyUndo": true,
+        "modernLegacyFourUndoFourRedo": true,
+        "modernReeditVersionGreaterThanHistoricalMax": true,
+        "unknownReuseRefused": true,
+        "ambiguousOldStateNotNewWritePermission": true,
+        "legacyRowsByteExact": true,
+        "oldSnapshotBytesExact": true,
+        "integrity": "ok"
+      }
+    },
+    {
+      "stage": "actual-SIGKILL",
+      "exitCode": -9,
+      "barrier": "HISTORY_VERIFIED_UNCOMMITTED",
+      "instrumentedMirrorOnly": true,
+      "instrumentedSourceSha256": "15aa162a144c860bc7cbf8baafddd886c0d724391a6d538254811abcbe302b5b",
+      "instrumentation": "dart:io fixture alias plus blocking stdout/stdin barrier before _pinBlobs(after); after real history/legacy registration; no other code changes"
+    },
+    {
+      "stage": "unmodified-current-crash-reopen",
+      "actual": {
+        "mode": "recover",
+        "schema": 9,
+        "headRevision": "14",
+        "exactLegacyUndo": true,
+        "modernLegacyFourUndoFourRedo": true,
+        "modernReeditVersionGreaterThanHistoricalMax": true,
+        "unknownReuseRefused": true,
+        "ambiguousOldStateNotNewWritePermission": true,
+        "legacyRowsByteExact": true,
+        "oldSnapshotBytesExact": true,
+        "integrity": "ok"
+      }
+    }
+  ],
+  "result": "passed",
+  "fullTaskComplete": false
+}
