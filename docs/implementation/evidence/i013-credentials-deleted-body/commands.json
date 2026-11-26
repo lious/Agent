@@ -1,0 +1,122 @@
+{
+  "increment": "1.92",
+  "title": "Official I-013 credentials and deleted body are not packed into the admitted archive",
+  "baseCommit": "71e468016e148a22eecbccef06518617c07de78c",
+  "asOf": "2026-11-27T00:17:05+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_store",
+        "packages/studio_sdk"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.37
+    },
+    {
+      "name": "store-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_store/test/i013_credentials_deleted_body_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-store.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.333
+    },
+    {
+      "name": "sdk-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/i013_credentials_deleted_body_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-sdk-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.429
+    },
+    {
+      "name": "i013-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_store/test/files_test.dart",
+        "packages/studio_store/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/checkpoint_retention_test.dart",
+        "packages/studio_sdk/test/save_test.dart",
+        "packages/studio_sdk/test/save_crash_test.dart",
+        "packages/studio_store/test/i011_durable_revision_test.dart",
+        "packages/studio_sdk/test/i011_durable_revision_test.dart",
+        "packages/studio_store/test/i012_user_saved_revision_test.dart",
+        "packages/studio_sdk/test/i012_user_saved_revision_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-i013-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 159.257
+    },
+    {
+      "name": "document-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_document/test/i008_unsupported_edit_technique_test.dart",
+        "packages/studio_document/test/i005_random_undo_slip_roll_slide_test.dart",
+        "packages/studio_document/test/s3_roll_slip_slide_matrix_test.dart",
+        "packages/studio_document/test/i006_random_legal_inputs_test.dart",
+        "packages/studio_document/test/i006_trim_mode_matrix_test.dart",
+        "packages/studio_document/test/i005_locked_members_negative_range_test.dart",
+        "packages/studio_document/test/caption_slip_clip_test.dart",
+        "packages/studio_document/test/caption_roll_cut_test.dart",
+        "packages/studio_document/test/caption_slide_clip_test.dart",
+        "packages/studio_document/test/audio/automation/i009_official_mix_semantics_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-document-regression.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 24.232
+    },
+    {
+      "name": "sdk-caption-regression",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_sdk/test/caption_slip_clip_test.dart",
+        "packages/studio_sdk/test/caption_roll_cut_test.dart",
+        "packages/studio_sdk/test/caption_slide_clip_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-sdk-caption.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 3.512
+    },
+    {
+      "name": "ui-regression",
+      "command": [
+        "flutter",
+        "test",
+        "test/i012_user_saved_revision_ui_test.dart",
+        "test/caption_slip_clip_ui_test.dart",
+        "test/caption_roll_cut_ui_test.dart",
+        "test/caption_slide_clip_ui_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": "packages/studio_editor_ui",
+      "log": "docs/implementation/evidence/i013-credentials-deleted-body/final-ui.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 15.144
+    }
+  ]
+}

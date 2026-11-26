@@ -1,0 +1,93 @@
+{
+  "increment": "1.92",
+  "title": "Official I-013 credentials and deleted body are not packed into the admitted archive",
+  "baseCommit": "71e468016e148a22eecbccef06518617c07de78c",
+  "productionChanged": false,
+  "newCount": 3,
+  "newTests": {
+    "store": 2,
+    "sdk": 1,
+    "ui": 0
+  },
+  "clauseOfficialized": "凭据/已删正文不入包",
+  "task": "I-013",
+  "clausesNotRequalified": [
+    "运行job归档固定rev并报告pending",
+    "不可打包资源显式manifest",
+    "取消无半包发布",
+    "保留策略不删可达blob"
+  ],
+  "whyNotAlreadyOfficial": "Existing files_test.dart officializes archive roundtrip, hostile ZIP paths, and rejection of unknown manifest fields / unlisted entries, and ProjectArchive already writes sessionArchive: null, but no official suite had closed this I-013 remainingAcceptance wording for excluding superseded document body and refusing a planted sessionArchive. Those files were not reused, weakened, or rewritten.",
+  "rowsStillOpenOnI013": [
+    "运行job归档固定rev并报告pending (job archival and pending-job reports remain unfinished; not invented; not re-qualified)",
+    "不可打包资源显式manifest (admitted embedded opener requires empty missingExternalRefs and does not open packMode=linked; not invented; not re-qualified)",
+    "取消无半包发布 (already official in save_test.dart queued cancellation; not re-qualified)",
+    "保留策略不删可达blob (already official in files_test.dart CAS GC and checkpoint-retention prune-indexes-only / pin retention; not re-qualified)"
+  ],
+  "seeds": null,
+  "regressions": {
+    "i013FilesRetentionSaveCrashAndPriorIncrements": {
+      "sdkAndStore": 37
+    },
+    "i008UnsupportedEditTechnique": {
+      "document": 3
+    },
+    "i005RandomUndoSlipRollSlide": {
+      "document": 1
+    },
+    "i005S3RollSlipSlideMatrix": {
+      "document": 3
+    },
+    "i006RandomLegalInputs": {
+      "document": 2
+    },
+    "i006TrimModeMatrix": {
+      "document": 8
+    },
+    "i005LockedMembersNegativeRange": {
+      "document": 5
+    },
+    "captionSlip": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionRoll": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "captionSlide": {
+      "document": 6,
+      "sdk": 2,
+      "ui": 1
+    },
+    "a1I009": {
+      "document": 7
+    },
+    "i012UserSavedRevisionUi": {
+      "ui": 1
+    }
+  },
+  "sdkI005RandomUndoSlipRollSlideNotRerun": true,
+  "analyzerExitCode": 0,
+  "aggregateSha256": "4ca0eaef348213e48c499a2c3076d895a9b271182d192d4fccc1c429bb4de355",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i013Status": "partial",
+  "remainingAcceptance": "运行job归档固定rev并报告pending；不可打包资源显式manifest；取消无半包发布；保留策略不删可达blob。",
+  "i012Status": "partial",
+  "i012RemainingAcceptance": "虚拟时钟验证全部触发；并发save合并；保存完成只在durable receipt之后。",
+  "i011Status": "partial",
+  "i011RemainingAcceptance": "各崩溃点注入后只开最后好snapshot+tail；损坏唯一好副本不覆盖；Schema完整往返。",
+  "i005Status": "partial",
+  "i006Status": "partial",
+  "i006RemainingAcceptance": "",
+  "i008Status": "partial",
+  "i008RemainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。",
+  "v005Status": "partial",
+  "v005RemainingAcceptance": "每崩溃点10次；durableRevision零丢失、校验失败零静默打开、取消不覆盖好副本；未测provider保持受限。",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "asOf": "2026-11-27T00:17:05+08:00",
+  "timezone": "Asia/Shanghai"
+}

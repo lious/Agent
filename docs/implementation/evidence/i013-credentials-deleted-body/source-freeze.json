@@ -1,0 +1,21 @@
+{
+  "increment": "1.92",
+  "title": "Official I-013 credentials and deleted body are not packed into the admitted archive",
+  "baseCommit": "71e468016e148a22eecbccef06518617c07de78c",
+  "sourceSha256": {
+    "packages/studio_store/test/i013_credentials_deleted_body_test.dart": "901a3b2fc2c132f1e124bc0f40ccb876a59c839ad60e51c1fd330327a88c04fd",
+    "packages/studio_sdk/test/i013_credentials_deleted_body_test.dart": "42d92eed15cb4c2520a1a86f86e8c24ac72d141113cabeb47b99bb3c11ca3a2b",
+    "docs/adr/0099-i013-credentials-deleted-body.md": "e5bfba1891d71b4b469bd01700de47abc3fe054f2298522750359c4a47eaa9db",
+    "docs/implementation/README.md": "49d7312b707147335b223a6f185c06f8cd7f5d5e544205f63eb38d0664ea2369",
+    "docs/implementation/REVIEW.md": "1d791e60f908a73f880178a527a3016afc223cad6ae0d0fe19960f1696ce3c58",
+    "docs/implementation/task-status.json": "34d49909587e8bb5de53ec193e0cc7daac7d249a1812050f5805863fc492c847"
+  },
+  "aggregateSha256": "4ca0eaef348213e48c499a2c3076d895a9b271182d192d4fccc1c429bb4de355",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "96bcdec78cc77ddc93e06323b89ca35c035348363a0453e68c954725173c7017",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T00:17:05+08:00",
+  "timezone": "Asia/Shanghai"
+}
