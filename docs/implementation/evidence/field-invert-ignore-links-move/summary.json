@@ -1,0 +1,55 @@
+{
+  "increment": "1.67",
+  "title": "Field-aware invert of a prior includeLinks=false MoveClips command",
+  "baseCommit": "55b474c4dfa99c5fb84438699b634e4e4d39c97b",
+  "aggregateSha256": "440e82ad3993b9f1fd2e0428b9f3d45d716c2ba03d00f676d0bc8dc6f1a69e0d",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 240,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 111,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 396,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip reject-mode includeLinks=false MoveClips of a video host by +1s restores only that command's ignore-links write set when those fields still match the command's after-image. A later unrelated SetMarkers does not conflict: invert restores the moving host's start, leaves the unmoved audio partner at its original start, restores link policy preserve and the stored offset, restores sequence duration 3, restores the followed hello cue, and keeps the later markers and the unmoved absolute stay cue. A later text edit of the unmoved stay cue, or of the followed hello cue, also does not conflict; invert keeps the new text.",
+    "A later +0.5s includeLinks=false move of the same host, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. A later second +1s ignore-links move would slide the followed hello onto the unmoved stay and still refuse CAPTION_OVERLAP; official conflict therefore uses the +0.5s move or tip invert. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Leaf-level rational n/d granularity is unchanged. This slice does not change production algebra, insertion order, or IMPLICIT_GAP, and does not officialize overwrite or insert PasteClips invert, SetDissolve invert, or auto-close of a vacated source gap. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered RippleDeleteClips, RippleTrimClip, leave-gap TrimClip, leave-gap DeleteClip, MoveClip / MoveClips, LiftClips/Cut, SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. A diverging unlink invert remains LINK_OFFSET_MISMATCH. An overwrite that would uncover or crop a source cue remains ANCHOR_OUT_OF_RANGE. The single-clip Move button stays MoveClip and is not used on this path.",
+    "A real UI path adds a hello cue, extracts persistent audio, adds a stay cue and makes it absolute, checks Ignore links and groups this move, multi-selects the video host, previews and commits a +1s includeLinks=false MoveClips, adds a later marker, inverts the MoveClips command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The native multi-move ghost of a caption-bearing timeline also refuses that policy, but that refusal does not block committing the pending gesture. Extract is required so a linked audio partner exists. Official later work is a marker or a text edit, not a later +1s move of the same host. A newly added stay cue redefaults to clipLocal unless it is made absolute in a second SetCaptions.",
+    "Already-delivered ripple delete, ripple trim, leave-gap trim, leave-gap delete, move, lift/cut, split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip / SplitClip / leave-gap TrimClip / RippleTrimClip / rightmost RippleDeleteClips / leave-gap DeleteClip / leave-gap MoveClip / LiftClips / reject-mode MoveClips / overwrite-mode MoveClips / insert-mode MoveClips, insert-move leave-gap, overwrite, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND."
+  ],
+  "asOf": "2026-11-26T16:10:39+08:00",
+  "timezone": "Asia/Shanghai"
+}
