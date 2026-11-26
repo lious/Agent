@@ -1,0 +1,18 @@
+{
+  "baseCommit": "496c2066f0ea6b8e1fa774e632c7cb573a3e31f7",
+  "sourceSha256": {
+    "packages/studio_document/lib/caption.dart": "977b1814154b8dccc02efc4133ca73ea6c5dd113754ed6e317fde407054da03b",
+    "packages/studio_document/lib/overwrite.dart": "aee98f0ce73f1b0872dca7b2449738eb84e363d50c2ff3fede1f00462e78487d",
+    "packages/studio_document/lib/clipboard.dart": "be3054592388b287eac6501ecf3008dab2ba234b0063d86cd50e2c8be737374e",
+    "packages/studio_document/test/caption_overwrite_test.dart": "7911d7a6b13709300295e7bc643d4d33cd873bee230e8569b9fe0ac1fa6359dd",
+    "packages/studio_sdk/test/caption_overwrite_test.dart": "e812ff080859aac773e65c9b49e59a3c467fba9b544fb259a926b6f6671ce48d",
+    "packages/studio_editor_ui/test/caption_overwrite_ui_test.dart": "80dbc0f27c0a82afd2b5e539b1381e1d674ff09afc76bc6c9b82f92fe69ee450"
+  },
+  "aggregateSha256": "89815610acf2250ee83febfc658172ce1383f3a6108e8574712cf6f43f65a208",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T10:17:23+08:00",
+  "timezone": "Asia/Shanghai"
+}

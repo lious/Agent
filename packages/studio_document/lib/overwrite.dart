@@ -376,6 +376,12 @@ ProjectDocument _overwriteMoveClips(
     newId,
   );
   _deleteAffectedTransitions(d, touched, moved, rangesByTrack);
+  // Destination hosts may have been trimmed, punched, or removed. Rebind
+  // uniquely covered clipLocal cues/markers to remnants; otherwise keep the
+  // same text/time as an absolute remnant. Later content is not shifted.
+  // Source-window uncover is refused after the move, not silently cropped.
+  applyCaptionsAfterSplit(d, nextVersion: version);
+  applyMarkersAfterSplit(d);
   for (final id in moved) {
     final c = clips[id];
     c['timelineRange']['start'] = (_start(c as Map) + operation.delta).toJson();

@@ -804,6 +804,10 @@ ProjectDocument _pasteClips(
     (d['transitions'] as List).add(t);
   }
   _rewriteMediaTracks(s, tracks, affected, version, newId, minimumDuration);
+  if (operation.mode == 'overwrite') {
+    applyCaptionsAfterSplit(d, nextVersion: version);
+    applyMarkersAfterSplit(d);
+  }
   applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
   followClipLocalCaptions(d, nextVersion: version);
   if (operation.mode != 'insert') {

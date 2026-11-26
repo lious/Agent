@@ -1156,13 +1156,23 @@ void _bindCaptionToHost(
   if (start < hostStart || start + duration > hostStart + hostDur) {
     throw const StudioException('ANCHOR_OUT_OF_RANGE');
   }
-  final changed = anchor['kind'] != 'clipLocal' || anchor['clipId'] != hostId;
-  anchor['kind'] = 'clipLocal';
-  anchor['clipId'] = hostId;
-  anchor['range'] = {
-    'start': (start - hostStart).toJson(),
+  final localStart = start - hostStart;
+  final nextRange = {
+    'start': localStart.toJson(),
     'duration': duration.toJson(),
   };
+  final previous = anchor['range'];
+  final rangeChanged =
+      previous is! Map ||
+      Q.fromJson(previous['start']) != localStart ||
+      Q.fromJson(previous['duration']) != duration;
+  final changed =
+      anchor['kind'] != 'clipLocal' ||
+      anchor['clipId'] != hostId ||
+      rangeChanged;
+  anchor['kind'] = 'clipLocal';
+  anchor['clipId'] = hostId;
+  anchor['range'] = nextRange;
   if (changed && nextVersion != null) {
     cue['version'] = nextVersion(cue['id'] as String);
   }

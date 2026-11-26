@@ -1,0 +1,55 @@
+{
+  "increment": "1.48",
+  "title": "Caption-aware overwrite move and paste",
+  "baseCommit": "496c2066f0ea6b8e1fa774e632c7cb573a3e31f7",
+  "aggregateSha256": "89815610acf2250ee83febfc658172ce1383f3a6108e8574712cf6f43f65a208",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 5,
+    "sdk": 2,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 161,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 5
+    },
+    "sdk": {
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 26,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 260,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Overwrite move and overwrite paste with captions no longer leave a dangling clipLocal host after the destination is carved. Uniquely covered destination cues rebind to a remnant; otherwise the whole cue stays at its authored times as an absolute remnant with the same text. Later content is not shifted.",
+    "A followed cue on a moving clip still follows the host. If it would occupy the same times as a dest remnant, the command is whole-group CAPTION_OVERLAP. Overwrite paste may rebind a uniquely covered dest cue onto the pasted clip. A source-anchored cue whose window is uncovered or cropped remains ANCHOR_OUT_OF_RANGE. Lifting a clipLocal-marker host remains REF_NOT_FOUND. Captions do not enter the internal clipboard.",
+    "A real UI path imports AV, extracts persistent audio, splits, adds left / carved-interval / remnant cues, sets Collision mode overwrite, commits a multi-select move, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED.",
+    "Already-delivered LiftClips/Cut, MoveClip, DeleteClip, TrimClip, insert-move leave-gap, includeLinks=false, field-aware invert, split/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, and the table's 0.02s off-grid offset are not in this slice. I-005 and I-010 stay partial."
+  ],
+  "asOf": "2026-11-26T10:33:22+08:00",
+  "timezone": "Asia/Shanghai"
+}
