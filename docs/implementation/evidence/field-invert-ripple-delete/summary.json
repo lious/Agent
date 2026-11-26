@@ -1,0 +1,55 @@
+{
+  "increment": "1.60",
+  "title": "Field-aware invert of a prior RippleDeleteClips command",
+  "baseCommit": "deea2310998457e11a2fb1207acf41a6f71e9e4e",
+  "aggregateSha256": "6bb4b1a334642ce33d7fe404053376eed350c26b9f0fd94462db940020ff4fc8",
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "newThisIncrement": {
+    "document": 4,
+    "sdk": 2,
+    "ui": 1,
+    "total": 7
+  },
+  "selected": {
+    "document": {
+      "passed": 212,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 4
+    },
+    "sdk": {
+      "passed": 97,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "ui": {
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1
+    },
+    "total": {
+      "passed": 347,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "actualLegacyAndKill": "passed",
+    "undoRedoKill": "passed",
+    "opacityCancel100": "passed"
+  },
+  "bounds": [
+    "Field-aware invert of a prior non-tip RippleDeleteClips of a rightmost remnant restores only that command's delete write set when those fields still match the command's after-image. A later unrelated SetMarkers does not conflict: invert restores the deleted remnant and its cue and keeps the later markers and unmoved earlier cues. A later out-trim of the uninvolved left remnant, or a later text edit of the uninvolved left cue, also does not conflict.",
+    "A later leave-gap move of a remnant whose start was shifted by a ripple delete of an earlier remnant, or invert of the tip, is whole-group UNDO_CONFLICT and does not roll the database back. Invert of a non-last ripple delete that must reinsert an earlier clip is not this slice's official success path; admission can refuse IMPLICIT_GAP because the restored item is appended after later remnants, and this slice does not change insertion order or retarget that code. Official InversePatch kind stays restoreSnapshot. Linear undo/redo stay tip snapshot restores. Leaf-level rational n/d granularity is unchanged. Video and caption mute/solo stay refused at admission with FEATURE_NOT_IMPLEMENTED. Audio muted/solo stay SetAudioTrackState. syncLock is not toggled. Already-delivered RippleDeleteClips, RippleTrimClip, leave-gap TrimClip, SplitClip, ExtractAudioClip, UnlinkAudioVideo / LinkAudioVideo, SetAudioTrackState, and SetTrackState locked/unlock semantics stay unchanged. A diverging unlink invert remains LINK_OFFSET_MISMATCH.",
+    "A real UI path splits at 1s, adds left and right cues, ripple-deletes the right remnant, adds a later marker, inverts the RippleDeleteClips command, then undoes, redoes, archives a fork, and exports a VTT sidecar. Preview and MP4 still refuse CAPTION_RENDER_POLICY_NOT_IMPLEMENTED. The single-clip Move button stays MoveClip. Extract is not required for this path.",
+    "Already-delivered ripple delete, ripple trim, leave-gap trim, split, extract, unlink/link, SetAudioTrackState, SetTrackState locked, caption-aware GroupClips/UngroupClips, invert of SetCaptions / SetMarkers / GroupClips / SetTrackState / SetAudioTrackState / UnlinkAudioVideo / ExtractAudioClip / SplitClip / leave-gap TrimClip / RippleTrimClip, insert-move leave-gap, overwrite, LiftClips/Cut, caption default/follow/interval/source-window, marker absolute default / clipLocal follow / ripple interval, 1000 seeded random undo, and the opened section-3 geometry matrix stay unchanged. Auto-close-on-move, new-track, cross-project bake, OS clipboard, source-interval crop, marker sidecar formats, a complete invert matrix, I-006, MP4 burn-in, and the table's 0.02s off-grid offset are not in this slice. Lifting a clipLocal-marker host remains REF_NOT_FOUND. An uncovering or cropping interval remains ANCHOR_OUT_OF_RANGE."
+  ],
+  "asOf": "2026-11-26T14:09:48+08:00",
+  "timezone": "Asia/Shanghai"
+}
