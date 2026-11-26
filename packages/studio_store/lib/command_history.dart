@@ -353,9 +353,14 @@ extension CommandHistory on DocumentRepository {
         bumpIds.add(e.key);
       }
     }
+    // Sequence fingerprints already close captions and transitions that live
+    // outside the sequence object. Invert must mint a new sequence version
+    // when those children change, same as later marker or caption text edits.
     if (clocksOff(current.toJson()['captions']) !=
             clocksOff(next['captions']) ||
-        clocksOff(current.toJson()['markers']) != clocksOff(next['markers'])) {
+        clocksOff(current.toJson()['markers']) != clocksOff(next['markers']) ||
+        clocksOff(current.toJson()['transitions']) !=
+            clocksOff(next['transitions'])) {
       for (final sequence in next['sequences'] as List) {
         if (sequence is Map && sequence['id'] is String) {
           bumpIds.add(sequence['id'] as String);
