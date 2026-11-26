@@ -1,0 +1,27 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":1916399,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_sdk/test/caption_slip_clip_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"suite":{"id":2,"platform":"vm","path":"packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"suite","time":5}
+{"test":{"id":3,"name":"loading packages/studio_sdk/test/caption_roll_cut_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":4,"platform":"vm","path":"packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"suite","time":7}
+{"test":{"id":5,"name":"loading packages/studio_sdk/test/caption_slide_clip_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":3,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1068}
+{"group":{"id":6,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1070}
+{"test":{"id":7,"name":"short path: caption-aware SlipClip of the left remnant, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":0,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"testStart","time":1071}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1100}
+{"group":{"id":8,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1100}
+{"test":{"id":9,"name":"short path: caption-aware RollCut of a packed 1s cut, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":153,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"testStart","time":1101}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1153}
+{"group":{"id":10,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":1153}
+{"test":{"id":11,"name":"short path: caption-aware SlideClip of a packed 3s triple, undo/redo, archive fork, sidecar, no MP4 burn-in","suiteID":4,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":186,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"testStart","time":1153}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1898}
+{"test":{"id":12,"name":"slip that would uncover a source cue or exhaust the source tail is a whole-group refusal","suiteID":0,"groupIDs":[6],"metadata":{"skip":false,"skipReason":null},"line":211,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slip_clip_test.dart"},"type":"testStart","time":1900}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1916}
+{"test":{"id":13,"name":"a roll that would uncover a source cue, leave the cut, or exhaust source is a whole-group refusal","suiteID":2,"groupIDs":[8],"metadata":{"skip":false,"skipReason":null},"line":215,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_roll_cut_test.dart"},"type":"testStart","time":1916}
+{"testID":11,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2101}
+{"test":{"id":14,"name":"a slide that would uncover a source cue, leave the triple, or exhaust source is a whole-group refusal","suiteID":4,"groupIDs":[10],"metadata":{"skip":false,"skipReason":null},"line":250,"column":3,"url":"file:///workspace/agent-foundation-20261125/packages/studio_sdk/test/caption_slide_clip_test.dart"},"type":"testStart","time":2102}
+{"testID":12,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2217}
+{"testID":13,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2352}
+{"testID":14,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2596}
+{"success":true,"type":"done","time":2600}

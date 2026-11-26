@@ -1,0 +1,21 @@
+{
+  "increment": "1.95",
+  "title": "Official I-021 canceled-epoch frames do not reflux into preview",
+  "baseCommit": "4741172b5b55a856b383c9ed3fb2ada44f1d90e5",
+  "sourceSha256": {
+    "packages/studio_media/test/i021_canceled_epoch_preview_test.dart": "71a3f566267b5cbe8369b89855985ff598624fd24aae64151954e4ab896781ea",
+    "packages/studio_sdk/test/i021_canceled_epoch_preview_test.dart": "542046b110069e4fbf0622af8ff802e7684319d8ae9f1081490ef5a0d67fa5f7",
+    "docs/adr/0102-i021-canceled-epoch-preview.md": "3a608baa6deafea57b0fff6615bad98cd2b80de3bf5eeb94944741cf810f333d",
+    "docs/implementation/README.md": "9b91eed4297ab2933de59128dde8fecfde2aeb600b317c6f0ee82e3deeac430f",
+    "docs/implementation/REVIEW.md": "3d05fc05a5a7b810f675acdd9c7ff952647a2af62ad3f01a3cdbe9b1bd290cc7",
+    "docs/implementation/task-status.json": "f562647d0b28534db059876ce05ba62eb917e447a19de6a0c0912635638bd8a0"
+  },
+  "aggregateSha256": "d15a15abff7ee6f1e9424d636c186f859da99b7f5457545c5f72b07a750bb0d2",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "d70a1b2b5d7051c05ea7e6865c14719b058bed1a661f3e37ce44687b33bd9020",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T00:59:18+08:00",
+  "timezone": "Asia/Shanghai"
+}
