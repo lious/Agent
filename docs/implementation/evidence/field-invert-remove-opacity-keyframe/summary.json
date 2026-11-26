@@ -1,0 +1,56 @@
+{
+  "increment": "1.73",
+  "title": "Field-aware invert of a prior RemoveOpacityKeyframe command",
+  "baseCommit": "4c844a64b10ffd07ad480e0894ce8ea15035feed",
+  "aggregateSha256": "13dd64d38145a8c0c3951f070a0247628e265375c8fe85960041057fbe7f1159",
+  "sourceSha256": {
+    "packages/studio_document/test/field_invert_remove_opacity_keyframe_test.dart": "c63b875d63c2bedface926d03dcaf7536e8c0904800b9af6253283f0a879a31b",
+    "packages/studio_sdk/test/field_invert_remove_opacity_keyframe_test.dart": "66a651eadfe7a6879c1ec73ae452d508aecd463f92f44be2822854d3e47b1818",
+    "packages/studio_editor_ui/test/field_invert_remove_opacity_keyframe_ui_test.dart": "1b98f6c642c9ff61bf1b263e43ceaa7c0376d1a2d095976772483fcf980b2b02"
+  },
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "freezeAsOf": "2026-11-26T17:54:01+08:00",
+  "selectedAsOf": "2026-11-26T18:05:30+08:00",
+  "timezone": "Asia/Shanghai",
+  "officialCounts": {
+    "document": 264,
+    "sdk": 123,
+    "ui": 51,
+    "total": 438,
+    "failed": 0,
+    "notRun": 0
+  },
+  "runs": {
+    "analyzer": {
+      "exitCode": 0,
+      "elapsedSeconds": 1.799
+    },
+    "document": {
+      "exitCode": 0,
+      "elapsedSeconds": 48.824
+    },
+    "sdk": {
+      "exitCode": 0,
+      "elapsedSeconds": 458.328
+    },
+    "ui": {
+      "exitCode": 0,
+      "elapsedSeconds": 130.311
+    },
+    "actual-legacy-and-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 12.366
+    },
+    "undo-redo-kill": {
+      "exitCode": 0,
+      "elapsedSeconds": 19.803
+    },
+    "100cancel": {
+      "exitCode": 0,
+      "elapsedSeconds": 0.767
+    }
+  },
+  "notes": "Official selected document+SDK+UI 438/0/0 (264+123+51). New tests 7 (4+2+1). Hidden loader testDone events excluded from dart JSON counts. UI counted from compact reporter +N: All tests passed!. Analyzer, actual old-library, SIGKILL undo/redo and 100 opacity_cancel all exited 0. Do not mix prior official 431/424/417/410/403/396/389/382/375/368/361/354/347/340/333/326/319/312/304/297/290/283/275/268/260/252/245/238/231/224/217/211/204/190/171/166/152/134/128/119/104/95/85/75/64/51/37/7 or 281."
+}
