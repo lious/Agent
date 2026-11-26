@@ -419,6 +419,39 @@ class _FoundationAppState extends State<FoundationApp>
         widget.workspace.edit(operation(), expectedRevision: _project.revision),
   );
 
+  EditOperation _rollCut() {
+    final selected = _clips.singleWhere((c) => c['id'] == _selected);
+    final selectedStart = Q.fromJson(selected['timelineRange']['start']);
+    final selectedEnd =
+        selectedStart + Q.fromJson(selected['timelineRange']['duration']);
+    final selectedTrack = selected['trackId'];
+    Map? later;
+    Map? earlier;
+    for (final c in _clips) {
+      if (c['id'] == selected['id'] || c['trackId'] != selectedTrack) {
+        continue;
+      }
+      final start = Q.fromJson(c['timelineRange']['start']);
+      final end = start + Q.fromJson(c['timelineRange']['duration']);
+      if (start == selectedEnd) {
+        later = c as Map;
+      } else if (end == selectedStart) {
+        earlier = c as Map;
+      }
+    }
+    if (later != null) {
+      return RollCut(selected['id'] as String, later['id'] as String, _delta());
+    }
+    if (earlier != null) {
+      return RollCut(
+        earlier['id'] as String,
+        selected['id'] as String,
+        _delta(),
+      );
+    }
+    throw const StudioException('NOT_ADJACENT');
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed) {
@@ -1162,6 +1195,11 @@ class _FoundationAppState extends State<FoundationApp>
               ? null
               : () => _edit(() => SlipClip(_selected!, _delta())),
           child: const Text('Slip'),
+        ),
+        OutlinedButton(
+          key: const Key('roll'),
+          onPressed: _busy || _selected == null ? null : () => _edit(_rollCut),
+          child: const Text('Roll'),
         ),
         TextField(
           key: const Key('ripple-close-start'),

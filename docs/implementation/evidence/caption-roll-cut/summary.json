@@ -1,0 +1,23 @@
+{
+  "increment": "1.82",
+  "title": "Official persist path for caption-aware RollCut",
+  "baseCommit": "a554fea398b90fb3ba830f513d8ce085bf1d0599",
+  "officialSelected": {
+    "document": 304,
+    "sdk": 141,
+    "ui": 60,
+    "total": 505,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": {
+    "document": 6,
+    "sdk": 2,
+    "ui": 1,
+    "total": 9
+  },
+  "aggregateSha256": "53fa8b6acde5b1f52ee939291737c2fcdd41a6c0f53c620c4c0f47a77b305c0d",
+  "asOf": "2026-11-26T21:09:32+08:00",
+  "timezone": "Asia/Shanghai",
+  "productionChange": true
+}

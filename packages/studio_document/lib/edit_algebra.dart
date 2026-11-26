@@ -1049,7 +1049,8 @@ ProjectDocument applyEdit(
       operation is! TrimClip &&
       operation is! DeleteClip &&
       operation is! MoveClip &&
-      operation is! SlipClip) {
+      operation is! SlipClip &&
+      operation is! RollCut) {
     throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
   }
   final zeroDelta = switch (operation) {
@@ -1695,6 +1696,13 @@ ProjectDocument applyEdit(
     // clipLocal cues stay put because timelineRange is unchanged.
     // Source-anchored cues reproject from the still-covering source window.
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+  } else if (operation is RollCut) {
+    // Left start is unchanged, so clipLocal cues on the left stay put.
+    // clipLocal cues on the right follow the moved right start.
+    // Source-anchored cues reproject from the still-covering source window.
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: nextVersion);
+    followClipLocalCaptions(d, nextVersion: nextVersion);
+    applyClipLocalMarkerLocals(d, markerLocals);
   }
   var covered = Q.of(0);
   for (final track in d['sequences'][0]['tracks'] as List) {

@@ -294,131 +294,200 @@ ProjectDocument _persistentAudioEdit(
             (operation is TrimClip && !operation.ripple) ||
             (operation is DeleteClip && !operation.ripple) ||
             operation is MoveClip ||
-            operation is SlipClip)) {
+            operation is SlipClip ||
+            operation is RollCut)) {
       throw const StudioException('CAPTION_SYNC_EDIT_NOT_IMPLEMENTED');
     }
-    final key = switch (operation) {
-      MoveClip(:final clipId) => clipId,
-      TrimClip(:final clipId) => clipId,
-      SlipClip(:final clipId) => clipId,
-      DeleteClip(:final clipId) => clipId,
-      SplitClip(:final clipId) => clipId,
-      _ => throw const StudioException(
-        'AUDIO_TIMELINE_EDIT_MODE_NOT_IMPLEMENTED',
-      ),
-    };
-    final selected = clip(key);
-    final members = selected['linkGroupId'] == null
-        ? [selected]
-        : [
-            for (final m in groups.singleWhere(
-              (g) => g['id'] == selected['linkGroupId'],
-            )['members'])
-              clip(m['clipId'] as String),
-          ];
-    if (operation is TrimClip && operation.ripple ||
-        operation is DeleteClip && operation.ripple) {
-      throw const StudioException('LINKED_RIPPLE_NOT_IMPLEMENTED');
-    }
-    for (final c in members) {
-      writable(c, ['timelineRange', 'sourceRange', 'timeMap']);
-    }
-    final delta = switch (operation) {
-      MoveClip(:final delta) => delta,
-      TrimClip(:final delta) => delta,
-      SlipClip(:final sourceDelta) => sourceDelta,
-      _ => null,
-    };
-    if (delta == Q.of(0)) return before;
-    if (operation is SplitClip) {
-      final splitAt = operation.at;
-      if (splitAt <= start(selected) || splitAt >= end(selected)) {
-        throw const StudioException('INVALID_SPLIT');
+    if (operation is RollCut) {
+      final left = clip(operation.leftId);
+      final right = clip(operation.rightId);
+      if (left['trackId'] != right['trackId'] ||
+          start(left) + duration(left) != start(right)) {
+        throw const StudioException('NOT_ADJACENT');
       }
-      final rights = <Map>[];
-      for (final c in members) {
-        final local = splitAt - start(selected);
-        if (local <= Q.of(0) || local >= duration(c)) {
-          throw const StudioException('LINKED_SPLIT_RANGE');
+      List<Map> groupOf(Map c) => c['linkGroupId'] == null
+          ? [c]
+          : [
+              for (final m in groups.singleWhere(
+                (g) => g['id'] == c['linkGroupId'],
+              )['members'])
+                clip(m['clipId'] as String),
+            ];
+      final lefts = groupOf(left);
+      final rights = groupOf(right);
+      for (final c in [...lefts, ...rights]) {
+        writable(c, ['timelineRange', 'sourceRange', 'timeMap']);
+      }
+      if (operation.delta == Q.of(0)) {
+        return before;
+      }
+      final usedRights = <String>{};
+      for (final a in lefts) {
+        Map? partner;
+        for (final b in rights) {
+          if (b['trackId'] == a['trackId'] &&
+              start(a) + duration(a) == start(b)) {
+            partner = b;
+            break;
+          }
         }
-        final rate = Q.fromJson(c['timeMap']['rate']),
-            oldDuration = duration(c),
-            oldSource = Q.fromJson(c['sourceRange']['start']);
-        final right = jsonDecode(jsonEncode(c)) as Map<String, dynamic>;
-        right['id'] = c['id'] == key ? operation.rightId : id();
-        right['version'] = '0';
-        changed.add(right['id'] as String);
-        right['timelineRange'] = {
-          'start': (start(c) + local).toJson(),
-          'duration': (oldDuration - local).toJson(),
-        };
-        right['sourceRange'] = {
-          'start': (oldSource + rate * local).toJson(),
-          'duration': (rate * (oldDuration - local)).toJson(),
-        };
-        right['linkGroupId'] = null;
-        set(c, 'timelineRange', 'duration', local);
-        set(c, 'sourceRange', 'duration', rate * local);
-        (track(c)['items'] as List).add(right);
-        rights.add(right);
-      }
-      if (rights.length > 1) {
-        link(
-          rights.singleWhere((c) => track(c)['kind'] == 'video'),
-          rights.singleWhere((c) => track(c)['kind'] == 'audio'),
+        if (partner == null) {
+          throw const StudioException('NOT_ADJACENT');
+        }
+        usedRights.add(partner['id'] as String);
+        final ra = Q.fromJson(a['timeMap']['rate']);
+        final rb = Q.fromJson(partner['timeMap']['rate']);
+        final delta = operation.delta;
+        set(a, 'timelineRange', 'duration', duration(a) + delta);
+        set(
+          a,
+          'sourceRange',
+          'duration',
+          Q.fromJson(a['sourceRange']['duration']) + ra * delta,
+        );
+        set(partner, 'timelineRange', 'start', start(partner) + delta);
+        set(partner, 'timelineRange', 'duration', duration(partner) - delta);
+        set(
+          partner,
+          'sourceRange',
+          'start',
+          Q.fromJson(partner['sourceRange']['start']) + rb * delta,
+        );
+        set(
+          partner,
+          'sourceRange',
+          'duration',
+          Q.fromJson(partner['sourceRange']['duration']) - rb * delta,
         );
       }
+      if (usedRights.length != rights.length) {
+        throw const StudioException('NOT_ADJACENT');
+      }
     } else {
+      final key = switch (operation) {
+        MoveClip(:final clipId) => clipId,
+        TrimClip(:final clipId) => clipId,
+        SlipClip(:final clipId) => clipId,
+        DeleteClip(:final clipId) => clipId,
+        SplitClip(:final clipId) => clipId,
+        _ => throw const StudioException(
+          'AUDIO_TIMELINE_EDIT_MODE_NOT_IMPLEMENTED',
+        ),
+      };
+      final selected = clip(key);
+      final members = selected['linkGroupId'] == null
+          ? [selected]
+          : [
+              for (final m in groups.singleWhere(
+                (g) => g['id'] == selected['linkGroupId'],
+              )['members'])
+                clip(m['clipId'] as String),
+            ];
+      if (operation is TrimClip && operation.ripple ||
+          operation is DeleteClip && operation.ripple) {
+        throw const StudioException('LINKED_RIPPLE_NOT_IMPLEMENTED');
+      }
       for (final c in members) {
-        final rate = Q.fromJson(c['timeMap']['rate']);
-        switch (operation) {
-          case MoveClip():
-            set(c, 'timelineRange', 'start', start(c) + operation.delta);
-          case TrimClip():
-            if (operation.edge != 'in' && operation.edge != 'out') {
-              throw const StudioException('INVALID_EDGE');
-            }
-            final incoming = operation.edge == 'in';
-            set(
-              c,
-              'timelineRange',
-              'duration',
-              duration(c) +
-                  (incoming ? Q.of(0) - operation.delta : operation.delta),
-            );
-            set(
-              c,
-              'sourceRange',
-              'duration',
-              Q.fromJson(c['sourceRange']['duration']) +
-                  (incoming
-                      ? Q.of(0) - rate * operation.delta
-                      : rate * operation.delta),
-            );
-            if (incoming) {
+        writable(c, ['timelineRange', 'sourceRange', 'timeMap']);
+      }
+      final delta = switch (operation) {
+        MoveClip(:final delta) => delta,
+        TrimClip(:final delta) => delta,
+        SlipClip(:final sourceDelta) => sourceDelta,
+        _ => null,
+      };
+      if (delta == Q.of(0)) return before;
+      if (operation is SplitClip) {
+        final splitAt = operation.at;
+        if (splitAt <= start(selected) || splitAt >= end(selected)) {
+          throw const StudioException('INVALID_SPLIT');
+        }
+        final rights = <Map>[];
+        for (final c in members) {
+          final local = splitAt - start(selected);
+          if (local <= Q.of(0) || local >= duration(c)) {
+            throw const StudioException('LINKED_SPLIT_RANGE');
+          }
+          final rate = Q.fromJson(c['timeMap']['rate']),
+              oldDuration = duration(c),
+              oldSource = Q.fromJson(c['sourceRange']['start']);
+          final right = jsonDecode(jsonEncode(c)) as Map<String, dynamic>;
+          right['id'] = c['id'] == key ? operation.rightId : id();
+          right['version'] = '0';
+          changed.add(right['id'] as String);
+          right['timelineRange'] = {
+            'start': (start(c) + local).toJson(),
+            'duration': (oldDuration - local).toJson(),
+          };
+          right['sourceRange'] = {
+            'start': (oldSource + rate * local).toJson(),
+            'duration': (rate * (oldDuration - local)).toJson(),
+          };
+          right['linkGroupId'] = null;
+          set(c, 'timelineRange', 'duration', local);
+          set(c, 'sourceRange', 'duration', rate * local);
+          (track(c)['items'] as List).add(right);
+          rights.add(right);
+        }
+        if (rights.length > 1) {
+          link(
+            rights.singleWhere((c) => track(c)['kind'] == 'video'),
+            rights.singleWhere((c) => track(c)['kind'] == 'audio'),
+          );
+        }
+      } else {
+        for (final c in members) {
+          final rate = Q.fromJson(c['timeMap']['rate']);
+          switch (operation) {
+            case MoveClip():
               set(c, 'timelineRange', 'start', start(c) + operation.delta);
+            case TrimClip():
+              if (operation.edge != 'in' && operation.edge != 'out') {
+                throw const StudioException('INVALID_EDGE');
+              }
+              final incoming = operation.edge == 'in';
+              set(
+                c,
+                'timelineRange',
+                'duration',
+                duration(c) +
+                    (incoming ? Q.of(0) - operation.delta : operation.delta),
+              );
+              set(
+                c,
+                'sourceRange',
+                'duration',
+                Q.fromJson(c['sourceRange']['duration']) +
+                    (incoming
+                        ? Q.of(0) - rate * operation.delta
+                        : rate * operation.delta),
+              );
+              if (incoming) {
+                set(c, 'timelineRange', 'start', start(c) + operation.delta);
+                set(
+                  c,
+                  'sourceRange',
+                  'start',
+                  Q.fromJson(c['sourceRange']['start']) +
+                      rate * operation.delta,
+                );
+              }
+            case SlipClip():
               set(
                 c,
                 'sourceRange',
                 'start',
-                Q.fromJson(c['sourceRange']['start']) + rate * operation.delta,
+                Q.fromJson(c['sourceRange']['start']) + operation.sourceDelta,
               );
-            }
-          case SlipClip():
-            set(
-              c,
-              'sourceRange',
-              'start',
-              Q.fromJson(c['sourceRange']['start']) + operation.sourceDelta,
-            );
-          case DeleteClip():
-            (track(c)['items'] as List).remove(c);
-          default:
-            throw StateError('handled');
+            case DeleteClip():
+              (track(c)['items'] as List).remove(c);
+            default:
+              throw StateError('handled');
+          }
         }
-      }
-      if (operation is DeleteClip && selected['linkGroupId'] != null) {
-        groups.removeWhere((g) => g['id'] == selected['linkGroupId']);
+        if (operation is DeleteClip && selected['linkGroupId'] != null) {
+          groups.removeWhere((g) => g['id'] == selected['linkGroupId']);
+        }
       }
     }
   }
@@ -534,6 +603,10 @@ ProjectDocument _persistentAudioEdit(
     }
   } else if (operation is SlipClip) {
     applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+  } else if (operation is RollCut) {
+    applySourceCaptionAbsolutes(d, sourceAbs, nextVersion: version);
+    followClipLocalCaptions(d, nextVersion: version);
+    applyClipLocalMarkerLocals(d, markerLocals);
   }
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);

@@ -1,0 +1,17 @@
+{
+  "increment": "1.82",
+  "title": "Official persist path for caption-aware RollCut",
+  "baseCommit": "a554fea398b90fb3ba830f513d8ce085bf1d0599",
+  "sourceSha256": {
+    "packages/studio_document/test/caption_roll_cut_test.dart": "8a7e66dc852d51dfe8db61a6890a7f563e6b31a873a565737014ed4fb2e5cb09",
+    "packages/studio_sdk/test/caption_roll_cut_test.dart": "e6c4d4b834cf0a2f1c060da46f7659ed5a914cab114336ed3e66bafefc59007a",
+    "packages/studio_editor_ui/test/caption_roll_cut_ui_test.dart": "6a086d6b9604d913d93821eccc51e0d01f27c71faa3b48980535936fb50ed746"
+  },
+  "aggregateSha256": "53fa8b6acde5b1f52ee939291737c2fcdd41a6c0f53c620c4c0f47a77b305c0d",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "aggregateCanonical": "sha256 of sorted \"digest  path\\n\" lines of sourceSha256",
+  "asOf": "2026-11-26T20:55:32+08:00",
+  "timezone": "Asia/Shanghai"
+}

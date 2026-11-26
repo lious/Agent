@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-26T20:46:52+08:00",
+  "asOf": "2026-11-26T21:09:32+08:00",
   "timezone": "Asia/Shanghai",
   "baselineCommit": "5b753f0df4f8fa6b2f4fc940017defd486822ab0",
   "originalPlanningExportUnmodified": true,
@@ -12,7 +12,7 @@
   },
   "interpretation": "Partial means only stated implementedScope; remainingAcceptance remains authoritative, never silently reduced. Blocked validation does not imply implementation complete. Planned work remains executable and must continue.",
   "nextPriority": [
-    "Continue original I-005 remaining clipboard/group matrix (auto-close as part of a move is still not a legal MoveClips mode, new-track, cross-project paste/import/bake, OS clipboard, mobile long-press/pinch) and remaining marker/export-format work; Increment 1.81 officially admitted caption-aware SlipClip as remaining I-006 work (not a complete I-006: roll/slide and 1000 random legal I-006 inputs remain; field-aware invert of Slip is not this slice; mid-clip insert paste invert and invert of a non-trailing leave-gap delete / LiftClips stay IMPLICIT_GAP; a diverging unlink invert stays LINK_OFFSET_MISMATCH; video/caption mute/solo and syncLock stay closed; marker sidecar implementation is not in this checkout), not the full section-3 matrix, the table's 0.02s off-grid link offset, source-interval crop, MP4 burn-in, or a complete invert matrix. Original I-023 intermittent underrun remains unresolved; continue other 48 planned dependencies without storage expansion."
+    "Continue original I-005 remaining clipboard/group matrix (auto-close as part of a move is still not a legal MoveClips mode, new-track, cross-project paste/import/bake, OS clipboard, mobile long-press/pinch) and remaining marker/export-format work; Increment 1.82 officially admitted caption-aware RollCut as remaining I-006 work (not a complete I-006: slide and 1000 random legal I-006 inputs remain; field-aware invert of Roll or Slip is not this slice; mid-clip insert paste invert and invert of a non-trailing leave-gap delete / LiftClips stay IMPLICIT_GAP; a diverging unlink invert stays LINK_OFFSET_MISMATCH; video/caption mute/solo and syncLock stay closed; marker sidecar implementation is not in this checkout), not the full section-3 matrix, the table's 0.02s off-grid link offset, source-interval crop, MP4 burn-in, or a complete invert matrix. Original I-023 intermittent underrun remains unresolved; continue other 48 planned dependencies without storage expansion."
   ],
   "activeCiInstalled": false,
   "ciBlocker": "GitHub workflow scope absent; inert recipe only, no OAuth elevation",
@@ -680,11 +680,12 @@
       "implementationStatus": "partial",
       "verificationStatus": "partial",
       "fullTaskComplete": false,
-      "implementedScope": "Single-track original edits plus linked video+audio split/move/non-ripple trim/slip/delete, prechecked partner locks, collision/source/grid failure atomicity, actual source-origin offsets and1000 exact trim/inverse operations. Unlink preserves both clips; selected-audio split allocates real immutable versions. Caption-aware SlipClip is officially admitted on the persist path: sourceRange.start moves by the source delta; timelineRange, TimeMap shape, and sequence duration stay unchanged; clipLocal and absolute cues stay put; source-anchored cues reproject while the source window still covers them; uncovering a source cue, a source head/tail shortfall, or a locked sourceRange is whole-group ANCHOR_OUT_OF_RANGE / SOURCE_OUT_OF_RANGE / FIELD_LOCKED. Linked AV still slips link-group members together by the same source delta. Official workbench Slip button issues one SlipClip. Linked ripple/roll/slide, full handles/modes/random matrix, field-aware invert of Slip, and 1000 random legal slip/roll/slide inputs remain explicit unfinished scope.",
+      "implementedScope": "Single-track original edits plus linked video+audio split/move/non-ripple trim/slip/delete, prechecked partner locks, collision/source/grid failure atomicity, actual source-origin offsets and1000 exact trim/inverse operations. Unlink preserves both clips; selected-audio split allocates real immutable versions. Caption-aware SlipClip is officially admitted on the persist path: sourceRange.start moves by the source delta; timelineRange, TimeMap shape, and sequence duration stay unchanged; clipLocal and absolute cues stay put; source-anchored cues reproject while the source window still covers them; uncovering a source cue, a source head/tail shortfall, or a locked sourceRange is whole-group ANCHOR_OUT_OF_RANGE / SOURCE_OUT_OF_RANGE / FIELD_LOCKED. Caption-aware RollCut is officially admitted on the persist path: a packed adjacent cut moves by the timeline delta; left duration and later source grow, the right start and source window shrink, outer ends and sequence duration stay fixed; clipLocal on the left stays put, clipLocal on the right follows the right start, source-anchored cues reproject while still covered, and absolute cues stay at author time; a non-adjacent cut, uncovering a source cue, a source shortfall, or a locked field is whole-group NOT_ADJACENT / ANCHOR_OUT_OF_RANGE / SOURCE_OUT_OF_RANGE / FIELD_LOCKED. Linked AV still slips link-group members together by the same source delta, and rolls members at the same cut with each stream's source rate. Official workbench Slip and Roll buttons issue one SlipClip or RollCut. Slide, full handles/modes/random matrix, field-aware invert of Slip or Roll, and 1000 random legal slip/roll/slide inputs remain explicit unfinished scope.",
       "evidence": [
         "evidence/local-video/verification.json",
         "evidence/persistent-audio/summary.json",
-        "evidence/caption-slip-clip/summary.json"
+        "evidence/caption-slip-clip/summary.json",
+        "evidence/caption-roll-cut/summary.json"
       ],
       "remainingAcceptance": "全部trim模式逐条含handles/跨链接/锁轨断言；1千随机合法输入长度/源范围守恒；失败不半写。",
       "remainingScope": "含轨锁/syncLock/link/unlink/多轨边界；不静默破同步。",
