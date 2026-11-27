@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_proxy_delivery_probe/test/media/proxy/i004_proxy_delivery_test.dart
+00:00 +0: a proxy without the original is editable; a default export is refused
+00:00 +1: explicit proxy delivery produces a marked degraded export; unmarked or missing proxy is refused
+00:00 +2: I-024 export suites, I-013 packMode, muxer, and V-003 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
