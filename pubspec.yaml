@@ -44,7 +44,8 @@
     "packages/studio_codec_probe",
     "packages/studio_resource_admission",
     "packages/studio_container_probe",
-    "packages/studio_delivery_fps"
+    "packages/studio_delivery_fps",
+    "packages/studio_media_retention"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

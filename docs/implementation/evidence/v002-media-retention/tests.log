@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_media_retention/test/compatibility/retention/v002_media_retention_test.dart
+00:00 +0: original essence and original PTS are retained; replacing the source or dropping PTS is refused
+00:00 +1: color metadata stays with the retained original; normalization must be explicit or the path is an unsupported notice
+00:00 +2: V-006 metadata preservation and Increment 2.79 delivery-fps leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
