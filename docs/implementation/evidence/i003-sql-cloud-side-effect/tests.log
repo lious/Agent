@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_sql_cloud_side_effect_probe/test/storage/commit/i003_sql_cloud_side_effect_test.dart
+00:00 +0: a local SQLite commit is acknowledged only when it starts no cloud side effect
+00:00 +1: starting a cloud side effect inside the SQL commit is refused
+00:00 +2: Increment 3.07 close-checkpoint work, I-003 revision tests, quote/apply, I-040, and I-011 crash leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
