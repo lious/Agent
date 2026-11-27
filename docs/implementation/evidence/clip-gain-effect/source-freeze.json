@@ -1,0 +1,35 @@
+{
+  "baseCommit": "fa22018304c3eaa46d187fd9f5e867fca25383b7",
+  "sourceCommit": "fa22018304c3eaa46d187fd9f5e867fca25383b7",
+  "sourceParent": "0de237b0bf8ddaa772412ccd667a61d689e670b1",
+  "featureParent": "c9579461c4dbd397936aaf27385995b45551a639",
+  "sourceSha256": {
+    "packages/studio_document/lib/clip_gain.dart": "b974484eeafacf2e11081bb5d3c0bda767a3723c28a53d3a22556d3b3deb89e2",
+    "packages/studio_document/lib/clip_gain_edit.dart": "c4dfe268312f8fb00b09c9011df80ad93ef7fd132988f8f7926fba2ccfbb2259",
+    "packages/studio_document/lib/edit_algebra.dart": "a180c948650ae8079036abc1bb4a46b49b5f311ace85d91e5f144b283971d6dd",
+    "packages/studio_document/lib/overwrite.dart": "630105a75fc4ac2cc43a98d1ff7911c8d102e489ddea1c4912d6d745ab9b1924",
+    "packages/studio_document/lib/local_admission.dart": "2b9d831b6c6bc193ea5178f87a307d078ca40bc25da39b0b0e1760f14c79026e",
+    "packages/studio_document/lib/audio_mix_recipe.dart": "43c1317e121cd0e02ff8aa4747b96a41eb19ed081e2112cd251cbda7eba5302b",
+    "packages/studio_document/lib/studio_document.dart": "7d7d90ead29cd2e859ecc63524c9b4aa6114cab30ed63cdccdb57ec92ecc842e",
+    "packages/studio_document/test/audio/automation/i009_clip_gain_effect_test.dart": "fc0e78cadc1d18f49e279fc79af6a9d342ae05505b630ba0d5694e31f594c0fe",
+    "packages/studio_sdk/lib/studio_sdk.dart": "21e42692868b08766e9c7f2258234649fdab3f5b4952d8dac5c8769d1e00c495"
+  },
+  "aggregateSha256": "3d97c60da9f4029702ba5345fe83edfba9ae805c3f9f3a5f5e1626f1f239ab0f",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "asOf": "2026-11-27T11:31:39+08:00",
+  "timezone": "Asia/Shanghai",
+  "tipSha256": {
+    "packages/studio_document/lib/audio_mix_recipe.dart": "43c1317e121cd0e02ff8aa4747b96a41eb19ed081e2112cd251cbda7eba5302b",
+    "packages/studio_document/lib/clip_gain.dart": "b974484eeafacf2e11081bb5d3c0bda767a3723c28a53d3a22556d3b3deb89e2",
+    "packages/studio_document/lib/clip_gain_edit.dart": "c4dfe268312f8fb00b09c9011df80ad93ef7fd132988f8f7926fba2ccfbb2259",
+    "packages/studio_document/lib/edit_algebra.dart": "b1f7fd188230e039f004a7aa3fcd9ba841330021ec23e477f88fd3bec5a9e215",
+    "packages/studio_document/lib/local_admission.dart": "2b9d831b6c6bc193ea5178f87a307d078ca40bc25da39b0b0e1760f14c79026e",
+    "packages/studio_document/lib/overwrite.dart": "630105a75fc4ac2cc43a98d1ff7911c8d102e489ddea1c4912d6d745ab9b1924",
+    "packages/studio_document/lib/studio_document.dart": "c4d8842db3c16924ed48deb91507c49ff131aa6f65f4aa77ea1af1102a0fb0fb",
+    "packages/studio_document/test/audio/automation/i009_clip_gain_effect_test.dart": "fc0e78cadc1d18f49e279fc79af6a9d342ae05505b630ba0d5694e31f594c0fe",
+    "packages/studio_sdk/lib/studio_sdk.dart": "44c336fc5fc7e7748257c876cb2173068added330b5343a6ff916befe1170bcc"
+  },
+  "tipAggregateSha256": "b91a1073a595522dd764af78ebaf90741c3f01d49b64d7dbdb867e3059ae6eea",
+  "tipAggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path) of tipSha256",
+  "tipNote": "edit_algebra.dart, studio_document.dart, and studio_sdk.dart differ from the parent-verified sourceSha256 because later feature-branch Slip/Roll/Slide, official marker sidecar, and Increments 1.83–2.00 work was preserved beside this I-009 slice. All other listed files match the source freeze. The source commit fa22018 claimed aggregate fa4f6248995c168568ef9b00f1494b25e4b8086d8233e20547bd2e8195dda431, which is the digest-first (lexicographic line) sort of the same sourceSha256; that commit is not amended. The official path-sorted sha256sum aggregate of sourceSha256 is 3d97c60da9f4029702ba5345fe83edfba9ae805c3f9f3a5f5e1626f1f239ab0f."
+}

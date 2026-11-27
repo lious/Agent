@@ -96,15 +96,18 @@ void _bindFragmentEffects(
     raw['version'] = reuseIds ? raw['version'] : '1';
     raw['owner'] = {'kind': 'clip', 'id': fragment['id']};
     if ((raw['keyframes'] as List).isNotEmpty) {
-      if (raw['type'] != 'opacity') {
+      if (raw['type'] == 'opacity') {
+        raw['keyframes'] = cropOpacityPoints(
+          raw,
+          localOffset,
+          newDuration,
+          newId,
+        );
+      } else if (raw['type'] == 'gain') {
+        raw['keyframes'] = cropGainPoints(raw, localOffset, newDuration, newId);
+      } else {
         throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
       }
-      raw['keyframes'] = cropOpacityPoints(
-        raw,
-        localOffset,
-        newDuration,
-        newId,
-      );
     }
     if (reuseIds) {
       final index = effects.indexWhere((e) => e['id'] == eid);

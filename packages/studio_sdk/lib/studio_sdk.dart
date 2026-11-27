@@ -2265,6 +2265,29 @@ final class StudioWorkspace {
     ),
     expectedRevision: expectedRevision,
   );
+  ProjectDocument setClipGain(
+    String clipId,
+    double gainDb, {
+    required BigInt expectedRevision,
+  }) => edit(SetClipGain(clipId, gainDb), expectedRevision: expectedRevision);
+  ProjectDocument setGainKeyframe(
+    String clipId,
+    Q localTime,
+    double gainDb, {
+    String interpolation = 'linear',
+    required BigInt expectedRevision,
+  }) => edit(
+    SetGainKeyframe(clipId, localTime, gainDb, interpolation: interpolation),
+    expectedRevision: expectedRevision,
+  );
+  ProjectDocument removeGainKeyframe(
+    String clipId,
+    Q localTime, {
+    required BigInt expectedRevision,
+  }) => edit(
+    RemoveGainKeyframe(clipId, localTime),
+    expectedRevision: expectedRevision,
+  );
   Future<Map<String, dynamic>> exportVideo(
     File destination, {
     bool includeEmbeddedAudio = false,

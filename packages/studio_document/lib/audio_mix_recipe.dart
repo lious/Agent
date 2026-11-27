@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:studio_contracts/studio_contracts.dart';
 
 import 'audio_bus.dart';
+import 'clip_gain.dart';
 import 'time.dart';
 
 /// Compile official mix sources from a project document and already-decoded
@@ -45,16 +46,20 @@ List<PcmInput> compileOfficialMixInputs({
         throw const StudioException('FEATURE_NOT_IMPLEMENTED');
       }
       final rate = Q.fromJson(timeMap['rate']);
+      final official = officialClipGain(project, clip as Map);
       inputs.add(
         PcmInput(
           busId: busId,
           samples: samples,
           channels: 2,
-          automation: clipAutomation[id],
+          gainDb: official.staticDb,
+          automation: official.automation ?? clipAutomation[id],
           clipStart: Q.fromJson(clip['timelineRange']['start']),
           sourceStart: Q.fromJson(clip['sourceRange']['start']),
           rate: rate,
-          sourceAnchored: sourceAnchoredClipIds.contains(id),
+          sourceAnchored: official.automation != null
+              ? false
+              : sourceAnchoredClipIds.contains(id),
         ),
       );
     }

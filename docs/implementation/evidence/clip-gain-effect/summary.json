@@ -1,0 +1,39 @@
+{
+  "increment": "2.02",
+  "title": "Official persist of manual clip gain Effects and volume keyframes",
+  "baseCommit": "c9579461c4dbd397936aaf27385995b45551a639",
+  "aggregateSha256": "b91a1073a595522dd764af78ebaf90741c3f01d49b64d7dbdb867e3059ae6eea",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "newThisIncrement": {
+    "document": 6,
+    "sdk": 0,
+    "ui": 0,
+    "total": 6
+  },
+  "selected": {
+    "document": {
+      "passed": 332,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 6
+    },
+    "total": {
+      "passed": 332,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0
+  },
+  "bounds": [
+    "Manual clip gain persists as official type=gain Effects on audio clips only, via SetClipGain, SetGainKeyframe, and RemoveGainKeyframe. Keyframe times are quantized to the 48 kHz sample grid (KEYFRAME_NOT_ON_SAMPLE). Default 0 dB is a no-op; animated curves refuse SetClipGain (ANIMATED_GAIN_REQUIRES_EXPLICIT_KEYFRAME_EDIT). Keys are absolute dB (static gainDb is not also multiplied). Admission allows at most one gain Effect per audio clip; limiter and pan Effect types stay UNSUPPORTED_EDIT_TECHNIQUE. Video clips refuse gain writes.",
+    "compileOfficialMixInputs reads the persisted gain Effect and feeds PcmInput.gainDb or a clip-local GainEnvelope so mix48k applies clip gain, then the existing default pan (0), then the track/master bus. Disabled gain is unity (0 dB). AUTO ducking is never written into the manual Effect.",
+    "applyOfficialClipAnalysis plans ducking as the already-admitted AUTO layer against the persisted manual Effect and does not rewrite Effect JSON (mutations=0). A locked audio track refuses TRACK_LOCKED; lockedFields of effects, effectIds, gain, or effects.* / effectIds.* refuse MANUAL_LOCKED. User edits on a locked track or those locked fields refuse FIELD_LOCKED. Whole-group refusal leaves the document unchanged.",
+    "Split, trim, and overwrite crop gain keyframes with param gainDb and rebind owners; slip leaves clip-local keys unchanged. This slice does not start I-060/V-024 limiter, open I-007 PCM remapping or nest, invent new tracks, change Pulse/clock/queue, claim I-023 complete, or add invert-matrix rows. Independent audio import is skipped because it would invent missing I-004 surfaces (AssetRepository / RelinkProposal / FileToken) or a new official audio track. Video and caption mute/solo stay FEATURE_NOT_IMPLEMENTED; audio muted/solo stay SetAudioTrackState; syncLock is not toggled. Increment 1.17/1.18 stay open. Store tests are not used as evidence."
+  ],
+  "asOf": "2026-11-27T11:31:39+08:00",
+  "timezone": "Asia/Shanghai",
+  "sourceCommit": "fa22018304c3eaa46d187fd9f5e867fca25383b7",
+  "sourceAggregateSha256": "3d97c60da9f4029702ba5345fe83edfba9ae805c3f9f3a5f5e1626f1f239ab0f"
+}

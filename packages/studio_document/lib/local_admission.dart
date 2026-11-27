@@ -194,10 +194,11 @@ void requireLocalEditingWritable(ProjectDocument project) {
           c['provenanceId'] != null) {
         throw const StudioException('FEATURE_NOT_IMPLEMENTED');
       }
-      if (track['kind'] != 'video' && (c['effectIds'] as List).isNotEmpty) {
-        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+      if (track['kind'] == 'audio') {
+        admittedAudioClipEffects(d, c as Map);
+      } else {
+        clipOpacityQ16(d, c as Map);
       }
-      clipOpacityQ16(d, c as Map);
       final source = c['source'];
       final a = assets[source['id']];
       if (a == null) throw const StudioException('REF_NOT_FOUND');

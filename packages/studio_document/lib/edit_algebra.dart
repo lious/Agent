@@ -13,6 +13,7 @@ part 'ripple.dart';
 part 'ripple_trim.dart';
 part 'track_state.dart';
 part 'audio_routes.dart';
+part 'clip_gain_edit.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -615,6 +616,7 @@ void _normalizeOpacityOwners(
                       v == '*' ||
                       v == 'effects' ||
                       v == 'effectIds' ||
+                      (e['type'] == 'gain' && v == 'gain') ||
                       (v as String).startsWith('effects.') ||
                       v.startsWith('effectIds.'),
                 )) {
@@ -625,7 +627,13 @@ void _normalizeOpacityOwners(
                 ...e,
                 'version': ownerChanged ? e['version'] : version(e['id']),
                 'keyframes': crop
-                    ? cropOpacityPoints(e, offset, duration, id)
+                    ? switch (e['type']) {
+                        'opacity' => cropOpacityPoints(e, offset, duration, id),
+                        'gain' => cropGainPoints(e, offset, duration, id),
+                        _ => throw const StudioException(
+                          'UNSUPPORTED_EDIT_TECHNIQUE',
+                        ),
+                      }
                     : List<Map>.from(e['keyframes']),
               };
               if (ownerChanged) {
@@ -940,6 +948,9 @@ ProjectDocument applyEdit(
   if (operation is SetOpacityKeyframe || operation is RemoveOpacityKeyframe) {
     return _opacityKeyframeEdit(before, operation, nextVersion, newId);
   }
+  if (operation is SetGainKeyframe || operation is RemoveGainKeyframe) {
+    return _gainKeyframeEdit(before, operation, nextVersion, newId);
+  }
   if (operation is SetDissolve || operation is RemoveDissolve) {
     return _dissolveEdit(before, operation, nextVersion, newId);
   }
@@ -986,6 +997,9 @@ ProjectDocument applyEdit(
   if (operation is SetClipOpacity) {
     return _setOpacity(before, operation, nextVersion, newId);
   }
+  if (operation is SetClipGain) {
+    return _setClipGain(before, operation, nextVersion, newId);
+  }
   if (operation is DiscardPreviewProxies) {
     return _discardPreviewProxies(before, operation, nextVersion);
   }
@@ -1001,6 +1015,9 @@ ProjectDocument applyEdit(
           ) &&
           operation is! SetMasterAudio &&
           operation is! SetAudioBusRoutes &&
+          operation is! SetClipGain &&
+          operation is! SetGainKeyframe &&
+          operation is! RemoveGainKeyframe &&
           operation is! RenameProject &&
           operation is! SetCaptions &&
           operation is! SetMarkers &&
@@ -1271,6 +1288,9 @@ ProjectDocument applyEdit(
     case SetClipOpacity():
     case SetOpacityKeyframe():
     case RemoveOpacityKeyframe():
+    case SetClipGain():
+    case SetGainKeyframe():
+    case RemoveGainKeyframe():
     case SetMasterAudio():
     case SetAudioBusRoutes():
       throw StateError('Handled master audio edit');
