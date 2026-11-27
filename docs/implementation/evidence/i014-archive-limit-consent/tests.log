@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_archive_limit_consent_probe/test/storage/import/i014_archive_limit_consent_test.dart
+00:00 +0: packages/studio_archive_limit_consent_probe/test/storage/import/i014_archive_limit_consent_test.dart: raising an archive size limit requires one-time explicit consent and must not disable path, permission, or hash checks
+00:00 +1: packages/studio_archive_limit_consent_probe/test/storage/import/i014_archive_limit_consent_test.dart: files_test zip bomb ARCHIVE_LIMIT, FutureMajorAdmission, and zip slip or symlink refusal stay closed
+00:00 +2: All tests passed!
