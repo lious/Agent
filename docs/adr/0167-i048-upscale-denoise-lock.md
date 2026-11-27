@@ -1,0 +1,30 @@
+# ADR 0167 — Official I-048 upscale / denoise lock and no-auto-accept protocol
+
+## Status
+
+Accepted for Increment 2.68 as the first I-048 slice. I-048 moves planned → partial and is not marked complete. The V-013=upscale-denoise gate is not met and is not claimed; V-013 stays blocked. This increment does not invent a real SR/denoise runtime (RealESRGAN / SCUNet / ncnn), a limiter, or a real RNNoise/stem engine. Generated detail is not treated as fact. Failed frames are not auto-applied. I-026, I-024, I-047, and I-046 leftovers are not re-qualified. I-045, I-044, and I-043 leftovers are not re-qualified. I-061 stays planned; V-026=gltf-preview and preview consistency are not claimed. I-039 and I-038 leftovers are not re-qualified. I-035 stays planned. I-055 is not started. I-049 is not started. I-013 stays partial (job archival remains unopened). I-014 stays partial (the product RestoreService store commit path remains unopened). I-037, I-038, V-007, V-020, I-054, I-051, I-046, I-041, I-040, I-053, I-056, I-057, I-052, I-039, V-026, I-043, I-044, I-045, and I-047 stay partial and are not marked complete. V-009, V-010, V-012, V-016, V-017, V-018, V-019, V-021, and V-022 stay blocked. `fullTaskComplete` stays false. `fullTasksCompleted` stays 0. InversePatch kind stays `restoreSnapshot`. Project `user_version` stays 9. Schema v10 is not merged. No paid API is called. Optical-flow and V-003 stay unclaimed.
+
+## Decision
+
+s8t requires that native scale and the output preset stay explicit: RealESRGAN_x4plus is an x4 candidate; delivering a 2x file by deterministic downsample does not relabel the model as native x2; scale is not recovered factual detail. OOM first reduces `coreTile` and keeps the required halo, then CPU or queue; it must not silently change scale or model. An OS pause must be resumable. Watermark and text warnings must not be dropped; protected text must not be replaced without a warning; the feature must not be used to remove a copyright watermark. Failed-frame candidates must not auto-apply. The full film must not reside in RAM. An image-pass qualification does not license video. Frame interpolation is a separate capability and must not auto-add fps because of upscale. Inverse tone-map must not be claimed as HDR-detail recovery. BGR must not be fed as RGB. `real_gan` must not secretly replace the official color-PSNR profile. nlmeans is not an AI model; hqdn3d must not be silently added to an LGPL pack. RNNoise, SCUNet, and super-resolution are not the same function. V-013 seam / flicker qualification is a gate, not a default accept.
+
+This increment officializes that bound as a DEV-PURE compiler in a new workspace package `packages/studio_image_tools`, entry file `lib/restore/restore_image_job.dart`. I-026 `studio_image_editor` is not rewritten.
+
+- `preview` reports `nativeScale=4` and `outputPreset=realesrganX4plus`, with `generatedDetailIsFact=false` and warnings retained. `deliverDownsampledX2` keeps native scale 4 and labels the preset `deliveryX2FromX4`. Claiming scale as recovered fact, or relabeling the downsample as native x2, is `UNSUPPORTED_EDIT_TECHNIQUE`.
+- `onOom` may reduce `coreTile` and must keep `halo` and the pinned scale/preset. Silently changing scale or model is `UNSUPPORTED_EDIT_TECHNIQUE`. Feeding BGR as RGB, swapping to `real_gan`, labeling nlmeans as AI, adding hqdn3d to an LGPL pack, or equating RNNoise with SCUNet or SR is `UNSUPPORTED_EDIT_TECHNIQUE`.
+- `pauseForOs` / `resumeAfterOs` resume the same job. `loadFullFilmIntoRam` is `FULL_FILM_RESIDENT`. Releasing video because an image pass passed is `VIDEO_GATE_INDEPENDENT`. Auto-adding fps, or claiming inverse tone-map restores HDR, is `UNSUPPORTED_EDIT_TECHNIQUE`.
+- Dropping a watermark warning or replacing protected text without a warning is `WATERMARK_WARNING_REQUIRED`. Removing a copyright watermark is `RIGHTS_FORBIDDEN`. Auto-applying a failed frame is `FAILED_FRAME_NOT_AUTO_APPLIED`. `autoAccept` without `v013Met` is `V013_GATE_UNMET`. A missing qualified pack is `MODEL_ABI_UNVERIFIED`. `srEngineInvented`, `denoiseEngineInvented`, and `v013Claimed` stay false.
+
+A RealESRGAN / SCUNet / ncnn runtime, V-013 qualification, and automatic NLE attach remain unopened.
+
+## Consequences
+
+The first I-048 leftover acceptance items (native scale and output preset stay explicit, an OS pause is resumable, watermark and text warnings are not dropped, the full film is not held in RAM, and seam / flicker must not auto-accept unless V-013 is met, including no auto-apply of failed frames) are officialized at this RestoreImageJob bound. The V-013=upscale-denoise gate and a real SR/denoise runtime remain unopened, so I-048 stays partial and is not marked complete. 87-task counts become 0 complete / 59 partial / 15 planned / 13 blocked.
+
+## Evidence
+
+`docs/implementation/evidence/i048-upscale-denoise-lock/`.
+
+## Follow-up
+
+Next honest Linux/Web increment: prefer a narrowly specified I-049 speech / voice-profile lock protocol if it is already written and does not invent a real TTS or clone engine, does not claim V-014 or V-015, does not treat TTS as singing, and does not overwrite hand-tuned clip or locked captions. Otherwise pick the next still-doable planned or remaining-partial work from the four planning documents. Do not start I-061 or claim V-026=gltf-preview. Do not start I-055 unless a narrow already-specified LocaleCatalog/semantics slice is required. Do not start I-035 or claim a V-020 precision/recall achievement. Do not invent a limiter, a real SR/denoise runtime, or a real RNNoise/stem engine. Do not claim V-010, V-011, V-012, or V-013. Do not invent I-013 job archival or an I-014 product RestoreService commit path. Do not re-qualify I-048, I-047, I-046, I-026, or I-024 leftovers. Do not invent a PlanGraph manual-lock API or re-qualify `PLAN_CYCLE`. Do not mark I-037, I-038, V-007, V-020, I-054, I-051, I-046, I-041, I-040, I-053, I-056, I-057, I-052, I-039, V-026, I-043, I-044, I-045, I-047, or I-048 complete.

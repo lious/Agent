@@ -32,7 +32,8 @@
     "packages/studio_generation",
     "packages/studio_billing",
     "packages/studio_gltf_probe",
-    "packages/studio_video_tools"
+    "packages/studio_video_tools",
+    "packages/studio_image_tools"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

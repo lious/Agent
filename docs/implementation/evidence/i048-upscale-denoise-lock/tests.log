@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_image_tools/test/upscale/tiles_encode/i048_upscale_denoise_lock_test.dart
+00:00 +0: native scale and output preset stay explicit; generated detail is not fact; OOM does not silently change the model
+00:00 +1: an OS pause is resumable; the full film is not held in RAM; an image pass does not license video
+00:00 +2: watermark and text warnings are kept; failed frames and unmet V-013 cannot auto-accept
+00:00 +3: All tests passed!
+EXIT:0
