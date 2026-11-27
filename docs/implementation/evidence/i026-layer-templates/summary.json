@@ -1,0 +1,30 @@
+{
+  "increment": "2.15",
+  "title": "I-026 ImageDocument, ten official layer templates, reversible reference grade, and explicit font/effect degrade",
+  "baseCommit": "a08d74fbbc9fc08ea48bd7a0e9f4f1af3bff59d4",
+  "productionChanged": true,
+  "newCount": 7,
+  "newTests": {
+    "studio_image_editor": 7
+  },
+  "clauseOfficialized": "Ten official layered templates (photo-card, paper-collage, brand-card, caption-poster, product-frame) round-trip without flattening and keep structure hash; rebind of a photo slot does not change original source hashes or other text/transform layers; locked layers are skipped by batch reference grade; missing fonts and effects are explicit MISSING_FONT / MISSING_EFFECT degrades and remain on the layer. Inferred color cannot be stored as an original fact; style suggestions can be refused. Flattening is refused.",
+  "task": "I-026",
+  "whyNotAlreadyOfficial": "I-026 was planned with no studio_image_editor package.",
+  "rowsStillOpenOnI026": [
+    "Template edit UI (deliverable includes UI; this slice is ImageDocument + TemplateService + catalog)",
+    "graphics-library/1.0.0 SQLite store and GraphicRepository publish/search/upgrade",
+    "Rights gating for shared template packs; I-004 AssetRepository attach of library blobs",
+    "V-003 image-render GPU qualification",
+    "Automatic sentence-unrelated: not shrinking products into stickers is enforced by keeping layered ImageDocument, but a full workbench visual-language skin is still open"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "41977be4351f9b2457fcd4e14048b62a983b317379168a2238cdd2115495b8ea",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i026Status": "partial",
+  "fullTaskComplete": false,
+  "v003Claimed": false,
+  "coreStoreUserVersion": 9,
+  "asOf": "2026-11-27T22:31:30+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.15"
+}

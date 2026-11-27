@@ -1,0 +1,9 @@
+00:00 +0: loading packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart
+00:00 +0: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: catalog has ten official layered templates across the planned families
+00:00 +1: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: all ten templates round-trip without flattening and keep structure hash
+00:00 +2: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: rebinding a photo slot does not change original source hashes or other layers
+00:00 +3: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: locked layers are not changed by a batch reference grade
+00:00 +4: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: inferred color cannot be stored as an original fact and style suggestions can be refused
+00:00 +5: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: missing fonts and effects are explicit degrades and stay on the layer
+00:00 +6: packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart: slot type mismatches and locked-field rebinds are refused
+00:00 +7: All tests passed!

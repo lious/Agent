@@ -20,7 +20,8 @@
     "packages/studio_peer_ui",
     "packages/studio_play",
     "packages/studio_agent",
-    "packages/studio_voice"
+    "packages/studio_voice",
+    "packages/studio_image_editor"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
