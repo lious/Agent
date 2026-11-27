@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_store/test/i013_unpackable_manifest_test.dart
+00:00 +0: linked mode publishes packMode=linked with an explicit missingExternalRefs manifest, does not pack the original, and is not selfContained
+00:00 +1: proxies mode uses packMode=linked rather than proxyOnly; a planted proxyOnly packMode is refused; an empty ZIP does not become selfContained
+00:00 +2: default originals save still refuses a locator and does not publish; a linked package is not selfContained and does not carry model weights
+00:00 +3: All tests passed!

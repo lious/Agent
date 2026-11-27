@@ -1,0 +1,7 @@
+00:00 +0: loading packages/studio_store/test/i013_credentials_deleted_body_test.dart
+00:00 +0: packages/studio_store/test/i013_credentials_deleted_body_test.dart: a current-revision archive excludes superseded body, sessions, and credentials
+00:00 +1: packages/studio_store/test/i013_credentials_deleted_body_test.dart: a current-revision archive excludes superseded body, sessions, and credentials
+00:00 +2: packages/studio_store/test/i013_credentials_deleted_body_test.dart: a current-revision archive excludes superseded body, sessions, and credentials
+00:00 +3: packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart: preservation open and writable pack do not auto-fetch planted external locators
+00:00 +4: packages/studio_sdk/test/i014_auto_external_link_refusal_test.dart: preservation open and writable pack do not auto-fetch planted external locators
+00:00 +5: All tests passed!

@@ -1,0 +1,27 @@
+{
+  "increment": "2.50",
+  "task": "I-013",
+  "title": "Unpackable-resource explicit manifest: packMode=linked and missingExternalRefs",
+  "asOf": "2026-11-28T02:49:30+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "3f4f197f98da269bf240da6147b0ec95abc66b9e",
+  "officialTests": 3,
+  "frozenSuites": "I-013 credentials/deleted-body (2) and I-014 auto-external-link store/document/sdk (3), 5 total, not rewritten",
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "job archival / pending-job report (运行job归档固定rev并报告pending)",
+    "re-qualification of 取消无半包发布 or 保留策略不删可达blob",
+    "packMode=proxyOnly (not a core enum; proxyOnly is only sourceCompleteness)",
+    "selfContained merely because a ZIP was written",
+    "packed cloud model or weight bytes",
+    "auto-fetch of external locators",
+    "schema v10 / Project user_version change (stays 9)",
+    "I-037, I-038, or V-007 complete",
+    "60s WebCodecs/OPFS roundtrip",
+    "quote/apply, paid generation, SQL vertical.v1"
+  ],
+  "files": [
+    "packages/studio_store/lib/project_archive.dart",
+    "packages/studio_store/test/i013_unpackable_manifest_test.dart"
+  ]
+}

@@ -1,0 +1,2 @@
+9330584cea1e9427c7cc1afc278b05fafa8cb19d7383343b05180c7f31d3448f  packages/studio_store/lib/project_archive.dart
+97401903cf02661d0e5e0389c4455c6336b1d4b8a8ab565ee45ffd83328963aa  packages/studio_store/test/i013_unpackable_manifest_test.dart
