@@ -63,7 +63,8 @@
     "packages/studio_still_image_clip_probe",
     "packages/studio_render_node_probe",
     "packages/studio_generated_layer_probe",
-    "packages/studio_image_document_graph_probe"
+    "packages/studio_image_document_graph_probe",
+    "packages/studio_command_clamp_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

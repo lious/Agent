@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_command_clamp_probe/test/timeline/commands/i005_command_clamp_test.dart
+00:00 +0: a preview drag may clamp without writing; a final command that submits visible clamped parameters is admitted
+00:00 +1: an unclamped out-of-range final command does not write; hidden clamped parameters and AI silent correction are refused
+00:00 +2: a TrimPlanner, Flutter widget tree, muted/solo, clipboard, auto-close, and already-official I-005 link-offset work stay closed
+00:00 +3: All tests passed!
+EXIT:0
