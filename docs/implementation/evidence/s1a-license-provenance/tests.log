@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_license_provenance_probe/test/license/s1a_license_provenance_test.dart
+00:00 +0: packages/studio_license_provenance_probe/test/license/s1a_license_provenance_test.dart: quantize, LoRA, merge, or rename must not wash upstream conditions; a model name is not a hash; a request must not self-select a personal exemption
+00:00 +1: packages/studio_license_provenance_probe/test/license/s1a_license_provenance_test.dart: I-033, I-058, FONT_REDISTRIBUTION_FACT, MODELS_REFERENCED_NOT_DOWNLOADED, and license-execution stay closed
+00:00 +2: All tests passed!

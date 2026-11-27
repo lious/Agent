@@ -96,7 +96,8 @@
     "packages/studio_error_class_probe",
     "packages/studio_license_execution_probe",
     "packages/studio_drop_frame_probe",
-    "packages/studio_llm_path_probe"
+    "packages/studio_llm_path_probe",
+    "packages/studio_license_provenance_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
