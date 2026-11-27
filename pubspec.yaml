@@ -39,7 +39,8 @@
     "packages/studio_clock_probe",
     "packages/studio_export",
     "packages/studio_storage_probe",
-    "packages/studio_fallback_probe"
+    "packages/studio_fallback_probe",
+    "packages/studio_compat_registry"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

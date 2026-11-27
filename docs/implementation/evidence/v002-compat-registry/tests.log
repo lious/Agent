@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_compat_registry/test/compatibility/registry/v002_compat_registry_test.dart
+00:00 +0: unknown DeviceSnapshot quantities stay null, not 0; known quantities are U64 decimal strings
+00:00 +1: planned or adapting only display the target; labValidated is test-channel only; released requires complete evidence
+00:00 +2: version, driver, model, or EP changes expire old qualification and are not inherited; V-001 and I-042 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
