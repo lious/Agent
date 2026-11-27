@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_web_publication_probe/test/web/publication/i020_web_publication_test.dart
+00:00 +0: packages/studio_web_publication_probe/test/web/publication/i020_web_publication_test.dart: an external download or file handle is admitted as independent publication and must not reuse POSIX semantics
+00:00 +1: packages/studio_web_publication_probe/test/web/publication/i020_web_publication_test.dart: Increment 2.37 WebMediaPort, a V-007 claim, an OPFS runtime, and a StoragePort runtime stay closed
+00:00 +2: All tests passed!
