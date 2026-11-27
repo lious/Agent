@@ -24,3 +24,7 @@ const lateResultDropped = 'LATE_RESULT_DROPPED';
 const cancelled = 'CANCELLED';
 const modelMismatch = 'MODEL_MISMATCH';
 const toolsUnsupported = 'TOOLS_UNSUPPORTED';
+const recoverableTimeout = 'RECOVERABLE_TIMEOUT';
+const jobNotFound = 'JOB_NOT_FOUND';
+const queueEmpty = 'QUEUE_EMPTY';
+const jobBusy = 'JOB_BUSY';

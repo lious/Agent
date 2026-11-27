@@ -1,0 +1,33 @@
+00:00 +0: loading packages/studio_agent/test/harness_loop_test.dart
+00:00 +0: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +1: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +2: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +3: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +4: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +5: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +6: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +7: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +8: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +9: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +10: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +11: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +12: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +13: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +14: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +15: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +16: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +17: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +18: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +19: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout before generate does not claim the command id
+00:00 +20: packages/studio_agent/test/llm_runtime_stream_test.dart: load refuses when the requested pack is not the admitted one
+00:00 +21: packages/studio_agent/test/llm_runtime_stream_test.dart: duplicate and out-of-order chunks do not execute a half tool call
+00:00 +22: packages/studio_agent/test/llm_runtime_stream_test.dart: truncated tool JSON is refused and is not executable
+00:00 +23: packages/studio_agent/test/llm_runtime_stream_test.dart: truncated stream without done is refused
+00:00 +24: packages/studio_agent/test/llm_runtime_stream_test.dart: a model that does not support tools is explicitly refused
+00:00 +25: packages/studio_agent/test/llm_runtime_stream_test.dart: llama.cpp adapter is fail-closed without a native backend
+00:00 +26: packages/studio_agent/test/llm_runtime_stream_test.dart: cloud text adapter is unconfigured and opens zero sockets
+00:00 +27: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +28: packages/studio_agent/test/plan_and_tools_test.dart: untrusted injected verbs do not become executable delete or payment plans
+00:00 +29: packages/studio_agent/test/plan_and_tools_test.dart: capability table is honest about iOS inference and packaging
+00:00 +30: packages/studio_agent/test/plan_and_tools_test.dart: missing model pack leaves the agent unavailable but manual tools work
+00:00 +31: All tests passed!

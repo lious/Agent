@@ -24,6 +24,8 @@ final class FakeLlmRuntime implements LlmRuntimeAdapter {
   bool _loaded = false;
   bool _cancelled = false;
   int networkRequestCount = 0;
+  void Function()? beforeEachChunk;
+  String? lastPrompt;
 
   @override
   String get runtimeId => 'fake.echo';
@@ -82,11 +84,13 @@ final class FakeLlmRuntime implements LlmRuntimeAdapter {
     if (request.toolsEnabled && !supportsTools) {
       throw const StudioException(toolsUnsupported);
     }
+    lastPrompt = request.prompt;
     final chunks = scriptedChunks ?? _defaultChunks(request);
     for (final chunk in chunks) {
       if (_cancelled) {
         throw const StudioException(cancelled);
       }
+      beforeEachChunk?.call();
       yield chunk;
     }
   }

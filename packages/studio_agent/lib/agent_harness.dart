@@ -72,7 +72,7 @@ final class AgentHarness {
   final Set<String> approvedCommands = {};
   final Map<String, ToolCallPlan> pendingPlans = {};
   final Map<String, String> pendingText = {};
-  bool _steered = false;
+  String? pendingSteer;
 
   void _runHooks(String phase, Map<String, Object?> ctx) {
     for (final hook in hooks) {
@@ -87,8 +87,8 @@ final class AgentHarness {
   AgentAvailability availability() =>
       AgentAvailability.inspect(packRegistry);
 
-  void steer() {
-    _steered = true;
+  void steer([String text = 'steer']) {
+    pendingSteer = text;
   }
 
   void cancel() {
@@ -107,22 +107,38 @@ final class AgentHarness {
     projectRevision[projectId] = revision;
   }
 
-  Future<TurnResult> runTurn(TurnInput input, {int? expectedRevision}) async {
+  Future<TurnResult> runTurn(
+    TurnInput input, {
+    int? expectedRevision,
+    DateTime Function()? now,
+    Duration? timeout,
+    DateTime? startedAt,
+  }) async {
     budget.requireOpen();
     availability().requireAgent();
-    messages.requireFresh(input.commandId);
-    messages.accept(
-      AgentMessage(
-        id: input.messageId,
-        sessionId: input.sessionId,
-        turnId: input.turnId,
-        role: MessageRole.user,
-        body: input.segments.map((s) => s.body).join('\n'),
-        trusted: input.segments.every((s) => s.trusted),
-      ),
-    );
+    DateTime stamp() => (now ?? DateTime.now)();
+    final started = startedAt ?? stamp();
+    void requireDeadline() {
+      if (timeout == null) return;
+      if (!stamp().difference(started).isNegative &&
+          stamp().difference(started) >= timeout) {
+        throw const StudioException(recoverableTimeout);
+      }
+    }
 
     try {
+      requireDeadline();
+      messages.requireFresh(input.commandId);
+      messages.accept(
+        AgentMessage(
+          id: input.messageId,
+          sessionId: input.sessionId,
+          turnId: input.turnId,
+          role: MessageRole.user,
+          body: input.segments.map((s) => s.body).join('\n'),
+          trusted: input.segments.every((s) => s.trusted),
+        ),
+      );
       _runHooks('beforeTurn', {});
       final prompt = ContextBuilder().build(
         segments: input.segments,
@@ -133,6 +149,7 @@ final class AgentHarness {
         throw const StudioException(toolsUnsupported);
       }
       final assembler = StreamAssembler(expectTools: input.toolsEnabled);
+      requireDeadline();
       await for (final chunk in runtime.generate(
         LlmGenerateRequest(
           prompt: prompt,
@@ -141,6 +158,7 @@ final class AgentHarness {
         ),
       )) {
         budget.requireOpen();
+        requireDeadline();
         assembler.accept(chunk);
         if (chunk.text.isNotEmpty) {
           budget.addOutputTokens(runtime.tokenize(chunk.text).length);
@@ -209,16 +227,19 @@ final class AgentHarness {
       );
     } on StudioException catch (e) {
       if (e.code == hookPrivilegeEscalation) rethrow;
+      final recoverable = e.code == recoverableTimeout;
       journal.append(
         id: 'j-${input.commandId}-err',
         kind: 'error',
         commandId: '${input.commandId}-err',
-        payload: {'code': e.code, 'path': e.path},
-        at: DateTime.now().toUtc(),
+        payload: {
+          'code': e.code,
+          'path': e.path,
+          'recoverable': recoverable,
+        },
+        at: stamp().toUtc(),
       );
       rethrow;
-    } finally {
-      _steered = _steered;
     }
   }
 

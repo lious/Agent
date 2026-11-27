@@ -1,0 +1,28 @@
+{
+  "increment": "2.16",
+  "title": "I-031 recoverable timeout, FIFO job queue, and steer applied to the next step",
+  "baseCommit": "c8ddd034071a8534827188f77ef0ea158eaeebff",
+  "productionChanged": true,
+  "newCount": 5,
+  "newTests": {
+    "studio_agent": 5
+  },
+  "clauseOfficialized": "A mid-generate timeout is RECOVERABLE_TIMEOUT, is journaled as recoverable, leaves the budget uncancelled, executes zero tool side effects, and a fresh command id can still run. A queued job that times out can be followed by the next queued job. Steer on a queued job is applied to the next step and cannot rewrite a finished receipt. FIFO queue: cancelling a not-yet-run job leaves side effects at 0. A timeout before generate does not claim the command id, so the same id can be retried.",
+  "task": "I-031",
+  "whyNotAlreadyOfficial": "Increment 2.14 officialized turn, approval, hooks, cancel, and no-progress, and left timeout recovery plus steer/queue/job unofficialized.",
+  "rowsStillOpenOnI031": [
+    "Wiring to I-029 intent/watermark store and I-003 PlanGraph production scheduling (I-029 remains planned; I-031 hardDeps include I-029)",
+    "Multi-device or persisted outbox job runner",
+    "On-device LLM inference (N4) remains planned; no weights are loaded"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "fb7fa33bd72e310f19bc32ad224fa25a469f2c9ec4d7616a9bf923a8644eab89",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i031Status": "partial",
+  "fullTaskComplete": false,
+  "coreStoreUserVersion": 9,
+  "asOf": "2026-11-27T22:49:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.16",
+  "frozen214HarnessLoopTests": 7
+}

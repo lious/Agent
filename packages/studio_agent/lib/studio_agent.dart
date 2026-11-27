@@ -2,6 +2,7 @@ export 'agent_availability.dart';
 export 'agent_codes.dart';
 export 'agent_harness.dart';
 export 'agent_journal.dart';
+export 'agent_scheduler.dart';
 export 'budget_controller.dart';
 export 'capability_table.dart';
 export 'cloud_text_adapter.dart';
