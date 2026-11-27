@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_package_staging_probe/test/storage/archive/i013_package_staging_test.dart
+00:00 +0: a package must be built from clean staging, must not reuse a session directory or pack a generic cache, and analysis evidence needs consent
+00:00 +1: Increment 3.24 SessionExportAdmission, ADR 0099, AuditJournalAdmission, and job archival stay closed
+00:00 +2: All tests passed!
