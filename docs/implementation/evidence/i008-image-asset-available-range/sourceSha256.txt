@@ -1,0 +1,2 @@
+b256eb1f198fa35b159803ca40b6bf2c41a71a8b3901d54a68054c0b02ba3598  packages/studio_document/lib/project_semantics.dart
+4d6a7ee5a844179a89aa1fd2cdb99ddd024e4c37bc16c4f7e5180e1ca9c27cce  packages/studio_document/test/media/still/i008_image_asset_available_range_test.dart

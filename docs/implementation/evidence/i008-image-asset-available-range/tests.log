@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_document/test/media/still/i008_image_asset_available_range_test.dart
+00:00 +0: an image asset clip with a null streamId and a static 1x domain is not refused by video availableRange
+00:00 +1: an image asset clip with a streamId is SOURCE_STREAM_MISMATCH
+00:00 +2: All tests passed!
+EXIT:0

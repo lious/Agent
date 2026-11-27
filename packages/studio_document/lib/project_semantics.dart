@@ -198,15 +198,25 @@ void _projectSemantics(
           }
         }
         if (kind == 'asset' && current) {
-          final a = indexes['assets']![source['id']],
-              streams = (a['streams'] as List)
-                  .where((x) => x['id'] == source['streamId'])
-                  .toList();
-          if (streams.length != 1 || streams.single['type'] != t['kind']) {
-            issue('SOURCE_STREAM_MISMATCH', '/clips/source/streamId');
-          } else if (sourceStart + sourceDuration >
-              q(streams.single['duration'])) {
-            issue('SOURCE_OUT_OF_RANGE', '/clips/sourceRange');
+          final a = indexes['assets']![source['id']];
+          // s4 / Increment 2.98: image assets use streamId=null and a
+          // synthesized static sampling domain. Video availableRange
+          // lookup must not refuse a still. This is not a rewrite of
+          // StillImageClipAdmission or frozen I-008 suites.
+          if (a['kind'] == 'image') {
+            if (source['streamId'] != null) {
+              issue('SOURCE_STREAM_MISMATCH', '/clips/source/streamId');
+            }
+          } else {
+            final streams = (a['streams'] as List)
+                .where((x) => x['id'] == source['streamId'])
+                .toList();
+            if (streams.length != 1 || streams.single['type'] != t['kind']) {
+              issue('SOURCE_STREAM_MISMATCH', '/clips/source/streamId');
+            } else if (sourceStart + sourceDuration >
+                q(streams.single['duration'])) {
+              issue('SOURCE_OUT_OF_RANGE', '/clips/sourceRange');
+            }
           }
         } else if (kind != 'asset') {
           if (source['streamId'] != null) {
