@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_job_cancel_probe/test/timeline/commands/i005_job_cancel_user_edits_test.dart
+00:00 +0: canceling a failed export or a cloud generation keeps already-completed user edits
+00:00 +1: a cancel that would undo committed user edits, or an unknown job kind, is refused
+00:00 +2: Increment 3.03 conflict-replan work, I-024 export suites, quote/apply, and an I-014 RestoreService stay closed
+00:00 +3: All tests passed!
+EXIT:0
