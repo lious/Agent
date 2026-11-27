@@ -1,0 +1,30 @@
+{
+  "increment": "2.52",
+  "task": "V-020",
+  "title": "QA baseline fixtures and repair oracle",
+  "asOf": "2026-11-28T02:56:20+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "32198b0dbcf57223cf8e51062c25e067b2b92c63",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "known-violation precision/recall initial target >=0.8 (not measured)",
+    "20 good/bad clip measured held-out production label set",
+    "I-035 product QAService / RepairPlanner / review UI",
+    "paid model evaluation or paid generation",
+    "DependencyIndex or IntentReducer as a product surface",
+    "60s WebCodecs/OPFS roundtrip / V-007 production pin",
+    "I-037, I-038, or V-007 complete",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions"
+  ],
+  "files": [
+    "packages/studio_quality/lib/studio_quality.dart",
+    "packages/studio_quality/lib/qa_baseline.dart",
+    "packages/studio_quality/test/quality/repair_graph/v020_qa_baseline_test.dart",
+    "packages/studio_quality/pubspec.yaml"
+  ]
+}

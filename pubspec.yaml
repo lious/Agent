@@ -24,7 +24,8 @@
     "packages/studio_image_editor",
     "packages/studio_context",
     "packages/studio_web_media",
-    "packages/studio_vertical"
+    "packages/studio_vertical",
+    "packages/studio_quality"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
