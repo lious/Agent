@@ -1,0 +1,8 @@
+00:00 +0: loading packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart
+00:00 +0: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: over-limit text is refused and is not silently truncated
+00:00 +1: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: observations and inferences stay separate and remain page or PTS traceable
+00:00 +2: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: hash plus model parameters cache deduplicates, and a new question misses
+00:00 +3: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: missing upload consent does not upload, and a license warning cannot exempt it
+00:00 +4: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: a tight projection budget is partial and does not silently drop citations
+00:00 +5: packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart: unsupported or unconfigured visual analysis is explicit, not a silent model run
+00:00 +6: All tests passed!

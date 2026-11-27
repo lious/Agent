@@ -1,0 +1,29 @@
+{
+  "increment": "2.18",
+  "title": "I-028 attachment ingest, analysis artifacts, and evidence projection",
+  "baseCommit": "d7b48b37244137991dcdf7891ae1df1e4af6d112",
+  "productionChanged": true,
+  "newCount": 6,
+  "newTests": {
+    "studio_context": 6
+  },
+  "clauseOfficialized": "Over-limit text is refused and is not silently truncated (page/byte locators are kept on in-limit bodies). Observations and inferences stay separate and remain page or PTS traceable; an inference without supports is refused. Hash plus extractor/model parameters cache deduplicates, and a new question misses. Missing uploadSubset consent does not upload (networkRequestCount stays 0); a license warning cannot exempt it. A tight projection budget is partial with omitted ids and cannot be marked complete. Unsupported formats and unconfigured visual analysis fail explicitly (FORMAT_UNSUPPORTED / MODEL_UNAVAILABLE).",
+  "task": "I-028",
+  "whyNotAlreadyOfficial": "I-028 was planned with no studio_context package.",
+  "rowsStillOpenOnI028": [
+    "Real OCR / VL / video-frame ASR pipelines (ports fail closed as MODEL_UNAVAILABLE; no weights downloaded)",
+    "I-004 AssetRepository attach of ingested blobs as project assets",
+    "V-025 multimodal-analysis qualification",
+    "Native demux/scene-sampler and temporal motion understanding (explicitly not claimed)"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "a6b5a9e73a9719eefbabf6929378725b4bddc90feef49c130743a290f3e93def",
+  "i028Status": "partial",
+  "fullTaskComplete": false,
+  "v025Claimed": false,
+  "realOcrAsrVlmClaimed": false,
+  "coreStoreUserVersion": 9,
+  "asOf": "2026-11-27T23:21:17+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.18"
+}

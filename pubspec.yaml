@@ -21,7 +21,8 @@
     "packages/studio_play",
     "packages/studio_agent",
     "packages/studio_voice",
-    "packages/studio_image_editor"
+    "packages/studio_image_editor",
+    "packages/studio_context"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
