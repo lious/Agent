@@ -43,7 +43,8 @@
     "packages/studio_compat_registry",
     "packages/studio_codec_probe",
     "packages/studio_resource_admission",
-    "packages/studio_container_probe"
+    "packages/studio_container_probe",
+    "packages/studio_delivery_fps"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_delivery_fps/test/compatibility/fps/v002_delivery_fps_test.dart
+00:00 +0: changing delivery fps by rewriting only the header is refused because it would alter playback speed
+00:00 +1: a delivery fps change resamples timeline PTS and preserves duration and playback speed
+00:00 +2: a retimer is not invented; I-024, I-007, and V-004 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
