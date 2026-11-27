@@ -15,7 +15,11 @@ Map trackOf(ProjectDocument p, String id) =>
       (t) => t['id'] == id,
     );
 
-Map<String, dynamic> videoTemplate(ProjectDocument p, {required String id, required int order}) {
+Map<String, dynamic> videoTemplate(
+  ProjectDocument p, {
+  required String id,
+  required int order,
+}) {
   final root = p.toJson()['sequences'][0] as Map;
   return {
     'id': id,
@@ -107,11 +111,7 @@ void main() {
     final order = nextOrder(p);
     final good = videoTemplate(p, id: 'track-video-2', order: order);
 
-    expect(
-      () =>
-          edit(p, AddTrack({...good, 'kind': 'audio', 'busId': 'bus-master'})),
-      throwsCode('FEATURE_NOT_IMPLEMENTED'),
-    );
+    // Audio AddTrack is officialized in Increment 2.33; caption stays closed.
     expect(
       () => edit(p, AddTrack({...good, 'kind': 'caption'})),
       throwsCode('FEATURE_NOT_IMPLEMENTED'),

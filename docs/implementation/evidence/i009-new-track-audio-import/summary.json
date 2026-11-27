@@ -1,0 +1,29 @@
+{
+  "increment": "2.33",
+  "task": "I-009",
+  "title": "Audio new-track and independent audio import",
+  "asOf": "2026-11-28T01:39:25+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "9c210ca08c36f4360204ba643d4a3b69b11dfa8d",
+  "officialTests": 3,
+  "regressionTests": 25,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "bus Effect",
+    "limiter / I-060",
+    "I-007 PCM remapping/nest",
+    "video or caption muted/solo on SetTrackState",
+    "caption addTrack",
+    "TrimPlanner / new trim modes",
+    "I-023 real mix/export qualification",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_document/lib/track_state.dart",
+    "packages/studio_document/lib/local_admission.dart",
+    "packages/studio_document/lib/persistent_audio.dart",
+    "packages/studio_document/lib/edit_algebra.dart",
+    "packages/studio_document/test/audio/automation/i009_new_track_audio_import_test.dart",
+    "packages/studio_document/test/nle/i005_add_track_test.dart"
+  ]
+}

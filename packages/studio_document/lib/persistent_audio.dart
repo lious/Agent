@@ -198,7 +198,10 @@ ProjectDocument _persistentAudioEdit(
         sourceStart + aEnd - aStart > Q.fromJson(audio.single['duration'])) {
       throw const StudioException('AUDIO_SOURCE_RANGE_UNAVAILABLE');
     }
-    final audioTracks = tracks.where((t) => t['kind'] == 'audio');
+    final audioTracks = [
+      for (final t in tracks)
+        if (t['kind'] == 'audio') t as Map,
+    ];
     final Map at;
     if (audioTracks.isEmpty) {
       at = {
@@ -220,7 +223,14 @@ ProjectDocument _persistentAudioEdit(
       };
       tracks.add(at);
     } else {
-      at = audioTracks.single as Map;
+      final targeted = [
+        for (final t in audioTracks)
+          if (t['targeted'] == true) t,
+      ];
+      audioTracks.sort(
+        (a, b) => (a['order'] as int).compareTo(b['order'] as int),
+      );
+      at = targeted.length == 1 ? targeted.single : audioTracks.first;
     }
     if (at['locked'] == true) throw const StudioException('FIELD_LOCKED');
     final copy = jsonDecode(jsonEncode(video)) as Map<String, dynamic>;
@@ -712,4 +722,135 @@ ProjectDocument _persistentAudioEdit(
   final result = ProjectDocument.fromJson(d);
   requireLocalEditingWritable(result);
   return result;
+}
+
+/// Import a standalone kind=audio asset onto an existing audio track.
+/// This is the audio counterpart of [AppendVideoAsset]: the clip is not
+/// extracted from a video host and is not auto-linked. Bus Effect and
+/// limiter stay closed. Target track must already exist (use [AddTrack]).
+final class AppendAudioAsset extends EditOperation {
+  AppendAudioAsset({
+    required Map<String, dynamic> asset,
+    required Map<String, dynamic> blob,
+    required Map<String, dynamic> rights,
+    required this.clipId,
+    required this.targetTrackId,
+  }) : _encoded = jsonEncode({'asset': asset, 'blob': blob, 'rights': rights});
+
+  final String _encoded, clipId, targetTrackId;
+
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'appendAudioAsset',
+    ...Map<String, Object?>.from(jsonDecode(_encoded) as Map),
+    'clipId': clipId,
+    'targetTrackId': targetTrackId,
+  };
+}
+
+ProjectDocument _appendAudioAsset(
+  ProjectDocument before,
+  AppendAudioAsset operation,
+  VersionAllocator version,
+  IdAllocator newId,
+) {
+  requireId(operation.clipId);
+  requireId(operation.targetTrackId);
+  final payload = operation.toJson();
+  final asset = Map<String, dynamic>.from(payload['asset'] as Map);
+  final blob = Map<String, dynamic>.from(payload['blob'] as Map);
+  final rights = Map<String, dynamic>.from(payload['rights'] as Map);
+  if (asset['kind'] != 'audio') {
+    throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+  }
+  final streams = [
+    for (final st in asset['streams'] as List)
+      if (st['type'] == 'audio') st,
+  ];
+  if (streams.length != 1 ||
+      (asset['streams'] as List).any((st) => st['type'] == 'video')) {
+    throw const StudioException('AUDIO_STREAM_REQUIRED');
+  }
+  final stream = streams.single as Map;
+  final d = before.toJson();
+  final s = d['sequences'][0] as Map;
+  final tracks = s['tracks'] as List;
+  final matches = [
+    for (final t in tracks)
+      if (t['id'] == operation.targetTrackId) t,
+  ];
+  if (matches.length != 1) {
+    throw const StudioException('TRACK_NOT_FOUND');
+  }
+  final track = matches.single as Map;
+  if (track['kind'] != 'audio') {
+    throw const StudioException('TRACK_KIND_MISMATCH');
+  }
+  if (track['locked'] == true) {
+    throw const StudioException('FIELD_LOCKED');
+  }
+  if ((d['assets'] as List).any((v) => v['id'] == asset['id'])) {
+    throw const StudioException('DUPLICATE_ID');
+  }
+  if ((d['rightsRecords'] as List).any((v) => v['id'] == rights['id']) &&
+      rights['id'] != asset['rightsId']) {
+    throw const StudioException('DUPLICATE_ID');
+  }
+  // Reuse an existing rights row only when it already names this asset id.
+  if (!(d['rightsRecords'] as List).any((v) => v['id'] == rights['id'])) {
+    (d['rightsRecords'] as List).add(rights);
+  }
+  if (!(d['blobs'] as List).any((v) => v['hash'] == blob['hash'])) {
+    (d['blobs'] as List).add(blob);
+  }
+  final duration = Q(
+    sampleIndex(Q.fromJson(stream['duration']), 48000, Rounding.floor),
+    BigInt.from(48000),
+  );
+  if (duration <= Q.of(0)) {
+    throw const StudioException('CLIP_TOO_SHORT');
+  }
+  var start = Q.of(0);
+  for (final item in track['items'] as List) {
+    final end =
+        Q.fromJson(item['timelineRange']['start']) +
+        Q.fromJson(item['timelineRange']['duration']);
+    if (end > start) start = end;
+  }
+  if (Q(sampleIndex(start, 48000, Rounding.tiesToEven), BigInt.from(48000)) !=
+      start) {
+    throw const StudioException('NOT_ON_SAMPLE');
+  }
+  (d['assets'] as List).add(asset);
+  (track['items'] as List).add({
+    'id': operation.clipId,
+    'version': '1',
+    'trackId': track['id'],
+    'name': asset['name'],
+    'source': {
+      'kind': 'asset',
+      'id': asset['id'],
+      'version': asset['version'],
+      'streamId': stream['id'],
+    },
+    'timelineRange': {'start': start.toJson(), 'duration': duration.toJson()},
+    'sourceRange': {'start': Q.of(0).toJson(), 'duration': duration.toJson()},
+    'timeMap': {'kind': 'linear', 'rate': Q.of(1).toJson()},
+    'enabled': true,
+    'lockedFields': <String>[],
+    'linkGroupId': null,
+    'selectionGroupId': null,
+    'effectIds': <String>[],
+    'shotId': null,
+    'candidateId': null,
+    'provenanceId': null,
+  });
+  final cover = start + duration;
+  if (cover > Q.fromJson(s['duration'])) {
+    s['duration'] = cover.toJson();
+  }
+  s['version'] = version(s['id'] as String);
+  final after = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(after);
+  return after;
 }

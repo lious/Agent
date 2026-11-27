@@ -1112,6 +1112,9 @@ ProjectDocument applyEdit(
   if (operation is RemoveTrack) {
     return _removeTrack(before, operation, nextVersion);
   }
+  if (operation is AppendAudioAsset) {
+    return _appendAudioAsset(before, operation, nextVersion, newId);
+  }
   if (operation is MoveClips) {
     return _moveClips(before, operation, nextVersion, newId);
   }
@@ -1219,7 +1222,8 @@ ProjectDocument applyEdit(
           operation is! UpgradeNest &&
           operation is! AddTrack &&
           operation is! RemoveTrack &&
-          operation is! SetTrackState)) {
+          operation is! SetTrackState &&
+          operation is! AppendAudioAsset)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
   }
   if (operation is SetAudioBusRoutes) {
@@ -1505,6 +1509,8 @@ ProjectDocument applyEdit(
     case AddTrack():
     case RemoveTrack():
       throw StateError('Handled add/remove track edit');
+    case AppendAudioAsset():
+      throw StateError('Handled append audio asset');
     case RenameProject():
       throw StateError('Handled before sequence edit');
     case MakeCompound():

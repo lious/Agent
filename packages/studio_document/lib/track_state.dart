@@ -96,10 +96,16 @@ ProjectDocument _addTrack(
     throw const StudioException('INVALID_TRACK_STATE');
   }
   requireId(id);
-  if (t['kind'] != 'video') {
-    throw const StudioException('FEATURE_NOT_IMPLEMENTED');
-  }
-  if (t['muted'] != false || t['solo'] != false || t['busId'] != null) {
+  if (t['kind'] == 'audio') {
+    if (t['busId'] is! String) {
+      throw const StudioException('AUDIO_BUS_MISSING');
+    }
+    requireId(t['busId'] as String);
+  } else if (t['kind'] == 'video') {
+    if (t['muted'] != false || t['solo'] != false || t['busId'] != null) {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+    }
+  } else {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
   final items = t['items'];
@@ -117,6 +123,19 @@ ProjectDocument _addTrack(
   }
   if (tracks.any((existing) => existing['order'] == t['order'])) {
     throw const StudioException('DUPLICATE_ORDER');
+  }
+  if (t['kind'] == 'audio') {
+    final graph = AudioBusGraph([
+      for (final raw in d['audioBuses'] as List)
+        AudioBus.fromJson(Map<String, dynamic>.from(raw as Map)),
+    ], s['masterBusId'] as String);
+    final busId = t['busId'] as String;
+    if (!graph.buses.containsKey(busId)) {
+      throw const StudioException('AUDIO_BUS_MISSING');
+    }
+    if (!graph.pathToMaster(busId).contains(graph.masterId)) {
+      throw const StudioException('AUDIO_BUS_UNROUTED');
+    }
   }
   tracks.add(t);
   s['version'] = version(s['id'] as String);
@@ -146,13 +165,15 @@ ProjectDocument _removeTrack(
     throw const StudioException('TRACK_NOT_FOUND');
   }
   final track = matches.single as Map;
-  if (track['kind'] != 'video') {
+  if (track['kind'] != 'video' && track['kind'] != 'audio') {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
-  final videoCount = tracks.where((t) => t['kind'] == 'video').length;
-  // Keep the admitted primary video track (list index 0) in place.
-  if (videoCount < 2 || track['id'] == tracks[0]['id']) {
-    throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+  if (track['kind'] == 'video') {
+    final videoCount = tracks.where((t) => t['kind'] == 'video').length;
+    // Keep the admitted primary video track (list index 0) in place.
+    if (videoCount < 2 || track['id'] == tracks[0]['id']) {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+    }
   }
   if (track['locked'] == true) {
     throw const StudioException('FIELD_LOCKED');

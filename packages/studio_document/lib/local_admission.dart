@@ -92,12 +92,16 @@ void requireLocalEditingWritable(ProjectDocument project) {
   }
   final rights = {for (final v in d['rightsRecords'] as List) v['id']: v};
   for (final a in assets.values) {
-    if (a['kind'] != 'video' ||
+    if ((a['kind'] != 'video' && a['kind'] != 'audio') ||
         a['status'] != 'ready' ||
         a['externalLocator'] != null) {
       throw const StudioException('FEATURE_NOT_IMPLEMENTED');
     }
-    if ((a['proxyRefs'] as List).length > 1) {
+    if (a['kind'] == 'audio') {
+      if ((a['proxyRefs'] as List).isNotEmpty) {
+        throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+      }
+    } else if ((a['proxyRefs'] as List).length > 1) {
       throw const StudioException('PROXY_METADATA_INVALID');
     }
     for (final p in a['proxyRefs']) {
@@ -117,7 +121,12 @@ void requireLocalEditingWritable(ProjectDocument project) {
       throw const StudioException('ASSET_FINGERPRINT_MISMATCH');
     }
     final streams = a['streams'] as List;
-    if (!streams.any((v) => v['type'] == 'video')) {
+    if (a['kind'] == 'audio') {
+      if (!streams.any((v) => v['type'] == 'audio') ||
+          streams.any((v) => v['type'] == 'video')) {
+        throw const StudioException('AUDIO_STREAM_REQUIRED');
+      }
+    } else if (!streams.any((v) => v['type'] == 'video')) {
       throw const StudioException('VIDEO_STREAM_REQUIRED');
     }
     for (final st in streams) {
@@ -149,11 +158,10 @@ void requireLocalEditingWritable(ProjectDocument project) {
     final video = seqTracks.where((t) => t['kind'] == 'video').toList(),
         captionTracks = seqTracks.where((t) => t['kind'] == 'caption').toList(),
         audioTracks = seqTracks.where((t) => t['kind'] == 'audio').toList();
-    // Multiple video tracks are admitted so AddTrack can open a new video
-    // lane. Extra audio/caption tracks, and a non-leading primary video
-    // slot, stay FEATURE_NOT_IMPLEMENTED.
+    // Multiple video and audio tracks are admitted so AddTrack can open a
+    // new lane. Extra caption tracks, and a non-leading primary video slot,
+    // stay FEATURE_NOT_IMPLEMENTED.
     if (captionTracks.length > 1 ||
-        audioTracks.length > 1 ||
         video.length + captionTracks.length + audioTracks.length !=
             seqTracks.length ||
         (video.isNotEmpty && seqTracks[0]['kind'] != 'video')) {
