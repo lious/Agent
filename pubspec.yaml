@@ -92,7 +92,8 @@
     "packages/studio_library_archive_probe",
     "packages/studio_archive_countdown_probe",
     "packages/studio_unknown_extension_pin_probe",
-    "packages/studio_fixed_revision_archive_probe"
+    "packages/studio_fixed_revision_archive_probe",
+    "packages/studio_error_class_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

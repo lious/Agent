@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_error_class_probe/test/schema/i002_error_class_test.dart
+00:00 +0: structural and business errors must be reported as separate classes
+00:00 +1: I-002 rational-roundtrip, FK/overlap/overflow, and synthetic-project labels stay unclaimed
+00:00 +2: All tests passed!
