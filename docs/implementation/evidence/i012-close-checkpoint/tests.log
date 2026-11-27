@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_close_checkpoint_probe/test/storage/save/i012_close_checkpoint_test.dart
+00:00 +0: background, project-switch, or close requests a checkpoint immediately and does not wait for a generation or a ZIP
+00:00 +1: an unfinished external package must not be claimed as written; a desktop exit keeps the local recovery point; a mobile expiry must not start an unbounded background task
+00:00 +2: Increment 3.05 package auto-update, Increment 3.06 artifact-kind, ADR 0098, a SAF/iCloud adapter, and a Flutter widget tree stay closed
+00:00 +3: All tests passed!
+EXIT:0
