@@ -1,0 +1,29 @@
+# ADR 0159 — Official I-057 privilege, AB-consent, and release refusals
+
+## Status
+
+Accepted for Increment 2.60 as the first I-057 slice. I-057 moves planned → partial and is not marked complete. The V-020=eval-baseline gate is not met and is not claimed. This increment does not invent skill training, does not claim a model improvement, and does not start signed-pack import. It is not a rewrite of I-037 CraftSkillCompiler privilege bounds (unsigned preview, signature is not approval, requiredTools capped at the session allowlist): I-057 is the eval / AB / controlled-release bound. I-038 leftover quote/apply, SQL `vertical.v1`, and paid generation are not opened. I-035 stays planned. I-056, I-054 default-diagnostic exclusions, and I-029 DeletionBarrier are not re-qualified. I-053 and I-033 leftovers are not re-qualified. I-013 stays partial (job archival remains unopened). I-014 stays partial (the product RestoreService store commit path remains unopened). I-037, I-038, V-007, V-020, I-054, I-051, I-046, I-041, I-040, I-053, and I-056 stay partial and are not marked complete. V-009, V-016, V-017, V-018, V-019, V-021, and V-022 stay blocked. I-055 is not started. `fullTaskComplete` stays false. `fullTasksCompleted` stays 0. InversePatch kind stays `restoreSnapshot`. Project `user_version` stays 9. Schema v10 is not merged. No paid API is called.
+
+## Decision
+
+s10g defines a unified registry pin `(id, semver, contentHash)`. A model may only produce a candidate pack and must not change the active pin. Skill self-evolution may not automatically add tool permissions, bypass upload or payment, read more media, self-deploy training, or write a project. A malicious pack cannot install code as "self-repair". Real user-content experiments require a separate research consent, upload consent, and fee approval; a purchase-service consent cannot substitute. The default is offline comparison of synthetic or already-authorized research data. A winner is not declared from an unknown score or from too few samples; an offline oracle pass is not a model-quality win; metrics must be pre-registered. Rollback changes only the default pin for new runs; in-flight plans keep the old pin or pause, and already-generated artifacts keep their provenance. The work-item acceptance further requires that rollback preserve the project's skill pin, and that no real training may be reported as a model improvement. A training ADR is not training implemented or executed. SFT/DPO/RLHF is not a first-version runtime dependency.
+
+This increment officializes that bound as a DEV-PURE compiler in `packages/studio_quality/lib/eval/eval_runner.dart`, exported alongside the existing V-020 and I-056 surfaces (which are not rewritten):
+
+- `acceptCandidate` records a model proposal as a candidate and does not change `activePin`. Requests to escalate privilege, bypass upload or payment, read extra media, self-deploy training, write a project, self-heal-install code, or add a tool outside the installed allowlist are `TOOL_NOT_ALLOWED`. `promote` (self-promotion of a production pack) is `TOOL_NOT_ALLOWED`.
+- `enrollAb` of user content without research consent is `RESEARCH_CONSENT_REQUIRED`, including when only a purchase-service consent is present. Missing upload consent is `UPLOAD_CONSENT_REQUIRED`. Missing fee approval is `APPROVAL_REQUIRED`. Enrollment stays 0. An assignment export does not include `userId`. Synthetic fixtures may be compared offline without those consents.
+- `decideWinner` returns `inconclusive` and `modelQualityWin=false` for an unknown result, an under-sized sample, or an offline-oracle-only pass. Post-hoc metric shopping is `UNSUPPORTED_EDIT_TECHNIQUE`. `rollback` changes only `newRunDefaultPin`; the project skill pin, in-flight pin, and artifact provenance stay put. Hot-swapping an in-flight prompt is `FIELD_LOCKED`. `claimImprovement` without training is `TRAINING_NOT_EXECUTED`. `trainingExecuted`, `modelImprovementClaimed`, `sftStarted`, `dpoStarted`, `rlhfStarted`, and `v020EvalBaselineClaimed` stay false.
+
+A live eval service, canary traffic, signed-pack import, and a training toolchain remain unopened.
+
+## Consequences
+
+The first I-057 leftover acceptance items (a production pack cannot self-escalate privilege, user content is not enrolled in training or AB without consent, an unknown score does not win, rollback keeps the project skill pin, and no real training may be reported as a model improvement) are officialized at this EvalRunner bound. The V-020=eval-baseline gate, held-out eval, and optional training contract remain unopened, so I-057 stays partial and is not marked complete. 87-task counts become 0 complete / 51 partial / 23 planned / 13 blocked.
+
+## Evidence
+
+`docs/implementation/evidence/i057-eval-release/`.
+
+## Follow-up
+
+Next honest Linux/Web increment: prefer a narrowly specified I-052 duplicate-callback / unknown-no-repost protocol if it does not invent a WorkflowCoordinator or a real GPU worker. Otherwise pick the next still-doable planned or remaining-partial work from the four planning documents. Do not start I-055 unless a narrow already-specified LocaleCatalog/semantics slice is required. Do not start I-035 or claim a V-020 precision/recall or eval-baseline achievement. Do not invent skill training or claim a model improvement. Do not start signed-pack import. Do not re-qualify I-057, I-037, I-056, I-054, or I-029. Do not invent I-013 job archival or an I-014 product RestoreService commit path. Do not invent a payment vendor or claim V-022. Do not claim a 60s WebCodecs/OPFS roundtrip or pin a V-007 production lock. Do not start quote/apply, paid generation, or SQL `vertical.v1` unless a narrowly specified protocol slice is already written. Do not invent a PlanGraph manual-lock API or re-qualify `PLAN_CYCLE`. Do not mark I-037, I-038, V-007, V-020, I-054, I-051, I-046, I-041, I-040, I-053, I-056, or I-057 complete.
