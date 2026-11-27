@@ -1,0 +1,33 @@
+{
+  "increment": "2.54",
+  "task": "I-051",
+  "title": "GatewayPorts keys-not-in-app, tenant ACL, and signed-URL rules",
+  "asOf": "2026-11-28T03:03:26+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "70ff9e69a5069bb1f075e88d3366de8d0c707dbd",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "deployed FastAPI / PostgreSQL / S3-compatible object store",
+    "vendor selection or production backend",
+    "paid APIs",
+    "V-021 serverless qualification (stays blocked)",
+    "I-054 or I-029 re-qualification",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, V-020, or I-054 complete",
+    "production FTS/RAG or remote erasure",
+    "60s WebCodecs/OPFS roundtrip / V-007 production pin",
+    "quote/apply, paid generation, SQL vertical.v1",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions"
+  ],
+  "files": [
+    "packages/studio_gateway/lib/studio_gateway.dart",
+    "packages/studio_gateway/lib/gateway_ports.dart",
+    "packages/studio_gateway/test/backend/acl/i051_gateway_ports_test.dart",
+    "packages/studio_gateway/pubspec.yaml"
+  ]
+}

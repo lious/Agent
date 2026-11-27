@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_gateway/test/backend/acl/i051_gateway_ports_test.dart
+00:00 +0: keys never enter the App, a project pack, or a session export; business functions do not proxy large media; serverless cannot auto-fetch user media
+00:00 +1: cross-tenant access is zero: a model-claimed tenant is ignored, a wrong-tenant grant is denied, and same-hash objects in another tenant are not leaked
+00:00 +2: upload requires consent; an expired signed URL is refused; a grant cannot be reused past maxUses
+00:00 +3: All tests passed!
+EXIT:0
