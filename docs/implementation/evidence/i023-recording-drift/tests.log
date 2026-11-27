@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_drift_probe/test/audio/drift/i023_recording_drift_test.dart
+00:00 +0: explicit resample records a map and retains the original; silent overwrite or resample is refused
+00:00 +1: an explicit resample without a recorded map is refused; a manual sync offset applies only after confirmation
+00:00 +2: a waveform correlator, Increment 2.80 media retention, and related leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
