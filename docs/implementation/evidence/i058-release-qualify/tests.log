@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_release_probe/test/release/qualify/i058_release_qualify_test.dart
+00:00 +0: unverified capabilities are not displayed as supported
+00:00 +1: paid store release requires I-053 and V-022; optional capabilities are not forced online
+00:00 +2: real fixtures and store-release are not claimed; I-055 is not started
+00:00 +3: All tests passed!
+EXIT:0

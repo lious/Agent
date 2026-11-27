@@ -34,7 +34,8 @@
     "packages/studio_gltf_probe",
     "packages/studio_video_tools",
     "packages/studio_image_tools",
-    "packages/studio_color_probe"
+    "packages/studio_color_probe",
+    "packages/studio_release_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
