@@ -11,3 +11,5 @@ export 'character/portrait_rights.dart';
 export 'character/portrait_rights_gate.dart';
 export 'character/portrait_revocation_coordinator.dart';
 export 'character/t57_library_ddl.dart';
+export 'craft/registry_bridge.dart';
+export 'craft/skill_compiler.dart';

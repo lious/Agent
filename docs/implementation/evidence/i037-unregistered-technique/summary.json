@@ -1,0 +1,28 @@
+{
+  "increment": "2.38",
+  "task": "I-037",
+  "title": "Unregistered craft techniques are explicitly refused",
+  "asOf": "2026-11-28T02:01:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "038a5346d0134ef9aed556e8384f41da2d1556c3",
+  "officialTests": 3,
+  "frozenI008UnsupportedTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "new I-008 effect plugin / maskWipe registration",
+    "J/L cut / handles command golden",
+    "SOFT_CAMERA_CONTROL warning",
+    "external skill privilege escalation / approval bypass",
+    "FilmSkill FTS recall / signed pack import",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_assets/lib/craft/registry_bridge.dart",
+    "packages/studio_assets/lib/craft/skill_compiler.dart",
+    "packages/studio_assets/lib/studio_assets.dart",
+    "packages/studio_assets/test/skills/compile_safety/i037_unregistered_technique_test.dart"
+  ]
+}
