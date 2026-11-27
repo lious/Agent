@@ -1,0 +1,38 @@
+{
+  "increment": "2.06",
+  "title": "Official I-009 overwrite-crop (param=gainDb) and effectIds.* lock coverage",
+  "baseCommit": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "aggregateSha256": "23a14971cee57f62d7682c6d6c28b13612c7856f8140d19b6d3c7491b23cd10e",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "23a14971cee57f62d7682c6d6c28b13612c7856f8140d19b6d3c7491b23cd10e",
+  "newThisIncrement": {
+    "document": 2,
+    "sdk": 0,
+    "ui": 0,
+    "total": 2
+  },
+  "selected": {
+    "document": {
+      "passed": 464,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "total": {
+      "passed": 464,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0
+  },
+  "bounds": [
+    "This slice adds official coverage only for two recorded Increment 2.02 gaps. It does not open new audio capabilities.",
+    "Official overwrite paste of an admitted type=gain clip Effect crops the destination remnant and rebinds the incoming copy; every keyframe keeps param=gainDb; cropped boundary values match the existing cropGainPoints contract. Production overwrite.dart is unchanged.",
+    "lockedFields values that start with effectIds. (effectIds.<effectId> and effectIds.gain) refuse user SetClipGain / SetGainKeyframe / RemoveGainKeyframe with FIELD_LOCKED, refuse applyOfficialClipAnalysis with MANUAL_LOCKED, and refuse an overwrite paste that would crop the locked clip with FIELD_LOCKED. The document is unchanged. Production startsWith(\"effectIds.\") is unchanged.",
+    "The frozen Increment 2.02 test file i009_clip_gain_effect_test.dart is not rewritten. Independent audio import, bus Effect/limiter, I-060/V-024, I-007 remapping/nest, new-track, InversePatch (stays restoreSnapshot), Pulse/clock/queue, invert-matrix rows, caption export, and cross-device/RTC are not opened. Store tests and the Increment 1.88 SDK 1000-sequence undo suite were not run. I-009 stays partial. Increment 1.17/1.18 stay open. I-023 stays partial."
+  ],
+  "asOf": "2026-11-27T14:24:17+08:00",
+  "timezone": "Asia/Shanghai"
+}

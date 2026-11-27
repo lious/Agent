@@ -1,0 +1,11 @@
+{
+  "baseCommit": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "sourceSha256": {
+    "packages/studio_document/test/audio/automation/i009_clip_gain_overwrite_and_effectids_lock_test.dart": "c286e95991075d76fa9f6f1192afd718871c6f339de2c11c057866872885a236"
+  },
+  "aggregateSha256": "23a14971cee57f62d7682c6d6c28b13612c7856f8140d19b6d3c7491b23cd10e",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "23a14971cee57f62d7682c6d6c28b13612c7856f8140d19b6d3c7491b23cd10e",
+  "asOf": "2026-11-27T14:24:17+08:00",
+  "timezone": "Asia/Shanghai"
+}
