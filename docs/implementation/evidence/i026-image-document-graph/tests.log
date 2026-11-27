@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_image_document_graph_probe/test/media/still/i026_image_document_graph_test.dart
+00:00 +0: an ImageDocument on the shared effect path is admitted as a static clip, I2V first frame, or product overlay
+00:00 +1: a separate image effect system, a missing shared binding, or an unknown role is refused
+00:00 +2: an I2V runtime, unregistered plugin, and already-official still-image, RenderNode, generated-output, and I-026 template suites stay closed
+00:00 +3: All tests passed!
+EXIT:0
