@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_vfr_audio_probe/test/media/vfr/i021_vfr_audio_duration_test.dart
+00:00 +0: VFR normalize keeps actual audio samples; stretching to nominal fps duration is refused
+00:00 +1: writing audio length from nominal fps without an explicit stretch flag is still refused
+00:00 +2: I-021 seek/VFR/PTS leftovers, delivery-fps, media retention, and varispeed stay closed
+00:00 +3: All tests passed!
+EXIT:0

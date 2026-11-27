@@ -47,7 +47,8 @@
     "packages/studio_delivery_fps",
     "packages/studio_media_retention",
     "packages/studio_pressure_probe",
-    "packages/studio_varispeed_probe"
+    "packages/studio_varispeed_probe",
+    "packages/studio_vfr_audio_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
