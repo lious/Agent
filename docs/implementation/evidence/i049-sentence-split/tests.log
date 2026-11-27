@@ -1,0 +1,16 @@
+00:00 +0: loading packages/studio_voice/test/i049_sentence_split_test.dart
+00:00 +0: packages/studio_voice/test/i049_sentence_split_test.dart: Latin and CJK punctuation split into contiguous timed sentences
+00:00 +1: packages/studio_voice/test/i049_dialogue_speech_test.dart: unknown phonemes can be corrected and then transcribe
+00:00 +2: packages/studio_voice/test/i049_dialogue_speech_test.dart: unknown phonemes can be corrected and then transcribe
+00:00 +3: packages/studio_voice/test/i049_dialogue_speech_test.dart: unknown phonemes can be corrected and then transcribe
+00:00 +4: packages/studio_voice/test/i049_sentence_split_test.dart: a split plan splices at 24 kHz with sample counts equal to the planned sum
+00:00 +5: packages/studio_voice/test/i049_sentence_split_test.dart: a split plan splices at 24 kHz with sample counts equal to the planned sum
+00:00 +6: packages/studio_voice/test/i050_consent_clone_test.dart: no consent and post-revoke new executions stay at zero
+00:00 +7: packages/studio_voice/test/i050_consent_clone_test.dart: no consent and post-revoke new executions stay at zero
+00:00 +8: packages/studio_voice/test/i050_consent_clone_test.dart: no consent and post-revoke new executions stay at zero
+00:00 +9: packages/studio_voice/test/i049_dialogue_speech_test.dart: 16 kHz backend output is resampled to 24 kHz
+00:00 +10: packages/studio_voice/test/i050_consent_clone_test.dart: third-party impersonation without consent is refused, not a blanket ban
+00:00 +11: packages/studio_voice/test/i049_dialogue_speech_test.dart: TTS is not accepted as singing
+00:00 +12: packages/studio_voice/test/i050_consent_clone_test.dart: embeddings never enter ordinary archive or log; refs stay traceable
+00:00 +13: packages/studio_voice/test/i050_consent_clone_test.dart: revoked voice pin blocks new speech render
+00:00 +14: All tests passed!

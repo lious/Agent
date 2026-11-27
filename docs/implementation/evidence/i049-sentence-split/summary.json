@@ -1,0 +1,26 @@
+{
+  "increment": "2.17",
+  "title": "I-049 automatic sentence split into a timed DialoguePlan",
+  "baseCommit": "b33b7f4bee2e26740ddd0d39be6f87a6847ae26d",
+  "productionChanged": true,
+  "newCount": 4,
+  "newTests": {
+    "studio_voice": 4
+  },
+  "clauseOfficialized": "SentenceSplitter splits Latin and CJK punctuation into contiguous timed sentences; empty text and non-positive speed are refused; speed scales duration; a re-split keeps unchanged earlier sentence ids (content-hash ids) and assigns a new id to a rewritten sentence; the resulting DialoguePlan splices at 24 kHz with sample counts equal to the planned sum via FakeSpeechBackend. This is not a linguistic parser and not real TTS inference.",
+  "task": "I-049",
+  "whyNotAlreadyOfficial": "Increment 2.14 officialized pre-split DialoguePlan and left automatic sentence split unofficialized.",
+  "rowsStillOpenOnI049": [
+    "Real TTS inference (no speech model weights are downloaded or loaded)",
+    "CharacterRepository wiring (still not connected in this increment)"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "aad4c1f38b6b95f37268c4d2e8bb82a3f5a2312948a1cc7958a9e84b0eafc27c",
+  "i049Status": "partial",
+  "fullTaskComplete": false,
+  "realTtsClaimed": false,
+  "coreStoreUserVersion": 9,
+  "asOf": "2026-11-27T23:02:29+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.17"
+}
