@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_video_tools/test/video/source_pts_masks/i044_source_pts_masks_test.dart
+00:00 +0: VFR and 2x retime look up masks by source PTS, not edited frame numbers; trim does not change the source index
+00:00 +1: a confirmed cut clears memory and does not inherit identity; a keyframe correction only invalidates the block to the next lock or cut
+00:00 +2: a lost object becomes waitingCorrection; an empty mask is not treated as gone; auto-erase stops; bbox-only is not a precise mask
+00:00 +3: All tests passed!
+EXIT:0
