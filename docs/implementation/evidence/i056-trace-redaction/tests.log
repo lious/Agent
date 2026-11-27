@@ -1,0 +1,13 @@
+00:00 +0: loading packages/studio_quality/test/observability/redaction/i056_trace_redaction_test.dart
+00:00 +0: secrets, bodies, embeddings, identifiable image hashes, paths, GPS, signed URLs, store tokens, and canary emails are filtered; whitelist status fields remain
+00:00 +1: a fault trace correlates revision and job identifiers; local export works without a telemetry backend; upload without consent is refused
+00:00 +2: duplicate events do not double-count cost; purged diagnostic bodies are not revived for debugging
+00:00 +3: All tests passed!
+EXIT:0
+======= frozen V-020 =======
+00:00 +0: loading packages/studio_quality/test/quality/repair_graph/v020_qa_baseline_test.dart
+00:00 +0: human labels and model scores are listed separately; unknown is not auto-pass; an uncalibrated model score cannot auto-release a hard item; precision/recall is not claimed
+00:00 +1: the repair oracle does not regenerate already-passed shots or cover locked segments, returns NeedsReview on a lock intersection, and does not submit or start paid generation
+00:00 +2: OCR-only picture claims, missing video understanding, and unconnected lip-sync stay unknown; unregistered effects and unapproved paid repair are refused; hard rules are not lowered
+00:00 +3: All tests passed!
+EXIT:0
