@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_export/test/export/e2e/i024_smart_render_default_test.dart
+00:00 +0: smart render is not the default and mixed stream-copy is disabled
+00:00 +1: a preview screenshot is not an export; a missing encoder or a full disk fails explicitly
+00:00 +2: changing HDR, fps, or upload requires a new approval; timing and cancel leftovers are not re-claimed
+00:00 +3: All tests passed!
+EXIT:0
