@@ -1,0 +1,26 @@
+/// Stable machine-readable codes for the portable local-agent contracts.
+library;
+
+const agentUnavailable = 'AGENT_UNAVAILABLE';
+const modelPackMissing = 'MODEL_PACK_MISSING';
+const modelPackBadSignature = 'MODEL_PACK_BAD_SIGNATURE';
+const operatorUnsupported = 'OPERATOR_UNSUPPORTED';
+const runtimeUnavailable = 'RUNTIME_UNAVAILABLE';
+const cloudProviderNotConfigured = 'CLOUD_PROVIDER_NOT_CONFIGURED';
+const networkForbidden = 'NETWORK_FORBIDDEN';
+const planInvalid = 'PLAN_INVALID';
+const toolNotAllowed = 'TOOL_NOT_ALLOWED';
+const toolSchemaInvalid = 'TOOL_SCHEMA_INVALID';
+const approvalRequired = 'APPROVAL_REQUIRED';
+const duplicateCommand = 'DUPLICATE_COMMAND';
+const budgetExceeded = 'BUDGET_EXCEEDED';
+const noProgress = 'NO_PROGRESS';
+const hookPrivilegeEscalation = 'HOOK_PRIVILEGE_ESCALATION';
+const stalePointer = 'STALE_POINTER';
+const leaseDoubleCount = 'LEASE_DOUBLE_COUNT';
+const untrustedInstructionRefused = 'UNTRUSTED_INSTRUCTION_REFUSED';
+const handEditCas = 'HAND_EDIT_CAS';
+const lateResultDropped = 'LATE_RESULT_DROPPED';
+const cancelled = 'CANCELLED';
+const modelMismatch = 'MODEL_MISMATCH';
+const toolsUnsupported = 'TOOLS_UNSUPPORTED';

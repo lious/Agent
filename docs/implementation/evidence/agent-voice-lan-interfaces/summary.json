@@ -1,0 +1,66 @@
+{
+  "increment": "2.14",
+  "title": "Portable local-agent contracts, I-049/I-050 voice/clone interface gates, and limited play LAN protocol (Linux unit tests)",
+  "baseCommit": "56242675af1aecadea6c6bfb3d643b8db8f68038",
+  "productionChanged": true,
+  "newCount": 40,
+  "newTests": {
+    "studio_agent": 26,
+    "studio_voice": 10,
+    "studio_play": 4,
+    "harness": 0,
+    "store": 0,
+    "sdk": 0,
+    "ui": 0,
+    "document": 0
+  },
+  "clauseOfficialized": "I-030 portable stream assembler (truncated/out-of-order/duplicate chunks never execute a half tool; tool schema validation; tools-unsupported refusal; model pin records actual pack/digest/runtime). I-031 harness: duplicate command ids run once; approval-required tools have zero side effects until approved; hooks cannot escalate; late results do not overwrite hand edits; journal omits private reasoning. I-042 ModelPackRegistry: bad signature/unsupported operator refuse; offlineOnly networkRequestCount=0; shared units not double-counted; simulated process restart rejects stale handles. I-049 dialogue plan + FakeSpeechBackend: phoneme correction, 24 kHz splice sample counts, sentence/tempo invalidation, caption/clip locks, 16 kHz resample, TTS-is-not-singing. I-050 consent/revoke new executions stay 0; embeddings never enter archive/log; selected audio not overwritten; refs are traceable; third-party clone without consent is refused (not a blanket ban); FakeCloneBackend remains CLONE_INFERENCE_UNAVAILABLE. Play LAN v1.9.3 in-process loopback protocol: hello/heartbeat, duplicate seq ignored, revoked grant refused, mystery truth not delivered to a public screen, filtered snapshots, tampered hash refused. This is not on-device LLM inference, not a real TTS/clone model, not two-physical-device LAN E2E, not I-016, and not a studio_store schema v10 merge.",
+  "tasks": [
+    "I-030",
+    "I-031",
+    "I-042",
+    "I-049",
+    "I-050"
+  ],
+  "relatedDocuments": [
+    "AI创作Studio工程规格",
+    "Studio 跨端协作｜剧组创作与实景剧本杀设计提案",
+    "Studio 美术设计功能规划",
+    "独立iOS本地大语言模型Agent实施方案"
+  ],
+  "whyNotAlreadyOfficial": "These portable interfaces and Linux unit tests were not previously landed. N0–N6 of the iOS local-LLM Agent scheme were unimplemented. I-049/I-050 were planned with no interface package. Play Stage A existed; the limited LAN protocol messages were not officialized.",
+  "rowsStillOpen": [
+    "Real llama.cpp / XCFramework load and on-device LLM inference (no weights downloaded; N2/N4/N5/N6 remain planned)",
+    "Configured cloud text provider (no paid API; CloudTextAdapter stays CLOUD_PROVIDER_NOT_CONFIGURED)",
+    "I-031 steer/queue/job scheduling and explicit timeout-recovery officialization",
+    "I-042 pack download, pause/resume, native runtime probe, and hot unload of a real library",
+    "I-049 automatic sentence segmentation and real TTS inference",
+    "I-050 embedding encryption and CharacterRepository voiceClone wiring (still FEATURE_NOT_IMPLEMENTED in studio_assets)",
+    "Stage B two-physical-device LAN / XD-010 E2E (explicitly unclaimed; LoopbackPlayLanFabric.claimPhysicalE2e fails closed)",
+    "I-016–I-019 hardware ports; V-008–V-013 / V-015–V-019 / V-021–V-022 real inference and store-release acceptance"
+  ],
+  "leftoverWordingAfterSplit": "",
+  "seeds": null,
+  "regressions": {
+    "note": "No core store/document/harness/sdk/ui/media production files were modified; core project user_version stays 9; library workspace stays 6; frozen native library is unchanged. Existing official studio_play suites continue to pass together with the new lan_protocol_test.dart (4). Official 1.83–2.13 / C.1–C.3 / A.1 / K.1–K.3 / M.1–M.3 new-counts are not mixed into this increment's new-count of 40."
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "45ac63c588efb5a1676d36ab721aaa52ac5cb2ae174676dfaaf63b39ee5b142f",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "i030Status": "partial",
+  "i031Status": "partial",
+  "i042Status": "partial",
+  "i049Status": "partial",
+  "i050Status": "partial",
+  "fullTaskComplete": false,
+  "realInferenceClaimed": false,
+  "realDeviceQualificationClaimed": false,
+  "twoPhysicalDeviceLanE2eClaimed": false,
+  "i016Started": false,
+  "coreStoreUserVersion": 9,
+  "libraryWorkspaceVersion": 6,
+  "asOf": "2026-11-27T22:21:30+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.14",
+  "cadence": "t154u: continue increment-by-increment on Linux/Web until honestly exhaustible work is done; do not mark T-4 or the program complete."
+}

@@ -1,0 +1,19 @@
+{
+  "name": "studio_agent",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "description": "Portable local-LLM agent contracts, plan validation, and harness loop. No on-device inference claim.",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    }
+  },
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "lints": "^6.0.0"
+  }
+}

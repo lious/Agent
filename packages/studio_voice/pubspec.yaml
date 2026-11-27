@@ -1,0 +1,19 @@
+{
+  "name": "studio_voice",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "description": "I-049/I-050 speech and consent interfaces. No real TTS or clone inference.",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    }
+  },
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "lints": "^6.0.0"
+  }
+}

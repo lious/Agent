@@ -1,0 +1,42 @@
+00:00 +0: loading packages/studio_agent/test/harness_loop_test.dart
+00:00 +0: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +1: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +2: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +3: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +4: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +5: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +6: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +7: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +8: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +9: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +10: packages/studio_agent/test/llm_runtime_stream_test.dart: model pin records the actual admitted pack, digest, and runtime
+00:00 +11: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +12: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +13: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +14: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +15: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +16: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +17: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +18: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +19: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +20: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +21: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +22: packages/studio_agent/test/plan_and_tools_test.dart: whitelist tools validate schema; unknown and forbidden tools are refused
+00:00 +23: packages/studio_agent/test/plan_and_tools_test.dart: untrusted injected verbs do not become executable delete or payment plans
+00:00 +24: packages/studio_agent/test/plan_and_tools_test.dart: capability table is honest about iOS inference and packaging
+00:00 +25: packages/studio_agent/test/plan_and_tools_test.dart: missing model pack leaves the agent unavailable but manual tools work
+00:00 +26: packages/studio_voice/test/i049_dialogue_speech_test.dart: unknown phonemes can be corrected and then transcribe
+00:00 +27: packages/studio_voice/test/i050_consent_clone_test.dart: no consent and post-revoke new executions stay at zero
+00:00 +28: packages/studio_voice/test/i050_consent_clone_test.dart: no consent and post-revoke new executions stay at zero
+00:00 +29: packages/studio_voice/test/i049_dialogue_speech_test.dart: changing one sentence only invalidates it and tempo dependents
+00:00 +30: packages/studio_voice/test/i049_dialogue_speech_test.dart: changing one sentence only invalidates it and tempo dependents
+00:00 +31: packages/studio_voice/test/i050_consent_clone_test.dart: embeddings never enter ordinary archive or log; refs stay traceable
+00:00 +32: packages/studio_voice/test/i050_consent_clone_test.dart: embeddings never enter ordinary archive or log; refs stay traceable
+00:00 +33: packages/studio_voice/test/i049_dialogue_speech_test.dart: 16 kHz backend output is resampled to 24 kHz
+00:00 +34: packages/studio_voice/test/i050_consent_clone_test.dart: revoked voice pin blocks new speech render
+00:00 +35: packages/studio_voice/test/i049_dialogue_speech_test.dart: TTS is not accepted as singing
+00:00 +36: packages/studio_play/test/lan_protocol_test.dart: loopback fabric delivers hello and heartbeat between two logical peers
+00:00 +37: packages/studio_play/test/lan_protocol_test.dart: duplicate seq is ignored and a revoked grant is refused
+00:00 +38: packages/studio_play/test/lan_protocol_test.dart: mystery truth is not delivered to a public screen and snapshots stay filtered
+00:00 +39: packages/studio_play/test/lan_protocol_test.dart: tampered payload hash is refused and session mismatch is refused
+00:00 +40: All tests passed!

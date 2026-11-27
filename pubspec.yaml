@@ -18,7 +18,9 @@
     "apps/studio_web",
     "packages/studio_peer_io",
     "packages/studio_peer_ui",
-    "packages/studio_play"
+    "packages/studio_play",
+    "packages/studio_agent",
+    "packages/studio_voice"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
