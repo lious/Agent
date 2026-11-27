@@ -80,7 +80,8 @@
     "packages/studio_identity_collision_probe",
     "packages/studio_future_major_probe",
     "packages/studio_web_publication_probe",
-    "packages/studio_package_projection_probe"
+    "packages/studio_package_projection_probe",
+    "packages/studio_save_as_named_version_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

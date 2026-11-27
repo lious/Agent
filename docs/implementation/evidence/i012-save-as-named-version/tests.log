@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_save_as_named_version_probe/test/storage/save/i012_save_as_named_version_test.dart
+00:00 +0: packages/studio_save_as_named_version_probe/test/storage/save/i012_save_as_named_version_test.dart: Save As must not silently overwrite an existing file, and a named version is a label pin not a fork or rollback
+00:00 +1: packages/studio_save_as_named_version_probe/test/storage/save/i012_save_as_named_version_test.dart: CHECKPOINT_NAME_EXISTS, fork-new-projectId, ExplicitSaveAdmission, and CheckpointIdentityAdmission stay closed
+00:00 +2: All tests passed!
