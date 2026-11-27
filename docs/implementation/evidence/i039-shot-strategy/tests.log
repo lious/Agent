@@ -1,0 +1,31 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/animatic/i039_shot_strategy_test.dart
+00:00 +0: the official 15-second four-shot animatic has exact frame ranges and does not submit paid generation before confirmation
+00:00 +1: changing the lead or deleting a shot invalidates only dependents; sources and paid jobs are kept; a library upgrade does not replace the frozen pin
+00:00 +2: missing 2.5D assets are not disguised as 2.5D; unselected TTS is an unvoiced preview; overflow is not sped up
+00:00 +3: All tests passed!
+EXIT:0
+======= frozen I-038 =======
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart
+00:00 +0: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +1: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +2: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: a single 岚 still cannot pretend the twoImages template has a second photo; an explicit fictional partner changes the route
+00:00 +3: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: product facts are taken only from FactLedger; an LLM confirmed=true claim is UNCONFIRMED_FACT and does not submit
+00:00 +4: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: product facts are taken only from FactLedger; an LLM confirmed=true claim is UNCONFIRMED_FACT and does not submit
+00:00 +5: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: miniature 1:20 contact compiles the official soft-intent golden, keeps locked stance and mask, and does not claim geometric calibration or submit
+00:00 +6: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: miniature 1:20 contact compiles the official soft-intent golden, keeps locked stance and mask, and does not claim geometric calibration or submit
+00:00 +7: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: missing refs, a same image without explicit regions, and a scale outside 0.005..0.2 are SLOT_COUNT and do not submit
+00:00 +8: packages/studio_vertical/test/vertical/all_scenarios/i038_baby_dance_play_recipe_test.dart: babyDance official fictional clothed-cartoon safe-sway compiles the golden, keeps locked parent caption and private status, and does not auto-publish, retarget, or submit
+00:00 +9: packages/studio_vertical/test/vertical/all_scenarios/i038_baby_dance_play_recipe_test.dart: babyDance official fictional clothed-cartoon safe-sway compiles the golden, keeps locked parent caption and private status, and does not auto-publish, retarget, or submit
+00:00 +10: packages/studio_vertical/test/vertical/all_scenarios/i038_baby_dance_play_recipe_test.dart: a real-child path without guardian or with unverified provider policy is refused and does not submit; missing slots and a revoked rights epoch are also refused
+00:00 +11: packages/studio_vertical/test/vertical/all_scenarios/i038_baby_dance_play_recipe_test.dart: adult-motion retargeting, mocap, auto-segmentation, unsafe choreography, and auto social publish are refused; a dangerous jump is reduced to gentle sway and still does not auto-publish or submit
+00:00 +12: packages/studio_vertical/test/vertical/all_scenarios/i038_animal_humanized_play_recipe_test.dart: animalHumanized official orange-cat uprightCartoon compiles the identity golden, keeps a locked caption, and does not replace the face, claim mocap, or submit
+00:00 +13: packages/studio_vertical/test/vertical/all_scenarios/i038_animal_humanized_play_recipe_test.dart: missing animal ref or required slots, missing image license, and clothingOnly forced upright are refused; clothingOnly does not become an upright body
+00:00 +14: packages/studio_vertical/test/vertical/all_scenarios/i038_animal_humanized_play_recipe_test.dart: adult human face, motion-transfer mocap, unlicensed human voice, and auto-segmentation are refused; a dangerous action is downgraded and does not claim the real animal acted
+00:00 +15: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_layering_test.dart: s8m five-layer compile keeps official order, limits this-shot characters, surfaces SOFT_CAMERA_CONTROL, and does not claim prompt-guaranteed edits, promote inferred facts, or submit
+00:00 +16: packages/studio_vertical/test/vertical/all_scenarios/i038_change_dependency_test.dart: SKU and duration change invalidates S2 appearance and S3 fact overlay, keeps the handmade S2 range and clip, and does not stale S1 or submit
+00:00 +17: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_layering_test.dart: an undecided stale override is OVERRIDE_REBASE_REQUIRED; keepUserVersion and itemizedDiff do not submit; over-length and out-of-range parameters are refused without silent truncation
+00:00 +18: packages/studio_vertical/test/vertical/all_scenarios/i038_change_dependency_test.dart: a locked caption price conflict, a locked music tail, a short replacement source, a CAS mismatch, stretching locked audio, and a resurrected cache entry are refused and do not submit
+00:00 +19: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_layering_test.dart: unsupported negative, user-declared tools, eval, secret bindings, inferred facts, revoked rights, and a locked caption price conflict are refused and do not submit or escalate privilege
+00:00 +20: packages/studio_vertical/test/vertical/all_scenarios/i038_change_dependency_test.dart: unplacing S2 is not delete source; a local S4 redo does not regenerate other shots; a missing causal shot is not rewritten into dialogue; a later character publish does not upgrade the pin
+00:00 +21: All tests passed!
+EXIT:0
