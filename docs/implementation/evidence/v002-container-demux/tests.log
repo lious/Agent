@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_container_probe/test/compatibility/container/v002_container_demux_test.dart
+00:00 +0: a demuxed container does not imply the bitstream can be decoded
+00:00 +1: a demuxed container does not imply the bitstream can be encoded
+00:00 +2: independent fixtures are not inherited from a baseline MP4 demux; CodecProbePort and format-reason leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
