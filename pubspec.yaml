@@ -51,7 +51,8 @@
     "packages/studio_vfr_audio_probe",
     "packages/studio_drift_probe",
     "packages/studio_proxy_delivery_probe",
-    "packages/studio_relink_version_probe"
+    "packages/studio_relink_version_probe",
+    "packages/studio_proxy_seek_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

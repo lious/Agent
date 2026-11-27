@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_proxy_seek_probe/test/media/proxy/i021_proxy_source_seek_test.dart
+00:00 +0: final render uses the proxy-frame to source-PTS map; seeking the original by proxy frame number is refused
+00:00 +1: preview and final must use the same map rule; the last source frame must not go past the source
+00:00 +2: I-021 seek/VFR/PTS suites, Increment 2.84 audio duration, and a 1-frame measurement stay closed
+00:00 +3: All tests passed!
+EXIT:0
