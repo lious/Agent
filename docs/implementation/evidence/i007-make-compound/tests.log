@@ -1,0 +1,39 @@
+===== official I-007 MakeCompound persist =====
+00:00 +0: loading packages/studio_document/test/nle/compound/i007_make_compound_test.dart
+00:00 +0: A+B become a pinned nest; C stays; child starts are rebased; holes are explicit gaps
+00:00 +1: an external AV link must be unlinked or fully included; include keeps sync
+00:00 +2: unlinking first allows compounding only the video; the audio partner stays on the parent
+00:00 +3: a locked host track refuses the compound without a half-write
+00:00 +4: nest depth greater than 8 is refused and optical-flow remains unclaimed
+00:00 +5: All tests passed!
+
+===== frozen I-007 retime/nest =====
+00:00 +0: loading packages/studio_document/test/nle/retime/i007_retime_nest_test.dart
+00:00 +0: piecewise knots map local 3s to source offset 3s and invert exactly
+00:00 +1: split at 3s inserts the same mapping point on both segments
+00:00 +2: 30000/1001 with 48k has no cumulative drift through a linear TimeMap
+00:00 +3: caption source anchors use inverse TimeMap, not a frame index
+00:00 +4: optical-flow interpolation is refused and does not steal duration
+00:00 +5: reverse, freeze, and non-monotone maps are refused, not faked as +rate
+00:00 +6: nested cycles and depth over 8 are refused
+00:00 +7: sourceAt composes through a nest stack with exact Q, not frame indexes
+00:00 +8: All tests passed!
+
+===== frozen ignore_links_move_test.dart =====
+00:00 +0: loading packages/studio_document/test/ignore_links_move_test.dart
+00:00 +0: default includeLinks still moves both partners and keeps preserve
+00:00 +1: includeLinks=false moves only the explicit clip, marks allowOutOfSync, keeps offset
+00:00 +2: moving every member with includeLinks=false does not mark the link out of sync
+00:00 +3: locked unmoved partner does not refuse; locked selected member still does
+00:00 +4: insert and overwrite stay distinct; insert still leaves a source gap
+00:00 +5: includeLinks=false does not pull unselected selection-group members
+00:00 +6: All tests passed!
+
+===== frozen field_invert_unlink_test.dart =====
+00:00 +0: loading packages/studio_document/test/field_invert_unlink_test.dart
+00:00 +0: inverting an unlink after a later aligned leave-gap move keeps moved cues and restores the link
+00:00 +1: a later relink conflicts with invert of the original unlink
+00:00 +2: inverting an unlink after an unrelated marker edit leaves markers and unmoved cues
+00:00 +3: inverting a relink after a later leave-gap move restores the unlink only
+00:00 +4: inverting an unlink after a diverging move is refused as LINK_OFFSET_MISMATCH
+00:00 +5: All tests passed!

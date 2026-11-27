@@ -28,12 +28,12 @@ void requireLocalEditingWritable(ProjectDocument project) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
   final sequences = d['sequences'] as List, buses = d['audioBuses'] as List;
-  if (sequences.length != 1 ||
-      sequences.single['id'] != d['rootSequenceId'] ||
+  if (sequences.isEmpty ||
+      sequences[0]['id'] != d['rootSequenceId'] ||
       buses.isEmpty) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
-  final s = sequences.single;
+  final s = sequences[0];
   for (final raw in buses) {
     if ((raw['effectIds'] as List).isNotEmpty) {
       throw const StudioException('AUDIO_EFFECT_NOT_IMPLEMENTED');
@@ -47,10 +47,11 @@ void requireLocalEditingWritable(ProjectDocument project) {
   ], s['masterBusId'] as String);
   requireWritableMarkers(d);
   final consumed = <String>{
-    for (final t in s['tracks'])
-      for (final c in t['items'])
-        if (c['source'] != null)
-          for (final id in c['effectIds']) id as String,
+    for (final seq in sequences)
+      for (final t in seq['tracks'])
+        for (final c in t['items'])
+          if (c['source'] != null)
+            for (final id in c['effectIds'] as List) id as String,
   };
   if ((d['effects'] as List).any(
     (e) =>
@@ -128,18 +129,29 @@ void requireLocalEditingWritable(ProjectDocument project) {
       throw const StudioException('PROXY_RESOURCE_UNREFERENCED');
     }
   }
-  final tracks = s['tracks'] as List;
-  final video = tracks.where((t) => t['kind'] == 'video').toList(),
-      captionTracks = tracks.where((t) => t['kind'] == 'caption').toList(),
-      audioTracks = tracks.where((t) => t['kind'] == 'audio').toList();
-  if (video.length > 1 ||
-      captionTracks.length > 1 ||
-      audioTracks.length > 1 ||
-      video.length + captionTracks.length + audioTracks.length !=
-          tracks.length ||
-      (video.isNotEmpty && tracks[0]['kind'] != 'video')) {
-    throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+  final tracks = [
+    for (final seq in sequences) ...seq['tracks'] as List,
+  ];
+  for (final seq in sequences) {
+    final seqTracks = seq['tracks'] as List;
+    final video = seqTracks.where((t) => t['kind'] == 'video').toList(),
+        captionTracks = seqTracks.where((t) => t['kind'] == 'caption').toList(),
+        audioTracks = seqTracks.where((t) => t['kind'] == 'audio').toList();
+    if (video.length > 1 ||
+        captionTracks.length > 1 ||
+        audioTracks.length > 1 ||
+        video.length + captionTracks.length + audioTracks.length !=
+            seqTracks.length ||
+        (video.isNotEmpty && seqTracks[0]['kind'] != 'video')) {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED');
+    }
   }
+  final video = tracks.where((t) => t['kind'] == 'video').toList(),
+      captionTracks = [
+        for (final t in s['tracks'] as List)
+          if (t['kind'] == 'caption') t,
+      ],
+      audioTracks = tracks.where((t) => t['kind'] == 'audio').toList();
   for (final t in tracks) {
     if (t['kind'] == 'audio') {
       final busId = t['busId'] as String?;
@@ -191,7 +203,8 @@ void requireLocalEditingWritable(ProjectDocument project) {
   for (final track in [...video, ...audioTracks]) {
     for (final c in track['items']) {
       if (c['source'] == null) continue;
-      if (c['source']['kind'] != 'asset' ||
+      final source = c['source'];
+      if ((source['kind'] != 'asset' && source['kind'] != 'sequence') ||
           c['timeMap']['kind'] != 'linear' ||
           c['shotId'] != null ||
           c['candidateId'] != null ||
@@ -203,16 +216,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
       } else {
         clipOpacityQ16(d, c as Map);
       }
-      final source = c['source'];
-      final a = assets[source['id']];
-      if (a == null) throw const StudioException('REF_NOT_FOUND');
-      if (a['version'] != source['version']) {
-        throw const StudioException('SOURCE_VERSION_MISSING');
-      }
-      final streams = (a['streams'] as List).where(
-        (v) => v['id'] == source['streamId'] && v['type'] == track['kind'],
-      );
-      if (streams.length != 1) throw const StudioException('REF_NOT_FOUND');
       final rate = Q.fromJson(c['timeMap']['rate']);
       final tr = c['timelineRange'], sr = c['sourceRange'];
       final start = Q.fromJson(sr['start']),
@@ -223,6 +226,32 @@ void requireLocalEditingWritable(ProjectDocument project) {
           rate * Q.fromJson(tr['duration']) != duration) {
         throw const StudioException('TIME_MAP_MISMATCH');
       }
+      if (source['kind'] == 'sequence') {
+        if (source['streamId'] != null) {
+          throw const StudioException('SOURCE_STREAM_MISMATCH');
+        }
+        final child = [
+          for (final seq in sequences)
+            if (seq['id'] == source['id']) seq,
+        ];
+        if (child.length != 1) throw const StudioException('REF_NOT_FOUND');
+        if (child.single['version'] != source['version']) {
+          throw const StudioException('SOURCE_VERSION_MISSING');
+        }
+        if (start + duration > Q.fromJson(child.single['duration'])) {
+          throw const StudioException('SOURCE_OUT_OF_RANGE');
+        }
+        continue;
+      }
+      final a = assets[source['id']];
+      if (a == null) throw const StudioException('REF_NOT_FOUND');
+      if (a['version'] != source['version']) {
+        throw const StudioException('SOURCE_VERSION_MISSING');
+      }
+      final streams = (a['streams'] as List).where(
+        (v) => v['id'] == source['streamId'] && v['type'] == track['kind'],
+      );
+      if (streams.length != 1) throw const StudioException('REF_NOT_FOUND');
       if (start + duration > Q.fromJson(streams.single['duration'])) {
         throw const StudioException('SOURCE_OUT_OF_RANGE');
       }
@@ -277,7 +306,8 @@ void requireDissolveProfile(Map<String, dynamic> d) {
 /// not AV links and must remain bidirectionally consistent.
 void requireSelectionGroupProfile(Map<String, dynamic> d) {
   final clips = {
-    for (final t in d['sequences'][0]['tracks'])
+    for (final seq in d['sequences'] as List)
+      for (final t in seq['tracks'] as List)
       for (final c in t['items'])
         if (c['source'] != null) c['id']: c,
   };

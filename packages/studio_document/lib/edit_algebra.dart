@@ -15,6 +15,7 @@ part 'track_state.dart';
 part 'audio_routes.dart';
 part 'clip_gain_edit.dart';
 part 'transform_edit.dart';
+part 'nest_edit.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -1096,6 +1097,9 @@ ProjectDocument applyEdit(
   required IdAllocator newId,
 }) {
   requireLocalEditingWritable(before);
+  if (operation is MakeCompound) {
+    return _makeCompound(before, operation, nextVersion, newId);
+  }
   if (operation is SetTrackState) {
     return _setTrackState(before, operation, nextVersion);
   }
@@ -1201,7 +1205,8 @@ ProjectDocument applyEdit(
           operation is! RenameProject &&
           operation is! SetCaptions &&
           operation is! SetMarkers &&
-          operation is! AppendVideoAsset)) {
+          operation is! AppendVideoAsset &&
+          operation is! MakeCompound)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
   }
   if (operation is SetAudioBusRoutes) {
@@ -1486,6 +1491,8 @@ ProjectDocument applyEdit(
       throw StateError('Handled track state edit');
     case RenameProject():
       throw StateError('Handled before sequence edit');
+    case MakeCompound():
+      throw StateError('Handled compound edit');
     case AppendVideoAsset():
       final p = operation.toJson();
       final a = p['asset'] as Map<String, dynamic>;

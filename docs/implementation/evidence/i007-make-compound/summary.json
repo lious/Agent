@@ -1,0 +1,40 @@
+{
+  "increment": "2.27",
+  "title": "I-007 MakeCompound persist with external-link include-or-unlink",
+  "baseCommit": "2e7efa4c0c74e32539f9cd809a5f879b9ef0b07e",
+  "productionChanged": true,
+  "newCount": 5,
+  "newTests": {
+    "studio_document_i007_make_compound": 5
+  },
+  "frozenReRun": {
+    "studio_document_i007_retime_nest": 8,
+    "studio_document_ignore_links_move": 6,
+    "studio_document_field_invert_unlink": 5
+  },
+  "clauseOfficialized": "MakeCompound persists a child sequence and a pinned nest clip. Selected starts are rebased; interior holes are explicit Gaps; neighbors stay on the parent. An incomplete AV link is COMPOUND_EXTERNAL_LINK and does not half-write. Unlink first allows compounding only the video. Including every member keeps preserve sync on the parent nest pair. A locked track is FIELD_LOCKED. Depth greater than 8 is NEST_DEPTH. Optical-flow interpolation stays refused.",
+  "task": "I-007",
+  "whyNotAlreadyOfficial": "Increment 2.24 officialized RetimeMap and NestResolver only. MakeCompound persist and the I-006 external-link include-or-unlink rule were still listed in I-007 remainingScope.",
+  "rowsStillOpen": [
+    "UpgradeNest fit/trim/ripple; no auto-follow",
+    "OpenNested",
+    "P2 reverse/freeze/smooth",
+    "V-003 real playback",
+    "I-006 remainingScope (轨锁/syncLock/link/unlink/多轨边界; field-aware invert of Slip/Roll/Slide)"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "965192192bf48266f19ba63e50dc75dffacca084de34004562364d7d92192e5d",
+  "opticalFlowDefaulted": false,
+  "i006RemainingClosed": false,
+  "v003Claimed": false,
+  "fullTaskComplete": false,
+  "programCounts": {
+    "complete": 0,
+    "partial": 37,
+    "planned": 37,
+    "blocked": 13
+  },
+  "asOf": "2026-11-28T01:05:02+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.27"
+}
