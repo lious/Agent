@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_downmix_probe/test/audio/dsp/i023_downmix_matrix_test.dart
+00:00 +0: a downmix with an explicit finite matrix is admitted; pass-through does not require a matrix
+00:00 +1: an implicit or missing downmix matrix is refused; a malformed matrix is refused
+00:00 +2: a mixer or limiter runtime, I-009 mix, I-007 PCM remap, and I-023 measurements stay closed
+00:00 +3: All tests passed!
+EXIT:0
