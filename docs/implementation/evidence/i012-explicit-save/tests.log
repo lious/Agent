@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_explicit_save_probe/test/storage/save/i012_explicit_save_test.dart
+00:00 +0: saveManaged is admitted with a checkpoint and an explicit receipt and does not imply a .studioproj
+00:00 +1: saveBoundPackage requires an external binding and may claim success only after a StoragePort receipt
+00:00 +2: Increment 3.07 close-checkpoint, Increment 3.05 package auto-update, Increment 3.06 artifact-kind, ADR 0098, a Flutter widget tree, and a SAF/iCloud adapter stay closed
+00:00 +3: All tests passed!
+EXIT:0

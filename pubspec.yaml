@@ -71,7 +71,8 @@
     "packages/studio_artifact_kind_probe",
     "packages/studio_close_checkpoint_probe",
     "packages/studio_sql_cloud_side_effect_probe",
-    "packages/studio_writer_fence_probe"
+    "packages/studio_writer_fence_probe",
+    "packages/studio_explicit_save_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
