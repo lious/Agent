@@ -57,6 +57,7 @@ final class TemplateService {
     required String documentId,
     required Namespace namespace,
     List<TemplateBinding> bindings = const [],
+    bool allowDraft = false,
   }) {
     requireId(instanceId);
     requireId(documentId);
@@ -73,6 +74,7 @@ final class TemplateService {
       if (slot != null) {
         final binding = bySlot[slot.id];
         if (slot.required &&
+            !allowDraft &&
             binding == null &&
             slot.kind != SlotKind.text &&
             (sourceHash == null || sourceHash == _zero)) {

@@ -1,0 +1,32 @@
+{
+  "increment": "2.21",
+  "title": "I-026 template editor session and graphics-library store",
+  "baseCommit": "6d42d0bad860c0c6de1a2af2be884565fa4bccdb",
+  "productionChanged": true,
+  "newCount": 8,
+  "newTests": {
+    "studio_image_editor_library": 8
+  },
+  "frozenReRun": {
+    "studio_image_editor_i026_layer_templates": 7
+  },
+  "clauseOfficialized": "Private graphics-library/1 store (not project user_version 9) with immutable versions and heads. Same Graphic@1 stays pinned in P and Q after @2; only Q's explicit upgrade moves. Deleting a head leaves pinned versions loadable; pinned versions are GRAPHIC_IN_USE. Unauthorized material cannot enter a shared template; selection does not grant redistribution. Empty/too-long names are refused; tags are casefold-deduped; search is namespace-first. TemplateEditorSession rebinds a photo without flattening or changing text/ids/transforms; a required empty slot may stay as a draft and blocks delivery; unknown template metadata refuses upgrade/rebind.",
+  "task": "I-026",
+  "whyNotAlreadyOfficial": "Increment 2.15 landed ten official layered templates but left the graphics-library store and template-edit UI unopened.",
+  "rowsStillOpenOnI026": [
+    "I-004 AssetRepository attach of graphic/template blobs as project assets",
+    "V-003 GPU image-render qualification",
+    "Flutter widget tree for the template/library editor (this slice is the controller/session only)"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "753b3cf4ab6f4609c746cbf34fe230bb9d5b49e1569a5061e2ae9059d19449dd",
+  "i026Status": "partial",
+  "fullTaskComplete": false,
+  "v003Claimed": false,
+  "flutterWidgetTreeClaimed": false,
+  "coreStoreUserVersion": 9,
+  "graphicsLibraryDocument": "graphics-library/1",
+  "asOf": "2026-11-27T23:56:50+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.21"
+}

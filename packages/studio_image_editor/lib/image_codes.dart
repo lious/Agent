@@ -10,3 +10,8 @@ const flattenForbidden = 'FLATTEN_FORBIDDEN';
 const styleSuggestionRefused = 'STYLE_SUGGESTION_REFUSED';
 const inferredColorNotFact = 'INFERRED_COLOR_NOT_FACT';
 const requiredSlotEmpty = 'REQUIRED_SLOT_EMPTY';
+
+const rightsRequired = 'RIGHTS_REQUIRED';
+const unknownTemplate = 'UNKNOWN_TEMPLATE';
+const immutableGraphicVersion = 'IMMUTABLE_GRAPHIC_VERSION';
+const nameRejected = 'NAME_REJECTED';
