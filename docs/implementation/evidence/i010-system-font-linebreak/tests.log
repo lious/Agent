@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_system_font_probe/test/caption/font/i010_system_font_linebreak_test.dart
+00:00 +0: an explicit fontRef or font hash is admitted; a platform system-font default is refused
+00:00 +1: layout without an explicit fontRef or font hash is refused
+00:00 +2: a text shaper, sidecar or font-fallback re-qualification, safe-area re-reading, and burn-in stay closed
+00:00 +3: All tests passed!
+EXIT:0
