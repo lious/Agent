@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_color_probe/test/color/advanced/v006_color_pipeline_test.dart
+00:00 +0: HDR metadata and sample range are preserved; the original is not silently clipped or rewritten
+00:00 +1: without an HDR display, verification is numeric only; appearance and untested HDR publish are not claimed
+00:00 +2: silent tonemap is refused; missing capability keeps original params read-only; V-006 cannot auto-accept
+00:00 +3: All tests passed!
+EXIT:0
