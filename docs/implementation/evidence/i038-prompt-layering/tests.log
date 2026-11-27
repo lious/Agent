@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_layering_test.dart
+00:00 +0: s8m five-layer compile keeps official order, limits this-shot characters, surfaces SOFT_CAMERA_CONTROL, and does not claim prompt-guaranteed edits, promote inferred facts, or submit
+00:00 +1: an undecided stale override is OVERRIDE_REBASE_REQUIRED; keepUserVersion and itemizedDiff do not submit; over-length and out-of-range parameters are refused without silent truncation
+00:00 +2: unsupported negative, user-declared tools, eval, secret bindings, inferred facts, revoked rights, and a locked caption price conflict are refused and do not submit or escalate privilege
+00:00 +3: All tests passed!

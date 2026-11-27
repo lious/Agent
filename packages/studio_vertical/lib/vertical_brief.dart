@@ -16,6 +16,12 @@ const subjectOrderUnresolved = 'SUBJECT_ORDER_UNRESOLVED';
 const providerChildPolicyUnverified = 'PROVIDER_CHILD_POLICY_UNVERIFIED';
 const rightsRequired = 'RIGHTS_REQUIRED';
 const approvalRequired = 'APPROVAL_REQUIRED';
+const promptTooLong = 'PROMPT_TOO_LONG';
+const parameterRange = 'PARAMETER_RANGE';
+const factBindingConflict = 'FACT_BINDING_CONFLICT';
+const toolNotAllowed = 'TOOL_NOT_ALLOWED';
+const unsupportedEditTechnique = 'UNSUPPORTED_EDIT_TECHNIQUE';
+const softCameraControl = 'SOFT_CAMERA_CONTROL';
 
 /// s8h Purpose axis. Not mutually exclusive with input modes or recipes.
 enum VerticalPurpose {

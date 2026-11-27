@@ -1,0 +1,33 @@
+{
+  "increment": "2.47",
+  "task": "I-038",
+  "title": "s8m prompt layering, override rebase, and no-silent-truncate refusals",
+  "asOf": "2026-11-28T02:32:57+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "afdaa9860f99149279a37a70f33667a6a7b0fe97",
+  "officialTests": 3,
+  "frozenI038Suites": 15,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "quote / apply / WorkflowCoordinator",
+    "paid generation",
+    "SQL vertical.v1 / workspace SQLite w5",
+    "IntentReducer / DependencyIndex product surface",
+    "real two-model director/visual handoff",
+    "signed-pack import / production FTS/RAG",
+    "I-037 or I-038 complete",
+    "PlanGraph manual-lock API / PLAN_CYCLE re-qualification",
+    "motion capture / adult-motion retargeting / auto-segmentation",
+    "new child-related surfaces beyond officialized s8l bounds",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_vertical/lib/prompt_program.dart",
+    "packages/studio_vertical/lib/vertical_brief.dart",
+    "packages/studio_vertical/lib/studio_vertical.dart",
+    "packages/studio_vertical/pubspec.yaml",
+    "packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_layering_test.dart"
+  ]
+}
