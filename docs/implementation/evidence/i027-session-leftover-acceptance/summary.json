@@ -1,0 +1,25 @@
+{
+  "increment": "2.28",
+  "task": "I-027",
+  "title": "leftover tool-call pairing, fork/resume HTTP, and body purge",
+  "asOf": "2026-11-28T01:08:39+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "c8ea4d75faba6d827e25db4e4bc4346c713fec0d",
+  "officialTests": 6,
+  "harnessPackageTests": 20,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "workspace SQLite w5 persist",
+    "Project user_version 10",
+    "production FTS/RAG",
+    "product New/Rename/Archive/SearchSessions UI",
+    "explicit PatchGroup cherry-pick",
+    "chat workbench UI",
+    "shared cross-app session"
+  ],
+  "files": [
+    "packages/studio_harness/lib/session_store.dart",
+    "packages/studio_harness/lib/studio_harness.dart",
+    "packages/studio_harness/test/session/branches/i027_session_leftover_acceptance_test.dart"
+  ]
+}

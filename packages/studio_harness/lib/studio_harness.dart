@@ -4,6 +4,7 @@ export 'approval.dart';
 export 'budget.dart';
 export 'device_scheduler.dart';
 export 'reconcile.dart';
+export 'session_store.dart';
 
 /// A scoped reference is a value, not permission to execute a tool or edit a project.
 final class SessionRef {
