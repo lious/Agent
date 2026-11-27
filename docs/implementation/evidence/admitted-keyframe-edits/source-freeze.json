@@ -1,0 +1,11 @@
+{
+  "baseCommit": "3c45983d5ba9b8de8d9fb43511efeee6b8d50f47",
+  "sourceSha256": {
+    "packages/studio_document/test/admitted_keyframe_transition_edit_coverage_test.dart": "c0c789d3852c103743cfa85ae49a85595cad413c17e69a6db60972d2b5f47286"
+  },
+  "aggregateSha256": "19ab3e92308637986cbef0b55a53584c603cd2494132e513771e3d4b8ddadbf8",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "19ab3e92308637986cbef0b55a53584c603cd2494132e513771e3d4b8ddadbf8",
+  "asOf": "2026-11-27T16:00:26+08:00",
+  "timezone": "Asia/Shanghai"
+}

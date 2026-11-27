@@ -1,0 +1,40 @@
+{
+  "increment": "2.12",
+  "title": "Official coverage of admitted transform2d overwrite-crop and lumaWipe edit-command refusals",
+  "baseCommit": "3c45983d5ba9b8de8d9fb43511efeee6b8d50f47",
+  "aggregateSha256": "19ab3e92308637986cbef0b55a53584c603cd2494132e513771e3d4b8ddadbf8",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "19ab3e92308637986cbef0b55a53584c603cd2494132e513771e3d4b8ddadbf8",
+  "newThisIncrement": {
+    "document": 3,
+    "sdk": 0,
+    "ui": 0,
+    "total": 3
+  },
+  "selected": {
+    "document": {
+      "passed": 473,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 3,
+      "note": "473 is the studio_document package total on this workbench, not the official new-count and not a selected-subset count."
+    },
+    "total": {
+      "passed": 473,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0
+  },
+  "bounds": [
+    "This slice adds official coverage only for already-implemented behavior of admitted keyframes and lumaWipe under admitted split / trim / overwrite-crop / slip. It does not open new effects or edit commands.",
+    "Official overwrite paste of an admitted transform2d curve crops the destination remnant with interpolated cropTransformPoints boundary values (translateX 0 at local 0 and 16 at local 2 becomes 8 at the cropped local 1). The incoming full-clip copy keeps its original clip-local keys. Production overwrite.dart and cropTransformPoints are unchanged.",
+    "SplitClip and TrimClip of a lumaWipe host refuse with TRANSITION_RANGE_EDIT_REQUIRES_REMOVAL. SlipClip of a lumaWipe host refuses with UNSUPPORTED_EDIT_TECHNIQUE for both a handle-short delta and a still-covered delta; the sequence-owned luma is not silently dropped or rewritten. Overwrite paste into a luma window refuses with TRANSITION_NOT_ADJACENT or REF_NOT_FOUND, does not write a dissolve, leaves the document unchanged, and is accepted after RemoveLumaWipe. Production algebra is unchanged.",
+    "Frozen Increment 2.02 / 2.05 / 2.06 / 2.09 official test files are not rewritten. foundation_app_test.dart is not rewritten. Workbench controls for SetTransformKeyframe / RemoveTransformKeyframe / lumaWipe incomingLuma / opacity keyframes already exist and already have official locate() UI tests, so no UI or SDK tests were added. InversePatch stays restoreSnapshot. TRANSFORM_ANIMATION_NOT_IMPLEMENTED is not retargeted. RenderGraph, GPU FrameLease, maskWipe, assetLuma, assetAlpha, colorBasic animation, I-007, I-026, and V-003 are not opened. Native C++ was not changed and the shared preview library was not replaced. Store tests and the Increment 1.88 SDK 1000-sequence undo suite were not run. I-008 stays partial; I-005 stays partial. Leftover remainingAcceptance items 缺handles拒, 关键帧边界连续, and 一次提案原子undo恢复hash are not re-qualified and remain listed.",
+    "The source clone labeled this Increment 2.10 and ADR 0111; those identifiers are remapped only on this feature-branch commit. Source-freeze hashes describe the source clone."
+  ],
+  "asOf": "2026-11-27T16:00:26+08:00",
+  "timezone": "Asia/Shanghai"
+}
