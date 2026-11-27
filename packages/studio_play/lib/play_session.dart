@@ -76,9 +76,11 @@ final class PlayDevice {
   final bool canCompute;
   bool online;
 
+  /// Exact granted scopes only. Holding [TrustScope.mysteryTruth] does not
+  /// admit any other scope; public screens stay audience-only.
   bool allows(TrustScope scope) {
     if (forcedAudience) return scope == TrustScope.public;
-    return scopes.contains(scope) || scopes.contains(TrustScope.mysteryTruth);
+    return scopes.contains(scope);
   }
 
   static Set<TrustScope> _bounded(DeviceKind kind, Set<TrustScope> scopes) {
@@ -501,6 +503,20 @@ final class PlaySession {
   int get nextSeq => ++_seq;
   bool get hostOnline => devices[hostDeviceId]?.online ?? false;
 
+  /// Authorized-host local execution is not a [PlayDevice.allows] wildcard.
+  /// A GM notebook may run already-visible private material locally; a device
+  /// that merely holds mysteryTruth still cannot admit other scopes.
+  bool hostMayRunLocally(PlayDevice device, TrustScope scope) {
+    if (device.id != hostDeviceId || !device.online || device.forcedAudience) {
+      return false;
+    }
+    final g = grant(hostGrantId);
+    if (g.revoked || g.mysteryRole != MysteryRole.gm) return false;
+    if (!device.scopes.contains(TrustScope.mysteryTruth)) return false;
+    return scope == TrustScope.mysteryTruth ||
+        scope.id.startsWith('character.');
+  }
+
   PlayPerson person(String id) =>
       persons[id] ?? (throw StudioException('PLAY_PERMISSION_DENIED', id));
   PlayDevice device(String id) =>
@@ -898,17 +914,12 @@ final class PlaySession {
         g.crewRole == CrewRole.assistantDirector) {
       return true;
     }
-    if (g.crewRole == CrewRole.screenwriter ||
-        g.crewRole == CrewRole.editor ||
-        (g.crewRole == CrewRole.performer && g.lead)) {
-      final sceneOk = g.sceneIds.isEmpty || g.sceneIds.contains(sceneId);
-      final deptOk =
-          g.departments.isEmpty ||
-          department.isEmpty ||
-          g.departments.contains(department);
-      return sceneOk &&
-          deptOk &&
-          (g.sceneIds.isNotEmpty || g.departments.isNotEmpty || g.lead);
+    // Screenwriters may dispatch only inside explicitly assigned scenes.
+    // Editors and lead performers are not official issuers; they raise requests.
+    // Empty scene/department lists are not a wildcard, and `lead` alone is not
+    // a license to issue official work.
+    if (g.crewRole == CrewRole.screenwriter) {
+      return g.sceneIds.contains(sceneId);
     }
     return false;
   }
@@ -931,7 +942,10 @@ final class PlaySession {
   }
 
   void cancelTask(Acting by, String taskId) {
+    _requireMode(PlayMode.crew);
+    acting(personId: by.personId, deviceId: by.deviceId, grantId: by.grantId);
     final task = _task(taskId);
+    _requireScheduleAuthority(by);
     final previous = task.phase;
     task.phase = TaskPhase.cancelled;
     task.history.add('cancelled from $previous by ${by.roleLabel}');
@@ -939,7 +953,10 @@ final class PlaySession {
   }
 
   void reassignTask(Acting by, String taskId, String newPersonId) {
+    _requireMode(PlayMode.crew);
+    acting(personId: by.personId, deviceId: by.deviceId, grantId: by.grantId);
     final task = _task(taskId);
+    _requireScheduleAuthority(by);
     final previous = '${task.phase}:${task.claimedByPersonId}';
     person(newPersonId);
     task.assigneePersonId = newPersonId;
@@ -948,6 +965,15 @@ final class PlaySession {
       'reassigned from $previous to $newPersonId by ${by.roleLabel}',
     );
     _record(by, 'reassign', taskId);
+  }
+
+  void _requireScheduleAuthority(Acting by) {
+    if (by.assistant) throw StudioException('PLAY_AI_FORBIDDEN');
+    final g = grant(by.grantId);
+    if (g.crewRole != CrewRole.director &&
+        g.crewRole != CrewRole.assistantDirector) {
+      throw StudioException('PLAY_PERMISSION_DENIED', 'schedule');
+    }
   }
 
   String submitDelivery(
@@ -997,7 +1023,16 @@ final class PlaySession {
   }
 
   void markTechnicalQuality(Acting by, String deliveryId, String mark) {
+    _requireMode(PlayMode.crew);
     acting(personId: by.personId, deviceId: by.deviceId, grantId: by.grantId);
+    if (by.assistant) throw StudioException('PLAY_AI_FORBIDDEN');
+    final g = grant(by.grantId);
+    // Technical quality is a craft mark, not creative adoption.
+    if (g.crewRole != CrewRole.director &&
+        g.crewRole != CrewRole.assistantDirector &&
+        g.crewRole != CrewRole.performer) {
+      throw StudioException('PLAY_PERMISSION_DENIED', 'technical');
+    }
     deliveries[deliveryId]!.technicalMark = mark;
     _task(deliveries[deliveryId]!.taskId).history.add('technical $mark');
     _record(by, 'technical', '$deliveryId:$mark');
@@ -1225,10 +1260,17 @@ final class PlaySession {
     if (!wantVideo) {
       return {'kind': 'text-recap', 'text': text, 'video': null};
     }
-    final players = grants.values.where(
-      (g) => g.mysteryRole == MysteryRole.player && !g.revoked,
-    );
-    final missing = players.any((g) => memorialConsents[g.personId] != true);
+    // Consent is per person. The GM is a person too and cannot be skipped
+    // just because the role is GM.
+    final requiredPeople = <String>{};
+    for (final g in grants.values) {
+      if (g.revoked) continue;
+      if (g.mysteryRole == MysteryRole.player ||
+          g.mysteryRole == MysteryRole.gm) {
+        requiredPeople.add(g.personId);
+      }
+    }
+    final missing = requiredPeople.any((id) => memorialConsents[id] != true);
     if (missing) {
       throw StudioException('PLAY_CONSENT_REQUIRED');
     }

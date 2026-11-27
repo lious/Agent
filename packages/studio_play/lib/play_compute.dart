@@ -75,10 +75,14 @@ final class PlayComputeDispatcher {
     }
     final host = session.device(session.hostDeviceId);
     if (host.online &&
-        intent.inputs.every((input) => host.allows(input.scope))) {
+        intent.inputs.every((input) => _canReceive(host, input.scope))) {
       return host;
     }
     return null;
+  }
+
+  bool _canReceive(PlayDevice device, TrustScope scope) {
+    return device.allows(scope) || session.hostMayRunLocally(device, scope);
   }
 
   TaskLease claimLease(
@@ -96,7 +100,7 @@ final class PlayComputeDispatcher {
       throw const StudioException('PLAY_DEVICE_TRUST', 'not-compute');
     }
     for (final input in intent.inputs) {
-      if (!device.allows(input.scope)) {
+      if (!_canReceive(device, input.scope)) {
         throw StudioException('PLAY_PRIVATE_INPUT', input.id);
       }
     }
