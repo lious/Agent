@@ -74,7 +74,8 @@
     "packages/studio_writer_fence_probe",
     "packages/studio_explicit_save_probe",
     "packages/studio_checkpoint_identity_probe",
-    "packages/studio_prepared_stage_probe"
+    "packages/studio_prepared_stage_probe",
+    "packages/studio_shared_library_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_shared_library_probe/test/storage/commit/i003_shared_library_test.dart
+00:00 +0: an explicit shared library is admitted only with the same protocol and namespace authorization
+00:00 +1: Increment 3.12 prepared-stage, Increment 3.09 writer-fence, workspace_test isolation, an OS lock runtime, an App Group runtime, and I-003 namespace labels stay closed
+00:00 +2: All tests passed!
+EXIT:0
