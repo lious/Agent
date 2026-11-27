@@ -2,6 +2,7 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 
 import 'registry_bridge.dart';
+import 'skill_privilege.dart';
 
 const softCameraControl = 'SOFT_CAMERA_CONTROL';
 const capabilityUnsatisfied = 'CAPABILITY_UNSATISFIED';
@@ -292,6 +293,56 @@ final class CraftSkillCompiler {
       ],
       softWarnings: [warning],
       inverseKind: 'restoreSnapshot',
+    );
+  }
+
+  /// s8f import: unsigned packs may be previewed as untrusted
+  /// knowledge. Preview cannot add tools and does not execute.
+  SkillImportPreview previewExternalSkill(ExternalSkillRequest request) {
+    refuseForbiddenSkillPayload(request);
+    return SkillImportPreview(
+      skillSnapshotHash: request.contentHash,
+      untrusted: !request.signed,
+      addedTools: const [],
+      requiredApprovals: const ['userConfirm'],
+    );
+  }
+
+  /// s8f execute: requiredTools must stay inside the grant
+  /// intersection; a skill signature or claimedApproved flag is not
+  /// user approval. The compiler still does not write a project.
+  CraftProposal compileExternalSkill({
+    required SkillPackage skill,
+    required ExternalSkillRequest request,
+    required SkillExecutionScope scope,
+    String backend = 'cpu',
+  }) {
+    if (skill.id != request.skillId ||
+        skill.contentHash != request.contentHash ||
+        skill.pluginType != request.pluginType) {
+      throw StudioException('INVALID_ID', skill.id);
+    }
+    refuseForbiddenSkillPayload(request);
+    requireSkillToolGrant(request, scope);
+    // Signature and model/skill claimedApproved do not satisfy this.
+    if (!request.userConfirmed) {
+      throw StudioException(skillApprovalRequired, request.skillId);
+    }
+    final proposal = compile(skill: skill, backend: backend);
+    return CraftProposal(
+      id: proposal.id,
+      skillSnapshotHash: proposal.skillSnapshotHash,
+      compilerVersion: proposal.compilerVersion,
+      operator: proposal.operator,
+      requiredFeatures: proposal.requiredFeatures,
+      shotDesignPatchGroups: proposal.shotDesignPatchGroups,
+      editPatchGroups: proposal.editPatchGroups,
+      softWarnings: proposal.softWarnings,
+      unsupportedFields: proposal.unsupportedFields,
+      requiredApprovals: const [],
+      commands: proposal.commands,
+      inverseKind: proposal.inverseKind,
+      beforeSnapshotHash: proposal.beforeSnapshotHash,
     );
   }
 }

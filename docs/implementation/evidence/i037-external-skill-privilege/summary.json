@@ -1,0 +1,30 @@
+{
+  "increment": "2.41",
+  "task": "I-037",
+  "title": "External skills cannot escalate privileges or bypass approval",
+  "asOf": "2026-11-28T02:13:17+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "2ce86b44157c6be5fc6175b76d1e8edbb47be189",
+  "officialTests": 3,
+  "frozenI037UnregisteredTests": 3,
+  "frozenI037JlCutTests": 3,
+  "frozenI037SoftCameraTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "executable-script privilege path / movie Agent plugin system",
+    "signed package trust-chain import",
+    "production FTS/RAG recall",
+    "workspace SQLite w5",
+    "new I-008 effect plugin",
+    "hard physical camera control",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "I-037 fullTaskComplete (stays false; I-037 stays partial)"
+  ],
+  "files": [
+    "packages/studio_assets/lib/craft/skill_privilege.dart",
+    "packages/studio_assets/lib/craft/skill_compiler.dart",
+    "packages/studio_assets/test/skills/compile_safety/i037_external_skill_privilege_test.dart"
+  ]
+}
