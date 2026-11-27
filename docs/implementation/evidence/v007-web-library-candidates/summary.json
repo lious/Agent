@@ -1,0 +1,52 @@
+{
+  "increment": "2.49",
+  "task": "V-007",
+  "title": "Web demux/mux lockfile candidates, license facts, and feature matrix",
+  "asOf": "2026-11-28T02:42:30+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "9c1e88bbc6c2f30fc5ddf4d8a2724ebbe4251301",
+  "officialTests": 3,
+  "frozenI020Suites": 3,
+  "analyzer": "No issues found",
+  "candidates": [
+    {
+      "npmPackage": "mp4box",
+      "version": "2.6.0",
+      "license": "BSD-3-Clause",
+      "role": "demux",
+      "source": "https://www.npmjs.com/package/mp4box",
+      "observed": "2026-11-28"
+    },
+    {
+      "npmPackage": "mediabunny",
+      "version": "1.66.5",
+      "license": "MPL-2.0",
+      "role": "demuxAndMux",
+      "source": "https://www.npmjs.com/package/mediabunny",
+      "observed": "2026-11-28"
+    }
+  ],
+  "notACandidate": {
+    "npmPackage": "mp4-muxer",
+    "version": "5.2.2",
+    "reason": "deprecated 2025-07 in favor of mediabunny"
+  },
+  "notClaimed": [
+    "60s Chrome/Edge WebCodecs/OPFS roundtrip",
+    "production lock / runtime license audit pin",
+    "JS package vendor or npm install",
+    "ffmpeg.wasm as default",
+    "native FFmpeg as a fake general Web path",
+    "Safari/Firefox feature qualification",
+    "I-037 or I-038 complete",
+    "quote/apply, paid generation, SQL vertical.v1",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_web_media/lib/web_library.dart",
+    "packages/studio_web_media/lib/studio_web_media.dart",
+    "packages/studio_web_media/test/web/codec_storage/v007_web_library_test.dart"
+  ]
+}

@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_web_media/test/web/codec_storage/v007_web_library_test.dart
+00:00 +0: the official catalog records exactly two lockfile candidates with version and license facts, excludes ffmpeg.wasm and native FFmpeg, and does not pin or claim a 60s roundtrip
+00:00 +1: Chrome and Edge are first-batch targets but stay unqualified; Safari and Firefox unverified features are BROWSER_FEATURE_UNVERIFIED and do not submit
+00:00 +2: ffmpeg.wasm, native FFmpeg as a Web general path, an unsupported codec, and missing durable storage are refused and do not submit or download a package
+00:00 +3: All tests passed!
