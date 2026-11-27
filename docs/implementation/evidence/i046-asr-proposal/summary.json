@@ -1,0 +1,33 @@
+{
+  "increment": "2.55",
+  "task": "I-046",
+  "title": "ASR CaptionProposal refusals without on-device inference",
+  "asOf": "2026-11-28T03:06:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "7209fe765deb111fb168bf0c1977d22148e3c9f8",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "real Whisper / on-device ASR inference",
+    "V-009 ASR quality qualification (stays blocked)",
+    "CER/WER or word-timestamp accuracy",
+    "default stem separation or diarization",
+    "automatic cloud ASR",
+    "I-010 caption-table / source-interval crop / MP4 burn-in leftovers",
+    "TrimPlanner or new trim modes",
+    "I-051, I-054, or I-029 re-qualification",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, V-020, I-054, or I-051 complete",
+    "production FTS/RAG or a real FastAPI/PostgreSQL/S3 deployment",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_audio_tools/lib/studio_audio_tools.dart",
+    "packages/studio_audio_tools/lib/asr/transcription_job.dart",
+    "packages/studio_audio_tools/test/asr/caption_locks/i046_asr_proposal_test.dart",
+    "packages/studio_audio_tools/pubspec.yaml"
+  ]
+}
