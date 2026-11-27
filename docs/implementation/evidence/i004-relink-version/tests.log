@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_relink_version_probe/test/media/relink/i004_relink_version_test.dart
+00:00 +0: a different hash is admitted only as an explicit new version after duration, stream, and color differences are reviewed
+00:00 +1: auto-replace by filename is refused; an unreviewed explicit new version is refused
+00:00 +2: files_test RELINK_HASH_MISMATCH, ProxyDeliveryAdmission, and RelinkProposal product surfaces stay closed
+00:00 +3: All tests passed!
+EXIT:0
