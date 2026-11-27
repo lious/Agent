@@ -30,7 +30,8 @@
     "packages/studio_gateway",
     "packages/studio_audio_tools",
     "packages/studio_generation",
-    "packages/studio_billing"
+    "packages/studio_billing",
+    "packages/studio_gltf_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_gltf_probe/test/graphics/untrusted_3d/v026_untrusted_resource_test.dart
+00:00 +0: a local core document is admitted without fetching, previewing, or inventing a runtime
+00:00 +1: external URLs and path traversal are refused with zero network requests; unsupported extensions are refused and not dropped
+00:00 +2: 100 damaged inputs are refused without escaping or crashing, and none are auto-fetched
+00:00 +3: All tests passed!
+EXIT:0
