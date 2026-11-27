@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_artifact_kind_probe/test/storage/archive/i013_artifact_kind_test.dart
+00:00 +0: backup, logical archive, portable archive, finished export, and sync are admitted as distinct artifacts; only a sync with a remote ACK is device-synced
+00:00 +1: a finished export must not stand in for an editable project; a provider-written receipt without a remote ACK is not a device sync
+00:00 +2: I-013 job archival, Increment 2.50 packMode, Increment 3.05 package auto-update, I-024 export suites, and an I-014 RestoreService stay closed
+00:00 +3: All tests passed!
+EXIT:0
