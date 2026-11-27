@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_cas_db_gap_probe/test/storage/commit/i011_cas_db_gap_test.dart
+00:00 +0: the DB may reference ready only after CAS is on disk, and rename plus SQLite are not one atomic transaction
+00:00 +1: I-011 crash leftovers, AtomicFilePublisher, files_test, save_crash_test, ACK-lost receipt retry, and orphan GC stay closed
+00:00 +2: All tests passed!
+EXIT:0
