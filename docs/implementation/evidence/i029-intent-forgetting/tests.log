@@ -1,0 +1,19 @@
+===== official I-029 intent/forgetting =====
+00:00 +0: loading packages/studio_context/test/context/forget/i029_intent_forgetting_test.dart
+00:00 +0: s10a mood path: supersede, purge does not revive the old value, stale snapshot cannot publish
+00:00 +1: 1000 events of change and delete never revive a retired constraint
+00:00 +2: a watermark or privacy-epoch change requires a snapshot rebuild
+00:00 +3: already-uploaded provider bodies are only reported, never claimed erased
+00:00 +4: retract does not revive an earlier value; purged bodies cannot be restored; head conflicts do not half-write
+00:00 +5: ambiguous asset references are refused and do not mutate the project
+00:00 +6: All tests passed!
+
+===== frozen I-028 ingest/projection =====
+00:00 +0: loading packages/studio_context/test/context/attachments/i028_ingest_projection_test.dart
+00:00 +0: over-limit text is refused and is not silently truncated
+00:00 +1: observations and inferences stay separate and remain page or PTS traceable
+00:00 +2: hash plus model parameters cache deduplicates, and a new question misses
+00:00 +3: missing upload consent does not upload, and a license warning cannot exempt it
+00:00 +4: a tight projection budget is partial and does not silently drop citations
+00:00 +5: unsupported or unconfigured visual analysis is explicit, not a silent model run
+00:00 +6: All tests passed!

@@ -1,0 +1,36 @@
+{
+  "increment": "2.26",
+  "title": "I-029 effective intent, forgetting, and compaction watermarks",
+  "baseCommit": "42996e172adc448a83cf3db18dc4a12fedc74db0",
+  "productionChanged": true,
+  "newCount": 6,
+  "newTests": {
+    "studio_context_i029_intent_forgetting": 6
+  },
+  "frozenReRun": {
+    "studio_context_i028_ingest_projection": 6
+  },
+  "clauseOfficialized": "Declare/Supersede/Retract/RestoreIntentAsNew on an in-memory ledger. Retract and purge do not revive a superseded value. Purged bodies cannot be restored. expectedHeadSeq conflicts do not half-write. 1000 change/delete events revive 0 retired constraints. A watermark or privacy-epoch change makes a snapshot SNAPSHOT_STALE and requires rebuild. compile uses the reducer, not a chat summary. Already-uploaded provider bodies are reported as notSupported and never claimed globally erased. Ambiguous asset references are REFERENCE_AMBIGUOUS and do not mutate the project. Chat-body purge leaves Project revision unchanged.",
+  "task": "I-029",
+  "whyNotAlreadyOfficial": "I-029 was still planned. Increment 2.18 officialized I-028 ingest/projection only. There was no intent reducer, compaction watermark, or deletion barrier.",
+  "rowsStillOpen": [
+    "Workspace SQLite w5 persist (not merged; project user_version stays 9)",
+    "I-027 leftover remainingAcceptance (tool-call pairing, fork/resume HTTP, searchable-copy purge in SessionStore)",
+    "Real FTS/embedding GC and production RAG",
+    "I-031 harness / I-003 outbox wiring"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "b72e30fa67f02569c72a60ff4a2ba9b27f18f74179f79698f9cb591f9e501340",
+  "schemaV10Merged": false,
+  "workspaceW5Merged": false,
+  "fullTaskComplete": false,
+  "programCounts": {
+    "complete": 0,
+    "partial": 37,
+    "planned": 37,
+    "blocked": 13
+  },
+  "asOf": "2026-11-28T00:59:13+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.26"
+}

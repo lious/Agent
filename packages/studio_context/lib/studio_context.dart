@@ -6,3 +6,6 @@ export 'hashing.dart';
 export 'ingest.dart';
 export 'locators.dart';
 export 'projection.dart';
+export 'reducer.dart';
+export 'compaction.dart';
+export 'deletion.dart';
