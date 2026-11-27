@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_drop_frame_probe/test/schema/i002_drop_frame_test.dart
+00:00 +0: packages/studio_drop_frame_probe/test/schema/i002_drop_frame_test.dart: drop-frame timecode only changes display numbering and must not delete media frames
+00:00 +1: packages/studio_drop_frame_probe/test/schema/i002_drop_frame_test.dart: I-002 measurement labels, error-class admission, license-execution, and I-010 sidecar stay closed
+00:00 +2: All tests passed!
