@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_model_context_probe/test/harness/s10_model_context_test.dart
+00:00 +0: packages/studio_model_context_probe/test/harness/s10_model_context_test.dart: a provider port must not own the session database, a model switch must not migrate KV or vendor reasoning, and agents must not share implicit context
+00:00 +1: packages/studio_model_context_probe/test/harness/s10_model_context_test.dart: a real two-model I-034 handoff, mailbox schema, I-030, I-031, and recent license or session-navigation admissions stay closed
+00:00 +2: All tests passed!
