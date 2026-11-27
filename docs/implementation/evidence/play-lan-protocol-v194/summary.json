@@ -1,0 +1,43 @@
+{
+  "increment": "2.23",
+  "title": "Play LAN protocol software tests (v1.9.4)",
+  "baseCommit": "3d4dce0fcdd2949bc62b32de5cfad60b33586564",
+  "productionChanged": true,
+  "newCount": 3,
+  "newTests": {
+    "studio_play_lan_extension": 3
+  },
+  "frozenReRun": {
+    "studio_play_lan_2_14": 4,
+    "studio_play_package": 28
+  },
+  "clauseOfficialized": "Snapshot replies are filtered for the requester, not the host notebook. crew.confidential and character sides stay scope-bound. eventAck records accepted events. Stale seq is ignored. Unknown senders are PLAY_LAN_UNKNOWN_PEER. After goodbye, further messages are PLAY_LAN_PEER_GONE. claimPhysicalE2e stays PLAY_LAN_PHYSICAL_E2E_UNCLAIMED.",
+  "task": "XD-play-lan",
+  "whyNotAlreadyOfficial": "Increment 2.14 officialized hello/heartbeat, duplicate seq, revoke, public-screen truth refusal, and hash/session mismatch, but not requester-filtered snapshot exchange, sides/confidential delivery, eventAck, unknown peer, or goodbye.",
+  "rowsStillOpen": [
+    "Physical two-device LAN E2E / XD-010 (still blocked)",
+    "Schema v10 merge (not done)",
+    "STUN/TURN, writable peer RPC, or positive RTC"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "12b168c6d536809d602d0830d3089b35a53bd926ad415b2a3f3003959c1bacb5",
+  "xd010Claimed": false,
+  "schemaV10Merged": false,
+  "physicalE2eClaimed": false,
+  "fullTaskComplete": false,
+  "programCounts": {
+    "complete": 0,
+    "partial": 35,
+    "planned": 39,
+    "blocked": 13
+  },
+  "xdCounts": {
+    "complete": 0,
+    "partial": 8,
+    "planned": 1,
+    "blocked": 1
+  },
+  "asOf": "2026-11-28T00:25:49+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.23"
+}

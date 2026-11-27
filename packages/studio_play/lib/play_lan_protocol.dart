@@ -11,6 +11,8 @@ const playLanDuplicateSeq = 'PLAY_LAN_DUPLICATE_SEQ';
 const playLanUnknownPeer = 'PLAY_LAN_UNKNOWN_PEER';
 const playLanBadHash = 'PLAY_LAN_BAD_HASH';
 const playLanPhysicalE2eUnclaimed = 'PLAY_LAN_PHYSICAL_E2E_UNCLAIMED';
+const playLanPeerGone = 'PLAY_LAN_PEER_GONE';
+const playLanUnexpectedKind = 'PLAY_LAN_UNEXPECTED_KIND';
 
 enum PlayLanMessageKind {
   hello,
@@ -107,6 +109,8 @@ final class PlayLanEndpoint {
   final List<PlayLanEnvelope> inbox = [];
   final Map<String, int> _lastSeq = {};
   final Set<String> _seen = {};
+  final Set<String> departed = {};
+  final Set<String> ackedEvents = {};
   int nextSeq = 1;
 
   PlayLanEnvelope compose({
@@ -133,6 +137,10 @@ final class PlayLanEndpoint {
   bool receive(PlayLanEnvelope envelope) {
     if (envelope.sessionId != session.id) {
       throw const StudioException(playLanSessionMismatch);
+    }
+    if (departed.contains(envelope.senderDeviceId) &&
+        envelope.kind != PlayLanMessageKind.goodbye) {
+      throw StudioException(playLanPeerGone, envelope.senderDeviceId);
     }
     final sender = session.devices[envelope.senderDeviceId];
     if (sender == null) {
@@ -170,6 +178,14 @@ final class PlayLanEndpoint {
     _seen.add(key);
     _lastSeq[envelope.senderDeviceId] = envelope.seq;
     inbox.add(envelope);
+    if (envelope.kind == PlayLanMessageKind.goodbye) {
+      departed.add(envelope.senderDeviceId);
+    }
+    if (envelope.kind == PlayLanMessageKind.eventAck) {
+      final ackSeq = envelope.payload['ackSeq'];
+      final origin = envelope.payload['eventSender'] as String? ?? envelope.senderDeviceId;
+      if (ackSeq is int) ackedEvents.add('$origin:$ackSeq');
+    }
     return true;
   }
 
@@ -197,7 +213,19 @@ final class PlayLanEndpoint {
 
   /// Snapshot contents are filtered through [PlaySession.view] so a public
   /// screen cannot receive a GM notebook.
-  Map<String, Object?> filteredSnapshot() {
+  Map<String, Object?> filteredSnapshot() => snapshotFor(
+    personId: personId,
+    deviceId: deviceId,
+    grantId: grantId,
+  );
+
+  /// Always project the requested (person, device, grant) triple, never the
+  /// answering host's notebook.
+  Map<String, Object?> snapshotFor({
+    required String personId,
+    required String deviceId,
+    required String grantId,
+  }) {
     final view = session.view(
       personId: personId,
       deviceId: deviceId,
@@ -208,6 +236,43 @@ final class PlayLanEndpoint {
       'publicBoard': [for (final d in view.publicBoard) d.id],
       'hasTruth': view.containsText('truth') || view.containsText('谜底'),
     };
+  }
+
+  /// Reply to a snapshotRequest with a snapshot filtered for the requester.
+  PlayLanEnvelope replyToSnapshotRequest(
+    PlayLanEnvelope request, {
+    required int sentAtMs,
+  }) {
+    if (request.kind != PlayLanMessageKind.snapshotRequest) {
+      throw StudioException(playLanUnexpectedKind, request.kind.name);
+    }
+    return compose(
+      kind: PlayLanMessageKind.snapshot,
+      payload: snapshotFor(
+        personId: request.senderPersonId,
+        deviceId: request.senderDeviceId,
+        grantId: request.grantId,
+      ),
+      sentAtMs: sentAtMs,
+      scope: 'public',
+    );
+  }
+
+  PlayLanEnvelope ackEvent(
+    PlayLanEnvelope event, {
+    required int sentAtMs,
+  }) {
+    if (event.kind != PlayLanMessageKind.event) {
+      throw StudioException(playLanUnexpectedKind, event.kind.name);
+    }
+    return compose(
+      kind: PlayLanMessageKind.eventAck,
+      payload: {
+        'ackSeq': event.seq,
+        'eventSender': event.senderDeviceId,
+      },
+      sentAtMs: sentAtMs,
+    );
   }
 }
 
@@ -237,6 +302,26 @@ final class LoopbackPlayLanFabric {
     } else {
       ignoredDuplicates++;
     }
+  }
+
+  /// Host answers a snapshotRequest with a view filtered for the requester.
+  /// The host notebook is never used as the payload.
+  PlayLanEnvelope exchangeSnapshot({
+    required PlayLanEndpoint requester,
+    required PlayLanEndpoint responder,
+    required int sentAtMs,
+    required void Function(PlayLanEnvelope envelope) deliverRequest,
+    required void Function(PlayLanEnvelope envelope) deliverReply,
+  }) {
+    final request = requester.compose(
+      kind: PlayLanMessageKind.snapshotRequest,
+      payload: const {'what': 'view'},
+      sentAtMs: sentAtMs,
+    );
+    deliverRequest(request);
+    final reply = responder.replyToSnapshotRequest(request, sentAtMs: sentAtMs + 1);
+    deliverReply(reply);
+    return reply;
   }
 
   /// Explicit reminder that this fabric never qualifies physical E2E.

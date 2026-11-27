@@ -1,0 +1,52 @@
+===== official play LAN extension =====
+00:00 +0: loading packages/studio_play/test/lan_protocol_extension_test.dart
+00:00 +0: a snapshot reply is filtered for the requester, not the host notebook
+00:00 +1: crew.confidential is not delivered to a public-only client; sides stay character-bound
+00:00 +2: an accepted event can be acked; stale seq is ignored; unknown and departed peers are refused
+00:00 +3: All tests passed!
+
+===== frozen 2.14 lan_protocol_test.dart =====
+00:00 +0: loading packages/studio_play/test/lan_protocol_test.dart
+00:00 +0: loopback fabric delivers hello and heartbeat between two logical peers
+00:00 +1: duplicate seq is ignored and a revoked grant is refused
+00:00 +2: mystery truth is not delivered to a public screen and snapshots stay filtered
+00:00 +3: tampered payload hash is refused and session mismatch is refused
+00:00 +4: All tests passed!
+
+===== full studio_play package =====
+00:00 +0: loading packages/studio_play/test/scheduling_play_test.dart
+00:00 +0: packages/studio_play/test/scheduling_play_test.dart: human creative claims and device leases are separate layers
+00:00 +1: packages/studio_play/test/scheduling_play_test.dart: devices may only claim authorized compute; online is not enough; no device waits
+00:00 +2: packages/studio_play/test/scheduling_play_test.dart: joining a session or receiving a candidate is not library access or writer accept
+00:00 +3: loading packages/studio_play/test/lan_protocol_extension_test.dart
+00:00 +3: packages/studio_play/test/lan_protocol_extension_test.dart: a snapshot reply is filtered for the requester, not the host notebook
+00:00 +4: packages/studio_play/test/lan_protocol_extension_test.dart: crew.confidential is not delivered to a public-only client; sides stay character-bound
+00:00 +5: packages/studio_play/test/lan_protocol_extension_test.dart: an accepted event can be acked; stale seq is ignored; unknown and departed peers are refused
+00:00 +6: loading packages/studio_play/test/mystery_play_test.dart
+00:00 +6: packages/studio_play/test/mystery_play_test.dart: GM notebook sees the solution; the same account public screen does not
+00:00 +7: packages/studio_play/test/mystery_play_test.dart: private clues stay off other players and the public screen, including thumbnails, notices and logs
+00:00 +8: packages/studio_play/test/mystery_play_test.dart: public board stays empty until an explicit public reveal; only GM transitions acts
+00:00 +9: packages/studio_play/test/mystery_play_test.dart: compute rejects private inputs; results cannot advance the story or reveal the truth
+00:00 +10: packages/studio_play/test/mystery_play_test.dart: host offline pauses transitions; last page does not broadcast the truth; video needs consent
+00:00 +11: loading packages/studio_play/test/assignee_quality_test.dart
+00:00 +11: packages/studio_play/test/assignee_quality_test.dart: markTechnicalQuality rejects a non-assignee performer; director, AD and the assignee may mark without adopting
+00:00 +12: packages/studio_play/test/assignee_quality_test.dart: screenwriter with empty sceneIds cannot issue official tasks for unassigned scenes
+00:00 +13: loading packages/studio_play/test/crew_play_test.dart
+00:00 +13: packages/studio_play/test/crew_play_test.dart: lock is immutable, non-directors and assistants cannot lock
+00:00 +14: packages/studio_play/test/crew_play_test.dart: issue, claim, take, review and writer-accept; self-approval and CAS fail closed
+00:00 +15: packages/studio_play/test/crew_play_test.dart: cannot self-approve, requests cannot bypass issue, revoke blocks later claims
+00:00 +16: packages/studio_play/test/crew_play_test.dart: actors see sides not the full script; bible cites the source version
+00:00 +17: packages/studio_play/test/crew_play_test.dart: offline adoption is a draft opinion; stale script cannot auto-accept; history is kept
+00:00 +18: packages/studio_play/test/crew_play_test.dart: assistants cannot grant roles; play actions are unsupported as edit proposals
+00:00 +19: loading packages/studio_play/test/permission_gates_test.dart
+00:00 +19: packages/studio_play/test/permission_gates_test.dart: cancelTask and reassignTask require director or assistant director and keep history
+00:00 +20: packages/studio_play/test/permission_gates_test.dart: markTechnicalQuality is limited to director, assistant director or performer and is not creative adoption
+00:00 +21: packages/studio_play/test/permission_gates_test.dart: official issue rejects unscoped editor and lead performer; screenwriter stays inside assigned scenes
+00:00 +22: packages/studio_play/test/permission_gates_test.dart: PlayDevice.allows does not treat mysteryTruth as a wildcard for other scopes
+00:00 +23: packages/studio_play/test/permission_gates_test.dart: memorial video export requires the GM person consent as well as the players
+00:00 +24: loading packages/studio_play/test/lan_protocol_test.dart
+00:00 +24: packages/studio_play/test/lan_protocol_test.dart: loopback fabric delivers hello and heartbeat between two logical peers
+00:01 +25: packages/studio_play/test/lan_protocol_test.dart: duplicate seq is ignored and a revoked grant is refused
+00:01 +26: packages/studio_play/test/lan_protocol_test.dart: mystery truth is not delivered to a public screen and snapshots stay filtered
+00:01 +27: packages/studio_play/test/lan_protocol_test.dart: tampered payload hash is refused and session mismatch is refused
+00:01 +28: All tests passed!
