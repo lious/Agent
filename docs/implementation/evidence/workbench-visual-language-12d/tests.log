@@ -1,0 +1,11 @@
+===== official 12D workbench visual language =====
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/workbench/visual_language/i025_workbench_visual_language_test.dart
+00:00 +0: 12D constants and the four collaboration zones are the constraint contract
+00:00 +1: WCAG contrast accepts 4.5:1 text and refuses a weaker pair
+00:00 +2: errors cannot be conveyed by color alone
+00:00 +3: command chrome below 48 logical pixels is refused
+00:00 +4: confirm and cancel stay hittable at 200% type scale and fail when the surface is too narrow
+00:00 +5: reduced motion stops autoplay and flicker preview but keeps program motion
+00:00 +6: progress is announced by phase, not per token, and a late result must not steal focus
+00:00 +7: the official command-workbench catalog audits clean at 200% with reduced motion
+00:00 +8: All tests passed!

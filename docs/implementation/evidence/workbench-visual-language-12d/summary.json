@@ -1,0 +1,33 @@
+{
+  "increment": "2.22",
+  "title": "12D workbench visual language constraints",
+  "baseCommit": "506d035005c6a81ac93faea94565e229ae823204",
+  "productionChanged": true,
+  "newCount": 8,
+  "newTests": {
+    "studio_editor_ui_visual_language": 8
+  },
+  "frozenReRun": {},
+  "clauseOfficialized": "12D workbench visual language: four collaboration zones plus session sidebar; touch targets at least 48 logical pixels; WCAG AA text contrast 4.5:1; type scale 200% keeps confirm/cancel hittable; errors are not color-only; reduced motion stops autoplay and flicker preview and does not strip program motion; progress is phase-only; a late result must not steal focus.",
+  "task": "I-025",
+  "whyNotAlreadyOfficial": "The art-design plan noted that 12D had a11y constraints but no independent workbench visual-language chapter, type scale, or palette contract.",
+  "rowsStillOpenOnI025": [
+    "Restore last durable edit (remaining acceptance unchanged)",
+    "Export through I-024 (remaining acceptance unchanged)",
+    "I-055 multilingual / RTL / a11y alternatives (not opened)",
+    "Real-device screen-reader and usability testing (12D human tests)",
+    "FoundationApp widget chrome is not claimed to already measure 48 logical pixels"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "4dfde89a6ff60d59d1b5db69fa42dea25a24cd2176749da3965176baa9b84a9e",
+  "i025Status": "partial",
+  "i025RemainingAcceptanceUnchanged": true,
+  "fullTaskComplete": false,
+  "v003Claimed": false,
+  "i055Opened": false,
+  "foundationAppRewritten": false,
+  "realDeviceScreenReaderClaimed": false,
+  "asOf": "2026-11-28T00:11:27+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.22"
+}
