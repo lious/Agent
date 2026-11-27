@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_codec_probe/test/compatibility/codec/v002_codec_probe_port_test.dart
+00:00 +0: decode and encode are not interchangeable
+00:00 +1: unknown is not written as supported=true; advertised without a processed sample is not a qualification
+00:00 +2: unrelated modality fields stay null, not forged 0; V-002 format-reason and I-015 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
