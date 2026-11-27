@@ -1140,6 +1140,7 @@ final class StudioWorkspace {
         rasterEffects: point.rasterEffects,
         secondary: point.secondary,
         mixQ16: point.mixQ16,
+        lumaWipe: point.lumaWipe,
       );
     } else {
       final asset = _playbackAssets[point.assetId]!;
@@ -1206,6 +1207,7 @@ final class StudioWorkspace {
     Map<String, Map<String, double>>? rasterEffects,
     TimelineVideoPoint? secondary,
     int mixQ16 = 0,
+    LumaWipeSample? lumaWipe,
   }) async {
     _requireMedia();
     if (time < Q.of(0)) throw const StudioException('PREVIEW_TIME_INVALID');
@@ -1231,11 +1233,17 @@ final class StudioWorkspace {
       if (secondary.rasterEffects != null) {
         otherRaster = captureRasterEffects(secondary.rasterEffects!);
       }
-      if (mixQ16 < 0 ||
-          mixQ16 > 65536 ||
-          secondary.isGap ||
-          secondary.sourceTime < Q.of(0)) {
+      if (secondary.isGap ||
+          secondary.sourceTime < Q.of(0) ||
+          (lumaWipe == null && (mixQ16 < 0 || mixQ16 > 65536))) {
         throw const StudioException('DISSOLVE_POINT_INVALID');
+      }
+      if (lumaWipe != null &&
+          (lumaWipe.softness < lumaWipeSoftnessMin ||
+              lumaWipe.softness > lumaWipeSoftnessMax ||
+              lumaWipe.progress < Q.of(0) ||
+              lumaWipe.progress > Q.of(1))) {
+        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
       }
       otherAsset = Map<String, dynamic>.from(
         (project.toJson()['assets'] as List).singleWhere(
@@ -1260,7 +1268,7 @@ final class StudioWorkspace {
       'opacity-linear709-v1-q16': ?opacityQ16,
       'static-transform2d-linear709-v1': ?transform2d,
       'static-raster-linear709-v1': ?rasterEffects,
-      if (secondary != null)
+      if (secondary != null && lumaWipe == null)
         'dissolve-v1': {
           'blob': otherAsset!['originalBlobHash'],
           'time': secondary.sourceTime.toJson(),
@@ -1268,6 +1276,15 @@ final class StudioWorkspace {
           'transform2d': otherTransform,
           'rasterEffects': otherRaster,
           'mixQ16': mixQ16,
+        },
+      if (secondary != null && lumaWipe != null)
+        'luma-wipe-cpu-v1': {
+          'blob': otherAsset!['originalBlobHash'],
+          'time': secondary.sourceTime.toJson(),
+          'opacityQ16': secondary.opacityQ16,
+          'transform2d': otherTransform,
+          'rasterEffects': otherRaster,
+          ...lumaWipe.toRecipe(),
         },
     });
     final cached = sourcePreviewCache.get(key);
@@ -1315,7 +1332,8 @@ final class StudioWorkspace {
           transform2d: transform2d,
           rasterEffects: rasterEffects,
           secondary: rightRecipe,
-          mixQ16: mixQ16,
+          mixQ16: lumaWipe == null ? mixQ16 : 0,
+          lumaWipe: lumaWipe?.toRecipe(),
         ),
       );
       if (epoch != _previewEpoch || _closed) {
@@ -1379,6 +1397,7 @@ final class StudioWorkspace {
       rasterEffects: point.rasterEffects,
       secondary: point.secondary,
       mixQ16: point.mixQ16,
+      lumaWipe: point.lumaWipe,
     );
     if (current.hash != snapshot.hash) {
       throw const StudioException('PREVIEW_PROJECT_CHANGED');
@@ -1407,6 +1426,37 @@ final class StudioWorkspace {
     String transitionId, {
     required BigInt expectedRevision,
   }) => edit(RemoveDissolve(transitionId), expectedRevision: expectedRevision);
+
+  ProjectDocument setLumaWipe(
+    String leftClipId,
+    String rightClipId,
+    Q before,
+    Q after, {
+    required double softness,
+    bool invert = false,
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['lumaWipeCpuV1'] != true) {
+      throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+    }
+    return edit(
+      SetLumaWipe(
+        leftClipId,
+        rightClipId,
+        before,
+        after,
+        softness: softness,
+        invert: invert,
+      ),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  ProjectDocument removeLumaWipe(
+    String effectId, {
+    required BigInt expectedRevision,
+  }) => edit(RemoveLumaWipe(effectId), expectedRevision: expectedRevision);
 
   ProjectDocument setClipTransform(
     String clipId,
@@ -1514,6 +1564,10 @@ final class StudioWorkspace {
     if ((document.toJson()['transitions'] as List).isNotEmpty &&
         _media?.capabilities['linearDissolveV1'] != true) {
       throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
+    }
+    if (hasLumaWipeEffects(document.toJson()) &&
+        _media?.capabilities['lumaWipeCpuV1'] != true) {
+      throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
     }
 
     if ((document.toJson()['effects'] as List).any(
@@ -1959,6 +2013,55 @@ final class StudioWorkspace {
                 'rasterEffects': right.rasterEffects,
             },
             mixQ16: point.mixQ16,
+          );
+          check();
+        }
+        for (final e in lumaWipeEffects(definition)) {
+          if (e['enabled'] != true) continue;
+          if (qualifiedNodes.length >= 64) {
+            throw const StudioException('RESOURCE_EFFECT_QUALIFICATION_LIMIT');
+          }
+          if (_media!.capabilities['lumaWipeCpuV1'] != true) {
+            throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+          }
+          qualifiedNodes.add('lumaWipe:${e['id']}');
+          final p = e['parameters'] as Map;
+          final midpoint =
+              lumaParamTime(p, 'cut') +
+              (lumaParamTime(p, 'after') - lumaParamTime(p, 'before')) /
+                  Q.of(2);
+          final point = graph.sampleFrame(midpoint), right = point.secondary!;
+          if (point.lumaWipe == null) {
+            throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+          }
+          final primaryAsset = (definition['assets'] as List).singleWhere(
+                (v) => v['id'] == point.assetId,
+              ),
+              otherAsset = (definition['assets'] as List).singleWhere(
+                (v) => v['id'] == right.assetId,
+              );
+          final primary = await _blobs!.resolve(
+            primaryAsset['originalBlobHash'],
+          );
+          check();
+          final other = await _blobs!.resolve(otherAsset['originalBlobHash']);
+          check();
+          await engine.previewAsync(
+            primary,
+            point.sourceTime,
+            opacityQ16: point.opacityQ16,
+            transform2d: point.transform2d,
+            rasterEffects: point.rasterEffects,
+            secondary: {
+              'path': other.absolute.path,
+              'time': right.sourceTime.toJson(),
+              'indexed': true,
+              'opacityQ16': right.opacityQ16,
+              if (right.transform2d != null) 'transform2d': right.transform2d,
+              if (right.rasterEffects != null)
+                'rasterEffects': right.rasterEffects,
+            },
+            lumaWipe: point.lumaWipe!.toRecipe(),
           );
           check();
         }
@@ -2572,7 +2675,7 @@ final class StudioWorkspace {
         'height': s['canvas']['height'],
         'fps': s['frameRate'],
         'frameCount': count,
-        'segments': (d['transitions'] as List).isEmpty
+        'segments': (d['transitions'] as List).isEmpty && !hasLumaWipeEffects(d)
             ? segments
             : videoGraph.compileDissolves(segmentsByClip),
         if (audioPcm != null)

@@ -1,0 +1,16 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/packages/studio_editor_ui/test/luma_wipe_ui_test.dart
+00:00 +0: REAL lumaWipe UI edit/preview/undo/archive/fork/export does not fall back to dissolve
+Shell: [libx264 @ 0x7fc3dc02b040] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+Shell: [libx264 @ 0x7fc3dc02b040] profile Main, level 4.0, 4:2:0, 8-bit
+Shell: [libx264 @ 0x7fc3dc02b040] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x1:0x111 me=hex subme=2 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=30 keyint_min=3 scenecut=40 intra_refresh=0 rc_lookahead=10 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=20000 vbv_bufsize=25000 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00
+Shell: [libx264 @ 0x7fc3dc02b040] frame I:3     Avg QP: 5.00  size:    51
+Shell: [libx264 @ 0x7fc3dc02b040] frame P:57    Avg QP: 7.11  size:    14
+Shell: [libx264 @ 0x7fc3dc02b040] mb I  I16..4: 97.5%  0.0%  2.5%
+Shell: [libx264 @ 0x7fc3dc02b040] mb P  I16..4:  0.0%  0.0%  0.0%  P16..4:  0.0%  0.0%  0.0%  0.0%  0.0%    skip:100.0%
+Shell: [libx264 @ 0x7fc3dc02b040] coded y,uvDC,uvAC intra: 0.6% 0.0% 0.0% inter: 0.0% 0.0% 0.0%
+Shell: [libx264 @ 0x7fc3dc02b040] i16 v,h,dc,p: 82%  0% 18%  0%
+Shell: [libx264 @ 0x7fc3dc02b040] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu:  0%  0% 100%  0%  0%  0%  0%  0%  0%
+Shell: [libx264 @ 0x7fc3dc02b040] i8c dc,h,v,p: 100%  0%  0%  0%
+Shell: [libx264 @ 0x7fc3dc02b040] Weighted P-Frames: Y:1.8% UV:0.0%
+Shell: [libx264 @ 0x7fc3dc02b040] kb/s:3.82
+00:26 +1: All tests passed!

@@ -84,6 +84,10 @@ class _FoundationAppState extends State<FoundationApp>
   final _masterGain = TextEditingController(text: '0');
   final _dissolveBefore = TextEditingController(text: '6');
   final _dissolveAfter = TextEditingController(text: '6');
+  final _lumaBefore = TextEditingController(text: '6');
+  final _lumaAfter = TextEditingController(text: '6');
+  final _lumaSoftness = TextEditingController(text: '0.1');
+  bool _lumaInvert = false;
   final _tx = TextEditingController(text: '0');
   final _ty = TextEditingController(text: '0');
   final _scale = TextEditingController(text: '1');
@@ -612,6 +616,9 @@ class _FoundationAppState extends State<FoundationApp>
     _masterGain.dispose();
     _dissolveBefore.dispose();
     _dissolveAfter.dispose();
+    _lumaBefore.dispose();
+    _lumaAfter.dispose();
+    _lumaSoftness.dispose();
     _tx.dispose();
     _ty.dispose();
     _scale.dispose();
@@ -937,6 +944,84 @@ class _FoundationAppState extends State<FoundationApp>
       child: const Text(
         'Remove selected LEFT transition (undoable; edit ranges afterwards)',
       ),
+    ),
+    _path(
+      'luma-before',
+      'Registered lumaWipe before cut (project frames)',
+      _lumaBefore,
+    ),
+    _path(
+      'luma-after',
+      'Registered lumaWipe after cut (project frames)',
+      _lumaAfter,
+    ),
+    _path(
+      'luma-softness',
+      'Registered lumaWipe softness [0.001,0.5]',
+      _lumaSoftness,
+    ),
+    CheckboxListTile(
+      key: const Key('luma-invert'),
+      value: _lumaInvert,
+      onChanged: _busy ? null : (v) => setState(() => _lumaInvert = v ?? false),
+      title: const Text('Invert incoming luma mask'),
+    ),
+    OutlinedButton(
+      key: const Key('set-luma-wipe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final seq = _project.toJson()['sequences'][0],
+                  fps = FrameRate(seq['frameRate']['n'], seq['frameRate']['d']);
+              final left = _clips.singleWhere((c) => c['id'] == _selected);
+              final cut =
+                  Q.fromJson(left['timelineRange']['start']) +
+                  Q.fromJson(left['timelineRange']['duration']);
+              final right = _clips
+                  .where(
+                    (c) =>
+                        c['source'] != null &&
+                        Q.fromJson(c['timelineRange']['start']) == cut,
+                  )
+                  .toList();
+              if (right.length != 1) {
+                throw const StudioException('TRANSITION_NOT_ADJACENT');
+              }
+              final p = int.tryParse(_lumaBefore.text),
+                  q = int.tryParse(_lumaAfter.text),
+                  softness = double.tryParse(_lumaSoftness.text);
+              if (p == null || q == null || softness == null) {
+                throw const StudioException('TRANSITION_RANGE');
+              }
+              return widget.workspace.setLumaWipe(
+                _selected!,
+                right.single['id'] as String,
+                fps.frameTime(BigInt.from(p)),
+                fps.frameTime(BigInt.from(q)),
+                softness: softness,
+                invert: _lumaInvert,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text(
+        'Luma wipe selected LEFT → next; incomingLuma CPU only, no dissolve fallback',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('remove-luma-wipe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final found = lumaWipeEffects(_project.toJson())
+                  .where((e) => e['parameters']['leftClipId'] == _selected)
+                  .toList();
+              if (found.length != 1) throw const StudioException('NOT_FOUND');
+              return widget.workspace.removeLumaWipe(
+                found.single['id'] as String,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Remove selected LEFT lumaWipe (undoable)'),
     ),
     _path('transform-x', 'Transform translate X (canvas pixels)', _tx),
     _path('transform-y', 'Transform translate Y (canvas pixels)', _ty),

@@ -595,6 +595,83 @@ void render_dissolve_frame(AVFrame *dst,AVFrame *a,AVFrame *b,int opacity_a,int 
   const uint8_t *data[]={rgba.data(),nullptr,nullptr,nullptr};const int stride[]={dst->width*4,0,0,0};
   if(sws_scale(output.get(),data,stride,0,dst->height,dst->data,dst->linesize)!=dst->height)throw Error("SCALING_FAILED");
 }
+double clamp01(double x){return x<0?0:x>1?1:x;}
+double luma_smoothstep(double edge0,double edge1,double x){
+  if(edge0==edge1)return x<edge0?0:1;
+  const double t=clamp01((x-edge0)/(edge1-edge0));
+  return t*t*(3-2*t);
+}
+double parse_progress(const J &p){
+  keys(p,{"n","d"});
+  if(!p["n"].is_string())throw Error("RECIPE_TYPE");
+  const auto str=p["n"].get<std::string>();
+  if(str.empty()||str.size()>19||str.find_first_not_of("0123456789")!=std::string::npos)throw Error("RECIPE_RANGE");
+  const auto n=std::stoll(str);
+  const auto d=integer(p,"d",1,1000000000);
+  if(n<0||n>d)throw Error("RECIPE_RANGE");
+  if(n==0)return 0;
+  if(n==d)return 1;
+  return static_cast<double>(n)/static_cast<double>(d);
+}
+struct LumaWipe {
+  double p=0;
+  double softness=0.1;
+  bool invert=false;
+};
+LumaWipe parse_luma_wipe(const J &v,const J *progress=nullptr){
+  if(!v.is_object()||!v.contains("softness")||!v.contains("invert"))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+  if(!v["softness"].is_number()||!v["invert"].is_boolean())throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+  const double s=v["softness"].get<double>();
+  if(!(s>=0.001 && s<=0.5))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+  LumaWipe w;
+  w.softness=s;
+  w.invert=v["invert"].get<bool>();
+  if(progress)w.p=parse_progress(*progress);
+  else if(v.contains("p"))w.p=parse_progress(v["p"]);
+  else throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+  if(w.p<0||w.p>1)throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+  return w;
+}
+// Incoming-luma wipe AFTER each leg's transform/opacity, reusing the admitted
+// two-leg linear buffers. Never falls back to a uniform dissolve mix.
+void render_luma_wipe_frame(AVFrame *dst,AVFrame *a,AVFrame *b,int opacity_a,int opacity_b,const Transform2d &ta,const Transform2d &tb,const LumaWipe &wipe,SwsContext *&scaler,const std::function<void()> &check) {
+  if(!a||!b || a->width!=b->width || a->height!=b->height)throw Error("DISSOLVE_SOURCE_MISMATCH");
+  std::vector<float> left,right;
+  render_opacity_frame(dst,a,opacity_a,scaler,check,ta,&left);
+  render_opacity_frame(dst,b,opacity_b,scaler,check,tb,&right);
+  std::vector<uint8_t> rgba(static_cast<size_t>(dst->width)*dst->height*4);
+  for(int y=0;y<dst->height;y++) {
+    if(check && y%32==0)check();
+    for(int px=0;px<dst->width;px++){
+      const size_t at=static_cast<size_t>(y)*dst->width+px;
+      float rgb[3];
+      if(wipe.p<=0){
+        for(int c=0;c<3;c++)rgb[c]=left[at*3+c];
+      }else if(wipe.p>=1){
+        for(int c=0;c<3;c++)rgb[c]=right[at*3+c];
+      }else{
+        const float br=right[at*3],bg=right[at*3+1],bb=right[at*3+2];
+        double m=.2126*br+.7152*bg+.0722*bb;
+        if(wipe.invert)m=1-m;
+        m=clamp01(m);
+        const double threshold=1+wipe.softness-wipe.p*(1+2*wipe.softness);
+        const double w=luma_smoothstep(threshold-wipe.softness,threshold+wipe.softness,m);
+        for(int c=0;c<3;c++)rgb[c]=static_cast<float>((1-w)*left[at*3+c]+w*right[at*3+c]);
+      }
+      for(int c=0;c<3;c++){
+        const float encoded=rgb[c]<.018f?rgb[c]*4.5f:1.099f*std::pow(rgb[c],.45f)-.099f;
+        rgba[at*4+c]=static_cast<uint8_t>(std::clamp(std::lround(encoded*255.f),0L,255L));
+      }
+      rgba[at*4+3]=255;
+    }
+  }
+  auto free=[](SwsContext *p){sws_freeContext(p);};
+  std::unique_ptr<SwsContext,decltype(free)> output(sws_getContext(dst->width,dst->height,AV_PIX_FMT_RGBA,dst->width,dst->height,AV_PIX_FMT_YUV420P,SWS_BILINEAR,nullptr,nullptr,nullptr),free);
+  if(!output)throw Error("SCALER_UNAVAILABLE");
+  const int *cs=sws_getCoefficients(SWS_CS_ITU709);ok(sws_setColorspaceDetails(output.get(),cs,1,cs,0,0,1<<16,1<<16));
+  const uint8_t *data[]={rgba.data(),nullptr,nullptr,nullptr};const int stride[]={dst->width*4,0,0,0};
+  if(sws_scale(output.get(),data,stride,0,dst->height,dst->data,dst->linesize)!=dst->height)throw Error("SCALING_FAILED");
+}
 struct Output {
   AVFormatContext *format = nullptr;
   AVCodecContext *encoder = nullptr;
@@ -706,8 +783,9 @@ struct Output {
   }
   void render(AVFrame *source, int64_t index, int opacity,
               const std::function<void()> &check,
-              const std::function<void(AVFrame *)> &capture, const Transform2d &transform = {}, AVFrame *secondary=nullptr,int opacity_b=65536,const Transform2d &tb={},int mix=0) {
-    if(secondary)render_dissolve_frame(frame,source,secondary,opacity,opacity_b,transform,tb,mix,scaler,check);
+              const std::function<void(AVFrame *)> &capture, const Transform2d &transform = {}, AVFrame *secondary=nullptr,int opacity_b=65536,const Transform2d &tb={},int mix=0,const LumaWipe *luma=nullptr) {
+    if(secondary && luma)render_luma_wipe_frame(frame,source,secondary,opacity,opacity_b,transform,tb,*luma,scaler,check);
+    else if(secondary)render_dissolve_frame(frame,source,secondary,opacity,opacity_b,transform,tb,mix,scaler,check);
     else render_opacity_frame(frame, source, opacity, scaler, check, transform);
     if(check) check();
     frame->pts = index;
@@ -824,7 +902,7 @@ AVFrame *prepare_preview_frame(Input &in,const J &recipe) {
   return in.at(target);
 }
 J preview(Engine &engine, const J &recipe) {
-  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");previewBase.erase("rasterEffects");previewBase.erase("secondary");previewBase.erase("mixQ16");
+  auto previewBase=recipe;previewBase.erase("opacityQ16");previewBase.erase("transform2d");previewBase.erase("rasterEffects");previewBase.erase("secondary");previewBase.erase("mixQ16");previewBase.erase("lumaWipe");
   keys(previewBase,{"path","time","indexed"});
   const auto transform=transform2d(recipe);
   if (!recipe["path"].is_string() || !recipe["indexed"].is_boolean())
@@ -841,13 +919,21 @@ J preview(Engine &engine, const J &recipe) {
   AVFrame *second=nullptr;
   Transform2d second_transform;
   int second_opacity=65536,mix=0;
+  LumaWipe preview_luma;
+  bool preview_is_luma=false;
   if(recipe.contains("secondary")){
     auto base=recipe["secondary"];base.erase("opacityQ16");base.erase("transform2d");base.erase("rasterEffects");keys(base,{"path","time","indexed"});
     second_transform=transform2d(recipe["secondary"]);
     second_opacity=recipe["secondary"].contains("opacityQ16")?integer(recipe["secondary"],"opacityQ16",0,65536):65536;
-    mix=integer(recipe,"mixQ16",0,65536);
+    if(recipe.contains("lumaWipe")){
+      if(recipe.contains("mixQ16"))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+      preview_luma=parse_luma_wipe(recipe["lumaWipe"]);
+      preview_is_luma=true;
+    } else {
+      mix=integer(recipe,"mixQ16",0,65536);
+    }
     second=prepare_preview_frame(other,recipe["secondary"]);
-  } else if(recipe.contains("mixQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
+  } else if(recipe.contains("mixQ16")||recipe.contains("lumaWipe"))throw Error("DISSOLVE_RECIPE_FIELDS");
   std::unique_ptr<AVFrame, void(*)(AVFrame*)> effected(nullptr,[](AVFrame *p){owned_frame_free(&p);});
   if(recipe.contains("opacityQ16") || !transform.identity() || second) {
     const int opacity=recipe.contains("opacityQ16")?integer(recipe,"opacityQ16",0,65536):65536;
@@ -856,7 +942,7 @@ J preview(Engine &engine, const J &recipe) {
     effected->format=AV_PIX_FMT_YUV420P;effected->width=frame->width;effected->height=frame->height;
     ok(av_frame_copy_props(effected.get(),frame));ok(av_frame_get_buffer(effected.get(),32));
     SwsContext *scaler=nullptr;
-    try {if(second)render_dissolve_frame(effected.get(),frame,second,opacity,second_opacity,transform,second_transform,mix,scaler,in.check);else render_opacity_frame(effected.get(),frame,opacity,scaler,in.check,transform);}
+    try {if(second && preview_is_luma)render_luma_wipe_frame(effected.get(),frame,second,opacity,second_opacity,transform,second_transform,preview_luma,scaler,in.check);else if(second)render_dissolve_frame(effected.get(),frame,second,opacity,second_opacity,transform,second_transform,mix,scaler,in.check);else render_opacity_frame(effected.get(),frame,opacity,scaler,in.check,transform);}
     catch(...) {sws_freeContext(scaler);throw;}
     sws_freeContext(scaler);
     frame=effected.get();
@@ -1015,7 +1101,7 @@ J render(Engine &engine, const J &recipe) {
   std::vector<std::vector<Transform2d>> right_transform_schedules;
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("transformFrames");base.erase("rasterEffects");base.erase("secondary");base.erase("mixFramesQ16");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("transformFrames");base.erase("rasterEffects");base.erase("secondary");base.erase("mixFramesQ16");base.erase("lumaWipe");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
     transforms.push_back(transform2d(segment));
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
@@ -1035,10 +1121,19 @@ J render(Engine &engine, const J &recipe) {
         const auto &v=right["opacityFramesQ16"];if(right.contains("opacityQ16")||!v.is_array()||v.size()!=static_cast<size_t>(length))throw Error("OPACITY_SCHEDULE_RANGE");
         for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("OPACITY_RANGE");
       }
-      if(!segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
-      const auto &v=segment["mixFramesQ16"];if(!v.is_array()||v.size()!=static_cast<size_t>(length))throw Error("DISSOLVE_SCHEDULE_RANGE");
-      for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("DISSOLVE_MIX_RANGE");
-    } else if(segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
+      if(segment.contains("lumaWipe")){
+        if(segment.contains("mixFramesQ16"))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+        const auto &lw=segment["lumaWipe"];
+        if(!lw.is_object()||!lw.contains("progress"))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+        const auto &progress=lw["progress"];
+        if(!progress.is_array()||progress.size()!=static_cast<size_t>(length))throw Error("UNSUPPORTED_EDIT_TECHNIQUE");
+        for(const auto &x:progress)parse_luma_wipe(lw,&x);
+      } else {
+        if(!segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
+        const auto &v=segment["mixFramesQ16"];if(!v.is_array()||v.size()!=static_cast<size_t>(length))throw Error("DISSOLVE_SCHEDULE_RANGE");
+        for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("DISSOLVE_MIX_RANGE");
+      }
+    } else if(segment.contains("mixFramesQ16")||segment.contains("lumaWipe"))throw Error("DISSOLVE_RECIPE_FIELDS");
     right_transforms.push_back(rt);
     transform_schedules.push_back(transform_frames(segment, length, transforms.back()));
     right_transform_schedules.push_back(segment.contains("secondary")?transform_frames(segment["secondary"], length, rt):std::vector<Transform2d>{});
@@ -1123,7 +1218,11 @@ J render(Engine &engine, const J &recipe) {
     int opacity = source ? segments[si].value("opacityQ16",65536) : 65536;
     if(source && segments[si].contains("opacityFramesQ16"))opacity=segments[si]["opacityFramesQ16"][frame-segments[si]["startFrame"].get<int64_t>()].get<int>();
     int opacity_b=65536,mix=0;
-    if(second){const auto &r=segments[si]["secondary"];const auto at=frame-segments[si]["startFrame"].get<int64_t>();opacity_b=r.contains("opacityFramesQ16")?r["opacityFramesQ16"][at].get<int>():r.value("opacityQ16",65536);mix=segments[si]["mixFramesQ16"][at].get<int>();}
+    const LumaWipe *luma_ptr=nullptr;
+    LumaWipe luma_store;
+    if(second){const auto &r=segments[si]["secondary"];const auto at=frame-segments[si]["startFrame"].get<int64_t>();opacity_b=r.contains("opacityFramesQ16")?r["opacityFramesQ16"][at].get<int>():r.value("opacityQ16",65536);
+      if(segments[si].contains("lumaWipe")){luma_store=parse_luma_wipe(segments[si]["lumaWipe"],&segments[si]["lumaWipe"]["progress"][at]);luma_ptr=&luma_store;}
+      else mix=segments[si]["mixFramesQ16"][at].get<int>();}
     const auto at=source?frame-segments[si]["startFrame"].get<int64_t>():int64_t{0};
     const Transform2d xf=source?(transform_schedules[si].empty()?transforms[si]:transform_schedules[si][static_cast<size_t>(at)]):Transform2d{};
     const Transform2d rxf=second?(right_transform_schedules[si].empty()?right_transforms[si]:right_transform_schedules[si][static_cast<size_t>(at)]):Transform2d{};
@@ -1133,7 +1232,7 @@ J render(Engine &engine, const J &recipe) {
           const auto px=preview_pixels(actual);
           captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
         }
-      }, xf,second,opacity_b,rxf,mix);
+      }, xf,second,opacity_b,rxf,mix,luma_ptr);
     engine.rendered_video_frames=frame+1;
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
@@ -1232,6 +1331,7 @@ char *sm_capabilities(void) {
         {"networkAllowed", false},
         {"sourcePreview128", true},
         {"linearDissolveV1", true},
+        {"lumaWipeCpuV1", true},
         {"staticRasterV1", true},
         {"staticTransform2dV1", true},
         {"linearTransform2dKeyframesV1", true},

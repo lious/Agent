@@ -16,6 +16,7 @@ final class TimelineVideoPoint {
     this.secondary,
     this.mixQ16 = 0,
     this.rasterEffects,
+    this.lumaWipe,
   ]);
   final String clipId;
   final String? assetId, sourceVersion;
@@ -25,6 +26,7 @@ final class TimelineVideoPoint {
   final int mixQ16;
   final Map<String, double>? transform2d;
   final Map<String, Map<String, double>>? rasterEffects;
+  final LumaWipeSample? lumaWipe;
   bool get isGap => assetId == null;
 }
 
@@ -211,6 +213,16 @@ final class TimelineVideoGraph {
         boundaries.add(Q.fromJson(t['cut']) + Q.fromJson(t['after']));
       }
     }
+    for (final e in lumaWipeEffects(_document)) {
+      if (e['enabled'] == true) {
+        final p = e['parameters'] as Map;
+        final cut = lumaParamTime(p, 'cut'),
+            before = lumaParamTime(p, 'before'),
+            after = lumaParamTime(p, 'after');
+        boundaries.add(cut - before);
+        boundaries.add(cut + after);
+      }
+    }
     final times = boundaries.toList()..sort();
     Map<String, dynamic> node(TimelineVideoPoint p, Q time, int count) {
       final clip = _items.singleWhere((c) => c['id'] == p.clipId),
@@ -260,25 +272,50 @@ final class TimelineVideoGraph {
       };
       if (point.secondary != null) {
         recipe['secondary'] = node(point.secondary!, time, count);
-        final transition = (_document['transitions'] as List).singleWhere(
-          (t) =>
-              t['enabled'] == true &&
-              t['leftClipId'] == point.clipId &&
-              t['rightClipId'] == point.secondary!.clipId,
-        );
-        final start =
-                Q.fromJson(transition['cut']) -
-                Q.fromJson(transition['before']),
-            length =
-                Q.fromJson(transition['before']) +
-                Q.fromJson(transition['after']);
-        recipe['mixFramesQ16'] = [
-          for (var f = 0; f < count; f++)
-            dissolveMixQ16(
-              time + _frameRate.frameTime(BigInt.from(f)) - start,
-              length,
-            ),
-        ];
+        if (point.lumaWipe != null) {
+          final effect = lumaWipeEffects(_document).singleWhere(
+            (e) =>
+                e['enabled'] == true &&
+                e['parameters']['leftClipId'] == point.clipId &&
+                e['parameters']['rightClipId'] == point.secondary!.clipId,
+          );
+          final p = effect['parameters'] as Map;
+          // Never emit mixFramesQ16: a dissolve consumer must not silently
+          // blend this pair.
+          recipe['lumaWipe'] = {
+            'softness': (p['softness'] as num).toDouble(),
+            'invert': p['invert'] as bool,
+            'progress': [
+              for (var f = 0; f < count; f++)
+                lumaWipeProgress(
+                  time + _frameRate.frameTime(BigInt.from(f)),
+                  lumaParamTime(p, 'cut'),
+                  lumaParamTime(p, 'before'),
+                  lumaParamTime(p, 'after'),
+                ).toJson(),
+            ],
+          };
+        } else {
+          final transition = (_document['transitions'] as List).singleWhere(
+            (t) =>
+                t['enabled'] == true &&
+                t['leftClipId'] == point.clipId &&
+                t['rightClipId'] == point.secondary!.clipId,
+          );
+          final start =
+                  Q.fromJson(transition['cut']) -
+                  Q.fromJson(transition['before']),
+              length =
+                  Q.fromJson(transition['before']) +
+                  Q.fromJson(transition['after']);
+          recipe['mixFramesQ16'] = [
+            for (var f = 0; f < count; f++)
+              dissolveMixQ16(
+                time + _frameRate.frameTime(BigInt.from(f)) - start,
+                length,
+              ),
+          ];
+        }
       }
       result.add(recipe);
     }
@@ -305,6 +342,35 @@ final class TimelineVideoGraph {
           b,
           dissolveMixQ16(time - begin, length),
           a.rasterEffects,
+        );
+      }
+    }
+    for (final e in lumaWipeEffects(_document)) {
+      if (e['enabled'] != true) continue;
+      final p = e['parameters'] as Map;
+      final cut = lumaParamTime(p, 'cut'),
+          before = lumaParamTime(p, 'before'),
+          after = lumaParamTime(p, 'after');
+      final begin = cut - before, length = before + after;
+      if (time >= begin && time < begin + length) {
+        final left = _items.singleWhere((c) => c['id'] == p['leftClipId']),
+            right = _items.singleWhere((c) => c['id'] == p['rightClipId']);
+        final a = _clipPoint(left, time), b = _clipPoint(right, time);
+        return TimelineVideoPoint(
+          a.clipId,
+          a.assetId,
+          a.sourceVersion,
+          a.sourceTime,
+          a.opacityQ16,
+          a.transform2d,
+          b,
+          0,
+          a.rasterEffects,
+          LumaWipeSample(
+            progress: lumaWipeProgress(time, cut, before, after),
+            softness: (p['softness'] as num).toDouble(),
+            invert: p['invert'] as bool,
+          ),
         );
       }
     }

@@ -1,0 +1,84 @@
+{
+  "increment": "2.09",
+  "title": "Admit registered lumaWipe@1.0.0 incomingLuma Linux CPU",
+  "sourceParent": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "aggregateSha256": "b5c6e8a02bd40334af32cf037ee5f55fe98d474351e13426cb6d195e7044a85f",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "newThisIncrement": {
+    "document": 6,
+    "sdk": 1,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 468,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 6,
+      "note": "468 is the studio_document package total on this workbench, not the official new-count and not a selected-subset count."
+    },
+    "sdk": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1,
+      "files": [
+        "packages/studio_sdk/test/luma_wipe_render_test.dart",
+        "packages/studio_sdk/test/dissolve_render_test.dart",
+        "packages/studio_sdk/test/transform_keyframe_render_test.dart"
+      ]
+    },
+    "ui": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1,
+      "files": [
+        "packages/studio_editor_ui/test/luma_wipe_ui_test.dart"
+      ]
+    },
+    "nativeCtest": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "officialNewCount": 8,
+      "documentPackage": "468/0/0",
+      "sdkSelected": "5/0/0",
+      "uiNew": "1/0/0",
+      "ctest": "3/0"
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "analyzerPackages": [
+      "studio_document",
+      "studio_sdk",
+      "studio_media",
+      "studio_editor_ui"
+    ]
+  },
+  "bounds": [
+    "Official persist writes registered studio.fx/lumaWipe@1.0.0 with maskMode=incomingLuma via SetLumaWipe and RemoveLumaWipe as a sequence-owned Effect. This is not a new Transition.kind and not a dissolve-field spoof. Closed Sequence does not gain effectIds. requiredFeatures includes studio.craft.luma-wipe.v1 iff a luma effect exists.",
+    "Topology follows s8f: before+after>0, cut equals the adjacent clip boundary, same track no gap. Sources are virtually sampled in [cut-before, cut+after) with the admitted Transition handles formula; ordinary Clip ranges are not widened. Over-source is HANDLE_UNAVAILABLE with no freeze fallback. Same-track same-window occupancy with a core Transition or another pair operator is TRANSITION_WINDOW_CONFLICT; a replace after RemoveDissolve is allowed and must not double-mix the pair. Affected track/clip locks are checked even though owner is sequence. InversePatch kind stays restoreSnapshot; refusals do not half-write.",
+    "Formula follows s8f: progress p, m=dot(B.linearRGB, rec709 luma), optional invert, threshold/softness, linear-rec709 premultiplied blend; p=0 is all A and p=1 is all B. Dart compiles lumaWipe recipes (progress, softness, invert) and never emits mixFramesQ16 for luma. Linux CPU lumaWipeCpuV1 reuses the admitted two-leg dissolve linear buffers. GPU/Web stay disabled; no RenderGraph, GPU FrameLease, Metal, GLSL, HLSL, or WGSL was invented; no claim of cross-backend consistency.",
+    "Unsupported backends are read-only / block render and must not fall back to dissolve. Audio does not automatically fade with luma. assetLuma, assetAlpha, and maskWipe stay refused; a video matte is MASK_MEDIA_UNSUPPORTED. TRANSFORM_ANIMATION_NOT_IMPLEMENTED is not retargeted.",
+    "Production algebra of opacity, gain, transform keyframes, and dissolve is unchanged except that shared admission, fingerprint, and timeline compile now recognize this one admitted sequence-owned luma effect, and luma windows occupy the same exclusive pair slot as dissolve.",
+    "I-007 remapping/nest, V-003 render gate, crop/colorBasic animation, unregistered plugins, audioEqualPower, and freeze are not opened. I-008 stays partial; leftover remainingAcceptance items 「缺handles拒」, 「关键帧边界连续」, and 「一次提案原子undo恢复hash」 stay listed and were not re-qualified. The shared workbench peer /workspace/agent-media-native-peer/libstudio_media.so was not replaced."
+  ],
+  "native": {
+    "buildDir": "/tmp/studio-i008-luma-wipe-native",
+    "library": "/tmp/studio-i008-luma-wipe-native/libstudio_media.so",
+    "sha256": "d28032e6e42b1dde5448118f532eddceb4d4e752cf26c7313796072b93760117",
+    "peerLibrary": "/workspace/agent-media-native-peer/libstudio_media.so",
+    "peerSha256": "d56c8662e8eca9f07decf2a879d8b9b568a81150669eadee06aa4b23f6c68384",
+    "peerReplaced": false
+  },
+  "asOf": "2026-11-27T15:26:14+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureParent": "8de146635fac412832a9756c8e955ffe979e58ad",
+  "sourceCommitNote": "Increment 2.09 is an isolated replay onto 8de146635fac412832a9756c8e955ffe979e58ad of source e2268439084f8e3d63e83028f04ba64a7a5e9f98 (unique source parent b488f9655fada670a434ac6d6e76b99d9642fd20). The sourceSha256 / aggregateSha256 freeze describes the 15 source-commit files, not the replay tree after already-landed changes. Source clone unchanged; feature replay unpushed; shared native peer not installed.",
+  "sourceCommit": "e2268439084f8e3d63e83028f04ba64a7a5e9f98"
+}

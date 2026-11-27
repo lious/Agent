@@ -1,0 +1,27 @@
+{
+  "sourceParent": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "featureParent": "8de146635fac412832a9756c8e955ffe979e58ad",
+  "sourceSha256": {
+    "native/studio_media/src/studio_media.cpp": "697108d5aef31b18b2b62748c196e7f68125d81054671c6595c9610e5abf173c",
+    "packages/studio_document/lib/definition_fingerprint.dart": "cf3a3ef3cb0bcbddea17fb33c012ae4da3961a83029c1e1be86a3010f8ccd70a",
+    "packages/studio_document/lib/edit_algebra.dart": "313d32490a008176e2894e64c149fd64b72cfb43051b7e641005db92d3469549",
+    "packages/studio_document/lib/local_admission.dart": "4622044ade6cc8214560c7303ce25792e9800096b0ad6b125daecf0dc2b61028",
+    "packages/studio_document/lib/luma_wipe.dart": "23a26c0889974802216fcb8a563c19f0b6c493b25267b79ccd0cae6a0867231e",
+    "packages/studio_document/lib/project_semantics.dart": "17735b72b3f185fbf54e300fa6d621c6363e984e12bcaa728aec231c6b0b1fbf",
+    "packages/studio_document/lib/studio_document.dart": "3cfc6df82ca008c308dd6ad38fb1b97a31e1fdf4b885eee8fa2fa479c835f7f7",
+    "packages/studio_document/lib/timeline_graph.dart": "a846d2163e86a921545af4549bdf0a668a685864d1d30e760cd42105db0e0c18",
+    "packages/studio_document/lib/validator.dart": "15e2485eea58b8526c303fdb90b8f4975b94f46af59065b1f24443aa7399f591",
+    "packages/studio_document/test/luma_wipe_test.dart": "639c812de4f3138247aa9dcfda27af7b051e5430bcfddc9cb8ba4bd435bbdd6c",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "bf03c6e2a3743afc76f4a05c281fceccad286650b6e93a42ee795fc41ed74a6f",
+    "packages/studio_editor_ui/test/luma_wipe_ui_test.dart": "345129dfd71b08f89d6a2e78ad811a1c66f71f5855953fbebdabbcf328af0497",
+    "packages/studio_media/lib/studio_media.dart": "2b4b5a867598cf2decce2dde6e21339bf84e82eb615bc28e40d638d8b1979305",
+    "packages/studio_sdk/lib/studio_sdk.dart": "d486640f4ffae1119c9ac3a86e09d586f2682d58c884886bd354574fea323379",
+    "packages/studio_sdk/test/luma_wipe_render_test.dart": "0539680d6514ea5a56e76915e0e5c1b273a0293f4f5c518f9b2a22de0881309b"
+  },
+  "aggregateSha256": "b5c6e8a02bd40334af32cf037ee5f55fe98d474351e13426cb6d195e7044a85f",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "asOf": "2026-11-27T15:26:14+08:00",
+  "timezone": "Asia/Shanghai",
+  "sourceCommitNote": "Increment 2.09 is an isolated replay onto 8de146635fac412832a9756c8e955ffe979e58ad of source e2268439084f8e3d63e83028f04ba64a7a5e9f98 (unique source parent b488f9655fada670a434ac6d6e76b99d9642fd20). The sourceSha256 / aggregateSha256 freeze describes the 15 source-commit files, not the replay tree after already-landed changes. Source clone unchanged; feature replay unpushed; shared native peer not installed.",
+  "sourceCommit": "e2268439084f8e3d63e83028f04ba64a7a5e9f98"
+}

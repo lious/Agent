@@ -1,0 +1,8 @@
+00:00 +0: loading packages/studio_document/test/luma_wipe_test.dart
+00:00 +0: formula endpoints: p=0 is all A, p=1 is all B, compile emits lumaWipe not dissolve mix
+00:00 +1: missing head/tail handles return HANDLE_UNAVAILABLE without freeze fallback or document change
+00:00 +2: core Transition or another pair operator in the same window is TRANSITION_WINDOW_CONFLICT; removeTransition then luma is accepted
+00:00 +3: luma is not written as dissolve, unopened mask modes are refused, and unsupported technique is not silently stripped
+00:00 +4: audio does not automatically fade with a luma wipe; no audioEqualPower transition is introduced
+00:00 +5: track and clip locks refuse luma writes without half-write; noop and explicit removal are real
+00:00 +6: All tests passed!

@@ -1,0 +1,71 @@
+{
+  "increment": "2.09",
+  "asOf": "2026-11-27T15:38:12+08:00",
+  "timezone": "Asia/Shanghai",
+  "sourceCommit": "e2268439084f8e3d63e83028f04ba64a7a5e9f98",
+  "sourceParent": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "featureParent": "8de146635fac412832a9756c8e955ffe979e58ad",
+  "sourceCloneCleanUnchanged": true,
+  "sourceNotAdvertisedOnAnyOriginRef": true,
+  "sourceAndFeatureFreezeMatch": "b5c6e8a02bd40334af32cf037ee5f55fe98d474351e13426cb6d195e7044a85f",
+  "frozenSources": 15,
+  "officialNewCount": {
+    "document": 6,
+    "sdkRender": 1,
+    "flutterUi": 1,
+    "total": 8
+  },
+  "clone": {
+    "analyzer": "No issues found",
+    "newDocument": "6/0/0",
+    "fullDocumentRegression": "468/0/0 (not new-count)",
+    "selectedSdk": "5/0/0",
+    "flutterUi": "1/0/0",
+    "ctest": "3/0",
+    "nativeBuildDir": "/tmp/i008-verify-clone"
+  },
+  "feature": {
+    "analyzer": "No issues found",
+    "newDocument": "6/0/0",
+    "selectedSdk": "5/0/0",
+    "flutterUi": "1/0/0",
+    "ctest": "3/0",
+    "nativeBuildDir": "/tmp/studio-media-native-2.09"
+  },
+  "nativeBothRebuiltSha256": "d28032e6e42b1dde5448118f532eddceb4d4e752cf26c7313796072b93760117",
+  "sharedPeerSha256Unchanged": "d56c8662e8eca9f07decf2a879d8b9b568a81150669eadee06aa4b23f6c68384",
+  "peerInstalled": false,
+  "pushed": false,
+  "coreStoreVersion": 9,
+  "I008": {
+    "implementationStatus": "partial",
+    "fullTaskComplete": false,
+    "remainingAcceptance": "缺handles拒；关键帧边界连续；一次提案原子undo恢复hash。"
+  },
+  "taskCounts": {
+    "complete": 0,
+    "partial": 27,
+    "planned": 47,
+    "blocked": 13
+  },
+  "env": {
+    "PATH_prefix": "/workspace/toolchains/flutter/bin",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "independently rebuilt library in each nativeBuildDir",
+    "STUDIO_TEST_VIDEO": "/tmp/studio-i008-transform-keyframes-fixtures/white.mp4"
+  },
+  "notes": [
+    "Initial missing STUDIO_TEST_VIDEO caused one admitted SDK case and UI to skip; corrected environment and reran both fully, zero skips in recorded final results.",
+    "Increment 1.88 SDK 1000-undo suite deliberately skipped: existing command generation and invert implementation unchanged; new luma command retains restoreSnapshot. Full document regression includes its separate existing random-undo tests.",
+    "README and REVIEW keep all landed history and append this increment only. task-status splices only I-008 and asOf. ADR 0109-luma-wipe-cpu renamed 0110-luma-wipe-cpu; original source clone untouched.",
+    "No I-004/store/play/character/gain production or foundation_app_test.dart changes. GPU/Web/maskWipe/assetLuma/assetAlpha remain disabled/refused; no RenderGraph or new GPU interfaces.",
+    "Original final-* logs and commands.json are teammate source evidence; this subdirectory contains independent feature validation. Original compact logs have pre-existing carriage-return/trailing-space output; production diff whitespace is clean."
+  ],
+  "logsSha256": {
+    "doc.log": "9be287840c5eba57730d105f56a32ea6e6375fc9b5ea37d3f454286171a4b758",
+    "analyze.log": "6ff8519168832ae102060fd69184a738b46e34b6127dbb9480c9c08bf2a88b5c",
+    "sdk.log": "089aaf906383681db758113308775f7b2dd4a46ef8f3f7c826a38564c5cff496",
+    "ui.log": "4ae55ae60767b6177bac612cd70db79b1811a11b00f27284e25cb56f51e6d123",
+    "ctest.log": "f542b67526da9f45cade9b6caaf4a769196c1e720e4182b1163a25ea9ca2d541"
+  }
+}

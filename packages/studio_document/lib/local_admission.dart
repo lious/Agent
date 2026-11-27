@@ -18,12 +18,12 @@ void requireLocalEditingWritable(ProjectDocument project) {
     'fontRefs',
     'modelRefs',
     'retainedSources',
-    'requiredFeatures',
   ]) {
     if ((d[table] as List).isNotEmpty) {
       throw StudioException('FEATURE_NOT_IMPLEMENTED', table);
     }
   }
+  requireAdmittedRequiredFeatures(d);
   if ((d['extensions'] as Map).isNotEmpty || d['defaultFontRef'] != null) {
     throw const StudioException('FEATURE_NOT_IMPLEMENTED');
   }
@@ -52,9 +52,13 @@ void requireLocalEditingWritable(ProjectDocument project) {
         if (c['source'] != null)
           for (final id in c['effectIds']) id as String,
   };
-  if ((d['effects'] as List).any((e) => !consumed.contains(e['id']))) {
+  if ((d['effects'] as List).any(
+    (e) =>
+        !consumed.contains(e['id']) && !isAdmittedSequenceLumaWipe(d, e as Map),
+  )) {
     throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
   }
+  requireLumaWipeProfile(d);
   final assets = {for (final a in d['assets'] as List) a['id']: a};
   final blobs = {for (final v in d['blobs'] as List) v['hash']: v};
   if (blobs.length != (d['blobs'] as List).length) {

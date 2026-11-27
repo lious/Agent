@@ -1,0 +1,12 @@
+Internal ctest changing into directory: /tmp/studio-i008-luma-wipe-native
+Test project /tmp/studio-i008-luma-wipe-native
+    Start 1: media_handles
+1/3 Test #1: media_handles ....................   Passed    0.03 sec
+    Start 2: media_errors
+2/3 Test #2: media_errors .....................   Passed    0.03 sec
+    Start 3: media_cancel
+3/3 Test #3: media_cancel .....................   Passed    0.18 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   0.24 sec

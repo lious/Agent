@@ -354,6 +354,7 @@ void _projectSemantics(
       }
     }
   }
+  reportLumaWipeSemantics(d, issue, clips, tracks, indexes);
   for (final g in d['linkGroups']) {
     final members = g['members'] as List,
         ids = members.map((x) => x['clipId']).toList();

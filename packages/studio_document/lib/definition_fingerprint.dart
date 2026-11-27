@@ -44,15 +44,20 @@ final class DefinitionFingerprinter {
   void _requireProfile(ProjectDocument p) {
     if (_qualifiedContexts.contains(p)) return;
     final d = _document(p);
-    if ((d['extensions'] as Map).isNotEmpty ||
-        (d['requiredFeatures'] as List).isNotEmpty) {
+    if ((d['extensions'] as Map).isNotEmpty) {
       throw const StudioException('UNRESOLVED_EXTENSION_CLOSURE');
     }
-    // Track/sequence effect ordering has no qualified core consumer here.
-    // Do not silently omit their owner-only forward dependencies or invent order.
+    requireAdmittedRequiredFeatures(d);
+    // Track/sequence effect ordering has no qualified core consumer here
+    // except the admitted sequence-owned lumaWipe pair operator, which closes
+    // both legs through the sequence like dissolve. Do not invent order.
     if ((d['transitions'] as List).isNotEmpty) requireDissolveProfile(d);
+    if (hasLumaWipeEffects(d)) requireLumaWipeProfile(d);
     if ((d['effects'] as List).any(
-      (e) => e['owner']['kind'] == 'track' || e['owner']['kind'] == 'sequence',
+      (e) =>
+          e['owner']['kind'] == 'track' ||
+          (e['owner']['kind'] == 'sequence' &&
+              !isAdmittedSequenceLumaWipe(d, e as Map)),
     )) {
       throw const StudioException('DEFINITION_PROFILE_UNQUALIFIED');
     }
@@ -239,6 +244,7 @@ final class DefinitionFingerprinter {
             'pan',
             'limiter',
             'textStyle',
+            lumaWipeEffectType,
           };
           if (!known.contains(body['type']) ||
               (body['extensions'] as Map).isNotEmpty) {
@@ -290,6 +296,12 @@ final class DefinitionFingerprinter {
           for (final t in d['transitions']) {
             if (t['sequenceId'] == body['id']) {
               child('transitions', Map<String, dynamic>.from(t));
+            }
+          }
+          for (final e in d['effects']) {
+            if (isAdmittedSequenceLumaWipe(d, e as Map) &&
+                e['owner']['id'] == body['id']) {
+              child('effect', Map<String, dynamic>.from(e));
             }
           }
           child('bus', find('audioBuses', body['masterBusId']));

@@ -187,6 +187,161 @@ final class RemoveDissolve extends EditOperation {
   };
 }
 
+final class SetLumaWipe extends EditOperation {
+  const SetLumaWipe(
+    this.leftClipId,
+    this.rightClipId,
+    this.before,
+    this.after, {
+    required this.softness,
+    this.invert = false,
+  });
+  final String leftClipId, rightClipId;
+  final Q before, after;
+  final double softness;
+  final bool invert;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'setLumaWipe',
+    'leftClipId': leftClipId,
+    'rightClipId': rightClipId,
+    'before': before.toJson(),
+    'after': after.toJson(),
+    'softness': softness,
+    'invert': invert,
+  };
+}
+
+final class RemoveLumaWipe extends EditOperation {
+  const RemoveLumaWipe(this.effectId);
+  final String effectId;
+  @override
+  Map<String, Object?> toJson() => {
+    'kind': 'removeLumaWipe',
+    'effectId': effectId,
+  };
+}
+
+bool _lumaFieldLocked(Map clip) =>
+    clip['source'] != null &&
+    (clip['lockedFields'] as List).any(
+      (f) =>
+          f == '*' ||
+          f == 'transitions' ||
+          f == 'effects' ||
+          (f as String).startsWith('transitions.') ||
+          f.startsWith('effects.'),
+    );
+
+void _requireLumaTargetsUnlocked(Map track, Iterable<String> clipIds) {
+  if (track['locked'] == true) throw const StudioException('FIELD_LOCKED');
+  for (final c in (track['items'] as List).where(
+    (c) => clipIds.contains(c['id']),
+  )) {
+    if (_lumaFieldLocked(c as Map)) {
+      throw const StudioException('FIELD_LOCKED');
+    }
+  }
+}
+
+ProjectDocument _lumaWipeEdit(
+  ProjectDocument before,
+  EditOperation op,
+  VersionAllocator version,
+  IdAllocator id,
+) {
+  final d = before.toJson(), seq = d['sequences'][0];
+  final effects = d['effects'] as List;
+  final tracks = seq['tracks'] as List;
+  if (op is RemoveLumaWipe) {
+    final found = effects.where((e) => e['id'] == op.effectId).toList();
+    if (found.isEmpty || !isLumaWipeEffect(found.single as Map)) {
+      throw const StudioException('NOT_FOUND');
+    }
+    final p = found.single['parameters'] as Map;
+    final matches = tracks.where((t) => t['id'] == p['trackId']).toList();
+    if (matches.length != 1) throw const StudioException('NOT_FOUND');
+    _requireLumaTargetsUnlocked(matches.single, [
+      p['leftClipId'] as String,
+      p['rightClipId'] as String,
+    ]);
+    effects.removeWhere((e) => e['id'] == op.effectId);
+  } else {
+    final x = op as SetLumaWipe;
+    final matches = tracks
+        .where((t) => (t['items'] as List).any((c) => c['id'] == x.leftClipId))
+        .toList();
+    if (matches.length != 1) throw const StudioException('CLIP_NOT_FOUND');
+    final track = matches.single;
+    _requireLumaTargetsUnlocked(track, [x.leftClipId, x.rightClipId]);
+    final items = track['items'] as List;
+    if (!items.any((c) => c['id'] == x.rightClipId)) {
+      throw const StudioException('CLIP_NOT_FOUND');
+    }
+    final left = items.singleWhere((c) => c['id'] == x.leftClipId);
+    final cut =
+        Q.fromJson(left['timelineRange']['start']) +
+        Q.fromJson(left['timelineRange']['duration']);
+    final old = effects
+        .where(
+          (e) =>
+              isLumaWipeEffect(e as Map) &&
+              e['parameters']['leftClipId'] == x.leftClipId &&
+              e['parameters']['rightClipId'] == x.rightClipId,
+        )
+        .toList();
+    if (old.isNotEmpty &&
+        Q.fromJson(old.single['parameters']['before']) == x.before &&
+        Q.fromJson(old.single['parameters']['after']) == x.after &&
+        (old.single['parameters']['softness'] as num).toDouble() ==
+            x.softness &&
+        old.single['parameters']['invert'] == x.invert &&
+        old.single['enabled'] == true) {
+      return before;
+    }
+    final eid = old.isEmpty ? id() : old.single['id'] as String;
+    effects.removeWhere((e) => e['id'] == eid);
+    effects.add({
+      'id': eid,
+      'version': version(eid),
+      'owner': {'kind': 'sequence', 'id': seq['id']},
+      'pluginVersion': lumaWipePluginVersion,
+      'enabled': true,
+      'keyframes': [],
+      'extensions': <String, dynamic>{},
+      'type': lumaWipeEffectType,
+      'parameters': {
+        'sequenceId': seq['id'],
+        'trackId': track['id'],
+        'leftClipId': x.leftClipId,
+        'rightClipId': x.rightClipId,
+        'cut': cut.toJson(),
+        'before': x.before.toJson(),
+        'after': x.after.toJson(),
+        'maskMode': lumaWipeMaskIncoming,
+        'maskAssetRef': null,
+        'softness': x.softness,
+        'invert': x.invert,
+      },
+    });
+  }
+  if (hasLumaWipeEffects(d)) {
+    final features = List<String>.from(d['requiredFeatures'] as List);
+    if (!features.contains(lumaWipeRequiredFeature)) {
+      d['requiredFeatures'] = [...features, lumaWipeRequiredFeature];
+    }
+  } else {
+    d['requiredFeatures'] = [
+      for (final f in d['requiredFeatures'] as List)
+        if (f != lumaWipeRequiredFeature) f,
+    ];
+  }
+  seq['version'] = version(seq['id']);
+  final result = ProjectDocument.fromJson(d);
+  requireLocalEditingWritable(result);
+  return result;
+}
+
 ProjectDocument _dissolveEdit(
   ProjectDocument before,
   EditOperation op,
@@ -972,9 +1127,14 @@ ProjectDocument applyEdit(
   if (operation is SetDissolve || operation is RemoveDissolve) {
     return _dissolveEdit(before, operation, nextVersion, newId);
   }
-  // Do not silently move/drop a transition when editing its topology.
-  // Explicit removal is reversible; slip remains allowed if handles revalidate.
-  if ((before.toJson()['transitions'] as List).isNotEmpty &&
+  if (operation is SetLumaWipe || operation is RemoveLumaWipe) {
+    return _lumaWipeEdit(before, operation, nextVersion, newId);
+  }
+  // Do not silently move/drop a transition or luma pair operator when editing
+  // its topology. Explicit removal is reversible; slip remains allowed if
+  // handles revalidate.
+  if (((before.toJson()['transitions'] as List).isNotEmpty ||
+          hasLumaWipeEffects(before.toJson())) &&
       (operation is SplitClip ||
           operation is TrimClip ||
           operation is MoveClip ||
@@ -1302,6 +1462,8 @@ ProjectDocument applyEdit(
       throw StateError('persistent audio dispatch');
     case SetDissolve():
     case RemoveDissolve():
+    case SetLumaWipe():
+    case RemoveLumaWipe():
     case SetClipCrop():
     case SetClipColorBasic():
     case SetClipTransform():

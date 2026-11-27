@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:json_canonicalizer/json_canonicalizer.dart';
 
 import 'src/project_schema.dart';
+import 'luma_wipe.dart';
 import 'time.dart';
 
 import 'package:studio_contracts/studio_contracts.dart';

@@ -108,11 +108,16 @@ final class NativeMedia {
     Map<String, Map<String, double>>? rasterEffects,
     Map<String, dynamic>? secondary,
     int mixQ16 = 0,
+    Map<String, dynamic>? lumaWipe,
   }) {
     if (capabilities['sourcePreview128'] != true) {
       throw const StudioException('PREVIEW_ADAPTER_UNAVAILABLE');
     }
-    if (secondary != null && capabilities['linearDissolveV1'] != true) {
+    if (lumaWipe != null) {
+      if (secondary == null || capabilities['lumaWipeCpuV1'] != true) {
+        throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+      }
+    } else if (secondary != null && capabilities['linearDissolveV1'] != true) {
       throw const StudioException('DISSOLVE_ADAPTER_UNAVAILABLE');
     }
     if (rasterEffects != null && capabilities['staticRasterV1'] != true) {
@@ -136,7 +141,8 @@ final class NativeMedia {
       'transform2d': ?transform2d,
       'rasterEffects': ?rasterEffects,
       'secondary': ?secondary,
-      if (secondary != null) 'mixQ16': mixQ16,
+      if (secondary != null && lumaWipe == null) 'mixQ16': mixQ16,
+      'lumaWipe': ?lumaWipe,
     });
     return Isolate.run(
       () => NativeMedia._attach(path, ns, h)._call('sm_preview', recipe),
