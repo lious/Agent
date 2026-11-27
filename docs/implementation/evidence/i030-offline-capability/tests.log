@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_offline_capability_probe/test/agent/s10_offline_capability_test.dart
+00:00 +0: packages/studio_offline_capability_probe/test/agent/s10_offline_capability_test.dart: a preset script must not be disguised as a real LLM, offline cloud video generation must be disclosed as unsupported, and a text model must not be pretended to generate video
+00:00 +1: packages/studio_offline_capability_probe/test/agent/s10_offline_capability_test.dart: a real LLM, video-generation runtime, ModelContextAdmission, StreamAssembler, and GeneratedOutputAdmission stay closed
+00:00 +2: All tests passed!

@@ -99,7 +99,8 @@
     "packages/studio_llm_path_probe",
     "packages/studio_license_provenance_probe",
     "packages/studio_session_navigation_probe",
-    "packages/studio_model_context_probe"
+    "packages/studio_model_context_probe",
+    "packages/studio_offline_capability_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
