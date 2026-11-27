@@ -1,0 +1,2 @@
+e3d589c48cd631a02b22a30c7ddcadfbce6841539fb491970a803589a4156fa1  packages/studio_assets/lib/craft/skill_compiler.dart
+6d7b59f06de2256d61e73eaf773333d89d5eb05c0c7243687b2cf0f8f1d47bb7  packages/studio_assets/test/skills/compile_safety/i037_jl_cut_handles_test.dart

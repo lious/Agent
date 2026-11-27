@@ -1,0 +1,25 @@
+{
+  "increment": "2.39",
+  "task": "I-037",
+  "title": "J/L cut compiles to admitted unlink and trim commands",
+  "asOf": "2026-11-28T02:06:32+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "cee77a22c6ad7ed6f26c713ddc3fe190ab2d57f7",
+  "officialTests": 3,
+  "frozenI037UnregisteredTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "TrimPlanner or new trim modes",
+    "SOFT_CAMERA_CONTROL warning",
+    "external skill privilege escalation / approval bypass",
+    "new I-008 effect plugin",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_assets/lib/craft/skill_compiler.dart",
+    "packages/studio_assets/test/skills/compile_safety/i037_jl_cut_handles_test.dart"
+  ]
+}
