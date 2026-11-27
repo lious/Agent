@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_varispeed_probe/test/audio/varispeed/i023_varispeed_pitch_test.dart
+00:00 +0: non-1x source audio must be explicit varispeed-and-pitch-change or mute; claiming pitch preservation is refused
+00:00 +1: a non-1x rate with no explicit policy is refused; 1x needs no special policy
+00:00 +2: a time-stretch engine, I-007 PCM remapping, limiter, and related leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
