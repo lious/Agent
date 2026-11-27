@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_generated_layer_probe/test/generation/layers/i040_generated_output_candidate_test.dart
+00:00 +0: a raster or video candidate is admitted; prompt-extracting an MP4 object into an editable layer is refused
+00:00 +1: non-candidate generated output is refused; deterministic text, caption, and logo layers are not replaced
+00:00 +2: an inpainting, tracking, or segmentation runtime, I-040 provider re-qualification, and paid generation stay closed
+00:00 +3: All tests passed!
+EXIT:0
