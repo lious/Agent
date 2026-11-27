@@ -1,0 +1,62 @@
+{
+  "increment": "K.2",
+  "title": "Second I-036 @ mention, resolver, injector, and in-project materialize slice",
+  "baseCommit": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "asOf": "2026-11-27T14:59:32+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_assets"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-binding/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.364
+    },
+    {
+      "name": "character-library-frozen",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-binding/final-i036-frozen.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.786
+    },
+    {
+      "name": "character-binding-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-binding/final-i036-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.531
+    },
+    {
+      "name": "acceptance-adapter",
+      "command": [
+        "python3",
+        "tools/acceptance/cases/i036.py",
+        "--profile",
+        "linux-dev",
+        "--report",
+        "artifacts/acceptance/I-036.json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-binding/final-adapter.log",
+      "exitCode": 0,
+      "elapsedSeconds": 3.229
+    }
+  ]
+}

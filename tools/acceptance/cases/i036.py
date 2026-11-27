@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Selected I-036 CharacterPack/Voice/Rights library checks. Does not declare the task complete."""
+"""Selected I-036 character library and project-binding checks. Does not declare the task complete."""
 import argparse
 import json
 import os
@@ -25,6 +25,9 @@ def main():
         (['dart', 'test',
           'packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart',
           '--reporter=json'], ROOT, 'character-library'),
+        (['dart', 'test',
+          'packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart',
+          '--reporter=json'], ROOT, 'character-binding'),
     ]
     records = []
     failed = False
@@ -43,8 +46,7 @@ def main():
         'taskStatus': 'partial',
         'checks': records,
         'notValidated': [
-            '@ mention search and CharacterPromptInjector',
-            'Project.Character materialize / appearanceRef attach',
+            'Project.Character appearanceRef attach (I-004 AssetRepository / RelinkProposal / FileToken)',
             'offline lease / online realPerson cloud rights check',
             'library GC of unreferenced versions',
             'voice cloning (I-049 / I-050)',

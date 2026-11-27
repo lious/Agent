@@ -1,0 +1,19 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":2093954,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":1,"time":7,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":620}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":6,"line":null,"column":null,"url":null},"type":"group","time":622}
+{"test":{"id":3,"name":"@ mention scan searches only the authorized library and records a locked-version ref without uploading pack images","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":270,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":623}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":812}
+{"test":{"id":4,"name":"ProjectCharacterResolver.resolve applies legal overrides and fails closed on revoked live rights","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":340,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":813}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":866}
+{"test":{"id":5,"name":"CharacterPromptInjector.compile injects only this shot appearance, wardrobe, action, and anti-drift constraints","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":476,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":867}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":888}
+{"test":{"id":6,"name":"CharacterPromptInjector returns REFERENCE_SLOT_CONFLICT when a single first-frame slot would drop one side","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":563,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":888}
+{"testID":6,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":908}
+{"test":{"id":7,"name":"identity consistency is IDENTITY_SOFT_CONSTRAINT and is never marked as a pixel lock","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":622,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":909}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":927}
+{"test":{"id":8,"name":"materialize writes name, constraints, and extension refs; appearanceRef attach stops on missing I-004 surfaces","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":661,"column":3,"url":"file:///workspace/studio-i036-character-binding/packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart"},"type":"testStart","time":928}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":953}
+{"success":true,"type":"done","time":959}

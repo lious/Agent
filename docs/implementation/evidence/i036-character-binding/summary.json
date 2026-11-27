@@ -1,0 +1,46 @@
+{
+  "increment": "K.2",
+  "title": "Second I-036 @ mention, resolver, injector, and in-project materialize slice",
+  "baseCommit": "b488f9655fada670a434ac6d6e76b99d9642fd20",
+  "productionChanged": true,
+  "newCount": 6,
+  "newTests": {
+    "studio_assets": 6,
+    "harness": 0,
+    "store": 0,
+    "sdk": 0,
+    "ui": 0,
+    "document": 0
+  },
+  "clauseOfficialized": "@ mention authorized-library scan and locked-version ProjectCharacterRef; resolver + injector this-shot constraints; REFERENCE_SLOT_CONFLICT; IDENTITY_SOFT_CONSTRAINT only; name/constraints/extension materialize. appearanceRef attach of library blobs remains blocked on I-004.",
+  "task": "I-036",
+  "whyNotAlreadyOfficial": "After Increment 2.04 / K.1, @ mention search, ProjectCharacterResolver, CharacterPromptInjector, and Project.Character materialize were still unopened.",
+  "rowsStillOpenOnI036": [
+    "Project.Character appearanceRef attach of library reference blobs (missing I-004 AssetRepository / RelinkProposal / FileToken)",
+    "offline lease / online realPerson cloud rights check",
+    "library GC of unreferenced versions",
+    "voice cloning (I-049 / I-050)",
+    "LoRA training or weight download; LoRA across base models and absolute identity lock are not promised",
+    "craft_fts on this frozen SQLite 3.54.1 build (no SQLITE_ENABLE_FTS5); I-037 is not opened"
+  ],
+  "leftoverWordingAfterSplit": "",
+  "seeds": null,
+  "regressions": {
+    "note": "No core store/document/harness/sdk/ui production files were modified; core project user_version stays 9; frozen native library is unchanged; the frozen 2.04 suite of 7 tests was re-run and passed and was not rewritten. Official 1.83–2.05 / C.1–C.3 / A.1 / K.1 suites were not mixed into this new-count. K.1 aggregateSha256 cc912250084c1ef18cd2c0943c593291e17de38f749d04493b1a9b7ace4ef3f3 is unchanged."
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "8dbbb7bfda96bfe4bf56c06fa64fcb0427f67148a84dfbf403496cce114c1252",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "07314d3c920b1fd26c8639e1733995874d203df5a8b6ff6c0c902308f31b0771",
+  "frozenK1AggregateSha256": "cc912250084c1ef18cd2c0943c593291e17de38f749d04493b1a9b7ace4ef3f3",
+  "i036Status": "partial",
+  "remainingAcceptance": "",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "i049Started": false,
+  "i050Started": false,
+  "coreStoreUserVersion": 9,
+  "libraryWorkspaceVersion": 6,
+  "asOf": "2026-11-27T14:59:32+08:00",
+  "timezone": "Asia/Shanghai"
+}
