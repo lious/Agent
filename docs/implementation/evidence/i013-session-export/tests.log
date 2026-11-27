@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_session_export_probe/test/storage/archive/i013_session_export_test.dart
+00:00 +0: packages/studio_session_export_probe/test/storage/archive/i013_session_export_test.dart: when session content is omitted, refs stay redacted, command bodies are omitted, and runs are historical
+00:00 +1: packages/studio_session_export_probe/test/storage/archive/i013_session_export_test.dart: ADR 0099 default session exclusion, AuditJournalAdmission, job-resume binding, and job archival stay closed
+00:00 +2: All tests passed!
