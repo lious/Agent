@@ -1,0 +1,7 @@
+00:00 +0: loading packages/studio_render_node_probe/test/render/graph/i022_render_node_union_test.dart
+00:00 +0: a closed-union acyclic graph with required outputs and fingerprints in the cache key is admitted
+00:00 +1: an unknown kind, missing outputs, and a cycle are refused
+00:00 +2: a filename-only cache key is refused; node fingerprints must participate
+00:00 +3: a V-003 measurement, FrameLease, LUT runtime, and already-official recipe or consistency admissions stay closed
+00:00 +4: All tests passed!
+EXIT:0
