@@ -1,0 +1,49 @@
+{
+  "increment": "K.1",
+  "title": "First I-036 CharacterPack / Voice / Rights library slice",
+  "baseCommit": "c9579461c4dbd397936aaf27385995b45551a639",
+  "asOf": "2026-11-27T11:37:51+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_assets"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-pack-library/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.286
+    },
+    {
+      "name": "character-library-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-pack-library/final-i036-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.307
+    },
+    {
+      "name": "acceptance-adapter",
+      "command": [
+        "python3",
+        "tools/acceptance/cases/i036.py",
+        "--profile",
+        "linux-dev",
+        "--report",
+        "artifacts/acceptance/I-036.json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-character-pack-library/final-adapter.log",
+      "exitCode": 0,
+      "elapsedSeconds": 1.5
+    }
+  ]
+}

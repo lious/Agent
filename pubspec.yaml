@@ -8,6 +8,7 @@
     "packages/studio_contracts",
     "packages/studio_document",
     "packages/studio_store",
+    "packages/studio_assets",
     "packages/studio_harness",
     "packages/studio_sdk",
     "apps/studio_demo",

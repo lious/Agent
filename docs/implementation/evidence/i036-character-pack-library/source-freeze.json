@@ -1,0 +1,37 @@
+{
+  "increment": "K.1",
+  "title": "First I-036 CharacterPack / Voice / Rights library slice",
+  "baseCommit": "c9579461c4dbd397936aaf27385995b45551a639",
+  "sourceSha256": {
+    "packages/studio_assets/pubspec.yaml": "c4d12637e11487d1b6933e80690c8e364a740069ec32644a22bd9e121cc465b2",
+    "packages/studio_assets/analysis_options.yaml": "69d5fc7c4dc082613882215d52d18b02b1688b833d674ce9b281f45821626b7d",
+    "packages/studio_assets/lib/studio_assets.dart": "0b3137bb24bf098ab64aa6a7735c63363ca5f86a3002701aa44f7f98536ee9fc",
+    "packages/studio_assets/lib/character/t57_library_ddl.dart": "2c0867c6f7078a6ca360710e0304e9d6502fc6f70369c6405e2a580fc280248d",
+    "packages/studio_assets/lib/character/library_store.dart": "de1913c3bba25761321072fb3fb32655fdb2e48dd27e10bae4a9907c148ddda1",
+    "packages/studio_assets/lib/character/character_pack_validator.dart": "913a8d44e2dacf6654d0aba53d4eeb562cba7b5370e19e2f09f00d17ad31729e",
+    "packages/studio_assets/lib/character/character_repository.dart": "27298455678401d50e86b33d1c075f8f293461be97725c809fbbae9c2d08ca31",
+    "packages/studio_assets/lib/character/character_upgrade_planner.dart": "0eab631f02b74ad156f48afadb75e74b47c687832258b347f06281962bd0bd72",
+    "packages/studio_assets/lib/character/portrait_rights.dart": "efc98e7f484d054be94798abaaeee5e7c4a21fe5b5d0b80e7ff97e637a0f6c50",
+    "packages/studio_assets/schemas/character-pack.schema.json": "1d55400fe4e988f3473b197fd710210da26e9eca9e0671b93d425025caed254e",
+    "packages/studio_assets/schemas/project-character-ref.schema.json": "faf886f65f569b233306cc714b8c2c26de139ee4ff28481e3ccd0838e7142bb3",
+    "packages/studio_assets/schemas/t57-library.sql": "00a5afa851c82d9d0fc811bee67b65360a092edcb0229b0e4ff1979377dc9ebd",
+    "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart": "08006acf0961d9bbe8241ba3ebc4240e9c97dab8dbb86b12901753a7616012aa",
+    "schemas/character-pack.schema.json": "1d55400fe4e988f3473b197fd710210da26e9eca9e0671b93d425025caed254e",
+    "schemas/project-character-ref.schema.json": "faf886f65f569b233306cc714b8c2c26de139ee4ff28481e3ccd0838e7142bb3",
+    "schemas/t57-library.sql": "00a5afa851c82d9d0fc811bee67b65360a092edcb0229b0e4ff1979377dc9ebd",
+    "tools/acceptance/cases/i036.py": "3383f526fb19bd66113cfac0f7ad5f38a0a1f8f42990a8a310da70c340be177d",
+    "docs/adr/k001-i036-character-pack-library.md": "5573f24843a02c08c3b5e64a4e66138597f60af2f9758f162c36b1f4eabc9145",
+    "docs/implementation/task-status.json": "e4d21badb9ba2e4760e3aa6770ad63729144267d1786c6a994c12d5bccf03525",
+    "docs/implementation/README.md": "b9672c38df4bfa1f85d6a14561fdd790142c0b5478431d85e38a5306e698fcd4",
+    "docs/implementation/REVIEW.md": "db4df42331174d44aef8477e46109f490796ec48cb8de6e5fc35b74568010d1d",
+    "pubspec.yaml": "2aea75501d2f404bdaa038b9cb424b4570fa32c2402f44fa94f0a7a01407879c"
+  },
+  "aggregateSha256": "cc912250084c1ef18cd2c0943c593291e17de38f749d04493b1a9b7ace4ef3f3",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "5f3550f3da038b59b25a0a769ac3ae7458c3a0d12f351cc24ddb02af4b81b18f",
+  "nativeLibrarySha256": {
+    "/workspace/agent-media-native-peer/libstudio_media.so": "8a3b18a5f56123ec6267cb537d3d9789c1084030678b6a6c85ca361c1045bab7"
+  },
+  "asOf": "2026-11-27T11:37:51+08:00",
+  "timezone": "Asia/Shanghai"
+}

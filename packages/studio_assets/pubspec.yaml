@@ -1,0 +1,26 @@
+{
+  "name": "studio_assets",
+  "version": "0.1.0",
+  "publish_to": "none",
+  "environment": {
+    "sdk": "^3.14.0"
+  },
+  "resolution": "workspace",
+  "dependencies": {
+    "studio_contracts": {
+      "path": "../studio_contracts"
+    },
+    "studio_document": {
+      "path": "../studio_document"
+    },
+    "sqlite3": "^2.9.4",
+    "crypto": "^3.0.8",
+    "archive": "4.7.1",
+    "path": "^1.9.1",
+    "json_canonicalizer": "1.1.0"
+  },
+  "dev_dependencies": {
+    "test": "^1.26.3",
+    "lints": "^6.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.32.0","pid":2036986,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
+{"count":1,"time":6,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":504}
+{"group":{"id":2,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":7,"line":null,"column":null,"url":null},"type":"group","time":506}
+{"test":{"id":3,"name":"official 8G CharacterPack schema and T57 library DDL are closed","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":227,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":506}
+{"testID":3,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":577}
+{"test":{"id":4,"name":"CharacterPackValidator enforces 8G cross-reference and rights rules","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":279,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":577}
+{"testID":4,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":594}
+{"test":{"id":5,"name":"global library upgrade does not change old project pins","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":306,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":595}
+{"testID":5,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":637}
+{"test":{"id":6,"name":"upgrade keeps local wardrobe override and does not overwrite hand-edited captions","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":402,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":637}
+{"testID":6,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":660}
+{"test":{"id":7,"name":"after revoke, new generation and cache hits are 0","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":533,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":661}
+{"testID":7,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":679}
+{"test":{"id":8,"name":"cross-app import does not inherit source grants or permissions","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":604,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":679}
+{"testID":8,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":748}
+{"test":{"id":9,"name":"publish is refused on head conflict and leaves no half-published version","suiteID":0,"groupIDs":[2],"metadata":{"skip":false,"skipReason":null},"line":770,"column":3,"url":"file:///workspace/studio-i036-character-pack/packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart"},"type":"testStart","time":749}
+{"testID":9,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":758}
+{"success":true,"type":"done","time":764}

@@ -1645,3 +1645,14 @@ Document-level official clip gain Effect persistence: 6 new tests plus the selec
 ## Increment 2.03 — same-device crew and mystery play-mode MVP (in-memory replay)
 
 Isolated replay of `packages/studio_play` onto this tip without schema v10 or `edit_proposals`. Official new-count is 14 tests (crew 6, mystery 5, scheduling 3); analyzer clean on studio_play. 87-task counts stay 0 complete / 26 partial / 48 planned / 13 blocked. No XD item is marked complete. Ordinary local commit only; unique parent 5ce5f97; no push and no merge to main.
+
+
+## Increment 2.04 — first I-036 CharacterPack / Voice / Rights library slice (bounded close)
+
+1. **The official 8G / T57 contract is used, not invented:** CharacterPack and ProjectCharacterRef schemas byte-compare to `docs/studio/reference/t57Schemas.json`. T57_LIBRARY_DDL text is unchanged. Library workspace w6 is a dedicated database; core project `user_version` stays 9. The approved SQLite 3.54.1 binary is unchanged. `craft_fts` is present in the official SQL and is not instantiated on this frozen build (no `SQLITE_ENABLE_FTS5`); I-037 is not opened. Increments 2.02 and 2.03 remain intact; `packages/studio_play` is unchanged, and the core store is not expanded to v10 or `edit_proposals`.
+
+2. **The four original I-036 acceptance clauses are officialized at this bound, and leftovers stay honest:** 全局升级不改旧项目pin；撤销后新生成/缓存命中=0；手调剪辑字幕不覆盖；跨App权限独立. “手调剪辑字幕不覆盖” is at CharacterUpgradePlanner / pin upgrade only; I-010 crop/burn-in is not opened. remainingAcceptance for those four clauses is cleared; remainingScope stays listed. I-036 stays partial. `fullTaskComplete` stays false. 87-task counts move honestly from 26 partial / 48 planned to 27 partial / 47 planned because I-036 was planned and is now partial; complete stays 0.
+
+3. **Closed work is not opened, and frozen hashes are not rewritten:** I-049 / I-050, paid APIs, model-weight download, I-007, I-016/I-017/I-018, a full I-019 port, I-020, I-026, I-060, I-046, I-055, and leftover I-010 items stay closed. `tools/acceptance/run_task.py` routing is unchanged. C.1–C.3, A.1, M.1–M.3, and Increment 2.00 evidence files are not modified. I-005 leftover section-3 rows, I-006 remainingAcceptance (empty), I-008 leftovers, I-011 leftovers, I-012 leftovers, I-013 leftovers, I-014 leftovers, I-015 leftovers, I-021 leftovers, I-022 remainingAcceptance, I-024 remainingAcceptance, I-025 leftovers, I-027 leftovers, I-032 leftovers, and V-005 remainingAcceptance including 「durableRevision零丢失」 stay listed and are not silently cleared. Official 505 and Increments 1.83–2.00 / C.1–C.3 / 2.02–2.03 new-counts are not mixed into this increment's new-count of 7 tests (studio_assets).
+
+These reviews do not close original I-036, I-005, I-006, I-008, I-011, I-012, I-013, I-014, I-015, I-021, I-022, I-024, I-025, I-027, I-032, or V-005. `fullTaskComplete` stays false.
