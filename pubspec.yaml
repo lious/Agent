@@ -53,7 +53,8 @@
     "packages/studio_proxy_delivery_probe",
     "packages/studio_relink_version_probe",
     "packages/studio_proxy_seek_probe",
-    "packages/studio_rotation_once_probe"
+    "packages/studio_rotation_once_probe",
+    "packages/studio_render_recipe_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

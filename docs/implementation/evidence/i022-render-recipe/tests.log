@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_render_recipe_probe/test/render/recipe/i022_render_recipe_test.dart
+00:00 +0: preview and final share the same RenderRecipe hash
+00:00 +1: divergent preview and final recipes are refused; an empty recipe is refused
+00:00 +2: V-003 measurement, I-024 export suites, FrameLease, and muxer leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
