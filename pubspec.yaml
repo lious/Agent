@@ -55,7 +55,8 @@
     "packages/studio_proxy_seek_probe",
     "packages/studio_rotation_once_probe",
     "packages/studio_render_recipe_probe",
-    "packages/studio_icc_first_probe"
+    "packages/studio_icc_first_probe",
+    "packages/studio_preview_export_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

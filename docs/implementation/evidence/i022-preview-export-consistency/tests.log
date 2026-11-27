@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_preview_export_probe/test/render/graph/i022_preview_export_consistency_test.dart
+00:00 +0: the official RenderGraph order is admitted; a reversed or truncated order is refused
+00:00 +1: a proxy may replace only the sample source; preview may drop size or frames but not the color formula
+00:00 +2: a V-003 measurement, FrameLease, muxer, and already-official recipe or color admissions stay closed
+00:00 +3: All tests passed!
+EXIT:0
