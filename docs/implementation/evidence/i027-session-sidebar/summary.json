@@ -1,0 +1,23 @@
+{
+  "increment": "2.34",
+  "task": "I-027",
+  "title": "Session rename, archive, and title search",
+  "asOf": "2026-11-28T01:42:36+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "6441306a504de8a2ceb743bba70e25541e511d25",
+  "officialTests": 3,
+  "harnessPackageTests": 23,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "explicit PatchGroup cherry-pick",
+    "chat workbench UI",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "stolen cross-app session",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_harness/lib/session_store.dart",
+    "packages/studio_harness/test/session/branches/i027_session_sidebar_test.dart"
+  ]
+}

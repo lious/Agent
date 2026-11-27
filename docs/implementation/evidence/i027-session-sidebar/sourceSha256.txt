@@ -1,0 +1,2 @@
+a1a9a396cb92f05a7d48fec79e749798a6751a170233e6e21a20091c70e99512  packages/studio_harness/lib/session_store.dart
+c79fd6b0131e59651eca4f3907152146a9657bbaa41b9e745fa52f773a9abb1a  packages/studio_harness/test/session/branches/i027_session_sidebar_test.dart

@@ -36,11 +36,13 @@ final class SessionRecord {
     required this.projectId,
     required this.title,
     required this.activeBranchId,
+    this.status = SessionStatus.active,
   });
 
-  final String id, projectId, title, activeBranchId;
+  final String id, projectId, activeBranchId;
   final Namespace namespace;
-  final status = SessionStatus.active;
+  String title;
+  SessionStatus status;
 }
 
 final class BranchRecord {
@@ -165,6 +167,51 @@ final class SessionStore {
     return s;
   }
 
+  void _requireWritable(SessionRecord session) {
+    if (session.status != SessionStatus.active) {
+      throw const StudioException('SESSION_ARCHIVED');
+    }
+  }
+
+  /// Rename a session in this namespace. An empty title is refused.
+  SessionRecord renameSession(String id, String title) {
+    if (title.isEmpty) throw const StudioException('INVALID_SESSION_TITLE');
+    final sess = session(id);
+    sess.title = title;
+    return sess;
+  }
+
+  /// Archive a session. The record stays in this namespace and is omitted
+  /// from the default list/search. Write operations are refused.
+  SessionRecord archiveSession(String id) {
+    final sess = session(id);
+    sess.status = SessionStatus.archived;
+    return sess;
+  }
+
+  /// Default list is active sessions only. This is not production FTS.
+  List<SessionRecord> listSessions({bool includeArchived = false}) {
+    final rows = [
+      for (final s in _sessions.values)
+        if (includeArchived || s.status == SessionStatus.active) s,
+    ]..sort((a, b) => a.id.compareTo(b.id));
+    return List<SessionRecord>.unmodifiable(rows);
+  }
+
+  /// Title search in this namespace. Archived sessions are omitted unless
+  /// [includeArchived] is set. This is not production FTS/RAG.
+  List<SessionRecord> searchSessions(
+    String query, {
+    bool includeArchived = false,
+  }) {
+    if (query.isEmpty) return const [];
+    final needle = query.toLowerCase();
+    return [
+      for (final s in listSessions(includeArchived: includeArchived))
+        if (s.title.toLowerCase().contains(needle)) s,
+    ];
+  }
+
   BranchRecord branch(String id) {
     final b = _branches[id];
     if (b == null) throw StudioException('BRANCH_NOT_FOUND', id);
@@ -184,7 +231,7 @@ final class SessionStore {
     requireId(call.toolCallId);
     requireId(call.runId);
     requireId(call.agentId);
-    session(call.sessionId);
+    _requireWritable(session(call.sessionId));
     branch(call.branchId);
     if (call.sessionId != branch(call.branchId).sessionId) {
       throw StudioException(messageScopeMismatch, call.branchId);
@@ -211,6 +258,7 @@ final class SessionStore {
     requireId(branchId);
     requireId(turnId);
     final sess = session(sessionId);
+    _requireWritable(sess);
     final br = branch(branchId);
     if (br.sessionId != sess.id) {
       throw StudioException(messageScopeMismatch, branchId);
@@ -267,6 +315,7 @@ final class SessionStore {
     if (call == null || call.state != ToolCallState.waiting) {
       throw StudioException(toolCallMismatch, toolCallId);
     }
+    _requireWritable(session(call.sessionId));
     if (http.executed.contains(toolCallId)) {
       // Already sent; never resend.
       return;
@@ -286,6 +335,7 @@ final class SessionStore {
   }) {
     requireId(newBranchId);
     final sess = session(sessionId);
+    _requireWritable(sess);
     final parent = branch(parentBranchId);
     if (parent.sessionId != sess.id) {
       throw StudioException(messageScopeMismatch, parentBranchId);
