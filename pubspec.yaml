@@ -23,7 +23,8 @@
     "packages/studio_voice",
     "packages/studio_image_editor",
     "packages/studio_context",
-    "packages/studio_web_media"
+    "packages/studio_web_media",
+    "packages/studio_vertical"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

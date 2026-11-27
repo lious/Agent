@@ -1,0 +1,30 @@
+{
+  "increment": "2.42",
+  "task": "I-038",
+  "title": "VerticalWorkflowCompiler fixtures, confirmed facts, and compile refusals",
+  "asOf": "2026-11-28T02:18:07+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "0bc9d598405b18d4f3f3d8ec86bf84b2cc1e1bd6",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "i032Judgment": "Leftover 「图环；手动锁始终有效」 is still not a clean slice: 图环 is already official as PLAN_CYCLE and was not re-qualified; a PlanGraph manual-lock API still does not exist and was not invented.",
+  "notClaimed": [
+    "I-032 图环 re-qualification / PlanGraph manual-lock API",
+    "I-037 complete / signed-pack import / production FTS/RAG",
+    "paid generation / quote / apply / WorkflowCoordinator",
+    "SQL vertical.v1 / workspace SQLite w5",
+    "PlayRecipe hug/miniature/animalHumanized/babyDance library",
+    "full s8m prompt-layering cases",
+    "I-004 AssetRepository attach",
+    "live I-036 cloud rights check",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_vertical/lib/vertical_brief.dart",
+    "packages/studio_vertical/lib/fact_ledger.dart",
+    "packages/studio_vertical/lib/workflow_compiler.dart",
+    "packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart"
+  ]
+}
