@@ -1,0 +1,24 @@
+{
+  "increment": "2.35",
+  "task": "I-032",
+  "title": "Expired fence does not commit, and 100 restarts have no duplicate side effects",
+  "asOf": "2026-11-28T01:47:23+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "fedf3f9f2d1b13af8b8b8bac29d271e33dc455a7",
+  "officialTests": 2,
+  "frozenI032OfficialSuites": 6,
+  "frozenDurableSuites": 11,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "PlanGraph manual-lock API",
+    "re-qualification of PLAN_CYCLE / 图环",
+    "new restart product surface",
+    "dynamic replan / model-loop execution",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_store/test/i032_restart_fence_test.dart"
+  ]
+}
