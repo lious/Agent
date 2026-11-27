@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_archive_countdown_probe/test/storage/archive/i013_archive_countdown_test.dart
+00:00 +0: a library or portable archive must not start a recycle-bin countdown
+00:00 +1: I-029 DeletionBarrier, Increment 3.27 LibraryArchiveAdmission, and a recycle-bin timer stay closed
+00:00 +2: All tests passed!
