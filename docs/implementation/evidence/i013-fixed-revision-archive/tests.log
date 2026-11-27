@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_fixed_revision_archive_probe/test/storage/archive/i013_fixed_revision_archive_test.dart
+00:00 +0: a fixed-revision portable archive excludes future outputs, stays immutable after publish, must not cancel a paid job, and discloses pending jobs
+00:00 +1: I-013 job archival, Increment 3.06 ArtifactKindAdmission, Increment 3.04 JobCancelAdmission, and paid APIs stay closed
+00:00 +2: All tests passed!
