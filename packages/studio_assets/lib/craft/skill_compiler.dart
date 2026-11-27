@@ -3,6 +3,13 @@ import 'package:studio_document/studio_document.dart';
 
 import 'registry_bridge.dart';
 
+const softCameraControl = 'SOFT_CAMERA_CONTROL';
+const capabilityUnsatisfied = 'CAPABILITY_UNSATISFIED';
+
+/// s8f camera.dollyZoom@1.0.0 compiled single-shot suggestion.
+const dollyZoomBackSuggestion = '相机后移同时收紧视角，主体占画面比例尽量稳定，背景空间感变化';
+const dollyZoomForwardSuggestion = '相机前移同时放宽视角，主体占画面比例尽量稳定，背景空间感变化';
+
 const filmCraftContentType = 'filmCraft';
 const skillCompilerVersion = '1.0.0';
 
@@ -106,6 +113,56 @@ final class JlCutRequest {
   final String leftVideoId, rightVideoId;
 }
 
+enum CameraMappingHandling { api, promptSuggestion, nle, unsupported }
+
+enum DollyZoomDirection { backDollyZoomIn, forwardZoomOut }
+
+/// s8g SkillMapping. Wan camera moves are promptSuggestion, not a
+/// unified physical camera API.
+final class CameraSkillMapping {
+  CameraSkillMapping({
+    required this.providerProfileId,
+    required this.fieldPath,
+    required this.handling,
+    this.parameterName,
+    this.warningCode,
+    this.required = false,
+  }) {
+    requireId(providerProfileId);
+    if (fieldPath.isEmpty || fieldPath.length > 256) {
+      throw const StudioException('INVALID_ID', 'fieldPath');
+    }
+  }
+
+  final String providerProfileId, fieldPath;
+  final CameraMappingHandling handling;
+  final String? parameterName, warningCode;
+  final bool required;
+}
+
+/// s8f camera_craft request. Compiles to a soft promptSuggestion and a
+/// SOFT_CAMERA_CONTROL warning. This is not hard physical camera control
+/// and not a new I-008 plugin.
+final class CameraCraftRequest {
+  CameraCraftRequest({
+    this.skillId = 'camera.dollyZoom',
+    this.version = '1.0.0',
+    this.direction = DollyZoomDirection.backDollyZoomIn,
+    required this.providerProfileId,
+    required this.capabilityMappings,
+    this.hasPhysicalCameraControl = false,
+  }) {
+    requirePluginId(skillId);
+    requirePluginId(version);
+    requireId(providerProfileId);
+  }
+
+  final String skillId, version, providerProfileId;
+  final DollyZoomDirection direction;
+  final List<CameraSkillMapping> capabilityMappings;
+  final bool hasPhysicalCameraControl;
+}
+
 /// s8f CraftSkillCompiler. An unregistered technique is refused explicitly
 /// and is not rewritten to a registered dissolve. J/L cuts compile to
 /// already-admitted unlink and trim commands.
@@ -168,6 +225,73 @@ final class CraftSkillCompiler {
       commands: planned,
       inverseKind: 'restoreSnapshot',
       beforeSnapshotHash: project.hash,
+    );
+  }
+
+  /// s8f camera.dollyZoom: 2D / Wan mappings stay promptSuggestion and
+  /// surface SOFT_CAMERA_CONTROL. Required hard physical control without
+  /// capability is CAPABILITY_UNSATISFIED. Digital zoom is not emitted
+  /// as a stand-in for a real dolly zoom.
+  CraftProposal compileCameraCraft({required CameraCraftRequest request}) {
+    if (request.skillId != 'camera.dollyZoom' || request.version != '1.0.0') {
+      throw StudioException('UNSUPPORTED_EDIT_TECHNIQUE', request.skillId);
+    }
+    final mappings = [
+      for (final m in request.capabilityMappings)
+        if (m.providerProfileId == request.providerProfileId) m,
+    ];
+    if (mappings.isEmpty) {
+      throw StudioException(capabilityUnsatisfied, request.providerProfileId);
+    }
+    final hard = [
+      for (final m in mappings)
+        if (m.required &&
+            (m.handling == CameraMappingHandling.api ||
+                m.handling == CameraMappingHandling.nle ||
+                m.handling == CameraMappingHandling.unsupported))
+          m,
+    ];
+    if (hard.isNotEmpty && !request.hasPhysicalCameraControl) {
+      throw StudioException(capabilityUnsatisfied, request.skillId);
+    }
+    final suggestions = [
+      for (final m in mappings)
+        if (m.handling == CameraMappingHandling.promptSuggestion) m,
+    ];
+    if (suggestions.isEmpty) {
+      throw StudioException(capabilityUnsatisfied, request.skillId);
+    }
+    final warning =
+        suggestions
+            .map((m) => m.warningCode)
+            .firstWhere((c) => c != null && c.isNotEmpty, orElse: () => null) ??
+        softCameraControl;
+    final text = request.direction == DollyZoomDirection.backDollyZoomIn
+        ? dollyZoomBackSuggestion
+        : dollyZoomForwardSuggestion;
+    _n += 1;
+    return CraftProposal(
+      id: 'craft-$_n',
+      skillSnapshotHash: request.skillId,
+      compilerVersion: skillCompilerVersion,
+      operator: OperatorDescriptor(
+        id: request.skillId,
+        version: request.version,
+        backend: 'prompt',
+        enabled: true,
+        requiredFeatures: const [],
+      ),
+      requiredFeatures: const [],
+      shotDesignPatchGroups: [
+        {
+          'kind': 'promptSuggestion',
+          'text': text,
+          'skillId': request.skillId,
+          'providerProfileId': request.providerProfileId,
+        },
+      ],
+      softWarnings: [warning],
+      inverseKind: 'restoreSnapshot',
     );
   }
 }

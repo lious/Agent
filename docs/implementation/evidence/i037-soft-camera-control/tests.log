@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_assets/test/skills/compile_safety/i037_soft_camera_control_test.dart
+00:00 +0: camera.dollyZoom compiles to the official soft prompt and SOFT_CAMERA_CONTROL, not a digital zoom or project write
+00:00 +1: required hard physical camera control without capability is CAPABILITY_UNSATISFIED and does not emit digital zoom
+00:00 +2: a missing provider mapping is CAPABILITY_UNSATISFIED; a skill does not invent a physical camera operator
+00:00 +3: All tests passed!

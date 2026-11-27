@@ -1,0 +1,8 @@
+00:00 +0: loading packages/studio_assets/test/skills/compile_safety/i037_unregistered_technique_test.dart
+00:00 +0: packages/studio_assets/test/skills/compile_safety/i037_unregistered_technique_test.dart: RegistryBridge admits registered lumaWipe on cpu and refuses unregistered or disabled backends
+00:00 +1: packages/studio_assets/test/skills/compile_safety/i037_unregistered_technique_test.dart: an unregistered technique is refused, is not enabled by skill presence, and does not fall back to dissolve
+00:00 +2: packages/studio_assets/test/skills/compile_safety/i037_unregistered_technique_test.dart: a skill cannot register unreviewed shader or FFmpeg filter strings; a registered lumaWipe cpu skill compiles without writing a project
+00:00 +3: packages/studio_assets/test/skills/compile_safety/i037_jl_cut_handles_test.dart: a 0.4s J-cut compiles to unlink and trim, moves only the audio cut, and restores from the before snapshot
+00:00 +4: packages/studio_assets/test/skills/compile_safety/i037_jl_cut_handles_test.dart: a 0.4s L-cut extends outgoing audio past the video cut using the same admitted commands
+00:00 +5: packages/studio_assets/test/skills/compile_safety/i037_jl_cut_handles_test.dart: insufficient audio head, a locked audio track, and a 0.4s J on a 0.2s handle are refused without writing
+00:00 +6: All tests passed!

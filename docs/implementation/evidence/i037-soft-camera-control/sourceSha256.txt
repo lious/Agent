@@ -1,0 +1,2 @@
+e96866b35fed8cb963620ab2f5c087d32c112256f9425bc7e31eeef57cf4aba2  packages/studio_assets/lib/craft/skill_compiler.dart
+1c9616a3e2cebda3f4e5df45fe2ee5f8fc2827269ad6d16f3fdf5e6ae4f85627  packages/studio_assets/test/skills/compile_safety/i037_soft_camera_control_test.dart

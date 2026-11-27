@@ -1,0 +1,27 @@
+{
+  "increment": "2.40",
+  "task": "I-037",
+  "title": "SOFT_CAMERA_CONTROL warning for camera.dollyZoom promptSuggestion",
+  "asOf": "2026-11-28T02:08:55+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "e3374ed2ce7c5921272ab5d89792298c46609b0e",
+  "officialTests": 3,
+  "frozenI037UnregisteredTests": 3,
+  "frozenI037JlCutTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "hard physical camera control / thin-lens API",
+    "digital zoom as a stand-in for a real dolly zoom",
+    "new I-008 effect plugin",
+    "external skill privilege escalation / approval bypass",
+    "signed package import / production FTS/RAG",
+    "workspace SQLite w5",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_assets/lib/craft/skill_compiler.dart",
+    "packages/studio_assets/test/skills/compile_safety/i037_soft_camera_control_test.dart"
+  ]
+}
