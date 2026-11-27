@@ -1,0 +1,13 @@
+00:00 +0: loading packages/studio_audio_tools/test/audio/stems_ola/i047_stem_denoise_lock_test.dart
+00:00 +0: stems are derived candidates; the original is not overwritten and stays editable when resources are insufficient
+00:00 +1: 100 cancels each release DenoiseState; a released state cannot be reused
+00:00 +2: changing preprocess invalidates the ASR cache but does not rewrite locked captions; V-010 is required to auto-accept
+00:00 +3: All tests passed!
+EXIT:0
+======= frozen I-046 =======
+00:00 +0: loading packages/studio_audio_tools/test/asr/caption_locks/i046_asr_proposal_test.dart
+00:00 +0: silence or music suspected hallucinations are not auto-accepted; noAudio does not invent a transcript; diarization and cloud ASR are refused; inference is not claimed
+00:00 +1: locked or hand-edited cues are not overwritten on transcribe or accept
+00:00 +2: overlapping 30s/29s windows dedup identical time and text, keep conflicting evidence without inventing a sentence, and a deleted source or late cancel does not hang a cue
+00:00 +3: All tests passed!
+EXIT:0
