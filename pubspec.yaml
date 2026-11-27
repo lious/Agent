@@ -28,7 +28,8 @@
     "packages/studio_quality",
     "packages/studio_privacy",
     "packages/studio_gateway",
-    "packages/studio_audio_tools"
+    "packages/studio_audio_tools",
+    "packages/studio_generation"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

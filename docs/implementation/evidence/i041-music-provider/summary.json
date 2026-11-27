@@ -1,0 +1,33 @@
+{
+  "increment": "2.56",
+  "task": "I-041",
+  "title": "MusicProvider profile refusals, BeatGrid snap, and duck proposals",
+  "asOf": "2026-11-28T03:09:13+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "d8b5236ebf8fdf1a0f09ecda2ee801fe46c30d38",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "real ACE/YuE/SA inference or model download",
+    "V-016 ACE / V-017 SA / V-018 YuE2 qualification (stay blocked)",
+    "measured beat-tracker accuracy beyond a declared integer-sample grid",
+    "limiter or bus Effect",
+    "paid APIs or automatic paid generation",
+    "I-009 bus/gain leftover re-qualification",
+    "I-033 reconciler leftover re-qualification",
+    "I-046, I-051, I-054, I-029, or I-010 leftover re-qualification",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, V-020, I-054, I-051, or I-046 complete",
+    "executable ABC script path",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_generation/lib/studio_generation.dart",
+    "packages/studio_generation/lib/music/music_provider.dart",
+    "packages/studio_generation/test/music/beat_duck/i041_music_provider_test.dart",
+    "packages/studio_generation/pubspec.yaml"
+  ]
+}
