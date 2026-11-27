@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_fallback_probe/test/compatibility/fallback/v002_fallback_planner_test.dart
+00:00 +0: same-format already-verified software falls back per local preference and is logged; each proposal carries time, quality, privacy, cost, and approval hash fields
+00:00 +1: output size, HDR, model, upload, or cost changes need confirmation; a missing encoder is not disguised as a CPU fallback
+00:00 +2: with no local path the plan is pending adaptation or unsupported; cloud is not selected silently; V-004 and I-024 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
