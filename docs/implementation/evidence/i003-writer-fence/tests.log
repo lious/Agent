@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_writer_fence_probe/test/storage/commit/i003_writer_fence_test.dart
+00:00 +0: a live writer lock is admitted for the owner and must not be stolen by expiry alone
+00:00 +1: a stale worker result is STALE_WRITER and does not mutate head or the publish target
+00:00 +2: Increment 3.08 SQL cloud-side-effect work, I-032 PlanGraph fencing, a manual-lock API, I-003 revision tests, and I-011 crash leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
