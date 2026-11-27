@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_privacy/test/privacy/delete_export/i054_permission_deletion_test.dart
+00:00 +0: denied photos or microphone still allow local file import; export to a FileToken does not need album write; denoise cannot open a mic without a grant; a system grant is not provider consent
+00:00 +1: purged content is not visible on FTS, RAG, summary, or archive surfaces; an old summary or pack cannot resurrect it; production FTS/RAG and remote erasure are not claimed
+00:00 +2: default diagnostics exclude private text, source media, and credentials; a production-basis export may include policy facts but not credentials, deleted bodies, or session archives
+00:00 +3: All tests passed!
+EXIT:0

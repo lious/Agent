@@ -1,0 +1,33 @@
+{
+  "increment": "2.53",
+  "task": "I-054",
+  "title": "PermissionBroker refusals and PrivacyService export/delete barrier",
+  "asOf": "2026-11-28T03:00:21+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "b8acfa8573b0aa77731b90ff3bd0f44c51f69578",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "production FTS/RAG",
+    "rewrite or re-qualification of I-029 DeletionBarrier or I-027 session-search leftovers",
+    "real OS Photo Picker / microphone APIs",
+    "V-022 regional / network allowlist qualification",
+    "forensic SSD/WAL/system-backup erasure",
+    "provider remote deletion guarantee",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, or V-020 complete",
+    "60s WebCodecs/OPFS roundtrip / V-007 production pin",
+    "quote/apply, paid generation, SQL vertical.v1",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions"
+  ],
+  "files": [
+    "packages/studio_privacy/lib/studio_privacy.dart",
+    "packages/studio_privacy/lib/privacy_service.dart",
+    "packages/studio_privacy/test/privacy/delete_export/i054_permission_deletion_test.dart",
+    "packages/studio_privacy/pubspec.yaml"
+  ]
+}

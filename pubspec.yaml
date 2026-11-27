@@ -25,7 +25,8 @@
     "packages/studio_context",
     "packages/studio_web_media",
     "packages/studio_vertical",
-    "packages/studio_quality"
+    "packages/studio_quality",
+    "packages/studio_privacy"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
