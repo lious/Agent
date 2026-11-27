@@ -1,0 +1,13 @@
+00:00 +0: loading packages/studio_generation/test/generation/async_candidates/i040_generation_provider_test.dart
+00:00 +0: duplicate, unknown, late, and cancel paths do not double-bill; unknown is poll-only; late media is sandboxed and not auto-applied
+00:00 +1: one-shot and multi-shot inserts are editable clips, not a flat MP4; continuation keeps the original clip and audio and inserts only the suffix; uncertain splice and unapproved approx continuation are refused
+00:00 +2: locked original audio and hand-edited captions are not overwritten on insert
+00:00 +3: All tests passed!
+EXIT:0
+======= frozen I-041 =======
+00:00 +0: loading packages/studio_generation/test/music/beat_duck/i041_music_provider_test.dart
+00:00 +0: ACE can be planned without YuE2; unsupported Turbo tasks, YuE stems, voice clone, ABC scripts, fractional BPM, and unsupported meters are refused
+00:00 +1: beat snap stays within 1 sample of a declared integer grid; duck proposals do not rewrite manual gain or invent a limiter; locked tracks are refused
+00:00 +2: a late cancel accounts the fee and isolates the candidate without hanging it on the timeline or calling a paid API; unapproved paid generation is refused
+00:00 +3: All tests passed!
+EXIT:0

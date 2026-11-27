@@ -1,0 +1,32 @@
+{
+  "increment": "2.57",
+  "task": "I-040",
+  "title": "VideoGenerationProvider async candidates and editable NLE insert",
+  "asOf": "2026-11-28T03:12:01+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "73e9214b6b67cf6e8aaddc8cdd0d69a46589b12b",
+  "officialTests": 3,
+  "frozenI041Suites": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "paid APIs or a real Wan/DashScope call",
+    "WorkflowCoordinator quote/apply",
+    "V-019 video-mode qualification (stays blocked)",
+    "account auto-connect",
+    "productionEnabled (stays false)",
+    "I-033 reconciler leftover re-qualification",
+    "I-041 leftover re-qualification",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, V-020, I-054, I-051, I-046, or I-041 complete",
+    "limiter, bus Effect, or real ACE/YuE inference",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_generation/lib/studio_generation.dart",
+    "packages/studio_generation/lib/video_generation_provider.dart",
+    "packages/studio_generation/test/generation/async_candidates/i040_generation_provider_test.dart"
+  ]
+}
