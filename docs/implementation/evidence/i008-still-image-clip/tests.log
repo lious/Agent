@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_still_image_clip_probe/test/media/still/i008_still_image_clip_test.dart
+00:00 +0: an imageDocument or image Asset clip is admitted with a null streamId and a static 1x domain
+00:00 +1: a still clip with a streamId, or a non-static / non-1x source domain, is refused
+00:00 +2: Ken Burns, I-026 leftovers, I-008 keyframe suites, and V-003 stay closed
+00:00 +3: All tests passed!
+EXIT:0
