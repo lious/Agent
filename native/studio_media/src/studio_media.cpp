@@ -384,10 +384,7 @@ struct Transform2d {
   bool raster_identity() const {return left==0 && top==0 && right==1 && bottom==1 && exposure==0 && contrast==1 && saturation==1;}
   bool identity() const {return matrix_identity() && raster_identity();}
 };
-Transform2d transform2d(const J &recipe) {
-  Transform2d t;
-  if(recipe.contains("transform2d")){
-  const auto &p=recipe["transform2d"];
+void fill_transform_matrix(Transform2d &t, const J &p) {
   keys(p,{"translateX","translateY","scaleX","scaleY","rotationDeg","anchorX","anchorY"});
   if(p.size()!=7)throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");
   auto number=[&](const char *k){if(!p[k].is_number())throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");double v=p[k].get<double>();if(!std::isfinite(v))throw Error("TRANSFORM_PARAMETERS_UNSUPPORTED");return v;};
@@ -395,6 +392,26 @@ Transform2d transform2d(const J &recipe) {
   if(t.sx<=0 || t.sy<=0 || t.sx>100 || t.sy>100)throw Error("TRANSFORM_SCALE_RANGE");
   if(t.ax<0 || t.ax>1 || t.ay<0 || t.ay>1)throw Error("TRANSFORM_ANCHOR_RANGE");
   if(std::abs(t.tx)>1000000 || std::abs(t.ty)>1000000 || std::abs(t.deg)>1000000 || t.sx<.000001 || t.sy<.000001)throw Error("TRANSFORM_CPU_PROFILE_RANGE");
+}
+// Dart compiles hold/linear schedules; native never interpolates a second copy.
+std::vector<Transform2d> transform_frames(const J &recipe, int64_t length, const Transform2d &base) {
+  std::vector<Transform2d> out;
+  if(!recipe.contains("transformFrames")) return out;
+  if(recipe.contains("transform2d")) throw Error("TRANSFORM_SCHEDULE_RANGE");
+  const auto &values=recipe["transformFrames"];
+  if(!values.is_array() || values.size()!=static_cast<size_t>(length)) throw Error("TRANSFORM_SCHEDULE_RANGE");
+  out.reserve(static_cast<size_t>(length));
+  for(const auto &p: values){
+    Transform2d t=base;
+    fill_transform_matrix(t, p);
+    out.push_back(t);
+  }
+  return out;
+}
+Transform2d transform2d(const J &recipe) {
+  Transform2d t;
+  if(recipe.contains("transform2d")){
+  fill_transform_matrix(t, recipe["transform2d"]);
   }
   if(recipe.contains("rasterEffects")){
     const auto &r=recipe["rasterEffects"];
@@ -994,9 +1011,11 @@ J render(Engine &engine, const J &recipe) {
     throw Error("SEGMENT_LIMIT");
   std::vector<Transform2d> right_transforms;
   std::vector<Transform2d> transforms;transforms.reserve(segments.size());
+  std::vector<std::vector<Transform2d>> transform_schedules;
+  std::vector<std::vector<Transform2d>> right_transform_schedules;
   int64_t last_end = 0;
   for (const auto &segment : segments) {
-    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("rasterEffects");base.erase("secondary");base.erase("mixFramesQ16");
+    auto base=segment;base.erase("opacityQ16");base.erase("opacityFramesQ16");base.erase("transform2d");base.erase("transformFrames");base.erase("rasterEffects");base.erase("secondary");base.erase("mixFramesQ16");
     keys(base,{"path", "startFrame", "frameCount", "sourceStart", "streamIndex"});
     transforms.push_back(transform2d(segment));
     if(segment.contains("opacityQ16")) integer(segment,"opacityQ16",0,65536);
@@ -1009,7 +1028,7 @@ J render(Engine &engine, const J &recipe) {
     }
     Transform2d rt;
     if(segment.contains("secondary")){
-      const auto &right=segment["secondary"];auto rb=right;rb.erase("transform2d");rb.erase("rasterEffects");rb.erase("opacityQ16");rb.erase("opacityFramesQ16");keys(rb,{"path","sourceStart","streamIndex"});
+      const auto &right=segment["secondary"];auto rb=right;rb.erase("transform2d");rb.erase("transformFrames");rb.erase("rasterEffects");rb.erase("opacityQ16");rb.erase("opacityFramesQ16");keys(rb,{"path","sourceStart","streamIndex"});
       rt=transform2d(right);integer(right,"streamIndex",0,63);local_file(right.at("path").get<std::string>());
       if(right.contains("opacityQ16"))integer(right,"opacityQ16",0,65536);
       if(right.contains("opacityFramesQ16")){
@@ -1021,6 +1040,8 @@ J render(Engine &engine, const J &recipe) {
       for(const auto &x:v)if(!x.is_number_integer()||x<0||x>65536)throw Error("DISSOLVE_MIX_RANGE");
     } else if(segment.contains("mixFramesQ16"))throw Error("DISSOLVE_RECIPE_FIELDS");
     right_transforms.push_back(rt);
+    transform_schedules.push_back(transform_frames(segment, length, transforms.back()));
+    right_transform_schedules.push_back(segment.contains("secondary")?transform_frames(segment["secondary"], length, rt):std::vector<Transform2d>{});
     integer(segment, "streamIndex", 0, 63);
     if (begin < last_end || length > count - begin)
       throw Error("SEGMENT_OVERLAP_OR_RANGE");
@@ -1103,13 +1124,16 @@ J render(Engine &engine, const J &recipe) {
     if(source && segments[si].contains("opacityFramesQ16"))opacity=segments[si]["opacityFramesQ16"][frame-segments[si]["startFrame"].get<int64_t>()].get<int>();
     int opacity_b=65536,mix=0;
     if(second){const auto &r=segments[si]["secondary"];const auto at=frame-segments[si]["startFrame"].get<int64_t>();opacity_b=r.contains("opacityFramesQ16")?r["opacityFramesQ16"][at].get<int>():r.value("opacityQ16",65536);mix=segments[si]["mixFramesQ16"][at].get<int>();}
+    const auto at=source?frame-segments[si]["startFrame"].get<int64_t>():int64_t{0};
+    const Transform2d xf=source?(transform_schedules[si].empty()?transforms[si]:transform_schedules[si][static_cast<size_t>(at)]):Transform2d{};
+    const Transform2d rxf=second?(right_transform_schedules[si].empty()?right_transforms[si]:right_transform_schedules[si][static_cast<size_t>(at)]):Transform2d{};
     out.render(source,frame,opacity,[&]{if(engine.epoch.load()!=epoch) throw Error("CANCELED");},
       [&](AVFrame *actual){
         if(capture_frames.count(frame)) {
           const auto px=preview_pixels(actual);
           captures.push_back(J{{"frame",frame},{"width",px.width},{"height",px.height},{"rgba",px.pixels},{"stage","actual-yuv420-before-encoder"}});
         }
-      }, source ? transforms[si] : Transform2d{},second,opacity_b,second?right_transforms[si]:Transform2d{},mix);
+      }, xf,second,opacity_b,rxf,mix);
     engine.rendered_video_frames=frame+1;
     if (out.audio) {
       const int64_t end = av_rescale_q_rnd(
@@ -1210,6 +1234,7 @@ char *sm_capabilities(void) {
         {"linearDissolveV1", true},
         {"staticRasterV1", true},
         {"staticTransform2dV1", true},
+        {"linearTransform2dKeyframesV1", true},
         {"linearOpacityV1", true},
         {"linearOpacityKeyframesV1", true},
         {"rgba128PtsProxyV1", true},

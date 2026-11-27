@@ -197,8 +197,18 @@ void main() {
         'easing': null,
       },
     ];
+    // Increment 2.03 admits registered transform2d@1.0.0 hold/linear keys.
+    // The official code itself is not retargeted: unregistered params still
+    // refuse as TRANSFORM_ANIMATION_NOT_IMPLEMENTED with no half-write.
     expect(
       () => requireLocalEditingWritable(ProjectDocument.fromJson(animated)),
+      returnsNormally,
+    );
+    expect(
+      () => move.change(
+        withTransform,
+        SetTransformKeyframe(firstVideoId(base), Q.of(0), 'skewX', 1),
+      ),
       code('TRANSFORM_ANIMATION_NOT_IMPLEMENTED'),
     );
     expect(content(withTransform), withTransformHash);

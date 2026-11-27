@@ -76,7 +76,7 @@ void main() {
         'param': 'scaleX',
         'localTime': Q.of(0).toJson(),
         'value': 1,
-        'interpolation': 'linear',
+        'interpolation': 'bezier',
         'easing': null,
       },
     ];

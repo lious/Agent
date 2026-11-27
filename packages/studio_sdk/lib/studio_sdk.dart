@@ -902,12 +902,7 @@ final class StudioWorkspace {
     if (_proxyBusy) throw const StudioException('PROXY_BUILD_BUSY');
     final snapshot = current;
     _requireTransformAdapter(snapshot);
-    if ((snapshot.toJson()['effects'] as List).any(
-          (e) => (e['keyframes'] as List).isNotEmpty,
-        ) &&
-        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
-      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
-    }
+    _requireKeyframeAdapters(snapshot);
     requireLocalEditingWritable(snapshot);
     stopTimelinePlayback();
     for (final reader in _frameProxies.values) {
@@ -1428,6 +1423,40 @@ final class StudioWorkspace {
     );
   }
 
+  ProjectDocument setTransformKeyframe(
+    String clipId,
+    Q localTime,
+    String param,
+    double value, {
+    String interpolation = 'linear',
+    required BigInt expectedRevision,
+  }) {
+    _requireMedia();
+    if (_media!.capabilities['linearTransform2dKeyframesV1'] != true) {
+      throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
+    }
+    return edit(
+      SetTransformKeyframe(
+        clipId,
+        localTime,
+        param,
+        value,
+        interpolation: interpolation,
+      ),
+      expectedRevision: expectedRevision,
+    );
+  }
+
+  ProjectDocument removeTransformKeyframe(
+    String clipId,
+    Q localTime,
+    String param, {
+    required BigInt expectedRevision,
+  }) => edit(
+    RemoveTransformKeyframe(clipId, localTime, param),
+    expectedRevision: expectedRevision,
+  );
+
   ProjectDocument setClipCrop(
     String clipId,
     Map<String, double> parameters, {
@@ -1456,6 +1485,23 @@ final class StudioWorkspace {
       SetClipColorBasic(clipId, parameters),
       expectedRevision: expectedRevision,
     );
+  }
+
+  void _requireKeyframeAdapters(ProjectDocument document) {
+    final effects = document.toJson()['effects'] as List;
+    if (effects.any(
+          (e) => e['type'] == 'opacity' && (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
+      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
+    }
+    if (effects.any(
+          (e) =>
+              e['type'] == 'transform2d' && (e['keyframes'] as List).isNotEmpty,
+        ) &&
+        _media?.capabilities['linearTransform2dKeyframesV1'] != true) {
+      throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
+    }
   }
 
   void _requireTransformAdapter(ProjectDocument document) {
@@ -1612,12 +1658,7 @@ final class StudioWorkspace {
     _protectOutput(target);
     final snapshot = current;
     _requireTransformAdapter(snapshot);
-    if ((snapshot.toJson()['effects'] as List).any(
-          (e) => (e['keyframes'] as List).isNotEmpty,
-        ) &&
-        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
-      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
-    }
+    _requireKeyframeAdapters(snapshot);
     requireLocalEditingWritable(snapshot);
     final cues = (snapshot.toJson()['captions'] as List)
         .map((c) => CaptionCue.fromProjectJson(c as Map<String, dynamic>))
@@ -1743,12 +1784,7 @@ final class StudioWorkspace {
     final source = session.project;
     _requireTransformAdapter(source);
     final graph = TimelineVideoGraph(source);
-    if ((source.toJson()['effects'] as List).any(
-          (e) => (e['keyframes'] as List).isNotEmpty,
-        ) &&
-        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
-      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
-    }
+    _requireKeyframeAdapters(source);
     if ((source.toJson()['effects'] as List).isNotEmpty &&
         _media!.capabilities['linearOpacityV1'] != true) {
       throw const StudioException('OPACITY_ADAPTER_UNAVAILABLE');
@@ -2323,12 +2359,7 @@ final class StudioWorkspace {
     _protectOutput(destination);
     final snapshot = current;
     _requireTransformAdapter(snapshot);
-    if ((snapshot.toJson()['effects'] as List).any(
-          (e) => (e['keyframes'] as List).isNotEmpty,
-        ) &&
-        _media!.capabilities['linearOpacityKeyframesV1'] != true) {
-      throw const StudioException('OPACITY_KEYFRAMES_ADAPTER_UNAVAILABLE');
-    }
+    _requireKeyframeAdapters(snapshot);
     requireLocalEditingWritable(snapshot);
     if ((snapshot.toJson()['captions'] as List).isNotEmpty) {
       throw const StudioException('CAPTION_RENDER_POLICY_NOT_IMPLEMENTED');

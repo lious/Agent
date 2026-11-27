@@ -14,6 +14,7 @@ part 'ripple_trim.dart';
 part 'track_state.dart';
 part 'audio_routes.dart';
 part 'clip_gain_edit.dart';
+part 'transform_edit.dart';
 
 typedef VersionAllocator = String Function(String entityId);
 typedef IdAllocator = String Function();
@@ -355,6 +356,13 @@ ProjectDocument _setStaticVisual(
         c,
       ).where((e) => e['type'] == type);
       final Map? old = existing.isEmpty ? null : existing.single;
+      if (type == 'transform2d' &&
+          old != null &&
+          (old['keyframes'] as List).isNotEmpty) {
+        throw const StudioException(
+          'ANIMATED_TRANSFORM_REQUIRES_EXPLICIT_KEYFRAME_EDIT',
+        );
+      }
       if (old != null &&
           old['enabled'] == true &&
           contentHash(old['parameters']) == contentHash(parameters)) {
@@ -630,6 +638,12 @@ void _normalizeOpacityOwners(
                     ? switch (e['type']) {
                         'opacity' => cropOpacityPoints(e, offset, duration, id),
                         'gain' => cropGainPoints(e, offset, duration, id),
+                        'transform2d' => cropTransformPoints(
+                          e,
+                          offset,
+                          duration,
+                          id,
+                        ),
                         _ => throw const StudioException(
                           'UNSUPPORTED_EDIT_TECHNIQUE',
                         ),
@@ -951,6 +965,10 @@ ProjectDocument applyEdit(
   if (operation is SetGainKeyframe || operation is RemoveGainKeyframe) {
     return _gainKeyframeEdit(before, operation, nextVersion, newId);
   }
+  if (operation is SetTransformKeyframe ||
+      operation is RemoveTransformKeyframe) {
+    return _transformKeyframeEdit(before, operation, nextVersion, newId);
+  }
   if (operation is SetDissolve || operation is RemoveDissolve) {
     return _dissolveEdit(before, operation, nextVersion, newId);
   }
@@ -1018,6 +1036,8 @@ ProjectDocument applyEdit(
           operation is! SetClipGain &&
           operation is! SetGainKeyframe &&
           operation is! RemoveGainKeyframe &&
+          operation is! SetTransformKeyframe &&
+          operation is! RemoveTransformKeyframe &&
           operation is! RenameProject &&
           operation is! SetCaptions &&
           operation is! SetMarkers &&
@@ -1291,6 +1311,8 @@ ProjectDocument applyEdit(
     case SetClipGain():
     case SetGainKeyframe():
     case RemoveGainKeyframe():
+    case SetTransformKeyframe():
+    case RemoveTransformKeyframe():
     case SetMasterAudio():
     case SetAudioBusRoutes():
       throw StateError('Handled master audio edit');

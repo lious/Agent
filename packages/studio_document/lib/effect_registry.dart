@@ -187,8 +187,8 @@ List<int> opacityScheduleRangeQ16(
 }
 
 /// Registered crop → transform2d → colorBasic → opacity, in graph order.
-/// Raster and transform nodes are static-only; opacity may have a curve.
-/// Unknown nodes are never skipped, including disabled ones.
+/// Raster nodes are static-only; opacity and registered transform2d may have
+/// hold/linear curves. Unknown nodes are never skipped, including disabled ones.
 List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
   final result = <Map>[];
   final types = <String>{};
@@ -209,10 +209,8 @@ List<Map> admittedClipEffects(Map<String, dynamic> project, Map clip) {
       throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
     }
     if (type == 'transform2d') {
-      if ((e['keyframes'] as List).isNotEmpty) {
-        throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
-      }
       validateTransform2d(Map<String, dynamic>.from(e['parameters'] as Map));
+      validatedTransformPoints(e, clip);
     }
     if (type == 'crop' || type == 'colorBasic') {
       if ((e['keyframes'] as List).isNotEmpty) {
@@ -264,22 +262,242 @@ void validateTransform2d(Map<String, dynamic> p) {
   }
 }
 
-Map<String, double>? clipTransform2d(Map<String, dynamic> project, Map clip) {
+Map<String, double>? clipTransform2d(
+  Map<String, dynamic> project,
+  Map clip, [
+  Q? localTime,
+]) {
   final effects = admittedClipEffects(
     project,
     clip,
   ).where((e) => e['type'] == 'transform2d');
   if (effects.isEmpty || effects.single['enabled'] == false) return null;
-  final p = Map<String, double>.from(
-    (effects.single['parameters'] as Map).map(
-      (k, v) => MapEntry(k as String, (v as num).toDouble()),
-    ),
-  );
+  final effect = effects.single;
+  final points = validatedTransformPoints(effect, clip);
+  if (points.isNotEmpty) {
+    final rate = project['sequences'][0]['frameRate'];
+    final fps = FrameRate(rate['n'], rate['d']);
+    for (final k in points) {
+      final t = Q.fromJson(k['localTime']);
+      if (fps.quantize(t, Rounding.tiesToEven) != t) {
+        throw const StudioException('KEYFRAME_NOT_ON_FRAME');
+      }
+    }
+  }
+  final p = <String, double>{
+    for (final k in identityTransform2d.keys)
+      k: transformValueAt(effect, k, localTime ?? Q.of(0), points: points),
+  };
+  validateTransform2d(Map<String, dynamic>.from(p));
   // Identity is a true bypass; no unnecessary RGB8 round-trip.
   if (identityTransform2d.keys.every((k) => p[k] == identityTransform2d[k])) {
     return null;
   }
   return p;
+}
+
+List<Map> validatedTransformPoints(Map effect, Map clip) {
+  validateTransform2d(Map<String, dynamic>.from(effect['parameters'] as Map));
+  final points = List<Map>.from(effect['keyframes']);
+  if (points.length > 256) {
+    throw const StudioException('TRANSFORM_KEYFRAME_LIMIT');
+  }
+  final seen = <String>{};
+  final duration = Q.fromJson(clip['timelineRange']['duration']);
+  for (final k in points) {
+    final param = k['param'];
+    if (param is! String || !identityTransform2d.containsKey(param)) {
+      throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
+    }
+    if (k['easing'] != null ||
+        !['hold', 'linear'].contains(k['interpolation'])) {
+      throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
+    }
+    final value = k['value'];
+    if (value is! num || !value.isFinite) {
+      throw const StudioException('TRANSFORM_PARAMETERS_UNSUPPORTED');
+    }
+    validateTransform2d({
+      for (final e in (effect['parameters'] as Map).entries)
+        e.key as String: (e.value as num).toDouble(),
+      param: value.toDouble(),
+    });
+    final t = Q.fromJson(k['localTime']);
+    if (t < Q.of(0) || t > duration) {
+      throw const StudioException('KEYFRAME_OUT_OF_RANGE');
+    }
+    if (!seen.add('$param:${t.toJson()}')) {
+      throw const StudioException('DUPLICATE_KEYFRAME');
+    }
+  }
+  points.sort((a, b) {
+    final c = Q.fromJson(a['localTime']).compareTo(Q.fromJson(b['localTime']));
+    if (c != 0) return c;
+    return (a['param'] as String).compareTo(b['param'] as String);
+  });
+  return points;
+}
+
+/// Clip-local project seconds, independent of source slip. Endpoints hold;
+/// outgoing interpolation is half-open [a,b), exactly b selects b's value.
+/// Missing keys for a registered param hold the static parameter.
+double transformValueAt(Map effect, String param, Q time, {List<Map>? points}) {
+  if (!identityTransform2d.containsKey(param)) {
+    throw const StudioException('TRANSFORM_ANIMATION_NOT_IMPLEMENTED');
+  }
+  final keys =
+      (points ?? List<Map>.from(effect['keyframes']))
+          .where((k) => k['param'] == param)
+          .toList()
+        ..sort(
+          (a, b) =>
+              Q.fromJson(a['localTime']).compareTo(Q.fromJson(b['localTime'])),
+        );
+  if (keys.isEmpty) {
+    return (effect['parameters'][param] as num).toDouble();
+  }
+  if (time <= Q.fromJson(keys.first['localTime'])) {
+    return (keys.first['value'] as num).toDouble();
+  }
+  var lo = 1, hi = keys.length;
+  while (lo < hi) {
+    final mid = (lo + hi) ~/ 2;
+    if (time < Q.fromJson(keys[mid]['localTime'])) {
+      hi = mid;
+    } else {
+      lo = mid + 1;
+    }
+  }
+  if (lo == keys.length) return (keys.last['value'] as num).toDouble();
+  final left = keys[lo - 1],
+      right = keys[lo],
+      a = Q.fromJson(left['localTime']),
+      b = Q.fromJson(right['localTime']);
+  final v = (left['value'] as num).toDouble();
+  if (left['interpolation'] == 'hold') return v;
+  final alpha = (time - a) / (b - a);
+  return v +
+      ((right['value'] as num).toDouble() - v) *
+          (alpha.n.toDouble() / alpha.d.toDouble());
+}
+
+/// Crop/rebase each registered param curve independently, preserving endpoint
+/// values and outgoing interpolation. Owner domain is closed at duration.
+List<Map> cropTransformPoints(
+  Map effect,
+  Q offset,
+  Q duration,
+  String Function() id,
+) {
+  final keys = List<Map>.from(effect['keyframes'])
+    ..sort((a, b) {
+      final c = Q
+          .fromJson(a['localTime'])
+          .compareTo(Q.fromJson(b['localTime']));
+      if (c != 0) return c;
+      return (a['param'] as String).compareTo(b['param'] as String);
+    });
+  if (keys.isEmpty) return const [];
+  final params = {for (final k in keys) k['param'] as String};
+  final result = <Map>[];
+  for (final param in identityTransform2d.keys.where(params.contains)) {
+    final curve = keys.where((k) => k['param'] == param).toList();
+    String mode(Q t) {
+      if (t < Q.fromJson(curve.first['localTime'])) return 'hold';
+      for (var i = curve.length - 1; i >= 0; i--) {
+        if (Q.fromJson(curve[i]['localTime']) <= t) {
+          return i == curve.length - 1
+              ? 'hold'
+              : curve[i]['interpolation'] as String;
+        }
+      }
+      return 'hold';
+    }
+
+    Map boundary(Q absolute, Q local) => {
+      'id': id(),
+      'param': param,
+      'localTime': local.toJson(),
+      'value': transformValueAt(effect, param, absolute, points: curve),
+      'interpolation': mode(absolute),
+      'easing': null,
+    };
+    result.add(boundary(offset, Q.of(0)));
+    for (final k in curve) {
+      if (Q.fromJson(k['localTime']) > offset &&
+          Q.fromJson(k['localTime']) < offset + duration) {
+        result.add({
+          ...k,
+          'localTime': (Q.fromJson(k['localTime']) - offset).toJson(),
+        });
+      }
+    }
+    result.add(boundary(offset + duration, duration));
+  }
+  result.sort((a, b) {
+    final c = Q.fromJson(a['localTime']).compareTo(Q.fromJson(b['localTime']));
+    if (c != 0) return c;
+    return (a['param'] as String).compareTo(b['param'] as String);
+  });
+  return result;
+}
+
+List<Map<String, double>>? transformScheduleRange(
+  Map<String, dynamic> project,
+  Map clip,
+  FrameRate fps,
+  Q start,
+  int count,
+) {
+  if (count < 1 || count > 120000) {
+    throw const StudioException('TRANSFORM_SCHEDULE_RANGE');
+  }
+  final effects = admittedClipEffects(
+    project,
+    clip,
+  ).where((e) => e['type'] == 'transform2d');
+  if (effects.isEmpty || effects.single['enabled'] == false) return null;
+  final effect = effects.single;
+  final points = validatedTransformPoints(effect, clip);
+  for (final k in points) {
+    final t = Q.fromJson(k['localTime']);
+    if (fps.quantize(t, Rounding.tiesToEven) != t) {
+      throw const StudioException('KEYFRAME_NOT_ON_FRAME');
+    }
+  }
+  final frames = [
+    for (var i = 0; i < count; i++)
+      <String, double>{
+        for (final k in identityTransform2d.keys)
+          k: transformValueAt(
+            effect,
+            k,
+            start + fps.frameTime(BigInt.from(i)),
+            points: points,
+          ),
+      },
+  ];
+  for (final p in frames) {
+    validateTransform2d(Map<String, dynamic>.from(p));
+  }
+  if (frames.every(
+    (p) =>
+        identityTransform2d.keys.every((k) => p[k] == identityTransform2d[k]),
+  )) {
+    return null;
+  }
+  return frames;
+}
+
+Map<String, dynamic> transformRecipeFields(List<Map<String, double>>? frames) {
+  if (frames == null) return const {};
+  final first = frames.first;
+  if (frames.every(
+    (p) => identityTransform2d.keys.every((k) => p[k] == first[k]),
+  )) {
+    return {'transform2d': first};
+  }
+  return {'transformFrames': frames};
 }
 
 const visualEffectOrder = ['crop', 'transform2d', 'colorBasic', 'opacity'];

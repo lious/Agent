@@ -1,0 +1,27 @@
+{
+  "baseCommit": "dc74be13a792bd683b44371059fcf44f423af7b7",
+  "sourceCommit": "dc74be13a792bd683b44371059fcf44f423af7b7",
+  "sourceParent": "5ce5f97ccbb86b45ae22591f7ee8c637b6ae758b",
+  "featureParent": "c24b55566418c98e73f26e67ca14e51387261162",
+  "sourceSha256": {
+    "packages/studio_document/lib/effect_registry.dart": "604c479975ceafc08638009f9bce1f69e7ce4fb2a8420974b10e1d2c25eb9324",
+    "packages/studio_document/lib/edit_algebra.dart": "b7569cf81c9177e2e44eacd09c6f7771c3a4a8a6d80940f71d11a983aa02e624",
+    "packages/studio_document/lib/transform_edit.dart": "f72b4e7cf4dbfc4f971da3d450986681e8ba10298c10a7bd5c70f4c2f4073296",
+    "packages/studio_document/lib/overwrite.dart": "c361293ce6e769a574fafd9d4e710b97e1bb1ed676142fccc7c7d0390f51156a",
+    "packages/studio_document/lib/timeline_graph.dart": "01d9e40be10ae146159a02cff9c4025d14d02a9df899565b2c323cec71ff7cfb",
+    "packages/studio_document/test/i008_unsupported_edit_technique_test.dart": "29d933a32f85513a8d56873837be1bc27fc75dfcf62cf36e485ac7ea2fc39f5c",
+    "packages/studio_document/test/transform_test.dart": "9c615e2da2d9e5c1e1bed4a2f7dd1914c9ca49aecc22349f635b95c524d67d89",
+    "packages/studio_document/test/transform_keyframe_test.dart": "53b35739cefab0ca1a5ddbc7bf4d2b843da60a2c976418086c8778098b54bdc5",
+    "packages/studio_sdk/lib/studio_sdk.dart": "5c6f28eba9c401e722f3ea705b4700c65ab945430a62a8547924869914c6ff88",
+    "packages/studio_sdk/lib/edit_gesture.dart": "96a82fa960f405ab685c30c638b16bf2cda7ee521d8fce25f6902026c764d1ae",
+    "packages/studio_sdk/test/transform_keyframe_render_test.dart": "9679de9fa96c10bfabf4620141440a3ea98c6a1d4ae64f55724d4a671a3acba4",
+    "packages/studio_editor_ui/lib/studio_editor_ui.dart": "8077da0c494634cc04c235785818ee1aeb0fad4084527dce55c431e157dff2df",
+    "packages/studio_editor_ui/test/transform_keyframe_ui_test.dart": "361fee526bd59ebaed91a59f1ca09f7c4b562e2c4aa5d17802095677204530de",
+    "native/studio_media/src/studio_media.cpp": "5ada2d34549ff16635e28189cb7908018804f173cb3e8a3dc51dd19839293c18"
+  },
+  "aggregateSha256": "d2dafb9a6858b2cc7bc5568c4516eb4a0b5a0f8cc6c997c3246bb913449df004",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "asOf": "2026-11-27T12:03:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "sourceCommitNote": "Verified clone source commit dc74be13a792bd683b44371059fcf44f423af7b7 (unique parent 5ce5f97ccbb86b45ae22591f7ee8c637b6ae758b, Increment 2.02) is landed on feat/studio-foundation-20261125 as Increment 2.05 with unique parent c24b55566418c98e73f26e67ca14e51387261162 (Increment 2.04). This freeze is of the listed production and official test sources from that verified clone source; file bytes and aggregate SHA256 are unchanged. Docs and evidence logs are not part of the aggregate."
+}

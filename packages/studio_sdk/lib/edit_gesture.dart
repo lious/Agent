@@ -33,6 +33,13 @@ String _gestureTarget(EditOperation op) => contentHash(switch (op) {
     op.interpolation,
   ],
   SetClipTransform() => ['transform', op.clipId],
+  SetTransformKeyframe() => [
+    'transformKeyframe',
+    op.clipId,
+    op.param,
+    op.time.toJson(),
+    op.interpolation,
+  ],
   SetClipCrop() => ['crop', op.clipId],
   SetClipColorBasic() => ['colorBasic', op.clipId],
   _ => throw const StudioException('GESTURE_OPERATION_UNSUPPORTED'),
@@ -122,6 +129,7 @@ extension WorkspaceGestures on StudioWorkspace {
       if (operation is SetClipOpacity ||
           operation is SetOpacityKeyframe ||
           operation is SetClipTransform ||
+          operation is SetTransformKeyframe ||
           operation is SetClipCrop ||
           operation is SetClipColorBasic) {
         _requireMedia();
@@ -129,6 +137,7 @@ extension WorkspaceGestures on StudioWorkspace {
           SetClipOpacity() => 'linearOpacityV1',
           SetOpacityKeyframe() => 'linearOpacityKeyframesV1',
           SetClipTransform() => 'staticTransform2dV1',
+          SetTransformKeyframe() => 'linearTransform2dKeyframesV1',
           _ => 'staticRasterV1',
         };
         if (_media!.capabilities[capability] != true) {

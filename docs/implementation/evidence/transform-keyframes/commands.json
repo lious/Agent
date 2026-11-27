@@ -1,0 +1,46 @@
+{
+  "asOf": "2026-11-27T11:54:37+08:00",
+  "timezone": "Asia/Shanghai",
+  "workbench": "Linux",
+  "cwd": "/workspace/studio-i008-transform-keyframes",
+  "nativeBuildDir": "/tmp/studio-i008-transform-keyframes-native",
+  "env": {
+    "PATH_prefix": "/workspace/toolchains/flutter/bin",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1",
+    "STUDIO_MEDIA_LIBRARY": "/tmp/studio-i008-transform-keyframes-native/libstudio_media.so",
+    "STUDIO_TEST_VIDEO": "/tmp/studio-i008-transform-keyframes-fixtures/white.mp4",
+    "DISPLAY": ":6"
+  },
+  "commands": [
+    {
+      "log": "final-analyzer.log",
+      "command": "dart analyze packages/studio_document packages/studio_sdk packages/studio_media packages/studio_editor_ui",
+      "exit": 0,
+      "result": "No issues found!"
+    },
+    {
+      "log": "final-document.log",
+      "command": "dart test packages/studio_document --reporter compact",
+      "exit": 0,
+      "result": "462/0/0 All tests passed"
+    },
+    {
+      "log": "final-sdk.log",
+      "command": "dart test packages/studio_sdk/test/transform_keyframe_render_test.dart packages/studio_sdk/test/transform_render_test.dart packages/studio_sdk/test/opacity_keyframe_render_test.dart --reporter compact",
+      "exit": 0,
+      "result": "5/0/0 All tests passed (1 new transform keyframe render + existing static transform and opacity keyframe render regressions)"
+    },
+    {
+      "log": "final-ui.log",
+      "command": "cd packages/studio_editor_ui && flutter test test/transform_keyframe_ui_test.dart --reporter compact",
+      "exit": 0,
+      "result": "1/0/0 All tests passed"
+    },
+    {
+      "log": "final-ctest.log",
+      "command": "ctest --test-dir /tmp/studio-i008-transform-keyframes-native --output-on-failure",
+      "exit": 0,
+      "result": "3/0 tests passed"
+    }
+  ]
+}

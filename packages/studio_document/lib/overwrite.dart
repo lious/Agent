@@ -105,6 +105,13 @@ void _bindFragmentEffects(
         );
       } else if (raw['type'] == 'gain') {
         raw['keyframes'] = cropGainPoints(raw, localOffset, newDuration, newId);
+      } else if (raw['type'] == 'transform2d') {
+        raw['keyframes'] = cropTransformPoints(
+          raw,
+          localOffset,
+          newDuration,
+          newId,
+        );
       } else {
         throw const StudioException('UNSUPPORTED_EDIT_TECHNIQUE');
       }

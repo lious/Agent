@@ -126,12 +126,26 @@ final class TimelineVideoGraph {
           )
           .toInt(),
       'sourceStart': Q.fromJson(clip['sourceRange']['start']).toJson(),
-      'transform2d': ?clipTransform2d(_document, clip),
+      ...transformRecipeFields(
+        transformScheduleRange(
+          _document,
+          clip,
+          frameRate,
+          Q.of(0),
+          frameRate
+              .frameIndex(
+                Q.fromJson(clip['timelineRange']['duration']),
+                Rounding.tiesToEven,
+              )
+              .toInt(),
+        ),
+      ),
       'rasterEffects': ?clipRasterEffects(_document, clip),
       'streamIndex': streamIndex,
       if ((clip['effectIds'] as List).isNotEmpty &&
           (_document['effects'] as List).any(
             (e) =>
+                e['type'] == 'opacity' &&
                 (clip['effectIds'] as List).contains(e['id']) &&
                 (e['keyframes'] as List).isNotEmpty,
           ))
@@ -166,7 +180,11 @@ final class TimelineVideoGraph {
       c,
       time - Q.fromJson(c['timelineRange']['start']),
     ),
-    clipTransform2d(_document, c),
+    clipTransform2d(
+      _document,
+      c,
+      time - Q.fromJson(c['timelineRange']['start']),
+    ),
     null,
     0,
     clipRasterEffects(_document, c),
@@ -209,7 +227,15 @@ final class TimelineVideoGraph {
         'path': base['path'],
         'streamIndex': base['streamIndex'],
         'sourceStart': p.sourceTime.toJson(),
-        if (p.transform2d != null) 'transform2d': p.transform2d,
+        ...transformRecipeFields(
+          transformScheduleRange(
+            _document,
+            clip,
+            _frameRate,
+            time - Q.fromJson(clip['timelineRange']['start']),
+            count,
+          ),
+        ),
         if (p.rasterEffects != null) 'rasterEffects': p.rasterEffects,
         if (values.every((v) => v == values.first))
           'opacityQ16': values.first
@@ -299,7 +325,7 @@ final class TimelineVideoGraph {
         Q.fromJson(c['sourceRange']['start']) +
             (time - start) * Q.fromJson(c['timeMap']['rate']),
         clipOpacityQ16(_document, c, time - start),
-        clipTransform2d(_document, c),
+        clipTransform2d(_document, c, time - start),
         null,
         0,
         clipRasterEffects(_document, c),

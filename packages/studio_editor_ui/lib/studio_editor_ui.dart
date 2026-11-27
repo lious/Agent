@@ -88,6 +88,10 @@ class _FoundationAppState extends State<FoundationApp>
   final _ty = TextEditingController(text: '0');
   final _scale = TextEditingController(text: '1');
   final _rotation = TextEditingController(text: '0');
+  final _transformFrame = TextEditingController(text: '0');
+  final _transformParam = TextEditingController(text: 'translateX');
+  final _transformKeyValue = TextEditingController(text: '0');
+  bool _transformHold = false;
   final _rasterInputs = <String, TextEditingController>{
     for (final e in identityCrop.entries)
       'crop-${e.key}': TextEditingController(text: '${e.value}'),
@@ -612,6 +616,9 @@ class _FoundationAppState extends State<FoundationApp>
     _ty.dispose();
     _scale.dispose();
     _rotation.dispose();
+    _transformFrame.dispose();
+    _transformParam.dispose();
+    _transformKeyValue.dispose();
     for (final c in _rasterInputs.values) {
       c.dispose();
     }
@@ -964,6 +971,72 @@ class _FoundationAppState extends State<FoundationApp>
               }, expectedRevision: _project.revision);
             }),
       child: const Text('Apply persisted transform (static, bilinear CPU)'),
+    ),
+    _path(
+      'transform-keyframe-param',
+      'Registered transform2d param (translateX/Y, scaleX/Y, rotationDeg, anchorX/Y)',
+      _transformParam,
+    ),
+    _path(
+      'transform-keyframe-frame',
+      'Clip-local project frame for transform key (0..duration endpoint)',
+      _transformFrame,
+    ),
+    _path(
+      'transform-keyframe-value',
+      'Transform key value at this local frame',
+      _transformKeyValue,
+    ),
+    CheckboxListTile(
+      key: const Key('transform-keyframe-hold'),
+      value: _transformHold,
+      onChanged: _busy
+          ? null
+          : (v) => setState(() => _transformHold = v ?? false),
+      title: const Text('Hold transform until next key (otherwise linear)'),
+    ),
+    OutlinedButton(
+      key: const Key('set-transform-keyframe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final frame = int.tryParse(_transformFrame.text),
+                  value = double.tryParse(_transformKeyValue.text);
+              if (frame == null || value == null) {
+                throw const StudioException('INVALID_KEYFRAME');
+              }
+              final fps = _project.toJson()['sequences'][0]['frameRate'];
+              return widget.workspace.setTransformKeyframe(
+                _selected!,
+                FrameRate(fps['n'], fps['d']).frameTime(BigInt.from(frame)),
+                _transformParam.text,
+                value,
+                interpolation: _transformHold ? 'hold' : 'linear',
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text(
+        'Set / replace transform keyframe (Ken Burns, atomic undo)',
+      ),
+    ),
+    OutlinedButton(
+      key: const Key('remove-transform-keyframe'),
+      onPressed: _busy || _selected == null
+          ? null
+          : () => _act(() {
+              final frame = int.tryParse(_transformFrame.text);
+              if (frame == null) {
+                throw const StudioException('INVALID_KEYFRAME');
+              }
+              final fps = _project.toJson()['sequences'][0]['frameRate'];
+              return widget.workspace.removeTransformKeyframe(
+                _selected!,
+                FrameRate(fps['n'], fps['d']).frameTime(BigInt.from(frame)),
+                _transformParam.text,
+                expectedRevision: _project.revision,
+              );
+            }),
+      child: const Text('Remove transform keyframe at this local frame'),
     ),
     const Text(
       'Crop: original-source normalized edges, half-open pixel-area coverage; no canvas resize. Colour: linear709 exposure → contrast → saturation before opacity/dissolve.',

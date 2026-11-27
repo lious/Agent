@@ -1,0 +1,76 @@
+{
+  "increment": "2.05",
+  "title": "Admit registered transform2d@1.0.0 keyframes (Ken Burns)",
+  "baseCommit": "dc74be13a792bd683b44371059fcf44f423af7b7",
+  "sourceParent": "5ce5f97ccbb86b45ae22591f7ee8c637b6ae758b",
+  "sourceCommit": "dc74be13a792bd683b44371059fcf44f423af7b7",
+  "aggregateSha256": "d2dafb9a6858b2cc7bc5568c4516eb4a0b5a0f8cc6c997c3246bb913449df004",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "newThisIncrement": {
+    "document": 6,
+    "sdk": 1,
+    "ui": 1,
+    "total": 8
+  },
+  "selected": {
+    "document": {
+      "passed": 462,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 6,
+      "note": "462 is the studio_document package total on this workbench, not the official new-count and not a selected-subset count."
+    },
+    "sdk": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1,
+      "files": [
+        "packages/studio_sdk/test/transform_keyframe_render_test.dart",
+        "packages/studio_sdk/test/transform_render_test.dart",
+        "packages/studio_sdk/test/opacity_keyframe_render_test.dart"
+      ]
+    },
+    "ui": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 1,
+      "files": [
+        "packages/studio_editor_ui/test/transform_keyframe_ui_test.dart"
+      ]
+    },
+    "nativeCtest": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total": {
+      "officialNewCount": 8,
+      "documentPackage": "462/0/0",
+      "sdkSelected": "5/0/0",
+      "uiNew": "1/0/0",
+      "ctest": "3/0"
+    }
+  },
+  "support": {
+    "analyzer": 0,
+    "analyzerPackages": [
+      "studio_document",
+      "studio_sdk",
+      "studio_media",
+      "studio_editor_ui"
+    ]
+  },
+  "bounds": [
+    "Official persist writes registered transform2d@1.0.0 hold/linear keyframes via SetTransformKeyframe and RemoveTransformKeyframe on translateX, translateY, scaleX, scaleY, rotationDeg, anchorX, and anchorY only. This is transform keyframes (Ken Burns), not video generation, not a new Effect.type, and not a pluginVersion bump.",
+    "Semantics reuse the admitted opacity machine: clip-local times quantized to the project frame grid (KEYFRAME_NOT_ON_FRAME); at most 256 points per transform effect (TRANSFORM_KEYFRAME_LIMIT); half-open hold/linear interpolation; trim interpolates at the boundary and rebases; split clones owners and point ids; slip / dragging a clip leaves clip-local keys unchanged; InversePatch kind stays restoreSnapshot; refusals do not half-write.",
+    "Dart compiles per-frame schedules; native consumes transformFrames or a constant transform2d when every frame is identical, and does not host a second interpolator. Preview may use a single-frame evaluated transform2d. Mix/graph order remains crop → transform2d → colorBasic → opacity → dissolve.",
+    "Unknown interpolation, audio clips, and easing stay UNSUPPORTED_EDIT_TECHNIQUE (easing remains SCHEMA_TYPE where that is already the schema rule). Unregistered parameters and adapters that lack linearTransform2dKeyframesV1 stay TRANSFORM_ANIMATION_NOT_IMPLEMENTED; that code is not retargeted. Animated curves refuse static SetClipTransform with ANIMATED_TRANSFORM_REQUIRES_EXPLICIT_KEYFRAME_EDIT and do not clear keys.",
+    "Production algebra of opacity, gain, and dissolve is unchanged except that shared crop/admission helpers now also recognize admitted transform2d curves, encoderSegment emits opacityFramesQ16 only when an opacity-typed effect has keys (not any effect), and four SDK adapter checks no longer treat transform-only keys as a missing opacity adapter. I-009 algebra and gain tests were not otherwise changed.",
+    "Luma, unregistered plugins, crop/colorBasic animation, field-aware invert matrix rows, I-007 remapping/nest, I-009 volume-keyframe algebra changes, I-036 CharacterPack, Pulse/clock certification, and the V-003 render gate are not opened. Increment 1.17/1.18 stay open. I-008 stays partial; leftover remainingAcceptance items 「缺handles拒」, 「关键帧边界连续」, and 「一次提案原子undo恢复hash」 stay listed and were not re-qualified."
+  ],
+  "asOf": "2026-11-27T12:03:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureParent": "c24b55566418c98e73f26e67ca14e51387261162"
+}
