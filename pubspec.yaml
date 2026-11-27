@@ -77,7 +77,8 @@
     "packages/studio_prepared_stage_probe",
     "packages/studio_shared_library_probe",
     "packages/studio_cas_db_gap_probe",
-    "packages/studio_identity_collision_probe"
+    "packages/studio_identity_collision_probe",
+    "packages/studio_future_major_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
