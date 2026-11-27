@@ -15,6 +15,7 @@ const mediaCombination = 'MEDIA_COMBINATION';
 const subjectOrderUnresolved = 'SUBJECT_ORDER_UNRESOLVED';
 const providerChildPolicyUnverified = 'PROVIDER_CHILD_POLICY_UNVERIFIED';
 const rightsRequired = 'RIGHTS_REQUIRED';
+const approvalRequired = 'APPROVAL_REQUIRED';
 
 /// s8h Purpose axis. Not mutually exclusive with input modes or recipes.
 enum VerticalPurpose {

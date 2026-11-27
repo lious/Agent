@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_baby_dance_play_recipe_test.dart
+00:00 +0: babyDance official fictional clothed-cartoon safe-sway compiles the golden, keeps locked parent caption and private status, and does not auto-publish, retarget, or submit
+00:00 +1: a real-child path without guardian or with unverified provider policy is refused and does not submit; missing slots and a revoked rights epoch are also refused
+00:00 +2: adult-motion retargeting, mocap, auto-segmentation, unsafe choreography, and auto social publish are refused; a dangerous jump is reduced to gentle sway and still does not auto-publish or submit
+00:00 +3: All tests passed!

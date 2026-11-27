@@ -35,6 +35,10 @@ final class CompiledShot {
     this.claimsRealAnimalActed = false,
     this.claimsReliableMocap = false,
     this.adultFaceReplaced = false,
+    this.autoPublished = false,
+    this.privateStatusLocked = false,
+    this.framePerfectDanceClaimed = false,
+    this.adultMotionRetargeted = false,
   });
 
   final String briefId, prompt;
@@ -50,6 +54,8 @@ final class CompiledShot {
   final String? lockedStance;
   final String? humanization, safeAction, lockedExpressionCaption;
   final bool claimsRealAnimalActed, claimsReliableMocap, adultFaceReplaced;
+  final bool autoPublished, privateStatusLocked;
+  final bool framePerfectDanceClaimed, adultMotionRetargeted;
 
   /// Protocol proof: compile errors and successes do not submit.
   int get documentWrites => 0;

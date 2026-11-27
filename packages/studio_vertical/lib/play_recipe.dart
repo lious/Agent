@@ -76,8 +76,8 @@ final class HugRequest {
 }
 
 /// s8l PlayRecipe compiler. Auto-segmentation, geometric
-/// calibration, motion capture, and paid generation are not invented.
-/// A babyDance library entry is not opened here.
+/// calibration, motion capture, adult-motion retargeting, and paid
+/// generation are not invented.
 final class PlayRecipeCompiler {
   int documentWrites = 0;
 
@@ -247,6 +247,89 @@ final class PlayRecipeCompiler {
       claimsRealAnimalActed: false,
       claimsReliableMocap: false,
       adultFaceReplaced: false,
+    );
+  }
+
+  /// s8l babyDance@1.0.0 official safety and guardian refusals only.
+  /// Default is a fictional clothed cartoon. This does not invent
+  /// motion capture, adult-motion retargeting, auto-segmentation,
+  /// paid generation, or any new child imagery or motion path.
+  CompiledShot compileBabyDance(BabyDanceRequest request) {
+    if (request.requestAutoSegmentation) {
+      throw const StudioException(capabilityUnsupported, 'autoSegmentation');
+    }
+    if (request.requestAdultMotionRetarget) {
+      throw const StudioException(capabilityUnsupported, 'adultMotionRetarget');
+    }
+    if (request.requestMotionCapture || request.claimFramePerfectDance) {
+      throw const StudioException(capabilityUnsupported, 'motionCapture');
+    }
+    if (request.requestSexualizedAction ||
+        request.requestAdultSeductiveChoreography) {
+      throw const StudioException(mediaCombination, 'unsafeAction');
+    }
+    if (request.requestAutoPublish) {
+      throw const StudioException(approvalRequired, 'publicPublish');
+    }
+    if (request.appearanceId == null || request.action == null) {
+      throw const StudioException(slotCount, 'babyDance');
+    }
+    if (!request.fullyClothed) {
+      throw const StudioException(mediaCombination, 'clothing');
+    }
+    if (!request.hasImageLicense) {
+      throw const StudioException(rightsRequired, 'imageLicense');
+    }
+    if (request.hasReferenceMotion && !request.referenceMotionLicensed) {
+      throw const StudioException(rightsRequired, 'referenceMotion');
+    }
+    if (request.hasMusic && !request.musicLicensed) {
+      throw const StudioException(rightsRequired, 'music');
+    }
+    if (request.rightsEpochRevoked) {
+      throw const StudioException(rightsRequired, 'rightsEpoch');
+    }
+    if (request.isRealChild) {
+      if (!request.hasGuardianAuthorization) {
+        throw const StudioException(rightsRequired, 'guardian');
+      }
+      if (!request.hasPortraitScope || !request.minimalUpload) {
+        throw const StudioException(rightsRequired, 'portraitScope');
+      }
+      if (!request.providerChildPolicyVerified) {
+        throw const StudioException(
+          providerChildPolicyUnverified,
+          'providerChildPolicy',
+        );
+      }
+    }
+
+    final action = request.requestDangerousTwistOrHighJump
+        ? BabyDanceAction.gentleSway
+        : request.action!;
+    final official =
+        !request.isRealChild &&
+        request.clothingAndIdentity == babyDanceOfficialClothing &&
+        request.safeSetting == babyDanceOfficialSetting &&
+        (action == BabyDanceAction.seatedClap ||
+            action == BabyDanceAction.gentleSway);
+    documentWrites = 0;
+    return CompiledShot(
+      briefId: 'baby-safe-sway',
+      prompt: official
+          ? babyDanceSafeSwayPrompt
+          : _babyDancePrompt(request, action),
+      unsupportedFields: const [],
+      requestedParameters: const {},
+      seed: null,
+      recipeId: '$babyDanceRecipeId@$babyDanceRecipeVersion',
+      route: 'i2v',
+      safeAction: action.name,
+      lockedExpressionCaption: request.lockedParentCaption,
+      autoPublished: false,
+      privateStatusLocked: request.privateStatusLocked,
+      framePerfectDanceClaimed: false,
+      adultMotionRetargeted: false,
     );
   }
 }
@@ -442,4 +525,85 @@ String _animalPrompt(AnimalHumanizedRequest request, String action) {
   return '参考中的${request.species}保留${request.speciesIdentity}，拟人程度=$degree。\n'
       '穿${request.wardrobe}，在${request.setting}做$action；${request.cameraLight}。\n'
       '不要以人类面孔替代物种面部；这是虚构卡通行为。';
+}
+
+/// Official s8l babyDance actions only. No other motion paths are added.
+enum BabyDanceAction { seatedClap, gentleSway, smallStep }
+
+const babyDanceRecipeId = 'babyDance';
+const babyDanceRecipeVersion = '1.0.0';
+const babyDanceSafeSwayTemplate = 'play.baby.safe-sway@1.0.0';
+
+const babyDanceOfficialClothing = '浅蓝连体衣和软布帽';
+const babyDanceOfficialSetting = '坐在平稳软垫上';
+
+/// Official fictional clothed-cartoon golden from s8l. This is not a
+/// real-child path and not a frame-perfect dance copy.
+const babyDanceSafeSwayPrompt =
+    '圆润比例的虚构卡通婴儿保持浅蓝连体衣和软布帽，坐在平稳软垫上，\n'
+    '轻轻拍手并左右小幅摇摆；固定全身中景，动作轻缓，明亮柔和室内光线。\n'
+    '保持非性化、完整着装与安全姿态；不模仿危险或成人挑逗动作。';
+
+/// DEV-PURE babyDance safety/guardian request. Only official s8l
+/// refusal bounds; no new child imagery or motion path is invented.
+final class BabyDanceRequest {
+  BabyDanceRequest({
+    required this.appearanceId,
+    required this.action,
+    this.clothingAndIdentity = babyDanceOfficialClothing,
+    this.safeSetting = babyDanceOfficialSetting,
+    this.fullyClothed = true,
+    this.hasImageLicense = false,
+    this.isRealChild = false,
+    this.hasGuardianAuthorization = false,
+    this.hasPortraitScope = false,
+    this.minimalUpload = false,
+    this.providerChildPolicyVerified = false,
+    this.requestAdultMotionRetarget = false,
+    this.requestMotionCapture = false,
+    this.claimFramePerfectDance = false,
+    this.requestSexualizedAction = false,
+    this.requestAdultSeductiveChoreography = false,
+    this.requestDangerousTwistOrHighJump = false,
+    this.requestAutoSegmentation = false,
+    this.requestAutoPublish = false,
+    this.hasMusic = false,
+    this.musicLicensed = false,
+    this.hasReferenceMotion = false,
+    this.referenceMotionLicensed = false,
+    this.rightsEpochRevoked = false,
+    this.privateStatusLocked = false,
+    this.lockedParentCaption,
+  }) {
+    if (appearanceId != null) requireId(appearanceId!);
+  }
+
+  final String? appearanceId;
+  final BabyDanceAction? action;
+  final String clothingAndIdentity, safeSetting;
+  final bool fullyClothed, hasImageLicense, isRealChild;
+  final bool hasGuardianAuthorization, hasPortraitScope, minimalUpload;
+  final bool providerChildPolicyVerified;
+  final bool requestAdultMotionRetarget, requestMotionCapture;
+  final bool claimFramePerfectDance;
+  final bool requestSexualizedAction, requestAdultSeductiveChoreography;
+  final bool requestDangerousTwistOrHighJump, requestAutoSegmentation;
+  final bool requestAutoPublish;
+  final bool hasMusic,
+      musicLicensed,
+      hasReferenceMotion,
+      referenceMotionLicensed;
+  final bool rightsEpochRevoked, privateStatusLocked;
+  final String? lockedParentCaption;
+}
+
+String _babyDancePrompt(BabyDanceRequest request, BabyDanceAction action) {
+  final move = switch (action) {
+    BabyDanceAction.seatedClap => '轻轻拍手',
+    BabyDanceAction.gentleSway => '左右小幅摇摆',
+    BabyDanceAction.smallStep => '小步移动',
+  };
+  return '虚构卡通形象保持${request.clothingAndIdentity}，在${request.safeSetting}'
+      '做$move；固定全身中景，动作轻缓。'
+      '保持非性化、完整着装与安全姿态；不模仿危险或成人挑逗动作。';
 }
