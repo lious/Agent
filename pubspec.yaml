@@ -66,7 +66,8 @@
     "packages/studio_image_document_graph_probe",
     "packages/studio_command_clamp_probe",
     "packages/studio_conflict_replan_probe",
-    "packages/studio_job_cancel_probe"
+    "packages/studio_job_cancel_probe",
+    "packages/studio_package_auto_update_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

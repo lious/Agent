@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_package_auto_update_probe/test/storage/save/i012_package_auto_update_test.dart
+00:00 +0: the default off auto-update is admitted when local save and pending external update are disclosed; an authorized local auto-update must not re-copy CAS originals
+00:00 +1: a provider or OS-sync target must not auto-overwrite; a non-local path must not be treated as a plain file; a missing default disclosure is refused
+00:00 +2: ADR 0098 I-012 leftovers, Increment 2.73 provider restriction, a SAF/iCloud adapter, and a V-005 qualification claim stay closed
+00:00 +3: All tests passed!
+EXIT:0
