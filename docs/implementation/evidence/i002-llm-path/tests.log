@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_llm_path_probe/test/schema/i002_llm_path_test.dart
+00:00 +0: packages/studio_llm_path_probe/test/schema/i002_llm_path_test.dart: a document path must not come from an LLM
+00:00 +1: packages/studio_llm_path_probe/test/schema/i002_llm_path_test.dart: I-002 measurement labels, drop-frame, error-class, license-execution, and wall-clock ADRs stay closed
+00:00 +2: All tests passed!
