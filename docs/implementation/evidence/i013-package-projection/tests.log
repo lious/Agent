@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_package_projection_probe/test/storage/archive/i013_package_projection_test.dart
+00:00 +0: packages/studio_package_projection_probe/test/storage/archive/i013_package_projection_test.dart: a matching projection is not a second source of truth and must not overwrite the snapshot body
+00:00 +1: packages/studio_package_projection_probe/test/storage/archive/i013_package_projection_test.dart: Increment 2.50 packMode, ArtifactKindAdmission, MANIFEST_SNAPSHOT_MISMATCH, and job archival stay closed
+00:00 +2: All tests passed!
