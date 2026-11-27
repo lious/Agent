@@ -8,9 +8,12 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'package:json_canonicalizer/json_canonicalizer.dart';
 import 'package:studio_document/studio_document.dart';
 
+import 'character_library_gc.dart';
 import 'character_pack_validator.dart';
 import 'library_store.dart';
 import 'portrait_rights.dart';
+import 'portrait_rights_gate.dart';
+import 'portrait_revocation_coordinator.dart';
 
 const _rebuildLocalIdMapping = 'rebuildLocalIdMapping';
 const _archiveFormat = 'studio-character-pack';
@@ -106,11 +109,21 @@ final class ProjectCharacterPin {
 final class CharacterRepository {
   CharacterRepository(this.store)
     : cache = CharacterDerivedCache(),
-      generations = CharacterGenerationLedger();
+      generations = CharacterGenerationLedger() {
+    gc = CharacterLibraryGc(store);
+    revocation = PortraitRevocationCoordinator(
+      store: store,
+      cache: cache,
+      generations: generations,
+    );
+  }
 
   final CharacterLibraryStore store;
   final CharacterDerivedCache cache;
   final CharacterGenerationLedger generations;
+  late final CharacterLibraryGc gc;
+  late final PortraitRevocationCoordinator revocation;
+  static const rightsGate = PortraitRightsGate();
   final _drafts = <String, CharacterDraft>{};
   var _draftSeq = 0;
   static const validator = CharacterPackValidator();
@@ -119,6 +132,31 @@ final class CharacterRepository {
 
   static CharacterRepository open(String root, Namespace namespace) =>
       CharacterRepository(CharacterLibraryStore.open(root, namespace));
+
+  void pinCandidateTask(CandidateTaskPin pin) {
+    final pack = loadPublished(pin.entityId, pin.version);
+    if (packHashOf(pack) != pin.packHash) {
+      throw const StudioException('BINDING_MISMATCH', 'packHash');
+    }
+    final rightsId = _map(pack['asset'])['portraitRightsId'] as String;
+    final live = liveRights(rightsId);
+    if (live != null && live['state'] == 'revoked') {
+      throw const StudioException('RIGHTS_REVOKED', 'candidate');
+    }
+    gc.pinCandidateTask(pin);
+  }
+
+  /// Arrival/completion gate. Late results for a revoked rightsId are
+  /// isolated and are not accepted as a normal ready output.
+  CandidateArrivalReport arriveCandidateResult({
+    required String taskId,
+    String? outputPath,
+    String? outputId,
+  }) => revocation.arriveCandidateResult(
+    taskId: taskId,
+    outputPath: outputPath,
+    outputId: outputId,
+  );
 
   void close() => store.close();
 
@@ -389,6 +427,18 @@ final class CharacterRepository {
       throw const StudioException('ARCHIVE_LIMIT');
     }
     _atomicWrite(destinationPath, encoded);
+    gc.pinExport(
+      ExportPin(
+        exportId: contentHash({
+          'destinationPath': destinationPath,
+          'packHash': ref.packHash,
+        }),
+        libraryId: ref.libraryId,
+        entityId: ref.assetId,
+        version: ref.version,
+        packHash: ref.packHash,
+      ),
+    );
     return ArchiveReceipt(
       fileToken: destinationPath,
       packHash: ref.packHash,
@@ -442,6 +492,8 @@ final class CharacterRepository {
     validator.validatePack(remapped.pack);
     _requireResourceBytes(remapped.pack, supplied: selected);
     final hash = packHashOf(remapped.pack);
+    final sourceRevoked = _sourcePackKnownRevoked(sourceHash, packMap);
+    final liveState = sourceRevoked ? 'revoked' : 'unknown';
     return store.transaction(() {
       final asset = _map(remapped.pack['asset']);
       final assetId = asset['id'] as String;
@@ -456,7 +508,10 @@ final class CharacterRepository {
         store.putCas(entry.key, entry.value);
       }
       store.putCas(hash, utf8.encode(json.encode(remapped.pack)));
-      // Live rights stay unknown: source-app approvals are not inherited.
+      // Live rights stay unknown unless this namespace already recorded a
+      // revocation for the source pack or rights evidence. Source-app
+      // approvals are not inherited, and a known revocation cannot be
+      // bypassed by restoring an old pack.
       _insertPublished(
         libraryId,
         assetId,
@@ -464,8 +519,31 @@ final class CharacterRepository {
         hash,
         remapped.pack,
         const RightsDecision.deny('UNKNOWN'),
-        liveState: 'unknown',
+        liveState: liveState,
       );
+      if (sourceRevoked) {
+        final epoch =
+            liveRights(asset['portraitRightsId'] as String)?['epoch']
+                as String? ??
+            '0';
+        for (final item in (remapped.pack['rights'] as List)) {
+          final record = Map<String, Object?>.from(item as Map);
+          final remappedId = record['id'] as String;
+          final sourceId = remapped.idMap.entries
+              .firstWhere(
+                (entry) => entry.value == remappedId,
+                orElse: () => MapEntry(remappedId, remappedId),
+              )
+              .key;
+          revocation.recordDenylistEntry(
+            rightsId: remappedId,
+            packHash: sourceHash,
+            evidenceHash: (record['evidenceHash'] as String?) ?? 'none',
+            sourceRightsId: sourceId,
+            epoch: epoch,
+          );
+        }
+      }
       return ImportPreview(
         sourcePackHash: sourceHash,
         packHash: hash,
@@ -473,7 +551,7 @@ final class CharacterRepository {
         assetId: assetId,
         version: version,
         idMap: remapped.idMap,
-        liveRightsState: 'unknown',
+        liveRightsState: liveState,
       );
     });
   }
@@ -492,6 +570,9 @@ final class CharacterRepository {
       throw const StudioException('SCHEMA_INVALID', 'state');
     }
     requireId(rightsId);
+    if (state == 'active' && revocation.isKnownRevoked(rightsId: rightsId)) {
+      throw const StudioException('RIGHTS_REVOKED', 'rightsId');
+    }
     store.transaction(() {
       store.execute(
         'INSERT INTO portrait_rights_live(namespace,rights_id,epoch,state,'
@@ -520,6 +601,7 @@ final class CharacterRepository {
     required String provider,
     required String region,
     required DateTime now,
+    DispatchContext context = const DispatchContext(),
   }) {
     validator.validateProjectCharacterRef(characterRef);
     final pack = loadPublished(
@@ -529,76 +611,30 @@ final class CharacterRepository {
     if (packHashOf(pack) != characterRef['packHash']) {
       throw const StudioException('BINDING_MISMATCH', 'packHash');
     }
-    final rightsId = (_map(pack['asset'])['portraitRightsId'] as String);
+    final asset = _map(pack['asset']);
+    final rightsId = asset['portraitRightsId'] as String;
     final live = liveRights(rightsId);
     final record = _rightsRecord(pack, rightsId);
-    final epoch = live?['epoch'] as String? ?? '0';
-    if (live == null || live['state'] == 'unknown') {
-      return RightsDecision.deny(
-        'RIGHTS_REQUIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    if (live['state'] == 'revoked') {
-      return RightsDecision.deny(
-        'RIGHTS_REVOKED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    if (live['state'] == 'expired') {
-      return RightsDecision.deny(
-        'RIGHTS_EXPIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    final expiresAt = record['expiresAt'] as String?;
-    if (expiresAt != null && DateTime.parse(expiresAt).isBefore(now.toUtc())) {
-      return RightsDecision.deny(
-        'RIGHTS_EXPIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    final uses = (record['allowedUses'] as List).cast<String>();
-    if (!uses.contains(operation)) {
-      return RightsDecision.deny(
-        'RIGHTS_REQUIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    final providers = (record['allowedProviderIds'] as List).cast<String>();
-    if (providers.isNotEmpty && !providers.contains(provider)) {
-      return RightsDecision.deny(
-        'RIGHTS_REQUIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    // region/territories: empty means unrestricted in this DEV-PURE slice.
-    final territories = (record['territories'] as List).cast<String>();
-    if (territories.isNotEmpty && !territories.contains(region)) {
-      return RightsDecision.deny(
-        'RIGHTS_REQUIRED',
-        rightsId: rightsId,
-        epoch: epoch,
-        existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
-      );
-    }
-    return RightsDecision.allow(
-      rightsId: rightsId,
-      epoch: epoch,
-      existingOutputsPolicy: record['existingOutputsPolicy'] as String?,
+    final decision = rightsGate.evaluate(
+      asset: asset,
+      rightsRecord: record,
+      live: live,
+      operation: operation,
+      provider: provider,
+      region: region,
+      now: now,
+      context: context,
     );
+    if (decision.allowed && decision.leaseUntil != null) {
+      putLiveRights(
+        rightsId: rightsId,
+        epoch: decision.epoch ?? live?['epoch'] as String? ?? '0',
+        state: 'active',
+        checkedAt: decision.checkedAt,
+        leaseUntil: decision.leaseUntil,
+      );
+    }
+    return decision;
   }
 
   /// Dispatch a synthetic generation (no model, no paid API). Denied after
@@ -608,24 +644,69 @@ final class CharacterRepository {
     required String provider,
     required String region,
     required DateTime now,
+    DispatchContext context = const DispatchContext(),
+    String? outputPath,
+    String? outputId,
   }) {
-    final decision = evaluate(
-      characterRef: characterRef,
+    dispatch(
       operation: 'referenceGeneration',
+      characterRef: characterRef,
       provider: provider,
       region: region,
       now: now,
+      context: context,
+      outputPath: outputPath,
+      outputId: outputId,
+    );
+  }
+
+  /// Dispatch-time gate for new generation, training, or reference upload.
+  /// No model inference or paid API is invoked.
+  void dispatch({
+    required String operation,
+    required Map<String, Object?> characterRef,
+    required String provider,
+    required String region,
+    required DateTime now,
+    DispatchContext context = const DispatchContext(),
+    String? outputPath,
+    String? outputId,
+  }) {
+    if (operation == 'voiceClone') {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED', 'voiceClone');
+    }
+    if (!characterDispatchOperations.contains(operation)) {
+      throw StudioException('SCHEMA_INVALID', operation);
+    }
+    final decision = evaluate(
+      characterRef: characterRef,
+      operation: operation,
+      provider: provider,
+      region: region,
+      now: now,
+      context: context,
     );
     if (!decision.allowed) {
       throw StudioException(decision.code ?? 'RIGHTS_REQUIRED');
     }
     generations.recordDispatch();
-    cache.put(
-      rightsId: decision.rightsId!,
-      packHash: characterRef['packHash'] as String,
-      lookId: characterRef['lookId'] as String,
-      value: 'generated:${characterRef['packHash']}',
-    );
+    if (operation == 'referenceGeneration') {
+      cache.put(
+        rightsId: decision.rightsId!,
+        packHash: characterRef['packHash'] as String,
+        lookId: characterRef['lookId'] as String,
+        value: 'generated:${characterRef['packHash']}',
+      );
+    }
+    if (outputPath != null) {
+      revocation.recordOutput(
+        ExistingOutputRecord(
+          outputId: outputId ?? 'out-${characterRef['packHash']}-$operation',
+          rightsId: decision.rightsId!,
+          path: outputPath,
+        ),
+      );
+    }
   }
 
   String? lookupCache({
@@ -657,36 +738,8 @@ final class CharacterRepository {
     return _map(pack['asset'])['portraitRightsId'] as String;
   }
 
-  RevocationReport revoke(String rightsId, String expectedEpoch) {
-    requireId(rightsId);
-    return store.transaction(() {
-      final live = liveRights(rightsId);
-      if (live == null) {
-        throw const StudioException('RESOURCE_MISSING', 'rightsId');
-      }
-      if (live['epoch'] != expectedEpoch) {
-        throw const StudioException('HEAD_CONFLICT', 'epoch');
-      }
-      final nextEpoch = _incrementU64(expectedEpoch);
-      cache.invalidateRights(rightsId);
-      cache.resetCounters();
-      generations.reset();
-      store.execute(
-        'UPDATE portrait_rights_live SET epoch=?, state=? WHERE namespace=? '
-        'AND rights_id=?',
-        [nextEpoch, 'revoked', store.ns, rightsId],
-      );
-      final policy = _existingOutputsPolicy(rightsId);
-      return RevocationReport(
-        rightsId: rightsId,
-        epoch: nextEpoch,
-        state: 'revoked',
-        newGenerations: generations.dispatched,
-        cacheHits: cache.hits,
-        existingOutputsPolicy: policy,
-      );
-    });
-  }
+  RevocationReport revoke(String rightsId, String expectedEpoch) =>
+      revocation.revoke(rightsId, expectedEpoch);
 
   void _insertPublished(
     String libraryId,
@@ -763,8 +816,8 @@ final class CharacterRepository {
       }
       final live = liveRights(rightsId);
       final epoch = live?['epoch'] as String? ?? '0';
-      final state = liveState == 'unknown'
-          ? 'unknown'
+      final state = liveState != 'active'
+          ? liveState
           : (rightsDecision.allowed ? 'active' : 'unknown');
       if (live == null) {
         store.execute(
@@ -810,21 +863,6 @@ final class CharacterRepository {
       if (record['id'] == rightsId) return record;
     }
     throw const StudioException('RESOURCE_MISSING', 'rightsId');
-  }
-
-  String _existingOutputsPolicy(String rightsId) {
-    final versions = store.select(
-      'SELECT version, body_hash FROM portrait_rights_versions WHERE '
-      'namespace=? AND rights_id=? ORDER BY length(version), version',
-      [store.ns, rightsId],
-    );
-    if (versions.isEmpty) {
-      throw const StudioException('RESOURCE_MISSING', 'rightsId');
-    }
-    final body = jsonDecode(
-      utf8.decode(store.readCas(versions.last['body_hash'] as String)),
-    ) as Map;
-    return body['existingOutputsPolicy'] as String;
   }
 
   String _nextVersion(String assetId) {
@@ -978,8 +1016,25 @@ final class CharacterRepository {
     }
   }
 
-  String _incrementU64(String value) =>
-      (BigInt.parse(value) + BigInt.one).toString();
+  bool _sourcePackKnownRevoked(
+    String sourcePackHash,
+    Map<String, Object?> pack,
+  ) {
+    if (revocation.isKnownRevoked(packHash: sourcePackHash)) {
+      return true;
+    }
+    for (final item in (pack['rights'] as List)) {
+      final record = Map<String, Object?>.from(item as Map);
+      if (revocation.isKnownRevoked(
+        sourceRightsId: record['id'] as String?,
+        evidenceHash: record['evidenceHash'] as String?,
+        rightsId: record['id'] as String?,
+      )) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 class _Remapped {

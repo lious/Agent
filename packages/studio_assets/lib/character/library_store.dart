@@ -51,6 +51,7 @@ final class CharacterLibraryStore {
           throw const StudioException('UNSUPPORTED_LIBRARY_WORKSPACE');
         }
         _requireOfficialTables(db);
+        _ensureLeaseGcLedgers(db);
         db.execute('COMMIT');
       } catch (_) {
         db.execute('ROLLBACK');
@@ -91,6 +92,78 @@ final class CharacterLibraryStore {
     if (sqliteHasFts5(db) && !names.contains('craft_fts')) {
       throw const StudioException('LIBRARY_DDL_MISSING', 'craft_fts');
     }
+  }
+
+  /// I-036 lease / revocation / GC ledgers. These are library-workspace
+  /// application tables, not official T57 DDL, not Project root tables, and
+  /// they do not bump the library workspace number (stays 6) or the core
+  /// project store user_version.
+  static void _ensureLeaseGcLedgers(Database db) {
+    db.execute("""
+CREATE TABLE IF NOT EXISTS library_export_pins (
+  namespace TEXT NOT NULL,
+  export_id TEXT NOT NULL,
+  library_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  version TEXT NOT NULL,
+  pack_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  PRIMARY KEY(namespace, export_id),
+  FOREIGN KEY(namespace, library_id, kind, entity_id, version)
+    REFERENCES library_versions(namespace, library_id, kind, entity_id, version)
+);
+""");
+    db.execute("""
+CREATE TABLE IF NOT EXISTS library_candidate_pins (
+  namespace TEXT NOT NULL,
+  task_id TEXT NOT NULL,
+  library_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  version TEXT NOT NULL,
+  pack_hash TEXT NOT NULL,
+  state TEXT NOT NULL CHECK(state IN ('processing','ready','cancelled','isolated')),
+  PRIMARY KEY(namespace, task_id),
+  FOREIGN KEY(namespace, library_id, kind, entity_id, version)
+    REFERENCES library_versions(namespace, library_id, kind, entity_id, version)
+);
+""");
+    db.execute("""
+CREATE TABLE IF NOT EXISTS library_retention_plans (
+  namespace TEXT NOT NULL,
+  plan_id TEXT NOT NULL,
+  library_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  version TEXT NOT NULL,
+  reason TEXT NOT NULL CHECK(reason IN ('retain','revocationCleanup')),
+  PRIMARY KEY(namespace, plan_id, library_id, kind, entity_id, version),
+  FOREIGN KEY(namespace, library_id, kind, entity_id, version)
+    REFERENCES library_versions(namespace, library_id, kind, entity_id, version)
+);
+""");
+    db.execute("""
+CREATE TABLE IF NOT EXISTS portrait_revocation_denylist (
+  namespace TEXT NOT NULL,
+  rights_id TEXT NOT NULL,
+  pack_hash TEXT NOT NULL,
+  evidence_hash TEXT NOT NULL,
+  source_rights_id TEXT NOT NULL,
+  epoch TEXT NOT NULL,
+  PRIMARY KEY(namespace, rights_id, pack_hash, evidence_hash)
+);
+""");
+    db.execute("""
+CREATE TABLE IF NOT EXISTS character_existing_outputs (
+  namespace TEXT NOT NULL,
+  output_id TEXT NOT NULL,
+  rights_id TEXT NOT NULL,
+  path TEXT NOT NULL,
+  body_hash TEXT,
+  PRIMARY KEY(namespace, output_id)
+);
+""");
   }
 
   void close() {

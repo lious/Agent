@@ -28,6 +28,9 @@ def main():
         (['dart', 'test',
           'packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart',
           '--reporter=json'], ROOT, 'character-binding'),
+        (['dart', 'test',
+          'packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart',
+          '--reporter=json'], ROOT, 'character-rights-lease'),
     ]
     records = []
     failed = False
@@ -47,12 +50,10 @@ def main():
         'checks': records,
         'notValidated': [
             'Project.Character appearanceRef attach (I-004 AssetRepository / RelinkProposal / FileToken)',
-            'offline lease / online realPerson cloud rights check',
-            'library GC of unreferenced versions',
             'voice cloning (I-049 / I-050)',
             'LoRA training or weight download',
             'craft_fts on this frozen SQLite build (no SQLITE_ENABLE_FTS5)',
-            'paid or remote APIs',
+            'paid or commercial online rights APIs (fresh check remains an injectable stub)',
         ],
     }
     if args.report:

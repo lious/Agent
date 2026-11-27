@@ -1,0 +1,55 @@
+{
+  "taskId": "I-036",
+  "profile": "linux-dev",
+  "scopeStatus": "passed",
+  "fullTaskComplete": false,
+  "taskStatus": "partial",
+  "checks": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_assets"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "character-library",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart",
+        "--reporter=json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "character-binding",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart",
+        "--reporter=json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "character-rights-lease",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart",
+        "--reporter=json"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "notValidated": [
+    "Project.Character appearanceRef attach (I-004 AssetRepository / RelinkProposal / FileToken)",
+    "voice cloning (I-049 / I-050)",
+    "LoRA training or weight download",
+    "craft_fts on this frozen SQLite build (no SQLITE_ENABLE_FTS5)",
+    "paid or commercial online rights APIs (fresh check remains an injectable stub)"
+  ]
+}

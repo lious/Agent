@@ -1,3 +1,4 @@
+export 'character/character_library_gc.dart';
 export 'character/character_materializer.dart';
 export 'character/character_mention.dart';
 export 'character/character_pack_validator.dart';
@@ -7,4 +8,6 @@ export 'character/character_resolver.dart';
 export 'character/character_upgrade_planner.dart';
 export 'character/library_store.dart';
 export 'character/portrait_rights.dart';
+export 'character/portrait_rights_gate.dart';
+export 'character/portrait_revocation_coordinator.dart';
 export 'character/t57_library_ddl.dart';

@@ -1,0 +1,49 @@
+{
+  "increment": "K.3",
+  "title": "Third I-036 offline lease, revocation gates, and library GC slice (arrival-gate follow-up)",
+  "baseCommit": "71a67dc1e265341e0e6d97577e3d9009a3f42f0e",
+  "productionChanged": true,
+  "newCount": 7,
+  "newTests": {
+    "studio_assets": 7,
+    "harness": 0,
+    "store": 0,
+    "sdk": 0,
+    "ui": 0,
+    "document": 0
+  },
+  "clauseOfficialized": "Offline lease / fresh-online-check gate for real-person new cloud generation; pin freezes content not permission; known revocation cannot be bypassed by restoring an old pack; dispatch-time deny of generation/training/upload; existingOutputsPolicy retainAllowed/blockUse/reviewRequired without deleting user files; library GC roots (project, export, candidate-task pins); deleteHead retains referenced versions; recycle only at zero refs and not in retain/revocation-cleanup plans, with retryable physical GC. Follow-up: arriveCandidateResult isolates a late candidate result after revoke and does not accept it as a normal ready output.",
+  "task": "I-036",
+  "whyNotAlreadyOfficial": "Verification of 71a67dc found no completion/arrival gate, so a result arriving after revoke could not be isolated. The official suite now includes that case.",
+  "rowsStillOpenOnI036": [
+    "Project.Character appearanceRef attach of library reference blobs (missing I-004 AssetRepository / RelinkProposal / FileToken)",
+    "voice cloning (I-049 / I-050)",
+    "LoRA training or weight download; LoRA across base models and absolute identity lock are not promised",
+    "craft_fts on this frozen SQLite 3.54.1 build (no SQLITE_ENABLE_FTS5); I-037 is not opened",
+    "fresh online rights check remains an injectable stub; no paid or commercial online rights API is connected",
+    "CharacterLibraryGc.recycle removes metadata/index rows only and does not claim CAS physical reclamation"
+  ],
+  "leftoverWordingAfterSplit": "",
+  "seeds": null,
+  "regressions": {
+    "note": "No core store/document/harness/sdk/ui production files were modified; core project user_version stays 9; library workspace stays 6; frozen native library is unchanged; the frozen 2.04 suite of 7 tests and the frozen 2.08 suite of 6 tests were re-run and passed and were not rewritten. Official 1.83–2.09 / C.1–C.3 / A.1 / K.1 / K.2 suites were not mixed into this new-count. K.1 aggregateSha256 cc912250084c1ef18cd2c0943c593291e17de38f749d04493b1a9b7ace4ef3f3 and K.2 aggregateSha256 8dbbb7bfda96bfe4bf56c06fa64fcb0427f67148a84dfbf403496cce114c1252 are unchanged. Valid-lease offline dispatch is unchanged."
+  },
+  "analyzerExitCode": 0,
+  "aggregateSha256": "1215ad3bf63810e9684aac01ad5a2fa004c19f9591c0e64f203560bfa96e5c04",
+  "aggregateCanonical": "sha256 of path-sorted \"digest  path\\n\" lines of sourceSha256",
+  "unusedDigestSortedAggregateSha256": "760df303035580b3f8b8d9ac304ddb856ebe5c6b846834c64f5bc19f6255b6a1",
+  "frozenK1AggregateSha256": "cc912250084c1ef18cd2c0943c593291e17de38f749d04493b1a9b7ace4ef3f3",
+  "frozenK2AggregateSha256": "8dbbb7bfda96bfe4bf56c06fa64fcb0427f67148a84dfbf403496cce114c1252",
+  "i036Status": "partial",
+  "remainingAcceptance": "",
+  "fullTaskComplete": false,
+  "i007Started": false,
+  "i049Started": false,
+  "i050Started": false,
+  "coreStoreUserVersion": 9,
+  "libraryWorkspaceVersion": 6,
+  "asOf": "2026-11-27T16:04:19+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.13",
+  "featureBranchReplayNote": "Feature-branch Increment 2.13 replays unique source range 3c45983..cb05ec8 onto 076e620. K.3 remains the immutable source evidence/ADR identifier; source-freeze hashes describe the source clone, not these documentation splices."
+}

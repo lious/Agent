@@ -1,0 +1,75 @@
+{
+  "increment": "K.3",
+  "title": "Third I-036 offline lease, revocation gates, and library GC slice (arrival-gate follow-up)",
+  "baseCommit": "71a67dc1e265341e0e6d97577e3d9009a3f42f0e",
+  "asOf": "2026-11-27T16:04:19+08:00",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "name": "analyzer",
+      "command": [
+        "dart",
+        "analyze",
+        "packages/studio_assets"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-rights-lease/final-analyzer.log",
+      "exitCode": 0,
+      "elapsedSeconds": 0.315
+    },
+    {
+      "name": "character-library-frozen",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-rights-lease/final-i036-frozen-204.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.268
+    },
+    {
+      "name": "character-binding-frozen",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-rights-lease/final-i036-frozen-208.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.169
+    },
+    {
+      "name": "character-rights-lease-new",
+      "command": [
+        "dart",
+        "test",
+        "packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart",
+        "--reporter=json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-rights-lease/final-i036-new.jsonl",
+      "exitCode": 0,
+      "elapsedSeconds": 1.257
+    },
+    {
+      "name": "acceptance-adapter",
+      "command": [
+        "python3",
+        "tools/acceptance/cases/i036.py",
+        "--profile",
+        "linux-dev",
+        "--report",
+        "artifacts/acceptance/I-036.json"
+      ],
+      "cwd": ".",
+      "log": "docs/implementation/evidence/i036-rights-lease/final-adapter.log",
+      "exitCode": 0,
+      "elapsedSeconds": 4.078
+    }
+  ]
+}
