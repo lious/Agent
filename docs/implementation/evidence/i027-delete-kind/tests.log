@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_delete_kind_probe/test/session/i027_delete_kind_test.dart
+00:00 +0: packages/studio_delete_kind_probe/test/session/i027_delete_kind_test.dart: project deletion and session deletion are different kinds and must not be treated as each other
+00:00 +1: packages/studio_delete_kind_probe/test/session/i027_delete_kind_test.dart: SessionNavigationAdmission, ArchiveCountdownAdmission, I-004, I-029, ADR 0018, and the recycle-bin path stay closed
+00:00 +2: All tests passed!
