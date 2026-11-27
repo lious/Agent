@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_animal_humanized_play_recipe_test.dart
+00:00 +0: animalHumanized official orange-cat uprightCartoon compiles the identity golden, keeps a locked caption, and does not replace the face, claim mocap, or submit
+00:00 +1: missing animal ref or required slots, missing image license, and clothingOnly forced upright are refused; clothingOnly does not become an upright body
+00:00 +2: adult human face, motion-transfer mocap, unlicensed human voice, and auto-segmentation are refused; a dangerous action is downgraded and does not claim the real animal acted
+00:00 +3: All tests passed!

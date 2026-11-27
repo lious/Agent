@@ -1,0 +1,11 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart
+00:00 +0: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +1: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: hug twoImages compiles the official R2V golden, keeps stable subject order, and does not submit or auto-segment
+00:00 +2: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: hug twoImages compiles the official R2V golden, keeps stable subject order, and does not submit or auto-segment
+00:00 +3: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: hug twoImages compiles the official R2V golden, keeps stable subject order, and does not submit or auto-segment
+00:00 +4: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: miniature 1:20 contact compiles the official soft-intent golden, keeps locked stance and mask, and does not claim geometric calibration or submit
+00:00 +5: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: a single 岚 still cannot pretend the twoImages template has a second photo; an explicit fictional partner changes the route
+00:00 +6: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: missing refs, a same image without explicit regions, and a scale outside 0.005..0.2 are SLOT_COUNT and do not submit
+00:00 +7: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: missing refs, a same image without explicit regions, and a scale outside 0.005..0.2 are SLOT_COUNT and do not submit
+00:00 +8: packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart: auto-segmentation, geometric calibration, precise scale or occlusion without layered deterministic composite, and actual product-size claims are refused
+00:00 +9: All tests passed!

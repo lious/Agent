@@ -29,6 +29,12 @@ final class CompiledShot {
     this.artisticFantasy = false,
     this.lockedStance,
     this.lockedHandMask = false,
+    this.humanization,
+    this.safeAction,
+    this.lockedExpressionCaption,
+    this.claimsRealAnimalActed = false,
+    this.claimsReliableMocap = false,
+    this.adultFaceReplaced = false,
   });
 
   final String briefId, prompt;
@@ -42,6 +48,8 @@ final class CompiledShot {
   final bool scaleClaimsGeometricCalibration;
   final bool preciseOcclusionClaimed, artisticFantasy, lockedHandMask;
   final String? lockedStance;
+  final String? humanization, safeAction, lockedExpressionCaption;
+  final bool claimsRealAnimalActed, claimsReliableMocap, adultFaceReplaced;
 
   /// Protocol proof: compile errors and successes do not submit.
   int get documentWrites => 0;

@@ -76,8 +76,8 @@ final class HugRequest {
 }
 
 /// s8l PlayRecipe compiler. Auto-segmentation, geometric
-/// calibration, and paid generation are not invented.
-/// animalHumanized and babyDance library entries are not opened here.
+/// calibration, motion capture, and paid generation are not invented.
+/// A babyDance library entry is not opened here.
 final class PlayRecipeCompiler {
   int documentWrites = 0;
 
@@ -190,6 +190,63 @@ final class PlayRecipeCompiler {
       artisticFantasy: artistic,
       lockedStance: request.lockedStance,
       lockedHandMask: request.lockedHandMask,
+    );
+  }
+
+  /// s8l animalHumanized@1.0.0. clothingOnly does not become an
+  /// upright human body; uprightCartoon does not replace the species
+  /// face with an adult human face. Animal image plus human motion is
+  /// not reliable mocap. This is not paid generation.
+  CompiledShot compileAnimalHumanized(AnimalHumanizedRequest request) {
+    if (request.requestAutoSegmentation) {
+      throw const StudioException(capabilityUnsupported, 'autoSegmentation');
+    }
+    if (request.requestMotionTransfer || request.claimReliableMocap) {
+      throw const StudioException(capabilityUnsupported, 'motionCapture');
+    }
+    if (request.requestAdultHumanFace) {
+      throw const StudioException(mediaCombination, 'adultHumanFace');
+    }
+    if (request.humanization == AnimalHumanization.clothingOnly &&
+        request.forceUprightBody) {
+      throw const StudioException(mediaCombination, 'clothingOnly.upright');
+    }
+    if (request.animalReferenceId == null ||
+        request.species.isEmpty ||
+        request.speciesIdentity.isEmpty ||
+        request.wardrobe.isEmpty ||
+        request.action.isEmpty) {
+      throw const StudioException(slotCount, 'animalHumanized');
+    }
+    if (!request.hasImageLicense) {
+      throw const StudioException(rightsRequired, 'imageLicense');
+    }
+    if (request.requestHumanVoice && !request.hasHumanVoiceAuthorization) {
+      throw const StudioException(rightsRequired, 'humanVoice');
+    }
+
+    final action = _safeAnimalAction(request.action);
+    final official =
+        request.species == animalOrangeCatSpecies &&
+        request.speciesIdentity == animalOrangeCatIdentity &&
+        request.humanization == AnimalHumanization.uprightCartoon &&
+        request.wardrobe == animalOrangeCatWardrobe &&
+        action == animalOrangeCatAction;
+    documentWrites = 0;
+    return CompiledShot(
+      briefId: 'animal-identity',
+      prompt: official ? animalIdentityPrompt : _animalPrompt(request, action),
+      unsupportedFields: const [],
+      requestedParameters: const {},
+      seed: null,
+      recipeId: '$animalRecipeId@$animalRecipeVersion',
+      route: request.route,
+      humanization: request.humanization.name,
+      safeAction: action,
+      lockedExpressionCaption: request.lockedExpressionCaption,
+      claimsRealAnimalActed: false,
+      claimsReliableMocap: false,
+      adultFaceReplaced: false,
     );
   }
 }
@@ -311,4 +368,78 @@ String _miniaturePrompt(MiniatureRequest request) {
   return '${request.subjectIdentity}以约$ratio的幻想微缩比例置于'
       '${request.referenceIdentity}旁，${request.action}。'
       '比例只是模型意图，未作真实3D尺度保证。';
+}
+
+enum AnimalHumanization { clothingOnly, uprightCartoon }
+
+const animalRecipeId = 'animalHumanized';
+const animalRecipeVersion = '1.0.0';
+const animalIdentityTemplate = 'play.animal.identity@1.0.0';
+
+const animalOrangeCatSpecies = '橘猫';
+const animalOrangeCatIdentity = '短鼻口、三角耳、橘色额纹与蓬松尾巴';
+const animalOrangeCatWardrobe = '蓝色围裙';
+const animalOrangeCatAction = '轻轻翻开一本无字绘本';
+const animalSimpleFallbackAction = '挥爪';
+
+const animalIdentityPrompt =
+    '参考中的橘猫保留短鼻口、三角耳、橘色额纹与蓬松尾巴，拟人程度=卡通直立。\n'
+    '穿蓝色围裙，在明亮书桌旁轻轻翻开一本无字绘本；固定中景、柔和正侧光。\n'
+    '不要以人类面孔替代猫脸；这是虚构卡通行为。';
+
+const _unsafeAnimalActions = {'复杂烹饪', '危险动作', '跳高', '驾驶'};
+
+/// DEV-PURE animal-humanization request. This is not motion capture,
+/// auto-segmentation, or a paid generator.
+final class AnimalHumanizedRequest {
+  AnimalHumanizedRequest({
+    required this.animalReferenceId,
+    required this.species,
+    required this.speciesIdentity,
+    required this.humanization,
+    required this.wardrobe,
+    required this.action,
+    this.setting = '明亮书桌旁',
+    this.cameraLight = '固定中景、柔和正侧光',
+    this.route = 'i2v',
+    this.hasImageLicense = false,
+    this.requestHumanVoice = false,
+    this.hasHumanVoiceAuthorization = false,
+    this.requestMotionTransfer = false,
+    this.claimReliableMocap = false,
+    this.requestAdultHumanFace = false,
+    this.forceUprightBody = false,
+    this.requestAutoSegmentation = false,
+    this.lockedExpressionCaption,
+  }) {
+    if (animalReferenceId != null) requireId(animalReferenceId!);
+  }
+
+  final String? animalReferenceId;
+  final String species, speciesIdentity, wardrobe, action;
+  final String setting, cameraLight, route;
+  final AnimalHumanization humanization;
+  final bool hasImageLicense,
+      requestHumanVoice,
+      hasHumanVoiceAuthorization,
+      requestMotionTransfer,
+      claimReliableMocap,
+      requestAdultHumanFace,
+      forceUprightBody,
+      requestAutoSegmentation;
+  final String? lockedExpressionCaption;
+}
+
+String _safeAnimalAction(String action) {
+  if (_unsafeAnimalActions.contains(action)) return animalSimpleFallbackAction;
+  return action;
+}
+
+String _animalPrompt(AnimalHumanizedRequest request, String action) {
+  final degree = request.humanization == AnimalHumanization.uprightCartoon
+      ? '卡通直立'
+      : '仅服装';
+  return '参考中的${request.species}保留${request.speciesIdentity}，拟人程度=$degree。\n'
+      '穿${request.wardrobe}，在${request.setting}做$action；${request.cameraLight}。\n'
+      '不要以人类面孔替代物种面部；这是虚构卡通行为。';
 }
