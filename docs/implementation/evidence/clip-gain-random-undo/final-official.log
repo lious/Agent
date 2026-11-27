@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_document/test/audio/automation/i009_clip_gain_random_undo_test.dart
+00:00 +0: deterministic official gain commands undo via restoreSnapshot to the start content hash; refusals do not half-write
+00:00 +1: 1000 seeded official random SetClipGain/SetGainKeyframe/RemoveGainKeyframe sequences undo to the start content hash
+i009-gain-undo document: 1000 sequences, legal=3445 refusals=337 families={setClipGain: 907, setGainKeyframe: 1808, removeGainKeyframe: 730} inversePatch=restoreSnapshot seed=0x2090a009
+00:14 +2: All tests passed!

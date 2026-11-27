@@ -1,0 +1,11 @@
+{
+  "baseCommit": "3c45983d5ba9b8de8d9fb43511efeee6b8d50f47",
+  "sourceSha256": {
+    "packages/studio_document/test/audio/automation/i009_clip_gain_random_undo_test.dart": "732f253264ed99e79bdc09b97b940dfcb4138aeeec5a9f6394c177ceb289d255"
+  },
+  "aggregateSha256": "7b3da6ba8e3b22e2e623257300f6757f1918bf6964397a3e33529505027aabd4",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "7b3da6ba8e3b22e2e623257300f6757f1918bf6964397a3e33529505027aabd4",
+  "asOf": "2026-11-27T15:50:21+08:00",
+  "timezone": "Asia/Shanghai"
+}

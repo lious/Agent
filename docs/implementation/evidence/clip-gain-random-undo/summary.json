@@ -1,0 +1,47 @@
+{
+  "increment": "2.10",
+  "title": "Official I-009 random undo/hash coverage of admitted clip gain commands",
+  "baseCommit": "3c45983d5ba9b8de8d9fb43511efeee6b8d50f47",
+  "aggregateSha256": "7b3da6ba8e3b22e2e623257300f6757f1918bf6964397a3e33529505027aabd4",
+  "aggregateCanonical": "sha256 of path-sorted sha256sum output in \"digest  path\\n\" form (sort by path)",
+  "unusedDigestSortedAggregateSha256": "7b3da6ba8e3b22e2e623257300f6757f1918bf6964397a3e33529505027aabd4",
+  "newThisIncrement": {
+    "document": 2,
+    "sdk": 0,
+    "ui": 0,
+    "total": 2
+  },
+  "selected": {
+    "document": {
+      "passed": 472,
+      "failed": 0,
+      "skipped": 0,
+      "newInThisIncrement": 2
+    },
+    "total": {
+      "passed": 472,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "support": {
+    "analyzer": 0
+  },
+  "drawnFamilies": {
+    "trials": 1000,
+    "seed": "0x2090a009",
+    "legal": 3445,
+    "refusals": 337,
+    "setClipGain": 907,
+    "setGainKeyframe": 1808,
+    "removeGainKeyframe": 730,
+    "inversePatchKind": "restoreSnapshot"
+  },
+  "bounds": [
+    "This slice adds official coverage only for the recorded Increment 2.02/2.06 gap that admitted SetClipGain / SetGainKeyframe / RemoveGainKeyframe were not in a random undo generator. It does not open new audio capabilities and does not change production algebra.",
+    "A new official document file, not a rewrite of Increment 1.88 / I-005 or of the frozen 2.02 / 2.06 gain tests, generates those three admitted commands. 1000 seeded sequences (seed 0x2090a009) walked immutable restoreSnapshot snapshots back to the start content hash. Legal draws actually included all three families (setClipGain=907, setGainKeyframe=1808, removeGainKeyframe=730; legal=3445, refusals=337). Refusals do not half-write. Official InversePatch kind stays restoreSnapshot. No Slip/Roll/Slide or gain field-level invert was added.",
+    "Independent audio import, bus Effect/limiter, I-060/V-024, I-007 remapping/nest, new-track, Pulse/clock/queue, invert-matrix rows, caption export, cross-device/RTC, and store schema v10 are not opened. Store tests and the Increment 1.88 SDK 1000-sequence undo suite were not run and are not part of this official new-count. I-009 stays partial. Increment 1.17/1.18 stay open. I-023 stays partial."
+  ],
+  "asOf": "2026-11-27T15:50:21+08:00",
+  "timezone": "Asia/Shanghai"
+}
