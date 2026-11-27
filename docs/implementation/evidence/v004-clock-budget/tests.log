@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_clock_probe/test/media/clock/v004_clock_budget_test.dart
+00:00 +0: dropped frames are not hidden as success; output time and audio samples stay put
+00:00 +1: an unmet drop-rate target only downgrades the preview proxy and discloses; success is not claimed
+00:00 +2: the queue stays within its bound; 20ms, underrun, and thermal measurements are not claimed
+00:00 +3: All tests passed!
+EXIT:0
