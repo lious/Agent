@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_library_archive_probe/test/storage/archive/i013_library_archive_test.dart
+00:00 +0: a library archive is a list-state change: no revision bump, no CAS delete, read-only, and restore still needs review
+00:00 +1: Increment 3.06 ArtifactKindAdmission, Increment 3.26, I-029, and job archival stay closed
+00:00 +2: All tests passed!
