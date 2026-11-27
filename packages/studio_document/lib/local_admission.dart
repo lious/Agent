@@ -149,8 +149,10 @@ void requireLocalEditingWritable(ProjectDocument project) {
     final video = seqTracks.where((t) => t['kind'] == 'video').toList(),
         captionTracks = seqTracks.where((t) => t['kind'] == 'caption').toList(),
         audioTracks = seqTracks.where((t) => t['kind'] == 'audio').toList();
-    if (video.length > 1 ||
-        captionTracks.length > 1 ||
+    // Multiple video tracks are admitted so AddTrack can open a new video
+    // lane. Extra audio/caption tracks, and a non-leading primary video
+    // slot, stay FEATURE_NOT_IMPLEMENTED.
+    if (captionTracks.length > 1 ||
         audioTracks.length > 1 ||
         video.length + captionTracks.length + audioTracks.length !=
             seqTracks.length ||

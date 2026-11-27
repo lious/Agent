@@ -1106,6 +1106,12 @@ ProjectDocument applyEdit(
   if (operation is SetTrackState) {
     return _setTrackState(before, operation, nextVersion);
   }
+  if (operation is AddTrack) {
+    return _addTrack(before, operation, nextVersion);
+  }
+  if (operation is RemoveTrack) {
+    return _removeTrack(before, operation, nextVersion);
+  }
   if (operation is MoveClips) {
     return _moveClips(before, operation, nextVersion, newId);
   }
@@ -1210,7 +1216,10 @@ ProjectDocument applyEdit(
           operation is! SetMarkers &&
           operation is! AppendVideoAsset &&
           operation is! MakeCompound &&
-          operation is! UpgradeNest)) {
+          operation is! UpgradeNest &&
+          operation is! AddTrack &&
+          operation is! RemoveTrack &&
+          operation is! SetTrackState)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
   }
   if (operation is SetAudioBusRoutes) {
@@ -1493,6 +1502,9 @@ ProjectDocument applyEdit(
       throw StateError('Handled marker edit');
     case SetTrackState():
       throw StateError('Handled track state edit');
+    case AddTrack():
+    case RemoveTrack():
+      throw StateError('Handled add/remove track edit');
     case RenameProject():
       throw StateError('Handled before sequence edit');
     case MakeCompound():

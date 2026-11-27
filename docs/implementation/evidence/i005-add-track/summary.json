@@ -1,0 +1,29 @@
+{
+  "increment": "2.32",
+  "task": "I-005",
+  "title": "AddTrack / RemoveTrack and copy A+C onto a new video track",
+  "asOf": "2026-11-28T01:32:49+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "95eb8b94b34f10e8b4888203b66e21a322246600",
+  "officialTests": 3,
+  "regressionTests": 27,
+  "analyzer": "No issues found",
+  "skippedTrimPlanner": "No s5 payload schema or official TrimPlanner API; not invented.",
+  "notClaimed": [
+    "I-006 TrimPlanner / command_planner surfaces",
+    "video or caption muted/solo on SetTrackState",
+    "extra audio or caption addTrack (I-009 new-track)",
+    "OS clipboard",
+    "auto-close as a MoveClips mode",
+    "0.02s OFF_FRAME_GRID link offset",
+    "mobile long-press/pinch",
+    "removing the primary or sole video track",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_document/lib/track_state.dart",
+    "packages/studio_document/lib/edit_algebra.dart",
+    "packages/studio_document/lib/local_admission.dart",
+    "packages/studio_document/test/nle/i005_add_track_test.dart"
+  ]
+}
