@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_storage_probe/test/storage/faults/v005_provider_restriction_test.dart
+00:00 +0: SAF, iCloud, and generic cloud stay unvalidated and restricted
+00:00 +1: local rename is not applied to untested providers; non-atomic providers need staging and confirmation
+00:00 +2: provider qualification is not claimed; I-011 and I-014 leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0

@@ -37,7 +37,8 @@
     "packages/studio_color_probe",
     "packages/studio_release_probe",
     "packages/studio_clock_probe",
-    "packages/studio_export"
+    "packages/studio_export",
+    "packages/studio_storage_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
