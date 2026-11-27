@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_caption_safe_area_probe/test/caption/layout/i010_caption_safe_area_test.dart
+00:00 +0: zero insets admit a full-canvas layout; a box inside nonzero insets is admitted
+00:00 +1: a layout that enters the inset margins is refused; a degenerate safe area is refused
+00:00 +2: a text shaper, I-010 sidecar or font-fallback re-qualification, source-interval crop, and burn-in stay closed
+00:00 +3: All tests passed!
+EXIT:0

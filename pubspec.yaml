@@ -57,7 +57,8 @@
     "packages/studio_render_recipe_probe",
     "packages/studio_icc_first_probe",
     "packages/studio_preview_export_probe",
-    "packages/studio_downmix_probe"
+    "packages/studio_downmix_probe",
+    "packages/studio_caption_safe_area_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",
