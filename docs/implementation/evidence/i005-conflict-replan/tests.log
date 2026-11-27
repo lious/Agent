@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_conflict_replan_probe/test/timeline/commands/i005_conflict_replan_test.dart
+00:00 +0: after a retained conflict, a submit is admitted only once a new plan has been previewed
+00:00 +1: an automatic overwrite retry, a dropped candidate, or a submit without a new plan and preview is refused
+00:00 +2: Increment 3.02 command-clamp work, a TrimPlanner, a Flutter widget tree, and I-003 / I-025 suites stay closed
+00:00 +3: All tests passed!
+EXIT:0
