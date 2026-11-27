@@ -101,7 +101,8 @@
     "packages/studio_session_navigation_probe",
     "packages/studio_model_context_probe",
     "packages/studio_offline_capability_probe",
-    "packages/studio_delete_kind_probe"
+    "packages/studio_delete_kind_probe",
+    "packages/studio_sibling_job_cancel_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

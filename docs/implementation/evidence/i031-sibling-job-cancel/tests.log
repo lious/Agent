@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_sibling_job_cancel_probe/test/harness/s11_sibling_job_cancel_test.dart
+00:00 +0: packages/studio_sibling_job_cancel_probe/test/harness/s11_sibling_job_cancel_test.dart: cancelling one shot must not cancel the other shots' jobs
+00:00 +1: packages/studio_sibling_job_cancel_probe/test/harness/s11_sibling_job_cancel_test.dart: JobCancelAdmission, SessionNavigationAdmission, DeleteKindAdmission, ADR 0028, I-040, and usage accounting stay closed
+00:00 +2: All tests passed!
