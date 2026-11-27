@@ -11,3 +11,4 @@ export 'template_editor.dart';
 export 'template_pack.dart';
 export 'template_service.dart';
 export 'template_validator.dart';
+export 'erase/erase_layer.dart';

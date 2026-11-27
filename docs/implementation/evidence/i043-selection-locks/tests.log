@@ -1,0 +1,29 @@
+00:00 +0: loading packages/studio_image_editor/test/mask/geometry_locks/i043_selection_locks_test.dart
+00:00 +0: eight orientations and crop padding round-trip within 0.5 source pixels; the official ROI golden maps (600,300) to (512,256)
+00:00 +1: a locked mask tile is not overwritten; accept is one undoable transaction and does not delete the original; a late cancel does not write user layers
+00:00 +2: text selection without a grounder is refused; alpha-only does not call inpaint; a missing pack is not relabeled as intelligent classic inpaint; a binary mask is not matting
+00:00 +3: All tests passed!
+EXIT:0
+======= frozen I-026 templates =======
+00:00 +0: loading packages/studio_image_editor/test/graphics/layer_templates/i026_layer_templates_test.dart
+00:00 +0: catalog has ten official layered templates across the planned families
+00:00 +1: all ten templates round-trip without flattening and keep structure hash
+00:00 +2: rebinding a photo slot does not change original source hashes or other layers
+00:00 +3: locked layers are not changed by a batch reference grade
+00:00 +4: inferred color cannot be stored as an original fact and style suggestions can be refused
+00:00 +5: missing fonts and effects are explicit degrades and stay on the layer
+00:00 +6: slot type mismatches and locked-field rebinds are refused
+00:00 +7: All tests passed!
+EXIT:0
+======= frozen I-026 library =======
+00:00 +0: loading packages/studio_image_editor/test/graphics/library/i026_graphics_library_store_test.dart
+00:00 +0: graphics-library/1 is a private library and does not write project user_version
+00:00 +1: the same Graphic@1 stays pinned in P and Q after @2 is published; only Q upgrades
+00:00 +2: deleting a library head leaves pinned versions loadable; pinned versions are GRAPHIC_IN_USE
+00:00 +3: unauthorized material cannot enter a shared template; selection does not grant redistribution
+00:00 +4: empty or too-long names are refused, tags are casefold-deduped, and search is namespace-first
+00:00 +5: template editor rebinds a photo without flattening or changing text, ids, or transforms
+00:00 +6: a required empty slot may stay as a draft but blocks delivery; unknown template metadata refuses upgrade/rebind
+00:00 +7: published versions are immutable
+00:00 +8: All tests passed!
+EXIT:0
