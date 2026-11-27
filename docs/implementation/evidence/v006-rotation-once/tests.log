@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_rotation_once_probe/test/color/orientation/v006_rotation_once_test.dart
+00:00 +0: display-matrix orientation is applied once; applying it again to already-rotated pixels is refused
+00:00 +1: a user transform2d rotation is not a second container orientation; upright pixels with no display-matrix apply are admitted
+00:00 +2: an HDR/LUT runtime, V-006 numeric or appearance qualification, and I-059 stay closed
+00:00 +3: All tests passed!
+EXIT:0
