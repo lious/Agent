@@ -1,0 +1,29 @@
+{
+  "increment": "2.51",
+  "task": "I-014",
+  "title": "Same-project restore does not roll back event seq",
+  "asOf": "2026-11-28T02:52:42+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "f0eb2ba19a07bcbe379f9db676d74f9636b5a427",
+  "officialTests": 3,
+  "frozenI014Suites": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "product RestoreService lifecycle transaction that commits head+1 to the project store",
+    "rolling back event seq",
+    "replacing the entire SQLite database",
+    "restoring old approvals",
+    "schema v10 / Project user_version change (stays 9)",
+    "I-013 job archival",
+    "I-037, I-038, or V-007 complete",
+    "60s WebCodecs/OPFS roundtrip / V-007 production pin",
+    "quote/apply, paid generation, SQL vertical.v1",
+    "rewrite of frozen I-014 auto-external-link suites or I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_document/lib/restore_version.dart",
+    "packages/studio_document/lib/studio_document.dart",
+    "packages/studio_document/test/i014_restore_event_seq_test.dart"
+  ]
+}

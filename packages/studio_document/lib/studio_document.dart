@@ -29,6 +29,7 @@ export 'strict_json.dart';
 export 'edit_algebra.dart';
 export 'field_invert.dart';
 export 'local_admission.dart';
+export 'restore_version.dart';
 export 'luma_wipe.dart';
 
 String contentHash(Object? value) =>

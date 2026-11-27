@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_document/test/i014_restore_event_seq_test.dart
+00:00 +0: a user restore plan advances head+1, pins the before snapshot, keeps InversePatch as restoreSnapshot, and does not roll back event seq or submit
+00:00 +1: locked manual fields default-block; explicit overwrite or fork is required; AI cannot issue restoreVersion
+00:00 +2: rolling back event seq, replacing SQLite, restoring approvals, a CAS mismatch, and missing consent are refused and do not submit
+00:00 +3: All tests passed!
