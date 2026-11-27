@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_license_execution_probe/test/license/s1c_license_execution_test.dart
+00:00 +0: packages/studio_license_execution_probe/test/license/s1c_license_execution_test.dart: a license gap must not auto-switch models, relabel HTTP 403 as a warning, or let a fact-only change cancel jobs or trigger a paid retry
+00:00 +1: packages/studio_license_execution_probe/test/license/s1c_license_execution_test.dart: I-033, I-058, FONT_REDISTRIBUTION_FACT, MODELS_REFERENCED_NOT_DOWNLOADED, and paid APIs stay closed
+00:00 +2: All tests passed!
