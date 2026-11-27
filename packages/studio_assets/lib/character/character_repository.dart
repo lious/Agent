@@ -7,6 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:studio_contracts/studio_contracts.dart';
 import 'package:json_canonicalizer/json_canonicalizer.dart';
 import 'package:studio_document/studio_document.dart';
+import 'package:studio_voice/studio_voice.dart';
 
 import 'character_library_gc.dart';
 import 'character_pack_validator.dart';
@@ -107,9 +108,16 @@ final class ProjectCharacterPin {
 /// rights records only. It does not train or download LoRA weights, clone
 /// voices, call paid APIs, or bump the core project SQLite user_version.
 final class CharacterRepository {
-  CharacterRepository(this.store)
-    : cache = CharacterDerivedCache(),
-      generations = CharacterGenerationLedger() {
+  CharacterRepository(
+    this.store, {
+    VoiceConsentLedger? voiceConsent,
+    VoiceStore? voiceStore,
+    CloneBackend? cloneBackend,
+  }) : cache = CharacterDerivedCache(),
+       generations = CharacterGenerationLedger(),
+       voiceConsent = voiceConsent ?? VoiceConsentLedger(),
+       voiceStore = voiceStore ?? VoiceStore(),
+       cloneBackend = cloneBackend ?? FakeCloneBackend() {
     gc = CharacterLibraryGc(store);
     revocation = PortraitRevocationCoordinator(
       store: store,
@@ -121,6 +129,9 @@ final class CharacterRepository {
   final CharacterLibraryStore store;
   final CharacterDerivedCache cache;
   final CharacterGenerationLedger generations;
+  final VoiceConsentLedger voiceConsent;
+  final VoiceStore voiceStore;
+  final CloneBackend cloneBackend;
   late final CharacterLibraryGc gc;
   late final PortraitRevocationCoordinator revocation;
   static const rightsGate = PortraitRightsGate();
@@ -660,6 +671,83 @@ final class CharacterRepository {
     );
   }
 
+  /// Honest I-050 wiring. Consent and pack voice-rights are checked, then
+  /// the fail-closed clone backend runs. Real clone inference stays
+  /// unavailable (`CLONE_INFERENCE_UNAVAILABLE`). This is not a permission
+  /// grant and does not increment successful executions on failure.
+  void requestVoiceClone({
+    required Map<String, Object?> characterRef,
+    required String voiceProfileId,
+    required String traceId,
+    required List<int> referencePcm,
+    required String provider,
+    required String region,
+    required DateTime now,
+    DispatchContext context = const DispatchContext(),
+    bool subjectIsOwner = true,
+  }) {
+    dispatch(
+      operation: 'voiceClone',
+      characterRef: characterRef,
+      provider: provider,
+      region: region,
+      now: now,
+      context: context,
+      voiceProfileId: voiceProfileId,
+      traceId: traceId,
+      referencePcm: referencePcm,
+      subjectIsOwner: subjectIsOwner,
+    );
+  }
+
+  void _voiceClone({
+    required Map<String, Object?> characterRef,
+    required String? voiceProfileId,
+    required String? traceId,
+    required List<int>? referencePcm,
+    required bool subjectIsOwner,
+  }) {
+    if (voiceProfileId == null || traceId == null || referencePcm == null) {
+      throw const StudioException('INVALID_ID', 'voiceClone');
+    }
+    validator.validateProjectCharacterRef(characterRef);
+    final pack = loadPublished(
+      characterRef['assetId'] as String,
+      characterRef['pinnedVersion'] as String,
+    );
+    if (packHashOf(pack) != characterRef['packHash']) {
+      throw const StudioException('BINDING_MISMATCH', 'packHash');
+    }
+    final asset = _map(pack['asset']);
+    final portraitId = asset['portraitRightsId'] as String;
+    final live = liveRights(portraitId);
+    if (live != null && live['state'] == 'revoked') {
+      throw const StudioException('RIGHTS_REVOKED', 'voiceClone');
+    }
+    final voice = _map(asset['voice']);
+    if (voice['cloningAllowed'] != true) {
+      throw const StudioException('RIGHTS_REQUIRED', 'cloningAllowed');
+    }
+    final voiceRightsId = voice['voiceRightsId'];
+    if (voiceRightsId is! String) {
+      throw const StudioException('RIGHTS_REQUIRED', 'voiceRightsId');
+    }
+    final voiceRights = _rightsRecord(pack, voiceRightsId);
+    final uses = (voiceRights['allowedUses'] as List).cast<String>();
+    if (!uses.contains('voiceClone')) {
+      throw const StudioException('RIGHTS_REQUIRED', 'voiceClone');
+    }
+    CloneJob(
+      id: 'clone-${characterRef['packHash']}',
+      voiceProfileId: voiceProfileId,
+      traceId: traceId,
+      ledger: voiceConsent,
+      store: voiceStore,
+      backend: cloneBackend,
+      subjectIsOwner: subjectIsOwner,
+    ).execute(referencePcm: referencePcm);
+  }
+
   /// Dispatch-time gate for new generation, training, or reference upload.
   /// No model inference or paid API is invoked.
   void dispatch({
@@ -671,9 +759,20 @@ final class CharacterRepository {
     DispatchContext context = const DispatchContext(),
     String? outputPath,
     String? outputId,
+    String? voiceProfileId,
+    String? traceId,
+    List<int>? referencePcm,
+    bool subjectIsOwner = true,
   }) {
     if (operation == 'voiceClone') {
-      throw const StudioException('FEATURE_NOT_IMPLEMENTED', 'voiceClone');
+      _voiceClone(
+        characterRef: characterRef,
+        voiceProfileId: voiceProfileId,
+        traceId: traceId,
+        referencePcm: referencePcm,
+        subjectIsOwner: subjectIsOwner,
+      );
+      return;
     }
     if (!characterDispatchOperations.contains(operation)) {
       throw StudioException('SCHEMA_INVALID', operation);

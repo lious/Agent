@@ -10,7 +10,8 @@
   "dependencies": {
     "studio_contracts": {
       "path": "../studio_contracts"
-    }
+    },
+    "crypto": "^3.0.8"
   },
   "dev_dependencies": {
     "test": "^1.26.3",

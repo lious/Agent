@@ -12,3 +12,4 @@ const embeddingNotArchivable = 'EMBEDDING_NOT_ARCHIVABLE';
 const ttsIsNotSinging = 'TTS_IS_NOT_SINGING';
 const traceRequired = 'TRACE_REQUIRED';
 const voiceProfileMissing = 'VOICE_PROFILE_MISSING';
+const embeddingMacMismatch = 'EMBEDDING_MAC_MISMATCH';

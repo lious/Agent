@@ -1,0 +1,33 @@
+{
+  "increment": "2.20",
+  "title": "I-050 embedding encryption and CharacterRepository wiring",
+  "baseCommit": "80caa6f057910f2a644ffae553a72215272088b1",
+  "productionChanged": true,
+  "newCount": 6,
+  "newTests": {
+    "studio_voice_encryption": 3,
+    "studio_assets_wiring": 3
+  },
+  "frozenReRun": {
+    "studio_voice_i049_i050": 14
+  },
+  "clauseOfficialized": "Embeddings are encrypted at rest (HMAC-SHA256 keystream and MAC) and decrypt back to plaintext; a wrong key is EMBEDDING_MAC_MISMATCH; archive/log still carry only ids and traces. CharacterRepository.requestVoiceClone / dispatch(voiceClone) checks cloningAllowed, voice rights, and consent, then fails closed as CLONE_INFERENCE_UNAVAILABLE without incrementing successful executions or storing an embedding. Missing consent is CONSENT_REQUIRED, not FEATURE_NOT_IMPLEMENTED.",
+  "task": "I-050",
+  "whyNotAlreadyOfficial": "Increment 2.14 left embedding encryption and CharacterRepository.voiceClone as FEATURE_NOT_IMPLEMENTED.",
+  "rowsStillOpenOnI050": [
+    "Real clone inference (FakeCloneBackend stays CLONE_INFERENCE_UNAVAILABLE; no weights downloaded)",
+    "Hardware HSM or production key custody (EmbeddingCipher is a software sealed box)",
+    "An approval or pack flag still does not represent a permission grant"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "a13f77e7b6ab0a6c524e01da0e3f79de2761a39cd4cea6acae6d2585a266354e",
+  "i050Status": "partial",
+  "fullTaskComplete": false,
+  "cloneInferenceClaimed": false,
+  "coreStoreUserVersion": 9,
+  "libraryWorkspaceVersion": 6,
+  "preexistingI036Fts5Note": "Two frozen I-036 assertions that fts5Enabled is false already fail at 80caa6f on this host; not rewritten; not a 2.20 regression.",
+  "asOf": "2026-11-27T23:42:55+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.20"
+}

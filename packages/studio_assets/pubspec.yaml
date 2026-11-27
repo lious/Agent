@@ -17,7 +17,10 @@
     "crypto": "^3.0.8",
     "archive": "4.7.1",
     "path": "^1.9.1",
-    "json_canonicalizer": "1.1.0"
+    "json_canonicalizer": "1.1.0",
+    "studio_voice": {
+      "path": "../studio_voice"
+    }
   },
   "dev_dependencies": {
     "test": "^1.26.3",
