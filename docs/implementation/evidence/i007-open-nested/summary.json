@@ -1,0 +1,25 @@
+{
+  "increment": "2.31",
+  "task": "I-007",
+  "title": "OpenNested resolves the pinned child timeline without auto-follow",
+  "asOf": "2026-11-28T01:26:15+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "384ea5bcf2192542838c00ad2d72bcb42d392c6a",
+  "officialTests": 4,
+  "regressionTests": 18,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "in-child persist edits / applyEdit on the child sequence",
+    "P2 reverse/freeze/smooth",
+    "optical-flow interpolation",
+    "V-003 real playback",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "I-006 TrimPlanner surfaces",
+    "video muted/solo on SetTrackState"
+  ],
+  "files": [
+    "packages/studio_document/lib/open_nested.dart",
+    "packages/studio_document/lib/studio_document.dart",
+    "packages/studio_document/test/nle/compound/i007_open_nested_test.dart"
+  ]
+}

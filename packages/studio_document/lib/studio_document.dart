@@ -17,6 +17,7 @@ export 'time.dart';
 export 'retime.dart';
 export 'keyframe_proposal.dart';
 export 'nest.dart';
+export 'open_nested.dart';
 export 'caption.dart';
 export 'marker.dart';
 export 'marker_sidecar.dart';
