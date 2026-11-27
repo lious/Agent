@@ -1,0 +1,31 @@
+{
+  "increment": "2.58",
+  "task": "I-053",
+  "title": "EntitlementLedger receipt uniqueness and offline-forgery refusals",
+  "asOf": "2026-11-28T03:14:44+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "515ec855b9ed086873cb8d920892c563283baf16",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "StoreKit / Play SDK connection",
+    "invented payment vendor or default domestic payment vendor",
+    "paid APIs, IAP, store registration, or app review",
+    "V-022 store-billing qualification (stays blocked)",
+    "deployed receipt_verifier service",
+    "I-033 SubmissionReconciler leftover re-qualification",
+    "I-040 leftover re-qualification",
+    "I-013 job archival",
+    "I-014 product RestoreService store commit path",
+    "I-035 product QA loop / V-020 precision/recall achievement",
+    "I-037, I-038, V-007, V-020, I-054, I-051, I-046, I-041, or I-040 complete",
+    "schema v10 / Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_billing/lib/studio_billing.dart",
+    "packages/studio_billing/lib/entitlement_ledger.dart",
+    "packages/studio_billing/test/billing/entitlements/i053_entitlement_ledger_test.dart",
+    "packages/studio_billing/pubspec.yaml"
+  ]
+}

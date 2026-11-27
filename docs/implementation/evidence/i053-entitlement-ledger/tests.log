@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_billing/test/billing/entitlements/i053_entitlement_ledger_test.dart
+00:00 +0: a duplicate store receipt grants once; ack retry returns the same receipt; unverified, cancelled, or pending proofs grant nothing; project revision is unchanged
+00:00 +1: an offline client cannot forge additional units; entitlement cache is not packed; clock rollback and unknown entitlements cannot start a paid cloud task
+00:00 +2: refund or revoke does not grant again; renewal cancel is not immediate expiry; a license warning does not waive cloud fees or lift YuE/portrait/voice rights; unknown prices are not forged as free
+00:00 +3: All tests passed!
+EXIT:0
