@@ -15,6 +15,7 @@ import 'time.dart';
 import 'validator.dart';
 export 'time.dart';
 export 'retime.dart';
+export 'keyframe_proposal.dart';
 export 'nest.dart';
 export 'caption.dart';
 export 'marker.dart';

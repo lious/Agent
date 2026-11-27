@@ -1,0 +1,37 @@
+{
+  "increment": "2.25",
+  "title": "I-008 leftover handles, boundary continuity, and atomic undo",
+  "baseCommit": "6c46530956a96c7bd432f65caa289333f2f4224e",
+  "productionChanged": true,
+  "newCount": 4,
+  "newTests": {
+    "studio_document_i008_leftover_acceptance": 4
+  },
+  "frozenReRun": {
+    "studio_document_transform_keyframe_test": 6,
+    "studio_document_dissolve_test": 4,
+    "studio_document_luma_wipe_test": 6
+  },
+  "clauseOfficialized": "Missing dissolve handles are TRANSITION_HANDLE_MISSING and missing luma handles are HANDLE_UNAVAILABLE, with no freeze fallback and no document change, including when a transform2d curve is already present. Existing codes are not retargeted. Registered transform2d@1.0.0 linear keys are continuous at knots; a split matches both remnants at the cut; a trim interpolates the new boundary. TransformKeyframeProposal coalesces 30 drag samples of one key into a single commit; InversePatch kind is restoreSnapshot; one undo restores the start content hash as a new revision of that snapshot; cancel writes nothing; a later refusal does not half-write.",
+  "task": "I-008",
+  "whyNotAlreadyOfficial": "Increments 2.05 and 2.12 admitted transform2d keyframes and officialized overwrite-crop / luma refusal coverage, but explicitly left 缺handles拒, 关键帧边界连续, and 一次提案原子undo恢复hash listed and not re-qualified. There was no coalescing restoreSnapshot proposal for a transform2d key drag, and no official I-008 leftover suite binding those three items.",
+  "rowsStillOpen": [
+    "V-003 GPU/real-render consistency",
+    "Unregistered effect plugins and advanced color",
+    "Field-aware invert matrix rows for SetTransformKeyframe / RemoveTransformKeyframe"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "d80d54a6a94c2fe7f1b1f3699588c6d1ea4ae51e34b2a2500b436865c6305d78",
+  "v003Claimed": false,
+  "newPluginInvented": false,
+  "fullTaskComplete": false,
+  "programCounts": {
+    "complete": 0,
+    "partial": 36,
+    "planned": 38,
+    "blocked": 13
+  },
+  "asOf": "2026-11-28T00:50:52+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.25"
+}
