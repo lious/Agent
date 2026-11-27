@@ -1,0 +1,2 @@
+3abf0eb2cd961303e1a1ea63c4f177dabb1d94374a4bee88c2d312ec13cb7cfa  packages/studio_document/lib/local_admission.dart
+d5f9b720b2f18089fb53d11e954b4c381fe44baca9de42be330230d118e5a8ed  packages/studio_document/test/media/still/i008_image_asset_local_admission_test.dart

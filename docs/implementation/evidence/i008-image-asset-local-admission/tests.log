@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_document/test/media/still/i008_image_asset_local_admission_test.dart
+00:00 +0: an image asset clip with a null streamId is locally writable
+00:00 +1: an image asset clip with a streamId is SOURCE_STREAM_MISMATCH, not VIDEO_STREAM_REQUIRED
+00:00 +2: All tests passed!
+EXIT:0

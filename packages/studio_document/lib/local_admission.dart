@@ -92,12 +92,18 @@ void requireLocalEditingWritable(ProjectDocument project) {
   }
   final rights = {for (final v in d['rightsRecords'] as List) v['id']: v};
   for (final a in assets.values) {
-    if ((a['kind'] != 'video' && a['kind'] != 'audio') ||
+    // s4 / Increment 2.99: ready, non-external image assets are writable.
+    // Video stream lookup and VIDEO_STREAM_REQUIRED must not refuse them.
+    // This is not a rewrite of StillImageClipAdmission, Increment 2.98
+    // semantics, or frozen I-008 suites.
+    if ((a['kind'] != 'video' &&
+            a['kind'] != 'audio' &&
+            a['kind'] != 'image') ||
         a['status'] != 'ready' ||
         a['externalLocator'] != null) {
       throw const StudioException('FEATURE_NOT_IMPLEMENTED');
     }
-    if (a['kind'] == 'audio') {
+    if (a['kind'] == 'audio' || a['kind'] == 'image') {
       if ((a['proxyRefs'] as List).isNotEmpty) {
         throw const StudioException('FEATURE_NOT_IMPLEMENTED');
       }
@@ -126,7 +132,8 @@ void requireLocalEditingWritable(ProjectDocument project) {
           streams.any((v) => v['type'] == 'video')) {
         throw const StudioException('AUDIO_STREAM_REQUIRED');
       }
-    } else if (!streams.any((v) => v['type'] == 'video')) {
+    } else if (a['kind'] != 'image' &&
+        !streams.any((v) => v['type'] == 'video')) {
       throw const StudioException('VIDEO_STREAM_REQUIRED');
     }
     for (final st in streams) {
@@ -280,6 +287,12 @@ void requireLocalEditingWritable(ProjectDocument project) {
       if (a == null) throw const StudioException('REF_NOT_FOUND');
       if (a['version'] != source['version']) {
         throw const StudioException('SOURCE_VERSION_MISSING');
+      }
+      if (a['kind'] == 'image') {
+        if (source['streamId'] != null) {
+          throw const StudioException('SOURCE_STREAM_MISMATCH');
+        }
+        continue;
       }
       final streams = (a['streams'] as List).where(
         (v) => v['id'] == source['streamId'] && v['type'] == track['kind'],
