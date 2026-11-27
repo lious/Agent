@@ -3,6 +3,8 @@ import 'package:studio_contracts/studio_contracts.dart';
 export 'approval.dart';
 export 'budget.dart';
 export 'device_scheduler.dart';
+export 'mailbox.dart';
+export 'roles.dart';
 export 'reconcile.dart';
 export 'session_store.dart';
 

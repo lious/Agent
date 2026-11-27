@@ -1,0 +1,28 @@
+{
+  "increment": "2.36",
+  "task": "I-034",
+  "title": "DEV-PURE AgentMailbox protocol, exclusive conflicts, and debate pause",
+  "asOf": "2026-11-28T01:53:52+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "1d445e15dad8d145a1c4f5f066928f58703deded",
+  "officialTests": 4,
+  "harnessPackageTests": 27,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "two real modelId / weight-pack records on the same case",
+    "paid API / real local or cloud model run",
+    "durable mailbox inbox in project SQLite",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "PatchGroup cherry-pick / chat workbench UI",
+    "ModelRouter / MemoryIndex / ContextCompiler",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "I-012 remainingAcceptance re-qualification"
+  ],
+  "files": [
+    "packages/studio_harness/lib/roles.dart",
+    "packages/studio_harness/lib/mailbox.dart",
+    "packages/studio_harness/lib/studio_harness.dart",
+    "packages/studio_harness/test/agents/handoff/i034_agent_mailbox_test.dart"
+  ]
+}
