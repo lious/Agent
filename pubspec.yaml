@@ -41,7 +41,8 @@
     "packages/studio_storage_probe",
     "packages/studio_fallback_probe",
     "packages/studio_compat_registry",
-    "packages/studio_codec_probe"
+    "packages/studio_codec_probe",
+    "packages/studio_resource_admission"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

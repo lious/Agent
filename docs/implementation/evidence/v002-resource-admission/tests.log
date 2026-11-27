@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_resource_admission/test/compatibility/admission/v002_resource_admission_test.dart
+00:00 +0: unified-pool incremental charges shared once; already-resident shared is deducted first
+00:00 +1: idle RAM does not offset VRAM; a discrete shortfall is waitingResource and basic editing stays available
+00:00 +2: mmap is not zero residency; I-042 leases and earlier s6c slices stay closed
+00:00 +3: All tests passed!
+EXIT:0
