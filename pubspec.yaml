@@ -72,7 +72,8 @@
     "packages/studio_close_checkpoint_probe",
     "packages/studio_sql_cloud_side_effect_probe",
     "packages/studio_writer_fence_probe",
-    "packages/studio_explicit_save_probe"
+    "packages/studio_explicit_save_probe",
+    "packages/studio_checkpoint_identity_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

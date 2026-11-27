@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_checkpoint_identity_probe/test/storage/save/i012_checkpoint_identity_test.dart
+00:00 +0: a product recovery checkpoint is admitted, is not a SQLite WAL checkpoint, and must not recopy media
+00:00 +1: a lagging checkpointRevision does not mean edits are unsaved
+00:00 +2: ADR 0003, Increment 3.07 close-checkpoint, Increment 3.10 explicit-save, ADR 0097, and a WAL-checkpoint runtime stay closed
+00:00 +3: All tests passed!
+EXIT:0
