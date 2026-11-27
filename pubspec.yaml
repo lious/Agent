@@ -87,7 +87,8 @@
     "packages/studio_audit_journal_probe",
     "packages/studio_original_placeholder_probe",
     "packages/studio_session_export_probe",
-    "packages/studio_package_staging_probe"
+    "packages/studio_package_staging_probe",
+    "packages/studio_history_availability_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

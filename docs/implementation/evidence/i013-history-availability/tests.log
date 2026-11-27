@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_history_availability_probe/test/storage/archive/i013_history_availability_test.dart
+00:00 +0: when history is omitted, only the current snapshot is kept and old refs stay unavailable, not retargeted at current content
+00:00 +1: ADR 0018 ImportMap, historical-revision binding, fork-new-projectId, and Increment 3.25 stay closed
+00:00 +2: All tests passed!
