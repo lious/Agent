@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_session_navigation_probe/test/session/i027_session_navigation_test.dart
+00:00 +0: packages/studio_session_navigation_probe/test/session/i027_session_navigation_test.dart: leaving a screen or switching sessions must not cancel a running job or reset the playhead
+00:00 +1: packages/studio_session_navigation_probe/test/session/i027_session_navigation_test.dart: JobCancelAdmission, ADR 0028, license-execution, license-provenance, and deferred runtimes stay closed
+00:00 +2: All tests passed!
