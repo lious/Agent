@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_unknown_extension_pin_probe/test/storage/archive/i013_unknown_extension_pin_test.dart
+00:00 +0: an unknown extension whose refs cannot be enumerated must be pinned conservatively and must not claim a complete archive
+00:00 +1: I-004 same-hash, ADR 0099, I-029, Increment 2.50 packMode, and PENDING_MEDIA complete-archive stay closed
+00:00 +2: All tests passed!
