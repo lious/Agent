@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_pressure_probe/test/compatibility/pressure/v023_pressure_interrupt_test.dart
+00:00 +0: under thermal or memory pressure, heavy models pause first and basic editing stays available
+00:00 +1: ten interrupts do not lose already-durable chunks; in-flight non-durable work is discarded
+00:00 +2: I-042 leases, ResourceAdmissionController, shared-once, ABI stale-pointer, and 20-minute OOM leftovers stay closed
+00:00 +3: All tests passed!
+EXIT:0
