@@ -23,6 +23,12 @@ final class CompiledShot {
     this.rightSubjectId,
     this.disclaimer,
     this.overlayText,
+    this.scaleIntent,
+    this.scaleClaimsGeometricCalibration = false,
+    this.preciseOcclusionClaimed = false,
+    this.artisticFantasy = false,
+    this.lockedStance,
+    this.lockedHandMask = false,
   });
 
   final String briefId, prompt;
@@ -32,6 +38,10 @@ final class CompiledShot {
   final List<VerticalInputMode> inputModes;
   final String? recipeId, route, leftSubjectId, rightSubjectId;
   final String? disclaimer, overlayText;
+  final double? scaleIntent;
+  final bool scaleClaimsGeometricCalibration;
+  final bool preciseOcclusionClaimed, artisticFantasy, lockedHandMask;
+  final String? lockedStance;
 
   /// Protocol proof: compile errors and successes do not submit.
   int get documentWrites => 0;

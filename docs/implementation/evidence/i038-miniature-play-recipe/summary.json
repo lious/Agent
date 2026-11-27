@@ -1,0 +1,30 @@
+{
+  "increment": "2.44",
+  "task": "I-038",
+  "title": "miniature@1.0.0 PlayRecipe slot and scale refusals",
+  "asOf": "2026-11-28T02:24:11+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "d48b58ff6b93839c113d4e1fa7ee1409317ae797",
+  "officialTests": 3,
+  "frozenI038FixtureTests": 3,
+  "frozenI038HugTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "auto-segmentation",
+    "geometric calibration / real 3D scale / pixel-precise scale without layered deterministic composite",
+    "paid generation / quote / apply / WorkflowCoordinator",
+    "animalHumanized / babyDance library entries",
+    "SQL vertical.v1 / workspace SQLite w5",
+    "signed-pack import / production FTS/RAG",
+    "I-037 complete",
+    "PlanGraph manual-lock API / PLAN_CYCLE re-qualification",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_vertical/lib/play_recipe.dart",
+    "packages/studio_vertical/lib/workflow_compiler.dart",
+    "packages/studio_vertical/test/vertical/all_scenarios/i038_miniature_play_recipe_test.dart"
+  ]
+}

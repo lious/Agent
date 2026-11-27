@@ -75,9 +75,9 @@ final class HugRequest {
   final String? lockedDisclaimer;
 }
 
-/// s8l hug@1.0.0 slot/route compiler. Auto-segmentation and paid
-/// generation are not invented. miniature / animalHumanized /
-/// babyDance library entries are not opened here.
+/// s8l PlayRecipe compiler. Auto-segmentation, geometric
+/// calibration, and paid generation are not invented.
+/// animalHumanized and babyDance library entries are not opened here.
 final class PlayRecipeCompiler {
   int documentWrites = 0;
 
@@ -134,6 +134,64 @@ final class PlayRecipeCompiler {
       overlayText: hugOverlayText,
     );
   }
+
+  /// s8l miniature@1.0.0. Scale is a creative soft intent, not real
+  /// geometric calibration. Precise pixel scale requires layered
+  /// assets and deterministic compositing. Auto-segmentation is not
+  /// invented.
+  CompiledShot compileMiniature(MiniatureRequest request) {
+    if (request.requestAutoSegmentation) {
+      throw const StudioException(capabilityUnsupported, 'autoSegmentation');
+    }
+    if (request.requestGeometricCalibration ||
+        request.claimActualProductScale) {
+      throw const StudioException(
+        capabilityUnsupported,
+        'geometricCalibration',
+      );
+    }
+    if (request.requirePreciseScale &&
+        !(request.layeredAssets && request.deterministicComposite)) {
+      throw const StudioException(capabilityUnsupported, 'preciseScale');
+    }
+    if (request.requirePreciseOcclusion && !request.layeredAssets) {
+      throw const StudioException(capabilityUnsupported, 'preciseOcclusion');
+    }
+    if (request.subjectId == null || request.referenceObjectId == null) {
+      throw const StudioException(slotCount, 'miniature.refs');
+    }
+    if (request.scaleIntent < miniatureScaleMin ||
+        request.scaleIntent > miniatureScaleMax) {
+      throw const StudioException(slotCount, 'scaleIntent');
+    }
+    if (request.subjectId == request.referenceObjectId &&
+        (request.subjectRegion == null || request.referenceRegion == null)) {
+      throw const StudioException(slotCount, 'regions');
+    }
+
+    final official =
+        request.subjectIdentity == miniatureSubjectIdentity &&
+        request.referenceIdentity == miniatureReferenceIdentity &&
+        request.scaleIntent == miniatureExampleScale &&
+        request.action == miniatureExampleAction;
+    final artistic = !request.layeredAssets;
+    documentWrites = 0;
+    return CompiledShot(
+      briefId: 'miniature-contact',
+      prompt: official ? miniatureContactPrompt : _miniaturePrompt(request),
+      unsupportedFields: const [],
+      requestedParameters: const {},
+      seed: null,
+      recipeId: '$miniatureRecipeId@$miniatureRecipeVersion',
+      route: request.route,
+      scaleIntent: request.scaleIntent,
+      scaleClaimsGeometricCalibration: false,
+      preciseOcclusionClaimed: false,
+      artisticFantasy: artistic,
+      lockedStance: request.lockedStance,
+      lockedHandMask: request.lockedHandMask,
+    );
+  }
 }
 
 void _requirePortrait(HugSubject subject) {
@@ -187,4 +245,70 @@ String _promptFor(HugVariant variant, HugSubject left, HugSubject right) {
   return 'Image 1所示${left.identity}在画面左侧，Image 2所示${right.identity}在右侧。\n'
       '两人向对方靠近并轻轻侧拥，中景，固定机位，柔和室内侧光。\n'
       '保持各自服装与面部区别，动作轻缓，避免复杂转身；这是合成互动。';
+}
+
+/// s8l miniature@1.0.0 relative scale intent bounds. The 1:20 example
+/// is a creative soft constraint, not geometric calibration.
+const miniatureRecipeId = 'miniature';
+const miniatureRecipeVersion = '1.0.0';
+const miniatureContactTemplate = 'play.miniature.contact@1.0.0';
+const miniatureScaleMin = 0.005;
+const miniatureScaleMax = 0.2;
+const miniatureExampleScale = 0.05;
+
+const miniatureSubjectIdentity = '穿黄色雨衣的虚构小人物';
+const miniatureReferenceIdentity = '普通白瓷杯';
+const miniatureExampleAction = '扶着杯把向上张望';
+
+const miniatureContactPrompt =
+    '穿黄色雨衣的虚构小人物以约1:20的幻想微缩比例置于普通白瓷杯旁，扶着杯把向上张望。\n'
+    '从桌面低机位观察，保持杯把在人物前方的遮挡关系，手脚接触处有柔和阴影；\n'
+    '窗光从左后方照入。不要把杯子变成建筑或修改杯把数量。';
+
+/// DEV-PURE miniature request. This is not a 3D calibrator and not
+/// an auto-segmentation or I-004 attach path.
+final class MiniatureRequest {
+  MiniatureRequest({
+    required this.subjectId,
+    required this.referenceObjectId,
+    required this.scaleIntent,
+    required this.subjectIdentity,
+    required this.referenceIdentity,
+    required this.action,
+    this.subjectRegion,
+    this.referenceRegion,
+    this.route = 'i2v',
+    this.layeredAssets = false,
+    this.deterministicComposite = false,
+    this.requestAutoSegmentation = false,
+    this.requestGeometricCalibration = false,
+    this.requirePreciseScale = false,
+    this.requirePreciseOcclusion = false,
+    this.claimActualProductScale = false,
+    this.lockedStance,
+    this.lockedHandMask = false,
+  }) {
+    if (subjectId != null) requireId(subjectId!);
+    if (referenceObjectId != null) requireId(referenceObjectId!);
+    if (subjectRegion != null) requireId(subjectRegion!);
+    if (referenceRegion != null) requireId(referenceRegion!);
+  }
+
+  final String? subjectId, referenceObjectId, subjectRegion, referenceRegion;
+  final double scaleIntent;
+  final String subjectIdentity, referenceIdentity, action, route;
+  final bool layeredAssets, deterministicComposite;
+  final bool requestAutoSegmentation, requestGeometricCalibration;
+  final bool requirePreciseScale, requirePreciseOcclusion;
+  final bool claimActualProductScale, lockedHandMask;
+  final String? lockedStance;
+}
+
+String _miniaturePrompt(MiniatureRequest request) {
+  final ratio = request.scaleIntent == 0
+      ? '0'
+      : '1:${(1 / request.scaleIntent).round()}';
+  return '${request.subjectIdentity}以约$ratio的幻想微缩比例置于'
+      '${request.referenceIdentity}旁，${request.action}。'
+      '比例只是模型意图，未作真实3D尺度保证。';
 }

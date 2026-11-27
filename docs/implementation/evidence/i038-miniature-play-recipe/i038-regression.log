@@ -1,0 +1,8 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart
+00:00 +0: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: hug twoImages compiles the official R2V golden, keeps stable subject order, and does not submit or auto-segment
+00:00 +1: packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart: a single 岚 still cannot pretend the twoImages template has a second photo; an explicit fictional partner changes the route
+00:00 +2: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +3: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +4: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: product facts are taken only from FactLedger; an LLM confirmed=true claim is UNCONFIRMED_FACT and does not submit
+00:00 +5: packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart: unauthorized subjects, unsupported firstLast, and stale overrides are refused without rewrite or submit
+00:00 +6: All tests passed!
