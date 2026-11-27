@@ -1,0 +1,44 @@
+{
+  "asOf": "2026-11-27T15:52:57.766790+08:00",
+  "timezone": "Asia/Shanghai",
+  "slice": "play-assignee-quality",
+  "baseCommit": "3c45983d5ba9b8de8d9fb43511efeee6b8d50f47",
+  "note": "Same-process studio_play slice only. Not stage B, not XD-010, not schema v10. Official new count is the 2 new tests below, not the package total.",
+  "sourceHashes": {
+    "packages/studio_play/lib/play_session.dart": "f2e9e33cecccbf04b2146493fd1f060266b8c0afb8cbba343231e32fc2bcde35",
+    "packages/studio_play/test/assignee_quality_test.dart": "4ea0dade71ce6f78c332ffffc2a2a29b2c89f9b37ce0a205347e80f959e6c8d5",
+    "docs/addenda/multidevice-v1.9.2-play-assignee-quality.md": "90dae364b60ccc2f4a7d12d9b7ee6a0937c28cc8b4530a295e14bab6d2747f19"
+  },
+  "toolchain": {
+    "Dart": "3.14.0",
+    "SQLite": "3.54.1",
+    "platform": "Linux x86_64"
+  },
+  "environment": {
+    "PATH_prefix": "/workspace/toolchains/flutter/bin",
+    "LD_LIBRARY_PATH": "/workspace/toolchains/sqlite-3.54.1"
+  },
+  "commands": [
+    "LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1 dart analyze packages/studio_play",
+    "LD_LIBRARY_PATH=/workspace/toolchains/sqlite-3.54.1 dart test packages/studio_play"
+  ],
+  "results": {
+    "analyze": "No issues found",
+    "existingTestsPassed": 19,
+    "newOfficialTests": [
+      "markTechnicalQuality rejects a non-assignee performer; director, AD and the assignee may mark without adopting",
+      "screenwriter with empty sceneIds cannot issue official tasks for unassigned scenes"
+    ],
+    "newOfficialCount": 2,
+    "totalPassed": 21,
+    "chromeTests": false
+  },
+  "storeCeiling": {
+    "file": "packages/studio_store/lib/studio_store.dart",
+    "userVersion": 9,
+    "hasDdl10": false,
+    "hasEditProposals": false,
+    "thisSliceDidNotModifyStudioStore": true
+  },
+  "featureBranchIncrement": "2.11"
+}

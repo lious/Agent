@@ -1027,14 +1027,20 @@ final class PlaySession {
     acting(personId: by.personId, deviceId: by.deviceId, grantId: by.grantId);
     if (by.assistant) throw StudioException('PLAY_AI_FORBIDDEN');
     final g = grant(by.grantId);
+    final delivery = deliveries[deliveryId]!;
+    final task = _task(delivery.taskId);
     // Technical quality is a craft mark, not creative adoption.
-    if (g.crewRole != CrewRole.director &&
-        g.crewRole != CrewRole.assistantDirector &&
-        g.crewRole != CrewRole.performer) {
+    // Director and assistant director may mark any delivery; a performer
+    // may mark only if they are the task assignee (claimer).
+    final schedule =
+        g.crewRole == CrewRole.director ||
+        g.crewRole == CrewRole.assistantDirector;
+    final assignee = task.claimedByPersonId == by.personId;
+    if (!schedule && !assignee) {
       throw StudioException('PLAY_PERMISSION_DENIED', 'technical');
     }
-    deliveries[deliveryId]!.technicalMark = mark;
-    _task(deliveries[deliveryId]!.taskId).history.add('technical $mark');
+    delivery.technicalMark = mark;
+    task.history.add('technical $mark');
     _record(by, 'technical', '$deliveryId:$mark');
   }
 
