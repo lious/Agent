@@ -83,7 +83,8 @@
     "packages/studio_package_projection_probe",
     "packages/studio_save_as_named_version_probe",
     "packages/studio_archive_space_probe",
-    "packages/studio_archive_limit_consent_probe"
+    "packages/studio_archive_limit_consent_probe",
+    "packages/studio_audit_journal_probe"
   ],
   "dev_dependencies": {
     "lints": "^6.0.0",

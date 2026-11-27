@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_audit_journal_probe/test/storage/import/i014_audit_journal_test.dart
+00:00 +0: packages/studio_audit_journal_probe/test/storage/import/i014_audit_journal_test.dart: an audit journal is metadata only, must not be replayed on import, and a new undo stack starts empty
+00:00 +1: packages/studio_audit_journal_probe/test/storage/import/i014_audit_journal_test.dart: ADR 0099 default journal exclusion, ArchiveLimitConsentAdmission, FutureMajorAdmission, and a RestoreService stay closed
+00:00 +2: All tests passed!
