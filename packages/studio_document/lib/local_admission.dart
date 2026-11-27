@@ -17,7 +17,6 @@ void requireLocalEditingWritable(ProjectDocument project) {
     'generationRecords',
     'fontRefs',
     'modelRefs',
-    'retainedSources',
   ]) {
     if ((d[table] as List).isNotEmpty) {
       throw StudioException('FEATURE_NOT_IMPLEMENTED', table);
@@ -65,11 +64,22 @@ void requireLocalEditingWritable(ProjectDocument project) {
   if (blobs.length != (d['blobs'] as List).length) {
     throw const StudioException('DUPLICATE_BLOB');
   }
+  for (final retained in d['retainedSources'] as List) {
+    if (retained['kind'] != 'sequence') {
+      throw const StudioException('FEATURE_NOT_IMPLEMENTED', 'retainedSources');
+    }
+    if (!blobs.containsKey(retained['definitionBlobHash'])) {
+      throw const StudioException('REF_NOT_FOUND', 'retainedSources');
+    }
+  }
   for (final blob in blobs.values) {
-    if (!{'original', 'proxy', 'ptsMap'}.contains(blob['role']) ||
+    if (!{'original', 'proxy', 'ptsMap', 'snapshot'}.contains(blob['role']) ||
         (blob['role'] == 'original' &&
             blob['packagePath'] !=
                 'originals/${(blob['hash'] as String).substring(7)}') ||
+        (blob['role'] == 'snapshot' &&
+            blob['packagePath'] !=
+                'snapshots/${(blob['hash'] as String).substring(7)}') ||
         BigInt.parse(blob['bytes'] as String) <= BigInt.zero) {
       throw const StudioException('BLOB_METADATA_INVALID');
     }
@@ -123,15 +133,17 @@ void requireLocalEditingWritable(ProjectDocument project) {
         p['blobHash'] as String,
         p['ptsMapBlobHash'] as String,
       ],
+    for (final r in d['retainedSources'] as List) ...[
+      r['definitionBlobHash'] as String,
+      for (final h in r['dependencyBlobHashes'] as List) h as String,
+    ],
   };
   for (final b in blobs.values) {
     if (b['role'] != 'original' && !usedDerived.contains(b['hash'])) {
       throw const StudioException('PROXY_RESOURCE_UNREFERENCED');
     }
   }
-  final tracks = [
-    for (final seq in sequences) ...seq['tracks'] as List,
-  ];
+  final tracks = [for (final seq in sequences) ...seq['tracks'] as List];
   for (final seq in sequences) {
     final seqTracks = seq['tracks'] as List;
     final video = seqTracks.where((t) => t['kind'] == 'video').toList(),
@@ -236,7 +248,18 @@ void requireLocalEditingWritable(ProjectDocument project) {
         ];
         if (child.length != 1) throw const StudioException('REF_NOT_FOUND');
         if (child.single['version'] != source['version']) {
-          throw const StudioException('SOURCE_VERSION_MISSING');
+          final retained = (d['retainedSources'] as List).any(
+            (x) =>
+                x['kind'] == 'sequence' &&
+                x['id'] == source['id'] &&
+                x['version'] == source['version'],
+          );
+          if (!retained) {
+            throw const StudioException('SOURCE_VERSION_MISSING');
+          }
+          // Historical pins are frozen against the retained definition, not
+          // the live sequence duration.
+          continue;
         }
         if (start + duration > Q.fromJson(child.single['duration'])) {
           throw const StudioException('SOURCE_OUT_OF_RANGE');
@@ -308,8 +331,8 @@ void requireSelectionGroupProfile(Map<String, dynamic> d) {
   final clips = {
     for (final seq in d['sequences'] as List)
       for (final t in seq['tracks'] as List)
-      for (final c in t['items'])
-        if (c['source'] != null) c['id']: c,
+        for (final c in t['items'])
+          if (c['source'] != null) c['id']: c,
   };
   final seen = <String>{};
   for (final g in d['selectionGroups']) {

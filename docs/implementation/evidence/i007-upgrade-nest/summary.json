@@ -1,0 +1,26 @@
+{
+  "increment": "2.30",
+  "task": "I-007",
+  "title": "UpgradeNest fit/trim/ripple with no auto-follow",
+  "asOf": "2026-11-28T01:22:53+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "8db92d93664e64a0a656d8df00b530b6b3b03edc",
+  "officialTests": 5,
+  "regressionTests": 13,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "OpenNested",
+    "P2 reverse/freeze/smooth",
+    "optical-flow interpolation",
+    "V-003 real playback",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "Project user_version 10 / workspace w5",
+    "in-child sequence persist edits"
+  ],
+  "files": [
+    "packages/studio_document/lib/nest_edit.dart",
+    "packages/studio_document/lib/local_admission.dart",
+    "packages/studio_document/lib/edit_algebra.dart",
+    "packages/studio_document/test/nle/compound/i007_upgrade_nest_test.dart"
+  ]
+}

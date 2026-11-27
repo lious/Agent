@@ -1100,6 +1100,9 @@ ProjectDocument applyEdit(
   if (operation is MakeCompound) {
     return _makeCompound(before, operation, nextVersion, newId);
   }
+  if (operation is UpgradeNest) {
+    return _upgradeNest(before, operation, nextVersion, newId);
+  }
   if (operation is SetTrackState) {
     return _setTrackState(before, operation, nextVersion);
   }
@@ -1206,7 +1209,8 @@ ProjectDocument applyEdit(
           operation is! SetCaptions &&
           operation is! SetMarkers &&
           operation is! AppendVideoAsset &&
-          operation is! MakeCompound)) {
+          operation is! MakeCompound &&
+          operation is! UpgradeNest)) {
     return _persistentAudioEdit(before, operation, nextVersion, newId);
   }
   if (operation is SetAudioBusRoutes) {
@@ -1493,6 +1497,8 @@ ProjectDocument applyEdit(
       throw StateError('Handled before sequence edit');
     case MakeCompound():
       throw StateError('Handled compound edit');
+    case UpgradeNest():
+      throw StateError('Handled nest upgrade');
     case AppendVideoAsset():
       final p = operation.toJson();
       final a = p['asset'] as Map<String, dynamic>;
