@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_change_dependency_test.dart
+00:00 +0: SKU and duration change invalidates S2 appearance and S3 fact overlay, keeps the handmade S2 range and clip, and does not stale S1 or submit
+00:00 +1: a locked caption price conflict, a locked music tail, a short replacement source, a CAS mismatch, stretching locked audio, and a resurrected cache entry are refused and do not submit
+00:00 +2: unplacing S2 is not delete source; a local S4 redo does not regenerate other shots; a missing causal shot is not rewritten into dialogue; a later character publish does not upgrade the pin
+00:00 +3: All tests passed!

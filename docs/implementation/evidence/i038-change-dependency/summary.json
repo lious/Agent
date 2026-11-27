@@ -1,0 +1,33 @@
+{
+  "increment": "2.48",
+  "task": "I-038",
+  "title": "s8m change-dependency and locked-field invalidation",
+  "asOf": "2026-11-28T02:37:50+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "a2bd9741ed4c9998a4166727290298c0bd37aaff",
+  "officialTests": 3,
+  "frozenI038Suites": 18,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "IntentReducer / DependencyIndex as a product surface",
+    "quote / apply / WorkflowCoordinator",
+    "paid generation",
+    "SQL vertical.v1 / workspace SQLite w5",
+    "full s8m case A/B apply/archive flows",
+    "real two-model director/visual handoff",
+    "signed-pack import / production FTS/RAG",
+    "I-037 or I-038 complete",
+    "PlanGraph manual-lock API / PLAN_CYCLE re-qualification",
+    "motion capture / adult-motion retargeting / auto-segmentation",
+    "new child-related surfaces beyond officialized s8l bounds",
+    "Project user_version change (stays 9)",
+    "rewrite of frozen I-036 fts5Enabled==false assertions",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_vertical/lib/change_dependency.dart",
+    "packages/studio_vertical/lib/vertical_brief.dart",
+    "packages/studio_vertical/lib/studio_vertical.dart",
+    "packages/studio_vertical/test/vertical/all_scenarios/i038_change_dependency_test.dart"
+  ]
+}

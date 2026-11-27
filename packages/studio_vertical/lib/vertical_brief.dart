@@ -22,6 +22,8 @@ const factBindingConflict = 'FACT_BINDING_CONFLICT';
 const toolNotAllowed = 'TOOL_NOT_ALLOWED';
 const unsupportedEditTechnique = 'UNSUPPORTED_EDIT_TECHNIQUE';
 const softCameraControl = 'SOFT_CAMERA_CONTROL';
+const revisionConflict = 'REVISION_CONFLICT';
+const fieldLocked = 'FIELD_LOCKED';
 
 /// s8h Purpose axis. Not mutually exclusive with input modes or recipes.
 enum VerticalPurpose {
