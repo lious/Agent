@@ -1,0 +1,38 @@
+{
+  "increment": "2.24",
+  "title": "I-007 RetimeMap / NestResolver (DEV-PURE)",
+  "baseCommit": "ea4384ecb1984fd57594439dc86e76acb2748209",
+  "productionChanged": true,
+  "newCount": 8,
+  "newTests": {
+    "studio_document_i007_retime_nest": 8
+  },
+  "frozenReRun": {
+    "studio_document_time_test": 6
+  },
+  "clauseOfficialized": "Linear and piecewise-linear TimeMap sourceAt and inverse mapping use exact Q. knots (0,0),(2,1),(4,5) map local 3s to source offset 3s; a split at 3s inserts the same mapping point on both segments. 300 frames at 30000/1001 with 48 kHz has no cumulative drift through the map (480480 samples). Caption source anchors use invert(v), not FrameRate.frameIndex. Optical-flow / frame-blend interpolation is RETIME_INTERP_UNSUPPORTED and does not steal duration. Reverse is RETIME_DIRECTION_UNSUPPORTED, not faked as a positive rate. Non-monotone or bad endpoints are refused. Nest cycles are NEST_CYCLE; depth greater than 8 is NEST_DEPTH. sourceAt composes a nest stack of TimeMaps.",
+  "task": "I-007",
+  "whyNotAlreadyOfficial": "I-007 was still planned. Existing code only used linear rate TimeMaps on the I-006 persist path and had no RetimeMap, inverse mapping, split, nest DAG validator, or official I-007 sourceAt tests.",
+  "rowsStillOpen": [
+    "MakeCompound persist / external-link inclusion or unlink first",
+    "UpgradeNest duration-change fit/trim/ripple; no auto-follow",
+    "P2 reverse/freeze/smooth implementation",
+    "V-003 real playback qualification",
+    "I-006 remainingScope (轨锁/syncLock/link/unlink/多轨边界; field-aware invert of Slip/Roll/Slide)"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "470f756c7a9724316297a0da55d1cbe6c9fcc547aaf660cfcfd00ed10ca915fa",
+  "v003Claimed": false,
+  "opticalFlowDefaulted": false,
+  "i006RemainingClosed": false,
+  "fullTaskComplete": false,
+  "programCounts": {
+    "complete": 0,
+    "partial": 36,
+    "planned": 38,
+    "blocked": 13
+  },
+  "asOf": "2026-11-28T00:33:25+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.24"
+}

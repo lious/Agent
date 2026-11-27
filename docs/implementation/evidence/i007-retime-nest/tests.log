@@ -1,0 +1,21 @@
+===== official I-007 retime/nest =====
+00:00 +0: loading test/nle/retime/i007_retime_nest_test.dart
+00:00 +0: piecewise knots map local 3s to source offset 3s and invert exactly
+00:00 +1: split at 3s inserts the same mapping point on both segments
+00:00 +2: 30000/1001 with 48k has no cumulative drift through a linear TimeMap
+00:00 +3: caption source anchors use inverse TimeMap, not a frame index
+00:00 +4: optical-flow interpolation is refused and does not steal duration
+00:00 +5: reverse, freeze, and non-monotone maps are refused, not faked as +rate
+00:00 +6: nested cycles and depth over 8 are refused
+00:00 +7: sourceAt composes through a nest stack with exact Q, not frame indexes
+00:00 +8: All tests passed!
+
+===== frozen time_test.dart =====
+00:00 +0: loading test/time_test.dart
+00:00 +0: 10000 exact rational arithmetic and JSON roundtrips
+00:00 +1: 300 frames at NTSC are 10.01 seconds and no cumulative sample drift
+00:00 +2: negative and positive ties to even, floor and ceil
+00:00 +3: canonical wire rejects noncanonical, overflow and divide by zero
+00:00 +4: half-open intervals and checked end
+00:00 +5: frame rate and sample rate bounds
+00:00 +6: All tests passed!

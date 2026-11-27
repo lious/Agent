@@ -14,6 +14,8 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'time.dart';
 import 'validator.dart';
 export 'time.dart';
+export 'retime.dart';
+export 'nest.dart';
 export 'caption.dart';
 export 'marker.dart';
 export 'marker_sidecar.dart';
