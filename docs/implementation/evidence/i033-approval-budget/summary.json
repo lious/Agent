@@ -1,0 +1,31 @@
+{
+  "increment": "2.19",
+  "title": "I-033 approval, budget reservation, and idempotent posting",
+  "baseCommit": "95e7ddac4598d8e2d1be89fbf0d64542d0c2f188",
+  "productionChanged": true,
+  "newCount": 6,
+  "newTests": {
+    "studio_harness": 6
+  },
+  "frozenReRun": {
+    "studio_harness_i032_and_scheduler": 8
+  },
+  "clauseOfficialized": "The same idempotency key causes at most one provider POST. An unknown provider status is not blindly retried (UNKNOWN_NO_BLIND_RETRY; poll does not POST). A late cancel only settles or releases and does not attach to the timeline; a late cancel after a settled post does not append. Fee, upload, and portrait consents cannot be waived by a license warning (WARNING_DOES_NOT_EXEMPT, postCount=0). A binding change invalidates approval (APPROVAL_STALE) and does not auto-increase budget; exhaustion pauses with BUDGET_EXHAUSTED.",
+  "task": "I-033",
+  "whyNotAlreadyOfficial": "I-033 was planned with no approval/budget/reconcile implementation in studio_harness.",
+  "rowsStillOpenOnI033": [
+    "I-003 project-store persistence of receipts/outbox (in-memory only in this slice)",
+    "Production vendor adapters and real-money reconciliation (FakeBillingProvider is DEV synthetic only; no paid API called)",
+    "An approval still does not represent a permission grant"
+  ],
+  "analyzerExitCode": 0,
+  "aggregateSha256": "0ecda613eb0fa18ca28bc8035fb8739deb82bba3b7001f77531f427e251e043d",
+  "i033Status": "partial",
+  "fullTaskComplete": false,
+  "paidApiClaimed": false,
+  "permissionGrantClaimed": false,
+  "coreStoreUserVersion": 9,
+  "asOf": "2026-11-27T23:25:16+08:00",
+  "timezone": "Asia/Shanghai",
+  "featureBranchIncrement": "2.19"
+}
