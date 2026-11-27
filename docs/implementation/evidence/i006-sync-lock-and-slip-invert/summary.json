@@ -1,0 +1,23 @@
+{
+  "increment": "2.29",
+  "task": "I-006",
+  "title": "syncLock, multi-track ripple bounds, and field-aware invert of Slip/Roll/Slide",
+  "asOf": "2026-11-28T01:15:04+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "190ea43eff7bb4d8b85565e7d34fe4105d7cdac3",
+  "officialTests": 9,
+  "regressionTests": 48,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "TrimPlanner surfaces",
+    "video muted/solo on SetTrackState",
+    "UpgradeNest / OpenNested",
+    "optical-flow / reverse / freeze / smooth",
+    "InversePatch kind change (stays restoreSnapshot)"
+  ],
+  "files": [
+    "packages/studio_document/lib/track_state.dart",
+    "packages/studio_document/test/field_invert_slip_roll_slide_test.dart",
+    "packages/studio_document/test/i006_sync_lock_bounds_test.dart"
+  ]
+}
