@@ -1,0 +1,6 @@
+00:00 +0: loading packages/studio_document/test/i005_off_frame_grid_link_offset_test.dart
+00:00 +0: s3 table: video at 0s / audio at 0.02s linked, move +1s yields 1 / 1.02
+00:00 +1: force-moving only the video +1s marks allowOutOfSync; unlink keeps both clips and does not relocate
+00:00 +2: moving video by 0.02s is still NOT_ON_FRAME; the leftover is the audio link offset only
+00:00 +3: All tests passed!
+EXIT:0

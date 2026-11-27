@@ -1,0 +1,2 @@
+1e5571873161bac29aec05b28ae47a61e2b7fdae8ef3c0ce693f5395a2d58c8f  packages/studio_document/lib/persistent_audio.dart
+64040861b0c91675323f53b25a091891241fe9cf513a8eac9bc67f819a2adf66  packages/studio_document/test/i005_off_frame_grid_link_offset_test.dart

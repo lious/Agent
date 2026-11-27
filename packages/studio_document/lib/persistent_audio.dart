@@ -635,7 +635,16 @@ ProjectDocument _persistentAudioEdit(
         if (tailEnd > cursor) cursor = tailEnd;
       }
     }
-    if (t['kind'] == 'video' && retain > cursor) cursor = retain;
+    // Audio-extended sequence duration must not invent an off-grid video
+    // tail gap. The s3 0.02s AV link offset may make the sequence longer
+    // than the on-grid video end; OFF_FRAME_GRID still refuses off-grid
+    // video clip starts.
+    if (t['kind'] == 'video' && retain > cursor) {
+      final fps = FrameRate(s['frameRate']['n'], s['frameRate']['d']);
+      if (fps.quantize(retain, Rounding.tiesToEven) == retain) {
+        cursor = retain;
+      }
+    }
     final builtEnd = normalized.isEmpty ? Q.of(0) : end(normalized.last as Map);
     if (cursor > builtEnd) {
       normalized.add({

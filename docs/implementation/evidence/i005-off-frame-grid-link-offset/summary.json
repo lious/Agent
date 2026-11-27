@@ -1,0 +1,25 @@
+{
+  "increment": "2.82",
+  "task": "I-005",
+  "title": "s3 0.02s OFF_FRAME_GRID AV link-offset example",
+  "asOf": "2026-11-28T04:39:11+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "558b09333eaeb85eeb7657c0671afce4cabd7aa1",
+  "officialTests": 3,
+  "regressionTests": 26,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "TrimPlanner or new trim modes",
+    "video or caption muted/solo on SetTrackState",
+    "OS clipboard",
+    "auto-close as a MoveClips mode",
+    "mobile long-press/pinch",
+    "other stale I-005 remainingAcceptance labels (keyframes, Retime/transitions, nest, syncLock, Slip/Roll/Slide field invert) were not silently cleared",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "Project user_version change (stays 9)"
+  ],
+  "files": [
+    "packages/studio_document/lib/persistent_audio.dart",
+    "packages/studio_document/test/i005_off_frame_grid_link_offset_test.dart"
+  ]
+}
