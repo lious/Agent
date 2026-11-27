@@ -1,0 +1,29 @@
+{
+  "increment": "2.37",
+  "task": "I-020",
+  "title": "WebMediaPort codec refusal and OPFS eviction recovery hint",
+  "asOf": "2026-11-28T01:57:31+08:00",
+  "timezone": "Asia/Shanghai",
+  "parent": "910bf2fb55a64255c291833f9951efaf92cfe3bf",
+  "officialTests": 3,
+  "analyzer": "No issues found",
+  "notClaimed": [
+    "60s browser roundtrip ≤1 frame",
+    "V-007 Chrome/Edge qualification",
+    "same-project native golden command semantics",
+    "real OPFS / IndexedDB origin",
+    "ffmpeg.wasm default path",
+    "native hardware AVFrame",
+    "apps/studio_web rewrite",
+    "workspace SQLite w5 / production FTS/RAG",
+    "Project user_version change (stays 9)",
+    "InversePatch kind change (stays restoreSnapshot)",
+    "I-025 remainingAcceptance re-qualification"
+  ],
+  "files": [
+    "packages/studio_web_media/lib/web_media_port.dart",
+    "packages/studio_web_media/lib/studio_web_media.dart",
+    "packages/studio_web_media/test/web/roundtrip/i020_web_media_port_test.dart",
+    "pubspec.yaml"
+  ]
+}
