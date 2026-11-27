@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_prepared_stage_probe/test/storage/commit/i003_prepared_stage_test.dart
+00:00 +0: the save prepared stage is admitted when it does not hold a long SQLite write transaction
+00:00 +1: Increment 3.09 writer-fence, Increment 3.08 SQL cloud-side-effect, I-003 revision tests, an OS lock runtime, crash takeover, and a serial coordinator stay closed
+00:00 +2: All tests passed!
+EXIT:0
