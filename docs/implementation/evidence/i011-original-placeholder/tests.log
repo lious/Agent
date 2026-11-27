@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_original_placeholder_probe/test/storage/recovery/i011_original_placeholder_test.dart
+00:00 +0: packages/studio_original_placeholder_probe/test/storage/recovery/i011_original_placeholder_test.dart: a bad cache may be rebuilt, but a bad original is reported missing and must not be replaced with a fake image
+00:00 +1: packages/studio_original_placeholder_probe/test/storage/recovery/i011_original_placeholder_test.dart: I-011 crash leftovers, CasDbGapAdmission, I-004 MISSING_MEDIA, and a RestoreService stay closed
+00:00 +2: All tests passed!
