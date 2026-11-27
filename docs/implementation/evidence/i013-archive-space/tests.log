@@ -1,0 +1,4 @@
+00:00 +0: loading packages/studio_archive_space_probe/test/storage/archive/i013_archive_space_test.dart
+00:00 +0: packages/studio_archive_space_probe/test/storage/archive/i013_archive_space_test.dart: archive progress must not invent a percent when total bytes are unknown, double-count same-hash CAS media, or assume a cross-volume rename
+00:00 +1: packages/studio_archive_space_probe/test/storage/archive/i013_archive_space_test.dart: Increment 2.50 packMode, cancel-no-half-package, I-004 same-hash, I-042 lease double-count, and ENOSPC stay closed
+00:00 +2: All tests passed!
