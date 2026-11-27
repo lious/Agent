@@ -11,6 +11,9 @@ const capabilityUnsupported = 'CAPABILITY_UNSUPPORTED';
 const overrideRebaseRequired = 'OVERRIDE_REBASE_REQUIRED';
 const slotCount = 'SLOT_COUNT';
 const generationDisabled = 'GENERATION_DISABLED';
+const mediaCombination = 'MEDIA_COMBINATION';
+const subjectOrderUnresolved = 'SUBJECT_ORDER_UNRESOLVED';
+const providerChildPolicyUnverified = 'PROVIDER_CHILD_POLICY_UNVERIFIED';
 
 /// s8h Purpose axis. Not mutually exclusive with input modes or recipes.
 enum VerticalPurpose {

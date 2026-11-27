@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_prompt_compiler_fixtures_test.dart
+00:00 +0: all six purposes have a legal fixture; axes are not mutually exclusive; unsupported params are kept and seed does not claim cross-model consistency
+00:00 +1: product facts are taken only from FactLedger; an LLM confirmed=true claim is UNCONFIRMED_FACT and does not submit
+00:00 +2: unauthorized subjects, unsupported firstLast, and stale overrides are refused without rewrite or submit
+00:00 +3: All tests passed!

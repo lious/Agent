@@ -17,6 +17,12 @@ final class CompiledShot {
     required this.requestedParameters,
     required this.seed,
     this.inputModes = const [],
+    this.recipeId,
+    this.route,
+    this.leftSubjectId,
+    this.rightSubjectId,
+    this.disclaimer,
+    this.overlayText,
   });
 
   final String briefId, prompt;
@@ -24,6 +30,8 @@ final class CompiledShot {
   final Map<String, Object?> requestedParameters;
   final int? seed;
   final List<VerticalInputMode> inputModes;
+  final String? recipeId, route, leftSubjectId, rightSubjectId;
+  final String? disclaimer, overlayText;
 
   /// Protocol proof: compile errors and successes do not submit.
   int get documentWrites => 0;

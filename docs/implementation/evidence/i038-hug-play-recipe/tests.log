@@ -1,0 +1,5 @@
+00:00 +0: loading packages/studio_vertical/test/vertical/all_scenarios/i038_hug_play_recipe_test.dart
+00:00 +0: hug twoImages compiles the official R2V golden, keeps stable subject order, and does not submit or auto-segment
+00:00 +1: a single 岚 still cannot pretend the twoImages template has a second photo; an explicit fictional partner changes the route
+00:00 +2: missing portrait, a real stranger auto-pair, a dual-person still, auto-segmentation, and an unverified child policy are refused without submit
+00:00 +3: All tests passed!
