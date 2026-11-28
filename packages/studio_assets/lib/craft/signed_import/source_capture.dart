@@ -46,6 +46,7 @@ final class SkillSourceCapture {
   Future<Uint8List?> choose(
     SkillSourceSelection Function() picker, {
     bool Function()? currentAppStillValid,
+    void Function()? onSelected,
   }) {
     // A source-only caller may omit the fence; full App composition MUST supply
     // a live snapshot/generation comparison. No callback is verification/consent.
@@ -76,7 +77,16 @@ final class SkillSourceCapture {
       result.completeError(const SkillSourceException('selectionFailed'));
       return result.future;
     }
-    unawaited(_capture(generation, _selection!, result, settled, stillCurrent));
+    unawaited(
+      _capture(
+        generation,
+        _selection!,
+        result,
+        settled,
+        stillCurrent,
+        onSelected,
+      ),
+    );
     return result.future;
   }
 
@@ -100,6 +110,7 @@ final class SkillSourceCapture {
     Completer<Uint8List?> result,
     Completer<void> settled,
     bool Function() stillCurrent,
+    void Function()? onSelected,
   ) async {
     SkillSourceReader? reader;
     Timer? timer;
@@ -129,6 +140,8 @@ final class SkillSourceCapture {
             result.completeError(const SkillSourceException('deadline'));
           }
         });
+        onSelected?.call();
+        live();
         final expected = await reader.length();
         live();
         if (expected < 0 || expected > skillSourceMaxBytes) {

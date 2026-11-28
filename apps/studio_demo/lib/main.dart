@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'skill_import_host.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:studio_sdk/studio_sdk.dart';
 import 'package:studio_editor_ui/studio_editor_ui.dart';
@@ -24,7 +26,11 @@ void main(List<String> args) {
     tenantId: 'local',
     workspaceId: 'default',
   );
-  runApp(FoundationApp(workspace: workspace));
+  runApp(
+    const bool.fromEnvironment('STUDIO_SIGNED_IMPORT_PREVIEW')
+        ? SkillImportHost(workspace: workspace)
+        : FoundationApp(workspace: workspace),
+  );
   if (args.contains('--smoke-test')) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       stdout.writeln(

@@ -224,6 +224,35 @@ remain a separate coherent slice if this prerequisite is landed on its own. In
 particular no standalone callback test proves actual App CSP/readiness, accessible
 widgets, no-write behavior, signed verification or production-root provisioning.
 
+### Increment 3.53 composition phase observation (t155u)
+
+A5 distinguishes picking from reading, but the bounded source Future alone does
+not expose OS selection completion. Add an optional synchronous App-only
+`onSelected` observation to the capture helper and App adapters. Invoke it only
+for a non-null reader after generation/live-App checks, with the selected-source
+monotonic deadline already started, before length/open/read. Recheck liveness
+after it. It updates status only, never verifies, imports, acknowledges or grants
+authority; cancellation produces no reading transition. It is not a model/JS
+callback. The existing App shell owns the session and immutable snapshot callback,
+repository, action port, source helper and literal preview controls; shared pure
+Dart internal session logic is permitted without shared widget API changes.
+Full combined A6 acceptance remains mandatory before claiming full composition.
+Native startup also needs an explicit ordering binding: the existing
+FoundationApp initState (studio_editor_ui.dart:322–325) owns workspace.openDemo;
+StudioWorkspace.open alone has no current project. Mount the unchanged
+FoundationApp first and wait for its first frame before constructing the private
+preview policy/session from workspace.current. No guessed readiness/widget API,
+second openDemo call or replacement project is allowed. Existing project opening
+is baseline App work, never attributed to import. Web similarly waits for its
+existing _open/project publication before constructing its preview controls.
+Pass the actual workspace object (Linux) / current projectId (Web) as a private
+App-owner identity in addition to ImportAppSnapshot. A workspace/project switch
+can keep an equal profile/namespace/scopeHash; it must still retire the session.
+In the synchronous App widget update turn, retire the OLD owner before any next
+selection/import callback can run. Do not replace the capture helper or revive
+that session on an equal-looking switch back. This private identity is never
+pack-provided or an execution/approval capability.
+
 ## A4 — immutable presentation and separate explicit acknowledgment
 
 Render ONLY the importer-owned immutable SkillVerificationReport, never an

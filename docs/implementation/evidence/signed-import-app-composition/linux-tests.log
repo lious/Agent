@@ -1,0 +1,7 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/skill_import_app_test.dart
+Building Linux application...
+✓ Built build/linux/x64/debug/bundle/studio_demo
+00:00 +0: existing Linux App owner + GTK source + immutable needsReview preview has no project/store writes
+00:03 +1: (tearDownAll)
+00:03 +1: All tests passed!
+{"passed":true,"actualApp":"SkillImportHost + unchanged FoundationApp/StudioWorkspace","namespace":{"appId":"studio_demo","tenantId":"local","workspaceId":"default"},"trustState":"needsReview","ackDisabled":true,"projectUnchanged":true,"databaseCasShelfFilesUnchanged":true,"excludedTransientFiles":["*-shm"],"profile":"isolated box GTK 3 / Xvfb; empty production roots; unknown clock"}

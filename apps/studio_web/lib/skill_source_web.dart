@@ -11,7 +11,12 @@ import 'package:web/web.dart' as web;
 Future<Uint8List?> chooseWebSkillSource(
   SkillSourceCapture capture, {
   bool Function()? currentAppStillValid,
-}) => capture.choose(_pick, currentAppStillValid: currentAppStillValid);
+  void Function()? onSelected,
+}) => capture.choose(
+  _pick,
+  currentAppStillValid: currentAppStillValid,
+  onSelected: onSelected,
+);
 
 SkillSourceSelection _pick() {
   final input = web.HTMLInputElement()

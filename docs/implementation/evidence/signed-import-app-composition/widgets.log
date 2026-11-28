@@ -1,0 +1,20 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/test/skill_import_composition_test.dart
+00:00 +0: real owner initializes once, previews then explicit ack is non-authorizing and one-shot
+00:00 +1: real typed comparator refuses profile and retires preview
+00:00 +2: real typed comparator refuses policy and retires preview
+00:00 +3: real typed comparator refuses namespace and retires preview
+00:00 +4: real typed comparator refuses grants and retires preview
+00:00 +5: real typed comparator refuses clockConfidence and retires preview
+00:00 +6: real typed comparator refuses rollback and retires preview
+00:00 +7: real typed comparator refuses backwardTime and retires preview
+00:00 +8: owner retirement precedes ABA publication and cannot revive
+00:00 +9: retirement during actual async source awaits prevents importing late bytes
+00:00 +10: backend startup failure is terminal with no unsigned fallback
+00:00 +11: retired while backend starts cannot publish ready
+00:00 +12: invalid signature is refused in owner without unsigned retry
+00:00 +13: actual App widgets literal bounded text, full identity, accessibility ack, and no auto acknowledgment
+00:00 +14: actual default unknown clock disables acknowledgment and discard clears target
+00:01 +15: isolated public-root verified report stays preview until separate widget action
+00:01 +16: App cancel widget stays fail-closed while selected source is pending
+00:01 +17: actual owner identity switch and ABA restoration retire equal-scope preview
+00:01 +18: All tests passed!

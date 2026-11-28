@@ -10,9 +10,11 @@ import 'package:studio_assets/craft/signed_import/source_capture.dart';
 Future<Uint8List?> chooseLinuxSkillSource(
   SkillSourceCapture capture, {
   bool Function()? currentAppStillValid,
+  void Function()? onSelected,
 }) => capture.choose(
   () => SkillSourceSelection(_pick()),
   currentAppStillValid: currentAppStillValid,
+  onSelected: onSelected,
 );
 
 Future<SkillSourceReader?> _pick() async {

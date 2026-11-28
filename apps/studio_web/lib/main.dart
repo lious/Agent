@@ -9,6 +9,11 @@ import 'package:studio_contracts/studio_contracts.dart';
 import 'package:studio_document/studio_document.dart';
 
 import 'browser_store.dart';
+
+import 'package:studio_assets/studio_signed_skill_import_web.dart';
+
+import 'skill_import_panel.dart';
+import 'skill_source_web.dart';
 import 'peer_panel.dart';
 
 void main() => runApp(const WebStudioApp());
@@ -20,6 +25,15 @@ class WebStudioApp extends StatefulWidget {
 }
 
 class _WebStudioState extends State<WebStudioApp> {
+  final _skillProfile = AppProfile(
+    appId: 'studio',
+    region: 'local',
+    features: {'project.metadata'},
+  );
+  late final _skillPolicy = BuildTimeSignaturePolicy.disabled(
+    _skillProfile,
+    Namespace('studio', 'local', 'web'),
+  );
   BrowserProjectStore? _store;
   ProjectDocument? _project;
   final _title = TextEditingController(),
@@ -132,6 +146,27 @@ class _WebStudioState extends State<WebStudioApp> {
               'Browser IndexedDB metadata/caption editing only. No media renderer, model or paid service. Peer networking requires separate explicit WebRTC pairing below. Browser storage can be evicted: export JSON; this is not a complete portable media archive.',
             ),
             const ProjectInspectorPanel(),
+            if (const bool.fromEnvironment('STUDIO_SIGNED_IMPORT_PREVIEW') &&
+                _project != null)
+              SkillImportPanel(
+                ownerIdentity: _project!.projectId,
+                currentApp: () => ImportAppSnapshot(
+                  profile: _skillProfile,
+                  namespace: _project!.namespace.toJson(),
+                  policy: _skillPolicy,
+                  nowSeconds: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+                  installedAllowlist: {},
+                  sessionGrant: {},
+                  branchScope: {},
+                ),
+                createRepository: createWebSignedSkillRepository,
+                chooseSource: (capture, guard, selected) =>
+                    chooseWebSkillSource(
+                      capture,
+                      currentAppStillValid: guard,
+                      onSelected: selected,
+                    ),
+              ),
             if (_project == null)
               const Text('Opening local browser project…')
             else ...[

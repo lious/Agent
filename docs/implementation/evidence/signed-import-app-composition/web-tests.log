@@ -1,0 +1,6 @@
+Compiling lib/main.dart for the Web...                             957ms
+✓ Built ../../../skill-import-app-353/web-app
+{"mode":"normal","passed":true}
+{"mode":"missing-backend","passed":true}
+{"mode":"csp-backend-block","passed":true}
+{"mode":"sri-backend-tamper","passed":true}

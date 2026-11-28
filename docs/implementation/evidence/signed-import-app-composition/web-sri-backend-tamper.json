@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "mode": "sri-backend-tamper",
+  "actualApp": "WebStudioApp opt-in, actual compiled owner/widgets + existing File adapter/backend",
+  "chooseDisabled": "true",
+  "chooserCount": 0,
+  "requests": [
+    "http://127.0.0.1:43989/",
+    "http://127.0.0.1:43989/signed_import_bootstrap.js",
+    "http://127.0.0.1:43989/flutter_bootstrap.js",
+    "http://127.0.0.1:43989/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:43989/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:43989/main.dart.js",
+    "http://127.0.0.1:43989/assets/FontManifest.json",
+    "http://127.0.0.1:43989/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:43989/favicon.ico",
+    "http://127.0.0.1:43989/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "violations": [],
+  "exceptions": [],
+  "noImportIdbWrites": false,
+  "idbAndLocalSessionSnapshotUnchanged": false,
+  "scope": "recorded default-empty-root/unknown-clock App flow only; CDP public files, no manual dialog/device/provider qualification",
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-opq7tyoLiKYRccPBJ6Rwkw'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "servedAssetSha256": {
+    "/": "47f30b37d1c7489a80a9b4b5ac0e0d6caeef59addcb150411bbdadf3effb5080",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/flutter_bootstrap.js": "3b3de07e2cc7bb1b86af9f0df07dccfd3df601a9a6b01c6d408bd40af17ccf8b",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/main.dart.js": "1604f95a0db55b97e69d66966e907bf9515fba72302d63757229b5f2e4fa15a7",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "788c9efe6cd4714658e4c1975c9c3ddc4cc8e8e43b8f28517251df3a79620106"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V"
+}

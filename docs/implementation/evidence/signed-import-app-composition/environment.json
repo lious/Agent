@@ -1,0 +1,8 @@
+{
+  "recordedAtAsiaShanghai": "2026-11-28T13:49:51+08:00",
+  "kernel": "Linux 6.12.113+ x86_64",
+  "cmake": "cmake version 3.31.6",
+  "pkgConfigGtk": "3.24.49",
+  "approvedSqliteDependency": "/workspace/toolchains/sqlite-3.54.1",
+  "verificationNote": "Unexpected missing tracked LICENSE.core and absent compiler/dev dependencies observed late in verification; cause unknown. Original deletion left untouched and excluded from increment. Frozen store runtime guard stays enabled. Build cache regenerated; documented compiler, GTK, secret-storage and SQLite development dependencies restored on box. No user computer involved."
+}
