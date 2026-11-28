@@ -12,6 +12,7 @@ final class AppImportFixtureConfiguration {
     required this.clockConfident,
     this.clockRollback = false,
     this.lifecycleTestControls = false,
+    this.observeRepositoryForTest = false,
     this.chooseSourceForTest,
     this.transitions = const [],
   });
@@ -19,7 +20,7 @@ final class AppImportFixtureConfiguration {
   final List<AppImportFixtureTransition> transitions;
   final int nowSeconds;
   final bool clockConfident, clockRollback;
-  final bool lifecycleTestControls;
+  final bool lifecycleTestControls, observeRepositoryForTest;
   final Future<Uint8List?> Function(
     SkillSourceCapture,
     bool Function(),

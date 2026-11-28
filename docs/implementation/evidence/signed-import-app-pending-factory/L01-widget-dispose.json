@@ -1,0 +1,378 @@
+{
+  "passed": true,
+  "caseId": "L01-widget-dispose",
+  "details": {
+    "realFactoryPendingBeforeRetirement": true,
+    "verifiedVendorHeld": true,
+    "actualFactoryCompletedAfterRetirement": true,
+    "actualWidgetDisposed": true,
+    "contextRetired": false,
+    "ordinaryRebuildDidNotRevive": true,
+    "repositoryObserver": {
+      "phase": "completed",
+      "started": 1,
+      "completed": 1,
+      "failed": 0,
+      "observerFaults": 0
+    }
+  },
+  "chooserCount": 0,
+  "actualApp": "WebStudioApp.testImport + actual owner/panel/store + real web factory",
+  "inputMethod": "trusted CDP Tab/Enter on standard App fixture controls",
+  "observations": [
+    {
+      "phase": "pending",
+      "repository": {
+        "phase": "started",
+        "started": 1,
+        "completed": 0,
+        "failed": 0,
+        "observerFaults": 0
+      },
+      "browserMonotonic": 634.3000000007451
+    },
+    {
+      "phase": "retired",
+      "repository": {
+        "phase": "started",
+        "started": 1,
+        "completed": 0,
+        "failed": 0,
+        "observerFaults": 0
+      },
+      "choosePresent": false,
+      "browserMonotonic": 1606
+    },
+    {
+      "phase": "completed",
+      "repository": {
+        "phase": "completed",
+        "started": 1,
+        "completed": 1,
+        "failed": 0,
+        "observerFaults": 0
+      },
+      "browserMonotonic": 1754.7000000001863
+    },
+    {
+      "phase": "settled-no-revival",
+      "repository": {
+        "phase": "completed",
+        "started": 1,
+        "completed": 1,
+        "failed": 0,
+        "observerFaults": 0
+      },
+      "browserMonotonic": 3501
+    }
+  ],
+  "noAcknowledgmentAccepted": true,
+  "storageSnapshotUnchanged": true,
+  "noComponentWrites": true,
+  "traces": [
+    {
+      "event": "pageshow",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    },
+    {
+      "event": "focus",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "focus",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "6464c6b0-65c6-4f9d-a499-bf163a683cd0",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    }
+  ],
+  "navigations": [
+    {
+      "frame": {
+        "id": "DB9A189F9EE08EFADED7E83804A87041",
+        "loaderId": "022C1876CF040C3143466A8CA33471E3",
+        "url": "http://127.0.0.1:42811/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:42811",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    }
+  ],
+  "nativeTraceDataLoss": false,
+  "requests": [
+    "http://127.0.0.1:42811/",
+    "http://127.0.0.1:42811/signed_import_bootstrap.js",
+    "http://127.0.0.1:42811/flutter_bootstrap.js",
+    "http://127.0.0.1:42811/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:42811/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:42811/main.dart.js",
+    "http://127.0.0.1:42811/assets/FontManifest.json",
+    "http://127.0.0.1:42811/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:42811/favicon.ico",
+    "http://127.0.0.1:42811/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "exceptions": [],
+  "violations": [],
+  "scope": "L01 box compiled App only; G3/L02/L03/N01/N02/full A6 remain pending",
+  "vendorBodyGate": {
+    "released": true,
+    "watchdogFired": false,
+    "invalidSignal": false,
+    "elapsedSeconds": 1.088983116000236
+  },
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-xByKv4d5MUWXchDwQJ3Rgg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "documentResponses": [
+    {
+      "nonce": "xByKv4d5MUWXchDwQJ3Rgg",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-xByKv4d5MUWXchDwQJ3Rgg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "7b5885f28a568c9fd74363be0f712acfada90157cb2d4058f854366f2d330c1b"
+    }
+  ],
+  "servedAssetSha256": {
+    "/": "7b5885f28a568c9fd74363be0f712acfada90157cb2d4058f854366f2d330c1b",
+    "/flutter_bootstrap.js": "deece96fa1afcd21ea4827d88f3b3fc0f0fb6f435d6405f23105b4003899e5c2",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/main.dart.js": "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V"
+}

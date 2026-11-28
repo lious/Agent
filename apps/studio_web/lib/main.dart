@@ -1,6 +1,7 @@
 import 'package:studio_editor_ui/project_inspector.dart';
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:js_interop';
 
 import 'package:web/web.dart' as web;
@@ -45,6 +46,47 @@ class _WebStudioState extends State<WebStudioApp> {
   bool? _fixtureConfidence, _fixtureRollback;
   Set<String> _fixtureInstalled = {}, _fixtureSession = {}, _fixtureBranch = {};
   String _fixtureTransition = 'none';
+  int _fixtureRepositoryStarted = 0, _fixtureRepositoryCompleted = 0;
+  int _fixtureRepositoryFailed = 0, _fixtureObserverFaults = 0;
+
+  void _recordFixtureRepository(String phase) {
+    try {
+      web.document.documentElement?.setAttribute(
+        'data-signed-import-fixture-repository',
+        jsonEncode({
+          'phase': phase,
+          'started': _fixtureRepositoryStarted,
+          'completed': _fixtureRepositoryCompleted,
+          'failed': _fixtureRepositoryFailed,
+          'observerFaults': _fixtureObserverFaults,
+        }),
+      );
+    } catch (_) {
+      // Observation failure must not alter the actual factory result/failure.
+      ++_fixtureObserverFaults;
+    }
+  }
+
+  Future<FilmSkillRepository> _observeRealFixtureRepository(
+    ImportAppSnapshot Function() currentApp,
+    ImportUserActionPort actions,
+  ) async {
+    ++_fixtureRepositoryStarted;
+    _recordFixtureRepository('started');
+    try {
+      final repository = await createWebSignedSkillRepository(
+        currentApp,
+        actions,
+      );
+      ++_fixtureRepositoryCompleted;
+      _recordFixtureRepository('completed');
+      return repository;
+    } catch (_) {
+      ++_fixtureRepositoryFailed;
+      _recordFixtureRepository('failed');
+      rethrow;
+    }
+  }
 
   BrowserProjectStore? _store;
   ProjectDocument? _project;
@@ -309,7 +351,9 @@ class _WebStudioState extends State<WebStudioApp> {
                   sessionGrant: _fixtureSession,
                   branchScope: _fixtureBranch,
                 ),
-                createRepository: createWebSignedSkillRepository,
+                createRepository: (_fixture?.observeRepositoryForTest ?? false)
+                    ? _observeRealFixtureRepository
+                    : createWebSignedSkillRepository,
                 chooseSource: (capture, guard, selected) =>
                     _fixture?.chooseSourceForTest?.call(
                       capture,
