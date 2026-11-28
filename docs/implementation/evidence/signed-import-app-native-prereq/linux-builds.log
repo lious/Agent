@@ -1,0 +1,10 @@
++ /workspace/toolchains/flutter/bin/flutter build linux --release
+Building Linux application...                                   
+✓ Built build/linux/x64/release/bundle/studio_demo
++ /workspace/toolchains/flutter/bin/flutter build linux --release --dart-define=STUDIO_SIGNED_IMPORT_PREVIEW=true
+Building Linux application...                                   
+✓ Built build/linux/x64/release/bundle/studio_demo
++ /workspace/toolchains/flutter/bin/flutter build linux --release -t test/import_native_fixture_entrypoint.dart --dart-define=STUDIO_SIGNED_IMPORT_PREVIEW=true --dart-define=STUDIO_SIGNED_IMPORT_SODIUM_PATH=/workspace/toolchains/sodium-1.0.22/lib/libsodium.so.26.4.0 --dart-define=STUDIO_SIGNED_IMPORT_SODIUM_SHA256=21cc20c28267ed326b3b9c826ecec21aaffbc51e0ab3e947292fdcf692f56ae1
+Building Linux application...                                   
+✓ Built build/linux/x64/release/bundle/studio_demo
+fixture missing sentinels: {'ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=': True, 'sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8': True, 'TEST ENTRYPOINT ONLY': False, 'studio-foundation-native-fixture': True}

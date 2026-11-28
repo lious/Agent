@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "builds": {
+    "default": {
+      "name": "default",
+      "command": [
+        "linux",
+        "--release"
+      ],
+      "dest": "/workspace/skill-import-app-362/default-app",
+      "executableSha256": "9ea0e0ecea050cdca4e67a62dfc59cf3b1fe16c88af4ae885674a85ad4a99f65",
+      "appSha256": "c32fe28a3068e5a3bb0bf1040966ff7455d313e772a8c2bec6a0015e4f743cbb",
+      "engineSha256": "8fc5c4ee6a20215f54c332c7b8910c482434247e451f24cfd7d3225f0a28066b",
+      "sentinelsPresent": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": false,
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": false,
+        "studio-foundation-native-fixture": false
+      },
+      "sentinelHits": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": [],
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": [],
+        "studio-foundation-native-fixture": []
+      },
+      "fixtureSentinelsPresent": false
+    },
+    "opt-in": {
+      "name": "opt-in",
+      "command": [
+        "linux",
+        "--release",
+        "--dart-define=STUDIO_SIGNED_IMPORT_PREVIEW=true"
+      ],
+      "dest": "/workspace/skill-import-app-362/opt-in-app",
+      "executableSha256": "9ea0e0ecea050cdca4e67a62dfc59cf3b1fe16c88af4ae885674a85ad4a99f65",
+      "appSha256": "92ee9431c6740af3dc982c3f6579d45a728673db679c88235d477fecf703d080",
+      "engineSha256": "8fc5c4ee6a20215f54c332c7b8910c482434247e451f24cfd7d3225f0a28066b",
+      "sentinelsPresent": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": false,
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": false,
+        "studio-foundation-native-fixture": false
+      },
+      "sentinelHits": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": [],
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": [],
+        "studio-foundation-native-fixture": []
+      },
+      "fixtureSentinelsPresent": false
+    },
+    "fixture": {
+      "name": "fixture",
+      "command": [
+        "linux",
+        "--release",
+        "-t",
+        "test/import_native_fixture_entrypoint.dart"
+      ],
+      "dest": "/workspace/skill-import-app-362/fixture-app",
+      "executableSha256": "9ea0e0ecea050cdca4e67a62dfc59cf3b1fe16c88af4ae885674a85ad4a99f65",
+      "appSha256": "eaf77f38975fc0bc3269ea976144fcaecf84a0e2e8264e72010d44ff6b49c423",
+      "engineSha256": "8fc5c4ee6a20215f54c332c7b8910c482434247e451f24cfd7d3225f0a28066b",
+      "sentinelsPresent": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": true,
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": true,
+        "studio-foundation-native-fixture": true
+      },
+      "sentinelHits": {
+        "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=": [
+          "lib/libapp.so"
+        ],
+        "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8": [
+          "lib/libapp.so"
+        ],
+        "studio-foundation-native-fixture": [
+          "lib/libapp.so"
+        ]
+      },
+      "fixtureSentinelsPresent": true
+    }
+  },
+  "sourceSha256": {
+    "apps/studio_demo/lib/import_fixture_composition.dart": "67380a3f71b30c4e23414dfde307df6c0a88c344f2926aeeb47b4326102ea8d0",
+    "apps/studio_demo/lib/skill_import_host.dart": "da76c9f489d1b2bf06185eed1e24f202704b6db6ddbb89432d553ac5259c2924",
+    "apps/studio_demo/lib/skill_import_panel.dart": "ce45eb3046f110f40885613caacf95c8194ed932b9acee0dac73b7903303a77f",
+    "apps/studio_demo/lib/main.dart": "fbf11b7b14ed4827097fff3b3042d54bd8b328580127926995ad79c2e89af53b",
+    "apps/studio_demo/test/import_native_fixture_entrypoint.dart": "833899265b6d4dc14d66db647ddb700cc0967f038e32917bda0544a20a4d2ee9",
+    "apps/studio_demo/test/import_native_reader.dart": "026f1c8bf5383ac02831d19485b2e6cf86bb88bfd6b953db618fab6c00e6a3bf",
+    "apps/studio_demo/test/import_native_reader_test.dart": "401f6b41ebfdb710c5b87cdb4ab6bd7b7c19259622897907f33565001350d4ba",
+    "apps/studio_demo/test/import_native_lifetime_test.dart": "854d62168f0bc43281310c7681d075e42800297fa9e8535eb60ae20c294121c4",
+    "apps/studio_demo/test/keyboard_focus_canary.dart": "27c894c6f12fc90319190984e9c2ac9ad203e2af644b7b160a06ff2bb65705c8",
+    "tools/acceptance/native_observation/watch_canary.dart": "7c87f46e1efd35a820963f89e193b7672626dfb8f220b70eea63b2a9ab57c82a",
+    "tools/acceptance/native_observation/strace_canary.py": "e618264b76481842458d705ef60911e5a5b760bfb82e640929a48da2b90e5b62",
+    "tools/acceptance/native_observation/keyboard_canary.py": "92bb029b05f4012773c389036a32088d88281151c716aa63256932488e9fbd72",
+    "tools/acceptance/run_skill_import_app_native_prereq.py": "f1307fbb796d06ddcf2b01859e113ee9f740d373247cb462a40a76f3a719ddf3",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded"
+  },
+  "sodiumLockSha256": "dbf40cbf0ca372c9635149b3ad93df9412e100b2ecba63ee3d176801692dbd4c",
+  "licenseCoreSha256": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+  "sentinels": [
+    "ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=",
+    "sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8",
+    "studio-foundation-native-fixture"
+  ],
+  "note": "studio_demo ELF is the shared native runner; lib/libapp.so is the Dart AOT payload. Source comments are not compiled sentinels."
+}

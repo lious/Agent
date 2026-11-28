@@ -213,3 +213,18 @@ fullTasksCompleted=0. user_version=9, InversePatch=restoreSnapshot. Preserve eve
 original remainingAcceptance/remainingScope. No durable installation, cross-
 namespace import, production roots/FTS/RAG, device/model/provider/OS assistive-
 device/paid API/store release acceptance, Mac/XS, main merge or force push.
+
+
+## Increment 3.62 — independently qualified native prerequisites
+
+Implemented the official native seam and independently qualified NG0–NG3 only.
+SkillImportHost.testImport, App-private lifetime, first-read controlled port,
+and a separately compiled fixture entrypoint now exist. Three Linux release
+artifacts and UTF-8/UTF-16 sentinel scans prove default and ordinary opt-in
+payloads exclude public root/fingerprint/fixture path constants; those appear
+only in the fixture libapp.so. Source comments are not compiled sentinels.
+Watcher, strace, and xdotool/Flutter keyboard canaries passed. Isolated
+--smoke-test startup allowlists for default and opt-in recorded local UNIX
+X11/Wayland/session-bus endpoints only, with no remote network. The seven
+N01–N02 profiles, combined G1–G5, and full A6 remain unqualified. L01 was not
+rerun. See ADR 0261 and evidence/signed-import-app-native-prereq/.

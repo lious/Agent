@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "window": "2097155",
+  "focusedWindow": "2097155",
+  "activated": true,
+  "inputMethod": "xdotool Tab then Return on actual Flutter Linux window",
+  "scope": "transport canary only, not N01"
+}

@@ -1,0 +1,38 @@
+{
+  "default": {
+    "name": "default",
+    "returncode": 0,
+    "stdout": "STUDIO_SMOKE_OK studio_demo revision=0\n",
+    "stderr": "\n(dev.studio.studio_demo:119955): dbind-WARNING **: 15:51:00.576: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.studio_demo:119955): Atk-CRITICAL **: 15:51:00.838: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\n",
+    "traceFiles": 48,
+    "traceBytes": 6216131,
+    "smokeOk": true,
+    "traceDataLoss": false,
+    "endpointCount": 3,
+    "endpoints": [
+      "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+      "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+      "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+    ],
+    "connectOrBindLines": 5,
+    "sqliteLibrary": "/workspace/toolchains/sqlite-3.54.1"
+  },
+  "opt-in": {
+    "name": "opt-in",
+    "returncode": 0,
+    "stdout": "STUDIO_SMOKE_OK studio_demo revision=0\n",
+    "stderr": "\n(dev.studio.studio_demo:120034): dbind-WARNING **: 15:51:03.747: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files\n\n(dev.studio.studio_demo:120034): Atk-CRITICAL **: 15:51:04.000: atk_socket_embed: assertion 'plug_id != NULL' failed\n[IMPORTANT:flutter/shell/platform/embedder/embedder_surface_gl_impeller.cc(127)] Using the Impeller rendering backend (OpenGLESSDF).\n",
+    "traceFiles": 47,
+    "traceBytes": 6182730,
+    "smokeOk": true,
+    "traceDataLoss": false,
+    "endpointCount": 3,
+    "endpoints": [
+      "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+      "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+      "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+    ],
+    "connectOrBindLines": 5,
+    "sqliteLibrary": "/workspace/toolchains/sqlite-3.54.1"
+  }
+}

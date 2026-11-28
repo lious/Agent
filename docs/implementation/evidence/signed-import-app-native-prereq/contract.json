@@ -1,0 +1,73 @@
+{
+  "increment": "3.62",
+  "base": "0b7ef6650b05c9897e48ec97f409bf2eb8f0f6d1",
+  "kind": "native-prerequisite-qualification",
+  "runtimeImplemented": true,
+  "nativeProfilesQualified": [],
+  "qualifiedNativeRows": [],
+  "plannedNativeCaseIds": [
+    "N01-enter",
+    "N01-space",
+    "N01-semantics",
+    "N02-preview-navigation",
+    "N02-preview-dispose",
+    "N02-read-navigation",
+    "N02-read-dispose"
+  ],
+  "qualifiedNativeGates": [
+    "NG0",
+    "NG1",
+    "NG2",
+    "NG3"
+  ],
+  "pendingNativeProfiles": [
+    "N01",
+    "N02"
+  ],
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "l01Rerun": false,
+  "combinedAcceptanceClaimed": false,
+  "allowedRuntimeChanges": [
+    "apps/studio_demo/lib/import_fixture_composition.dart",
+    "apps/studio_demo/lib/skill_import_host.dart",
+    "apps/studio_demo/lib/skill_import_panel.dart",
+    "apps/studio_demo/test/import_native_fixture_entrypoint.dart",
+    "apps/studio_demo/test/import_native_lifetime_test.dart",
+    "apps/studio_demo/test/import_native_reader.dart",
+    "apps/studio_demo/test/import_native_reader_test.dart",
+    "apps/studio_demo/test/keyboard_focus_canary.dart"
+  ],
+  "preservedTrees": [
+    "packages",
+    "native",
+    "fixtures",
+    "pubspec.lock",
+    "apps/studio_web",
+    "apps/studio_demo/lib/main.dart",
+    "apps/studio_demo/lib/skill_source_linux.dart"
+  ],
+  "sourceSha256": {
+    "apps/studio_demo/lib/import_fixture_composition.dart": "67380a3f71b30c4e23414dfde307df6c0a88c344f2926aeeb47b4326102ea8d0",
+    "apps/studio_demo/lib/skill_import_host.dart": "da76c9f489d1b2bf06185eed1e24f202704b6db6ddbb89432d553ac5259c2924",
+    "apps/studio_demo/lib/skill_import_panel.dart": "ce45eb3046f110f40885613caacf95c8194ed932b9acee0dac73b7903303a77f",
+    "apps/studio_demo/lib/main.dart": "fbf11b7b14ed4827097fff3b3042d54bd8b328580127926995ad79c2e89af53b",
+    "apps/studio_demo/test/import_native_fixture_entrypoint.dart": "833899265b6d4dc14d66db647ddb700cc0967f038e32917bda0544a20a4d2ee9",
+    "apps/studio_demo/test/import_native_reader.dart": "026f1c8bf5383ac02831d19485b2e6cf86bb88bfd6b953db618fab6c00e6a3bf",
+    "apps/studio_demo/test/import_native_reader_test.dart": "401f6b41ebfdb710c5b87cdb4ab6bd7b7c19259622897907f33565001350d4ba",
+    "apps/studio_demo/test/import_native_lifetime_test.dart": "854d62168f0bc43281310c7681d075e42800297fa9e8535eb60ae20c294121c4",
+    "apps/studio_demo/test/keyboard_focus_canary.dart": "27c894c6f12fc90319190984e9c2ac9ad203e2af644b7b160a06ff2bb65705c8",
+    "tools/acceptance/native_observation/watch_canary.dart": "7c87f46e1efd35a820963f89e193b7672626dfb8f220b70eea63b2a9ab57c82a",
+    "tools/acceptance/native_observation/strace_canary.py": "e618264b76481842458d705ef60911e5a5b760bfb82e640929a48da2b90e5b62",
+    "tools/acceptance/native_observation/keyboard_canary.py": "92bb029b05f4012773c389036a32088d88281151c716aa63256932488e9fbd72",
+    "tools/acceptance/run_skill_import_app_native_prereq.py": "f1307fbb796d06ddcf2b01859e113ee9f740d373247cb462a40a76f3a719ddf3",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded"
+  },
+  "documentSha256": {
+    "docs/studio/spec/s8f-signed-import-app-native-v1.md": "9a5c0dd077a38d8989d0769a0eb2c9cddd772cfede2427d0bd12cf3697cb65db",
+    "docs/studio/spec/s8f-signed-import-app-acceptance-v1.md": "eeef29ad0e67de2bb35a158606bf7ff0010e3be66e9d6acc6bdf6b1e438a263a",
+    "docs/adr/0261-app-native-prerequisite-gates.md": "58265d45324e2370b6128884d67d1d9ccd394e7f6656e580671ec085b2766169",
+    "tools/acceptance/run_skill_import_app_native_prereq.py": "f1307fbb796d06ddcf2b01859e113ee9f740d373247cb462a40a76f3a719ddf3",
+    "tools/tests/test_signed_import_native_prereq.py": "76d0489f44a65c412ff6268dfb906aa629bb23a1e69339f59679735aebe054cf"
+  }
+}

@@ -8,15 +8,19 @@ import 'package:studio_assets/craft/signed_import/app_session.dart';
 import 'package:studio_assets/craft/signed_import/importer.dart';
 import 'package:studio_assets/craft/signed_import/source_capture.dart';
 
+import 'import_fixture_composition.dart';
+
 class SkillImportPanel extends StatefulWidget {
   const SkillImportPanel({
     super.key,
     this.ownerIdentity,
+    this.ownerLifetime,
     required this.currentApp,
     required this.createRepository,
     required this.chooseSource,
   });
   final Object? ownerIdentity;
+  final ImportCompositionLifetime? ownerLifetime;
   final ImportAppSnapshot Function() currentApp;
   final ImportRepositoryFactory createRepository;
   final Future<Uint8List?> Function(
@@ -32,6 +36,8 @@ class SkillImportPanel extends StatefulWidget {
 class _SkillImportPanelState extends State<SkillImportPanel>
     with WidgetsBindingObserver {
   late final AppImportSession _session;
+  void Function()? _unregisterLifetime;
+  bool _ownerRetiring = false;
   @override
   void initState() {
     super.initState();
@@ -40,16 +46,23 @@ class _SkillImportPanelState extends State<SkillImportPanel>
       currentApp: () => widget.currentApp(),
       capture: SkillSourceCapture(),
       changed: () {
-        if (mounted) setState(() {});
+        if (mounted && !_ownerRetiring) setState(() {});
       },
     );
+    _unregisterLifetime = widget.ownerLifetime?.register(() {
+      // Parent publication already rebuilds, or teardown is unmounting the tree.
+      // Do not schedule a child rebuild while its owner is being disposed.
+      _ownerRetiring = true;
+      _session.retire();
+    });
     unawaited(_session.initialize(widget.createRepository));
   }
 
   @override
   void didUpdateWidget(covariant SkillImportPanel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.ownerIdentity != widget.ownerIdentity) {
+    if (oldWidget.ownerIdentity != widget.ownerIdentity ||
+        !identical(oldWidget.ownerLifetime, widget.ownerLifetime)) {
       _session.retire();
     } else {
       _session.refresh();
@@ -69,6 +82,7 @@ class _SkillImportPanelState extends State<SkillImportPanel>
 
   @override
   void dispose() {
+    _unregisterLifetime?.call();
     WidgetsBinding.instance.removeObserver(this);
     _session.dispose();
     super.dispose();

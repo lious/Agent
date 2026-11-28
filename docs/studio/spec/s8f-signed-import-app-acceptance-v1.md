@@ -327,3 +327,11 @@ The evidence-only audit records 39 historical browser profiles at their original
 commits, not new qualification. Late profiles span two fixture binary hashes;
 App-late C2/C7 combined conditions and full A6 remain unestablished. No L01 rerun
 or historical result/schema rewrite. ADR 0260 records this plan-only boundary.
+
+
+## Increment 3.62 — native prerequisite qualification (t155u)
+
+Increment 3.62 implements the official native seam and independently qualifies
+NG0–NG3 only, per [native v1](s8f-signed-import-app-native-v1.md) and ADR 0261.
+The seven N01–N02 profiles, combined G1–G5, and full A6 remain unqualified.
+L01 was not rerun. No original remainingAcceptance wording is changed.
