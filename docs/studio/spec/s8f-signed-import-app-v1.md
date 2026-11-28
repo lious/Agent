@@ -373,6 +373,17 @@ App preview controls. Required NEW acceptance groups:
    and the independent host integration tests above. No skip, fake backend-success
    fallback or old Linux/Web crypto/vector/format-repair rerun as UI evidence.
 
+### Increment 3.54 — actual-App acceptance fixture binding (t155u)
+
+A6.4's public fixture roots/time allowance does not provide a browser App-root
+injection contract: main.dart privately fixes disabled policy/unknown clock.
+The normative [acceptance fixture supplement](s8f-signed-import-app-acceptance-v1.md)
+binds a separate test entrypoint mounting the actual App, an App-private typed
+fixture constructor, pre-publication owner invalidation, artifact isolation and
+explicit remaining keyboard/navigation/pagehide/late-state case IDs. This is
+PLAN ONLY; no fixture seam or new browser/native matrix is implemented/qualified
+by 3.54. Default roots/clock, crypto and privilege boundaries remain unchanged.
+
 ## A7 — sources and landing boundary
 
 Sources read 2026-11-28 Asia/Shanghai, with local anchors above:

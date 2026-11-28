@@ -1,0 +1,34 @@
+{
+  "increment": "3.54",
+  "base": "5220d66b0c00008f215efb9bbcdca0ec57d0f5f3",
+  "runtimeImplemented": false,
+  "newRuntimeCases": 0,
+  "fullA6AcceptanceComplete": false,
+  "productionRootsProvisioned": false,
+  "recommendedNextIncrement": "3.55",
+  "plannedMatrixRows": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "L01",
+    "L02",
+    "L03",
+    "N01",
+    "N02"
+  ],
+  "licenseCoreSha256": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+  "documentSha256": {
+    "docs/studio/spec/s8f-signed-import-app-acceptance-v1.md": "5834a0045724527443d6f64cbd080f0d4386228340bbbc2e972a1b2e2731b9ab",
+    "docs/studio/spec/s8f-signed-import-app-v1.md": "f8be5f5426e5dc34b9f07cf5c8c94f40a4c9f18e933d9799577fff92d1a7a390",
+    "docs/adr/0253-signed-import-app-acceptance-fixtures.md": "a3d84c2404b0582b5932440b6f97f193cbce8548b7b9bb6c5b2da6a830c39d4a",
+    "tools/tests/test_signed_import_app_matrix_plan.py": "a20f512e6b0741dca697195ac96e9cb5fdd309d4ecbcddcb4e08a7d620465c56"
+  }
+}
