@@ -1,0 +1,26 @@
+00:00 +0: loading packages/studio_assets/test/skills/source_capture/source_capture_test.dart
+00:00 +0: exact capture and EOF sentinel 0
+00:00 +1: exact capture and EOF sentinel 1
+00:00 +2: exact capture and EOF sentinel 65535
+00:00 +3: exact capture and EOF sentinel 65536
+00:00 +4: exact capture and EOF sentinel 65537
+00:00 +5: exact capture and EOF sentinel 4194303
+00:00 +6: exact capture and EOF sentinel 4194304
+00:00 +7: bounded rejection declared
+00:00 +8: bounded rejection growth
+00:00 +9: bounded rejection changed
+00:00 +10: bounded rejection read
+00:00 +11: bounded rejection length
+00:00 +12: bounded rejection close
+00:00 +13: partial reads and independent copies
+00:00 +14: single operation, cancellation, late reader closes without opening
+00:00 +15: terminal dispose detaches selector but does not invent picker settlement
+00:00 +16: picker cancel and picker failure have no reader
+00:00 +17: exact 30000ms deadline and quiescence during length
+00:00 +18: exact 30000ms deadline and quiescence during read
+00:00 +19: exact 30000ms deadline and quiescence during close
+00:00 +20: human picker time not a read deadline
+00:00 +21: invalidate pending length produces no bytes and drains
+00:00 +22: invalidate pending read produces no bytes and drains
+00:00 +23: invalidate pending close produces no bytes and drains
+00:00 +24: All tests passed!

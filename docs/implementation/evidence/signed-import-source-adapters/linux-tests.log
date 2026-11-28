@@ -1,0 +1,18 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/integration_test/skill_source_adapter_test.dart
+Building Linux application...
+✓ Built build/linux/x64/debug/bundle/studio_demo
+00:00 +0: actual GTK single selection/cancel/reselection and bounded native capture
+00:09 +1: (tearDownAll)
+00:09 +1: All tests passed!
+{
+  "passed": true,
+  "cases": [
+    "regular",
+    "regular",
+    "cancel",
+    "cap",
+    "over-cap"
+  ],
+  "profile": "actual GTK 3 FileChooserNative on isolated Xvfb; GTK_USE_PORTAL=0; not portal/device acceptance",
+  "gtkVersion": "3.24.49"
+}

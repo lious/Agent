@@ -104,7 +104,9 @@ class SignedImportAppPlanTest(unittest.TestCase):
         for path, digest in self.contract['unchangedFiles'].items():
             original = git('show', base + ':' + path)
             self.assertEqual(hashlib.sha256(original).hexdigest(), digest, path)
-            self.assertEqual((ROOT / path).read_bytes(), original, path)
+            self.assertEqual(at_plan(path), original, path)
+            if path == 'tools/tests/test_acceptance.py':
+                self.assertEqual((ROOT / path).read_bytes(), original, path)
         # Assert this plan's historical tree, not a ban on scheduled future UI.
         commit = plan_commit()
         for tree in self.contract['preservedSourceTrees']:

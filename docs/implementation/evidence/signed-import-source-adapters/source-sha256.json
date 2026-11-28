@@ -1,0 +1,18 @@
+{
+  "apps/studio_demo/integration_test/skill_source_adapter_test.dart": "0bc6cd97c4f414cbba4d3ea7eabe6c1b99d3b137e535243c2e0512640d70d047",
+  "apps/studio_demo/lib/skill_source_linux.dart": "4a049911862683a0a42cb805d72b5bfff65edf508f9c436c19e09f9fd311e82e",
+  "apps/studio_demo/linux/flutter/generated_plugin_registrant.cc": "2d820ff616e2228f699316fa2329d173ddbe6b98bbd7faca780daf329e4efacb",
+  "apps/studio_demo/linux/flutter/generated_plugins.cmake": "9b0a3121ceab17166a6bdd0bf114dc7478c95b0c99e50c19d3257f89f36bafdb",
+  "apps/studio_demo/pubspec.yaml": "45a65d014e87a4324e73c0b99a8ab094ebb91b064ac5846fd3b262a9852f5312",
+  "apps/studio_web/lib/skill_source_web.dart": "b44df1a0c49574821ed9fa08d48198fd9d09562fdebc80f5094da6b62be26364",
+  "apps/studio_web/pubspec.yaml": "87bf96c31e9ec96bdde12e04925b3f2f72c552139df132bafc13156186401a53",
+  "apps/studio_web/test/skill_source_adapter_web_probe.dart": "c7dc5d77e27dad63bb8b8e534f4823e6af1375c0cfafed78e27f8cbb73047803",
+  "packages/studio_assets/lib/craft/signed_import/source_capture.dart": "5e7349bc7cc86d0626cb462d158659fe276123ec4d2b264afacc16c6d457d91b",
+  "packages/studio_assets/pubspec.yaml": "09677b6cd32211ba523becaaa76ef93223c68935732a2a73a96925238c077a6a",
+  "packages/studio_assets/test/skills/source_capture/source_capture_test.dart": "1c512c83b8cabb572d34c8ecbb91398e8f04bed6cbd9fc130b1f201dcc7517c8",
+  "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded",
+  "tools/acceptance/run_skill_source_linux.py": "ae2abf2181925e40f7d6371c87a97adf1b5bc270f6fe601f80cd2dcc487c4aac",
+  "tools/acceptance/run_skill_source_web.py": "6c2177260f16cdddebfa48a853760e6918c1f95c834428ff7c39e88725677197",
+  "tools/acceptance/skill_source/browser_probe.cjs": "6310bbf57b07e2c299d37426ff29bc7f5b932f0d0ff426e266bfd0aa33d0d0be",
+  "tools/acceptance/skill_source/gtk_choose.py": "c8c6e0c2c4b75eb927d34aa987cc4c505ba867ebdcc3770fb488f18473dea5f9"
+}

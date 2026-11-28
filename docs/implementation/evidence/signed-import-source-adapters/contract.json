@@ -1,0 +1,72 @@
+{
+  "increment": "3.51",
+  "base": "1c74633c7c03207ee99bae15fef44ed2d9ede86c",
+  "qualifiedScope": "bounded source adapters only, recorded box GTK and Chrome File profiles",
+  "selectionPreviewConsentImplemented": false,
+  "productionRootsProvisioned": false,
+  "documentWrites": 0,
+  "executionAuthority": false,
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "fullTasksCompleted": 0,
+  "allowedRuntimeChanges": [
+    "apps/studio_demo/integration_test/skill_source_adapter_test.dart",
+    "apps/studio_demo/lib/skill_source_linux.dart",
+    "apps/studio_demo/linux/flutter/generated_plugin_registrant.cc",
+    "apps/studio_demo/linux/flutter/generated_plugins.cmake",
+    "apps/studio_demo/pubspec.yaml",
+    "apps/studio_web/lib/skill_source_web.dart",
+    "apps/studio_web/pubspec.yaml",
+    "apps/studio_web/test/skill_source_adapter_web_probe.dart",
+    "packages/studio_assets/lib/craft/signed_import/source_capture.dart",
+    "packages/studio_assets/pubspec.yaml",
+    "packages/studio_assets/test/skills/source_capture/source_capture_test.dart",
+    "pubspec.lock"
+  ],
+  "unchangedFiles": {
+    "apps/studio_demo/lib/main.dart": "ef271215ea97288814556d36da1a64207163756078afdfd9b3580e640a0d1504",
+    "apps/studio_web/lib/main.dart": "0d66fe0f1fc3b9ba8df1845973f3e9406f46eefa68473dab2604c82656097b1b",
+    "apps/studio_web/web/flutter_bootstrap.js": "adfa13b86cfccbd5d87532397cd28313944602213dc09299634f3b36797627e0",
+    "apps/studio_web/web/index.html": "bef0b31437572fe8c7e5382496ec82faba2943314072b156d44fcbc52dfab2b6",
+    "fixtures/store/v1.sql": "ed67d8bd4269a02443cafd7acc525ccdbb312ac059baa2c8df1c9d561a96a3a7",
+    "packages/studio_assets/lib/craft/signed_import/backend.dart": "de88a4a755f0afdfd06503415056b2d561d8e67c14fc7717fcea6a2119bca925",
+    "packages/studio_assets/lib/craft/signed_import/backend_native.dart": "4b271d53f5c8c5df8168dbbba4c5df6c4e7c19a35c4a8d65d7d2520d37ab2b85",
+    "packages/studio_assets/lib/craft/signed_import/backend_unavailable.dart": "3d58959e66f9d69aa705e00adecd888854dbaad6045e37acba7ccebf36b33a8e",
+    "packages/studio_assets/lib/craft/signed_import/film_schema.dart": "681fad54d7ce750f23a38440324cec29a26f4eedca0949c2608f153e2ba072cb",
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "302252234413b4bf461ac5daa4c7f960ee142daeb1dde371af7f848697ceb7f5",
+    "packages/studio_assets/lib/craft/signed_import/manifest_metaschema.dart": "9fed67397684b4e086689f76cb00e3b0da7bd77c5eda087eb9239bb30f42e65a",
+    "packages/studio_assets/lib/craft/signed_import/schema_check.dart": "08fcb88073eee6442e95a2e7d2fcb0474cb2a0db1fc5bd8aeb7009a7388819e8",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier.dart": "f8d9d0dec7e5c78c541109d5a0cbdf96c6ce3066e21151ba64f520f96361c224",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier_web.dart": "11b1b5ddaf3d2ea1b1a27d1719c746eb492d32beefccdbb8b4eb67f0f58faed8",
+    "packages/studio_assets/lib/craft/signed_import/strict_json.dart": "ae17283c2441cf31417b03855f76225c6a836a117cf151540a40f49ce6e0a8a1",
+    "packages/studio_assets/lib/studio_assets.dart": "e6acd6232de881d8a5890af584c5ebfabf163718acdfa56803d2ac16e2f117a7",
+    "packages/studio_assets/test/skills/signed_import/backend_test.dart": "fb8c95e9bd7d9e9748080e46d0884cd69bcc5891bd05e3b85c01f20fdc9cb005",
+    "packages/studio_assets/test/skills/signed_import/fixture.dart": "fc69624cdd58ae6978bcc810738f0306de5cee379bb4a65500456ed1376de77d",
+    "packages/studio_assets/test/skills/signed_import/importer_test.dart": "cc09afdc7a81b71a8651a22c3a947b740dd90bcaf01b37abb76a20daa389925c",
+    "packages/studio_assets/test/skills/signed_import/vectors/LICENSE": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+    "packages/studio_assets/test/skills/signed_import/vectors/README.md": "a40cdafea8275738f6c82367a1a6bb3f3d646d3d2cc5175856432cb1ab73d08c",
+    "packages/studio_assets/test/skills/signed_import/vectors/ed25519_test.json": "ea80ffebac085e21cb9d3e903e7fa2b448d96702da5b31f061d0b83b430b74b3",
+    "packages/studio_store/lib/studio_store.dart": "ef14a0b4b2310d7f04ffaa17e384a73696cb1d769d717f51c3ba66b8ed912367",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d"
+  },
+  "newLockedPackages": [
+    "cross_file",
+    "file_selector_linux",
+    "file_selector_platform_interface",
+    "http"
+  ],
+  "unitTestCount": 24,
+  "linuxIntegrationTestCount": 1,
+  "linuxChooserCases": 5,
+  "webCases": 13,
+  "deferred": [
+    "full App selection/preview-consent composition and combined A6 acceptance",
+    "desktop portal and manual OS dialog qualification",
+    "production roots; durable installation; cross-namespace import; production FTS/RAG",
+    "device/model/provider/paid API/store acceptance"
+  ]
+}

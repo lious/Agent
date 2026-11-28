@@ -15,7 +15,14 @@
     },
     "studio_editor_ui": {
       "path": "../../packages/studio_editor_ui"
-    }
+    },
+    "studio_assets": {
+      "path": "../../packages/studio_assets"
+    },
+    "file_selector_linux": "0.9.4+1",
+    "file_selector_platform_interface": "2.7.0",
+    "cross_file": "0.3.5+5",
+    "http": "1.6.0"
   },
   "dev_dependencies": {
     "flutter_test": {

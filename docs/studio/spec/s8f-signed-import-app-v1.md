@@ -153,6 +153,29 @@ restores an old consent target. No secure-memory-erasure claim: clear references
 call repository.discard and let platform GC reclaim bytes. No content/path/name,
 private file token or pack URL goes to logs, analytics, prompts or audit storage.
 
+### Increment 3.51 implementation-exposed ownership binding (t155u)
+
+The bounded capture controller is an App-lifetime source helper, not a new
+FileToken, loader, approval or widget API. Keep it outside project/preview-route
+lifetimes. Scope changes cancel/invalidate its generation and await quiescence;
+they do not replace a still-busy controller with another. Source selection returns
+a pending selected-reader future plus a terminal-disposal cleanup hook. Readers
+open lazily AFTER the common 30000 ms deadline starts, so native open/length awaits
+cannot escape the read deadline. Shared pure-Dart byte/lifecycle logic may live in
+an opt-in internal studio_assets library; platform pickers remain App-owned files
+and are never exported from the shared studio_assets entrypoint.
+
+Ordinary cancel completes the caller outcome immediately but retains at most one
+pending picker completion until the OS/browser returns. Terminal App disposal
+also removes Web input listeners/element. HTMLInputElement has no abort/settled
+Promise API: after terminal disposal of an unresolved browser chooser, quiescence
+may remain pending until realm teardown. This is intentional fail-closed retirement,
+not proof the dialog closed. Do not construct a successor controller in that realm
+while the old one is outstanding. Native late-returned readers are closed without
+opening/reading after invalidation. No source reads or nonce/consent are queued.
+These rules make the existing one-outstanding-operation and detach-on-disposal
+requirements concrete; no claim of OS cancellation or new execution authority.
+
 ## A4 — immutable presentation and separate explicit acknowledgment
 
 Render ONLY the importer-owned immutable SkillVerificationReport, never an

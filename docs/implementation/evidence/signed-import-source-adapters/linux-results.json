@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "cases": [
+    "regular",
+    "regular",
+    "cancel",
+    "cap",
+    "over-cap"
+  ],
+  "profile": "actual GTK 3 FileChooserNative on isolated Xvfb; GTK_USE_PORTAL=0; not portal/device acceptance",
+  "gtkVersion": "3.24.49"
+}

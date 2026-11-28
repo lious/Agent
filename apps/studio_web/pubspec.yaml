@@ -23,6 +23,9 @@
     },
     "studio_editor_ui": {
       "path": "../../packages/studio_editor_ui"
+    },
+    "studio_assets": {
+      "path": "../../packages/studio_assets"
     }
   },
   "dev_dependencies": {
