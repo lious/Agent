@@ -1,0 +1,40 @@
+{
+  "kind": "planConsistencyOnly",
+  "preservedBase": "0f3f32d33d5412d08825f7a0ed7eea09e54b1838",
+  "runtimeImplemented": false,
+  "cryptoVerificationQualified": false,
+  "sections": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "payloadType": "application/vnd.studio.filmcraft.import.v1+json",
+  "algorithm": "Ed25519",
+  "limits": {
+    "envelopeBytes": 4194304,
+    "payloadBytes": 2097152,
+    "fileBytes": 1048576,
+    "depth": 32,
+    "signatures": 8
+  },
+  "unchangedFiles": {
+    "packages/studio_assets/lib/craft/skill_privilege.dart": "a698d6aa44b2f231f49acce7a2d71d17aaad9f5770c3ea780e97ac49ee46e8a0",
+    "packages/studio_assets/test/skills/compile_safety/i037_external_skill_privilege_test.dart": "014792388a7f19662b591561a0f83835e0a23d10defeecfd8d758b6cb5343f27",
+    "docs/studio/spec/s8g.md": "0efb500407036f49efa123ecc88087f80d6a7996abcc220721538f3077e7f80d",
+    "docs/studio/spec/s10.md": "67b9778259ac04d667c9c8bc164c381e27502b78b1a3d94b32340506a7d90e79",
+    "docs/studio/spec/s1a.md": "789372d30c3dfa7da84013af0c981d78c31f7e9037e62bdfc417e8e3bc460e2d",
+    "docs/studio/spec/s1c.md": "fc0d19eeb1b7792f0dd42ed3e4e51fe5ae27630b12b90f46c602cddbdefdf99c",
+    "packages/studio_agent/lib/capability_table.dart": "c850379d70f5a01a345e427bc7e2de8c7ed7f1e55c68248cd788a0ef1da86c9c"
+  },
+  "plannedAcceptanceCases": [
+    "published-pae-and-rfc8032",
+    "tamper-and-threshold",
+    "namespace-policy-time",
+    "strict-json-base64",
+    "path-hash-schema",
+    "preview-not-authority"
+  ]
+}

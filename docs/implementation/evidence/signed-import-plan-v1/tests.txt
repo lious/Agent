@@ -1,0 +1,28 @@
+test_authentication_and_no_downgrade_bindings (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_authentication_and_no_downgrade_bindings) ... ok
+test_dsse_reference_pae_not_a_signature_test (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_dsse_reference_pae_not_a_signature_test) ... ok
+test_explicit_plan_only_boundary (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_explicit_plan_only_boundary) ... ok
+test_local_document_links_resolve (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_local_document_links_resolve) ... ok
+test_preserved_source_contracts (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_preserved_source_contracts) ... ok
+test_resource_and_manifest_bindings (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_resource_and_manifest_bindings) ... ok
+test_status_is_not_new_acceptance (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_status_is_not_new_acceptance) ... ok
+test_all_87_overlay_rows_retain_original_acceptance_and_dependencies (tools.tests.test_acceptance.AcceptanceTests.test_all_87_overlay_rows_retain_original_acceptance_and_dependencies) ... FAIL
+test_frozen_v1_migration_sql_matches_actual_dart_bytes (tools.tests.test_acceptance.AcceptanceTests.test_frozen_v1_migration_sql_matches_actual_dart_bytes) ... ok
+test_hidden_loader_and_skipped_tests_are_not_counted (tools.tests.test_acceptance.AcceptanceTests.test_hidden_loader_and_skipped_tests_are_not_counted) ... ok
+test_schema_copy_and_embedded_constant_match_authoritative_document (tools.tests.test_acceptance.AcceptanceTests.test_schema_copy_and_embedded_constant_match_authoritative_document) ... ok
+test_timeout_becomes_failed_evidence (tools.tests.test_acceptance.AcceptanceTests.test_timeout_becomes_failed_evidence) ... ok
+test_unknown_task_exits_two (tools.tests.test_acceptance.AcceptanceTests.test_unknown_task_exits_two) ... ok
+
+======================================================================
+FAIL: test_all_87_overlay_rows_retain_original_acceptance_and_dependencies (tools.tests.test_acceptance.AcceptanceTests.test_all_87_overlay_rows_retain_original_acceptance_and_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/tests/test_acceptance.py", line 52, in test_all_87_overlay_rows_retain_original_acceptance_and_dependencies
+    self.assertEqual(task['remainingAcceptance'],by_id[task['id']]['acceptance'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'P0处理[64 chars]eason stay listed (already official in Linux A[573 chars]ned.' != 'P0处理[64 chars]eason。'
+Diff is 772 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.092s
+
+FAILED (failures=1)

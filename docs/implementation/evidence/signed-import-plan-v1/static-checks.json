@@ -1,0 +1,8 @@
+{
+  "kind": "planStaticChecks",
+  "pythonSyntax": "passed",
+  "gitDiffCheck": "passed",
+  "executableOrSchemaChanges": [],
+  "preservedBase": "0f3f32d33d5412d08825f7a0ed7eea09e54b1838",
+  "notes": "No Dart interfaces or executable import path changed; no Ed25519 runtime verification claimed."
+}

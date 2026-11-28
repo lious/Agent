@@ -85,3 +85,7 @@ execute(compiled):
 ```
 
 合成串联例：@岚(pin1、绿衣Look)＋workflow.motionMatch@1，导演Agent取三条相关技能而非整库，视觉Agent检查两端参考帧；用户接受“向右出画→向右进入下一镜”的计划，Compiler给Wan软运动prompt并显示SOFT_CAMERA_CONTROL。已有镜头足够则只提MatchCut与J音头0.4秒batch；音头只有0.2秒时拒绝并让用户选独立授权foley或缩短J，不偷补源。随后加luma wipe若未注册，UI明确阻断该技巧，可另选hard cut/dissolve；不改已锁字幕或音乐手调gain。
+
+### Signed import verification supplement
+
+[Signed Film/Craft import v1](s8f-signed-import-v1.md) completes the bounded DSSE/Ed25519 envelope, exact authenticated bytes, trusted direct-key policy and preview binding under t155u. This plan does not make ExternalSkillRequest.signed cryptographic evidence, change existing privilege gates, or implement verified import.
