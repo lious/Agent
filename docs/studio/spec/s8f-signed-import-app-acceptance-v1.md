@@ -315,3 +315,15 @@ G1–G5 are explicit implementation/qualification prerequisites, not passed gate
 Do not borrow B01–B11 or old source/crypto/host runtime results as these rows.
 N01–N02/full A6/I-037/T-4/program completion remain open. Implement the independently
 qualified transports before claiming the combined rows in the next increment.
+
+## Increment 3.61 — frozen evidence audit and native binding (t155u)
+
+The [native fixture supplement](s8f-signed-import-app-native-v1.md) N1–N7
+completes N01–N02's actual Linux host constructor/trusted policy-time, private
+pre-publication lifetime, keyboard/standard-semantics input, controlled-reader,
+artifact-exclusion and continuous filesystem/network observation bindings.
+Seven explicit native profiles and NG0–NG5 are PLANNED, not implemented/passed.
+The evidence-only audit records 39 historical browser profiles at their original
+commits, not new qualification. Late profiles span two fixture binary hashes;
+App-late C2/C7 combined conditions and full A6 remain unestablished. No L01 rerun
+or historical result/schema rewrite. ADR 0260 records this plan-only boundary.

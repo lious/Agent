@@ -1,0 +1,46 @@
+{
+  "increment": "3.61",
+  "base": "7c616a4aab245505f3fdd9fac15095fd640f5e3b",
+  "kind": "frozen-evidence-audit-and-native-plan-only",
+  "runtimeImplemented": false,
+  "newRuntimeExecutions": 0,
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "qualifiedNativeRows": [],
+  "plannedNativeRows": [
+    "N01",
+    "N02"
+  ],
+  "plannedNativeCaseIds": [
+    "N01-enter",
+    "N01-space",
+    "N01-semantics",
+    "N02-preview-navigation",
+    "N02-preview-dispose",
+    "N02-read-navigation",
+    "N02-read-dispose"
+  ],
+  "pendingNativeGates": [
+    "NG0",
+    "NG1",
+    "NG2",
+    "NG3",
+    "NG4",
+    "NG5"
+  ],
+  "preservedGitObjects": {
+    "apps": "e0ba6e6d427a899b849229abbf138a29e30b39fc",
+    "packages": "d3972512ecb294d0f48f62b9d880ada51dfb33fe",
+    "native": "ca31cbaa4f3037a5634f6af15210968fc64aea83",
+    "fixtures": "94b1fbba10bcd0a4edd46d128d39fa7ed4d43e85",
+    "pubspec.lock": "64fe2d9cbd3652377fcaef7134ca0572cd80a93c",
+    "tools/tests/test_acceptance.py": "a753ef8e895d4c00400e0255308bd42b3397d259"
+  },
+  "documentSha256": {
+    "docs/studio/spec/s8f-signed-import-app-native-v1.md": "7c43e3371cf4e68bfdd19ddfdba957544a3236f287e128714ed4bea1d2257139",
+    "docs/studio/spec/s8f-signed-import-app-acceptance-v1.md": "2a2085327ec4d6edfad66eb70970c5c36b4fdfad032f63ea611f4471dea32150",
+    "docs/adr/0260-app-native-fixture-bindings.md": "bd271acc65474de6a79a3aa6aafa9abe0ebddbc2d7fefa437d865b9acf66f0a3",
+    "tools/audit/signed_import_app_evidence.py": "c5217fbb9f27b6d67541b8b73b01a7b46f4d156ddacbd9127f9a7f0f2173de44",
+    "tools/tests/test_signed_import_native_plan.py": "0b2d42b391864e9efd192e49528284c1438a65d26c9eb6f934c6fea883ee56d2"
+  }
+}

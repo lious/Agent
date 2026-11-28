@@ -1,0 +1,501 @@
+{
+  "increment": "3.61",
+  "base": "7c616a4aab245505f3fdd9fac15095fd640f5e3b",
+  "kind": "frozen-evidence-integrity-audit-only",
+  "auditChecksPassed": true,
+  "newRuntimeExecutions": 0,
+  "currentRuntimeRequalified": false,
+  "l01Rerun": false,
+  "frozenEvidenceConflictFound": false,
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "historicalBrowserProfileCount": 39,
+  "historicalLateProfileCount": 12,
+  "historicalBuildRecordCount": 16,
+  "lateFixtureBinarySha256": [
+    "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+    "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29"
+  ],
+  "unchangedL01ObserverSha256": "e5b226002b123d4e1e574d9d9cdc4a6e8db05847f2f66869bfad5462f797980a",
+  "combinedConditionStatus": "OPEN: C2 one-binary/C7 combined evidence not established by versioned union",
+  "qualifiedNativeRows": [],
+  "plannedNativeRows": [
+    "N01",
+    "N02"
+  ],
+  "adrSha256": {
+    "docs/adr/0248-signed-import-app-composition-plan.md": "9fcd8417e3a9737e0843c9b0f801d1e6778f0df5e1f0ff6301710c626c8b8fd6",
+    "docs/adr/0249-signed-import-app-host-csp.md": "1e05a9a72275d2bd299f4aff4e8746ed78a15badf41c40a6d737f0bea5d759c1",
+    "docs/adr/0250-bounded-signed-import-source-adapters.md": "e2dd211f4aeb308d4ad58d6826a61820e68d7b5a95094e222f207bc92d8d1dfb",
+    "docs/adr/0251-import-composition-live-app-fence.md": "58f2e4919e1d16d7988964e7d74dd192c2ddb7566763cc786d4d94b764baaf47",
+    "docs/adr/0252-existing-app-signed-import-composition.md": "e0019ba12cb88f105cd5ddac3c0f813abc2a78435b395226150cac65254aa267",
+    "docs/adr/0253-signed-import-app-acceptance-fixtures.md": "a3d84c2404b0582b5932440b6f97f193cbce8548b7b9bb6c5b2da6a830c39d4a",
+    "docs/adr/0254-app-browser-fixture-acknowledgment.md": "7d780d3b576af9268748f17f7dd06988d593a9cdd4556fe3d1c2f26c7aff30cd",
+    "docs/adr/0255-app-browser-lifecycle-composition.md": "f5755daa8794ab079db36d28e1e53bb7ef737352334e06ec4308a9592f57e8ec",
+    "docs/adr/0256-app-late-state-time-composition.md": "ce79f1c0f9ce975a91f504f99e9fee8fa9aff46eb93708dc4b78b3064497d30d",
+    "docs/adr/0257-app-late-phase-acceptance-gates.md": "3f2c721af7724afda56ac273fd5aa11a0976e3a860a9fd231cee839d3b94b754",
+    "docs/adr/0258-app-pending-factory-transport.md": "0fcd34e5b84415c510faf50ca19de15bc0fb6377aee39ef66d1f1f716ed489d7",
+    "docs/adr/0259-app-controlled-reader-transport.md": "178bab4c3c8aa2184ad0bfd55725b5c980641445f78e5f64ad9b8cec65d6b910"
+  },
+  "groups": [
+    {
+      "name": "fixture",
+      "qualificationCommit": "c30441a71e0285bd597ac85c1fa7357822678c8a",
+      "recordedCaseCount": 4,
+      "recordedBuildCount": 3,
+      "sourceHashesChecked": 10,
+      "frozenFilesSha256": {
+        "docs/implementation/evidence/signed-import-app-fixture/B01.json": "eb7eae0b6cc49c317250a27a1fb793d2b599aa19350e5cec7bcfc4a5f4779134",
+        "docs/implementation/evidence/signed-import-app-fixture/B02.json": "f1368095e7dd7f6843b56c56f5f1fbac2cd3615abd51a8e70f17cb0ed73c3cd5",
+        "docs/implementation/evidence/signed-import-app-fixture/B03.json": "5105c898749ffd60c7040d55c70bdde145291158723624d0f25eb6fb3b0eef72",
+        "docs/implementation/evidence/signed-import-app-fixture/B04.json": "ae82d24f643ed657fe35cc11cd7988bb5978fbc32d704cebcda5fa55a51977db",
+        "docs/implementation/evidence/signed-import-app-fixture/README.md": "4d68e6c8f86810100d67c15d1d92864d829eb7079b25b7ca10fb6b12ba4c3343",
+        "docs/implementation/evidence/signed-import-app-fixture/analyzer.log": "a61bf3a41489597992545631f8df53755e506cfaf0505c911ab098d3b081537e",
+        "docs/implementation/evidence/signed-import-app-fixture/artifacts.json": "40d3ecd5e542d17316998d896475b584364406057d1b3bfc90a03e725f26499a",
+        "docs/implementation/evidence/signed-import-app-fixture/contract.json": "23865b6a85b8d90860e8dfd6de1ae556ab937a5c7b31006f0bf50f919aef6815",
+        "docs/implementation/evidence/signed-import-app-fixture/environment.json": "3367017a51db47280e760176e871eafc475b50eb60489ef6d05150c09ee5c365",
+        "docs/implementation/evidence/signed-import-app-fixture/flutter-version.json": "819a3a38f324d77bdf0585e42a6fb6d147d65f972ce0a61a0fc2236cf167dca3",
+        "docs/implementation/evidence/signed-import-app-fixture/format.log": "725a25e3d849ec6009e6718f1be15896780cc316feea4771d60c8303f0c3e1d2",
+        "docs/implementation/evidence/signed-import-app-fixture/lifetime.log": "18e58ec8a3bce94838624eed9b5d90eb546351a3e87269d2ad0808c921a9a5c4",
+        "docs/implementation/evidence/signed-import-app-fixture/runner.log": "ff041d33de39286696631f132007a6741e288bd4c5e30e88145afec9842a8b5a",
+        "docs/implementation/evidence/signed-import-app-fixture/static-tests.log": "e4bd4aa93c8841f7c4216922649abf98a8c46657bdfaad31019d6a2d33bbf445",
+        "docs/implementation/evidence/signed-import-app-fixture/unchanged-acceptance-suite.log": "42e9ee990f1ea5789ab0d319a5e89f701364815b37be5bf61ee5128c5268af84"
+      },
+      "cases": [
+        {
+          "caseId": "B01",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-fixture/B01.json",
+          "evidenceSha256": "eb7eae0b6cc49c317250a27a1fb793d2b599aa19350e5cec7bcfc4a5f4779134",
+          "recordedPassed": true,
+          "artifactTarget": "fixture",
+          "mainSha256": "2bf8eb608244510e06b7a481265dea4453fa0b552a602941a658a6ce0dec7da7"
+        },
+        {
+          "caseId": "B02",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-fixture/B02.json",
+          "evidenceSha256": "f1368095e7dd7f6843b56c56f5f1fbac2cd3615abd51a8e70f17cb0ed73c3cd5",
+          "recordedPassed": true,
+          "artifactTarget": "fixture",
+          "mainSha256": "2bf8eb608244510e06b7a481265dea4453fa0b552a602941a658a6ce0dec7da7"
+        },
+        {
+          "caseId": "B03",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-fixture/B03.json",
+          "evidenceSha256": "5105c898749ffd60c7040d55c70bdde145291158723624d0f25eb6fb3b0eef72",
+          "recordedPassed": true,
+          "artifactTarget": "fixture",
+          "mainSha256": "2bf8eb608244510e06b7a481265dea4453fa0b552a602941a658a6ce0dec7da7"
+        },
+        {
+          "caseId": "B04",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-fixture/B04.json",
+          "evidenceSha256": "ae82d24f643ed657fe35cc11cd7988bb5978fbc32d704cebcda5fa55a51977db",
+          "recordedPassed": true,
+          "artifactTarget": "fixture",
+          "mainSha256": "2bf8eb608244510e06b7a481265dea4453fa0b552a602941a658a6ce0dec7da7"
+        }
+      ]
+    },
+    {
+      "name": "lifecycle",
+      "qualificationCommit": "2a137beb9ef088aaf855a343a7a3d3c56694c525",
+      "recordedCaseCount": 11,
+      "recordedBuildCount": 4,
+      "sourceHashesChecked": 11,
+      "frozenFilesSha256": {
+        "docs/implementation/evidence/signed-import-app-lifecycle/B05.json": "e85ded2d2958bf9f8f5310e82d6cad2e2a4349505fdcc5f957fa2129fbd61ed7",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B06-away-back.json": "e6405836ea027b8f130f86137f97326c5c19cdfe42f645ec156ac04740f0fcf1",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B06-dispose.json": "d516d931e936cd85051939d886649e5e06acfc33de94af739419740bb0a69ac2",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B06-reload.json": "552c14f7386881e2350bf034c742a88f8e08562800f6c9d042fa8ed9b9c4c707",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B07-reading-handler-only.json": "7e27a0f9051d125ad8bbbb645204288afd2da068d587631f36c84bf832e003d7",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B07-reading-navigation.json": "e3aba18280f061c155c0848644cd6b8f52b0074cb402b40461d815ad938d669b",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-detached.json": "88e949faa8fc891d1ee3fce68df78b4113fc4d955d2db09ecce8f1e28d106c02",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-hidden.json": "6876a9c35c5c9df6a73ac71e6daf7bdeb3fd2881c293c443d103106fa01af99a",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-inactive.json": "ba989841637cb22535ceb333f0b10acc2bba2963261f5777e999859b058bf56d",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-paused.json": "862c19776bbf8b4113187313e77fc4791cb017bc987cfd9cb73abfdc2ab11ade",
+        "docs/implementation/evidence/signed-import-app-lifecycle/B08-real-hidden.json": "1dc75d2129b59fc2d87547f415b7f6756bbb1f1cb32b55265e2214f2b91a47fb",
+        "docs/implementation/evidence/signed-import-app-lifecycle/README.md": "be7a92b74d7e6f322338aa2cdf14a160e48b45a13c949836aa721186b63f9bd3",
+        "docs/implementation/evidence/signed-import-app-lifecycle/analyzer.log": "f8932567b5312b3c7aa9227ba228a16f32272c8fd2dd3f6fd54814d8675ba769",
+        "docs/implementation/evidence/signed-import-app-lifecycle/artifacts.json": "c5e1b460336458d083c92eb11aa422b5bb5a295b06986540a14be4bc5c5da2f2",
+        "docs/implementation/evidence/signed-import-app-lifecycle/contract.json": "8b6865e632707e81a335e592523d2e7856dd61c0256a99affdec6d416e437f01",
+        "docs/implementation/evidence/signed-import-app-lifecycle/environment.json": "f2fdcd7a142b0d1176ca58343359178826248ab49da70d63ed638c94e0524134",
+        "docs/implementation/evidence/signed-import-app-lifecycle/format.log": "32af0bda87e046566b8b0cd70d7bf261160165770f08bc7aac5b7c000ecff6af",
+        "docs/implementation/evidence/signed-import-app-lifecycle/initial-build-and-transport-diagnostic.log": "51ce99e4033a7b340c95d464a57ea3e87281b75c3c7714d1152777cffa9228d2",
+        "docs/implementation/evidence/signed-import-app-lifecycle/runner.log": "866258b4b9ff1586161b4f32dae08af73591e33f36ec2afdfbef348c254cd209",
+        "docs/implementation/evidence/signed-import-app-lifecycle/static-tests.log": "979a32793f5767370d2d24a857ac2b16be0a294d29d71c69ba7aa608f08112d5",
+        "docs/implementation/evidence/signed-import-app-lifecycle/unchanged-acceptance-suite.log": "6e7274bc469f7ce682aa7091b9615f67d67d771904faf93209e1693b0cd2235d"
+      },
+      "cases": [
+        {
+          "caseId": "B05",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B05.json",
+          "evidenceSha256": "e85ded2d2958bf9f8f5310e82d6cad2e2a4349505fdcc5f957fa2129fbd61ed7",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B06-away-back",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B06-away-back.json",
+          "evidenceSha256": "e6405836ea027b8f130f86137f97326c5c19cdfe42f645ec156ac04740f0fcf1",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B06-dispose",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B06-dispose.json",
+          "evidenceSha256": "d516d931e936cd85051939d886649e5e06acfc33de94af739419740bb0a69ac2",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B06-reload",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B06-reload.json",
+          "evidenceSha256": "552c14f7386881e2350bf034c742a88f8e08562800f6c9d042fa8ed9b9c4c707",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B07-reading-handler-only",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B07-reading-handler-only.json",
+          "evidenceSha256": "7e27a0f9051d125ad8bbbb645204288afd2da068d587631f36c84bf832e003d7",
+          "recordedPassed": true,
+          "artifactTarget": "held",
+          "mainSha256": "e1bc53863354edcb18fe9286482b1ffd0a034d29a31160aa2ca87e9c63c93a5f"
+        },
+        {
+          "caseId": "B07-reading-navigation",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B07-reading-navigation.json",
+          "evidenceSha256": "e3aba18280f061c155c0848644cd6b8f52b0074cb402b40461d815ad938d669b",
+          "recordedPassed": true,
+          "artifactTarget": "held",
+          "mainSha256": "e1bc53863354edcb18fe9286482b1ffd0a034d29a31160aa2ca87e9c63c93a5f"
+        },
+        {
+          "caseId": "B08-framework-detached",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-detached.json",
+          "evidenceSha256": "88e949faa8fc891d1ee3fce68df78b4113fc4d955d2db09ecce8f1e28d106c02",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B08-framework-hidden",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-hidden.json",
+          "evidenceSha256": "6876a9c35c5c9df6a73ac71e6daf7bdeb3fd2881c293c443d103106fa01af99a",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B08-framework-inactive",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-inactive.json",
+          "evidenceSha256": "ba989841637cb22535ceb333f0b10acc2bba2963261f5777e999859b058bf56d",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B08-framework-paused",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B08-framework-paused.json",
+          "evidenceSha256": "862c19776bbf8b4113187313e77fc4791cb017bc987cfd9cb73abfdc2ab11ade",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        },
+        {
+          "caseId": "B08-real-hidden",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-lifecycle/B08-real-hidden.json",
+          "evidenceSha256": "1dc75d2129b59fc2d87547f415b7f6756bbb1f1cb32b55265e2214f2b91a47fb",
+          "recordedPassed": true,
+          "artifactTarget": "lifecycle",
+          "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1"
+        }
+      ]
+    },
+    {
+      "name": "late-state",
+      "qualificationCommit": "f42d46d30f9dc88f9a15106022ba34c3cea5d69b",
+      "recordedCaseCount": 12,
+      "recordedBuildCount": 3,
+      "sourceHashesChecked": 10,
+      "frozenFilesSha256": {
+        "docs/implementation/evidence/signed-import-app-late-state/B09-aba.json": "146556ac6240a9e33ea101acc608484ee91902f160fa289142d25d8427ae4df4",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-branch.json": "080ab5cd1bfff4bab7c2d0f7fe9d4639a66653616150dfbc06f56a8f7b0726b8",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-epoch.json": "1e4058172319546f38ea61fa1021adabc8b838823411e79c39c56b74b7a40c8d",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-installed.json": "bafbe952d413c38e97e29c17e3eb2edb7d3642b62a846079a8cb7a50acb76522",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-key-removal.json": "866edd60907853164dd421f18d19a5b182e63584c3ffa53355c11a24c02d88f0",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-owner.json": "c9ec4975aea96d7a3e6fdb09e5dc39bd9beb0121896416c14369f363d9834d6e",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-profile.json": "d623c5b449d0260b67e990a11d94195a2fa13a2bda1e0cffd18a34111c402d6f",
+        "docs/implementation/evidence/signed-import-app-late-state/B09-session.json": "54c02dedd2341fa0a88b66ab2368b84426894400e6a1c85e60468573c27f99bd",
+        "docs/implementation/evidence/signed-import-app-late-state/B10.json": "359347345b995c6f2f57837cf9120abc3bf69016723fa4747084d3237d74221e",
+        "docs/implementation/evidence/signed-import-app-late-state/B11-backward.json": "ba4f7de2719e075f0e9ef21f9f612ff942590a48097769fc281b5a5acbfb3ad1",
+        "docs/implementation/evidence/signed-import-app-late-state/B11-confidence.json": "37b0a5a176f9dbf57acae5abd986a3c879e79fa2c6f3b6bc3533db4cb6205dd0",
+        "docs/implementation/evidence/signed-import-app-late-state/B11-rollback.json": "7961d0c872eea869cfefe2992d2f725bf833f1603ca38b364afcaababcfe1eca",
+        "docs/implementation/evidence/signed-import-app-late-state/README.md": "ce008c639418f6dbaae125b8b41760fe129e5cb1d32b6e8ab93bb48cc101113d",
+        "docs/implementation/evidence/signed-import-app-late-state/analyzer.log": "b11a1d60cb23b1f03cf4f703b0d65c205b344eb96776199a46a0df0368935838",
+        "docs/implementation/evidence/signed-import-app-late-state/artifacts.json": "fdebaa559e7f22c5fbf8ceb5fc7ad50dfea0360be04d0fcba7549d9898f6c25b",
+        "docs/implementation/evidence/signed-import-app-late-state/contract.json": "693d2de2a048e58e8f6cc6db56d537150d8c142b0df04970af5804c5bee7305e",
+        "docs/implementation/evidence/signed-import-app-late-state/environment.json": "f2fdcd7a142b0d1176ca58343359178826248ab49da70d63ed638c94e0524134",
+        "docs/implementation/evidence/signed-import-app-late-state/format.log": "11fa9bef8d8fc7afff8e4deace774cc0112b0c233c7459d267f4bde20fde2361",
+        "docs/implementation/evidence/signed-import-app-late-state/fresh-build-and-reselection-diagnostic.log": "e72af0e96f823375c80bb901de32203857b345e687293f3a08ed86d9ffe4ee56",
+        "docs/implementation/evidence/signed-import-app-late-state/public-fixture.json": "94dd5735886e9dceaa69b11c069280b68f9d54a2c0f9bdab9c6819f3360d348a",
+        "docs/implementation/evidence/signed-import-app-late-state/runner.log": "d573ca9b6d4b3a7c63d52c6806cf0ca682271587b9c6630f98280fc83a16d148",
+        "docs/implementation/evidence/signed-import-app-late-state/static-tests.log": "58b9abb3416c1d4a058b53fb42debd1a2bf9750b0d80351b2b838b661fdb4ea3",
+        "docs/implementation/evidence/signed-import-app-late-state/unchanged-acceptance-suite.log": "0268fab34809323a1516e137cbd678d5cb9a9154352c1d193c3a6a64858b5daa"
+      },
+      "cases": [
+        {
+          "caseId": "B09-aba",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-aba.json",
+          "evidenceSha256": "146556ac6240a9e33ea101acc608484ee91902f160fa289142d25d8427ae4df4",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-branch",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-branch.json",
+          "evidenceSha256": "080ab5cd1bfff4bab7c2d0f7fe9d4639a66653616150dfbc06f56a8f7b0726b8",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-epoch",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-epoch.json",
+          "evidenceSha256": "1e4058172319546f38ea61fa1021adabc8b838823411e79c39c56b74b7a40c8d",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-installed",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-installed.json",
+          "evidenceSha256": "bafbe952d413c38e97e29c17e3eb2edb7d3642b62a846079a8cb7a50acb76522",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-key-removal",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-key-removal.json",
+          "evidenceSha256": "866edd60907853164dd421f18d19a5b182e63584c3ffa53355c11a24c02d88f0",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-owner",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-owner.json",
+          "evidenceSha256": "c9ec4975aea96d7a3e6fdb09e5dc39bd9beb0121896416c14369f363d9834d6e",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-profile",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-profile.json",
+          "evidenceSha256": "d623c5b449d0260b67e990a11d94195a2fa13a2bda1e0cffd18a34111c402d6f",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B09-session",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B09-session.json",
+          "evidenceSha256": "54c02dedd2341fa0a88b66ab2368b84426894400e6a1c85e60468573c27f99bd",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B10",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B10.json",
+          "evidenceSha256": "359347345b995c6f2f57837cf9120abc3bf69016723fa4747084d3237d74221e",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B11-backward",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B11-backward.json",
+          "evidenceSha256": "ba4f7de2719e075f0e9ef21f9f612ff942590a48097769fc281b5a5acbfb3ad1",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B11-confidence",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B11-confidence.json",
+          "evidenceSha256": "37b0a5a176f9dbf57acae5abd986a3c879e79fa2c6f3b6bc3533db4cb6205dd0",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        },
+        {
+          "caseId": "B11-rollback",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-state/B11-rollback.json",
+          "evidenceSha256": "7961d0c872eea869cfefe2992d2f725bf833f1603ca38b364afcaababcfe1eca",
+          "recordedPassed": true,
+          "artifactTarget": "late-state",
+          "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9"
+        }
+      ]
+    },
+    {
+      "name": "pending-factory",
+      "qualificationCommit": "e499a223995bf067edbf506bb8e45d681a5b8ad6",
+      "recordedCaseCount": 2,
+      "recordedBuildCount": 3,
+      "sourceHashesChecked": 10,
+      "frozenFilesSha256": {
+        "docs/implementation/evidence/signed-import-app-pending-factory/L01-context.json": "7d4ad4da67b7ad0cad2b4741da5fc2b501ad5916d4a98af6600434fdde940706",
+        "docs/implementation/evidence/signed-import-app-pending-factory/L01-widget-dispose.json": "b289a94f0f435238608f412c2eae38b5bf45d560737546244a675bfaa686f6ff",
+        "docs/implementation/evidence/signed-import-app-pending-factory/README.md": "9befd6115d45a0e90b54fa803ccca4b09e1de663e54059798d5a80c1eaefaccc",
+        "docs/implementation/evidence/signed-import-app-pending-factory/analyzer.log": "cac2c9002b612d1b3506ed9b92a0b46f4ae29dd29fdcde97a24c86a51679796e",
+        "docs/implementation/evidence/signed-import-app-pending-factory/artifacts.json": "233325a505f3157867cde9eda814fe5325854f8fcf90bceee7a513f478e957f2",
+        "docs/implementation/evidence/signed-import-app-pending-factory/contract.json": "42b2585db16e6157d7b386f80d584bf248bc467c5f5056fcd705fe1d7c09b539",
+        "docs/implementation/evidence/signed-import-app-pending-factory/environment.json": "eca7c17dd4eb9e3860655b0fb629487a19e6af5b5e792bdeac53a789476fb499",
+        "docs/implementation/evidence/signed-import-app-pending-factory/format.log": "45677745de22edb703c8d6f33aa97667c853d61fd53a4d91027d6116d8b5d32f",
+        "docs/implementation/evidence/signed-import-app-pending-factory/fresh-build-and-cli-diagnostic.log": "4cc705b5fd3abd0122195745f9a880ada56758b2205a76bdbfad5cf50ebae572",
+        "docs/implementation/evidence/signed-import-app-pending-factory/host-gate-tests.log": "3b0dbb90387b342ccecc50446a0fb5e4385d86a3f467e5b97d63f8924fc08aff",
+        "docs/implementation/evidence/signed-import-app-pending-factory/runner.log": "fd4aeee714426f7132f55be537800350495ad367b38dd28dc8519d662d11136e",
+        "docs/implementation/evidence/signed-import-app-pending-factory/static-tests.log": "d9f6bd7705336f92e52a8a56d41e74b41519824ed74adb9edeeb12ae9138ff49",
+        "docs/implementation/evidence/signed-import-app-pending-factory/unchanged-acceptance-suite.log": "c03d8a295f90018a0b600a82ce43930d29e6bdd34aec111ab0aa6527a2d060f2"
+      },
+      "cases": [
+        {
+          "caseId": "L01-context",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-pending-factory/L01-context.json",
+          "evidenceSha256": "7d4ad4da67b7ad0cad2b4741da5fc2b501ad5916d4a98af6600434fdde940706",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29"
+        },
+        {
+          "caseId": "L01-widget-dispose",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-pending-factory/L01-widget-dispose.json",
+          "evidenceSha256": "b289a94f0f435238608f412c2eae38b5bf45d560737546244a675bfaa686f6ff",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29"
+        }
+      ]
+    },
+    {
+      "name": "late-reader",
+      "qualificationCommit": "7c616a4aab245505f3fdd9fac15095fd640f5e3b",
+      "recordedCaseCount": 10,
+      "recordedBuildCount": 3,
+      "sourceHashesChecked": 11,
+      "frozenFilesSha256": {
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-length-cancel.json": "eaf6532fd186c1d976182ad7bebf015082fa07ac7d2ea9c9a613fbfa6d3bdee8",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-length-context.json": "ab8d8b56d95ccbc27a14ae3616e67e02e9f6552c8e1876591299f319be6d6595",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-length-dispose.json": "505f8cefaf5020888095ef19941c3eeabf9ed666cd07e407785ef0c4a47a6b35",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-open-cancel.json": "91521110c9b5c194131280d6d1f4b08f3601320065256ace9c620deb268bc6f5",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-open-context.json": "09ce0d23977ed74487fe72d0a703feef319ab49df67352a91f8d13b57c926369",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-open-dispose.json": "6a617838225683aee0efeaf921dac1c2a9d4a06839710f35c78bd17b3fc0f0e7",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-read-cancel.json": "b649042ed6c15863d6fed9cbdd23d201d04abeba8c572a02d2c5954a30ad03fc",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-read-context.json": "210ad7e4bc40c395194d110c3e1affc6a4fce36de144a80cb0b5c466d30a7463",
+        "docs/implementation/evidence/signed-import-app-late-reader/L02-read-dispose.json": "354f62027651b5123c8fa3bbb907cc25120ddc5cfee28036c76af8ce5d008a92",
+        "docs/implementation/evidence/signed-import-app-late-reader/L03-null-close-context.json": "5a19b195ed9a5f169ff8cb0b1ea6624ba5421fd21e4dba7318435a864868e644",
+        "docs/implementation/evidence/signed-import-app-late-reader/README.md": "a3114ea7feb2b091d51728d991eb082ece0e8c50d4240c724cd8a273f03f5e26",
+        "docs/implementation/evidence/signed-import-app-late-reader/analyzer.log": "5813324c386510503b402687e6ac97ba99090612158da3c50f1a9edd04ac26da",
+        "docs/implementation/evidence/signed-import-app-late-reader/artifacts.json": "96c3c1db5349121e029e910a81a4eb87ec5daec6b12f688683b190e1ab1c94fa",
+        "docs/implementation/evidence/signed-import-app-late-reader/contract.json": "885f4df178303beffb7e472e7dfe699832d10f6ca5c5fdd4c44bf098d67be264",
+        "docs/implementation/evidence/signed-import-app-late-reader/environment.json": "4f87cf3c127901f3f64d7bcc39bb1ad5341082dde11f4847ec50f3d88d2d6d0e",
+        "docs/implementation/evidence/signed-import-app-late-reader/format.log": "dd4701be149ea0ea302dbc675dbbc55acbd35bd19cd68e84799b1e14498e2d78",
+        "docs/implementation/evidence/signed-import-app-late-reader/reader-unit-tests.log": "9c9e2069075d826cbeaadfc19f59d891d05dbfdbc2721c2c51071ac2b1aab99d",
+        "docs/implementation/evidence/signed-import-app-late-reader/runner.log": "dfd51879d5cb8a32c95f2aa70784576462bbdb60da0954158d689cbca127cf34",
+        "docs/implementation/evidence/signed-import-app-late-reader/static-tests.log": "aa6dada1df5a959b3a2d1d049acad8bc30010acd79486f2befa7c3d5c85ad849",
+        "docs/implementation/evidence/signed-import-app-late-reader/unchanged-acceptance-suite.log": "d42448bbb7d9b7a76dfd718e3c04e7e712bc153e47185b74537cc1a9fa27b573"
+      },
+      "cases": [
+        {
+          "caseId": "L02-length-cancel",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-length-cancel.json",
+          "evidenceSha256": "eaf6532fd186c1d976182ad7bebf015082fa07ac7d2ea9c9a613fbfa6d3bdee8",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-length-context",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-length-context.json",
+          "evidenceSha256": "ab8d8b56d95ccbc27a14ae3616e67e02e9f6552c8e1876591299f319be6d6595",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-length-dispose",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-length-dispose.json",
+          "evidenceSha256": "505f8cefaf5020888095ef19941c3eeabf9ed666cd07e407785ef0c4a47a6b35",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-open-cancel",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-open-cancel.json",
+          "evidenceSha256": "91521110c9b5c194131280d6d1f4b08f3601320065256ace9c620deb268bc6f5",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-open-context",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-open-context.json",
+          "evidenceSha256": "09ce0d23977ed74487fe72d0a703feef319ab49df67352a91f8d13b57c926369",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-open-dispose",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-open-dispose.json",
+          "evidenceSha256": "6a617838225683aee0efeaf921dac1c2a9d4a06839710f35c78bd17b3fc0f0e7",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-read-cancel",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-read-cancel.json",
+          "evidenceSha256": "b649042ed6c15863d6fed9cbdd23d201d04abeba8c572a02d2c5954a30ad03fc",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-read-context",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-read-context.json",
+          "evidenceSha256": "210ad7e4bc40c395194d110c3e1affc6a4fce36de144a80cb0b5c466d30a7463",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L02-read-dispose",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L02-read-dispose.json",
+          "evidenceSha256": "354f62027651b5123c8fa3bbb907cc25120ddc5cfee28036c76af8ce5d008a92",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        },
+        {
+          "caseId": "L03-null-close-context",
+          "evidencePath": "docs/implementation/evidence/signed-import-app-late-reader/L03-null-close-context.json",
+          "evidenceSha256": "5a19b195ed9a5f169ff8cb0b1ea6624ba5421fd21e4dba7318435a864868e644",
+          "recordedPassed": true,
+          "artifactTarget": "late-phase",
+          "mainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+        }
+      ]
+    }
+  ]
+}

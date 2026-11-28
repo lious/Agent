@@ -1,0 +1,15 @@
+test_adr_dependency_and_provenance_scope (tools.tests.test_signed_import_native_plan.NativePlanTests.test_adr_dependency_and_provenance_scope) ... ok
+test_all_runtime_trees_license_and_original_tests_preserved (tools.tests.test_signed_import_native_plan.NativePlanTests.test_all_runtime_trees_license_and_original_tests_preserved) ... ok
+test_append_only_parent_and_document_hashes (tools.tests.test_signed_import_native_plan.NativePlanTests.test_append_only_parent_and_document_hashes) ... ok
+test_distinct_binaries_do_not_establish_combined_acceptance (tools.tests.test_signed_import_native_plan.NativePlanTests.test_distinct_binaries_do_not_establish_combined_acceptance) ... ok
+test_exact_historical_profiles_and_original_commits (tools.tests.test_signed_import_native_plan.NativePlanTests.test_exact_historical_profiles_and_original_commits) ... ok
+test_original_task_wording_counts_and_program_preserved (tools.tests.test_signed_import_native_plan.NativePlanTests.test_original_task_wording_counts_and_program_preserved) ... ok
+test_reproducible_frozen_audit_without_new_runtime (tools.tests.test_signed_import_native_plan.NativePlanTests.test_reproducible_frozen_audit_without_new_runtime) ... ok
+test_seven_native_profiles_and_pending_gates (tools.tests.test_signed_import_native_plan.NativePlanTests.test_seven_native_profiles_and_pending_gates) ... ok
+test_source_provenance_mismatch_fails_closed (tools.tests.test_signed_import_native_plan.NativePlanTests.test_source_provenance_mismatch_fails_closed) ... ok
+test_trusted_composition_and_observation_bindings (tools.tests.test_signed_import_native_plan.NativePlanTests.test_trusted_composition_and_observation_bindings) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.964s
+
+OK
