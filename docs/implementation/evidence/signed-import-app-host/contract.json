@@ -1,0 +1,30 @@
+{
+  "kind": "actualAppHostGateOnly",
+  "base": "5a02ca7ec6d8d5dbfd8bd1f530c3ca3f9872e922",
+  "browserProfiles": 6,
+  "sourceAdaptersQualified": false,
+  "selectionPreviewConsentImplemented": false,
+  "productionHostImplemented": false,
+  "fullTasksCompleted": 0,
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "unchangedFiles": {
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "pubspec.lock": "0201baa0664d65a59250d862d129016ee7add2893bc40cd4cd8e3f1891affb3d",
+    "apps/studio_web/lib/main.dart": "0d66fe0f1fc3b9ba8df1845973f3e9406f46eefa68473dab2604c82656097b1b",
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "302252234413b4bf461ac5daa4c7f960ee142daeb1dde371af7f848697ceb7f5",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier.dart": "f8d9d0dec7e5c78c541109d5a0cbdf96c6ce3066e21151ba64f520f96361c224",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier_web.dart": "11b1b5ddaf3d2ea1b1a27d1719c746eb492d32beefccdbb8b4eb67f0f58faed8",
+    "packages/studio_assets/web/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "docs/studio/spec/s8f-signed-import-app-v1.md": "26cb4998931e0b26bf5524c643a5bd8764563a4a1722ff7c7dcafb983ddb681a",
+    "docs/adr/0248-signed-import-app-composition-plan.md": "9fcd8417e3a9737e0843c9b0f801d1e6778f0df5e1f0ff6301710c626c8b8fd6"
+  },
+  "allowedRuntimeChanges": [
+    "apps/studio_web/web/index.html",
+    "apps/studio_web/web/flutter_bootstrap.js"
+  ]
+}

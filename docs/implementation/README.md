@@ -1672,3 +1672,27 @@ fullTasksCompleted=0; I-037/T-4/program unfinished. Original acceptance and
 remainingScope, previous runtime sources/tests and the pre-existing strict-equality
 failure are untouched. No production roots, durable installation, cross-namespace
 import, FTS/RAG, device/model/provider/store/paid acceptance or excluded work opens.
+
+## Increment 3.50 — independent actual App-host CSP prerequisite only
+
+[ADR 0249](../adr/0249-signed-import-app-host-csp.md) implements the A5 host gate:
+actual Web App index without a base tag, App-owned external Flutter bootstrap,
+main-realm self-hosted CanvasKit and style-nonce support. A loopback strict-CSP/SRI
+host independently compiled and rendered the ACTUAL existing App; six fresh Chrome
+profiles cover normal, vendor SRI/CSP/missing-asset and wrong/missing style nonce.
+No unsafe-inline/eval, off-origin fetch or service-worker escape. Static hosting
+without that header/SRI/nonce profile is not claimed qualified.
+
+Evidence: `evidence/signed-import-app-host/`, including actual-App screenshot and
+asset/compiler/browser digests. Six new host evidence checks plus existing static
+plan/preservation checks pass (40 total), as do actual App compile/analyze and
+Python/JS syntax/diff checks. No old backend/vector/importer/format runtime is
+requalified; existing backend startup is a host-dependency smoke check only.
+
+This is ONE prerequisite, not full UI composition: source adapters, native GTK
+picker/browser selected-File tests and selection/preview-consent controls remain
+unimplemented/unqualified. Recommended 3.51 first qualifies those source adapters.
+Counts stay **0 complete / 62 partial / 12 planned / 13 blocked**;
+fullTasksCompleted=0; I-037/T-4/program unfinished. Original acceptance/remainingScope
+and existing strict-equality failure remain untouched. No installation, production
+roots, namespace transfer, FTS/RAG or standing excluded acceptance opens.

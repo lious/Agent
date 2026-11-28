@@ -1,0 +1,632 @@
+{
+  "kind": "actualAppHostCspQualificationOnly",
+  "passed": true,
+  "base": "5a02ca7ec6d8d5dbfd8bd1f530c3ca3f9872e922",
+  "flutter": {
+    "frameworkVersion": "3.50.1",
+    "channel": "stable",
+    "repositoryUrl": "https://github.com/flutter/flutter.git",
+    "frameworkRevision": "ae9b586f34a8443573f82ef57c3bf914a908cbf7",
+    "frameworkCommitDate": "2026-11-18 17:01:07 -0800",
+    "engineRevision": "4d35714800b9266b6693a58e1225ecd7e9e45ed7",
+    "engineCommitDate": "2026-11-18 01:50:07.000Z",
+    "engineContentHash": "51379e6df48ea8ee7205623b90fe66491cad8df3",
+    "engineBuildDate": "2026-11-17 23:29:07.499",
+    "dartSdkVersion": "3.14.0",
+    "devToolsVersion": "2.61.0",
+    "flutterVersion": "3.50.1",
+    "flutterRoot": "/workspace/toolchains/flutter"
+  },
+  "chrome": "Google Chrome 156.0.8078.47",
+  "mode": "Flutter release Dart-to-JS / main-realm CanvasKit / --no-web-resources-cdn",
+  "compiledMainSha256": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+  "appBootstrapSha256": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+  "sourceBootstrapSha256": "adfa13b86cfccbd5d87532397cd28313944602213dc09299634f3b36797627e0",
+  "uniqueStyleNonces": 6,
+  "vendorSha256": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V",
+  "sourceAdaptersQualified": false,
+  "selectionPreviewConsentImplemented": false,
+  "reports": [
+    {
+      "mode": "normal",
+      "firstFrame": true,
+      "backendState": "ready",
+      "violations": [],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        true
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:41071/?mode=normal",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:41071/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41071/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41071/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41071/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41071/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-dVFzyBCuS-w7jD8aUwY9dw'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/host_probe.js",
+        "/flutter_bootstrap.js",
+        "/signed_import_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/canvaskit/chromium/canvaskit.js",
+        "/main.dart.js",
+        "/assets/FontManifest.json",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+        "/assets/fonts/fallback/Roboto-Regular.ttf",
+        "/favicon.ico"
+      ],
+      "servedAssetSha256": {
+        "/": "b7a6936ad60eba8aee5b17680a8328779b587df41ed72a5eebb9728d6370df68",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    },
+    {
+      "mode": "sri-tamper",
+      "firstFrame": true,
+      "backendState": "failed",
+      "violations": [],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        true
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:44427/?mode=sri-tamper",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:44427/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:44427/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:44427/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:44427/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:44427/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-MQhWPfZmSwflV8cnZVt3UQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/host_probe.js",
+        "/signed_import_bootstrap.js",
+        "/flutter_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/canvaskit/chromium/canvaskit.js",
+        "/main.dart.js",
+        "/assets/FontManifest.json",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+        "/assets/fonts/fallback/Roboto-Regular.ttf",
+        "/favicon.ico"
+      ],
+      "servedAssetSha256": {
+        "/": "f01b45149fdcec25675a7b51f774e4d48d76c217f45435279376e8f93c064d91",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "3b2cde06c5ea65c143e27ebf8e04db23631bf8abef79ee8a2c6411d13c8ba24e",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    },
+    {
+      "mode": "csp-vendor-block",
+      "firstFrame": true,
+      "backendState": "failed",
+      "violations": [
+        {
+          "directive": "script-src-elem",
+          "blocked": "http://127.0.0.1:41089/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "sample": ""
+        }
+      ],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        true
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:41089/?mode=csp-vendor-block",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:41089/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41089/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41089/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:41089/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:41089/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [
+        {
+          "requestId": "2625117.12",
+          "timestamp": 195891.431718,
+          "type": "Script",
+          "errorText": "",
+          "canceled": false,
+          "blockedReason": "csp"
+        }
+      ],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-0yb-3AXnrE-TQCKbEADUBQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/host_probe.js",
+        "/signed_import_bootstrap.js",
+        "/flutter_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/canvaskit/chromium/canvaskit.js",
+        "/main.dart.js",
+        "/assets/FontManifest.json",
+        "/assets/fonts/fallback/Roboto-Regular.ttf",
+        "/favicon.ico"
+      ],
+      "servedAssetSha256": {
+        "/": "9aaa4bcf9af0e53d5f37c650bbc15dc9bea1ea200368e97fe608503e2e3ea4f1",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    },
+    {
+      "mode": "missing-vendor",
+      "firstFrame": true,
+      "backendState": "failed",
+      "violations": [],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        true
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:43495/?mode=missing-vendor",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:43495/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:43495/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:43495/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:43495/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:43495/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [
+        {
+          "requestId": "2625346.12",
+          "timestamp": 195895.500777,
+          "type": "Script",
+          "errorText": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-o-gnyHlg5z2Rbi8KOFOrqQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/flutter_bootstrap.js",
+        "/host_probe.js",
+        "/signed_import_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/main.dart.js",
+        "/canvaskit/chromium/canvaskit.js",
+        "/assets/FontManifest.json",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+        "/assets/fonts/fallback/Roboto-Regular.ttf",
+        "/favicon.ico"
+      ],
+      "servedAssetSha256": {
+        "/": "0185280873aaffc588c963dcba25a82d0383fb263f2024e530d25def9a6e2c9b",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    },
+    {
+      "mode": "wrong-style-nonce",
+      "firstFrame": true,
+      "backendState": "ready",
+      "violations": [
+        {
+          "directive": "style-src-elem",
+          "blocked": "inline",
+          "sample": ""
+        },
+        {
+          "directive": "style-src-elem",
+          "blocked": "inline",
+          "sample": ""
+        }
+      ],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        true
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:36175/?mode=wrong-style-nonce",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:36175/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:36175/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:36175/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:36175/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:36175/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-oL8Dn0Gh3QmYdQysWu_8AQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/host_probe.js",
+        "/signed_import_bootstrap.js",
+        "/flutter_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/canvaskit/chromium/canvaskit.js",
+        "/main.dart.js",
+        "/assets/FontManifest.json",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+        "/favicon.ico",
+        "/assets/fonts/fallback/Roboto-Regular.ttf"
+      ],
+      "servedAssetSha256": {
+        "/": "ce06f05c64715360591fc22963ca191063151fb44e632f090e3e9ac6a46b58a1",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    },
+    {
+      "mode": "missing-style-nonce",
+      "firstFrame": true,
+      "backendState": "ready",
+      "violations": [
+        {
+          "directive": "style-src-elem",
+          "blocked": "inline",
+          "sample": ""
+        },
+        {
+          "directive": "style-src-elem",
+          "blocked": "inline",
+          "sample": ""
+        }
+      ],
+      "errors": [],
+      "registrations": [],
+      "views": 1,
+      "nonceStyles": [
+        false
+      ],
+      "baseElements": 0,
+      "vendorTamperExecuted": false,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "secureContext": true,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:35073/?mode=missing-style-nonce",
+          "type": "Document"
+        },
+        {
+          "url": "http://127.0.0.1:35073/host_probe.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/signed_import_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/flutter_bootstrap.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/canvaskit/chromium/canvaskit.wasm",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:35073/canvaskit/chromium/canvaskit.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/main.dart.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/assets/FontManifest.json",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:35073/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "type": "Script"
+        },
+        {
+          "url": "http://127.0.0.1:35073/assets/fonts/fallback/Roboto-Regular.ttf",
+          "type": "Fetch"
+        },
+        {
+          "url": "http://127.0.0.1:35073/favicon.ico",
+          "type": "Other"
+        }
+      ],
+      "failures": [],
+      "exceptions": [],
+      "passed": true,
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-umH00o_2eqFxwBv1JpbnsA'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "remoteRequests": [],
+      "serverRequests": [
+        "/",
+        "/host_probe.js",
+        "/flutter_bootstrap.js",
+        "/signed_import_bootstrap.js",
+        "/canvaskit/chromium/canvaskit.wasm",
+        "/canvaskit/chromium/canvaskit.js",
+        "/main.dart.js",
+        "/assets/FontManifest.json",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+        "/assets/fonts/fallback/Roboto-Regular.ttf",
+        "/favicon.ico"
+      ],
+      "servedAssetSha256": {
+        "/": "cdd34e2d94dd8ec810b328ad68f6fdff1251c689e1d6fc7299b9afba64b3302d",
+        "/host_probe.js": "bda087b892d33dec4844b7d3ceda509dfadba19d74432ac4b6b7b9097e18f197",
+        "/flutter_bootstrap.js": "d38f8d655c00dc10462d1534117d44401716dcc943ac99e58ec5a67e2d507a39",
+        "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+        "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+        "/main.dart.js": "e6ac8ba0b7f8ffb8481d1106c2543e255fd56ba5bf182110e9c39c9f4e19d157",
+        "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+        "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+        "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+        "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+      },
+      "styleNonceBytes": 16
+    }
+  ]
+}
