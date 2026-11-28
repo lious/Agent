@@ -279,3 +279,39 @@ paid API, real model, new privilege path or private-key handling is authorized.
 Project user_version stays 9; InversePatch kind stays restoreSnapshot. No schema
 v10, library migration, restore service, ZipPlanner, durable mailbox, new DAG
 runtime, production FTS/RAG or paid service is opened.
+
+### Increment 3.46 implementation-exposed resource bindings (t155u)
+
+Before implementing adversarial schema traversal, close the computational bound:
+byte/depth limits alone do not bound repeated acyclic local-reference expansion.
+Each schema-validation operation and each manifest-metaschema operation has a
+200000-visit/comparison budget; exhaustion is SKILL_IMPORT_LIMIT, not a license
+warning or permissive success. Local-reference aliases (a definition whose body
+contains $ref) are unsupported; cycles remain refused. At most 16 immutable
+pending previews are retained per importer; discard/one-shot acknowledgment
+releases the captured bytes. No disk storage or durable queue is introduced.
+
+Acknowledgment needs a trusted App UI user-action capability, not merely an ID
+echoed by a model. The App mints a local one-use gesture handle for that retained
+preview after explicit UI consent; the importer accepts that opaque handle, not
+userConfirmed/signed booleans. The resulting record still grants no installation
+or tool-execution authority. This completes an implementation-exposed binding,
+not a new tool-approval API.
+
+The selected native verifier also enforces canonical prime-subgroup public keys
+and R points through libsodium's maintained point-validation API. No App curve
+arithmetic or custom point blacklist is added. This increment's executable port
+is explicitly Linux-only; shared/Web entrypoints do not import dart:ffi. An App
+release must independently pin its immutable deployed binary hash. The recorded
+DEV host artifact and test publisher keys are not production trust provisioning.
+
+A further parser binding exposed during implementation: finite JSON numbers must
+round-trip through the selected host number decoder without changing their
+normalized decimal value. Unsupported precision/underflow is refused as
+SKILL_IMPORT_ENCODING/numberPrecision rather than silently making distinct
+const/enum fixture values equal. Decimal equality/order use normalized decimal
+components, not reserialized signed bytes. This is a range/precision limit
+permitted by RFC 8259 section 6 (https://www.rfc-editor.org/rfc/rfc8259.txt), not
+an arbitrary-precision JSON engine or a Web-number compatibility qualification.
+Original authenticated bytes are NEVER rewritten; Time integer strings remain
+unchanged. Out-of-range non-byte integers cannot enter a captured byte token.

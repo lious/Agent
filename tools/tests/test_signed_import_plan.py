@@ -43,7 +43,9 @@ class SignedImportPlanTest(unittest.TestCase):
 
     def test_status_is_not_new_acceptance(self):
         old = json.loads(historical(self.base, 'docs/implementation/task-status.json'))
-        new = json.loads((ROOT / 'docs/implementation/task-status.json').read_text())
+        # This tests the plan-only 3.45 snapshot, not a ban on its scheduled runtime.
+        new = json.loads(historical('2d7c9a95111aaf9edc2075edb8a98acf3124c611',
+                                    'docs/implementation/task-status.json'))
         self.assertEqual(new['counts'], {'complete': 0, 'partial': 62, 'planned': 12, 'blocked': 13})
         self.assertEqual(new['fullTasksCompleted'], 0)
         self.assertEqual(len(new['tasks']), 87)

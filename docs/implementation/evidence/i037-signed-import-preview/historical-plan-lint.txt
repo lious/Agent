@@ -1,0 +1,12 @@
+test_authentication_and_no_downgrade_bindings (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_authentication_and_no_downgrade_bindings) ... ok
+test_dsse_reference_pae_not_a_signature_test (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_dsse_reference_pae_not_a_signature_test) ... ok
+test_explicit_plan_only_boundary (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_explicit_plan_only_boundary) ... ok
+test_local_document_links_resolve (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_local_document_links_resolve) ... ok
+test_preserved_source_contracts (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_preserved_source_contracts) ... ok
+test_resource_and_manifest_bindings (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_resource_and_manifest_bindings) ... ok
+test_status_is_not_new_acceptance (tools.tests.test_signed_import_plan.SignedImportPlanTest.test_status_is_not_new_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.030s
+
+OK

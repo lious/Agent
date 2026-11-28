@@ -1,0 +1,92 @@
+00:00 +0: loading test/skills/signed_import/backend_test.dart
+00:00 +0: test/skills/signed_import/backend_test.dart: RFC 8032 section 7.1 vector 1 and altered message
+00:00 +1: test/skills/signed_import/backend_test.dart: RFC 8032 section 7.1 vector 2 and altered message
+00:00 +2: test/skills/signed_import/backend_test.dart: RFC 8032 section 7.1 vector 3 and altered message
+00:00 +3: test/skills/signed_import/backend_test.dart: reject S >= L and S+L malleability
+00:00 +4: test/skills/signed_import/backend_test.dart: reject identity/zero/noncanonical/invalid public keys and R points
+00:00 +5: test/skills/signed_import/backend_test.dart: length guards, altered signature, wrong binary pin fail closed
+00:00 +6: test/skills/signed_import/importer_test.dart: real Ed25519 DSSE preview, separate hashes and one-shot acknowledgment
+00:00 +7: test/skills/signed_import/importer_test.dart: real Ed25519 DSSE preview, separate hashes and one-shot acknowledgment
+00:00 +8: test/skills/signed_import/importer_test.dart: capture copies bytes; deeply immutable knowledge/report lists
+00:00 +9: test/skills/signed_import/importer_test.dart: unsigned empty-root policy stays untrusted; acknowledgment never upgrades it
+00:00 +10: test/skills/signed_import/importer_test.dart: license facts and warnings stay unverified, no extra license approval
+00:00 +11: test/skills/signed_import/importer_test.dart: permission diff reports missing tools and does not grant them
+00:00 +12: test/skills/signed_import/importer_test.dart: UI gesture cannot be replaced by another UI port, ID echo or reused receipt
+00:00 +13: test/skills/signed_import/importer_test.dart: threshold uses distinct key bytes; ignores forged keyid and unknown envelope fields
+00:00 +14: test/skills/signed_import/importer_test.dart: duplicate configured keys/fingerprints are invalid policy
+00:00 +15: test/skills/signed_import/importer_test.dart: tampering fails closed: payload
+00:00 +16: test/skills/signed_import/importer_test.dart: tampering fails closed: type
+00:00 +17: test/skills/signed_import/importer_test.dart: tampering fails closed: signature
+00:00 +18: test/skills/signed_import/importer_test.dart: tampering fails closed: invalid-signed-no-downgrade
+00:00 +19: test/skills/signed_import/importer_test.dart: actual signed=true claim in payload is not a verification path
+00:00 +20: test/skills/signed_import/importer_test.dart: signed byte identity includes whitespace and preserves exact Unicode bytes
+00:00 +21: test/skills/signed_import/importer_test.dart: DSSE PAE reference bytes and UTF-8 lengths
+00:00 +22: test/skills/signed_import/importer_test.dart: ordinary and URL-safe padded/unpadded base64, no whitespace or pad-bit aliases
+00:00 +23: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":1,"x":2}
+00:00 +24: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":{"a":1,"\u0061":2}}
+00:00 +25: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":"\ud800"}
+00:00 +26: test/skills/signed_import/importer_test.dart: strict decoding refuses ﻿{}
+00:00 +27: test/skills/signed_import/importer_test.dart: strict decoding refuses {} true
+00:00 +28: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":NaN}
+00:00 +29: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":1e999}
+00:00 +30: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":01}
+00:00 +31: test/skills/signed_import/importer_test.dart: strict decoding refuses {"x":1,}
+00:00 +32: test/skills/signed_import/importer_test.dart: duplicate keys refused at envelope, payload and file layers
+00:00 +33: test/skills/signed_import/importer_test.dart: path alias refused: "../film-skill.json"
+00:00 +34: test/skills/signed_import/importer_test.dart: path alias refused: "/film-skill.json"
+00:00 +35: test/skills/signed_import/importer_test.dart: path alias refused: "C:\\film-skill.json"
+00:00 +36: test/skills/signed_import/importer_test.dart: path alias refused: "\\\\host\\file"
+00:00 +37: test/skills/signed_import/importer_test.dart: path alias refused: "dir/../film-skill.json"
+00:00 +38: test/skills/signed_import/importer_test.dart: path alias refused: "film-skill.json/"
+00:00 +39: test/skills/signed_import/importer_test.dart: path alias refused: "Film-Skill.json"
+00:00 +40: test/skills/signed_import/importer_test.dart: path alias refused: "film%2dskill.json"
+00:00 +41: test/skills/signed_import/importer_test.dart: path alias refused: "film-skill.json\u0000"
+00:00 +42: test/skills/signed_import/importer_test.dart: duplicate file path, wrong digest and incorrect byte length refused
+00:00 +43: test/skills/signed_import/importer_test.dart: all byte/depth/count limits fail without a preview
+00:00 +44: test/skills/signed_import/importer_test.dart: pending previews bounded and discard releases capacity
+00:00 +45: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses missing-required
+00:00 +46: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses unknown-field
+00:00 +47: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses id-drift
+00:00 +48: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses version-drift
+00:00 +49: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses signature-ref
+00:00 +50: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses namespace
+00:00 +51: test/skills/signed_import/importer_test.dart: closed FilmSkill refuses fixture-hash
+00:00 +52: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"$ref":"https://attacker.invalid/schema"}
+00:00 +53: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"object","properties":{},"additionalProperties":true}
+00:00 +54: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"string","minLength":-1}
+00:00 +55: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"array","minItems":3,"maxItems":1}
+00:00 +56: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"invented"}
+00:00 +57: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"string","pattern":".*"}
+00:00 +58: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"unknown":true}
+00:00 +59: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"$defs":{"a":{"$ref":"#/$defs/a"}},"$ref":"#/$defs/a"}
+00:00 +60: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"$ref":"#/$defs/missing"}
+00:00 +61: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"enum":[1,1]}
+00:00 +62: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"type":"object","properties":{},"required":["missing"],"additionalProperties":false}
+00:00 +63: test/skills/signed_import/importer_test.dart: manifest schema rejects unsupported/malformed vocabulary {"$defs":{"a":true,"b":{"$ref":"#/$defs/a"}},"$ref":"#/$defs/b"}
+00:00 +64: test/skills/signed_import/importer_test.dart: local schema definitions work and fixtures are checked not executed
+00:00 +65: test/skills/signed_import/importer_test.dart: manifest hash/requiredTools/fixture references cannot drift
+00:00 +66: test/skills/signed_import/importer_test.dart: parsed steps cannot hide tools, cycles, missing dependencies, or duplicate IDs
+00:00 +67: test/skills/signed_import/importer_test.dart: untrusted schemas cannot exhaust an acyclic reference graph work budget
+00:00 +68: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by epoch
+00:00 +69: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by revoked
+00:00 +70: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by expiry
+00:00 +71: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by before
+00:00 +72: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by clock-unknown
+00:00 +73: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by rollback
+00:00 +74: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by namespace
+00:00 +75: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by grant
+00:00 +76: test/skills/signed_import/importer_test.dart: acknowledgment invalidated by same-epoch-policy-change
+00:00 +77: test/skills/signed_import/importer_test.dart: trusted policy refuses revoked during import
+00:00 +78: test/skills/signed_import/importer_test.dart: trusted policy refuses not-before during import
+00:00 +79: test/skills/signed_import/importer_test.dart: trusted policy refuses expired during import
+00:00 +80: test/skills/signed_import/importer_test.dart: trusted policy refuses role during import
+00:00 +81: test/skills/signed_import/importer_test.dart: trusted policy refuses fingerprint during import
+00:00 +82: test/skills/signed_import/importer_test.dart: trusted policy refuses namespace during import
+00:00 +83: test/skills/signed_import/importer_test.dart: trusted policy refuses caller-policy during import
+00:00 +84: test/skills/signed_import/importer_test.dart: unknown or rollback clock yields needsReview, never a verified preview
+00:00 +85: test/skills/signed_import/importer_test.dart: numeric/enum/time defaults and duplicate parameter slots are checked
+00:00 +86: test/skills/signed_import/importer_test.dart: boolean schemas, local refs and malformed keyword value types
+00:00 +87: test/skills/signed_import/importer_test.dart: malformed signatures reject even with a valid threshold signature
+00:00 +88: test/skills/signed_import/importer_test.dart: default AppProfile policy has no provisioned publisher roots
+00:00 +89: test/skills/signed_import/importer_test.dart: numeric precision cannot merge distinct const/enum values or truncate bytes
+00:00 +90: All tests passed!

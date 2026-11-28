@@ -1,0 +1,9 @@
+test_authoritative_film_schema_reference_closure (tools.tests.test_signed_import_runtime_contract.SignedImportRuntimeContractTest.test_authoritative_film_schema_reference_closure) ... ok
+test_honest_status_and_original_wording (tools.tests.test_signed_import_runtime_contract.SignedImportRuntimeContractTest.test_honest_status_and_original_wording) ... ok
+test_locked_backend_corpus_and_native_only_entrypoint (tools.tests.test_signed_import_runtime_contract.SignedImportRuntimeContractTest.test_locked_backend_corpus_and_native_only_entrypoint) ... ok
+test_preserved_privilege_frozen_and_preexisting_failure_files (tools.tests.test_signed_import_runtime_contract.SignedImportRuntimeContractTest.test_preserved_privilege_frozen_and_preexisting_failure_files) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.035s
+
+OK

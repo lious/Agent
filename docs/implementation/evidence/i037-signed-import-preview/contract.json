@@ -1,0 +1,40 @@
+{
+  "kind": "nativeImportPreviewQualification",
+  "preservedBase": "2d7c9a95111aaf9edc2075edb8a98acf3124c611",
+  "runtimeImplemented": true,
+  "scope": "Linux x86_64 DEV native import-to-preview and in-memory UI acknowledgment only",
+  "dartTests": 90,
+  "backendFrameworkCases": 7,
+  "wycheproofSubcasesWithinOneCase": 210,
+  "importerFrameworkCases": 83,
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "unchangedFiles": {
+    "packages/studio_assets/lib/craft/skill_privilege.dart": "a698d6aa44b2f231f49acce7a2d71d17aaad9f5770c3ea780e97ac49ee46e8a0",
+    "packages/studio_assets/test/skills/compile_safety/i037_external_skill_privilege_test.dart": "014792388a7f19662b591561a0f83835e0a23d10defeecfd8d758b6cb5343f27",
+    "packages/studio_assets/lib/studio_assets.dart": "e6acd6232de881d8a5890af584c5ebfabf163718acdfa56803d2ac16e2f117a7",
+    "docs/studio/spec/s8g.md": "0efb500407036f49efa123ecc88087f80d6a7996abcc220721538f3077e7f80d",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "packages/studio_agent/lib/format_repair.dart": "159b121ede427bc390d56eadb2a88e98fa09f4f1b048a254c1ab86a13a791909",
+    "packages/studio_agent/test/format_repair_test.dart": "4e8a3f4f66e8eae65a669c20456d008f18dea015440d9c5e2e862b613d99345d",
+    "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart": "486205ef8460adea31a25fc026a2860398a68dafb5d9b3c1904c2203b714166c",
+    "packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart": "e1bfda67cc7c24615c2584149b75117f203afceea9974529165b2c9e6723af10",
+    "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart": "08006acf0961d9bbe8241ba3ebc4240e9c97dab8dbb86b12901753a7616012aa"
+  },
+  "backendLock": "packages/studio_assets/third_party/sodium/backend-lock.json",
+  "existingAcceptanceFailure": "Existing test_acceptance strict-equality failure remains unchanged; historical baseline evidence in signed-import-plan-v1/baseline-acceptance-failure.json. Not rerun or repaired here.",
+  "notQualified": [
+    "Web or other native hosts",
+    "file-picker/UI wiring",
+    "production publisher key provisioning",
+    "durable installation",
+    "cross-namespace transfer",
+    "FTS/RAG",
+    "real model/provider/device",
+    "production security audit"
+  ]
+}

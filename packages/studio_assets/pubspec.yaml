@@ -20,7 +20,8 @@
     "json_canonicalizer": "1.1.0",
     "studio_voice": {
       "path": "../studio_voice"
-    }
+    },
+    "ffi": "2.2.0"
   },
   "dev_dependencies": {
     "test": "^1.26.3",

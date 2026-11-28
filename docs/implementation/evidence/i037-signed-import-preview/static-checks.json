@@ -1,0 +1,11 @@
+{
+  "kind": "staticPreservation",
+  "gitDiffCheck": "passed",
+  "pythonSyntax": "passed",
+  "newDocLinks": "passed",
+  "originalAcceptanceWording": "all 87 unchanged from base",
+  "userVersionAndInversePatch": "no existing store/document source changed",
+  "priorRuntimeQualification": "not rerun",
+  "knownStrictEqualityFailure": "untouched; see 3.45 historical baseline evidence",
+  "devBackendBinaryOutsideRepository": true
+}
