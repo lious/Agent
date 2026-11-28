@@ -290,3 +290,28 @@ All cases keep actual App/store/File/factory/readiness, baseline snapshots and
 continuous no-write/network/CSP observation. Default and ordinary opt-in release
 artifacts exclude every new fixture control, fixture key/time and entrypoint.
 L01–L03/N01–N02 and full A6 remain deferred. Prior rows are NOT rerun.
+
+## Increment 3.58 — L01–L03 prerequisite gates (t155u; plan only)
+
+The existing immutable fixture transitions and pagehide reading gate do NOT yet
+provide (a) a genuine pending repository-success observer, (b) independent lazy
+open/length/read/close release controls, or (c) a natural early-result/quiescence
+oracle. These are concrete transport gaps, not permission to inject readiness,
+replace repositories, expose consent, or change capture ordering.
+
+The normative supplement is [App late-phase acceptance v1](s8f-signed-import-app-late-v1.md),
+under ADR 0257. It defines G0–G5 prerequisite gates and twelve separately identified
+L01–L03 profiles. In particular L03 uses the existing nullable cancellation result
+while close is pending; successful non-null capture already settles close BEFORE
+publication and must NOT be reordered to manufacture that test. A logical lazy
+open is inside reader.length after the existing deadline starts, not a substituted
+OS-picker wait. L01 holds only an already-integrity-checked vendor response and
+observes the ACTUAL factory's eventual success, never a fake ready callback.
+
+Increment 3.58 completes only this plan and executable source-contract preflight
+G0. No late-phase fixture, runtime observer, host hold/release, reader release gate,
+artifact exclusion build or new combined browser row is implemented or qualified.
+G1–G5 are explicit implementation/qualification prerequisites, not passed gates.
+Do not borrow B01–B11 or old source/crypto/host runtime results as these rows.
+N01–N02/full A6/I-037/T-4/program completion remain open. Implement the independently
+qualified transports before claiming the combined rows in the next increment.

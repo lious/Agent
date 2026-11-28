@@ -1,0 +1,19 @@
+{
+  "gate": "G0",
+  "kind": "static-source-contract-preflight",
+  "passed": true,
+  "runtimeQualification": false,
+  "newBrowserCasesRun": 0,
+  "newArtifactBuilds": 0,
+  "qualifiedMatrixRows": [],
+  "checks": [
+    "unchanged live actual factory/bridge",
+    "real initialization generation fence before ready",
+    "selected-source deadline before lazy open/length/read",
+    "successful bytes after close and quiescence",
+    "natural nullable cancel before quiescence",
+    "App await quiescence before token/import",
+    "plan matrix/transport obligations explicit",
+    "zero runtime delta and unchanged task acceptance"
+  ]
+}
