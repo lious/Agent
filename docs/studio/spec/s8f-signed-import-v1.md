@@ -315,3 +315,7 @@ permitted by RFC 8259 section 6 (https://www.rfc-editor.org/rfc/rfc8259.txt), no
 an arbitrary-precision JSON engine or a Web-number compatibility qualification.
 Original authenticated bytes are NEVER rewritten; Time integer strings remain
 unchanged. Out-of-range non-byte integers cannot enter a captured byte token.
+
+### Increment 3.47 Web composition plan
+
+[Web signed import-to-preview v1](s8f-signed-import-web-v1.md) completes the separately qualified browser artifact/bootstrap, concrete interop seam, App ownership and browser-test bindings. This is a plan-only supplement, not Web runtime qualification or a change to the accepted native/privilege boundaries.

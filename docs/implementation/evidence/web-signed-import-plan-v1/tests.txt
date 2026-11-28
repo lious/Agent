@@ -1,0 +1,12 @@
+test_candidate_pin_is_not_crypto_qualification (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_candidate_pin_is_not_crypto_qualification) ... ok
+test_preexecution_readiness_and_no_crypto_fallback (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_preexecution_readiness_and_no_crypto_fallback) ... ok
+test_required_browser_evidence_and_local_links (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_required_browser_evidence_and_local_links) ... ok
+test_runtime_and_frozen_files_were_unchanged_at_plan_snapshot (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_runtime_and_frozen_files_were_unchanged_at_plan_snapshot) ... ok
+test_seven_bindings_are_explicitly_plan_only (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_seven_bindings_are_explicitly_plan_only) ... ok
+test_status_preserves_acceptance_and_remaining_scope (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_status_preserves_acceptance_and_remaining_scope) ... ok
+test_typed_adapter_preserves_security_boundaries (tools.tests.test_signed_import_web_plan.WebSignedImportPlanTest.test_typed_adapter_preserves_security_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.535s
+
+OK

@@ -1,0 +1,12 @@
+{
+  "kind": "planStaticChecksOnly",
+  "candidateSourceHashes": "matched SHA256 and SHA384 SRI over downloaded bytes; NOT executed",
+  "candidateCodeExecuted": false,
+  "webRuntimeQualified": false,
+  "runtimeChanges": [],
+  "pythonSyntax": "passed",
+  "gitDiffCheck": "passed",
+  "preExistingAcceptanceTest": "unchanged and not rerun",
+  "priorNativeOrModelQualification": "not rerun",
+  "base": "f627ce3af55f8a1b82573be55acb0205a7339324"
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "candidateArtifactOnly",
+  "executed": false,
+  "webQualified": false,
+  "upstream": "jedisct1/libsodium.js",
+  "tag": "0.8.4",
+  "sourceUrl": "https://raw.githubusercontent.com/jedisct1/libsodium.js/0.8.4/dist/browsers-sumo/sodium.js",
+  "sourceBytes": 1319027,
+  "sourceSha256": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V",
+  "distribution": "dist/browsers-sumo/sodium.js",
+  "license": "ISC",
+  "expectedCoreVersion": "1.0.22",
+  "coreSubmoduleCommit": "33cc75ab1565d9dcbe808354191bd572ad6b64d0",
+  "coreVersionSource": "https://raw.githubusercontent.com/jedisct1/libsodium/33cc75ab1565d9dcbe808354191bd572ad6b64d0/configure.ac",
+  "checkedDate": "2026-11-28 Asia/Shanghai",
+  "notes": "Single combined browser artifact avoids floating npm ^0.8.0 transitive resolution. Presence/version provenance is not execution or Web cryptographic qualification.",
+  "appAssetPath": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+}

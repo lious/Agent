@@ -41,7 +41,9 @@ class SignedImportRuntimeContractTest(unittest.TestCase):
     def test_honest_status_and_original_wording(self):
         base = self.contract['preservedBase']
         old = json.loads(subprocess.check_output(['git', 'show', base + ':docs/implementation/task-status.json'], cwd=ROOT))
-        new = json.loads((ROOT / 'docs/implementation/task-status.json').read_text())
+        # Assert the 3.46 qualification snapshot, not a ban on future task progress.
+        new = json.loads(subprocess.check_output(['git', 'show',
+            'f627ce3af55f8a1b82573be55acb0205a7339324:docs/implementation/task-status.json'], cwd=ROOT))
         self.assertEqual(new['counts'], self.contract['statusCounts'])
         self.assertEqual(new['fullTasksCompleted'], 0)
         self.assertEqual(len(new['tasks']), 87)

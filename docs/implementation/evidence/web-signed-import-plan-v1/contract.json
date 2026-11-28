@@ -1,0 +1,40 @@
+{
+  "kind": "webCompositionPlanOnly",
+  "preservedBase": "f627ce3af55f8a1b82573be55acb0205a7339324",
+  "runtimeImplemented": false,
+  "webQualified": false,
+  "candidateExecuted": false,
+  "sections": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "W7"
+  ],
+  "readinessDeadlineMs": 10000,
+  "expectedCoreVersion": "1.0.22",
+  "unchangedFiles": {
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "49397b20eb950dd9b7fd0d6d99f97917e447f05d4aa1d7995d22fd334609b202",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier.dart": "f8d9d0dec7e5c78c541109d5a0cbdf96c6ce3066e21151ba64f520f96361c224",
+    "packages/studio_assets/lib/craft/signed_import/strict_json.dart": "ae17283c2441cf31417b03855f76225c6a836a117cf151540a40f49ce6e0a8a1",
+    "packages/studio_assets/lib/craft/signed_import/schema_check.dart": "08fcb88073eee6442e95a2e7d2fcb0474cb2a0db1fc5bd8aeb7009a7388819e8",
+    "packages/studio_assets/lib/craft/signed_import/film_schema.dart": "681fad54d7ce750f23a38440324cec29a26f4eedca0949c2608f153e2ba072cb",
+    "packages/studio_assets/lib/craft/signed_import/manifest_metaschema.dart": "9fed67397684b4e086689f76cb00e3b0da7bd77c5eda087eb9239bb30f42e65a",
+    "packages/studio_assets/lib/studio_assets.dart": "e6acd6232de881d8a5890af584c5ebfabf163718acdfa56803d2ac16e2f117a7",
+    "packages/studio_assets/lib/craft/skill_privilege.dart": "a698d6aa44b2f231f49acce7a2d71d17aaad9f5770c3ea780e97ac49ee46e8a0",
+    "packages/studio_assets/test/skills/compile_safety/i037_external_skill_privilege_test.dart": "014792388a7f19662b591561a0f83835e0a23d10defeecfd8d758b6cb5343f27",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "packages/studio_agent/lib/format_repair.dart": "159b121ede427bc390d56eadb2a88e98fa09f4f1b048a254c1ab86a13a791909",
+    "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart": "486205ef8460adea31a25fc026a2860398a68dafb5d9b3c1904c2203b714166c",
+    "packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart": "e1bfda67cc7c24615c2584149b75117f203afceea9974529165b2c9e6723af10",
+    "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart": "08006acf0961d9bbe8241ba3ebc4240e9c97dab8dbb86b12901753a7616012aa"
+  },
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  }
+}
