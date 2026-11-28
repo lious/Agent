@@ -1,0 +1,48 @@
+{
+  "kind": "planConsistencyOnly",
+  "policyVersion": "portable-format-repair-v1",
+  "runtimeImplemented": false,
+  "maxPlanRepairs": 1,
+  "attempts": [
+    1,
+    2
+  ],
+  "preservedBase": "6951d6b1e519009de99c223bc8202af1842c7309",
+  "unchangedFiles": {
+    "packages/studio_agent/lib/agent_harness.dart": "5404a573b0c6fb380344ec07c07c33d57c7a3bf9fc5e628d2b3499f878394820",
+    "packages/studio_agent/lib/agent_journal.dart": "c5021f967b8221982a98fe4c65ca1aff051fcadb1e0b913e2d5fa787b8054338",
+    "packages/studio_agent/lib/message_protocol.dart": "1d5ea072c15559e7eb5696d7ef63fadb320c0c2baff75f33df475db1cb6563da",
+    "packages/studio_agent/lib/budget_controller.dart": "dcf76cb5488b0deae29a2c304bb520a8a1ff503e242c515295e673a4d85b5554",
+    "packages/studio_agent/lib/llm_runtime.dart": "1cc6d2d697b84737fce8e0d23361df9de1498e7d8d623d66546bbf09cb34dec0",
+    "packages/studio_agent/lib/capability_table.dart": "c850379d70f5a01a345e427bc7e2de8c7ed7f1e55c68248cd788a0ef1da86c9c",
+    "packages/studio_agent/test/llm_runtime_stream_test.dart": "957b327537f0e3a3f46c403b922a039fb8f6632977cae04d25c2aa701c18f793",
+    "docs/implementation/task-status.json": "df8789a7dbe35d5735ea03f3dfc1d638684a55bc5193219bf4ee62c87e8ce252"
+  },
+  "bindings": {
+    "B1": "identity and attempt state",
+    "B2": "journal and terminal result",
+    "B3": "cumulative metering",
+    "B4": "completion evidence and narrow failure classifier",
+    "B5": "smaller task, prompt identity and approval"
+  },
+  "plannedAcceptanceCases": [
+    "duplicate-public-command",
+    "distinct-attempt-records",
+    "failed-attempt-retained",
+    "tool-json-not-free",
+    "failed-and-repair-input-charge",
+    "budget-exhaustion-before-retry",
+    "missing-done-no-retry",
+    "unknown-finish-no-retry",
+    "transport-no-retry",
+    "semantic-no-retry",
+    "extra-keys-not-silently-dropped",
+    "fresh-approval-required",
+    "smaller-output-cap",
+    "changed-prompt-hash",
+    "cancel-before-retry",
+    "revision-change-before-apply",
+    "no-third-attempt"
+  ],
+  "suffix": "\n[portable-format-repair-v1]\nReturn exactly one complete JSON tool-call object for the SAME user task and current allowed tool schema. No prose, no additional keys, no new task or tool, and no tool execution.\n"
+}

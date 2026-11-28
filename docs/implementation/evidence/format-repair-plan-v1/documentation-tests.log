@@ -1,0 +1,10 @@
+test_acceptance_checklist_is_distinct_from_runtime_results (test_format_repair_plan.FormatRepairPlanConsistencyTest.test_acceptance_checklist_is_distinct_from_runtime_results) ... ok
+test_existing_specification_text_is_preserved_and_linked (test_format_repair_plan.FormatRepairPlanConsistencyTest.test_existing_specification_text_is_preserved_and_linked) ... ok
+test_five_bindings_and_explicit_plan_only_status (test_format_repair_plan.FormatRepairPlanConsistencyTest.test_five_bindings_and_explicit_plan_only_status) ... ok
+test_frozen_runtime_tests_and_status_unchanged (test_format_repair_plan.FormatRepairPlanConsistencyTest.test_frozen_runtime_tests_and_status_unchanged) ... ok
+test_prompt_suffix_has_one_unambiguous_json_encoding (test_format_repair_plan.FormatRepairPlanConsistencyTest.test_prompt_suffix_has_one_unambiguous_json_encoding) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.031s
+
+OK

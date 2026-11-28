@@ -1,0 +1,7 @@
+bfc2fa181d9a384be387b7a119916d5d090a12f649f23c99e7d8569662a053de  docs/studio/spec/s10e-format-repair-v1.md
+6f1180c4cd0f3401434c7880d46630733e1ab63a1d1fbe8d5ab71ed76dcd19f4  docs/studio/spec/s10b.md
+d099df914ab2ec3e19752bd6ebb964bfeb56043f342f48432685de8ce22d1a08  docs/studio/spec/s10c.md
+9fcbe7207389718f7cecfbb922a3614e406d19ce343da5eda4b01e566b39deec  docs/studio/spec/s10d.md
+5241fa5db192958a880fb957c4c21cab7381d8ea48722029eded287db6fa187b  docs/studio/spec/s10e.md
+211e85a74a093aafa8cf237ee8c2340b66a679853ca857e12c81403359973494  docs/studio/spec/s12a.md
+0031818625db85999290a0ccd1ceb71561c4ff773d1c34abc412cde1a5ce7f19  tools/tests/test_format_repair_plan.py
