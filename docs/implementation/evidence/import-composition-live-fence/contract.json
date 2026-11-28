@@ -1,0 +1,42 @@
+{
+  "increment": "3.52",
+  "base": "013a8e50c8dcf6be716c065f4e357c636fdc5737",
+  "qualifiedScope": "controlled-reader live-App source fence only; no actual App comparator or combined acceptance",
+  "fullCompositionImplemented": false,
+  "combinedCspReadinessWidgetAccessibilityNoWriteQualified": false,
+  "productionRootsProvisioned": false,
+  "fullTasksCompleted": 0,
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "newDartCases": 17,
+  "allowedRuntimeChanges": [
+    "apps/studio_demo/lib/skill_source_linux.dart",
+    "apps/studio_web/lib/skill_source_web.dart",
+    "packages/studio_assets/lib/craft/signed_import/source_capture.dart",
+    "packages/studio_assets/test/skills/import_composition/source_fence_test.dart"
+  ],
+  "unchangedFiles": {
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "apps/studio_demo/lib/main.dart": "ef271215ea97288814556d36da1a64207163756078afdfd9b3580e640a0d1504",
+    "apps/studio_web/lib/main.dart": "0d66fe0f1fc3b9ba8df1845973f3e9406f46eefa68473dab2604c82656097b1b",
+    "apps/studio_web/web/index.html": "bef0b31437572fe8c7e5382496ec82faba2943314072b156d44fcbc52dfab2b6",
+    "apps/studio_web/web/flutter_bootstrap.js": "adfa13b86cfccbd5d87532397cd28313944602213dc09299634f3b36797627e0",
+    "packages/studio_store/lib/studio_store.dart": "ef14a0b4b2310d7f04ffaa17e384a73696cb1d769d717f51c3ba66b8ed912367",
+    "fixtures/store/v1.sql": "ed67d8bd4269a02443cafd7acc525ccdbb312ac059baa2c8df1c9d561a96a3a7",
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "302252234413b4bf461ac5daa4c7f960ee142daeb1dde371af7f848697ceb7f5",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier.dart": "f8d9d0dec7e5c78c541109d5a0cbdf96c6ce3066e21151ba64f520f96361c224",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier_web.dart": "11b1b5ddaf3d2ea1b1a27d1719c746eb492d32beefccdbb8b4eb67f0f58faed8"
+  },
+  "sourceSha256": {
+    "packages/studio_assets/lib/craft/signed_import/source_capture.dart": "e243976a7831f2e8367efac07ab5cc377cc4b90ce4a24de37a865f71558d4e85",
+    "apps/studio_demo/lib/skill_source_linux.dart": "fd5d0e898f1010673aa7c389c0fb70fb4edd938c31401824c61f2d03f1290efc",
+    "apps/studio_web/lib/skill_source_web.dart": "ed438a89c396701c6e90a2b2344b0b99d2b07749dbeae386de0347f900dd415f",
+    "packages/studio_assets/test/skills/import_composition/source_fence_test.dart": "d4e818c25a4c1bf4703c2caf88d1a9ff886ab3bedfdb3a2b1277e6a844eafe78"
+  },
+  "oldRuntimeSuitesRerun": false
+}

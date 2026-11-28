@@ -176,6 +176,54 @@ opening/reading after invalidation. No source reads or nonce/consent are queued.
 These rules make the existing one-outstanding-operation and detach-on-disposal
 requirements concrete; no claim of OS cancellation or new execution authority.
 
+### Increment 3.52 implementation-exposed live-App fence (t155u)
+
+A2 requires re-sampling live App state after every source-read await. The 3.51
+source helper observes only its own cancellation generation; neither platform
+adapter accepts a live-App predicate. Checking App state only after the returned
+byte future is insufficient: a stale composition could continue reading until
+EOF. This is a concrete composition gap, not a defect in the source-only result.
+The implementation anchors are `source_capture.dart` choose/_capture/live,
+`skill_source_linux.dart` chooseLinuxSkillSource, and `skill_source_web.dart`
+chooseWebSkillSource. Their source-only signatures are not full App qualification.
+
+Bind an OPTIONAL internal `currentAppStillValid` synchronous bool callback on the
+source helper and its two App-owned adapters; omission retains SOURCE-ONLY use,
+not a permitted full-composition path. Full App composition MUST supply it. It is
+trusted App code, never a pack field/model predicate/JS endpoint or approval token.
+Sample BEFORE invoking the picker (preserving synchronous browser activation),
+after selected-reader completion, before starting length/open, after length/open,
+before and after each read, and after eventual close BEFORE publishing bytes.
+An observed false result or callback exception latches invalidity for that
+operation: return only local `scopeChanged`, never bytes, import or a new gesture.
+No new StudioException/protocol enum is introduced. Cleanup still runs, including
+closing late native handles; scope invalidity cannot free a pending OS operation
+or claim cancellation of kernel I/O. An opaque in-flight length/open/read may
+settle, but no subsequent read or byte publication is allowed after invalidity.
+Callbacks are bounded synchronous observations, not async policy/network work.
+
+The full App owner must capture a trusted composition-generation counter together
+with its live ImportAppSnapshot callback. Before any known profile/namespace/
+policy/epoch/grant/clock-confidence/rollback change is published, increment that
+counter, cancel source capture and discard the preview. Compare the captured
+counter on EVERY observation; comparing only final equal-looking values permits
+an ABA change-and-restore. Retain the identical installed profile and policy
+objects plus snapshot scopeHash (not just appId or signed=true). Observe trusted
+clock confidence/rollback and reject backward trusted nowSeconds; normal forward
+clock passage is not a new selection or a grant. Backend import/acknowledgment
+still applies its own existing live checks. The future App wrapper owns these
+comparisons; a callback returning true is NOT qualification that it does so.
+
+Test the new source-fence seam independently with controlled pending pickers and
+readers, including before-picker rejection, selection/length/read/close drift,
+callback exceptions, ABA generation drift, cancellation priority, cleanup faults,
+one busy operation until quiescence and synchronous picker activation. These are
+NEW composition-boundary tests, not reruns or expansion of 3.51 GTK/Web results.
+The complete A1/A2 App owner, A4/A5 widgets/acknowledgment and combined A6 acceptance
+remain a separate coherent slice if this prerequisite is landed on its own. In
+particular no standalone callback test proves actual App CSP/readiness, accessible
+widgets, no-write behavior, signed verification or production-root provisioning.
+
 ## A4 — immutable presentation and separate explicit acknowledgment
 
 Render ONLY the importer-owned immutable SkillVerificationReport, never an

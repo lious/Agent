@@ -7,8 +7,13 @@ import 'dart:typed_data';
 import 'package:file_selector_linux/file_selector_linux.dart';
 import 'package:studio_assets/craft/signed_import/source_capture.dart';
 
-Future<Uint8List?> chooseLinuxSkillSource(SkillSourceCapture capture) =>
-    capture.choose(() => SkillSourceSelection(_pick()));
+Future<Uint8List?> chooseLinuxSkillSource(
+  SkillSourceCapture capture, {
+  bool Function()? currentAppStillValid,
+}) => capture.choose(
+  () => SkillSourceSelection(_pick()),
+  currentAppStillValid: currentAppStillValid,
+);
 
 Future<SkillSourceReader?> _pick() async {
   final selected = await FileSelectorLinux().openFile(

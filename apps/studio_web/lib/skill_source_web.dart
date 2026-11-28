@@ -8,8 +8,10 @@ import 'dart:typed_data';
 import 'package:studio_assets/craft/signed_import/source_capture.dart';
 import 'package:web/web.dart' as web;
 
-Future<Uint8List?> chooseWebSkillSource(SkillSourceCapture capture) =>
-    capture.choose(_pick);
+Future<Uint8List?> chooseWebSkillSource(
+  SkillSourceCapture capture, {
+  bool Function()? currentAppStillValid,
+}) => capture.choose(_pick, currentAppStillValid: currentAppStillValid);
 
 SkillSourceSelection _pick() {
   final input = web.HTMLInputElement()

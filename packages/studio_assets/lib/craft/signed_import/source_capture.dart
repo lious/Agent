@@ -43,9 +43,25 @@ final class SkillSourceCapture {
   bool get busy => _busy;
   Future<void> get quiescent => _settled?.future ?? Future<void>.value();
 
-  Future<Uint8List?> choose(SkillSourceSelection Function() picker) {
+  Future<Uint8List?> choose(
+    SkillSourceSelection Function() picker, {
+    bool Function()? currentAppStillValid,
+  }) {
+    // A source-only caller may omit the fence; full App composition MUST supply
+    // a live snapshot/generation comparison. No callback is verification/consent.
+    var current = true;
+    bool stillCurrent() {
+      if (!current) return false;
+      try {
+        return current = currentAppStillValid?.call() ?? true;
+      } catch (_) {
+        return current = false;
+      }
+    }
+
     if (_disposed) throw const SkillSourceException('disposed');
     if (_busy) throw const SkillSourceException('busy');
+    if (!stillCurrent()) throw const SkillSourceException('scopeChanged');
     _busy = true;
     final generation = ++_generation;
     final result = _outcome = Completer<Uint8List?>();
@@ -60,7 +76,7 @@ final class SkillSourceCapture {
       result.completeError(const SkillSourceException('selectionFailed'));
       return result.future;
     }
-    unawaited(_capture(generation, _selection!, result, settled));
+    unawaited(_capture(generation, _selection!, result, settled, stillCurrent));
     return result.future;
   }
 
@@ -83,6 +99,7 @@ final class SkillSourceCapture {
     SkillSourceSelection selection,
     Completer<Uint8List?> result,
     Completer<void> settled,
+    bool Function() stillCurrent,
   ) async {
     SkillSourceReader? reader;
     Timer? timer;
@@ -92,6 +109,9 @@ final class SkillSourceCapture {
     void live() {
       if (_disposed || _generation != generation) {
         throw const SkillSourceException('cancelled');
+      }
+      if (!stillCurrent()) {
+        throw const SkillSourceException('scopeChanged');
       }
       if (watch != null && watch.elapsed >= skillSourceDeadline) {
         throw const SkillSourceException('deadline');
@@ -147,6 +167,10 @@ final class SkillSourceCapture {
       }
       if (watch != null && watch.elapsed >= skillSourceDeadline) {
         failure = const SkillSourceException('deadline');
+      }
+      if (!stillCurrent()) {
+        failure = const SkillSourceException('scopeChanged');
+        bytes = null;
       }
       timer?.cancel();
       watch?.stop();
