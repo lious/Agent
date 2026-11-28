@@ -1,0 +1,14 @@
+{
+  "flutterVersion": "Flutter 3.50.1 \u2022 channel stable \u2022 https://github.com/flutter/flutter.git",
+  "straceVersion": "strace -- version 6.13",
+  "straceSha256": "69f88291a4e47f258b8e32b089c919a247509f063ef3d6afe5389939051102b3",
+  "xdotoolVersion": "xdotool version 3.20160805.1",
+  "sqliteLibrary": "/workspace/toolchains/sqlite-3.54.1",
+  "sodiumLock": {
+    "devBinary": "/workspace/toolchains/sodium-1.0.22/lib/libsodium.so.26.4.0",
+    "devBinarySha256": "21cc20c28267ed326b3b9c826ecec21aaffbc51e0ab3e947292fdcf692f56ae1"
+  },
+  "licenseCoreSha256": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+  "display": "fresh Xvfb 1920x1200x24 per profile, GTK_USE_PORTAL=0",
+  "note": "debug integration qualification on isolated box Linux x86_64; not device/OS AT/store/release qualification"
+}

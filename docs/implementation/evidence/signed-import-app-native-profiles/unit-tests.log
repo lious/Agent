@@ -1,0 +1,11 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_lifetime_test.dart
+00:00 +0: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_lifetime_test.dart: initial lifetime allows an owner without publishing authority
+00:00 +1: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_lifetime_test.dart: retirement is synchronous before replacement publication
+00:00 +2: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_lifetime_test.dart: retired generation cannot register an active ABA successor
+00:00 +3: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_lifetime_test.dart: disposal unregisters the private lifetime listener
+00:00 +4: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_reader_test.dart: natural null stays busy until close and refuses a second arm
+00:00 +5: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_reader_test.dart: repeat release is ignored before the first hold
+00:00 +6: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_reader_test.dart: short TEST watchdog cancels then drains without byte success
+00:00 +7: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_reader_test.dart: observer sink faults do not replace the original null outcome
+00:00 +8: /workspace/agent-foundation-20261125/apps/studio_demo/test/import_native_reader_test.dart: choose forwards the live guard, selected callback and original future
+00:00 +9: All tests passed!

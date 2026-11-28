@@ -1,0 +1,1930 @@
+{
+  "increment": "3.63",
+  "passed": true,
+  "qualifiedNativeRows": [
+    "N01-enter",
+    "N01-space",
+    "N01-semantics",
+    "N02-preview-navigation",
+    "N02-preview-dispose",
+    "N02-read-navigation",
+    "N02-read-dispose"
+  ],
+  "summaries": [
+    {
+      "case": "N01-enter",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N01-enter",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854070.528459,
+        "protectedRoot": "/tmp/skill-native-363-N01-enter-3a73lfv4/app",
+        "appWindow": "2097155",
+        "chooseFocusKey": "skill-choose",
+        "chooseFocusLabel": "Choose skill source",
+        "gtkHelperExit": 0,
+        "gtkHelperStderr": "",
+        "inputMethod": "xdotool Tab/Return on actual focused Flutter control; GTK helper filled the Open File path",
+        "ackFocusKey": "skill-acknowledge",
+        "ackFocusLabel": "Acknowledge preview only",
+        "focusAfterAck": "skill-choose",
+        "watchEvents": [],
+        "observationEndUnix": 1795854085.635186,
+        "passed": true
+      },
+      "traceFiles": 228,
+      "traceBytes": 20170314,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N01-enter-3a73lfv4/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/run/dbus/system_bus_socket\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "144915",
+          "line": "1795854051.076814 connect(15<UDP:[922801]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "144906",
+          "line": "1795854050.511815 connect(7<TCP:[922783]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "144906",
+          "line": "1795854051.093745 connect(14<TCP:[926915]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "144906",
+          "line": "1795854085.967403 connect(14<TCP:[932401]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "144906",
+          "line": "1795854085.983846 connect(7<TCP:[932402]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "144984",
+          "line": "1795854055.626219 connect(15<TCP:[926979]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "144984",
+          "line": "1795854063.171505 connect(9<TCP:[919458]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "144925",
+          "line": "1795854051.083313 connect(14<UDP:[922020]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "144925",
+          "line": "1795854051.094063 connect(7<UDP:[922023]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145449",
+          "line": "1795854085.957336 connect(7<UDP:[934554]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145449",
+          "line": "1795854085.986611 connect(16<UDP:[937491]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145449",
+          "line": "1795854085.999466 connect(15<UDP:[937492]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145450",
+          "line": "1795854085.940132 connect(14<UDP:[932400]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145450",
+          "line": "1795854086.005348 connect(16<UDP:[938396]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145450",
+          "line": "1795854086.014972 connect(15<UDP:[938397]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145077",
+          "line": "1795854063.175050 connect(14<UDP:[924524]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145077",
+          "line": "1795854063.184273 connect(14<UDP:[924525]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145079",
+          "line": "1795854063.149775 connect(9<UDP:[926495]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "144992",
+          "line": "1795854053.420974 connect(9<UDP:[919397]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "144992",
+          "line": "1795854055.633409 connect(14<UDP:[919400]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "144992",
+          "line": "1795854055.641317 connect(14<UDP:[919401]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "145107"
+      ]
+    },
+    {
+      "case": "N01-space",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N01-space",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854100.243104,
+        "protectedRoot": "/tmp/skill-native-363-N01-space-q6evxrju/app",
+        "appWindow": "2097155",
+        "chooseFocusKey": "skill-choose",
+        "chooseFocusLabel": "Choose skill source",
+        "gtkHelperExit": 0,
+        "gtkHelperStderr": "",
+        "inputMethod": "xdotool Tab/Return on actual focused Flutter control; GTK helper filled the Open File path",
+        "ackFocusKey": "skill-acknowledge",
+        "ackFocusLabel": "Acknowledge preview only",
+        "focusAfterAck": "skill-choose",
+        "watchEvents": [],
+        "observationEndUnix": 1795854114.991997,
+        "passed": true
+      },
+      "traceFiles": 206,
+      "traceBytes": 18121634,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N01-space-q6evxrju/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/run/dbus/system_bus_socket\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "145605",
+          "line": "1795854092.452156 connect(13<UDP:[936902]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145605",
+          "line": "1795854092.477771 connect(13<UDP:[936903]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145891",
+          "line": "1795854115.296091 connect(14<UDP:[951593]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145891",
+          "line": "1795854115.326999 connect(15<UDP:[949556]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145891",
+          "line": "1795854115.341736 connect(15<UDP:[948080]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145495",
+          "line": "1795854087.077988 connect(7<UDP:[939109]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145495",
+          "line": "1795854087.086595 connect(7<UDP:[939110]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145493",
+          "line": "1795854087.059584 connect(14<UDP:[936828]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145554",
+          "line": "1795854092.420475 connect(14<TCP:[938489]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145554",
+          "line": "1795854092.445513 connect(7<TCP:[938490]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145554",
+          "line": "1795854092.458472 connect(15<TCP:[939157]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145562",
+          "line": "1795854089.262025 connect(7<UDP:[936890]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145562",
+          "line": "1795854092.378847 connect(13<UDP:[936899]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145562",
+          "line": "1795854092.425985 connect(7<UDP:[939156]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145562",
+          "line": "1795854092.462386 connect(13<UDP:[939158]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145604",
+          "line": "1795854092.388819 connect(7<UDP:[937698]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145604",
+          "line": "1795854092.443989 connect(15<UDP:[937700]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145604",
+          "line": "1795854092.470252 connect(16<UDP:[940152]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145484",
+          "line": "1795854086.518231 connect(7<TCP:[933877]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "145484",
+          "line": "1795854087.079110 connect(14<TCP:[938402]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145484",
+          "line": "1795854115.312405 connect(14<TCP:[950685]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145484",
+          "line": "1795854115.330941 connect(7<TCP:[946795]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145890",
+          "line": "1795854115.289846 connect(7<UDP:[949555]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145890",
+          "line": "1795854115.334886 connect(16<UDP:[952591]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145890",
+          "line": "1795854115.346575 connect(16<UDP:[950687]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "145621"
+      ]
+    },
+    {
+      "case": "N01-semantics",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N01-semantics",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854129.195995,
+        "protectedRoot": "/tmp/skill-native-363-N01-semantics-e9fk0vhx/app",
+        "appWindow": "2097155",
+        "chooseFocusKey": "skill-choose",
+        "chooseFocusLabel": "Choose skill source",
+        "gtkHelperExit": 0,
+        "gtkHelperStderr": "",
+        "inputMethod": "xdotool Tab/Return on actual focused Flutter control; GTK helper filled the Open File path",
+        "semantics": {
+          "id": 39,
+          "label": "Acknowledge preview only",
+          "enabled": true,
+          "hasTap": true,
+          "method": "framework-standard-semantics SemanticsAction.tap; not OS assistive-device qualification"
+        },
+        "focusAfterAck": null,
+        "semanticsAfter": {
+          "id": 39,
+          "enabled": false,
+          "hasTap": false
+        },
+        "ackFocusLabel": null,
+        "watchEvents": [],
+        "observationEndUnix": 1795854142.692362,
+        "passed": true
+      },
+      "traceFiles": 205,
+      "traceBytes": 18019065,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N01-semantics-e9fk0vhx/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/run/dbus/system_bus_socket\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "145922",
+          "line": "1795854115.819796 connect(7<TCP:[952616]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "145922",
+          "line": "1795854116.395910 connect(14<TCP:[948167]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145922",
+          "line": "1795854143.045678 connect(14<TCP:[963735]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145922",
+          "line": "1795854143.067867 connect(15<TCP:[963736]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145936",
+          "line": "1795854116.386386 connect(15<UDP:[949006]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145936",
+          "line": "1795854116.396201 connect(15<UDP:[949007]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146046",
+          "line": "1795854121.781912 connect(14<UDP:[949049]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146046",
+          "line": "1795854121.815983 connect(9<UDP:[951710]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146046",
+          "line": "1795854121.845318 connect(17<UDP:[951711]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145931",
+          "line": "1795854116.380214 connect(14<UDP:[951611]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146047",
+          "line": "1795854121.852790 connect(14<UDP:[949052]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146047",
+          "line": "1795854121.863338 connect(9<UDP:[949053]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "145996",
+          "line": "1795854121.807685 connect(16<TCP:[946858]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145996",
+          "line": "1795854121.834064 connect(15<TCP:[946859]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "145996",
+          "line": "1795854121.860104 connect(18<TCP:[946860]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146377",
+          "line": "1795854142.998743 connect(7<UDP:[958984]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146377",
+          "line": "1795854143.040884 connect(7<UDP:[958986]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146377",
+          "line": "1795854143.058784 connect(7<UDP:[958987]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146007",
+          "line": "1795854118.592698 connect(9<UDP:[951699]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146007",
+          "line": "1795854121.775768 connect(9<UDP:[949706]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146007",
+          "line": "1795854121.843905 connect(9<UDP:[949708]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146007",
+          "line": "1795854121.870870 connect(14<UDP:[949709]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146376",
+          "line": "1795854142.993397 connect(14<UDP:[960427]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146376",
+          "line": "1795854143.032249 connect(14<UDP:[961746]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146376",
+          "line": "1795854143.051302 connect(15<UDP:[961747]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "146058"
+      ]
+    },
+    {
+      "case": "N02-preview-navigation",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N02-preview-navigation",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854156.839844,
+        "protectedRoot": "/tmp/skill-native-363-N02-preview-navigation-s11uos2e/app",
+        "appWindow": "2097155",
+        "chooseFocusKey": "skill-choose",
+        "chooseFocusLabel": "Choose skill source",
+        "gtkHelperExit": 0,
+        "gtkHelperStderr": "",
+        "inputMethod": "xdotool Tab/Return on actual focused Flutter control; GTK helper filled the Open File path",
+        "retirement": "invalidateBeforePublication then Navigator.push; pop/rebuild did not revive",
+        "watchEvents": [],
+        "observationEndUnix": 1795854171.494435,
+        "passed": true
+      },
+      "traceFiles": 200,
+      "traceBytes": 18431795,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N02-preview-navigation-s11uos2e/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/run/dbus/system_bus_socket\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "146495",
+          "line": "1795854149.461845 connect(14<TCP:[962810]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146495",
+          "line": "1795854149.493069 connect(17<TCP:[962811]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146495",
+          "line": "1795854149.511944 connect(15<TCP:[962812]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146809",
+          "line": "1795854171.804043 connect(7<UDP:[974075]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146809",
+          "line": "1795854171.837045 connect(15<UDP:[971427]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146809",
+          "line": "1795854171.852000 connect(15<UDP:[971428]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146808",
+          "line": "1795854171.790201 connect(14<UDP:[966632]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146808",
+          "line": "1795854171.850684 connect(7<UDP:[974077]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146808",
+          "line": "1795854171.863160 connect(7<UDP:[974078]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146416",
+          "line": "1795854143.559003 connect(7<TCP:[963742]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "146416",
+          "line": "1795854144.173403 connect(14<TCP:[961096]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146416",
+          "line": "1795854171.819069 connect(14<TCP:[970122]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146416",
+          "line": "1795854171.828654 connect(16<TCP:[970123]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146545",
+          "line": "1795854149.435192 connect(14<UDP:[966661]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146545",
+          "line": "1795854149.476194 connect(16<UDP:[966663]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146545",
+          "line": "1795854149.509477 connect(9<UDP:[966664]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146503",
+          "line": "1795854146.380943 connect(9<UDP:[965643]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146503",
+          "line": "1795854149.429299 connect(9<UDP:[965703]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146503",
+          "line": "1795854149.496184 connect(9<UDP:[965707]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146503",
+          "line": "1795854149.515564 connect(16<UDP:[965708]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146425",
+          "line": "1795854144.131149 connect(14<UDP:[963783]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146546",
+          "line": "1795854149.477918 connect(9<UDP:[961841]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146546",
+          "line": "1795854149.501291 connect(15<UDP:[961842]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146427",
+          "line": "1795854144.133926 connect(15<UDP:[959003]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146427",
+          "line": "1795854144.142523 connect(7<UDP:[959004]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "146556"
+      ]
+    },
+    {
+      "case": "N02-preview-dispose",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N02-preview-dispose",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854186.117891,
+        "protectedRoot": "/tmp/skill-native-363-N02-preview-dispose-tr6drn28/app",
+        "appWindow": "2097155",
+        "chooseFocusKey": "skill-choose",
+        "chooseFocusLabel": "Choose skill source",
+        "gtkHelperExit": 0,
+        "gtkHelperStderr": "",
+        "inputMethod": "xdotool Tab/Return on actual focused Flutter control; GTK helper filled the Open File path",
+        "retirement": "actual host unmount disposed the session; no late report or ack",
+        "watchEvents": [],
+        "observationEndUnix": 1795854199.291121,
+        "passed": true
+      },
+      "traceFiles": 205,
+      "traceBytes": 18201202,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N02-preview-dispose-tr6drn28/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/run/dbus/system_bus_socket\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "147310",
+          "line": "1795854199.559670 connect(7<UDP:[979846]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147310",
+          "line": "1795854199.612790 connect(15<UDP:[979848]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147310",
+          "line": "1795854199.631348 connect(7<UDP:[979849]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147311",
+          "line": "1795854199.614241 connect(7<UDP:[983916]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147311",
+          "line": "1795854199.625096 connect(15<UDP:[985271]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146934",
+          "line": "1795854175.426818 connect(7<UDP:[974200]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146934",
+          "line": "1795854178.487406 connect(13<UDP:[974277]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146934",
+          "line": "1795854178.522891 connect(14<UDP:[973624]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146934",
+          "line": "1795854178.542526 connect(14<UDP:[973625]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146960",
+          "line": "1795854178.554597 connect(13<UDP:[975316]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146960",
+          "line": "1795854178.575971 connect(13<UDP:[975317]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146926",
+          "line": "1795854178.511333 connect(7<TCP:[975315]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146926",
+          "line": "1795854178.542290 connect(16<TCP:[976903]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146926",
+          "line": "1795854178.564420 connect(15<TCP:[976904]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146840",
+          "line": "1795854172.360200 connect(7<TCP:[967612]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "146840",
+          "line": "1795854172.982809 connect(14<TCP:[975890]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146840",
+          "line": "1795854199.592212 connect(14<TCP:[982882]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146840",
+          "line": "1795854199.618330 connect(16<TCP:[982883]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "146958",
+          "line": "1795854178.493500 connect(7<UDP:[975946]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146958",
+          "line": "1795854178.561025 connect(14<UDP:[973626]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146958",
+          "line": "1795854178.577885 connect(14<UDP:[973627]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146852",
+          "line": "1795854172.915926 connect(14<UDP:[967624]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147309",
+          "line": "1795854199.573108 connect(7<UDP:[977648]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146854",
+          "line": "1795854172.939536 connect(15<UDP:[974112]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "146854",
+          "line": "1795854172.948536 connect(7<UDP:[974113]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "146993"
+      ]
+    },
+    {
+      "case": "N02-read-navigation",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N02-read-navigation",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854213.531233,
+        "protectedRoot": "/tmp/skill-native-363-N02-read-navigation-004zwu87/app",
+        "readerInput": "tester.tap Choose on armed NativeReaderController; not N01 keyboard/GTK evidence",
+        "readerAfterRetirement": {
+          "held": true,
+          "busy": true,
+          "outcome": "null",
+          "counts": {
+            "armed": 1,
+            "selections": 1,
+            "selected": 1,
+            "lengthStarted": 1,
+            "openStarted": 1,
+            "openCompleted": 1,
+            "lengthCompleted": 1,
+            "readStarted": 1,
+            "held": 1,
+            "outcomeNull": 1
+          },
+          "events": [
+            "armed",
+            "selections",
+            "selected",
+            "lengthStarted",
+            "openStarted",
+            "openCompleted",
+            "lengthCompleted",
+            "readStarted",
+            "held",
+            "outcomeNull"
+          ],
+          "watchdogFired": false,
+          "observerFaults": 0,
+          "elapsedSeconds": 1.486626
+        },
+        "readerSnapshot": {
+          "held": false,
+          "busy": false,
+          "outcome": "null",
+          "counts": {
+            "armed": 1,
+            "selections": 1,
+            "selected": 1,
+            "lengthStarted": 1,
+            "openStarted": 1,
+            "openCompleted": 1,
+            "lengthCompleted": 1,
+            "readStarted": 1,
+            "held": 1,
+            "outcomeNull": 1,
+            "manualReleases": 1,
+            "readCompleted": 1,
+            "closeStarted": 1,
+            "closeCompleted": 1,
+            "quiescent": 1
+          },
+          "events": [
+            "armed",
+            "selections",
+            "selected",
+            "lengthStarted",
+            "openStarted",
+            "openCompleted",
+            "lengthCompleted",
+            "readStarted",
+            "held",
+            "outcomeNull",
+            "manualReleases",
+            "readCompleted",
+            "closeStarted",
+            "closeCompleted",
+            "quiescent"
+          ],
+          "watchdogFired": false,
+          "observerFaults": 0,
+          "elapsedSeconds": 1.492381
+        },
+        "watchEvents": [],
+        "observationEndUnix": 1795854215.586324,
+        "passed": true
+      },
+      "traceFiles": 171,
+      "traceBytes": 15701535,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N02-read-navigation-004zwu87/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "147418",
+          "line": "1795854206.091343 connect(15<TCP:[987293]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147418",
+          "line": "1795854206.129237 connect(14<TCP:[987294]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147418",
+          "line": "1795854206.146285 connect(16<TCP:[977717]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147342",
+          "line": "1795854200.126661 connect(7<TCP:[979907]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "147342",
+          "line": "1795854200.736792 connect(14<TCP:[985304]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147342",
+          "line": "1795854215.923121 connect(7<TCP:[990445]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147456",
+          "line": "1795854206.056195 connect(9<UDP:[988211]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147456",
+          "line": "1795854206.099919 connect(16<UDP:[988213]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147456",
+          "line": "1795854206.129894 connect(17<UDP:[984646]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147457",
+          "line": "1795854206.121948 connect(9<UDP:[986504]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147457",
+          "line": "1795854206.142617 connect(9<UDP:[987295]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147426",
+          "line": "1795854202.961001 connect(9<UDP:[989212]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147426",
+          "line": "1795854206.042841 connect(14<UDP:[982995]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147426",
+          "line": "1795854206.088653 connect(9<UDP:[982997]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147426",
+          "line": "1795854206.124788 connect(16<UDP:[982998]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147354",
+          "line": "1795854200.695217 connect(7<UDP:[986415]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147615",
+          "line": "1795854215.903409 connect(7<UDP:[991402]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147615",
+          "line": "1795854215.926803 connect(15<UDP:[985707]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147615",
+          "line": "1795854215.935602 connect(15<UDP:[985708]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147356",
+          "line": "1795854200.693818 connect(14<UDP:[985302]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147356",
+          "line": "1795854200.705054 connect(7<UDP:[985303]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "147467"
+      ]
+    },
+    {
+      "case": "N02-read-dispose",
+      "passed": true,
+      "returncode": 0,
+      "result": {
+        "case": "N02-read-dispose",
+        "casConfigured": false,
+        "shelfConfigured": false,
+        "casShelfAbsence": "StudioWorkspace opened without mediaLibraryPath/mediaRootPath; no CAS/shelf root was created",
+        "namespace": {
+          "appId": "studio_demo",
+          "tenantId": "local",
+          "workspaceId": "default"
+        },
+        "expectedHashes": {
+          "envelopeHash": "sha256:9f968e5e8411020ed097fa1b3db11fcf9c01e8eff1983a2ee6170631cf8da68c",
+          "payloadHash": "sha256:11d9aa06fd0494fe933e23c245fb82e5c7f594034818ff76b09aad37f7ab42f3",
+          "contentHash": "sha256:9db035b6bf90a4413ac83ff218e0d61558324d7d01ded9d25ba0b61a2ba2ce9c",
+          "permissionDiffHash": "sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e"
+        },
+        "projectRevisionBefore": "0",
+        "baselineUnix": 1795854229.815493,
+        "protectedRoot": "/tmp/skill-native-363-N02-read-dispose-cy4e8v4v/app",
+        "readerInput": "tester.tap Choose on armed NativeReaderController; not N01 keyboard/GTK evidence",
+        "readerAfterRetirement": {
+          "held": true,
+          "busy": true,
+          "outcome": "null",
+          "counts": {
+            "armed": 1,
+            "selections": 1,
+            "selected": 1,
+            "lengthStarted": 1,
+            "openStarted": 1,
+            "openCompleted": 1,
+            "lengthCompleted": 1,
+            "readStarted": 1,
+            "held": 1,
+            "disposeHooks": 1,
+            "outcomeNull": 1
+          },
+          "events": [
+            "armed",
+            "selections",
+            "selected",
+            "lengthStarted",
+            "openStarted",
+            "openCompleted",
+            "lengthCompleted",
+            "readStarted",
+            "held",
+            "disposeHooks",
+            "outcomeNull"
+          ],
+          "watchdogFired": false,
+          "observerFaults": 0,
+          "elapsedSeconds": 0.633665
+        },
+        "readerSnapshot": {
+          "held": false,
+          "busy": false,
+          "outcome": "null",
+          "counts": {
+            "armed": 1,
+            "selections": 1,
+            "selected": 1,
+            "lengthStarted": 1,
+            "openStarted": 1,
+            "openCompleted": 1,
+            "lengthCompleted": 1,
+            "readStarted": 1,
+            "held": 1,
+            "disposeHooks": 1,
+            "outcomeNull": 1,
+            "manualReleases": 1,
+            "readCompleted": 1,
+            "closeStarted": 1,
+            "closeCompleted": 1,
+            "quiescent": 1
+          },
+          "events": [
+            "armed",
+            "selections",
+            "selected",
+            "lengthStarted",
+            "openStarted",
+            "openCompleted",
+            "lengthCompleted",
+            "readStarted",
+            "held",
+            "disposeHooks",
+            "outcomeNull",
+            "manualReleases",
+            "readCompleted",
+            "closeStarted",
+            "closeCompleted",
+            "quiescent"
+          ],
+          "watchdogFired": false,
+          "observerFaults": 0,
+          "elapsedSeconds": 0.637368
+        },
+        "watchEvents": [],
+        "observationEndUnix": 1795854231.042971,
+        "passed": true
+      },
+      "traceFiles": 171,
+      "traceBytes": 15483424,
+      "traceDataLoss": false,
+      "workspace": "/tmp/skill-native-363-N02-read-dispose-cy4e8v4v/app",
+      "endpoints": [
+        "harness:10.0.0.2:53",
+        "harness:169.254.169.254:80",
+        "harness:198.18.0.1:443",
+        "loopback",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/bus\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/tmp/xdg-runtime-box-2/wayland-0\"}",
+        "{sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}",
+        "{sa_family=AF_UNIX, sun_path=@\"/tmp/.X11-unix/X0\"}"
+      ],
+      "harnessRemote": [
+        {
+          "pid": "147758",
+          "line": "1795854222.448151 connect(9<UDP:[987793]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147758",
+          "line": "1795854222.499557 connect(16<UDP:[987796]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147727",
+          "line": "1795854219.357290 connect(9<UDP:[984950]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147727",
+          "line": "1795854222.406654 connect(9<UDP:[989689]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147759",
+          "line": "1795854222.498182 connect(17<UDP:[985776]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147759",
+          "line": "1795854222.510644 connect(9<UDP:[985777]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147900",
+          "line": "1795854231.296764 connect(7<UDP:[987114]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147900",
+          "line": "1795854231.320069 connect(7<UDP:[987116]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147900",
+          "line": "1795854231.329260 connect(7<UDP:[987117]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147757",
+          "line": "1795854222.434770 connect(14<UDP:[984955]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147657",
+          "line": "1795854216.962119 connect(14<UDP:[990478]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147760",
+          "line": "1795854222.474389 connect(9<UDP:[988982]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147760",
+          "line": "1795854222.489038 connect(9<UDP:[988983]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147659",
+          "line": "1795854216.985295 connect(7<UDP:[989656]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147659",
+          "line": "1795854216.993514 connect(7<UDP:[989657]>, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(\"10.0.0.2\")}, 16) = 0",
+          "target": [
+            "10.0.0.2",
+            "53"
+          ]
+        },
+        {
+          "pid": "147645",
+          "line": "1795854216.413216 connect(7<TCP:[990454]>, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr(\"169.254.169.254\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "169.254.169.254",
+            "80"
+          ]
+        },
+        {
+          "pid": "147645",
+          "line": "1795854217.023382 connect(14<TCP:[986748]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147645",
+          "line": "1795854231.322830 connect(15<TCP:[985963]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147719",
+          "line": "1795854222.422156 connect(15<TCP:[986896]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147719",
+          "line": "1795854222.522427 connect(9<TCP:[984956]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        },
+        {
+          "pid": "147719",
+          "line": "1795854222.523512 connect(14<TCP:[984957]>, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr(\"198.18.0.1\")}, 16) = -1 EINPROGRESS (Operation now in progress)",
+          "target": [
+            "198.18.0.1",
+            "443"
+          ]
+        }
+      ],
+      "unexpectedRemote": [],
+      "appRemote": [],
+      "protectedWritesInWindow": [],
+      "appPids": [
+        "147769"
+      ]
+    }
+  ],
+  "debugIntegration": {
+    "note": "debug integration artifacts, not a 3.62 release-artifact requalification",
+    "executableSha256": "a05fb6138e9c6c6f3fd1917382bfc5538a6cce15a2696eef84af6305b2dc1688",
+    "flutterEngineSha256": "3671a1f7d588b7f4297c2fd4e72a25c0a4471ea351b4d70677f99d9467b22cfa",
+    "appSha256": null,
+    "bundleFiles": [
+      "data/flutter_assets/AssetManifest.bin",
+      "data/flutter_assets/FontManifest.json",
+      "data/flutter_assets/NOTICES.Z",
+      "data/flutter_assets/NativeAssetsManifest.json",
+      "data/flutter_assets/fonts/MaterialIcons-Regular.otf",
+      "data/flutter_assets/kernel_blob.bin",
+      "data/flutter_assets/packages/material_ui/shaders/ink_sparkle.frag",
+      "data/flutter_assets/shaders/ink_sparkle.frag",
+      "data/flutter_assets/shaders/stretch_effect.frag",
+      "data/flutter_assets/version.json",
+      "data/icudtl.dat",
+      "lib/libfile_selector_linux_plugin.so",
+      "lib/libflutter_linux_gtk.so",
+      "lib/libflutter_secure_storage_linux_plugin.so",
+      "lib/native_assets.json",
+      "studio_demo"
+    ]
+  },
+  "strace": {
+    "tool": "/usr/bin/strace",
+    "flags": [
+      "-ff",
+      "-ttt",
+      "-yy",
+      "-e",
+      "trace=network,file"
+    ]
+  },
+  "harnessRemoteAllowlist": [
+    [
+      "10.0.0.2",
+      "53"
+    ],
+    [
+      "169.254.169.254",
+      "80"
+    ],
+    [
+      "198.18.0.1",
+      "443"
+    ]
+  ],
+  "combinedAcceptanceClaimed": false,
+  "fullA6AcceptanceComplete": false
+}

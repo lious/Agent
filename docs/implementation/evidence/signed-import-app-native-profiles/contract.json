@@ -1,0 +1,50 @@
+{
+  "increment": "3.63",
+  "base": "91439223878707181e3dadd01786e9d9a60ca892",
+  "kind": "native-N01-N02-profile-qualification",
+  "runtimeImplemented": true,
+  "qualifiedNativeRows": [
+    "N01-enter",
+    "N01-space",
+    "N01-semantics",
+    "N02-preview-navigation",
+    "N02-preview-dispose",
+    "N02-read-navigation",
+    "N02-read-dispose"
+  ],
+  "qualifiedNativeGates": [
+    "NG4",
+    "NG5"
+  ],
+  "reusedNativeGates": [
+    "NG0",
+    "NG1",
+    "NG2",
+    "NG3"
+  ],
+  "pendingNativeProfiles": [],
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "l01Rerun": false,
+  "combinedAcceptanceClaimed": false,
+  "casShelfConfigured": false,
+  "osAssistiveDeviceClaimed": false,
+  "debugIntegration": {
+    "executableSha256": "a05fb6138e9c6c6f3fd1917382bfc5538a6cce15a2696eef84af6305b2dc1688",
+    "flutterEngineSha256": "3671a1f7d588b7f4297c2fd4e72a25c0a4471ea351b4d70677f99d9467b22cfa",
+    "appSha256": null,
+    "note": "debug integration artifacts, not a 3.62 release-artifact requalification"
+  },
+  "sourceSha256": {
+    "apps/studio_demo/lib/import_fixture_composition.dart": "b43f41f8bf3d0208b1fe4f53b5a1eda212c4d5e9712eeffc7ecb144d49ec057b",
+    "apps/studio_demo/lib/skill_import_host.dart": "4f3056aabbfeddc1b6622612862bacdd323818712a8241ed78a36694ac04bbab",
+    "apps/studio_demo/lib/skill_import_panel.dart": "ce45eb3046f110f40885613caacf95c8194ed932b9acee0dac73b7903303a77f",
+    "apps/studio_demo/lib/main.dart": "fbf11b7b14ed4827097fff3b3042d54bd8b328580127926995ad79c2e89af53b",
+    "apps/studio_demo/integration_test/skill_import_app_native_test.dart": "cc9ab52d93e7e8659ba0013e91ee7f491dbb6624c94ab09defbec957afab01ed",
+    "tools/acceptance/run_skill_import_app_native_profiles.py": "3510de816dbd042867c3acab2d92a7f2305582a95c85b832be6fe2791926e225"
+  },
+  "documentSha256": {
+    "docs/studio/spec/s8f-signed-import-app-native-v1.md": "063f77655b4b50f069f42b45d409c79e14e52759a3a7bdddb3ca850394a69f83",
+    "docs/adr/0262-app-native-profile-observation.md": "594c074a1c6f1ff9464db939ec41e3de810cf497d3dc19ce27c822c953190a52"
+  }
+}

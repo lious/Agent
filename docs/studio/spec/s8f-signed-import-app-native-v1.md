@@ -228,3 +228,80 @@ Watcher, strace, and xdotool/Flutter keyboard canaries passed. Isolated
 X11/Wayland/session-bus endpoints only, with no remote network. The seven
 N01–N02 profiles, combined G1–G5, and full A6 remain unqualified. L01 was not
 rerun. See ADR 0261 and evidence/signed-import-app-native-prereq/.
+
+
+## Increment 3.63 — N01–N02 observation wiring (t155u)
+
+The 3.61 profile table and 3.62 NG0–NG3 transports are sufficient for
+owner/policy/input methods. This supplement only binds how those transports
+attach to the seven debug-integration profiles; it does not reopen NG0–NG3,
+relax N5, or invent a product navigation surface.
+
+Protected App roots are the isolated workspace directory actually used by
+StudioWorkspace (the SQLite database path and its `-wal`/`-journal` siblings,
+and any actually configured CAS/shelf/media root). Absence of CAS/shelf is
+recorded; no directory is created as an observation hack. Harness roots are
+outside that tree: Flutter build/test caches, fixture signing output, result
+JSON, strace logs, Xvfb, xdotool, and the GTK helper. Inherited box
+XDG_RUNTIME_DIR plus the 3.62 UNIX X11/Wayland/session-bus endpoints, and
+loopback VM-service ports used by `flutter test`, are harness/display channels.
+A new remote inet endpoint, or a create/modify/move/delete (or path add/delete)
+under a protected root other than SQLite `-shm`, fails the case even if final
+bytes later match.
+
+Each profile: fresh workspace; sign the public empty-requiredTools pack before
+baseline; wait for first frame and actual backend readiness; then snapshot
+canonical project/revision, path/type/size/hash inventory, and database/WAL
+bytes; then start Directory.watch on every existing protected directory.
+Input, retirement, and teardown run after that baseline. Drain the watcher and
+compare inventory before workspace.close. Runner result writes are labeled
+harness cleanup.
+
+N01 trusted input remains xdotool Tab/Return or Space on the actual focused
+Flutter/GTK App window, plus the existing GTK helper for the Open File path.
+The integration test inspects the focused standard control through Flutter
+Focus/Semantics (key and label) immediately before activation. That is not OS
+assistive-device qualification. N01-semantics uses SemanticsAction.tap on the
+enabled acknowledgment node, then a repeat keyboard/pointer activation of the
+actual control. The harness never calls acknowledge(), onPressed, or
+explicitPreviewConsent.
+
+N02 chrome (navigate/rebuild/unmount) lives only in the test shell, not in
+default or ordinary opt-in construction. Navigate must call
+invalidateBeforePublication synchronously, then a normal Navigator.push to a
+labeled fixture route. The host may be embedded in that shell without wrapping
+a second MaterialApp. The test shell owns the lifetime and the first-read
+controller; after host unmount it may release only that existing completer.
+
+Do not requalify 3.62 canaries, release-artifact hashes, or older browser rows.
+Debug integration executables are recorded separately and are not release
+qualification. Combined G1–G5/full A6 remain unclaimed.
+
+Frozen film_schema still requires steps minItems=1 and each step toolId to be a
+member of requiredTools (film_schema.dart:79-86 and importer.dart:622-631). A
+literal empty-requiredTools filmCraft pack therefore cannot be valid. The official
+native pack uses the existing public fixture helper with one admitted
+media.analyze step, requiredTools=["media.analyze"], namespace from the actual
+workspace, and the compiled empty App installed/session/branch sets. The verified
+report records missingTools=["media.analyze"] under that empty grant.
+Acknowledgment remains preview-only and does not approve tool execution or grant
+tools. This is a plan completion, not a schema, grant, or execution change.
+
+Fixture-mode FocusScope around the import panel, plus ExcludeFocus on
+FoundationApp only when importFixture != null, bounds N01 Tab traversal to the
+actual import controls. That bounding is fixture construction only.
+
+Strace of each `flutter test` invocation includes Flutter/Dart tooling, the
+debug compiler, and the App. Protected-root create/modify/unlink is judged only
+inside the recorded baseline..observationEnd window (after first-frame readiness
+and pack signing, before workspace.close). SQLite open/journal/WAL during
+workspace.open or labeled close cleanup stay outside that window and are not
+import writes. Directory.watch still covers the same window.
+
+Remote inet is a failure if the App/workspace process (any PID that opens the
+protected sqlite) connects off-loopback, or if any process uses an endpoint
+outside the recorded flutter-test harness set. On this box that harness set is
+UDP/53 to the inherited resolv.conf nameserver 10.0.0.2, plus Flutter tool
+probes to 169.254.169.254:80 and 198.18.0.1:443. Those probes are tooling, not
+App import networking. Loopback VM-service and local UNIX X11/session sockets
+remain harness/display channels. Each profile uses a fresh Xvfb.

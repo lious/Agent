@@ -13,6 +13,7 @@ final class NativeImportFixtureConfiguration {
     this.clockRollback = false,
     this.chooseSourceForTest,
     this.readerControlsForTest,
+    this.lifetime,
     Set<String> installedAllowlist = const {},
     Set<String> sessionGrant = const {},
     Set<String> branchScope = const {},
@@ -30,6 +31,7 @@ final class NativeImportFixtureConfiguration {
   )?
   chooseSourceForTest;
   final NativeImportFixtureReaderControls? readerControlsForTest;
+  final ImportCompositionLifetime? lifetime;
 }
 
 // Synchronous App-only lifetime signal, never a consent/action endpoint.

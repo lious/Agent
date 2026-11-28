@@ -1,0 +1,42 @@
++ N01-enter display :0
+{
+  "case": "N01-enter",
+  "passed": true,
+  "returncode": 0
+}
++ N01-space display :0
+{
+  "case": "N01-space",
+  "passed": true,
+  "returncode": 0
+}
++ N01-semantics display :0
+{
+  "case": "N01-semantics",
+  "passed": true,
+  "returncode": 0
+}
++ N02-preview-navigation display :0
+{
+  "case": "N02-preview-navigation",
+  "passed": true,
+  "returncode": 0
+}
++ N02-preview-dispose display :0
+{
+  "case": "N02-preview-dispose",
+  "passed": true,
+  "returncode": 0
+}
++ N02-read-navigation display :0
+{
+  "case": "N02-read-navigation",
+  "passed": true,
+  "returncode": 0
+}
++ N02-read-dispose display :0
+{
+  "case": "N02-read-dispose",
+  "passed": true,
+  "returncode": 0
+}

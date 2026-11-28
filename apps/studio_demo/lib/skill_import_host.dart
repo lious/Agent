@@ -10,14 +10,17 @@ import 'skill_source_linux.dart';
 /// Existing App workspace remains owner; no FoundationApp API changes.
 class SkillImportHost extends StatefulWidget {
   const SkillImportHost({super.key, required this.workspace})
-    : importFixture = null;
+    : importFixture = null,
+      wrapMaterialApp = true;
   const SkillImportHost.testImport({
     super.key,
     required this.workspace,
     required NativeImportFixtureConfiguration this.importFixture,
+    this.wrapMaterialApp = true,
   });
   final StudioWorkspace workspace;
   final NativeImportFixtureConfiguration? importFixture;
+  final bool wrapMaterialApp;
   @override
   State<SkillImportHost> createState() => _SkillImportHostState();
 }
@@ -57,23 +60,26 @@ class _SkillImportHostState extends State<SkillImportHost> {
           );
   }
 
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-    home: Scaffold(
-      body: Stack(
-        children: [
-          FoundationApp(workspace: widget.workspace),
-          if (_projectMounted)
-            Align(
-              alignment: Alignment.topRight,
-              child: SizedBox(
-                width: 480,
-                child: SingleChildScrollView(
+  Widget _body() => Scaffold(
+    body: Stack(
+      children: [
+        ExcludeFocus(
+          excluding: widget.importFixture != null,
+          child: FoundationApp(workspace: widget.workspace),
+        ),
+        if (_projectMounted)
+          Align(
+            alignment: Alignment.topRight,
+            child: SizedBox(
+              width: 480,
+              child: SingleChildScrollView(
+                child: FocusScope(
+                  autofocus: widget.importFixture != null,
                   child: SkillImportPanel(
                     ownerIdentity: widget.workspace,
                     ownerLifetime: widget.importFixture == null
                         ? null
-                        : _importLifetime,
+                        : (widget.importFixture!.lifetime ?? _importLifetime),
                     currentApp: () {
                       final fixture = widget.importFixture;
                       return ImportAppSnapshot(
@@ -118,8 +124,12 @@ class _SkillImportHostState extends State<SkillImportHost> {
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     ),
   );
+
+  @override
+  Widget build(BuildContext context) =>
+      widget.wrapMaterialApp ? MaterialApp(home: _body()) : _body();
 }
