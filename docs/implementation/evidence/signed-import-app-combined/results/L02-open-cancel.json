@@ -1,0 +1,1068 @@
+{
+  "passed": true,
+  "caseId": "L02-open-cancel",
+  "details": {
+    "controlledNotFile": true,
+    "phase": "open",
+    "action": "cancel",
+    "naturalNullOutcome": true,
+    "oneResourceClosed": true,
+    "noReplacementCapacity": true,
+    "reader": {
+      "boundary": "open",
+      "held": false,
+      "busy": false,
+      "outcome": "null",
+      "counts": {
+        "armed": 1,
+        "selections": 1,
+        "selected": 1,
+        "lengthStarted": 1,
+        "openStarted": 1,
+        "held": 1,
+        "outcomeNull": 1,
+        "armRefusals": 1,
+        "manualReleases": 1,
+        "openCompleted": 1,
+        "lengthCompleted": 1,
+        "closeStarted": 1,
+        "closeCompleted": 1,
+        "quiescent": 1,
+        "ignoredReleases": 1
+      },
+      "events": [
+        "armed",
+        "selections",
+        "selected",
+        "lengthStarted",
+        "openStarted",
+        "held",
+        "outcomeNull",
+        "armRefusals",
+        "manualReleases",
+        "openCompleted",
+        "lengthCompleted",
+        "closeStarted",
+        "closeCompleted",
+        "quiescent",
+        "ignoredReleases"
+      ],
+      "watchdogFired": false,
+      "observerFaults": 0,
+      "elapsedSeconds": 2.765299
+    }
+  },
+  "chooserCount": 0,
+  "actualApp": "WebStudioApp.testImport + actual owner/panel/store + real web factory",
+  "inputMethod": "trusted CDP Tab/Enter on standard App fixture controls",
+  "observations": [
+    {
+      "phase": "held",
+      "reader": {
+        "boundary": "open",
+        "held": true,
+        "busy": true,
+        "outcome": "pending",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "held": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "held"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 0.0006
+      },
+      "browserMonotonic": 2747.7000000011176
+    },
+    {
+      "phase": "invalidated-before-release",
+      "reader": {
+        "boundary": "open",
+        "held": true,
+        "busy": true,
+        "outcome": "null",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "held": 1,
+          "outcomeNull": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "held",
+          "outcomeNull"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 0.3592
+      },
+      "browserMonotonic": 3026.0999999996275
+    },
+    {
+      "phase": "quiescent",
+      "reader": {
+        "boundary": "open",
+        "held": false,
+        "busy": false,
+        "outcome": "null",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "held": 1,
+          "outcomeNull": 1,
+          "armRefusals": 1,
+          "manualReleases": 1,
+          "openCompleted": 1,
+          "lengthCompleted": 1,
+          "closeStarted": 1,
+          "closeCompleted": 1,
+          "quiescent": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "held",
+          "outcomeNull",
+          "armRefusals",
+          "manualReleases",
+          "openCompleted",
+          "lengthCompleted",
+          "closeStarted",
+          "closeCompleted",
+          "quiescent"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 2.765299
+      },
+      "browserMonotonic": 5466.300000000745
+    }
+  ],
+  "noAcknowledgmentAccepted": true,
+  "storageSnapshotUnchanged": true,
+  "noComponentWrites": true,
+  "traces": [
+    {
+      "event": "pageshow",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    },
+    {
+      "event": "focus",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "focus",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "focus",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "214e49ea-8af9-418c-b37e-a578ab166a39",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    }
+  ],
+  "navigations": [
+    {
+      "frame": {
+        "id": "5EA24FA620143E1D7FD67CA2ADBA9633",
+        "loaderId": "140C2E411F2A460C68752089D265BE62",
+        "url": "http://127.0.0.1:38991/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:38991",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    }
+  ],
+  "nativeTraceDataLoss": false,
+  "requests": [
+    "http://127.0.0.1:38991/",
+    "http://127.0.0.1:38991/signed_import_bootstrap.js",
+    "http://127.0.0.1:38991/flutter_bootstrap.js",
+    "http://127.0.0.1:38991/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:38991/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:38991/main.dart.js",
+    "http://127.0.0.1:38991/assets/FontManifest.json",
+    "http://127.0.0.1:38991/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:38991/favicon.ico",
+    "http://127.0.0.1:38991/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "exceptions": [],
+  "violations": [],
+  "scope": "L02\u2013L03 controlled-port box App profile only; no real File/OS/device/AT/model/provider/full A6",
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-ysucMiRzXP6HIQyYgJQRTA'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "documentResponses": [
+    {
+      "nonce": "ysucMiRzXP6HIQyYgJQRTA",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-ysucMiRzXP6HIQyYgJQRTA'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "b36384e6fc4384ee3eead0be2673bf28ba7a3b0cefe0edb68f743de9089ffdfd"
+    }
+  ],
+  "servedAssetSha256": {
+    "/": "b36384e6fc4384ee3eead0be2673bf28ba7a3b0cefe0edb68f743de9089ffdfd",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/flutter_bootstrap.js": "deece96fa1afcd21ea4827d88f3b3fc0f0fb6f435d6405f23105b4003899e5c2",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/main.dart.js": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V",
+  "combinedIncrement": "3.65",
+  "c2LateMainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+}

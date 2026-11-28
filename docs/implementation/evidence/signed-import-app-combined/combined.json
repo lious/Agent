@@ -1,0 +1,133 @@
+{
+  "increment": "3.65",
+  "passed": true,
+  "combinedG1G5Complete": true,
+  "fullA6AcceptanceComplete": false,
+  "combinedAcceptanceClaimed": true,
+  "lateMainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+  "historicalLateHashesNotUsedAsC2Path": true,
+  "summaries": [
+    {
+      "caseId": "L01-widget-dispose",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L01-context",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-open-cancel",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-open-dispose",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-open-context",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-length-cancel",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-length-dispose",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-length-context",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-read-cancel",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-read-dispose",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L02-read-context",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    },
+    {
+      "caseId": "L03-null-close-context",
+      "passed": true,
+      "noComponentWrites": true,
+      "storageSnapshotUnchanged": true,
+      "noAcknowledgmentAccepted": true,
+      "exceptions": [],
+      "violations": []
+    }
+  ],
+  "c6": [
+    "L01-widget-dispose",
+    "L01-context",
+    "L02-open-cancel",
+    "L02-open-dispose",
+    "L02-open-context",
+    "L02-length-cancel",
+    "L02-length-dispose",
+    "L02-length-context",
+    "L02-read-cancel",
+    "L02-read-dispose",
+    "L02-read-context",
+    "L03-null-close-context"
+  ]
+}

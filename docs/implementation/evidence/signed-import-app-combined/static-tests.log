@@ -1,0 +1,3 @@
+python compile: ok
+node --check reused browsers: ok
+git diff --check:

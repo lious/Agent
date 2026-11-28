@@ -347,3 +347,18 @@ combined or full A6 acceptance. This increment is PLAN/EVIDENCE ONLY. It does
 not execute the combined run, requalify N01–N02 or NG0–NG5, or rerun L01,
 B01–B11, L02–L03, or G3. Full A6 remains false. No original remainingAcceptance
 wording is changed.
+
+## Increment 3.65 — official combined G1–G5 run
+
+The [late v1 3.65 supplement](s8f-signed-import-app-late-v1.md) and ADR 0264
+record that the official combined G1–G5 run bound in Increment 3.64 is complete
+against one fresh late C2 binary. The fresh late main hash is byte-identical
+to the historical 3.60 late fixture because no studio_web source has changed
+since 3.60; that digest is a newly built 3.65 artifact, not adoption of the
+historical 3.60 output path, and is not the historical 3.59 L01 hash. This
+increment does not requalify N01–N02 or NG0–NG5, and does not rewrite the
+3.59/3.60/3.64 contracts. A passing combined G1–G5 run still does not, by
+itself, set fullA6AcceptanceComplete. The official P5 A6.1–A6.7 audit remains
+required. I-037 installation, production publisher roots, cross-namespace
+import, and production FTS/RAG stay open. No original remainingAcceptance
+wording is changed.

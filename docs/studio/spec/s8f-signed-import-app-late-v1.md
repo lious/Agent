@@ -330,3 +330,61 @@ This increment lands only the completed official binding. Recommended next
 increment executes the combined G1–G5 run specified above, then stops short of
 full A6 unless that A6.1–A6.7 audit is honestly complete in the same coherent
 verified slice.
+
+## Increment 3.65 — official combined G1–G5 run
+
+Status: official combined G1–G5 COMPLETE against one fresh late C2 binary.
+fullA6AcceptanceComplete remains false. Base
+113ea94fd84106d5d624f9885fe3dc530a2c8d15 was clean and matched
+origin/feat/studio-foundation-20261125 before editing. Normative parents remain
+C2:58–66, C6:169–182, C7:190–212, the 3.64 supplement, acceptance P5,
+App v1 A6.1–A6.7, and ADRs 0257–0264.
+
+The official combined run bound in Increment 3.64 was executed:
+
+1. Input SHA-256 was frozen at this clean base (late entrypoint, reader helper,
+   Web import composition, pinned vendor/lock/bootstrap, and LICENSE.core as a
+   recorded unchanged file). Those sources did not change during the build.
+2. A fresh G1 used a disposable compiler cache and produced three actual
+   release/CSP/source-map builds (default, ordinary opt-in, and one isolated
+   late fixture targeting `test/import_late_phase_entrypoint.dart`). Exact
+   input and output SHA-256 are in the 3.65 `artifacts.json`. Default and
+   ordinary opt-in contain none of the late public root fingerprint,
+   release/observer strings, gate markers, or test imports/source-map entries.
+   The fixture artifact is not deployable. The fresh late main hash is
+   `935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb`. That
+   digest is byte-identical to the historical 3.60 L02–L03 late hash because
+   no studio_web source has changed since 3.60 and the compiler reproduced the
+   same bytes. This is not reuse of the historical 3.60 artifact path as the
+   C2 binary; the C2 binary is the newly built
+   `/workspace/skill-import-app-365/late-phase-app/main.dart.js`. The digest
+   is not the historical 3.59 L01 hash
+   `afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29`.
+3. Already-qualified G2 and G3 transports compiled into that fixture were
+   reused. The 3.59/3.60 unit or canary suites were not requalified, and those
+   historical contracts were not rewritten.
+4. G4 independently qualified all twelve C6 rows in fresh browser
+   contexts/stores against that one fresh late main hash, with actual
+   App/panel/factory/owner, trusted CDP Tab/Enter input, and per-phase
+   order/count evidence. 3.59/3.60 profile results and B01–B11/N01–N02
+   runtimes were not borrowed as those combined rows. This is combined G4 of
+   the C6 rows, not a rewrite of the frozen 3.59 L01 qualification.
+5. G5 independently recorded, for each of those twelve rows, actual CSP,
+   vendor SRI, startup versus component requests (request count unchanged
+   after composition start; recorded requests are document/startup/vendor
+   only), and IDB/localStorage/sessionStorage snapshots through teardown, with
+   zero component writes. CAS/shelf absence is proven by no such API or path
+   being supplied. Raw results and environment/executable digests are kept.
+   The reused drivers still emit historical `scope` labels; those labels are
+   not this increment's acceptance claim.
+
+A passing combined G1–G5 run still does not, by itself, set
+fullA6AcceptanceComplete. Full A6 additionally requires the P5 audit of
+outstanding A6.1–A6.7 obligations against recorded evidence, and still does
+not close I-037 installation, production publisher roots, cross-namespace
+import, or production FTS/RAG. Independently qualified B01–B11 and N01–N02
+rows remain scoped historical/native evidence and were not rerun. N01-semantics
+remains framework-standard-semantics, not OS assistive-device qualification.
+
+Recommended next increment is that official P5 A6.1–A6.7 audit. Do not set
+fullA6AcceptanceComplete unless the audit is honestly complete.

@@ -1,0 +1,1054 @@
+{
+  "passed": true,
+  "caseId": "L02-length-context",
+  "details": {
+    "controlledNotFile": true,
+    "phase": "length",
+    "action": "context",
+    "naturalNullOutcome": true,
+    "oneResourceClosed": true,
+    "noReplacementCapacity": true,
+    "reader": {
+      "boundary": "length",
+      "held": false,
+      "busy": false,
+      "outcome": "null",
+      "counts": {
+        "armed": 1,
+        "selections": 1,
+        "selected": 1,
+        "lengthStarted": 1,
+        "openStarted": 1,
+        "openCompleted": 1,
+        "held": 1,
+        "outcomeNull": 1,
+        "armRefusals": 1,
+        "manualReleases": 1,
+        "lengthCompleted": 1,
+        "closeStarted": 1,
+        "closeCompleted": 1,
+        "quiescent": 1,
+        "ignoredReleases": 1
+      },
+      "events": [
+        "armed",
+        "selections",
+        "selected",
+        "lengthStarted",
+        "openStarted",
+        "openCompleted",
+        "held",
+        "outcomeNull",
+        "armRefusals",
+        "manualReleases",
+        "lengthCompleted",
+        "closeStarted",
+        "closeCompleted",
+        "quiescent",
+        "ignoredReleases"
+      ],
+      "watchdogFired": false,
+      "observerFaults": 0,
+      "elapsedSeconds": 2.878299
+    }
+  },
+  "chooserCount": 0,
+  "actualApp": "WebStudioApp.testImport + actual owner/panel/store + real web factory",
+  "inputMethod": "trusted CDP Tab/Enter on standard App fixture controls",
+  "observations": [
+    {
+      "phase": "held",
+      "reader": {
+        "boundary": "length",
+        "held": true,
+        "busy": true,
+        "outcome": "pending",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "openCompleted": 1,
+          "held": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "openCompleted",
+          "held"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 0.0005
+      },
+      "browserMonotonic": 2771.9000000003725
+    },
+    {
+      "phase": "invalidated-before-release",
+      "reader": {
+        "boundary": "length",
+        "held": true,
+        "busy": true,
+        "outcome": "null",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "openCompleted": 1,
+          "held": 1,
+          "outcomeNull": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "openCompleted",
+          "held",
+          "outcomeNull"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 1.8884
+      },
+      "browserMonotonic": 4711.199999999255
+    },
+    {
+      "phase": "quiescent",
+      "reader": {
+        "boundary": "length",
+        "held": false,
+        "busy": false,
+        "outcome": "null",
+        "counts": {
+          "armed": 1,
+          "selections": 1,
+          "selected": 1,
+          "lengthStarted": 1,
+          "openStarted": 1,
+          "openCompleted": 1,
+          "held": 1,
+          "outcomeNull": 1,
+          "armRefusals": 1,
+          "manualReleases": 1,
+          "lengthCompleted": 1,
+          "closeStarted": 1,
+          "closeCompleted": 1,
+          "quiescent": 1
+        },
+        "events": [
+          "armed",
+          "selections",
+          "selected",
+          "lengthStarted",
+          "openStarted",
+          "openCompleted",
+          "held",
+          "outcomeNull",
+          "armRefusals",
+          "manualReleases",
+          "lengthCompleted",
+          "closeStarted",
+          "closeCompleted",
+          "quiescent"
+        ],
+        "watchdogFired": false,
+        "observerFaults": 0,
+        "elapsedSeconds": 2.878299
+      },
+      "browserMonotonic": 5616.9000000003725
+    }
+  ],
+  "noAcknowledgmentAccepted": true,
+  "storageSnapshotUnchanged": true,
+  "noComponentWrites": true,
+  "traces": [
+    {
+      "event": "pageshow",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    },
+    {
+      "event": "focus",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "focus",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "blur",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "focus",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Tab"
+    },
+    {
+      "event": "key",
+      "realm": "64dfe4fc-bc3e-4024-92cf-5bf01f0b2ebb",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "key": "Enter"
+    }
+  ],
+  "navigations": [
+    {
+      "frame": {
+        "id": "6809F8C9C9335E28CAF4C7F2F031DEF4",
+        "loaderId": "A4995FC929E5227946B5E286C768A5B0",
+        "url": "http://127.0.0.1:33927/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:33927",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    }
+  ],
+  "nativeTraceDataLoss": false,
+  "requests": [
+    "http://127.0.0.1:33927/",
+    "http://127.0.0.1:33927/signed_import_bootstrap.js",
+    "http://127.0.0.1:33927/flutter_bootstrap.js",
+    "http://127.0.0.1:33927/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:33927/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:33927/main.dart.js",
+    "http://127.0.0.1:33927/assets/FontManifest.json",
+    "http://127.0.0.1:33927/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:33927/favicon.ico",
+    "http://127.0.0.1:33927/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "exceptions": [],
+  "violations": [],
+  "scope": "L02\u2013L03 controlled-port box App profile only; no real File/OS/device/AT/model/provider/full A6",
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-V1e-NvpqetSFUMen5fJdUg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "documentResponses": [
+    {
+      "nonce": "V1e-NvpqetSFUMen5fJdUg",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-V1e-NvpqetSFUMen5fJdUg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "b0d7633faa2ab10cf3ef2111a97c150850c74fae9b4725cd6d164e2513962c34"
+    }
+  ],
+  "servedAssetSha256": {
+    "/": "b0d7633faa2ab10cf3ef2111a97c150850c74fae9b4725cd6d164e2513962c34",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/flutter_bootstrap.js": "deece96fa1afcd21ea4827d88f3b3fc0f0fb6f435d6405f23105b4003899e5c2",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/main.dart.js": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V",
+  "combinedIncrement": "3.65",
+  "c2LateMainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb"
+}

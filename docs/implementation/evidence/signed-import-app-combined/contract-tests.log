@@ -1,0 +1,15 @@
+test_combined_g1_g5_is_claimed_and_full_a6_is_not (tools.tests.test_signed_import_combined.CombinedRunTests.test_combined_g1_g5_is_claimed_and_full_a6_is_not) ... ok
+test_fresh_c2_binary_covers_all_twelve_rows (tools.tests.test_signed_import_combined.CombinedRunTests.test_fresh_c2_binary_covers_all_twelve_rows) ... ok
+test_historical_contracts_and_suites_were_not_rewritten_or_requalified (tools.tests.test_signed_import_combined.CombinedRunTests.test_historical_contracts_and_suites_were_not_rewritten_or_requalified) ... ok
+test_no_runtime_tree_edits_in_this_combined_run (tools.tests.test_signed_import_combined.CombinedRunTests.test_no_runtime_tree_edits_in_this_combined_run) ... ok
+test_studio_web_unchanged_and_production_exclusions_hold (tools.tests.test_signed_import_combined.CombinedRunTests.test_studio_web_unchanged_and_production_exclusions_hold) ... ok
+test_binding_does_not_claim_combined_or_full_a6 (tools.tests.test_signed_import_combined_plan.CombinedPlanTests.test_binding_does_not_claim_combined_or_full_a6) ... ok
+test_late_c2_hashes_remain_distinct_and_authoritative (tools.tests.test_signed_import_combined_plan.CombinedPlanTests.test_late_c2_hashes_remain_distinct_and_authoritative) ... ok
+test_no_runtime_tree_edits_in_this_binding (tools.tests.test_signed_import_combined_plan.CombinedPlanTests.test_no_runtime_tree_edits_in_this_binding) ... ok
+test_plan_requires_one_fresh_binary_and_twelve_c6_rows (tools.tests.test_signed_import_combined_plan.CombinedPlanTests.test_plan_requires_one_fresh_binary_and_twelve_c6_rows) ... ok
+test_studio_web_unchanged_since_late_reader_qualification (tools.tests.test_signed_import_combined_plan.CombinedPlanTests.test_studio_web_unchanged_since_late_reader_qualification) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.020s
+
+OK
