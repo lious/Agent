@@ -1,0 +1,8 @@
+test_crosswalk_is_linked_and_clearly_bounded (test_ios_milestone_crosswalk.MilestoneDocumentationTest.test_crosswalk_is_linked_and_clearly_bounded) ... ok
+test_frozen_table_is_unchanged_and_internal_labels_exist (test_ios_milestone_crosswalk.MilestoneDocumentationTest.test_frozen_table_is_unchanged_and_internal_labels_exist) ... ok
+test_same_numbers_are_not_equivalent_or_completion_evidence (test_ios_milestone_crosswalk.MilestoneDocumentationTest.test_same_numbers_are_not_equivalent_or_completion_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK

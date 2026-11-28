@@ -1,0 +1,54 @@
+{
+  "kind": "documentationCrosswalk",
+  "productQualification": false,
+  "sourceBase": "51ea41d9df1dadf019833d27ea0ee79637465549",
+  "repositoryTable": "packages/studio_agent/lib/capability_table.dart",
+  "repositoryTableSha256": "c850379d70f5a01a345e427bc7e2de8c7ed7f1e55c68248cd788a0ef1da86c9c",
+  "originalPage": "https://cursor.com/canvas/store-fa1f1df3-2eb9-4e13-93c0-0c955b705747/533e4c15-a9dd-4e44-bd8a-5500b076057b",
+  "originalSection": "native-milestones",
+  "warning": "Same-number labels are NOT equivalent milestones. Accepted portable N1/N3 entries do not establish original-Page N1/N3 completion.",
+  "rows": [
+    {
+      "internalPortableSlice": "N1-interfaces",
+      "originalPageMilestone": "N1",
+      "originalPageTitle": "Real local editing loop",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    },
+    {
+      "internalPortableSlice": "N2-llamacpp-binding",
+      "originalPageMilestone": "N2",
+      "originalPageTitle": "Reliability and model lifecycle",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    },
+    {
+      "internalPortableSlice": "N3-harness-tools",
+      "originalPageMilestone": "N3",
+      "originalPageTitle": "Release foundations and image enhancement",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    },
+    {
+      "internalPortableSlice": "N4-on-device-inference",
+      "originalPageMilestone": "N4",
+      "originalPageTitle": "Video C1",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    },
+    {
+      "internalPortableSlice": "N5-ios-packaging",
+      "originalPageMilestone": "N5",
+      "originalPageTitle": "ASR and advanced C2",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    },
+    {
+      "internalPortableSlice": "N6-device-qualification",
+      "originalPageMilestone": "N6",
+      "originalPageTitle": "Independent research",
+      "equivalent": false,
+      "originalPageCompletionEstablished": false
+    }
+  ]
+}
