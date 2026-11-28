@@ -1,0 +1,12 @@
+test_exact_delta_preserves_qualified_runtime_and_license (tools.tests.test_signed_import_late_reader.LateReaderTests.test_exact_delta_preserves_qualified_runtime_and_license) ... ok
+test_gate_witness_not_factory_or_result_override (tools.tests.test_signed_import_late_reader.LateReaderTests.test_gate_witness_not_factory_or_result_override) ... ok
+test_original_acceptance_and_task_counts_unchanged (tools.tests.test_signed_import_late_reader.LateReaderTests.test_original_acceptance_and_task_counts_unchanged) ... ok
+test_resource_quiescence_and_natural_null (tools.tests.test_signed_import_late_reader.LateReaderTests.test_resource_quiescence_and_natural_null) ... ok
+test_scope_excludes_l01_requalification_and_full_a6 (tools.tests.test_signed_import_late_reader.LateReaderTests.test_scope_excludes_l01_requalification_and_full_a6) ... ok
+test_ten_new_actual_app_profiles (tools.tests.test_signed_import_late_reader.LateReaderTests.test_ten_new_actual_app_profiles) ... ok
+test_three_artifacts_and_frozen_input_identity (tools.tests.test_signed_import_late_reader.LateReaderTests.test_three_artifacts_and_frozen_input_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.373s
+
+OK

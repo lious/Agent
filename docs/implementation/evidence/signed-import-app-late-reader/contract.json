@@ -1,0 +1,75 @@
+{
+  "increment": "3.60",
+  "base": "e499a223995bf067edbf506bb8e45d681a5b8ad6",
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "qualifiedMatrixRows": [
+    "L02",
+    "L03"
+  ],
+  "deferredNativeRows": [
+    "N01",
+    "N02"
+  ],
+  "l01DependencyCommit": "e499a223995bf067edbf506bb8e45d681a5b8ad6",
+  "caseIds": [
+    "L02-length-cancel",
+    "L02-length-context",
+    "L02-length-dispose",
+    "L02-open-cancel",
+    "L02-open-context",
+    "L02-open-dispose",
+    "L02-read-cancel",
+    "L02-read-context",
+    "L02-read-dispose",
+    "L03-null-close-context"
+  ],
+  "gateStatus": {
+    "G3": "qualified controlled-reader arm/release and natural-null close/quiescence",
+    "G1/G4/G5": "current ten profiles and three artifact exclusions only",
+    "G2": "frozen 3.59 dependency; no L01 rerun",
+    "combined": "not claimed"
+  },
+  "allowedRuntimeChanges": [
+    "apps/studio_web/lib/import_fixture_composition.dart",
+    "apps/studio_web/lib/main.dart",
+    "apps/studio_web/test/import_late_phase_entrypoint.dart",
+    "apps/studio_web/test/import_late_reader.dart",
+    "apps/studio_web/test/import_late_reader_test.dart"
+  ],
+  "sourceSha256": {
+    "apps/studio_web/lib/import_fixture_composition.dart": "a3d9df09a7804326e3a7113ee91e67775b754e5e4b8f0e623aecb5f9fa46f5c1",
+    "apps/studio_web/lib/main.dart": "468161102e849a6be8135b01c9985fa7aac0bdf010d14e994ed32c8733a84056",
+    "apps/studio_web/test/import_late_phase_entrypoint.dart": "5c2b38d0455d38d2a2c8524cace6c6071a8d7e613c9331a92e41f0958e11efd8",
+    "apps/studio_web/test/import_late_reader.dart": "2344ef530c93f4febcab8908df23c0129a6879d9df3682bcc39ed707be360541",
+    "apps/studio_web/test/import_late_reader_test.dart": "677316abc95fbd8249e06af5a253cdbdf497a001bdcef4a5875d1485ab299717",
+    "tools/acceptance/import_late_reader/browser.cjs": "edbc6d0ee4b0e7ab1a6dcdf7bc493d619bddf1f96b6173f48c3c6c880f095add",
+    "tools/acceptance/run_skill_import_app_late_reader.py": "f80185dfa41c4a30a3684e6c10ac8fd1b1882eeb447d68137d1b4daa98ef9885"
+  },
+  "unchangedFiles": {
+    "packages/studio_assets/third_party/sodium_web/LICENSE.core": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+    "packages/studio_assets/third_party/sodium_web/backend-lock.json": "2f85fe4be04c11848a98ed8462f8b774bcf15393362511b65bf6daa0917ad455",
+    "packages/studio_assets/third_party/sodium/backend-lock.json": "dbf40cbf0ca372c9635149b3ad93df9412e100b2ecba63ee3d176801692dbd4c",
+    "packages/studio_assets/web/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "apps/studio_web/web/index.html": "bef0b31437572fe8c7e5382496ec82faba2943314072b156d44fcbc52dfab2b6",
+    "apps/studio_web/web/flutter_bootstrap.js": "adfa13b86cfccbd5d87532397cd28313944602213dc09299634f3b36797627e0",
+    "apps/studio_web/lib/skill_source_web.dart": "7978a6a098a2a748eeed9ae3e589edd3e7d1a27721ff3355656ce68e24e97f20",
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "302252234413b4bf461ac5daa4c7f960ee142daeb1dde371af7f848697ceb7f5",
+    "packages/studio_assets/lib/craft/signed_import/app_session.dart": "93e0a90cadfd725a8a27487d0344a8a9bd2a449a78b3b29304ef2ebf91b91862",
+    "packages/studio_assets/lib/craft/signed_import/source_capture.dart": "f855c12a69daa10ec688f1066f30bd3e160be8b06c04128d4c799aa4e3542ecd",
+    "packages/studio_assets/lib/studio_signed_skill_import_web.dart": "368ea78f9aa066356bd8d15df741dad6abeeb79832fff19867d1ac139dfe10bc",
+    "packages/studio_store/lib/studio_store.dart": "ef14a0b4b2310d7f04ffaa17e384a73696cb1d769d717f51c3ba66b8ed912367",
+    "packages/studio_contracts/lib/studio_contracts.dart": "db3dc51e1424fa85778839a42e518755454509b302ed5e903efbe21d0234498b",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "apps/studio_web/lib/skill_import_panel.dart": "929422e8471c39024b81af5d1404b1a4b13e769c1e7a3bb1efd320f7039628b8",
+    "apps/studio_web/test/import_fixture_entrypoint.dart": "3eb33fb136ea118d67c26cce0b557e10bbddbcd6ecac52d7826858ced91ee573",
+    "apps/studio_web/test/import_fixture_lifetime_test.dart": "8a0091b001c4a5fc85462f5d907713a53af35e789dd890baca0f3d982f7359da",
+    "apps/studio_web/test/import_lifecycle_entrypoint.dart": "6ce1fc0eb545090d8d1a9a9381068056c2334f288d9d9e792042004f7114ce80",
+    "apps/studio_web/test/import_held_source.dart": "6e0e574b8d83e221ddcc67dc2ad5b8fc4c9b4abc990c8d0627aebfbbbc613828",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier_web.dart": "11b1b5ddaf3d2ea1b1a27d1719c746eb492d32beefccdbb8b4eb67f0f58faed8",
+    "apps/studio_demo/lib/skill_source_linux.dart": "1d0697e66eb0c3903fb0b7fc3a70be3b6eaca6f5015bd76355af71d9021ff324",
+    "docs/studio/spec/s8f-signed-import-app-acceptance-v1.md": "58fcef318d306e71afa207c250aad13e9cad1c48e3110a9a541722f60347c851",
+    "apps/studio_web/test/import_late_state_entrypoint.dart": "7a7e18fa1321d61dfc3d8958ddd2ea4432d0db624d8fe6c6b6d46d8b717998c6"
+  }
+}

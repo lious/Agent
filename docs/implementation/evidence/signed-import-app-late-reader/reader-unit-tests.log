@@ -1,0 +1,8 @@
+00:00 +0: loading /workspace/agent-foundation-20261125/apps/studio_web/test/import_late_reader_test.dart
+00:00 +0: controlled open: null cancellation preserves busy until one close
+00:00 +1: controlled length: null cancellation preserves busy until one close
+00:00 +2: controlled read: null cancellation preserves busy until one close
+00:00 +3: close gate: natural null precedes close/quiescence and owner change
+00:00 +4: TEST watchdog cancels and releases for cleanup, never success
+00:00 +5: observer fault cannot replace original capture outcome
+00:00 +6: All tests passed!

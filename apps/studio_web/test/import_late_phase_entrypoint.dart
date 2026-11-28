@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:web/web.dart' as web;
+
+import 'import_late_reader.dart';
+
 // TEST ONLY: actual factory observation; PUBLIC deterministic signing seed 1..32.
 import 'package:material_ui/material_ui.dart';
 import 'package:studio_assets/studio_signed_skill_import_web.dart';
@@ -33,12 +39,22 @@ BuildTimeSignaturePolicy policy(
   'maxFileBytes': 1048576,
 });
 
+final _reader = LateReaderController(
+  observe: (facts) {
+    web.document.documentElement?.setAttribute(
+      'data-signed-import-late-reader',
+      jsonEncode(facts),
+    );
+  },
+);
 void main() => runApp(
   WebStudioApp.testImport(
     importFixture: AppImportFixtureConfiguration(
       nowSeconds: 1000,
       clockConfident: true,
       observeRepositoryForTest: true,
+      readerControlsForTest: _reader,
+      chooseSourceForTest: _reader.choose,
       lifecycleTestControls: true,
       policyForOwner: (p, n) => policy(p, n),
       transitions: List.unmodifiable([

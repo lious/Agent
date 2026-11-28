@@ -223,3 +223,29 @@ cross-namespace import, FTS/RAG, device/model/provider/OS assistive-device accep
 paid APIs, deploy, Mac/XS, main merge or force-push. user_version=9 and restoreSnapshot
 remain unchanged; fullTasksCompleted=0 and counts stay 0/62/12/13. No original
 remainingAcceptance/remainingScope wording is rewritten.
+
+## Increment 3.60 — controlled-reader witness details (before implementation)
+
+C2/C4/C5 are implemented through a narrow App-private reader-control interface:
+arm one typed open/length/read/close enum, or release the existing gate. It carries
+no snapshot, liveness replacement, factory, token or consent. Normal App-root test
+buttons invoke it; arming is refused after source start, including while cancelling.
+A pure-Dart TEST controller owns one bounded four-byte reader, one gate and read-only
+counter observations. A test-entrypoint DOM sink publishes only those observations.
+Sink faults are recorded/test failures and cannot alter capture outcomes.
+
+Record actual selected/open/length/data-read/EOF/close/outcome/quiescent events.
+Logical open is memoized inside length, under the common existing source deadline;
+close waits for that same open and never reopens it. Invalid open/length completion
+permits no read; invalid first-read completion permits no second read/EOF. L03
+finishes one four-byte chunk plus EOF before holding close, then observes actual
+cancel(null), owner retirement and eventual single close/quiescence in that order.
+The wrapper returns the ORIGINAL capture future and adds passive observations only.
+
+The compiled browser controller uses the specified 15000 ms selected-source test
+watchdog. It records failure, cancels the actual capture and releases only for
+cleanup; it cannot count as manual success. Pure-controller non-browser fault
+unit tests may use a shorter TEST watchdog to exercise that failure path without
+changing the production 30000 ms deadline or browser crypto/source clocks. Actual
+browser rows must finish before their unchanged watchdog/deadline. L01 remains a
+frozen dependency, not a newly rerun profile. Native rows/full A6 remain deferred.

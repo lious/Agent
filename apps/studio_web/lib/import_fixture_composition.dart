@@ -14,9 +14,11 @@ final class AppImportFixtureConfiguration {
     this.lifecycleTestControls = false,
     this.observeRepositoryForTest = false,
     this.chooseSourceForTest,
+    this.readerControlsForTest,
     this.transitions = const [],
   });
   final BuildTimeSignaturePolicy Function(AppProfile, Namespace) policyForOwner;
+  final AppImportFixtureReaderControls? readerControlsForTest;
   final List<AppImportFixtureTransition> transitions;
   final int nowSeconds;
   final bool clockConfident, clockRollback;
@@ -76,4 +78,12 @@ final class AppImportFixtureChange {
   final Set<String>? installed, session, branch;
   final int? nowSeconds;
   final bool? clockConfident, clockRollback;
+}
+
+// App-private typed TEST control only; no repository, snapshot or consent input.
+enum AppImportFixtureReaderBoundary { open, length, read, close }
+
+abstract interface class AppImportFixtureReaderControls {
+  void arm(AppImportFixtureReaderBoundary boundary);
+  void release();
 }

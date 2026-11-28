@@ -304,6 +304,26 @@ class _WebStudioState extends State<WebStudioApp> {
                 ],
               ),
             ],
+            if (_fixture?.readerControlsForTest != null)
+              Wrap(
+                children: [
+                  for (final boundary in AppImportFixtureReaderBoundary.values)
+                    TextButton(
+                      onPressed: () {
+                        _fixture!.readerControlsForTest!.arm(boundary);
+                        setState(() {});
+                      },
+                      child: Text('Arm fixture reader ${boundary.name}'),
+                    ),
+                  TextButton(
+                    onPressed: () {
+                      _fixture!.readerControlsForTest!.release();
+                      setState(() {});
+                    },
+                    child: const Text('Release fixture reader'),
+                  ),
+                ],
+              ),
             if (_fixture?.lifecycleTestControls ?? false) ...[
               Text('Fixture lifecycle: $_fixtureLifecycle'),
               for (final state in [
