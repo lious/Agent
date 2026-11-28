@@ -1,0 +1,118 @@
+{
+  "kind": "sourceInspectionOnly",
+  "checkedDate": "2026-11-28 Asia/Shanghai",
+  "candidatePackages": [
+    {
+      "name": "file_selector_linux",
+      "version": "0.9.4+1",
+      "metadataUrl": "https://pub.dev/api/packages/file_selector_linux/versions/0.9.4%2B1",
+      "archiveUrl": "https://pub.dev/api/archives/file_selector_linux-0.9.4%2B1.tar.gz",
+      "archiveSha256": "da76400e7872ce7637ffdce12749ec24169c25f6195c28372208e65a24bcd2ab",
+      "archiveHashVerified": true,
+      "dependencies": {
+        "meta": "^1.10.0",
+        "flutter": {
+          "sdk": "flutter"
+        },
+        "cross_file": "^0.3.1",
+        "file_selector_platform_interface": "^2.7.0"
+      },
+      "installedOrExecuted": false
+    },
+    {
+      "name": "file_selector_platform_interface",
+      "version": "2.7.0",
+      "metadataUrl": "https://pub.dev/api/packages/file_selector_platform_interface/versions/2.7.0",
+      "archiveUrl": "https://pub.dev/api/archives/file_selector_platform_interface-2.7.0.tar.gz",
+      "archiveSha256": "35e0bd61ebcdb91a3505813b055b09b79dfdc7d0aee9c09a7ba59ae4bb13dc85",
+      "archiveHashVerified": true,
+      "dependencies": {
+        "http": ">=0.13.0 <2.0.0",
+        "flutter": {
+          "sdk": "flutter"
+        },
+        "cross_file": "^0.3.0",
+        "plugin_platform_interface": "^2.1.7"
+      },
+      "installedOrExecuted": false
+    },
+    {
+      "name": "cross_file",
+      "version": "0.3.5+5",
+      "metadataUrl": "https://pub.dev/api/packages/cross_file/versions/0.3.5%2B5",
+      "archiveUrl": "https://pub.dev/api/archives/cross_file-0.3.5%2B5.tar.gz",
+      "archiveSha256": "f141ea4f277af142a0356955707f6556f37b03947d39d55585981a06ca437bd6",
+      "archiveHashVerified": true,
+      "dependencies": {
+        "meta": "^1.3.0",
+        "web": ">=0.5.1 <2.0.0"
+      },
+      "installedOrExecuted": false
+    },
+    {
+      "name": "http",
+      "version": "1.6.0",
+      "metadataUrl": "https://pub.dev/api/packages/http/versions/1.6.0",
+      "archiveUrl": "https://pub.dev/api/archives/http-1.6.0.tar.gz",
+      "archiveSha256": "87721a4a50b19c7f1d49001e51409bddc46303966ce89a65af4f4e6004896412",
+      "archiveHashVerified": true,
+      "dependencies": {
+        "web": ">=0.5.0 <2.0.0",
+        "meta": "^1.3.0",
+        "async": "^2.5.0",
+        "http_parser": "^4.0.0"
+      },
+      "installedOrExecuted": false
+    },
+    {
+      "name": "plugin_platform_interface",
+      "version": "2.1.8",
+      "metadataUrl": "https://pub.dev/api/packages/plugin_platform_interface/versions/2.1.8",
+      "archiveUrl": "https://pub.dev/api/archives/plugin_platform_interface-2.1.8.tar.gz",
+      "archiveSha256": "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02",
+      "archiveHashVerified": true,
+      "dependencies": {
+        "meta": "^1.3.0"
+      },
+      "installedOrExecuted": false
+    }
+  ],
+  "existingLockedDependencies": {
+    "web": {
+      "version": "1.1.2",
+      "sha256": "e119e82ac4795c7925103b7cf3768191f33941b99e7ccffbd6c645201d9f606b"
+    },
+    "meta": {
+      "version": "1.19.0",
+      "sha256": "307249ce4ff29d58a18e97f6345f539382eb9c9c29ecda628900f31de0443dd9"
+    },
+    "async": {
+      "version": "2.13.1",
+      "sha256": "e2eb0491ba5ddb6177742d2da23904574082139b07c1e33b8503b9f46f3e1a37"
+    },
+    "http_parser": {
+      "version": "4.1.2",
+      "sha256": "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
+    },
+    "plugin_platform_interface": {
+      "version": "2.1.8",
+      "sha256": "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+    }
+  },
+  "inspectedFilesSha256": {
+    "file_selector_linux-LICENSE": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+    "file_selector_linux-lib-file_selector_linux.dart": "e920c52e1000221441be316e1b6030bcc50465c5dac45e5ffbd9ce06221bad28",
+    "file_selector_platform_interface-lib-file_selector_platform_interface.dart": "e81233c2a03b5f26f9700f76aca6d20669f9a811286144abda829dbb980ffaad",
+    "file_selector_linux-linux-file_selector_plugin.cc": "6c85e3968576e093e950fa6f0e11d788fe6972c9d93dbd93cd5514f807d31fd9",
+    "file_selector_platform_interface-LICENSE": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d"
+  },
+  "executed": false,
+  "selectorQualified": false,
+  "uiQualified": false,
+  "notes": [
+    "No package installation, dependency resolution, archive source execution or UI/platform testing.",
+    "cross_file 0.4.0 is NOT selected: incompatible with selector ^0.3 constraints. Compatible 0.3.5+5 selected explicitly.",
+    "HTTP is an unused transitive interface dependency, not permission for any network source or publisher lookup.",
+    "Existing App dependency locks remain untouched. Implementation must lock these exact candidates and preserve unrelated locked dependencies."
+  ]
+}

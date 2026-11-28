@@ -91,3 +91,5 @@ execute(compiled):
 [Signed Film/Craft import v1](s8f-signed-import-v1.md) completes the bounded DSSE/Ed25519 envelope, exact authenticated bytes, trusted direct-key policy and preview binding under t155u. This plan does not make ExternalSkillRequest.signed cryptographic evidence, change existing privilege gates, or implement verified import.
 
 [Web import composition v1](s8f-signed-import-web-v1.md) specifies the browser-only prerequisite and independent tests; Increment 3.47 does not implement or qualify that port.
+
+[App selection / preview-consent composition v1](s8f-signed-import-app-v1.md) completes the explicit App-owned source/read/presentation/one-use-consent planning prerequisite. Increment 3.49 is plan only, not UI/picker qualification or installation/tool approval.

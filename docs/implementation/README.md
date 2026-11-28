@@ -1649,3 +1649,26 @@ I-037/T-4/program remain unfinished; counts **0 complete / 62 partial / 12 plann
 strict-equality failure are untouched. No UI/file picker, production publisher
 provisioning, durable installation, namespace transfer, production FTS/RAG,
 real-device/model/provider/paid-API acceptance or standing excluded runtime opens.
+
+## Increment 3.49 — App selection / preview-consent composition plan only
+
+[App supplement](../studio/spec/s8f-signed-import-app-v1.md) and
+[ADR 0248](../adr/0248-signed-import-app-composition-plan.md) complete ownership,
+source selection/capture bounds, immutable presentation, separate one-use
+non-authorizing acknowledgment, lifecycle/staleness and independent App UI/picker/
+CSP acceptance planning. Maintained Linux selector archives were hash-checked and
+read as source only; Web uses already-locked File/Blob APIs. No plugin or UI was
+installed, implemented, executed or qualified. Backend tests are not UI evidence.
+
+The current Web base tag is not a qualified host: planned correction removes it,
+not relaxing base-uri or script CSP/SRI. The Linux plugin returns a path, not an
+atomic selected FD; consent binds captured immutable bytes, not an inode promise.
+Defaults remain empty roots/grants and unknown clock; no approval or install.
+Evidence: `evidence/signed-import-app-plan-v1/`. Next qualify source/host gates,
+then implement only that planned composition as Increment 3.50.
+
+Counts remain **0 complete / 62 partial / 12 planned / 13 blocked**;
+fullTasksCompleted=0; I-037/T-4/program unfinished. Original acceptance and
+remainingScope, previous runtime sources/tests and the pre-existing strict-equality
+failure are untouched. No production roots, durable installation, cross-namespace
+import, FTS/RAG, device/model/provider/store/paid acceptance or excluded work opens.

@@ -1,0 +1,48 @@
+{
+  "kind": "appCompositionPlanOnly",
+  "base": "68ebd8282f547e96b431fee17c2aa30cab30b83e",
+  "runtimeImplemented": false,
+  "uiQualified": false,
+  "filePickerQualified": false,
+  "cryptoRequalified": false,
+  "sections": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "A7"
+  ],
+  "limits": {
+    "envelopeBytes": 4194304,
+    "nativeSentinelBytes": 4194305,
+    "readChunkBytes": 65536,
+    "readDeadlineMs": 30000,
+    "outstandingSources": 1,
+    "pendingUiPreviews": 1,
+    "descriptionScalars": 256,
+    "descriptionSnippets": 32
+  },
+  "preservedSourceTrees": [
+    "apps",
+    "packages",
+    "native"
+  ],
+  "unchangedFiles": {
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "docs/studio/spec/s8f-signed-import-v1.md": "ef482a2a53772561986caefbb1716054a89da7f80a25ba4ae1599921da810c57",
+    "docs/studio/spec/s8f-signed-import-web-v1.md": "f44891bf177c70b18f250a1abfe97ebf22c68d35131bac7e58323529de44756c",
+    "docs/adr/0244-s8f-signed-import-plan.md": "3984fb7347a2bfb31a7d562687825e943989a8154256caa174ca153cababcc71",
+    "docs/adr/0246-web-signed-import-composition-plan.md": "190ddbce8d9c2fc1ff2126685e94683bb7c016a2d382abc5fff65d7752f1d3b2",
+    "docs/adr/0247-web-signed-import-preview.md": "bec75794d721e886359a4d0f029deb9f6641c694560231850f3295d27eca2fa9",
+    "pubspec.lock": "0201baa0664d65a59250d862d129016ee7add2893bc40cd4cd8e3f1891affb3d"
+  },
+  "counts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "fullTasksCompleted": 0
+}
