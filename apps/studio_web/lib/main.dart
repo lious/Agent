@@ -15,11 +15,14 @@ import 'package:studio_assets/studio_signed_skill_import_web.dart';
 import 'skill_import_panel.dart';
 import 'skill_source_web.dart';
 import 'peer_panel.dart';
+import 'import_fixture_composition.dart';
 
 void main() => runApp(const WebStudioApp());
 
 class WebStudioApp extends StatefulWidget {
-  const WebStudioApp({super.key});
+  const WebStudioApp({super.key}) : importFixture = null;
+  const WebStudioApp.testImport({super.key, required this.importFixture});
+  final AppImportFixtureConfiguration? importFixture;
   @override
   State<WebStudioApp> createState() => _WebStudioState();
 }
@@ -34,6 +37,9 @@ class _WebStudioState extends State<WebStudioApp> {
     _skillProfile,
     Namespace('studio', 'local', 'web'),
   );
+  AppImportFixtureConfiguration? _fixture;
+  BuildTimeSignaturePolicy? _fixturePolicy;
+  final _importLifetime = ImportCompositionLifetime();
   BrowserProjectStore? _store;
   ProjectDocument? _project;
   final _title = TextEditingController(),
@@ -41,10 +47,22 @@ class _WebStudioState extends State<WebStudioApp> {
       _subtitle = TextEditingController();
   String? _error;
   int _command = 0;
+  int _fixtureRebuilds = 0;
   @override
   void initState() {
     super.initState();
+    _fixture = widget.importFixture;
     unawaited(_open());
+  }
+
+  @override
+  void didUpdateWidget(covariant WebStudioApp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(_fixture, widget.importFixture)) {
+      _importLifetime.invalidateBeforePublication();
+      _fixture = widget.importFixture;
+      _fixturePolicy = null;
+    }
   }
 
   Future<void> _open() async {
@@ -125,6 +143,7 @@ class _WebStudioState extends State<WebStudioApp> {
 
   @override
   void dispose() {
+    _importLifetime.invalidateBeforePublication();
     _store?.close();
     _title.dispose();
     _text.dispose();
@@ -146,15 +165,32 @@ class _WebStudioState extends State<WebStudioApp> {
               'Browser IndexedDB metadata/caption editing only. No media renderer, model or paid service. Peer networking requires separate explicit WebRTC pairing below. Browser storage can be evicted: export JSON; this is not a complete portable media archive.',
             ),
             const ProjectInspectorPanel(),
+            if (_fixture != null) ...[
+              Text('Fixture App rebuild: $_fixtureRebuilds'),
+              TextButton(
+                onPressed: () => setState(() => ++_fixtureRebuilds),
+                child: const Text('Rebuild fixture App'),
+              ),
+            ],
             if (const bool.fromEnvironment('STUDIO_SIGNED_IMPORT_PREVIEW') &&
                 _project != null)
               SkillImportPanel(
                 ownerIdentity: _project!.projectId,
+                ownerLifetime: _importLifetime,
                 currentApp: () => ImportAppSnapshot(
                   profile: _skillProfile,
                   namespace: _project!.namespace.toJson(),
-                  policy: _skillPolicy,
-                  nowSeconds: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+                  policy: _fixture == null
+                      ? _skillPolicy
+                      : (_fixturePolicy ??= _fixture!.policyForOwner(
+                          _skillProfile,
+                          _project!.namespace,
+                        )),
+                  nowSeconds:
+                      _fixture?.nowSeconds ??
+                      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+                  clockConfident: _fixture?.clockConfident ?? false,
+                  clockRollback: _fixture?.clockRollback ?? false,
                   installedAllowlist: {},
                   sessionGrant: {},
                   branchScope: {},

@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "builds": {
+    "default": {
+      "target": "lib/main.dart",
+      "optIn": false,
+      "sourceMapSha256": "daf112f5aa68ee52f3c1769c2136d5d3d6906c0e62640839c3cf383c6fe01140",
+      "mainSha256": "ece572798c872f8b080ddac51c6c5144e35a017998d9384cd55fb450582fda34",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false
+    },
+    "opt-in": {
+      "target": "lib/main.dart",
+      "optIn": true,
+      "sourceMapSha256": "8edf4f9d5807600e15ba9161286c37599e65a1395218bcac176cc65762daf910",
+      "mainSha256": "67a1158e81a2665d5273a883d496b351e9db3be95e8da1151995fe2e342b9f5f",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false
+    },
+    "fixture": {
+      "target": "test/import_fixture_entrypoint.dart",
+      "optIn": true,
+      "sourceMapSha256": "7a6f0b898352ee89e806a7b5801a1b22d244296590091a3e8a60f7f507a63bf8",
+      "mainSha256": "2bf8eb608244510e06b7a481265dea4453fa0b552a602941a658a6ce0dec7da7",
+      "fixtureSentinelsPresent": true,
+      "testEntrypointInSourceMap": true
+    }
+  },
+  "sourceSha256": {
+    "apps/studio_web/lib/browser_compute.dart": "520da9d07ae182af497e4248185619e02299e688feb90c111500cc5d70a98ec6",
+    "apps/studio_web/lib/browser_store.dart": "937e1c3b352657374d94bfbc7c46712e78aeecf703f7e7604176280c50e36dc7",
+    "apps/studio_web/lib/import_fixture_composition.dart": "42efc847513b92599e0f6aebab7e2f4af23d23bd10a5c4ec1e9dce0e9bf48f3c",
+    "apps/studio_web/lib/main.dart": "4c98590b53ce2fe488c28291c640f304e89c655088358ce89030a5fef9f2d219",
+    "apps/studio_web/lib/peer_panel.dart": "25aea03d109996d4558430856de56cfc7f04c9c09c368f7e3ccdc6ed556ec6d8",
+    "apps/studio_web/lib/rtc_peer.dart": "1cc1173376cfe15927c1316791b30e68f85e2a13b8bc29f8a58d1dc1cfc076b1",
+    "apps/studio_web/lib/skill_import_panel.dart": "929422e8471c39024b81af5d1404b1a4b13e769c1e7a3bb1efd320f7039628b8",
+    "apps/studio_web/lib/skill_source_web.dart": "7978a6a098a2a748eeed9ae3e589edd3e7d1a27721ff3355656ce68e24e97f20",
+    "apps/studio_web/test/import_fixture_entrypoint.dart": "3eb33fb136ea118d67c26cce0b557e10bbddbcd6ecac52d7826858ced91ee573",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded"
+  },
+  "defaultSourceUsesNullFixture": true,
+  "fixtureClockDefinedOnlyInTestEntrypoint": true
+}

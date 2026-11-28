@@ -179,3 +179,14 @@ increment. Project user_version=9, InversePatch=restoreSnapshot; counts remain
 I-037, T-4 and program remain unfinished. No device/model/provider/paid API/store
 release acceptance; no durable install, cross-namespace import, production roots/
 FTS/RAG, user Mac/XS, main merge, force push or standing-exclusion runtime.
+
+## Increment 3.55 — browser semantics action observation
+
+For B03, activate the actual browser semantics DOM button's standard click action
+and observe the real engine-to-widget/repository result. This is a browser
+semantics-action boundary test, NOT an OS screen-reader/assistive-device claim.
+B01/B02 independently require trusted keyboard input; a DOM click cannot substitute
+for either keyboard case. Never invoke a private Dart callback or JS consent export.
+B04 may use a fixture-only normal App-root rebuild control (allowed by P3), with
+read-only rebuild count, to prove cached policy/profile identity survives rebuild.
+That control and counter must be absent from default artifacts along with roots/time.
