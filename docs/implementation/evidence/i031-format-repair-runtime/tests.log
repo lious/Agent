@@ -1,0 +1,35 @@
+00:00 +0: loading packages/studio_agent/test/format_repair_test.dart
+00:00 +0: single claim, retained attempt outcomes, exact identities, smaller request and fresh approval
+00:00 +1: second format failure is terminal with no third attempt
+00:00 +2: missing done never repairs or dispatches
+00:00 +3: missing finish evidence never repairs or dispatches
+00:00 +4: unknown finish evidence never repairs or dispatches
+00:00 +5: missing required fields never repairs or dispatches
+00:00 +6: wrong type never repairs or dispatches
+00:00 +7: unknown tool never repairs or dispatches
+00:00 +8: unknown tool with extras never repairs or dispatches
+00:00 +9: non-object never repairs or dispatches
+00:00 +10: empty call never repairs or dispatches
+00:00 +11: sequence gap never repairs or dispatches
+00:00 +12: conflicting seq never repairs or dispatches
+00:00 +13: extra keys trigger regeneration, never projection execution: {"id":"t1","name":"timeline.inspect","extra":true,"arguments":{"clipId":"clip-1"}}
+00:00 +14: extra keys trigger regeneration, never projection execution: {"id":"t1","name":"timeline.inspect","arguments":{"extra":true,"clipId":"clip-1"}}
+00:00 +15: extra fields cannot conceal invalid required argument
+00:00 +16: duplicate and reordered chunks are charged once; tool JSON is not free
+00:00 +17: transport exception does not become format repair
+00:00 +18: cancel between attempts retains received costs and forbids retry
+00:00 +19: model after preview invalidates apply without dispatch
+00:00 +20: catalog after preview invalidates apply without dispatch
+00:00 +21: revision after preview invalidates apply without dispatch
+00:00 +22: cancel after preview invalidates apply without dispatch
+00:00 +23: deadline after preview invalidates apply without dispatch
+00:00 +24: input exhaustion before second request charges no unsent input
+00:00 +25: output exhausted by incomplete JSON stops without reset or retry
+00:00 +26: repair context overflow does not strip original prompt
+00:00 +27: model between attempts prevents generation two
+00:00 +28: catalog between attempts prevents generation two
+00:00 +29: revision between attempts prevents generation two
+00:00 +30: deadline between attempts prevents generation two
+00:00 +31: byte-limit violation never triggers repair or retains payload in journal
+00:00 +32: untrusted semantic refusal is not treated as extra-field format repair
+00:00 +33: All tests passed!

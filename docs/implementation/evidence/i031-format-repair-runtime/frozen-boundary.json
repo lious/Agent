@@ -1,0 +1,15 @@
+{
+  "parent": "1f48402e5123c26673ea43748b4a8318a9d3d77a",
+  "checks": {
+    "packages/studio_agent/test/llm_runtime_stream_test.dart": "957b327537f0e3a3f46c403b922a039fb8f6632977cae04d25c2aa701c18f793",
+    "packages/studio_agent/lib/capability_table.dart": "c850379d70f5a01a345e427bc7e2de8c7ed7f1e55c68248cd788a0ef1da86c9c",
+    "StreamAssembler class suffix unchanged from parent": true
+  },
+  "realInferenceQualified": false,
+  "counts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  }
+}

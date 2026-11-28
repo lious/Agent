@@ -8,6 +8,7 @@ import 'agent_journal.dart';
 import 'budget_controller.dart';
 import 'context_builder.dart';
 import 'llm_runtime.dart';
+import 'format_repair.dart';
 import 'message_protocol.dart';
 import 'model_pack.dart';
 import 'plan_validator.dart';
@@ -42,6 +43,7 @@ final class TurnResult {
     this.toolResult,
     this.pendingApproval = false,
     this.applied = false,
+    this.approvalCommandId,
   });
 
   final String text;
@@ -49,6 +51,7 @@ final class TurnResult {
   final Map<String, Object?>? toolResult;
   final bool pendingApproval;
   final bool applied;
+  final String? approvalCommandId;
 }
 
 /// turn / run / step loop with fail-closed middleware, approval gates,
@@ -73,6 +76,7 @@ final class AgentHarness {
   final Map<String, ToolCallPlan> pendingPlans = {};
   final Map<String, String> pendingText = {};
   String? pendingSteer;
+  final Map<String, void Function()> _repairGuards = {};
 
   void _runHooks(String phase, Map<String, Object?> ctx) {
     for (final hook in hooks) {
@@ -84,8 +88,7 @@ final class AgentHarness {
     }
   }
 
-  AgentAvailability availability() =>
-      AgentAvailability.inspect(packRegistry);
+  AgentAvailability availability() => AgentAvailability.inspect(packRegistry);
 
   void steer([String text = 'steer']) {
     pendingSteer = text;
@@ -148,26 +151,60 @@ final class AgentHarness {
       if (input.toolsEnabled && !cap.supportsTools) {
         throw const StudioException(toolsUnsupported);
       }
-      final assembler = StreamAssembler(expectTools: input.toolsEnabled);
-      requireDeadline();
-      await for (final chunk in runtime.generate(
-        LlmGenerateRequest(
-          prompt: prompt,
-          maxOutputTokens: budget.maxOutputTokens,
-          toolsEnabled: input.toolsEnabled,
-        ),
-      )) {
+      final pack = packRegistry.loadedPack;
+      final manifest = pack == null
+          ? null
+          : packRegistry.inspectCatalog(pack.packId);
+      final runtimeIdentity = runtime.runtimeId;
+      final revisions = Map<String, int>.from(projectRevision);
+      final catalog = RepairCatalog(registry);
+      final catalogHash = catalog.hash;
+      void requireRepairFresh() {
         budget.requireOpen();
         requireDeadline();
-        assembler.accept(chunk);
-        if (chunk.text.isNotEmpty) {
-          budget.addOutputTokens(runtime.tokenize(chunk.text).length);
+        final current = runtime.capabilities();
+        if (!identical(packRegistry.loadedPack, pack) ||
+            (pack != null &&
+                !identical(
+                  packRegistry.inspectCatalog(pack.packId),
+                  manifest,
+                )) ||
+            runtime.runtimeId != runtimeIdentity ||
+            current.runtimeId != cap.runtimeId ||
+            current.supportsTools != cap.supportsTools ||
+            current.contextTokens != cap.contextTokens ||
+            current.outputTokens != cap.outputTokens ||
+            revisions.length != projectRevision.length ||
+            revisions.entries.any((e) => projectRevision[e.key] != e.value)) {
+          throw const StudioException(
+            planInvalid,
+            'format-repair-context-drift',
+          );
         }
+        catalog.requireCurrent(catalogHash);
       }
-      final rawTool = assembler.finish();
-      final turnPayload = <String, Object?>{
-        'text': assembler.text.toString(),
-      };
+
+      final validator = PlanValidator(
+        registry,
+        untrustedBodies: ContextBuilder.untrustedBodies(input.segments),
+      );
+      final generated = await FormatRepairGeneration(
+        runtime: runtime,
+        budget: budget,
+        journal: journal,
+        catalog: catalog,
+        identity: [
+          input.sessionId,
+          input.turnId,
+          input.messageId,
+          input.commandId,
+        ],
+        checkFresh: requireRepairFresh,
+        validate: validator.validate,
+        now: stamp,
+      ).generate(prompt, input.toolsEnabled);
+      final rawTool = generated.raw;
+      final turnPayload = <String, Object?>{'text': generated.text};
       if (rawTool != null) {
         turnPayload['toolCall'] = rawTool;
       }
@@ -179,15 +216,45 @@ final class AgentHarness {
         at: DateTime.now().toUtc(),
       );
       if (rawTool == null) {
-        return TurnResult(text: assembler.text.toString());
+        return TurnResult(text: generated.text);
       }
       final plan = PlanValidator(
         registry,
         untrustedBodies: ContextBuilder.untrustedBodies(input.segments),
       ).validate(rawTool);
-      budget.recordToolCall(jsonEncode({'name': plan.name, 'args': plan.arguments}));
+      if (generated.repaired) {
+        requireRepairFresh();
+        final approvalId =
+            'fra1-${repairHash(jsonEncode([input.commandId, 2, generated.promptHash, generated.schemaHash, repairHash(rawTool)]))}';
+        // A repaired proposal has its own fresh confirmation key. The original
+        // public command remains claimed and cannot authorize this proposal.
+        pendingPlans[approvalId] = plan;
+        pendingText[approvalId] = generated.text;
+        _repairGuards[approvalId] = () {
+          requireRepairFresh();
+          if (expectedRevision != null) {
+            final current =
+                projectRevision[plan.arguments['clipId'] as String? ??
+                    'project'] ??
+                0;
+            if (current != expectedRevision) {
+              throw const StudioException(handEditCas, 'revision');
+            }
+          }
+        };
+        return TurnResult(
+          text: generated.text,
+          toolName: plan.name,
+          pendingApproval: true,
+          approvalCommandId: approvalId,
+        );
+      }
+      budget.recordToolCall(
+        jsonEncode({'name': plan.name, 'args': plan.arguments}),
+      );
       final tool = registry.lookup(plan.name)!;
-      if (tool.requiresApproval && !approvedCommands.contains(input.commandId)) {
+      if (tool.requiresApproval &&
+          !approvedCommands.contains(input.commandId)) {
         _runHooks('beforeApproval', {'tool': plan.name});
         journal.append(
           id: 'j-${input.commandId}-pending',
@@ -197,16 +264,18 @@ final class AgentHarness {
           at: DateTime.now().toUtc(),
         );
         pendingPlans[input.commandId] = plan;
-        pendingText[input.commandId] = assembler.text.toString();
+        pendingText[input.commandId] = generated.text;
         return TurnResult(
-          text: assembler.text.toString(),
+          text: generated.text,
           toolName: plan.name,
           pendingApproval: true,
           applied: false,
         );
       }
       if (expectedRevision != null) {
-        final current = projectRevision[plan.arguments['clipId'] as String? ?? 'project'] ?? 0;
+        final current =
+            projectRevision[plan.arguments['clipId'] as String? ?? 'project'] ??
+            0;
         if (current != expectedRevision) {
           throw StudioException(handEditCas, 'revision');
         }
@@ -220,7 +289,7 @@ final class AgentHarness {
         at: DateTime.now().toUtc(),
       );
       return TurnResult(
-        text: assembler.text.toString(),
+        text: generated.text,
         toolName: plan.name,
         toolResult: result,
         applied: true,
@@ -232,11 +301,7 @@ final class AgentHarness {
         id: 'j-${input.commandId}-err',
         kind: 'error',
         commandId: '${input.commandId}-err',
-        payload: {
-          'code': e.code,
-          'path': e.path,
-          'recoverable': recoverable,
-        },
+        payload: {'code': e.code, 'path': e.path, 'recoverable': recoverable},
         at: stamp().toUtc(),
       );
       rethrow;
@@ -250,9 +315,25 @@ final class AgentHarness {
     if (!approvedCommands.contains(commandId)) {
       throw StudioException(approvalRequired, commandId);
     }
+    final guard = _repairGuards.remove(commandId);
+    if (guard != null) {
+      try {
+        guard();
+      } on Object {
+        pendingPlans.remove(commandId);
+        pendingText.remove(commandId);
+        approvedCommands.remove(commandId);
+        rethrow;
+      }
+    }
     final plan = pendingPlans.remove(commandId);
     if (plan == null) {
       throw StudioException(planInvalid, commandId);
+    }
+    if (guard != null) {
+      budget.recordToolCall(
+        jsonEncode({'name': plan.name, 'args': plan.arguments}),
+      );
     }
     final tool = registry.lookup(plan.name)!;
     final result = await tool.handler(plan.arguments);

@@ -38,12 +38,16 @@ final class LlmChunk {
     this.text = '',
     this.toolCallJson,
     this.done = false,
+    this.finishReason,
   });
 
   final int seq;
   final String text;
   final String? toolCallJson;
   final bool done;
+
+  /// Trustworthy adapter terminal evidence; null is not inferred.
+  final String? finishReason;
 }
 
 final class LlmGenerateRequest {

@@ -96,6 +96,8 @@ final class ToolRegistry {
     _tools[tool.name] = tool;
   }
 
+  List<RegisteredTool> get registeredTools => List.unmodifiable(_tools.values);
+
   RegisteredTool? lookup(String name) => _tools[name];
 
   /// Official default catalog for Increment 2.14 tests.
@@ -108,9 +110,7 @@ final class ToolRegistry {
       RegisteredTool(
         name: 'timeline.inspect',
         sideEffect: ToolSideEffect.none,
-        arguments: const [
-          ToolArgumentSchema(name: 'clipId', kind: 'string'),
-        ],
+        arguments: const [ToolArgumentSchema(name: 'clipId', kind: 'string')],
         handler: (args) async {
           lastInspect?.addAll(args);
           return {'clipId': args['clipId'], 'durationTicks': 24};
@@ -124,7 +124,11 @@ final class ToolRegistry {
         requiresApproval: true,
         arguments: const [
           ToolArgumentSchema(name: 'clipId', kind: 'string'),
-          ToolArgumentSchema(name: 'action', kind: 'string', allowed: {'rename'}),
+          ToolArgumentSchema(
+            name: 'action',
+            kind: 'string',
+            allowed: {'rename'},
+          ),
         ],
         handler: (args) async {
           sideEffectCounts['edit.propose'] =
@@ -140,7 +144,10 @@ final class ToolRegistry {
         arguments: const [
           ToolArgumentSchema(name: 'sentenceId', kind: 'string'),
         ],
-        handler: (args) async => {'sentenceId': args['sentenceId'], 'preview': true},
+        handler: (args) async => {
+          'sentenceId': args['sentenceId'],
+          'preview': true,
+        },
       ),
     );
     registry.register(

@@ -6,12 +6,23 @@ import 'context_builder.dart';
 /// Stops a run on token budget, repeated identical tool calls, or no progress.
 final class BudgetController {
   BudgetController({
+    this.maxInputTokens = agentLocalContextTokens,
     this.maxToolSteps = agentLocalMaxToolSteps,
     this.maxOutputTokens = agentLocalOutputTokens,
     this.identicalCallLimit = 2,
   });
 
-  final int maxToolSteps, maxOutputTokens, identicalCallLimit;
+  final int maxInputTokens, maxToolSteps, maxOutputTokens, identicalCallLimit;
+  int inputTokens = 0;
+
+  void addInputTokens(int n) {
+    requireOpen();
+    if (n < 0 || inputTokens + n > maxInputTokens) {
+      throw const StudioException(budgetExceeded, 'input');
+    }
+    inputTokens += n;
+  }
+
   int toolSteps = 0;
   int outputTokens = 0;
   final List<String> _recentSignatures = [];

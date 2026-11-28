@@ -191,3 +191,10 @@ This increment's Python checks are documentation consistency/static checks
 only. They do not execute repair or qualify I-030, I-031, a model or device.
 Project user_version=9, InversePatch=restoreSnapshot, fullTasksCompleted=0;
 all original task remainingAcceptance/remainingScope and counts stay unchanged.
+
+## Implementation record (Increment 3.44)
+
+The portable implementation now lives in studio_agent AgentHarness and
+format_repair.dart. See ADR 0243 and evidence/i031-format-repair-runtime for
+scripted interface tests. The preceding plan-only status and deferral describe
+Increment 3.43 historically; no real inference/provider qualification follows.

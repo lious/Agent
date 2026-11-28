@@ -1,0 +1,14 @@
+00:00 +0: loading packages/studio_agent/test/harness_loop_test.dart
+00:00 +0: packages/studio_agent/test/harness_loop_test.dart: duplicate command ids execute only once
+00:00 +1: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout mid-generate is recoverable and has zero tool side effects
+00:00 +2: packages/studio_agent/test/harness_loop_test.dart: approval-required tools have zero side effects until approved
+00:00 +3: packages/studio_agent/test/harness_timeout_queue_test.dart: a queued job that times out can be followed by the next queued job
+00:00 +4: packages/studio_agent/test/harness_timeout_queue_test.dart: a queued job that times out can be followed by the next queued job
+00:00 +5: packages/studio_agent/test/harness_timeout_queue_test.dart: a queued job that times out can be followed by the next queued job
+00:00 +6: packages/studio_agent/test/harness_loop_test.dart: journal omits private reasoning and records tool receipts
+00:00 +7: packages/studio_agent/test/harness_timeout_queue_test.dart: steer on a queued job is applied to the next step, not a finished receipt
+00:00 +8: packages/studio_agent/test/harness_timeout_queue_test.dart: steer on a queued job is applied to the next step, not a finished receipt
+00:00 +9: packages/studio_agent/test/harness_timeout_queue_test.dart: steer on a queued job is applied to the next step, not a finished receipt
+00:00 +10: packages/studio_agent/test/harness_timeout_queue_test.dart: FIFO queue and cancel of a not-yet-run job leave side effects at zero
+00:00 +11: packages/studio_agent/test/harness_timeout_queue_test.dart: timeout before generate does not claim the command id
+00:00 +12: All tests passed!
