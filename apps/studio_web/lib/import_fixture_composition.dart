@@ -13,8 +13,10 @@ final class AppImportFixtureConfiguration {
     this.clockRollback = false,
     this.lifecycleTestControls = false,
     this.chooseSourceForTest,
+    this.transitions = const [],
   });
   final BuildTimeSignaturePolicy Function(AppProfile, Namespace) policyForOwner;
+  final List<AppImportFixtureTransition> transitions;
   final int nowSeconds;
   final bool clockConfident, clockRollback;
   final bool lifecycleTestControls;
@@ -42,4 +44,35 @@ final class ImportCompositionLifetime {
       retire();
     }
   }
+}
+
+// Typed trusted test inputs, not snapshots, repository factories or action ports.
+final class AppImportFixtureTransition {
+  AppImportFixtureTransition(this.label, List<AppImportFixtureChange> steps)
+    : steps = List.unmodifiable(steps);
+  final String label;
+  final List<AppImportFixtureChange> steps;
+}
+
+final class AppImportFixtureChange {
+  AppImportFixtureChange({
+    this.profileForOwner,
+    this.policyForOwner,
+    this.projectId,
+    Set<String>? installed,
+    Set<String>? session,
+    Set<String>? branch,
+    this.nowSeconds,
+    this.clockConfident,
+    this.clockRollback,
+  }) : installed = installed == null ? null : Set.unmodifiable(installed),
+       session = session == null ? null : Set.unmodifiable(session),
+       branch = branch == null ? null : Set.unmodifiable(branch);
+  final AppProfile Function(AppProfile)? profileForOwner;
+  final BuildTimeSignaturePolicy Function(AppProfile, Namespace)?
+  policyForOwner;
+  final String? projectId;
+  final Set<String>? installed, session, branch;
+  final int? nowSeconds;
+  final bool? clockConfident, clockRollback;
 }

@@ -247,3 +247,46 @@ App. Missing observations are failures, not proof of a callback. Sources checked
 2026-11-28 Asia/Shanghai: developer.chrome.com/docs/web-platform/page-lifecycle-api,
 developer.mozilla.org/en-US/docs/Web/API/Window/pagehide_event, and the public
 ChromeDevTools/devtools-protocol json/browser_protocol.json Tracing schema.
+
+## Increment 3.57 — typed late-state publication and time transport (t155u)
+
+The immutable fixture configuration currently cannot express individual owner,
+grant or clock changes: replacing it always retires, while the App snapshot uses
+hardcoded profile/grants. Complete that concrete transport gap BEFORE implementation.
+An optional immutable list of named typed transition sequences may be supplied
+ONLY by the separately compiled test entrypoint. Each step carries only optional
+owner-derived profile/policy factories, an in-memory project identity, immutable
+installed/session/branch sets, and trusted integer time/confidence/rollback.
+No repository, verifier, snapshot, action port, consent callback, serialized map,
+JS endpoint, URL parameter or browser-persisted configuration is accepted.
+
+The actual App owns private active overrides, renders normal fixture-only buttons,
+and applies steps synchronously. It MUST signal its existing private lifetime
+before publishing any profile/policy/grant/owner change, backward time, confidence
+loss or rollback. Owner identity changes replace the actual in-memory project
+pointer in the same namespace, NOT the store record. No edit/save follows in these
+cases. Profile identity uses a distinct AppProfile with equal fields. Policy epoch
+and key removal are separate owner-derived policy factories. Grants change each
+of the three sets separately. ABA is explicitly empty session grant -> one tool
+-> empty, within ONE synchronous UI transition: restored equal scope cannot revive
+the retired panel. Existing source/owner comparators are unchanged.
+
+Forward trusted ticks alone MUST NOT signal retirement or replace profile/policy
+identity. B10 first advances within key validity and retains the exact report, then
+advances to the bundled signer's exclusive notAfter boundary and uses the actual
+separate acknowledgment button. The real repository must refuse, clear the target
+and require fresh selection. 'preview/pack validity' in B10 refers to existing
+signature-policy eligibility at acknowledgment (signed-import v1 key interval and
+policy/time recheck), NOT a new pack expiry field, preview TTL, wall-clock trust or
+new importer protocol. No missing schema field/runtime is invented.
+
+B09 has eight independent fresh profiles (profile identity, epoch, key removal,
+installed/session/branch grants, equal-namespace project identity, session-grant
+ABA). B10 has its own fresh profile and actual acknowledgment refusal, NOT a fake
+clock-induced retirement. B11 has three independent profiles (backward seconds,
+confidence loss, rollback flag). UI/AX trace names applied steps; no private consent
+callback is invoked. Retired cases cannot acknowledge/reselect or revive on rebuild.
+All cases keep actual App/store/File/factory/readiness, baseline snapshots and
+continuous no-write/network/CSP observation. Default and ordinary opt-in release
+artifacts exclude every new fixture control, fixture key/time and entrypoint.
+L01–L03/N01–N02 and full A6 remain deferred. Prior rows are NOT rerun.

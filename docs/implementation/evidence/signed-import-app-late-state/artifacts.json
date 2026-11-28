@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "verifiedArtifactReuse": true,
+  "builds": {
+    "default": {
+      "target": "lib/main.dart",
+      "optIn": false,
+      "sourceMapSha256": "2fc15def5f02a1db7c47381fb43b6539d6b7fb5ecad22f0398466d0bda85e74c",
+      "mainSha256": "258e1dc45a7a0ed85007df31962ead664e53e9cdeb9ac794000e1842a7d08158",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false,
+      "heldReaderSentinelPresent": false
+    },
+    "opt-in": {
+      "target": "lib/main.dart",
+      "optIn": true,
+      "sourceMapSha256": "8e071a1278422a214651edd3222837dd5a5488eab6783f1acf977631be8eec1a",
+      "mainSha256": "9815e6dcf2fd44f50a86aefb6d055b2772e50ae9a81f98b8dc36a2c23f93975d",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false,
+      "heldReaderSentinelPresent": false
+    },
+    "late-state": {
+      "target": "test/import_late_state_entrypoint.dart",
+      "optIn": true,
+      "sourceMapSha256": "eabc9d17b722e7e74ec81fee27b44aeae22163d74d900612a085fbe2b265ee87",
+      "mainSha256": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9",
+      "fixtureSentinelsPresent": true,
+      "testEntrypointInSourceMap": true,
+      "heldReaderSentinelPresent": false
+    }
+  },
+  "sourceSha256": {
+    "apps/studio_web/lib/browser_compute.dart": "520da9d07ae182af497e4248185619e02299e688feb90c111500cc5d70a98ec6",
+    "apps/studio_web/lib/browser_store.dart": "937e1c3b352657374d94bfbc7c46712e78aeecf703f7e7604176280c50e36dc7",
+    "apps/studio_web/lib/import_fixture_composition.dart": "3e38af12386209e8e9d5b3518e59dd01e542b1a1fd70e53a5b8e3d8c4f61d991",
+    "apps/studio_web/lib/main.dart": "a1d1670bd51985e7c028a33f7e8ed788bf45937edb8252bc8dfd9040832cd038",
+    "apps/studio_web/lib/peer_panel.dart": "25aea03d109996d4558430856de56cfc7f04c9c09c368f7e3ccdc6ed556ec6d8",
+    "apps/studio_web/lib/rtc_peer.dart": "1cc1173376cfe15927c1316791b30e68f85e2a13b8bc29f8a58d1dc1cfc076b1",
+    "apps/studio_web/lib/skill_import_panel.dart": "929422e8471c39024b81af5d1404b1a4b13e769c1e7a3bb1efd320f7039628b8",
+    "apps/studio_web/lib/skill_source_web.dart": "7978a6a098a2a748eeed9ae3e589edd3e7d1a27721ff3355656ce68e24e97f20",
+    "apps/studio_web/test/import_late_state_entrypoint.dart": "7a7e18fa1321d61dfc3d8958ddd2ea4432d0db624d8fe6c6b6d46d8b717998c6",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded"
+  },
+  "defaultSourceUsesNullFixture": true,
+  "fixtureClockDefinedOnlyInTestEntrypoint": true
+}

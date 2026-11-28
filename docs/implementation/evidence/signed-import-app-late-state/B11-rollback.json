@@ -1,0 +1,134 @@
+{
+  "passed": true,
+  "caseId": "B11-rollback",
+  "details": {
+    "transition": "rollback",
+    "terminalRetirement": true,
+    "rebuildDidNotRevive": true,
+    "actualOwnerAndRepository": true,
+    "observedFact": "rollback=true"
+  },
+  "chooserCount": 1,
+  "actualApp": "WebStudioApp.testImport + actual owner/panel/store + real web factory",
+  "noAcknowledgmentAccepted": true,
+  "storageSnapshotUnchanged": true,
+  "noComponentWrites": true,
+  "traces": [
+    {
+      "event": "pageshow",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    },
+    {
+      "event": "focus",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "file-change",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "count": 1
+    },
+    {
+      "event": "blur",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "blur",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "focus",
+      "realm": "2ddcb952-52c2-4c8b-8ffe-3c7a73bf185d",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    }
+  ],
+  "navigations": [
+    {
+      "frame": {
+        "id": "39B38D55C344198989E8C62A963404D1",
+        "loaderId": "A0A97F543F6C7044F49D32161AAE8DE0",
+        "url": "http://127.0.0.1:34095/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:34095",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    }
+  ],
+  "nativeTraceDataLoss": false,
+  "requests": [
+    "http://127.0.0.1:34095/",
+    "http://127.0.0.1:34095/signed_import_bootstrap.js",
+    "http://127.0.0.1:34095/flutter_bootstrap.js",
+    "http://127.0.0.1:34095/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:34095/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:34095/main.dart.js",
+    "http://127.0.0.1:34095/assets/FontManifest.json",
+    "http://127.0.0.1:34095/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:34095/favicon.ico",
+    "http://127.0.0.1:34095/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "exceptions": [],
+  "violations": [],
+  "scope": "B09\u2013B11 box compiled App only; no OS device/AT/model/provider/full A6",
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-m_Qk-YgWZJLhaW6Z0qmdBg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "documentResponses": [
+    {
+      "nonce": "m_Qk-YgWZJLhaW6Z0qmdBg",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-m_Qk-YgWZJLhaW6Z0qmdBg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "bf6395bb7c049aea7248597c437cb3b5d1061afdd61a8cbe497a3f9d5ba177cd"
+    }
+  ],
+  "servedAssetSha256": {
+    "/": "bf6395bb7c049aea7248597c437cb3b5d1061afdd61a8cbe497a3f9d5ba177cd",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/flutter_bootstrap.js": "deece96fa1afcd21ea4827d88f3b3fc0f0fb6f435d6405f23105b4003899e5c2",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/main.dart.js": "f7783bdb88816151a3645e6dc9bcb73d982569b528d1ee557ab924c138003be9",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V"
+}

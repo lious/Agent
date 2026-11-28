@@ -1,0 +1,66 @@
+{
+  "increment": "3.57",
+  "base": "2a137beb9ef088aaf855a343a7a3d3c56694c525",
+  "fullA6AcceptanceComplete": false,
+  "productionRootsProvisioned": false,
+  "completedMatrixRows": [
+    "B09",
+    "B10",
+    "B11"
+  ],
+  "deferredMatrixRows": [
+    "L01",
+    "L02",
+    "L03",
+    "N01",
+    "N02"
+  ],
+  "variants": [
+    "B09-profile",
+    "B09-epoch",
+    "B09-key-removal",
+    "B09-installed",
+    "B09-session",
+    "B09-branch",
+    "B09-owner",
+    "B09-aba",
+    "B10",
+    "B11-backward",
+    "B11-confidence",
+    "B11-rollback"
+  ],
+  "sourceSha256": {
+    "apps/studio_web/lib/import_fixture_composition.dart": "3e38af12386209e8e9d5b3518e59dd01e542b1a1fd70e53a5b8e3d8c4f61d991",
+    "apps/studio_web/lib/main.dart": "a1d1670bd51985e7c028a33f7e8ed788bf45937edb8252bc8dfd9040832cd038",
+    "apps/studio_web/test/import_late_state_entrypoint.dart": "7a7e18fa1321d61dfc3d8958ddd2ea4432d0db624d8fe6c6b6d46d8b717998c6",
+    "tools/acceptance/run_skill_import_app_late_state.py": "bc9ed5c8a16c0d22ac944db79157538775de647bd4172b2ca5d0d789823fa5e6",
+    "tools/acceptance/import_late_state/browser.cjs": "88379d3e23d66328fc6be25c7e700884fba6e2626ce6187503599ea470b6e6d7"
+  },
+  "allowedRuntimeChanges": [
+    "apps/studio_web/lib/import_fixture_composition.dart",
+    "apps/studio_web/lib/main.dart",
+    "apps/studio_web/test/import_late_state_entrypoint.dart"
+  ],
+  "unchangedFiles": {
+    "packages/studio_assets/third_party/sodium_web/LICENSE.core": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+    "packages/studio_assets/third_party/sodium_web/backend-lock.json": "2f85fe4be04c11848a98ed8462f8b774bcf15393362511b65bf6daa0917ad455",
+    "packages/studio_assets/third_party/sodium/backend-lock.json": "dbf40cbf0ca372c9635149b3ad93df9412e100b2ecba63ee3d176801692dbd4c",
+    "packages/studio_assets/web/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "apps/studio_web/web/index.html": "bef0b31437572fe8c7e5382496ec82faba2943314072b156d44fcbc52dfab2b6",
+    "apps/studio_web/web/flutter_bootstrap.js": "adfa13b86cfccbd5d87532397cd28313944602213dc09299634f3b36797627e0",
+    "apps/studio_web/lib/skill_source_web.dart": "7978a6a098a2a748eeed9ae3e589edd3e7d1a27721ff3355656ce68e24e97f20",
+    "packages/studio_assets/lib/craft/signed_import/importer.dart": "302252234413b4bf461ac5daa4c7f960ee142daeb1dde371af7f848697ceb7f5",
+    "packages/studio_assets/lib/craft/signed_import/app_session.dart": "93e0a90cadfd725a8a27487d0344a8a9bd2a449a78b3b29304ef2ebf91b91862",
+    "packages/studio_assets/lib/craft/signed_import/source_capture.dart": "f855c12a69daa10ec688f1066f30bd3e160be8b06c04128d4c799aa4e3542ecd",
+    "packages/studio_assets/lib/studio_signed_skill_import_web.dart": "368ea78f9aa066356bd8d15df741dad6abeeb79832fff19867d1ac139dfe10bc",
+    "packages/studio_store/lib/studio_store.dart": "ef14a0b4b2310d7f04ffaa17e384a73696cb1d769d717f51c3ba66b8ed912367",
+    "packages/studio_contracts/lib/studio_contracts.dart": "db3dc51e1424fa85778839a42e518755454509b302ed5e903efbe21d0234498b",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "apps/studio_web/lib/skill_import_panel.dart": "929422e8471c39024b81af5d1404b1a4b13e769c1e7a3bb1efd320f7039628b8",
+    "apps/studio_web/test/import_fixture_entrypoint.dart": "3eb33fb136ea118d67c26cce0b557e10bbddbcd6ecac52d7826858ced91ee573",
+    "apps/studio_web/test/import_fixture_lifetime_test.dart": "8a0091b001c4a5fc85462f5d907713a53af35e789dd890baca0f3d982f7359da",
+    "apps/studio_web/test/import_lifecycle_entrypoint.dart": "6ce1fc0eb545090d8d1a9a9381068056c2334f288d9d9e792042004f7114ce80",
+    "apps/studio_web/test/import_held_source.dart": "6e0e574b8d83e221ddcc67dc2ad5b8fc4c9b4abc990c8d0627aebfbbbc613828"
+  }
+}

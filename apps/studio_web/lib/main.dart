@@ -40,6 +40,12 @@ class _WebStudioState extends State<WebStudioApp> {
   AppImportFixtureConfiguration? _fixture;
   BuildTimeSignaturePolicy? _fixturePolicy;
   final _importLifetime = ImportCompositionLifetime();
+  AppProfile? _fixtureProfile;
+  int? _fixtureNow;
+  bool? _fixtureConfidence, _fixtureRollback;
+  Set<String> _fixtureInstalled = {}, _fixtureSession = {}, _fixtureBranch = {};
+  String _fixtureTransition = 'none';
+
   BrowserProjectStore? _store;
   ProjectDocument? _project;
   final _title = TextEditingController(),
@@ -65,6 +71,50 @@ class _WebStudioState extends State<WebStudioApp> {
       _fixture = widget.importFixture;
       _fixturePolicy = null;
     }
+  }
+
+  void _applyFixtureTransition(AppImportFixtureTransition transition) {
+    final fixture = _fixture;
+    if (fixture == null || !fixture.transitions.contains(transition)) return;
+    for (final change in transition.steps) {
+      final oldTime = _fixtureNow ?? fixture.nowSeconds;
+      final retire =
+          change.profileForOwner != null ||
+          change.policyForOwner != null ||
+          change.projectId != null ||
+          change.installed != null ||
+          change.session != null ||
+          change.branch != null ||
+          (change.nowSeconds != null && change.nowSeconds! < oldTime) ||
+          change.clockConfident == false ||
+          change.clockRollback == true;
+      if (retire) _importLifetime.invalidateBeforePublication();
+      // All candidate values are published only AFTER synchronous retirement.
+      if (change.profileForOwner != null) {
+        _fixtureProfile = change.profileForOwner!(
+          _fixtureProfile ?? _skillProfile,
+        );
+      }
+      if (change.projectId != null) {
+        _project = ProjectDocument.fromJson({
+          ..._project!.toJson(),
+          'projectId': change.projectId,
+        });
+      }
+      if (change.policyForOwner != null) {
+        _fixturePolicy = change.policyForOwner!(
+          _fixtureProfile ?? _skillProfile,
+          _project!.namespace,
+        );
+      }
+      _fixtureInstalled = change.installed ?? _fixtureInstalled;
+      _fixtureSession = change.session ?? _fixtureSession;
+      _fixtureBranch = change.branch ?? _fixtureBranch;
+      _fixtureNow = change.nowSeconds ?? _fixtureNow;
+      _fixtureConfidence = change.clockConfident ?? _fixtureConfidence;
+      _fixtureRollback = change.clockRollback ?? _fixtureRollback;
+    }
+    setState(() => _fixtureTransition = transition.label);
   }
 
   void _injectFixtureLifecycle(AppLifecycleState state) {
@@ -187,6 +237,31 @@ class _WebStudioState extends State<WebStudioApp> {
                 child: const Text('Rebuild fixture App'),
               ),
             ],
+            if (_fixture?.transitions.isNotEmpty ?? false) ...[
+              Text('Fixture transition: $_fixtureTransition'),
+              Text(
+                'Fixture owner facts: profileChanged=${_fixtureProfile != null}; '
+                'epoch=${_fixturePolicy?.value['policyEpoch']}; '
+                'keys=${(_fixturePolicy?.value['trustedSigners'] as List?)?.length}; '
+                'installed=${_fixtureInstalled.toList()}; '
+                'session=${_fixtureSession.toList()}; branch=${_fixtureBranch.toList()}; '
+                'owner=${_project?.projectId}; namespace=${_project?.namespace.toJson()}; '
+                'now=${_fixtureNow ?? _fixture!.nowSeconds}; '
+                'confidence=${_fixtureConfidence ?? _fixture!.clockConfident}; '
+                'rollback=${_fixtureRollback ?? _fixture!.clockRollback}',
+              ),
+              Wrap(
+                children: [
+                  for (final transition in _fixture!.transitions)
+                    TextButton(
+                      onPressed: () => _applyFixtureTransition(transition),
+                      child: Text(
+                        'Apply fixture transition ${transition.label}',
+                      ),
+                    ),
+                ],
+              ),
+            ],
             if (_fixture?.lifecycleTestControls ?? false) ...[
               Text('Fixture lifecycle: $_fixtureLifecycle'),
               for (final state in [
@@ -214,7 +289,7 @@ class _WebStudioState extends State<WebStudioApp> {
                 ownerIdentity: _project!.projectId,
                 ownerLifetime: _importLifetime,
                 currentApp: () => ImportAppSnapshot(
-                  profile: _skillProfile,
+                  profile: _fixtureProfile ?? _skillProfile,
                   namespace: _project!.namespace.toJson(),
                   policy: _fixture == null
                       ? _skillPolicy
@@ -223,13 +298,16 @@ class _WebStudioState extends State<WebStudioApp> {
                           _project!.namespace,
                         )),
                   nowSeconds:
+                      _fixtureNow ??
                       _fixture?.nowSeconds ??
                       DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                  clockConfident: _fixture?.clockConfident ?? false,
-                  clockRollback: _fixture?.clockRollback ?? false,
-                  installedAllowlist: {},
-                  sessionGrant: {},
-                  branchScope: {},
+                  clockConfident:
+                      _fixtureConfidence ?? _fixture?.clockConfident ?? false,
+                  clockRollback:
+                      _fixtureRollback ?? _fixture?.clockRollback ?? false,
+                  installedAllowlist: _fixtureInstalled,
+                  sessionGrant: _fixtureSession,
+                  branchScope: _fixtureBranch,
                 ),
                 createRepository: createWebSignedSkillRepository,
                 chooseSource: (capture, guard, selected) =>
