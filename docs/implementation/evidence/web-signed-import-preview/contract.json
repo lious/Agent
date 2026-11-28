@@ -1,0 +1,50 @@
+{
+  "kind": "browserImportPreviewQualification",
+  "base": "462b0a25a02c14be6fb9019c6ddeec0a50525629",
+  "scope": "Dart compiled to JavaScript -O2, main browser realm, recorded Chrome Linux test-host only",
+  "statusCounts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "fullTasksCompleted": 0,
+  "browserModes": 21,
+  "uniqueWycheproofVectors": 210,
+  "additionalMutationRealmRepetition": 210,
+  "importerCases": 40,
+  "unchangedFiles": {
+    "packages/studio_assets/lib/craft/skill_privilege.dart": "a698d6aa44b2f231f49acce7a2d71d17aaad9f5770c3ea780e97ac49ee46e8a0",
+    "packages/studio_assets/test/skills/compile_safety/i037_external_skill_privilege_test.dart": "014792388a7f19662b591561a0f83835e0a23d10defeecfd8d758b6cb5343f27",
+    "packages/studio_assets/lib/studio_assets.dart": "e6acd6232de881d8a5890af584c5ebfabf163718acdfa56803d2ac16e2f117a7",
+    "docs/studio/spec/s8g.md": "0efb500407036f49efa123ecc88087f80d6a7996abcc220721538f3077e7f80d",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "packages/studio_agent/lib/format_repair.dart": "159b121ede427bc390d56eadb2a88e98fa09f4f1b048a254c1ab86a13a791909",
+    "packages/studio_agent/test/format_repair_test.dart": "4e8a3f4f66e8eae65a669c20456d008f18dea015440d9c5e2e862b613d99345d",
+    "packages/studio_assets/test/assets/character_versions/i036_character_binding_test.dart": "486205ef8460adea31a25fc026a2860398a68dafb5d9b3c1904c2203b714166c",
+    "packages/studio_assets/test/assets/character_versions/i036_character_rights_lease_test.dart": "e1bfda67cc7c24615c2584149b75117f203afceea9974529165b2c9e6723af10",
+    "packages/studio_assets/test/assets/character_versions/i036_character_pack_library_test.dart": "08006acf0961d9bbe8241ba3ebc4240e9c97dab8dbb86b12901753a7616012aa",
+    "packages/studio_assets/lib/craft/signed_import/sodium_verifier.dart": "f8d9d0dec7e5c78c541109d5a0cbdf96c6ce3066e21151ba64f520f96361c224",
+    "packages/studio_assets/lib/craft/signed_import/strict_json.dart": "ae17283c2441cf31417b03855f76225c6a836a117cf151540a40f49ce6e0a8a1",
+    "packages/studio_assets/lib/craft/signed_import/schema_check.dart": "08fcb88073eee6442e95a2e7d2fcb0474cb2a0db1fc5bd8aeb7009a7388819e8",
+    "packages/studio_assets/lib/craft/signed_import/film_schema.dart": "681fad54d7ce750f23a38440324cec29a26f4eedca0949c2608f153e2ba072cb",
+    "packages/studio_assets/lib/craft/signed_import/manifest_metaschema.dart": "9fed67397684b4e086689f76cb00e3b0da7bd77c5eda087eb9239bb30f42e65a",
+    "docs/studio/spec/s8f-signed-import-web-v1.md": "f44891bf177c70b18f250a1abfe97ebf22c68d35131bac7e58323529de44756c",
+    "docs/adr/0246-web-signed-import-composition-plan.md": "190ddbce8d9c2fc1ff2126685e94683bb7c016a2d382abc5fff65d7752f1d3b2"
+  },
+  "notQualified": [
+    "all browsers",
+    "Dart-to-Wasm",
+    "workers",
+    "physical devices",
+    "real inference/model/provider",
+    "UI/file picker",
+    "production publisher provisioning",
+    "durable installation",
+    "cross-namespace import",
+    "production FTS/RAG",
+    "production security audit",
+    "store release"
+  ],
+  "browserAssertionCases": 68
+}

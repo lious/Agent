@@ -3,4 +3,4 @@
 library;
 
 export 'craft/signed_import/importer.dart';
-export 'craft/signed_import/sodium_verifier.dart';
+export 'craft/signed_import/backend.dart';

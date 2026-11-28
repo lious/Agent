@@ -1627,3 +1627,25 @@ Qualification is **Linux x86_64 DEV only**. Web/other hosts, file-picker/UI wiri
 [Web supplement](../studio/spec/s8f-signed-import-web-v1.md) / [ADR 0246](../adr/0246-web-signed-import-composition-plan.md) complete the pinned browser artifact/SRI, trusted pre-execution bootstrap/CSP, readiness, concrete typed adapter, App ownership and independent-browser-test bindings. This is PLAN ONLY: candidate source was hashed, not executed; no Web port is implemented or qualified. Linux results are not Web evidence. Evidence: `evidence/web-signed-import-plan-v1/`.
 
 The next increment implements and independently tests the browser port. Counts remain **0 complete / 62 partial / 12 planned / 13 blocked**; I-037/T-4/program remain unfinished. No UI/file-picker product wiring, production roots, installation, cross-namespace import or production FTS/RAG is opened. Original acceptance/remainingScope wording and all runtime sources are unchanged; the pre-existing strict-equality failure is untouched.
+## Increment 3.48 — independently tested Web signed import-to-preview
+
+[ADR 0247](../adr/0247-web-signed-import-preview.md) implements the completed
+3.47 plan without changing its cryptographic/privilege bindings. Opt-in Web
+bootstrap enforces the exact 0.8.4 artifact/SRI/CSP before execution, terminal
+readiness and CSPRNG checks; a typed final adapter and conditional concrete seam
+feed the actual bounded importer. Native crypto source and artifact policy are
+unchanged; no native runtime or format-repair suite was requalified.
+
+Independent real-browser evidence first exercises the production Web bridge's
+RFC/negative/210-vector corpus, then actual Dart-JS compiled import-to-preview,
+with separate fault realms and offline public signed fixtures. Scope is ONLY the
+recorded main-realm Chrome profile, not all Web engines or an assertion about the
+combined JS/WebAssembly artifact's internal execution path. Immutable reports and
+one-use UI-owned acknowledgment grant no execution/tool approval or writes.
+Evidence: `evidence/web-signed-import-preview/`.
+
+I-037/T-4/program remain unfinished; counts **0 complete / 62 partial / 12 planned /
+13 blocked**, fullTasksCompleted=0. Original acceptance wording and pre-existing
+strict-equality failure are untouched. No UI/file picker, production publisher
+provisioning, durable installation, namespace transfer, production FTS/RAG,
+real-device/model/provider/paid-API acceptance or standing excluded runtime opens.

@@ -1,4 +1,4 @@
-/// Native Linux import-to-preview entry point. No persistence/installation API.
+/// Bounded opt-in import-to-preview entry point. No persistence/installation API.
 library;
 
 import 'dart:convert';
@@ -11,7 +11,7 @@ import 'package:studio_document/studio_document.dart' show Q;
 import '../skill_privilege.dart';
 import 'film_schema.dart';
 import 'schema_check.dart';
-import 'sodium_verifier.dart';
+import 'backend.dart';
 import 'strict_json.dart';
 
 const signedSkillPayloadType =
@@ -300,6 +300,7 @@ final class FilmSkillRepository {
     Map<String, dynamic> namespace,
     BuildTimeSignaturePolicy signaturePolicy,
   ) {
+    ensureImportBackend(_backend);
     final app = _snapshot();
     requireThat(identical(signaturePolicy, app.policy), 'POLICY');
     final policy = _policy(app, namespace);
@@ -527,6 +528,7 @@ final class FilmSkillRepository {
   /// UI invokes ONLY after explicit user acknowledgment; accepting model-supplied
   /// "confirmed" flags is not a valid App integration. The ID binds retained data.
   SkillPreviewAcknowledgment acknowledge(ImportUserGesture gesture) {
+    ensureImportBackend(_backend);
     requireThat(
       identical(gesture._issuer, _userActions) && !gesture._used,
       'PREVIEW_STALE',

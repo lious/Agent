@@ -1,0 +1,1123 @@
+{
+  "ok": true,
+  "base": "462b0a25a02c14be6fb9019c6ddeec0a50525629",
+  "dart": "Dart SDK version: 3.14.0 (stable) (Wed Nov 4 16:28:39 2026 -0800) on \"linux_x64\"",
+  "chrome": "Google Chrome 156.0.8078.47",
+  "compiler": "dart compile js -O2; main browser realm",
+  "artifactSha256": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7",
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V",
+  "coreVersion": "1.0.22 checked by startup self-test",
+  "bootstrapSha256": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+  "compiledImporterSha256": "d85a44b8a8a9169b55f930a76d30a47677d57c7ca133d2c3480abdc71173ad73",
+  "modes": [
+    {
+      "ok": true,
+      "mode": "crypto",
+      "cases": [
+        "Dart caller buffers are isolated from mutating upstream",
+        "RFC8032 tests 1-3 and message tampering",
+        "all 210 Wycheproof subcases",
+        "canonical S, S+L, noncanonical/small-order key and R, lengths",
+        "shim rejects strings, shared/resizable buffers; double-copy aliasing and frozen bridge"
+      ],
+      "wycheproofSubcases": 210,
+      "elapsedMs": 128,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "aliasing",
+      "cases": [
+        "Dart caller buffers are isolated from mutating upstream",
+        "RFC8032 tests 1-3 and message tampering",
+        "all 210 Wycheproof subcases",
+        "canonical S, S+L, noncanonical/small-order key and R, lengths",
+        "shim rejects strings, shared/resizable buffers; double-copy aliasing and frozen bridge"
+      ],
+      "wycheproofSubcases": 210,
+      "elapsedMs": 132.66999998688698,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "bad-string",
+      "cases": [
+        "reject non-byte/shared/resizable input without coercion; terminal failure"
+      ],
+      "elapsedMs": 67.1550000011921,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "bad-shared",
+      "cases": [
+        "reject non-byte/shared/resizable input without coercion; terminal failure"
+      ],
+      "elapsedMs": 65.8250000178814,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "bad-resizable",
+      "cases": [
+        "reject non-byte/shared/resizable input without coercion; terminal failure"
+      ],
+      "elapsedMs": 67.44999998807907,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "importer",
+      "cases": [
+        "async drift uses live roots, clock and grants, not stale App state",
+        "namespace and installed-policy identity remain non-bypassable",
+        "DSSE exact bytes, immutable preview and one-use UI acknowledgment",
+        "two raw-key threshold, duplicate signatures, untrusted keyid and signed flag",
+        "explicit unsigned empty roots never upgraded; invalid signed never downgraded",
+        "hostile signed fixture attacker",
+        "hostile signed fixture tamper",
+        "hostile signed fixture invalidSigned",
+        "hostile signed fixture traversal",
+        "hostile signed fixture absolutePath",
+        "hostile signed fixture duplicatePath",
+        "hostile signed fixture hashMismatch",
+        "hostile signed fixture lengthMismatch",
+        "hostile signed fixture oversizedFileClaim",
+        "hostile signed fixture signedPayloadClaim",
+        "hostile signed fixture externalEntrypoint",
+        "hostile signed fixture base64File",
+        "hostile signed fixture filmSchema",
+        "hostile signed fixture remoteSchema",
+        "hostile signed fixture precision",
+        "hostile signed fixture duplicateJson",
+        "hostile signed fixture utf8",
+        "hostile signed fixture bom",
+        "hostile signed fixture surrogate",
+        "hostile signed fixture depth",
+        "hostile signed fixture licenseEvidencePath",
+        "hostile signed fixture fixtureMismatch",
+        "hostile signed fixture signatureCount",
+        "hostile signed fixture schemaWork",
+        "whitespace/Unicode preserved without signed-byte canonicalization",
+        "license declarations stay unverified warnings, not grants",
+        "envelope and App policy resource limits, max pending",
+        "stale consent policy",
+        "stale consent epoch",
+        "stale consent revoked",
+        "stale consent expiry",
+        "stale consent rollback",
+        "stale consent unknownClock",
+        "stale consent grant",
+        "discard, realm-local pending and no echo consent"
+      ],
+      "documentWrites": 0,
+      "executionAuthority": false,
+      "elapsedMs": 413.4599999785423,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-before-ready",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 31.314999997615814,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-symbol",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 75.88999998569489,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-version",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 67.1749999821186,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-truthy",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 73.53499999642372,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-preexisting",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 33.71000000834465,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-foreign",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 34.34499999880791,
+      "violations": [],
+      "browserErrors": [
+        "Uncaught Error: SKILL_IMPORT_POLICY/backend/preexistingBridge"
+      ],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-csprng",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 30.75499999523163,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-sri",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 56.84000000357628,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-csp",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 24.63000002503395,
+      "violations": [
+        {
+          "directive": "script-src-elem",
+          "blocked": "http://127.0.0.1:45541/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+        }
+      ],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'sha384-qAXEtAByvLA5j7NuiwwOVtSVIko/FIiUl2VITbR94wTK3kMHyvVYDgjGmDiJkzCG' 'sha384-LiM0lpVUYB96/54XK97c5O+HixGhcFvXAwfzlb5Uc0ELo1/eTpzmwVXJP3xGqbQs' 'sha384-d2Pmn6q8jcEkN/2c+/Ar8ixGHYB85VLoNlW/5nlDK1rc+SSGHHVHOPmWRZTUWSpY'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-deadline",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 10026.710000008345,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "fail-late",
+      "cases": [
+        "terminal backend rejection; no repository published"
+      ],
+      "elapsedMs": 12031.075000017881,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "replacement",
+      "cases": [
+        "terminal failure also blocks empty-root unsigned import"
+      ],
+      "elapsedMs": 64.03499999642372,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "truthy",
+      "cases": [
+        "terminal failure also blocks empty-root unsigned import"
+      ],
+      "elapsedMs": 70.62999999523163,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "exception",
+      "cases": [
+        "terminal failure also blocks empty-root unsigned import"
+      ],
+      "elapsedMs": 70.81499999761581,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    {
+      "ok": true,
+      "mode": "teardown",
+      "cases": [
+        "terminal failure also blocks empty-root unsigned import"
+      ],
+      "elapsedMs": 68.79499998688698,
+      "violations": [],
+      "browserErrors": [],
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "observedArtifact": "libsodium.js 0.8.4 combined JS/WebAssembly; path not individually instrumented",
+      "vendorTamperExecuted": false,
+      "persistenceCalls": [],
+      "requests": [
+        {
+          "path": "/index.html",
+          "method": "GET"
+        },
+        {
+          "path": "/harness.js",
+          "method": "GET"
+        },
+        {
+          "path": "/bootstrap.js",
+          "method": "GET"
+        },
+        {
+          "path": "/browser_test.js",
+          "method": "GET"
+        },
+        {
+          "path": "/fixtures.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vectors.json",
+          "method": "GET"
+        },
+        {
+          "path": "/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+          "method": "GET"
+        },
+        {
+          "path": "/result",
+          "method": "POST"
+        }
+      ],
+      "unexpectedRequests": [],
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    }
+  ]
+}

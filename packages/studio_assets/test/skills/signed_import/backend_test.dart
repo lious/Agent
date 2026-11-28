@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 
-import 'package:studio_assets/craft/signed_import/sodium_verifier.dart';
+import 'package:studio_assets/craft/signed_import/backend.dart';
 import 'package:test/test.dart';
 
 List<int> hex(String x) => [
