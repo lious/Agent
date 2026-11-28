@@ -362,3 +362,18 @@ itself, set fullA6AcceptanceComplete. The official P5 A6.1–A6.7 audit remains
 required. I-037 installation, production publisher roots, cross-namespace
 import, and production FTS/RAG stay open. No original remainingAcceptance
 wording is changed.
+
+## Increment 3.66 — official P5 A6.1–A6.7 audit
+
+The [ADR 0265](../../../adr/0265-app-full-a6-audit.md) audit reads recorded
+evidence only and does not requalify B01–B11, L01–L03, G3, the combined
+G1–G5 run, or N01–N02/NG0–NG5. Official P5 row coverage is complete, and the
+3.61 outstanding A6.1–A6.7 remainders are closed by recorded 3.62–3.65
+citations. A passing combined G1–G5 run still does not, by itself, set
+fullA6AcceptanceComplete; this audit is the additional official check and
+sets that flag true in the 3.66 contract only. Frozen 3.59–3.65 contracts
+are not rewritten. Completing these rows still does NOT close I-037
+installation, production publisher roots, cross-namespace import, or
+production FTS/RAG. B03 and N01-semantics remain framework/standard
+semantics, not OS assistive-device qualification. No original
+remainingAcceptance wording is changed.

@@ -409,3 +409,12 @@ art-page widget APIs, deferred runtimes or excluded hardware tasks open here.
 I-037/T-4/program stay unfinished; fullTasksCompleted=0; Project user_version=9,
 InversePatch=restoreSnapshot. Increment 3.50 implements/qualifies this composition
 only after its source/host gates pass, or reports an exact contract conflict.
+
+### Increment 3.66 — official A6.1–A6.7 audit (t155u)
+
+The official P5 audit against recorded evidence is complete and sets
+fullA6AcceptanceComplete true in the Increment 3.66 contract only. See
+acceptance v1 P5:150–154, ADR 0265, and the 3.66 acceptance/late
+supplements. This does not close I-037 installation, production publisher
+roots, cross-namespace import, or production FTS/RAG, and does not claim
+OS assistive-device, device, model, provider, or store-release acceptance.

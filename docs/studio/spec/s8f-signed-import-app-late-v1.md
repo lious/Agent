@@ -388,3 +388,15 @@ remains framework-standard-semantics, not OS assistive-device qualification.
 
 Recommended next increment is that official P5 A6.1–A6.7 audit. Do not set
 fullA6AcceptanceComplete unless the audit is honestly complete.
+
+## Increment 3.66 — official P5 A6.1–A6.7 audit
+
+Status: official P5 / A6.1–A6.7 audit COMPLETE against recorded evidence.
+fullA6AcceptanceComplete is set true in the 3.66 contract only. Base
+0d1c66a8dacafc085681f47bdecb56fce7b206c2 was clean and matched
+origin/feat/studio-foundation-20261125 before editing. A passing combined
+G1–G5 run still does not, by itself, set that flag; Increments 3.59–3.65
+remain historically not full A6 acceptance. This increment does not rerun
+the combined G1–G5 profiles or rewrite the frozen 3.65 contract, which
+stays fullA6AcceptanceComplete=false. I-037 installation, production
+publisher roots, cross-namespace import, and production FTS/RAG stay open.

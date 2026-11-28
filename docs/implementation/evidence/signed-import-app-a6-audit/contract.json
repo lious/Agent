@@ -1,0 +1,53 @@
+{
+  "increment": "3.66",
+  "base": "0d1c66a8dacafc085681f47bdecb56fce7b206c2",
+  "kind": "official-p5-a6-audit-against-recorded-evidence",
+  "fullA6AcceptanceComplete": true,
+  "combinedG1G5Complete": true,
+  "combinedG1G5DoesNotByItselfSetFullA6": true,
+  "p5RowCoverageComplete": true,
+  "outstandingA61ToA67Obligations": [],
+  "newRuntimeExecutions": 0,
+  "historicalSuitesRequalified": false,
+  "l01Rerun": false,
+  "b01B11Rerun": false,
+  "combinedG1G5Rerun": false,
+  "n01N02Requalified": false,
+  "ng0Ng5Requalified": false,
+  "frozenEvidenceConflictFound": false,
+  "i037RemainsPartial": true,
+  "fullTasksCompletedUnchanged": 0,
+  "countsUnchanged": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "p5BrowserCaseCount": 27,
+  "combinedC6CaseCount": 12,
+  "nativeCaseCount": 7,
+  "lateC2MainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+  "historicalL01LateMainSha256": "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29",
+  "recordedNonClaims": [
+    "OS assistive-device or screen-reader qualification (B03 and N01-semantics are framework/standard semantics only)",
+    "manual OS file-dialog testing (CDP File and box GTK_USE_PORTAL=0 Xvfb are the recorded browser/Linux boundaries)",
+    "desktop portal chooser qualification",
+    "OS lifecycle or device delivery (B08 framework injections qualify only the framework observer boundary; B08-real-hidden is actual tab visibility)",
+    "real File qualification of L02-L03 (controlled-port test readers only)",
+    "durable installation",
+    "production publisher roots or clock provisioning",
+    "cross-namespace import (B09-owner keeps namespace/store unchanged; the product flow stays unopened)",
+    "production FTS/RAG",
+    "device, model, provider, paid-API, or store-release acceptance",
+    "user Mac or XS",
+    "I-037 remaining product acceptance (P5:153-154: completing these rows still does not close I-037)"
+  ],
+  "historical365FullA6RemainsFalse": true,
+  "unchangedFiles": {
+    "packages/studio_assets/third_party/sodium_web/LICENSE.core": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "docs/implementation/evidence/signed-import-app-combined/contract.json": "838159b2e7711db043a8b1b769227859c1e454b2ec354621ab5ab02e7d4b71d8",
+    "docs/implementation/evidence/signed-import-app-combined-plan/contract.json": "bf3c96bec7452405c18185bdc7c561f6f3c91bac3e89e201e53d13265295f057",
+    "docs/implementation/evidence/signed-import-app-native-profiles/contract.json": "f7d685686009722d8bd44204891a0c9aa9226c0b6b1f848f47910c9ff3db2f4c"
+  }
+}
