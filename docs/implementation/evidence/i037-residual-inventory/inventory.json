@@ -1,0 +1,129 @@
+{
+  "increment": "3.67",
+  "base": "4f8f0996ab9c228585f3878c638276662d3f12fe",
+  "kind": "residual-i037-program-leftover-inventory-only",
+  "newRuntimeExecutions": 0,
+  "implementationSliceLanded": false,
+  "advanceableImplementationSliceFound": false,
+  "fullA6AcceptanceCompleteIn366Only": true,
+  "frozen365FullA6RemainsFalse": true,
+  "i037RemainsPartial": true,
+  "i037RemainingAcceptanceUnchanged": true,
+  "fullTasksCompleted": 0,
+  "counts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "recordedAt": "2026-11-28T16:52:49.215566+08:00",
+  "zone": "Asia/Shanghai",
+  "finding": "Official full A6 (3.66 contract only) does not complete I-037, T-4, or the overall program. No legally advanceable implementation slice was found under the existing plans and the 3.67 grants without inventing a product surface, opening a forbidden leftover, starting an excluded task, or requalifying Increments 3.31-3.66.",
+  "doNotOpen": [
+    "durable installation",
+    "production publisher roots / real publisher-root provisioning",
+    "cross-namespace import / transfer",
+    "production FTS/RAG / production FTS recall"
+  ],
+  "doNotStart": [
+    "I-035",
+    "I-055",
+    "I-059",
+    "I-061",
+    "I-016",
+    "I-017",
+    "I-018",
+    "I-019"
+  ],
+  "plannedIdsNotStarted": [
+    "V-014",
+    "V-024",
+    "V-025",
+    "I-016",
+    "I-017",
+    "I-018",
+    "I-019",
+    "I-035",
+    "I-055",
+    "I-059",
+    "I-060",
+    "I-061"
+  ],
+  "blockedIdsNotStarted": [
+    "V-008",
+    "V-009",
+    "V-010",
+    "V-011",
+    "V-012",
+    "V-013",
+    "V-015",
+    "V-016",
+    "V-017",
+    "V-018",
+    "V-019",
+    "V-021",
+    "V-022"
+  ],
+  "i037RemainingScopeResidualsNotClosedByA6": [
+    {
+      "item": "durable installation",
+      "class": "do-not-open",
+      "notes": "remainingScope and P5:153-154; 3.67 grant forbids opening it"
+    },
+    {
+      "item": "production publisher roots / real publisher-root provisioning",
+      "class": "do-not-open",
+      "notes": "default roots remain empty; isolated public fixture roots/time are test-only"
+    },
+    {
+      "item": "cross-namespace import / transfer",
+      "class": "do-not-open",
+      "notes": "B09-owner keeps namespace/store unchanged; product flow stays unopened"
+    },
+    {
+      "item": "production FTS/RAG and FTS recall",
+      "class": "do-not-open",
+      "notes": "remainingScope still says 签名包导入与 FTS 召回仍未打开; A6 closes preview/acknowledgment composition only"
+    },
+    {
+      "item": "App file-picker / product UI wiring in default (non-test) entrypoints",
+      "class": "binding-incomplete-do-not-invent",
+      "notes": "A6 used isolated test entrypoints, existing GTK/CDP seams, and App-owned selection. No complete official binding exists for default-entrypoint product file-picker or art-page widget APIs. Do not invent those APIs or smuggle production roots into main.dart."
+    },
+    {
+      "item": "other-platform / OS assistive-device / store-release qualification",
+      "class": "not-advanceable-under-current-grants",
+      "notes": "Box Linux GTK and box Chrome Web are the recorded boundaries. B03 and N01-semantics are framework/standard semantics only. Do not start I-016-I-019, user Mac/XS, or store-release."
+    },
+    {
+      "item": "unified Harness SkillPackage / EffectRegistry / PromptCompiler residuals",
+      "class": "already-partially-officialized-not-complete",
+      "notes": "Earlier I-037/I-008/I-031/I-038 slices officialized bounded compiler/fixture/admission work. Remaining quote/apply, paid generation, unregistered plugins, and production PlanGraph wiring are not a 3.67 implementation slice."
+    }
+  ],
+  "otherProgramLeftoversNotStarted": [
+    "V-014 offline TTS, V-024/I-060 limiter DSP, and V-025 multimodal ingest stay planned and are not started here (would open a new planned surface or deferred runtime).",
+    "Blocked V-008-V-013, V-015-V-019, V-021-V-022 remain blocked (models, paid APIs, store/privacy issuance).",
+    "Many partial-task remainingScope sentences still say 仍未打开 (job archival, glTF runtime, CrashSDK, measurements, paid generation). Those stay unofficial here; several prior ADRs already marked clean leftover slices exhausted or required inventing a deferred runtime."
+  ],
+  "standingNonClaims": [
+    "OS assistive-device or screen-reader qualification",
+    "manual OS file-dialog testing",
+    "desktop portal chooser qualification",
+    "device, model, provider, paid-API, or store-release acceptance",
+    "user Mac or XS",
+    "art-page widget APIs and 3.42 deferred runtimes",
+    "I-037 or T-4 / overall program completion"
+  ],
+  "historicalContractsLeftUnchanged": [
+    "docs/implementation/evidence/signed-import-app-a6-audit/contract.json",
+    "docs/implementation/evidence/signed-import-app-combined/contract.json",
+    "docs/implementation/evidence/signed-import-app-combined-plan/contract.json"
+  ],
+  "unchangedFiles": {
+    "packages/studio_assets/third_party/sodium_web/LICENSE.core": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "docs/implementation/evidence/signed-import-app-a6-audit/contract.json": "432c10697bcc01d651426256fa505747f79c756aded4735d840d741eae14331e"
+  },
+  "recommendedNextIncrement": "Increment 3.68: do not open durable installation, production publisher roots, cross-namespace import, or production FTS/RAG, and do not start I-035, I-055, I-059, I-061, or I-016-I-019. Advance only if a later official plan first binds one narrow residual that does not invent art-page APIs, deferred runtimes, or paid/device/store acceptance. If no such plan is authorized, I-037 and T-4 remain unfinished and this inventory remains the official residual record."
+}

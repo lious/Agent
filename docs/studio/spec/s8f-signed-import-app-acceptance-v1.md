@@ -377,3 +377,15 @@ installation, production publisher roots, cross-namespace import, or
 production FTS/RAG. B03 and N01-semantics remain framework/standard
 semantics, not OS assistive-device qualification. No original
 remainingAcceptance wording is changed.
+
+## Increment 3.67 — residual I-037 / program leftover inventory (t155u)
+
+The [ADR 0266](../../../adr/0266-i037-residual-inventory.md) inventory is
+plan/evidence only. Official full A6 remains recorded only in the 3.66
+contract and still does not close I-037. remainingScope signed-pack import /
+FTS recall wording is not rewritten and is not closed by A6. This increment
+does not open durable installation, production publisher roots,
+cross-namespace import, or production FTS/RAG, and does not start I-035,
+I-055, I-059, I-061, or I-016–I-019. No legally advanceable implementation
+slice was found without inventing art-page APIs or a deferred runtime. No
+original remainingAcceptance wording is changed.

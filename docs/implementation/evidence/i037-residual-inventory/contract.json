@@ -1,0 +1,87 @@
+{
+  "increment": "3.67",
+  "base": "4f8f0996ab9c228585f3878c638276662d3f12fe",
+  "kind": "residual-i037-program-leftover-inventory-only",
+  "newRuntimeExecutions": 0,
+  "implementationSliceLanded": false,
+  "advanceableImplementationSliceFound": false,
+  "fullA6AcceptanceCompleteIn366Only": true,
+  "frozen365FullA6RemainsFalse": true,
+  "i037RemainsPartial": true,
+  "i037RemainingAcceptanceUnchanged": true,
+  "fullTasksCompleted": 0,
+  "counts": {
+    "complete": 0,
+    "partial": 62,
+    "planned": 12,
+    "blocked": 13
+  },
+  "doNotOpen": [
+    "durable installation",
+    "production publisher roots / real publisher-root provisioning",
+    "cross-namespace import / transfer",
+    "production FTS/RAG / production FTS recall"
+  ],
+  "doNotStart": [
+    "I-035",
+    "I-055",
+    "I-059",
+    "I-061",
+    "I-016",
+    "I-017",
+    "I-018",
+    "I-019"
+  ],
+  "plannedIdsNotStarted": [
+    "V-014",
+    "V-024",
+    "V-025",
+    "I-016",
+    "I-017",
+    "I-018",
+    "I-019",
+    "I-035",
+    "I-055",
+    "I-059",
+    "I-060",
+    "I-061"
+  ],
+  "blockedIdsNotStarted": [
+    "V-008",
+    "V-009",
+    "V-010",
+    "V-011",
+    "V-012",
+    "V-013",
+    "V-015",
+    "V-016",
+    "V-017",
+    "V-018",
+    "V-019",
+    "V-021",
+    "V-022"
+  ],
+  "standingNonClaims": [
+    "OS assistive-device or screen-reader qualification",
+    "manual OS file-dialog testing",
+    "desktop portal chooser qualification",
+    "device, model, provider, paid-API, or store-release acceptance",
+    "user Mac or XS",
+    "art-page widget APIs and 3.42 deferred runtimes",
+    "I-037 or T-4 / overall program completion"
+  ],
+  "historicalContractsLeftUnchanged": [
+    "docs/implementation/evidence/signed-import-app-a6-audit/contract.json",
+    "docs/implementation/evidence/signed-import-app-combined/contract.json",
+    "docs/implementation/evidence/signed-import-app-combined-plan/contract.json"
+  ],
+  "unchangedFiles": {
+    "packages/studio_assets/third_party/sodium_web/LICENSE.core": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683",
+    "tools/tests/test_acceptance.py": "b7e7d94a50e8ab93986f5a6e96bbe5221fab241bfce5c9bb4fbebb1c0cec858d",
+    "docs/implementation/evidence/signed-import-app-a6-audit/contract.json": "432c10697bcc01d651426256fa505747f79c756aded4735d840d741eae14331e"
+  },
+  "recommendedNextIncrement": "Increment 3.68: do not open durable installation, production publisher roots, cross-namespace import, or production FTS/RAG, and do not start I-035, I-055, I-059, I-061, or I-016-I-019. Advance only if a later official plan first binds one narrow residual that does not invent art-page APIs, deferred runtimes, or paid/device/store acceptance. If no such plan is authorized, I-037 and T-4 remain unfinished and this inventory remains the official residual record.",
+  "doesNotCompleteI037": true,
+  "doesNotCompleteProgramOrT4": true,
+  "doesNotReopenOrUnsetFullA6Audit": true
+}

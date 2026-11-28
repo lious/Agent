@@ -1,0 +1,22 @@
+test_forbidden_surfaces_and_excluded_tasks_were_not_started (tools.tests.test_signed_import_residual_inventory.ResidualInventoryTests.test_forbidden_surfaces_and_excluded_tasks_were_not_started) ... ok
+test_full_a6_stays_true_only_in_the_366_contract (tools.tests.test_signed_import_residual_inventory.ResidualInventoryTests.test_full_a6_stays_true_only_in_the_366_contract) ... ok
+test_inventory_does_not_complete_i037_or_the_program (tools.tests.test_signed_import_residual_inventory.ResidualInventoryTests.test_inventory_does_not_complete_i037_or_the_program) ... ok
+test_no_runtime_tree_edits_and_license_untouched (tools.tests.test_signed_import_residual_inventory.ResidualInventoryTests.test_no_runtime_tree_edits_and_license_untouched) ... ok
+test_auditor_reproduces_the_committed_audit (tools.tests.test_signed_import_a6_audit.FullA6AuditTests.test_auditor_reproduces_the_committed_audit) ... {
+  "fullA6AcceptanceComplete": true,
+  "p5RowCoverageComplete": true,
+  "outstandingA61ToA67Obligations": [],
+  "browserRows": 27,
+  "combinedRows": 12,
+  "nativeRows": 7
+}
+ok
+test_full_a6_is_set_only_after_this_audit (tools.tests.test_signed_import_a6_audit.FullA6AuditTests.test_full_a6_is_set_only_after_this_audit) ... ok
+test_historical_contracts_and_license_were_not_rewritten (tools.tests.test_signed_import_a6_audit.FullA6AuditTests.test_historical_contracts_and_license_were_not_rewritten) ... ok
+test_non_claims_and_counts_remain_limited (tools.tests.test_signed_import_a6_audit.FullA6AuditTests.test_non_claims_and_counts_remain_limited) ... ok
+test_official_row_counts_and_c2_hash_are_recorded (tools.tests.test_signed_import_a6_audit.FullA6AuditTests.test_official_row_counts_and_c2_hash_are_recorded) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.047s
+
+OK

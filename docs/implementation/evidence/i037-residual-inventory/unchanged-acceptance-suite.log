@@ -1,0 +1,21 @@
+test_all_87_overlay_rows_retain_original_acceptance_and_dependencies (tools.tests.test_acceptance.AcceptanceTests.test_all_87_overlay_rows_retain_original_acceptance_and_dependencies) ... FAIL
+test_frozen_v1_migration_sql_matches_actual_dart_bytes (tools.tests.test_acceptance.AcceptanceTests.test_frozen_v1_migration_sql_matches_actual_dart_bytes) ... ok
+test_hidden_loader_and_skipped_tests_are_not_counted (tools.tests.test_acceptance.AcceptanceTests.test_hidden_loader_and_skipped_tests_are_not_counted) ... ok
+test_schema_copy_and_embedded_constant_match_authoritative_document (tools.tests.test_acceptance.AcceptanceTests.test_schema_copy_and_embedded_constant_match_authoritative_document) ... ok
+test_timeout_becomes_failed_evidence (tools.tests.test_acceptance.AcceptanceTests.test_timeout_becomes_failed_evidence) ... ok
+test_unknown_task_exits_two (tools.tests.test_acceptance.AcceptanceTests.test_unknown_task_exits_two) ... ok
+
+======================================================================
+FAIL: test_all_87_overlay_rows_retain_original_acceptance_and_dependencies (tools.tests.test_acceptance.AcceptanceTests.test_all_87_overlay_rows_retain_original_acceptance_and_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/tests/test_acceptance.py", line 52, in test_all_87_overlay_rows_retain_original_acceptance_and_dependencies
+    self.assertEqual(task['remainingAcceptance'],by_id[task['id']]['acceptance'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'P0处理[64 chars]eason stay listed (already official in Linux A[573 chars]ned.' != 'P0处理[64 chars]eason。'
+Diff is 772 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.063s
+
+FAILED (failures=1)
