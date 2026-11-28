@@ -1,0 +1,42 @@
+{
+  "increment": "3.64",
+  "base": "79109119861569d1b32093f8ba2f0ad67f7ba58d",
+  "kind": "combined-acceptance-binding-only",
+  "runtimeImplemented": false,
+  "newRuntimeExecutions": 0,
+  "combinedAcceptanceClaimed": false,
+  "combinedG1G5Complete": false,
+  "fullA6AcceptanceComplete": false,
+  "allLateRuntimeGatesComplete": false,
+  "sameBinaryConditionMet": false,
+  "l01Rerun": false,
+  "recommendedNextIncrement": "3.65",
+  "recommendedNextWork": "fresh G1 of one late fixture then G4/G5 of all twelve C6 rows against that single new late main hash",
+  "lateFixtureBinarySha256": [
+    "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+    "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29"
+  ],
+  "combinedCaseIds": [
+    "L01-widget-dispose",
+    "L01-context",
+    "L02-open-cancel",
+    "L02-open-dispose",
+    "L02-open-context",
+    "L02-length-cancel",
+    "L02-length-dispose",
+    "L02-length-context",
+    "L02-read-cancel",
+    "L02-read-dispose",
+    "L02-read-context",
+    "L03-null-close-context"
+  ],
+  "documentSha256": {
+    "docs/studio/spec/s8f-signed-import-app-late-v1.md": "203acc58c18e498aef3cdb4edb163450810e8c52355c5bdeb27993a7a82512d8",
+    "docs/studio/spec/s8f-signed-import-app-acceptance-v1.md": "302991c2862b9b6d862c657bdbf1b0a131f07fac8ca780783b6693bcf04b26b7",
+    "docs/adr/0263-app-combined-late-acceptance.md": "10aab469fc637cff70ddd006057507ef61fb7bb1bba312e749e57594db0b4a70",
+    "docs/implementation/evidence/signed-import-app-native-plan/audit.json": "f138f2236863cdc360cbda4fb0cb5006ce40e9ca9810542eccd72054e91d1126",
+    "docs/implementation/evidence/signed-import-app-pending-factory/artifacts.json": "233325a505f3157867cde9eda814fe5325854f8fcf90bceee7a513f478e957f2",
+    "docs/implementation/evidence/signed-import-app-late-reader/artifacts.json": "96c3c1db5349121e029e910a81a4eb87ec5daec6b12f688683b190e1ab1c94fa",
+    "docs/implementation/evidence/signed-import-app-combined-plan/conditions.json": "f6c2b86554cdc828ebb1d04be2db1890cf4ec457f1d287a9d14d3aef43827715"
+  }
+}

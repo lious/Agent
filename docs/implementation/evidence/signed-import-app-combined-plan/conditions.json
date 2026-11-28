@@ -1,0 +1,40 @@
+{
+  "increment": "3.64",
+  "kind": "combined-acceptance-binding-only",
+  "newRuntimeExecutions": 0,
+  "currentRuntimeRequalified": false,
+  "l01Rerun": false,
+  "b01B11Rerun": false,
+  "l02L03Rerun": false,
+  "g3Requalified": false,
+  "n01N02Requalified": false,
+  "ng0Ng5Requalified": false,
+  "frozenEvidenceConflictFound": false,
+  "studioWebChangesSince360": [],
+  "lateFixtureBinarySha256": [
+    "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+    "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29"
+  ],
+  "l01LateMainSha256": "afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29",
+  "l02L03LateMainSha256": "935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb",
+  "sameBinaryConditionMet": false,
+  "combinedG1G5Complete": false,
+  "fullA6AcceptanceComplete": false,
+  "historicalDefaultMainSha256": "87fc12eb3a69447ffd4ed5b20b8437909fcbd87d0a1ab176352335961d7774f8",
+  "historicalOptInMainSha256": "b44f2d205403d4b58440db3ed1cc0723408c7f6a89c52fce96dd87ffb6c9aa3c",
+  "combinedCaseIds": [
+    "L01-widget-dispose",
+    "L01-context",
+    "L02-open-cancel",
+    "L02-open-dispose",
+    "L02-open-context",
+    "L02-length-cancel",
+    "L02-length-dispose",
+    "L02-length-context",
+    "L02-read-cancel",
+    "L02-read-dispose",
+    "L02-read-context",
+    "L03-null-close-context"
+  ],
+  "note": "C2 one-binary condition is specified and not met. Distinct late hashes and independently qualified gates are not combined acceptance."
+}

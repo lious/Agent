@@ -335,3 +335,15 @@ Increment 3.62 implements the official native seam and independently qualifies
 NG0–NG3 only, per [native v1](s8f-signed-import-app-native-v1.md) and ADR 0261.
 The seven N01–N02 profiles, combined G1–G5, and full A6 remain unqualified.
 L01 was not rerun. No original remainingAcceptance wording is changed.
+
+
+## Increment 3.64 — combined-acceptance binding only (t155u)
+
+The [late v1 3.64 supplement](s8f-signed-import-app-late-v1.md) and ADR 0263
+record that official late C2 same-binary and C7 combined G1–G5 conditions are
+specified and not met: the twelve late profiles still span two fixture main
+hashes, and independently qualified 3.59–3.63 gates/rows may not be summed into
+combined or full A6 acceptance. This increment is PLAN/EVIDENCE ONLY. It does
+not execute the combined run, requalify N01–N02 or NG0–NG5, or rerun L01,
+B01–B11, L02–L03, or G3. Full A6 remains false. No original remainingAcceptance
+wording is changed.

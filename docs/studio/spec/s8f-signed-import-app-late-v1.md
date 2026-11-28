@@ -249,3 +249,84 @@ unit tests may use a shorter TEST watchdog to exercise that failure path without
 changing the production 30000 ms deadline or browser crypto/source clocks. Actual
 browser rows must finish before their unchanged watchdog/deadline. L01 remains a
 frozen dependency, not a newly rerun profile. Native rows/full A6 remain deferred.
+
+
+## Increment 3.64 — combined G1–G5 / late C2 same-binary binding (t155u)
+
+Status: official PLAN/EVIDENCE ONLY. Combined G1–G5 and full A6 are not executed
+or claimed. Base 79109119861569d1b32093f8ba2f0ad67f7ba58d was clean and matched
+origin/feat/studio-foundation-20261125 before editing. Normative parents remain
+C2:58–66, C6:169–182, C7:190–212, acceptance P5:150–154, App v1 A6.1–A6.7, the
+3.61 audit, and ADRs 0257–0262.
+
+The official late C2 same-binary condition is already specified and is not met.
+C2 requires one late-phase fixture binary for all twelve C6 profiles, not
+browser-selected configuration or a union of historical builds. The 3.61 audit
+recorded two distinct late-fixture main hashes and remains authoritative:
+
+- L01 (3.59, e499a223995bf067edbf506bb8e45d681a5b8ad6):
+  `afba0ef81607dd4986381f04bd1e38369c76c22f5d3179843189fa7fda03ef29`
+- L02–L03 (3.60, 7c616a4aab245505f3fdd9fac15095fd640f5e3b):
+  `935288c577714cac1ae695479edac7c16957d97284aa40de92941391c29312bb`
+
+L01 observer methods being byte-identical across 3.59/3.60 still does not
+establish binary equivalence. 3.59 and 3.60 contracts themselves leave
+allLateRuntimeGatesComplete and full A6 false, and limit G1/G4/G5 to their
+own profiles. Independently qualified G2 (3.59) and G3 (3.60) transports, and
+the 3.62–3.63 native NG0–NG5 / N01–N02 rows, are reused as scoped dependencies.
+They do not satisfy C2 or C7 combined evidence and must not be summed into a
+combined G1–G5 or full A6 claim. Increments 3.59–3.63 are not that acceptance.
+There is no contradictory frozen pass/fail that requires rerunning L01,
+B01–B11, L02–L03, G3, or N01–N02 in this increment.
+
+No studio_web late-fixture source has changed since 3.60, so the current
+`test/import_late_phase_entrypoint.dart` already carries both the L01 pending-
+factory and L02–L03 controlled-reader transports. That fact still does not
+make either historical late main hash the one C2 binary.
+
+The official combined G1–G5 run, reserved for the next increment, must:
+
+1. Freeze input source SHA-256 at that increment's clean base (the late
+   entrypoint, reader/factory test helpers, Web import composition, and the
+   already-pinned vendor/lock/bootstrap set). Abort if those sources change
+   during the build.
+2. Perform a fresh G1 with a disposable compiler cache: three actual
+   release/CSP/source-map builds (default, ordinary opt-in, and one isolated
+   late fixture targeting `test/import_late_phase_entrypoint.dart`). Record
+   exact input and output SHA-256. Default and ordinary opt-in must contain
+   none of the late entrypoint's public root fingerprint, release/observer
+   strings, gate markers, or test imports/source-map entries. The fixture
+   artifact is not deployable. This new late main hash is the single C2
+   binary; neither historical late hash may be reused as that binary.
+3. Reuse the already-qualified G2 held-vendor / factory-observer transport and
+   the G3 controlled-reader arm/release/natural-null transport already compiled
+   into that fixture. Do not requalify 3.59/3.60 unit or canary suites, and do
+   not rewrite those historical contracts.
+4. Independently qualify G4: one fresh browser context/origin/store for every
+   C6 row (L01-widget-dispose, L01-context, L02-open-cancel, L02-open-dispose,
+   L02-open-context, L02-length-cancel, L02-length-dispose, L02-length-context,
+   L02-read-cancel, L02-read-dispose, L02-read-context, L03-null-close-context)
+   against that one fixture binary, with actual App/panel/factory/owner, the
+   recorded input method, and per-phase order/count evidence. Do not borrow
+   3.59/3.60 profile results or any B01–B11/N01–N02 runtime as those twelve
+   combined rows.
+5. Independently qualify G5 for each of those twelve combined rows: actual
+   CSP/readiness/vendor SRI, startup versus component requests, continuous
+   IDB/CAS/shelf/project/local/session observation and full snapshots through
+   teardown. Prove CAS/shelf absence rather than inventing APIs. Keep raw
+   failures and environment/entrypoint/input/executable digests.
+
+A passing combined G1–G5 run still does not, by itself, set
+fullA6AcceptanceComplete. Full A6 additionally requires the P5 audit of
+outstanding A6.1–A6.7 obligations against recorded evidence, and still does
+not close I-037 installation, production publisher roots, cross-namespace
+import, or production FTS/RAG. Independently qualified B01–B11 and N01–N02
+rows remain scoped historical/native evidence; they are not rerun unless a
+genuine frozen-evidence conflict appears, and a browser row's name still
+cannot stand for a native alternative. N01-semantics remains
+framework-standard-semantics, not OS assistive-device qualification.
+
+This increment lands only the completed official binding. Recommended next
+increment executes the combined G1–G5 run specified above, then stops short of
+full A6 unless that A6.1–A6.7 audit is honestly complete in the same coherent
+verified slice.
