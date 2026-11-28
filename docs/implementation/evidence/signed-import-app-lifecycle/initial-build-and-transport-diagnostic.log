@@ -1,0 +1,21 @@
+Compiling lib/main.dart for the Web...                             31.0s
+✓ Built ../../../skill-import-app-356/default-app
+Compiling lib/main.dart for the Web...                             31.4s
+✓ Built ../../../skill-import-app-356/opt-in-app
+Compiling test/import_lifecycle_entrypoint.dart for the Web...        30.0s
+✓ Built ../../../skill-import-app-356/lifecycle-app
+Compiling test/import_lifecycle_entrypoint.dart for the Web...        30.7s
+✓ Built ../../../skill-import-app-356/held-app
+{"seedProvenance":"PUBLIC deterministic bytes 1..32; FixtureSigner(1)","signer":{"publicKeyBase64":"ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=","keyFingerprint":"sha256:65b60673d6ed884bf01c2c222d82ada0740f29ac3355d6a925c81f17f47a27b8","role":"filmCraftPublisher","notBefore":10,"notAfter":10000,"revoked":false},"nowSeconds":1000,"policyEpoch":1,"threshold":1,"envelopeHash":"sha256:cc1b26cae842c7b7d948bf02b525180d67b17296df7c7b3e0423f2e51fbc765f","payloadHash":"sha256:7f3ad685a98c2bbdf5fce93bf59b7010090853ff68f7bf667e4358b22e0fcc83","contentHash":"sha256:82de0a86bac7c59e69765d5fe22b741b5c7fa59c4940a0f7467f53b890e8a13a","permissionDiffHash":"sha256:d741fecba795dbcc45225de3954bf8bee0b8f52da2895cce8d24e89c3c299d5e","requiredTools":["media.analyze"],"licenseWarnings":["LICENSE_DECLARATION_UNVERIFIED","LICENSE_EVIDENCE_MISSING"],"namespace":{"appId":"studio","tenantId":"local","workspaceId":"web"}}
+{"mode":"B05","passed":true,"details":{"trustedNativeCancel":true,"sameFileSelections":3,"oldTargetRemovedWhilePicking":true}}
+Error: App composition condition timeout
+    at wait (/workspace/agent-foundation-20261125/tools/acceptance/import_lifecycle/browser.cjs:10:126)
+    at async /workspace/agent-foundation-20261125/tools/acceptance/import_lifecycle/browser.cjs:76:6
+Traceback (most recent call last):
+  File "/workspace/agent-foundation-20261125/tools/acceptance/run_skill_import_app_lifecycle.py", line 64, in <module>
+    try:subprocess.run(['node',str(ROOT/'tools/acceptance/import_lifecycle/browser.cjs'),profile+'/chrome/DevToolsActivePort',f'http://127.0.0.1:{server.server_port}/',str(OUT/'public/signed.json'),str(OUT/(mode+'.json')),mode,str(OUT/'public/expected.json'),str(ROOT/'tools/acceptance/skill_source/gtk_choose.py')],check=True,timeout=120,env=env)
+        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['node', '/workspace/agent-foundation-20261125/tools/acceptance/import_lifecycle/browser.cjs', '/tmp/skill-composition-browser-wa9udkhs/chrome/DevToolsActivePort', 'http://127.0.0.1:36037/', '/workspace/skill-import-app-356/public/signed.json', '/workspace/skill-import-app-356/B06-reload.json', 'B06-reload', '/workspace/skill-import-app-356/public/expected.json', '/workspace/agent-foundation-20261125/tools/acceptance/skill_source/gtk_choose.py']' returned non-zero exit status 1.

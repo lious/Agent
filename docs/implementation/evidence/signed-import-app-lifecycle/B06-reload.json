@@ -1,0 +1,158 @@
+{
+  "passed": true,
+  "caseId": "B06-reload",
+  "details": {
+    "actualNavigation": true,
+    "oldRealm": "ff337086-0067-4c29-9809-b69c7988b9c9",
+    "newRealm": "d82a2add-8b8b-48c4-880e-17ef2c149fd6",
+    "bfcacheRestored": false,
+    "oldPagehidePersisted": false,
+    "navigationStartupWrites": 1,
+    "readingBeforeNavigation": false,
+    "lateOldFutureObserved": false,
+    "lateReader": null
+  },
+  "chooserCount": 1,
+  "actualApp": "WebStudioApp.testImport + actual owner/panel/store + real web factory; labeled held reader only when required",
+  "noAcknowledgment": true,
+  "storageSnapshotUnchanged": true,
+  "noComponentWrites": true,
+  "traces": [
+    {
+      "event": "pageshow",
+      "realm": "ff337086-0067-4c29-9809-b69c7988b9c9",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    },
+    {
+      "event": "focus",
+      "realm": "ff337086-0067-4c29-9809-b69c7988b9c9",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true
+    },
+    {
+      "event": "file-change",
+      "realm": "ff337086-0067-4c29-9809-b69c7988b9c9",
+      "visibility": "visible",
+      "focus": true,
+      "writes": 1,
+      "isTrusted": true,
+      "count": 1
+    },
+    {
+      "event": "pagehide",
+      "transport": "chrome-user-timing",
+      "realm": "ff337086-0067-4c29-9809-b69c7988b9c9",
+      "writes": 1,
+      "isTrusted": true,
+      "persisted": false,
+      "reader": null
+    },
+    {
+      "event": "pageshow",
+      "realm": "d82a2add-8b8b-48c4-880e-17ef2c149fd6",
+      "visibility": "visible",
+      "focus": false,
+      "writes": 0,
+      "isTrusted": true,
+      "persisted": false
+    }
+  ],
+  "navigations": [
+    {
+      "frame": {
+        "id": "B0524EE7897E92FAAB26E7C60F53D792",
+        "loaderId": "65D2F1B65916447C460D544A44D0F85B",
+        "url": "http://127.0.0.1:40301/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:40301",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    },
+    {
+      "frame": {
+        "id": "B0524EE7897E92FAAB26E7C60F53D792",
+        "loaderId": "9FA70197A5E20EBF4161EE472DC71943",
+        "url": "http://127.0.0.1:40301/",
+        "domainAndRegistry": "",
+        "securityOrigin": "http://127.0.0.1:40301",
+        "securityOriginDetails": {
+          "isLocalhost": true
+        },
+        "mimeType": "text/html",
+        "adFrameStatus": {
+          "adFrameType": "none"
+        },
+        "secureContextType": "SecureLocalhost",
+        "crossOriginIsolatedContextType": "NotIsolated",
+        "gatedAPIFeatures": []
+      },
+      "type": "Navigation"
+    }
+  ],
+  "nativeTraceDataLoss": false,
+  "requests": [
+    "http://127.0.0.1:40301/",
+    "http://127.0.0.1:40301/signed_import_bootstrap.js",
+    "http://127.0.0.1:40301/flutter_bootstrap.js",
+    "http://127.0.0.1:40301/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:40301/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:40301/main.dart.js",
+    "http://127.0.0.1:40301/assets/FontManifest.json",
+    "http://127.0.0.1:40301/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:40301/favicon.ico",
+    "http://127.0.0.1:40301/vendor/studio-signed-import/sodium-0.8.4-sumo.js",
+    "http://127.0.0.1:40301/",
+    "http://127.0.0.1:40301/signed_import_bootstrap.js",
+    "http://127.0.0.1:40301/flutter_bootstrap.js",
+    "http://127.0.0.1:40301/canvaskit/chromium/canvaskit.wasm",
+    "http://127.0.0.1:40301/canvaskit/chromium/canvaskit.js",
+    "http://127.0.0.1:40301/main.dart.js",
+    "http://127.0.0.1:40301/assets/FontManifest.json",
+    "http://127.0.0.1:40301/assets/fonts/fallback/Roboto-Regular.ttf",
+    "http://127.0.0.1:40301/vendor/studio-signed-import/sodium-0.8.4-sumo.js"
+  ],
+  "exceptions": [],
+  "violations": [],
+  "scope": "box browser/GTK and labeled framework/handler boundaries only; no OS device/AT/model/provider/full A6",
+  "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-Oz8S0OB_HXSbHfUsOGKDuQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+  "documentResponses": [
+    {
+      "nonce": "Oz8S0OB_HXSbHfUsOGKDuQ",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-Oz8S0OB_HXSbHfUsOGKDuQ'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "f335abb6b105915186cd421ae7edaa51c5adc29dd503cad37f1be0eb5f15e8c3"
+    },
+    {
+      "nonce": "QIfgyycmeHJcOgPDaRjkAg",
+      "csp": "default-src 'none'; script-src 'self' 'sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V' 'wasm-unsafe-eval'; connect-src 'self'; object-src 'none'; base-uri 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'nonce-QIfgyycmeHJcOgPDaRjkAg'; worker-src 'none'; form-action 'none'; frame-ancestors 'none'",
+      "indexSha256": "dd4753ab592fdbdd1f327726dab053b06bdf34813c79f9fe9fcc10e2f9ac404c"
+    }
+  ],
+  "servedAssetSha256": {
+    "/": "dd4753ab592fdbdd1f327726dab053b06bdf34813c79f9fe9fcc10e2f9ac404c",
+    "/signed_import_bootstrap.js": "b09350895b25e4fb458c1b584dd508a0a3c8e73e9f711190e6bd605898bfe8b4",
+    "/flutter_bootstrap.js": "deece96fa1afcd21ea4827d88f3b3fc0f0fb6f435d6405f23105b4003899e5c2",
+    "/canvaskit/chromium/canvaskit.js": "b836e30a284ba783ffc91cc6adbedaa54efe95d1816e42781bb7234a7f0d3160",
+    "/main.dart.js": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1",
+    "/canvaskit/chromium/canvaskit.wasm": "e269e717aad848981ed07db8573b4f7923ccd557d2e696f2944f541f4ff3df9f",
+    "/assets/FontManifest.json": "53a71d83e7ec8836f0ef7ff6a88ee5f95e4003c7f4fb109277182c774eb54d79",
+    "/assets/fonts/fallback/Roboto-Regular.ttf": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+    "/vendor/studio-signed-import/sodium-0.8.4-sumo.js": "5d6f10ef3e530b45536ee0aa40fa54a46220cc78984df6992a9d48e9a741e8f7"
+  },
+  "sri": "sha384-mMeApJgV3qm7BJusi9ualkYZcdoTJBRsmYEZdzYa+yNWz+UH12DXh6SwImc6IO2V"
+}

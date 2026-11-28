@@ -48,6 +48,8 @@ class _WebStudioState extends State<WebStudioApp> {
   String? _error;
   int _command = 0;
   int _fixtureRebuilds = 0;
+  bool _fixturePanelMounted = true;
+  String _fixtureLifecycle = 'none';
   @override
   void initState() {
     super.initState();
@@ -63,6 +65,19 @@ class _WebStudioState extends State<WebStudioApp> {
       _fixture = widget.importFixture;
       _fixturePolicy = null;
     }
+  }
+
+  void _injectFixtureLifecycle(AppLifecycleState state) {
+    if (!(_fixture?.lifecycleTestControls ?? false)) return;
+    setState(() => _fixtureLifecycle = state.name);
+    WidgetsBinding.instance.handleAppLifecycleStateChanged(state);
+    Timer(const Duration(milliseconds: 150), () {
+      if (!mounted) return;
+      WidgetsBinding.instance.handleAppLifecycleStateChanged(
+        AppLifecycleState.resumed,
+      );
+      setState(() => _fixtureLifecycle = '${state.name} -> resumed');
+    });
   }
 
   Future<void> _open() async {
@@ -172,8 +187,29 @@ class _WebStudioState extends State<WebStudioApp> {
                 child: const Text('Rebuild fixture App'),
               ),
             ],
+            if (_fixture?.lifecycleTestControls ?? false) ...[
+              Text('Fixture lifecycle: $_fixtureLifecycle'),
+              for (final state in [
+                AppLifecycleState.inactive,
+                AppLifecycleState.hidden,
+                AppLifecycleState.paused,
+                AppLifecycleState.detached,
+              ])
+                TextButton(
+                  onPressed: () => _injectFixtureLifecycle(state),
+                  child: Text('Inject fixture lifecycle ${state.name}'),
+                ),
+              TextButton(
+                onPressed: () {
+                  _importLifetime.invalidateBeforePublication();
+                  setState(() => _fixturePanelMounted = false);
+                },
+                child: const Text('Unmount fixture import panel'),
+              ),
+            ],
             if (const bool.fromEnvironment('STUDIO_SIGNED_IMPORT_PREVIEW') &&
-                _project != null)
+                _project != null &&
+                _fixturePanelMounted)
               SkillImportPanel(
                 ownerIdentity: _project!.projectId,
                 ownerLifetime: _importLifetime,
@@ -197,6 +233,11 @@ class _WebStudioState extends State<WebStudioApp> {
                 ),
                 createRepository: createWebSignedSkillRepository,
                 chooseSource: (capture, guard, selected) =>
+                    _fixture?.chooseSourceForTest?.call(
+                      capture,
+                      guard,
+                      selected,
+                    ) ??
                     chooseWebSkillSource(
                       capture,
                       currentAppStillValid: guard,

@@ -190,3 +190,60 @@ for either keyboard case. Never invoke a private Dart callback or JS consent exp
 B04 may use a fixture-only normal App-root rebuild control (allowed by P3), with
 read-only rebuild count, to prove cached policy/profile identity survives rebuild.
 That control and counter must be absent from default artifacts along with roots/time.
+
+## Increment 3.56 — lifecycle transport and reading-gate bindings (t155u)
+
+B05 must distinguish actual Chrome/GTK Escape on the box display (trusted cancel)
+from empty CDP File injection, which does not dispatch cancellation in this Chrome
+profile. Never forge isTrusted. App cancellation/reselection and real File input
+reset are observed in the ACTUAL compiled App, not the old adapter harness.
+
+B06/B07 must observe old-realm pagehide/pageshow via a browser-owned read-only CDP
+trace before destruction, recording isTrusted/persisted and realm identity. Real
+reload and away/back are separate cases. If BFCache is not used, record fresh-realm
+reload behavior, not BFCache restoration. A fixture-only normal App control may
+synchronously invalidate-before-unmounting its import panel, without closing or
+editing the project; this separately exercises actual widget disposal.
+
+The minimal B07 reading seam is an OPTIONAL typed TEST-ONLY capture selector on
+AppImportFixtureConfiguration, callable only from the actual App Choose action.
+Its signature carries SkillSourceCapture, the existing live predicate and selected
+phase observation, returning Future<Uint8List?>. It cannot supply a repository,
+verifier, snapshot, action port or success result. The isolated reading entrypoint
+selects this seam only at compile time. A bounded four-byte controlled reader holds
+one read until pagehide, then releases once after the normal panel handler. These
+bytes MUST NEVER reach import after invalidation; this is not File/crypto success
+qualification. Read/open/close/completion counters are read-only DOM trace data,
+not JS command callbacks. No source reopen, capacity replacement or token queue.
+Use both real reading navigation and a separately labeled synthetic handler-only
+pagehide/late-completion case; the latter is not navigation/BFCache evidence.
+
+B08 must distinguish real browser visibility/focus transitions from controlled
+Flutter framework lifecycle notifications. Actual tab hide/show is observed via
+visibilitychange. Inactive/hidden/paused/detached injections use standard fixture-
+only UI controls and WidgetsBinding.handleAppLifecycleStateChanged, followed by a
+fixture timer returning to resumed so frames can render the result. They qualify
+only that framework observer boundary, NOT OS lifecycle/device delivery. Inactive
+must preserve the report/source capability; hidden/paused/detached must retire it
+and resuming cannot revive it. Native chooser focus observations are recorded, not
+assumed from CDP chooser interception. Test controls/gates are absent from default
+and ordinary opt-in artifacts and expose no consent/clock/publisher endpoint.
+
+Every variant keeps actual App/store/strict host/SRI/readiness and continuous
+no-write observation. Navigation startup requests are separated from import
+requests; browser-side trace transport is read-only and creates no App persistence.
+These bindings do not qualify B09–B11/L01–L03/N01–N02 or complete full A6.
+
+Old-realm transport refinement: use capture-phase window observers as recommended
+by Chrome's Page Lifecycle API. Primitive User Timing marks from the observer may
+be collected by the documented CDP Tracing.start/end/dataCollected/tracingComplete
+transport across renderer/context destruction; require dataLossOccurred=false.
+Console delivery alone is not accepted when a destruction-time notification is
+missing. Only public native event/realm/write/reader counters enter marks, never
+source bytes, consent functions or App persistence. No event synthesis, handler
+skipping, debugger termination, network trace upload or security relaxation.
+Wait for actual main-frame navigation commit before inspecting the new/restored
+App. Missing observations are failures, not proof of a callback. Sources checked
+2026-11-28 Asia/Shanghai: developer.chrome.com/docs/web-platform/page-lifecycle-api,
+developer.mozilla.org/en-US/docs/Web/API/Window/pagehide_event, and the public
+ChromeDevTools/devtools-protocol json/browser_protocol.json Tracing schema.

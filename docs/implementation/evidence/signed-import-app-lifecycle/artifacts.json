@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "verifiedArtifactReuse": true,
+  "builds": {
+    "default": {
+      "target": "lib/main.dart",
+      "optIn": false,
+      "sourceMapSha256": "6cd775f3ff623775e646973a1297ace81b522b4f4bd024ae15af765f9823fc1a",
+      "mainSha256": "8fbe93b194407260b0171b22d23f9184ff61d6eede4950ddae44999d8f7354df",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false,
+      "heldReaderSentinelPresent": false
+    },
+    "opt-in": {
+      "target": "lib/main.dart",
+      "optIn": true,
+      "sourceMapSha256": "21d3e90bd14dac6dfcf7beff5bf61daac7e59504819dcb04e7814e15ac71476b",
+      "mainSha256": "96d0138ef175502cae55706f377d0cee2f1930df23818f6d23e0616b289cb3c1",
+      "fixtureSentinelsPresent": false,
+      "testEntrypointInSourceMap": false,
+      "heldReaderSentinelPresent": false
+    },
+    "lifecycle": {
+      "target": "test/import_lifecycle_entrypoint.dart",
+      "optIn": true,
+      "sourceMapSha256": "c436b5a37fdda5c91b4e7b3628add00d76430f004866387197ecaf53f9c03a7b",
+      "mainSha256": "c5621b5894683c450ed231d6a4eb70e1ec12f3118b00927f9ee34bdf943349a1",
+      "fixtureSentinelsPresent": true,
+      "testEntrypointInSourceMap": true,
+      "heldReaderSentinelPresent": false
+    },
+    "held": {
+      "target": "test/import_lifecycle_entrypoint.dart",
+      "optIn": true,
+      "sourceMapSha256": "e10d0c2fb7d5e204336782250cba9b902033a18b1bdf82d78fea85630fc57101",
+      "mainSha256": "e1bc53863354edcb18fe9286482b1ffd0a034d29a31160aa2ca87e9c63c93a5f",
+      "fixtureSentinelsPresent": true,
+      "testEntrypointInSourceMap": true,
+      "heldReaderSentinelPresent": true
+    }
+  },
+  "sourceSha256": {
+    "apps/studio_web/lib/browser_compute.dart": "520da9d07ae182af497e4248185619e02299e688feb90c111500cc5d70a98ec6",
+    "apps/studio_web/lib/browser_store.dart": "937e1c3b352657374d94bfbc7c46712e78aeecf703f7e7604176280c50e36dc7",
+    "apps/studio_web/lib/import_fixture_composition.dart": "759073b01f87ee1301163a7ecf62dea17549acf174f81d1576d3c74d9f4bdceb",
+    "apps/studio_web/lib/main.dart": "7357284d5787a21899d8488c0e5b3be3a81585a4890bd1f21deef0bf89b25c4c",
+    "apps/studio_web/lib/peer_panel.dart": "25aea03d109996d4558430856de56cfc7f04c9c09c368f7e3ccdc6ed556ec6d8",
+    "apps/studio_web/lib/rtc_peer.dart": "1cc1173376cfe15927c1316791b30e68f85e2a13b8bc29f8a58d1dc1cfc076b1",
+    "apps/studio_web/lib/skill_import_panel.dart": "929422e8471c39024b81af5d1404b1a4b13e769c1e7a3bb1efd320f7039628b8",
+    "apps/studio_web/lib/skill_source_web.dart": "7978a6a098a2a748eeed9ae3e589edd3e7d1a27721ff3355656ce68e24e97f20",
+    "apps/studio_web/test/import_lifecycle_entrypoint.dart": "6ce1fc0eb545090d8d1a9a9381068056c2334f288d9d9e792042004f7114ce80",
+    "apps/studio_web/test/import_held_source.dart": "6e0e574b8d83e221ddcc67dc2ad5b8fc4c9b4abc990c8d0627aebfbbbc613828",
+    "pubspec.lock": "debd047ac92931a38ea3f70f452ab3805057f51418254bee142011983afb6ded"
+  },
+  "defaultSourceUsesNullFixture": true,
+  "fixtureClockDefinedOnlyInTestEntrypoint": true
+}
